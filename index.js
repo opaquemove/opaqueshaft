@@ -6,7 +6,7 @@ var http = require('http');
 var server = http.createServer( ( req, res ) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain' );
-  res.end( 'Hello MASATO.NAKANISHI 7.Sep.2018-3.' );
+  res.end( 'Hello MASATO.NAKANISHI 7.Jun.2020-1.' );
 });
 
 server.on( 'listening', () => {
