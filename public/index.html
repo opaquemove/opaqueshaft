@@ -1,7 +1,26 @@
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Single Page Application Sample</title>
+<script type="text/javascript" src="./index.js"></script>
+<link rel="stylesheet" type="text/css" href="./index.css" />
 </head>
 <body>
-OpaqueShaft.
+<div id="TOOLBAR">
+	<button onclick="getCookie();" >cookie</button>
+	<button onclick="signForm()"     >signIn...</button>
+	<button onclick="sign('signout')"    >signOut</button>
+	<button onclick="sign('signstatus')" >sign Status</button>
+	<button onclick="getConnection()" >getConnection</button>
+	<button onclick="addChild()"   >addChild</button>
+	<button onclick="sign('sign')" id='SIGN_STATE' >sign...</button>
+</div>
+
+<div id="STATUS" ></div>
+<div id="AREA" >&nbsp;</div>
+<div id="WHITEBOARD_FRAME">
+	<div id="WHITEBOARD" >&nbsp;</div>
+</div>
 </body>
 </html>
