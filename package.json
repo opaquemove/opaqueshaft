@@ -1,7 +1,7 @@
 {
-  "name": "simpleweb",
+  "name": "opaqueshaft",
   "version": "1.0.0",
-  "description": "Simple Web Server(node.js)",
+  "description": "OpaqueShaft Web Server(node.js)",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
