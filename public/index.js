@@ -3,7 +3,7 @@
  *	Date:	20.June.2020
  */
 
-
+var x, y;
 window.onload = init;
 
 function init()
@@ -123,13 +123,76 @@ function addChild(){
 	var wb = document.getElementById('WHITEBOARD');
 	var c = document.createElement("DIV");
 	c.setAttribute("id", "c_1");
-	c.style.width = '40px';
-	c.style.height = '20px';
+	c.setAttribute("class", "drag-and-drop");
+	c.style.width = '120px';
+	c.style.height = '30px';
 	c.style.border = '1px solid gray';
 	c.style.backgroundColor = 'white';
-	wb.appendChild( c );
+	var cc = wb.appendChild( c );
+	cc.addEventListener( "mousedown", mDown, false );
+	cc.addEventListener( "touchstart", mDown, false );
 
+}
 
+function mDown( e ) {
+
+        //クラス名に .drag を追加
+        this.classList.add("drag");
+
+        //タッチデイベントとマウスのイベントの差異を吸収
+        if(e.type === "mousedown") {
+            var event = e;
+        } else {
+            var event = e.changedTouches[0];
+        }
+
+        //要素内の相対座標を取得
+        x = event.pageX - this.offsetLeft;
+        y = event.pageY - this.offsetTop;
+
+        //ムーブイベントにコールバック
+        document.body.addEventListener("mousemove", mMove, false);
+        document.body.addEventListener("touchmove", mMove, false);	
+}
+
+function mMove( e ){
+
+        //ドラッグしている要素を取得
+        var drag = document.getElementsByClassName("drag")[0];
+
+        //同様にマウスとタッチの差異を吸収
+        if(e.type === "mousemove") {
+            var event = e;
+        } else {
+            var event = e.changedTouches[0];
+        }
+
+        //フリックしたときに画面を動かさないようにデフォルト動作を抑制
+        e.preventDefault();
+
+        //マウスが動いた場所に要素を動かす
+        drag.style.top = event.pageY - y + "px";
+        drag.style.left = event.pageX - x + "px";
+
+        //マウスボタンが離されたとき、またはカーソルが外れたとき発火
+        drag.addEventListener("mouseup", mUp, false);
+        document.body.addEventListener("mouseleave", mUp, false);
+        drag.addEventListener("touchend", mUp, false);
+        document.body.addEventListener("touchleave", mUp, false);
+
+}
+
+function mUp( e ) {
+	var drag = document.getElementsByClassName("drag")[0];
+
+	//ムーブベントハンドラの消去
+	document.body.removeEventListener("mousemove", mMove, false);
+	drag.removeEventListener("mouseup", mUp, false);
+	document.body.removeEventListener("touchmove", mMove, false);
+	drag.removeEventListener("touchend", mUp, false);
+
+	//クラス名 .drag も消す
+	drag.classList.remove("drag");
 }
 
 
