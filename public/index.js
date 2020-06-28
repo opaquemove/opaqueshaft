@@ -87,7 +87,7 @@ function sign( cmd )
 		}
 	}
 	try{
-		xmlhttp.open("POST", "/Serverside/tm.WebBackend", true );
+		xmlhttp.open("POST", "/webbackend", true );
 
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		switch (cmd )

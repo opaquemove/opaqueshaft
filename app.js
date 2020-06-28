@@ -35,6 +35,8 @@ app.post( '/webbackend', ( req, res ) => {
     case 'sign':
       break;
     case 'signin':
+      r += 'SIGNIN:';
+      r += req.body.acc;
       break;
     case 'signout':
       break;
