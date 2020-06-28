@@ -8,7 +8,8 @@ var server = require('http').Server(app);
 var ipaddr = "0.0.0.0";
 var port   = process.env.PORT || 8080;
 
-app.use( bodyParser.urlencoded( { extended: true} ) );
+app.use( bodyParser.urlencoded( { extended: true} ) );  // POST形式で受信
+//app.use( bodyParser.json ); // JSON形式で受信
 app.use('/', express.static( __dirname + '/public' ));
 /*
 io.on( 'connection', ( socket ) => {
@@ -24,6 +25,8 @@ io.on( 'connection', ( socket ) => {
 */
 
 app.post( '/webbackend', ( req, res ) => {
+//  res.set( 'Content-Type', 'application/json' );
+  console.log( 'cmd:' + req.body.cmd );
   res.send( req.body);
 })
 
