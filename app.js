@@ -37,6 +37,7 @@ app.post( '/webbackend', ( req, res ) => {
     case 'signin':
       r += 'SIGNIN:';
       r += req.body.acc + '(' + req.body.pwd + ')';
+      res.cookie( 'acc', req.body.acc );
       break;
     case 'signout':
       break;
