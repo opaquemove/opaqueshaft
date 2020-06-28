@@ -37,7 +37,7 @@ function postWebBackend(){
 		xmlhttp.open("POST", "/webbackend", true );
 
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send( "cmd=getconnection" );
+		xmlhttp.send( "cmd=signstatus" );
 
 	} catch ( e ) { alert( e );}
 

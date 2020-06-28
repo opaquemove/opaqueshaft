@@ -25,9 +25,22 @@ io.on( 'connection', ( socket ) => {
 */
 
 app.post( '/webbackend', ( req, res ) => {
+  var r = '';
 //  res.set( 'Content-Type', 'application/json' );
   console.log( 'cmd:' + req.body.cmd );
-  res.send( req.body);
+  switch( res.body.cmd ){
+    case 'signstatus':
+      r += 'SIGNSTATUS';
+      break;
+    case 'sign':
+      break;
+    case 'signin':
+      break;
+    case 'signout':
+      break;
+  }
+//  res.send( req.body );
+    res.send( r );
 })
 
 server.on( 'listening', () => {
