@@ -8,7 +8,8 @@ window.onload = init;
 
 function init()
 {
-	window.addEventListener("touchmove",
+	var wb = document.getElementById('WHITEBOARD');
+	wb.addEventListener("touchmove",
 	 function( e ) { e.preventDefault(); }, { passive:false } );
 }
 
