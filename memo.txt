@@ -2,3 +2,5 @@ package.json
 engines{}を記述しないと動作しない。
 Herokuの仕様のようです。
 
+npm install ws --save 	// websocket install
+

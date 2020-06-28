@@ -1,6 +1,7 @@
 /**
  *	Author: MASATO.NAKANISHI
  *	Date:	20.June.2020
+ *	Reference: https://q-az.net/elements-drag-and-drop/
  */
 
 var x, y;
