@@ -8,6 +8,8 @@ window.onload = init;
 
 function init()
 {
+	document.body.addEventListener("touchmove",
+	 function( e ) { e.preventDefault(); }, false );
 }
 
 function getCookie(){
