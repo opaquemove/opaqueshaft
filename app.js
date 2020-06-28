@@ -28,7 +28,7 @@ app.post( '/webbackend', ( req, res ) => {
   var r = '';
 //  res.set( 'Content-Type', 'application/json' );
   console.log( 'cmd:' + req.body.cmd );
-  switch( res.body.cmd ){
+  switch( req.body.cmd ){
     case 'signstatus':
       r += 'SIGNSTATUS';
       break;
