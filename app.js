@@ -43,6 +43,9 @@ app.post( '/webbackend', ( req, res ) => {
       res.cookie( 'acc', req.body.acc );
       break;
     case 'signout':
+      r += 'SIGNOUT:';
+      r += req.cookies.acc;
+      res.cookie( 'acc', '', { maxAge:0 } );
       break;
   }
 //  res.send( req.body );
