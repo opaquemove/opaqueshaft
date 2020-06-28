@@ -161,7 +161,8 @@ function mDown( e ) {
 function mMove( e ){
 
         //ドラッグしている要素を取得
-        var drag = document.getElementsByClassName("drag")[0];
+		//var drag = document.getElementsByClassName("drag")[0];
+		var drag = this;
 
         //同様にマウスとタッチの差異を吸収
         if(e.type === "mousemove") {
@@ -186,7 +187,8 @@ function mMove( e ){
 }
 
 function mUp( e ) {
-	var drag = document.getElementsByClassName("drag")[0];
+	//var drag = document.getElementsByClassName("drag")[0];
+	var drag = this;
 
 	//ムーブベントハンドラの消去
 	document.body.removeEventListener("mousemove", mMove, false);
