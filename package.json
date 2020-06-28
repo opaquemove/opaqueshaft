@@ -14,11 +14,11 @@
     "url": "https://git.heroku.com/opaqueshaft.git"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^8.2.1"
   },
   "engines": {
     "node": "10.x",
-    "npm":  "6.1.x" 
- }
-
+    "npm": "6.1.x"
+  }
 }

@@ -8,8 +8,8 @@ window.onload = init;
 
 function init()
 {
-	document.body.addEventListener("touchmove",
-	 function( e ) { e.preventDefault(); }, false );
+	window.addEventListener("touchmove",
+	 function( e ) { e.preventDefault(); }, { passive:false } );
 }
 
 function getCookie(){
@@ -170,7 +170,7 @@ function mMove( e ){
         }
 
         //フリックしたときに画面を動かさないようにデフォルト動作を抑制
-        event.preventDefault();
+        e.preventDefault();
 
         //マウスが動いた場所に要素を動かす
         drag.style.top = event.pageY - y + "px";
