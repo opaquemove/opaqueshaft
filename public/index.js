@@ -170,7 +170,7 @@ function mMove( e ){
         }
 
         //フリックしたときに画面を動かさないようにデフォルト動作を抑制
-        e.preventDefault();
+        event.preventDefault();
 
         //マウスが動いた場所に要素を動かす
         drag.style.top = event.pageY - y + "px";
