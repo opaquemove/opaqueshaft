@@ -19,6 +19,29 @@ function getCookie(){
 	alert("[" + c + "]");
 }
 
+function postWebBackend(){
+	var r = "";
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var o = document.getElementById('AREA');
+			o.style.visibility = 'visible';
+			r += "<pre>";
+			r += xmlhttp.responseText;
+			r += "</pre>";
+			r += "<button onclick='clearArea();' >cancel</button>";
+			o.innerHTML = r;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/webbackend", true );
+
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( "cmd=getconnection" );
+
+	} catch ( e ) { alert( e );}
+
+}
 function getConnection(){
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();

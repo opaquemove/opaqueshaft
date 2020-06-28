@@ -1,5 +1,6 @@
 //'use strict'
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 var server = require('http').Server(app);
 //var io     = require('socket.io')(server);
@@ -7,6 +8,7 @@ var server = require('http').Server(app);
 var ipaddr = "0.0.0.0";
 var port   = process.env.PORT || 8080;
 
+app.use( bodyParser.urlencoded( { extended: true} ) );
 app.use('/', express.static( __dirname + '/public' ));
 /*
 io.on( 'connection', ( socket ) => {
@@ -20,6 +22,10 @@ io.on( 'connection', ( socket ) => {
   })
 })
 */
+
+app.post( '/webbackend', ( req, res ) => {
+  res.send( req.body);
+})
 
 server.on( 'listening', () => {
   console.log('listening on ' + port );
