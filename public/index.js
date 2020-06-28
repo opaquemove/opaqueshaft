@@ -189,12 +189,12 @@ function mUp( e ) {
 
 	//ムーブベントハンドラの消去
 	document.body.removeEventListener("mousemove", mMove, false);
-	drag.removeEventListener("mouseup", mUp, false);
+	if ( !drag ) drag.removeEventListener("mouseup", mUp, false);
 	document.body.removeEventListener("touchmove", mMove, false);
-	drag.removeEventListener("touchend", mUp, false);
+	if ( !drag ) drag.removeEventListener("touchend", mUp, false);
 
 	//クラス名 .drag も消す
-	drag.classList.remove("drag");
+	if ( !drag ) drag.classList.remove("drag");
 }
 
 
