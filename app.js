@@ -7,7 +7,7 @@ var server = require('http').Server(app);
 var io     = require('socket.io').listen(server);
 
 var ipaddr = "0.0.0.0";
-var port   = process.env.PORT || 8080;
+var port   = process.env.PORT;
 
 app.use( bodyParser.urlencoded( { extended: true} ) );  // POST形式で受信
 app.use( cookieParser());
