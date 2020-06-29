@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var app = express();
 var server = require('http').Server(app);
-var io     = require('socket.io')(server);
+var io     = require('socket.io').listen(server);
 
 var ipaddr = "0.0.0.0";
 var port   = process.env.PORT || 8080;
