@@ -4,16 +4,16 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var app = express();
 var server = require('http').Server(app);
-var io     = require('socket.io').listen(server);
+//var io     = require('socket.io').listen(server);
 
 var ipaddr = "0.0.0.0";
-var port   = process.env.PORT;
+var port   = process.env.PORT || 8080;
 
 app.use( bodyParser.urlencoded( { extended: true} ) );  // POST形式で受信
 app.use( cookieParser());
 //app.use( bodyParser.json ); // JSON形式で受信
-//app.use('/', express.static( __dirname + '/public' ));
-
+app.use('/', express.static( __dirname + '/public' ));
+/*
 io.on( 'connection', ( socket ) => {
   socket.on('cmd', ( msg ) => {
     switch( msg ) {
@@ -24,7 +24,7 @@ io.on( 'connection', ( socket ) => {
     }
   })
 })
-
+*/
 
 app.post( '/webbackend', ( req, res ) => {
   var r = '';
