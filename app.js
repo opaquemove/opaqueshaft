@@ -12,7 +12,7 @@ var port   = process.env.PORT || 8080;
 app.use( bodyParser.urlencoded( { extended: true} ) );  // POST形式で受信
 app.use( cookieParser());
 //app.use( bodyParser.json ); // JSON形式で受信
-app.use('/', express.static( __dirname + '/public' ));
+//app.use('/', express.static( __dirname + '/public' ));
 /*
 io.on( 'connection', ( socket ) => {
   socket.on('cmd', ( msg ) => {
