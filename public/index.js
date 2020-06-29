@@ -5,19 +5,38 @@
  */
 
 var x, y;
+var curChild = null;
 window.onload = init;
+window.onresize = fitWhiteboardFrame;
 
 function init()
 {
 	var wb = document.getElementById('WHITEBOARD');
 	wb.addEventListener("touchmove",
 	 function( e ) { e.preventDefault(); }, { passive:false } );
+	fitWhiteboardFrame();
+}
+
+function fitWhiteboardFrame(){
+	var w = document.documentElement.clientWidth;
+	var h = document.documentElement.clientHeight;
+	var o = document.getElementById('WHITEBOARD_FRAME');
+	console.log( w + ',' + h );
+	o.style.width = ( w - 2 ) + 'px';
+	o.style.height = ( h - 44 ) + 'px';
 }
 
 function getCookie(){
 	var c = document.cookie;
 	alert("[" + c + "]");
+	alert( checkSign() );
 }
+
+function checkSign(){
+	var c = document.cookie;
+	return  ( c.indexOf( 'acc=') > -1 );
+}
+
 
 function postWebBackend(){
 	var r = "";
@@ -29,7 +48,7 @@ function postWebBackend(){
 			r += "<pre>";
 			r += xmlhttp.responseText;
 			r += "</pre>";
-			r += "<button onclick='clearArea();' >cancel</button>";
+			r += "<button onclick='clearArea();' >OK</button>";
 			o.innerHTML = r;
 		}
 	}
@@ -42,7 +61,7 @@ function postWebBackend(){
 	} catch ( e ) { alert( e );}
 
 }
-function getConnection(){
+function getAccountList(){
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -52,15 +71,15 @@ function getConnection(){
 			r += "<pre>";
 			r += xmlhttp.responseText;
 			r += "</pre>";
-			r += "<button onclick='clearArea();' >cancel</button>";
+			r += "<button onclick='clearArea();' >OK</button>";
 			o.innerHTML = r;
 		}
 	}
 	try{
-		xmlhttp.open("POST", "/Serverside/tm.WebBackend", true );
+		xmlhttp.open("POST", "/webbackend", true );
 
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send( "cmd=getconnection" );
+		xmlhttp.send( "cmd=getaccountlist" );
 
 		switch( xmlhttp.status){
 			case 200:
@@ -82,7 +101,7 @@ function sign( cmd )
 			r += xmlhttp.responseText;
 			r += "</pre>";
 			r += "<br/>";
-			r += "<button onclick='clearArea();' >cancel</button>";
+			r += "<button onclick='clearArea();' >OK</button>";
 			o.innerHTML = r;
 		}
 	}
@@ -113,7 +132,10 @@ function sign( cmd )
 
 function signForm()
 {
-
+	if ( checkSign()) {
+		sign('signstatus');
+		return;
+	}
 	var r = "";
 	r += "<form name='sign_form' >";
 		r += "<table>";
@@ -150,11 +172,9 @@ function addChild(){
 	var wb = document.getElementById('WHITEBOARD');
 	var c = document.createElement("DIV");
 	c.setAttribute("id", "c_1");
-	c.setAttribute("class", "drag-and-drop");
-	c.style.width = '120px';
-	c.style.height = '30px';
-	c.style.border = '1px solid gray';
-	c.style.backgroundColor = 'white';
+	c.setAttribute("class", "CHILD drag-and-drop");
+
+	c.innerText = 'MASATO.N';
 	var cc = wb.appendChild( c );
 	cc.addEventListener( "mousedown", mDown, false );
 	cc.addEventListener( "touchstart", mDown, false );
@@ -163,8 +183,9 @@ function addChild(){
 
 function mDown( e ) {
 
+		curChild = this;
         //クラス名に .drag を追加
-        this.classList.add("drag");
+        curChild.classList.add("drag");
 
         //タッチデイベントとマウスのイベントの差異を吸収
         if(e.type === "mousedown") {
@@ -174,8 +195,8 @@ function mDown( e ) {
         }
 
         //要素内の相対座標を取得
-        x = event.pageX - this.offsetLeft;
-        y = event.pageY - this.offsetTop;
+        x = event.pageX - curChild.offsetLeft;
+        y = event.pageY - curChild.offsetTop;
 
         //ムーブイベントにコールバック
         document.body.addEventListener("mousemove", mMove, false);
@@ -186,7 +207,8 @@ function mMove( e ){
 
         //ドラッグしている要素を取得
 		//var drag = document.getElementsByClassName("drag")[0];
-		var drag = e.target;
+//		var drag = e.target;
+		var drag = curChild;
 
         //同様にマウスとタッチの差異を吸収
         if(e.type === "mousemove") {
@@ -212,8 +234,8 @@ function mMove( e ){
 
 function mUp( e ) {
 	//var drag = document.getElementsByClassName("drag")[0];
-	var drag = e.target;
-
+	//var drag = e.target;
+	var drag = curChild;
 	//ムーブベントハンドラの消去
 	document.body.removeEventListener("mousemove", mMove, false);
 	if ( !drag ) drag.removeEventListener("mouseup", mUp, false);
@@ -222,6 +244,7 @@ function mUp( e ) {
 
 	//クラス名 .drag も消す
 	if ( !drag ) drag.classList.remove("drag");
+	curChild = null;
 }
 
 

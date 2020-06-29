@@ -9,8 +9,8 @@ BODY{
 	padding:	0px 0px;
 }
 #TOOLBAR{
-	top-padding:4px;
-	bottom-padding:4px;
+	padding-top:4px;
+	padding-bottom:4px;
 	height:40px;
 	z-index:0;
 }
@@ -35,22 +35,29 @@ BODY{
 	top:				42px;
 	left:				0px;
 	width:				100%;
-	height:				80%;
+	height:				100%;
 	background-color:	lightgray;
-	border:				1px solid red;
-
 }
-.WHITEBOARD{
-	position:absolute;
-	top:0px;
-	left:0px;
+#WHITEBOARD{
+	position:			relative;
+	top:				0px;
+	left:				0px;
+	width:				100%;
+	height:				100%;
+	border:				1px solid darkgrey;
+	overflow:			hidden;
 }
 
 .CHILD{
 	position:	absolute;
-	width:		50px;
-	height:		50px;
-	border:		1px solid lightgrey;
+	width:				120px;
+	height:				30px;
+	background-color:	white;
+	border-top:			1px solid lightgrey;
+	border-left:		4px solid red;
+	border-right:		1px solid lightgrey;
+	border-bottom:		1px solid lightgrey;
+	font-size:			20px;
 }
 
 .drag-and-drop {

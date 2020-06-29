@@ -33,7 +33,8 @@ app.post( '/webbackend', ( req, res ) => {
   switch( req.body.cmd ){
     case 'signstatus':
       r += 'SIGNSTATUS:';
-      r += req.cookies.acc;
+      r += ( req.cookies.acc == undefined )? 
+          'sign out':'sign in (' + req.cookies.acc + ')';
       break;
     case 'sign':
       break;
@@ -47,6 +48,10 @@ app.post( '/webbackend', ( req, res ) => {
       r += req.cookies.acc;
       res.cookie( 'acc', '', { maxAge:0 } );
       break;
+    case 'getaccountlist':
+      r += 'GETACCOUNTLIST:';
+      r += getAccountList();
+      break;
   }
 //  res.send( req.body );
     res.send( r );
@@ -59,6 +64,36 @@ server.on( 'listening', () => {
 });
 
 server.listen( port, ipaddr );
+
+
+function getAccountList(){
+  var r = '';
+
+  var pg = require('pg');
+  //const cstring = 'postgres://user:password@localhost:5432/databasename';
+  var cstring = process.env.DATABASE_URL;
+  const pool = new pg.Pool(
+    { connectionString: cstring } );
+  pool.query('SELECT * FROM accounts')
+    .then(( result ) => {
+  //    console.log('Success', result );
+      if ( result.rows ) {
+        result.rows.forEach((row, index ) => {
+          console.log( index + 1, row );
+          r += row;
+        } );
+      }
+    })
+    .catch( ( error ) => {
+      console.log('Failure', error );
+    })
+    .then( () => {
+      console.log('disconnect');
+      pool.end();
+    });
+  r += "Working..."
+  return r;
+}
 
 /*
 app.get('/', (req, res) => res.send('OpaqueShaft.'));
