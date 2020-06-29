@@ -4,8 +4,11 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var app = express();
 var server = require('http').Server(app);
-//var io     = require('socket.io').listen(server);
-
+var io     = require('socket.io').listen(server);
+io.configure( function() {
+  io.set("transports", ["xht-polling"]);
+  io.set("polling duration", 10 );
+});
 var ipaddr = "0.0.0.0";
 var port   = process.env.PORT || 8080;
 
