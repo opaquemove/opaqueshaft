@@ -63,7 +63,8 @@ function postWebBackend(){
 
 }
 function getAccountList(){
-	socket.emit( 'cmd', 'getaccountlist' );
+	//socket.emit( 'cmd', 'getaccountlist' );
+	alert();
 }
 
 function sign( cmd )
