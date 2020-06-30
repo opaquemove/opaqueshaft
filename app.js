@@ -19,6 +19,7 @@ app.use('/', express.static( __dirname + '/public' ));
 
 io.on( 'connection', ( socket ) => {
   socket.on('cmd', ( msg ) => {
+    console.log( msg);
     switch( msg ) {
       default:
         socket.broadcast.emit('cmd', msg );
