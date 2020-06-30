@@ -12,6 +12,8 @@ window.onresize = fitWhiteboardFrame;
 
 function init()
 {
+	var socket = io();
+
 	var wb = document.getElementById('WHITEBOARD');
 	wb.addEventListener("touchmove",
 	 function( e ) { e.preventDefault(); }, { passive:false } );
@@ -63,7 +65,7 @@ function postWebBackend(){
 
 }
 function getAccountList(){
-	//socket.emit( 'cmd', 'getaccountlist' );
+	socket.emit( 'cmd', 'getaccountlist' );
 	alert();
 }
 
