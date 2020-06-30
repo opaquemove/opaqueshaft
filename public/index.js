@@ -9,6 +9,7 @@ var curChild = null;
 window.onload = init;
 window.onresize = fitWhiteboardFrame;
 
+
 function init()
 {
 	var wb = document.getElementById('WHITEBOARD');
@@ -62,31 +63,7 @@ function postWebBackend(){
 
 }
 function getAccountList(){
-	var r = "";
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var o = document.getElementById('AREA');
-			o.style.visibility = 'visible';
-			r += "<pre>";
-			r += xmlhttp.responseText;
-			r += "</pre>";
-			r += "<button onclick='clearArea();' >OK</button>";
-			o.innerHTML = r;
-		}
-	}
-	try{
-		xmlhttp.open("POST", "/webbackend", true );
-
-		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send( "cmd=getaccountlist" );
-
-		switch( xmlhttp.status){
-			case 200:
-				break;
-		}
-
-	} catch ( e ) { alert( e );}
+	socket.emit( 'cmd', 'getaccountlist' );
 }
 
 function sign( cmd )
