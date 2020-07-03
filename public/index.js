@@ -123,8 +123,8 @@ function signForm()
 		r += "<td>Password:</td><td><input type='password' name='pwd' tabindex=2 /></td>";
 		r += "<tr>";
 		r += "</table>";
-		r += "<button tabindex=3 onclick='sign(\"signin\");' >signin</button>";
-		r += "<button tabindex=4 onclick='clearArea();' >cancel</button>";
+		r += "<input type='button' tabindex=3 onclick='sign(\"signin\");' value='signin' />";
+		r += "<input type='button' tabindex=4 onclick='clearArea();' value='cancel' />";
 	r += "</form>";
 	var o = document.getElementById('AREA');
 	o.innerHTML = r;
