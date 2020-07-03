@@ -123,9 +123,9 @@ function signForm()
 		r += "<td>Password:</td><td><input type='password' name='pwd' /></td>";
 		r += "<tr>";
 		r += "</table>";
+		r += "<button onclick='sign(\"signin\");' >signin</button>";
+		r += "<button onclick='clearArea();' >cancel</button>";
 	r += "</form>";
-	r += "<button onclick='sign(\"signin\");' >signin</button>";
-	r += "<button onclick='clearArea();' >cancel</button>";
 	var o = document.getElementById('AREA');
 	o.innerHTML = r;
 	o.style.visibility = 'visible';
