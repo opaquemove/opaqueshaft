@@ -117,14 +117,14 @@ function signForm()
 	r += "<form name='sign_form' >";
 		r += "<table>";
 		r += "<tr>";
-		r += "<td>ID:</td><td><input type='text' id='id' name='id' /></td>";
+		r += "<td>ID:</td><td><input type='text' id='id' name='id' tabindex=1 /></td>";
 		r += "</tr>";
 		r += "<tr>";
-		r += "<td>Password:</td><td><input type='password' name='pwd' /></td>";
+		r += "<td>Password:</td><td><input type='password' name='pwd' tabindex=2 /></td>";
 		r += "<tr>";
 		r += "</table>";
-		r += "<button onclick='sign(\"signin\");' >signin</button>";
-		r += "<button onclick='clearArea();' >cancel</button>";
+		r += "<button tabindex=3 onclick='sign(\"signin\");' >signin</button>";
+		r += "<button tabindex=4 onclick='clearArea();' >cancel</button>";
 	r += "</form>";
 	var o = document.getElementById('AREA');
 	o.innerHTML = r;
