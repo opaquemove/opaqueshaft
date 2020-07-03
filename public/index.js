@@ -12,8 +12,6 @@ window.onresize = fitWhiteboardFrame;
 
 function init()
 {
-	var socket = io();
-
 	var wb = document.getElementById('WHITEBOARD');
 	wb.addEventListener("touchmove",
 	 function( e ) { e.preventDefault(); }, { passive:false } );
@@ -24,7 +22,7 @@ function fitWhiteboardFrame(){
 	var w = document.documentElement.clientWidth;
 	var h = document.documentElement.clientHeight;
 	var o = document.getElementById('WHITEBOARD_FRAME');
-	console.log( w + ',' + h );
+	//console.log( w + ',' + h );
 	o.style.width = ( w - 2 ) + 'px';
 	o.style.height = ( h - 44 ) + 'px';
 }
@@ -66,7 +64,6 @@ function postWebBackend(){
 }
 function getAccountList(){
 	socket.emit( 'cmd', 'getaccountlist' );
-	alert();
 }
 
 function sign( cmd )

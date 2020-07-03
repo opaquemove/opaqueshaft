@@ -8,15 +8,15 @@
 -->
 <script type="text/javascript" src="/socket.io/socket.io.js" ></script>
 <script type="text/javascript" src="./index.js"></script>
-<script type="text/javascript" src="./soc_backend.js"></script>
 <link rel="stylesheet" type="text/css" href="./index.css" />
 </head>
 <body>
-<div id="TOOLBAR">
-	<div style="float:left;height:100%;border-left:10px solid red;">
-		OpaqueShaft
+	<script type="text/javascript" src="./soc_backend.js"></script>
+	<div id="TOOLBAR">
+	<div id="OPAQUESHAFT_TITLE">
+		&nbsp;OpaqueShaft
 	</div> 
-	<div style="float:left;padding-left: 20px;">
+	<div style="float:left;padding-top:10px;padding-left: 20px;">
 		<button onclick="getCookie();" >cookie</button>
 		<button onclick="postWebBackend()" >sign status</button>
 		<button onclick="signForm()"     >signIn...</button>

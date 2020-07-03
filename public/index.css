@@ -9,10 +9,16 @@ BODY{
 	padding:	0px 0px;
 }
 #TOOLBAR{
-	padding-top:4px;
+	padding-top:0px;
 	padding-bottom:4px;
 	height:40px;
 	z-index:0;
+}
+#OPAQUESHAFT_TITLE{
+	float:left;
+	height:100%;
+	border-left:10px solid red;
+	padding-top:10px;
 }
 #SIGN_STATE{
 	float:right;
