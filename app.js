@@ -11,6 +11,8 @@ var io     = require('socket.io').listen(server);
 //  io.set("transports", ["xhr-polling"]);
 //  io.set("polling duration", 10 );
 //});
+
+var accounts = require('./routes/accounts')
 var ipaddr = "0.0.0.0";
 var port   = process.env.PORT || 8080;
 
@@ -18,6 +20,7 @@ app.use( bodyParser.urlencoded( { extended: true} ) );  // POST形式で受信
 app.use( cookieParser());
 //app.use( bodyParser.json ); // JSON形式で受信
 app.use('/', express.static( __dirname + '/public' ));
+app.use('/accounts', accounts );
 
 io.on( 'connection', ( socket ) => {
   socket.on('cmd', ( msg ) => {
@@ -35,6 +38,7 @@ io.on( 'connection', ( socket ) => {
 })
 
 
+
 app.post( '/webbackend', ( req, res ) => {
   var r = '';
   var rc = false;
@@ -49,14 +53,24 @@ app.post( '/webbackend', ( req, res ) => {
     case 'sign':
       break;
     case 'signin':
-      var result = null;
+//      var result = null;
+      var id  = req.body.acc;
+      var pwd = req.body.pwd;
       r += 'SIGNIN:';
-      r += req.body.acc + '(' + req.body.pwd + ')';
-      var prms = new Promise( (resolv,reject) =>{
-        resolv( checkAcc( req.body.acc ) );} );
-      prms.then( data => {result = data;console.log('[' + data + ']');})
-      r += 'result(' + result + ')';
-      res.cookie( 'acc', req.body.acc );
+      r += id + '(' + pwd + ')';
+//      var prms = new Promise( (resolv,reject) =>{
+//        resolv( checkAcc( req.body.acc ) );} );
+//      prms.then( data => {result = data;console.log('[' + data + ']');})
+//      r += 'result(' + result + ')';
+//      res.cookie( 'acc', req.body.acc );
+
+      authAccount( id, pwd ).then( result => {
+        r += '  result(' + result + ')';
+        res.cookie( 'acc', id );
+        res.send( r );
+        return;
+      } );
+      
       break;
     case 'signout':
       r += 'SIGNOUT:';
@@ -160,6 +174,31 @@ function checkAcc( id ){
 
 }
 
+function authAccountHelper( id, pwd ){
+  var pg = require('pg');
+  const cstring = process.env.DATABASE_URL;
+    return new Promise( resolv => {
+      const pool = new pg.Pool(
+          { connectionString: cstring } );
+      var r = 'FAIL';
+      pool.query({
+        text: "SELECT * FROM accounts WHERE acc_id = $1 AND password = $2",
+        values: [ id, pwd ]
+        })
+      .then(( result ) => {
+          if ( result.rows.length > 0 ) r = 'SUCCESS';
+        })
+      .then( () => {
+        pool.end();
+        resolv( r );
+      });
+    });
+}
+
+async function authAccount( id, pwd ) {
+  var result = await authAccountHelper( id, pwd );
+  return result;
+}
 
 /*
 app.get('/', (req, res) => res.send('OpaqueShaft.'));
