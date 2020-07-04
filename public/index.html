@@ -13,25 +13,30 @@
 <body>
 	<script type="text/javascript" src="./soc_backend.js"></script>
 	<div id="TOOLBAR">
-	<div id="OPAQUESHAFT_TITLE">
-		&nbsp;OpaqueShaft
-	</div> 
-	<div style="float:left;padding-top:10px;padding-left: 20px;">
-		<button onclick="getCookie();" >cookie</button>
-		<button onclick="postWebBackend()" >sign status</button>
-		<button onclick="signForm()"     >signIn...</button>
-		<button onclick="sign('signout')"    >signOut</button>
-		<button onclick="sign('signstatus')" >sign Status</button>
-		<button onclick="getAccountList()" >getAccountList...</button>
-		<button onclick="addChild()"   >addChild</button>
-		<button onclick="sign('sign')" id='SIGN_STATE' >sign...</button>
+		<div id="OPAQUESHAFT_TITLE">
+			&nbsp;OpaqueShaft
+		</div> 
+		<div style="float:left;padding-top:10px;padding-left: 20px;">
+			<button onclick="getCookie();"                 >cookie</button>
+			<button onclick="postWebBackend()"             >sign status(webbackend)</button>
+			<button onclick="signForm()"                   >signIn(REST)...</button>
+			<button onclick="sign('signout')"              >signOut(REST)</button>
+			<button onclick="getAccountList()"             >getAccountList(socket.io)...</button>
+			<button onclick="loadChildren()"               >load Children(socket.io)</button>
+			<button onclick="clearWhiteboard()"            >clear Whiteboard</button>
+			<button onclick="countChild()"                 >count Child...</button>
+		</div>
+		<div style="float:rigjt;padding-top:10px;">
+			<button onclick="sign('sign')" id='SIGN_STATE' >sign(REST)...</button>
+		</div>
 	</div>
-</div>
 
-<div id="STATUS" ></div>
-<div id="AREA" >&nbsp;</div>
-<div id="WHITEBOARD_FRAME">
-	<div id="WHITEBOARD" >&nbsp;</div>
-</div>
+	<div id="WHITEBOARD_FRAME">
+		<div id="WHITEBOARD" ></div>
+	</div>
+	<div id="STATUS" >status:</div>
+
+	<div id="AREA" >&nbsp;</div>
+
 </body>
 </html>

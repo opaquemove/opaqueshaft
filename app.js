@@ -1,8 +1,8 @@
-//'use strict'
+'use strict'
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-const e = require('express');
+//const e = require('express');
 const { resolve } = require('path');
 var app = express();
 var server = require('http').Server(app);
@@ -22,12 +22,18 @@ app.use( cookieParser());
 app.use('/', express.static( __dirname + '/public' ));
 app.use('/accounts', accounts );
 
+//
+//  socket.io
+//
 io.on( 'connection', ( socket ) => {
   socket.on('cmd', ( msg ) => {
     console.log( msg);
     switch( msg ) {
       case 'getaccountlist':
         getAccountList( socket );
+        break;
+      case 'getchildrenlist':
+        getChildrenList( socket );
         break;
       default:
         //socket.broadcast.emit( msg, 'hogehoge' );
@@ -36,8 +42,6 @@ io.on( 'connection', ( socket ) => {
     }
   })
 })
-
-
 
 app.post( '/webbackend', ( req, res ) => {
   var r = '';
@@ -51,31 +55,6 @@ app.post( '/webbackend', ( req, res ) => {
           'sign out':'sign in (' + req.cookies.acc + ')';
       break;
     case 'sign':
-      break;
-    case 'signin':
-//      var result = null;
-      var id  = req.body.acc;
-      var pwd = req.body.pwd;
-      r += 'SIGNIN:';
-      r += id + '(' + pwd + ')';
-//      var prms = new Promise( (resolv,reject) =>{
-//        resolv( checkAcc( req.body.acc ) );} );
-//      prms.then( data => {result = data;console.log('[' + data + ']');})
-//      r += 'result(' + result + ')';
-//      res.cookie( 'acc', req.body.acc );
-
-      authAccount( id, pwd ).then( result => {
-        r += '  result(' + result + ')';
-        res.cookie( 'acc', id );
-        res.send( r );
-        return;
-      } );
-      
-      break;
-    case 'signout':
-      r += 'SIGNOUT:';
-      r += req.cookies.acc;
-      res.cookie( 'acc', '', { maxAge:0 } );
       break;
   }
 //  res.send( req.body );
@@ -109,7 +88,31 @@ function getAccountList( socket ){
 }
 */
 
+function getChildrenList( socket ){
+  var r = '';
 
+  var pg = require('pg');
+  var cstring = process.env.DATABASE_URL;
+  const pool = new pg.Pool(
+    { connectionString: cstring } );
+
+  pool.query('SELECT * FROM children')
+    .then(( result ) => {
+      if ( result.rows ) {
+        r += JSON.stringify( result.rows );
+      }
+    })
+    .catch( ( error ) => {
+      console.log('Failure', error );
+    })
+    .then( () => {
+      console.log('disconnect');
+      pool.end();
+      console.log( 'r:' + r );
+      socket.emit( 'getchildrenlist', r );
+    });
+  return r;
+}
 
 function getAccountList( socket ){
   var r = '';
