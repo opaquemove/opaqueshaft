@@ -17,14 +17,16 @@
 			&nbsp;OpaqueShaft
 		</div> 
 		<div style="float:left;padding-top:10px;padding-left: 20px;">
-			<button onclick="getCookie();"                 >cookie</button>
 			<button onclick="postWebBackend()"             >sign status(webbackend)</button>
 			<button onclick="signForm()"                   >signIn(REST)...</button>
-			<button onclick="sign('signout')"              >signOut(REST)</button>
+<!--
+	<button onclick="sign('signout')"              >signOut(REST)</button>
+-->	
 			<button onclick="getAccountList()"             >getAccountList(socket.io)...</button>
 			<button onclick="loadChildren()"               >load Children(socket.io)</button>
 			<button onclick="clearWhiteboard()"            >clear Whiteboard</button>
 			<button onclick="countChild()"                 >count Child...</button>
+			<button onclick="resetChildMark()"             >reset Child Mark</button>
 		</div>
 		<div style="float:rigjt;padding-top:10px;">
 			<button onclick="sign('sign')" id='SIGN_STATE' >sign(REST)...</button>

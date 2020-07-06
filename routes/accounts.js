@@ -25,25 +25,31 @@ router.get('/list', function(req, res, next ){
       });
 });
 
+//
+//  サインイン処理
+//
 router.post('/signin', function(req, res, next ){
     var id  = req.body.acc;
     var pwd = req.body.pwd;
     console.log( 'acc:' + id + ':');
+    res.header('Content-Type', 'application/json;charset=utf-8');
     db.any( {
         text: 'SELECT acc_id FROM accounts WHERE acc_id = $1 AND password = $2',
         values: [id,pwd] } )
       .then( rows => {
-          if ( rows.length > 0 )
-            res.cookie( 'acc', id );
-//          var list = [];
-//          for( var result of rows ){
-//              list.push( result );
-//          }
-//          res.json( list );
-            res.json( rows );
+          if ( rows.length > 0 ) {
+              //res.json( rows );
+              res.cookie( 'acc', id );
+              res.json( {cmd:'signin',status:'SUCCESS'} );
+            } else{
+                res.json( {cmd:'signin',status:'FAIL'} );
+          }
       });
 });
 
+//
+//  サインアウト処理
+//
 router.post('/signout', function(req, res, next ){
     var id  = req.cookies.acc;
     console.log( 'acc:' + id + ':');

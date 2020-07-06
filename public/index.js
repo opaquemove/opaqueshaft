@@ -5,26 +5,55 @@
  */
 
 var x, y;
-var curChild = null;
+var curChild  = null;
+var propChild = null;
 var curChildZIndex = null;
+var curChildMoved  = false;
 window.onload = init;
 window.onresize = fitWhiteboardFrame;
 
-
+//
+//	初期化処理
+//
 function init()
 {
 	var wb = document.getElementById('WHITEBOARD');
 	wb.addEventListener("touchmove",
 	 function( e ) { e.preventDefault(); }, { passive:false } );
 	wb.addEventListener('selectstart', function(e){return false;})
-	wb.addEventListener('click', function(e) { initArea();});
+	wb.addEventListener('click', 
+		function(e) {
+			initArea();
+			if ( e.target == wb)	resetChildMark();
+		});
 	fitWhiteboardFrame();
+
+	ctlToolbar();
+	if ( !checkSign() )  signForm();
 }
 
 function initArea(){
 	var o = document.getElementById('AREA');
 	if ( o.style.visibility != 'hidden' )
 		clearArea();
+}
+
+//
+//	サインアウトデザイン
+//
+function ctlToolbar(){
+	var tb     = document.getElementById('TOOLBAR');
+	var wbf    = document.getElementById('WHITEBOARD_FRAME');
+	var status = document.getElementById('STATUS');
+	if ( checkSign()) {
+		tb.style.visibility     = 'visible';
+		wbf.style.visibility    = 'visible';
+		status.style.visibility = 'visible';
+	} else {
+		tb.style.visibility     = 'hidden';
+		wbf.style.visibility    = 'hidden';
+		status.style.visibility = 'hidden';
+	}
 }
 
 function clearArea(){
@@ -51,12 +80,17 @@ function getCookie(){
 	alert( checkSign() );
 }
 
+//
+//	サインインしているかをチェック
+//
 function checkSign(){
 	var c = document.cookie;
 	return  ( c.indexOf( 'acc=') > -1 );
 }
 
-
+//
+//	バックエンド処理
+//
 function postWebBackend(){
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
@@ -86,26 +120,36 @@ function sign( cmd )
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
-		var o = document.getElementById('AREA');
 		switch ( xmlhttp.readyState){
 			case 1://opened
 			case 2://header received
 			case 3://loading
-				r = "";
-				r += "loading...";
-				o.style.visibility = 'visible';
-				o.innerHTML = r;
 				break;
 			case 4://done
+//				o.style.visibility = 'visible';
+				r = "";
+				//r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;overflow:hidden;' >";
 				if ( xmlhttp.status == 200 ){
-					o.style.visibility = 'visible';
-					r = "";
-					r += "<pre>";
+					var result = JSON.parse( xmlhttp.responseText );
 					r += xmlhttp.responseText;
-					r += "</pre>";
-					r += "<br/>";
-					r += "<button onclick='clearArea();' >OK</button>";
-					o.innerHTML = r;
+					switch( result.cmd ){
+						case 'signin':
+							var o = document.getElementById('SIGNIN_STATUS');
+							if ( result.status == 'SUCCESS' ){
+								ctlToolbar();
+								clearArea();
+							} else {
+								r += 'sign in error'
+							}
+							o.innerText = r;
+							break;
+						case 'signout':
+							if ( result.status == 'SUCCESS' ) ctlToolbar();
+							signForm();
+							break;
+					}
+				} else{
+					alert( xmlhttp.status );
 				}
 				break;
 		}
@@ -145,19 +189,36 @@ function signForm()
 		return;
 	}
 	var r = "";
-	r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;' >";
+	
+	r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;overflow:hidden;' >";
+		r += "<div id='OPAQUESHAFT_LOGINTITLE' >";
+		r += "&nbsp;&nbsp;OpaqueShaft";
+		r += "</div>"; 
+		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign in to your account</div>";
+		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
 		r += "<form name='sign_form' >";
-			r += "<table>";
+			r += "<table align='center' >";
 			r += "<tr>";
-			r += "<td>ID:</td><td><input type='text' id='id' name='id' tabindex=1 /></td>";
+			r += "<td>Sign in ID:</td>";
 			r += "</tr>";
 			r += "<tr>";
-			r += "<td>Password:</td><td><input type='password' name='pwd' tabindex=2 /></td>";
+			r += "<td><input style='width:200px;' type='text' id='id' name='id' tabindex=1 /></td>";
+			r += "</tr>";
+			r += "<tr>";
+			r += "<td>Password:</td>";
+			r += "<tr>";
+			r += "<tr>";
+			r += "<td><input style='width:200px;height:18px;' type='password' name='pwd' tabindex=2 /></td>";
 			r += "<tr>";
 			r += "</table>";
-			r += "<button type='button' tabindex=3 onclick='sign(\"signin\");' >signin</button>";
-			r += "<button type='button' tabindex=4 onclick='clearArea();' >cancel</button>";
+			r += "<div style='text-align:center;' >";
+				r += "<button style='width:208px;' type='button' tabindex=3 onclick='sign(\"signin\");' >signin</button>";
+			//	r += "<button type='button' tabindex=4 onclick='clearArea();' >cancel</button>";
+			r += "</div>";
 		r += "</form>";
+		r += "<div style='padding-top:20px;text-align:center;' >";
+			r += "created by MASATO.NAKANISHI. 2020"
+		r += "</div>";
 	r += "</div>";
 	var o = document.getElementById('AREA');
 	o.innerHTML = r;
@@ -182,7 +243,7 @@ function mDown( e ) {
         } else {
             var event = e.changedTouches[0];
         }
-
+		e.stopPropagation();
         //要素内の相対座標を取得
         x = event.pageX - curChild.offsetLeft;
         y = event.pageY - curChild.offsetTop;
@@ -207,11 +268,13 @@ function mMove( e ){
         }
 
         //フリックしたときに画面を動かさないようにデフォルト動作を抑制
-        e.preventDefault();
+		e.preventDefault();
+		e.stopPropagation();
 
         //マウスが動いた場所に要素を動かす
-        drag.style.top = event.pageY - y + "px";
-        drag.style.left = event.pageX - x + "px";
+        drag.style.top  = event.pageY - y + "px";
+		drag.style.left = event.pageX - x + "px";
+		curChildMoved   = true;
 
         //マウスボタンが離されたとき、またはカーソルが外れたとき発火
         drag.addEventListener("mouseup", mUp, false);
@@ -231,12 +294,34 @@ function mUp( e ) {
 	document.body.removeEventListener("touchmove", mMove, false);
 	if ( !drag ) drag.removeEventListener("touchend", mUp, false);
 
+	e.stopPropagation();
+
 	//クラス名 .drag も消す
 	if ( !drag ) drag.classList.remove("drag");
+	if ( !curChildMoved ){
+		if ( curChild.getAttribute('marked') == 'MARKED' ) {
+			unmarkChild( curChild );
+		}else {
+			markChild( curChild );
+		}
+	} 
 
 	curChild.style.zIndex = curChildZIndex;
-
-	curChild = null;
+	curChildMoved         = false;
+	curChild              = null;
 }
 
+function resetChildMark(){
+	var wb = document.getElementById('WHITEBOARD');
+	if ( wb.childNodes.length == 0 ) return;
+	var c = null;
+	c = wb.firstChild;
+	while ( c ) {
+		if ( c.getAttribute('marked') == 'MARKED') {
+			c.style.backgroundColor = '';
+			c.removeAttribute('marked');
+		}
+		c = c.nextSibling;
+	}
 
+}
