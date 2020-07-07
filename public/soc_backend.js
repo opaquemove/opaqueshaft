@@ -53,6 +53,28 @@ socket.on( 'getchildrenlist', function ( msg ) {
 })
 
 
+function loadChildrenForm(){
+	var r = "";
+	
+	r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;overflow:hidden;' >";
+		r += "<div id='OPAQUESHAFT_LOGINTITLE' >";
+		r += "&nbsp;&nbsp;OpaqueShaft";
+		r += "</div>"; 
+		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Load children...</div>";
+		r += "<div id='LOADCHILDREN_STATUS' style='height:20px;text-align:center;' >status</div>";
+			r += "<div style='text-align:center;' >";
+				r += "<button style='width:208px;' type='button' tabindex=3 onclick='loadChildren()' >load</button>";
+				r += "<button type='button' tabindex=4 onclick='clearArea();' >cancel</button>";
+			r += "</div>";
+	r += "</div>";
+	var o = document.getElementById('AREA');
+	o.innerHTML = r;
+	o.style.visibility = 'visible';
+	o = document.getElementById( 'id' ); 
+}
+//
+//  チャイルドローディング
+//
 function loadChildren(){
 	socket.emit( 'cmd', 'getchildrenlist' );
 }
@@ -74,7 +96,8 @@ function addChild( top, left, name, child_type, child_grade ){
     var c = document.createElement("DIV");
     c.setAttribute("child", "yes");
 	c.setAttribute("id", "c_1");
-	c.setAttribute("class", "CHILD drag-and-drop");
+    c.setAttribute("class", "CHILD drag-and-drop");
+    c.style.position = 'absolute;'
 	c.style.top = top + 'px';
     c.style.left = left + 'px';
     c.style.borderLeft = arChildGrade[ child_grade ];
@@ -87,6 +110,25 @@ function addChild( top, left, name, child_type, child_grade ){
     cc.addEventListener( 'dblclick',   propertyChild, false );
 	cc.addEventListener( "mousedown",  mDown, false );
 	cc.addEventListener( "touchstart", mDown, false );
+
+}
+
+//
+//  管理用チャイルドを実体化
+//
+function addChildManage( oParent, oChild ){
+
+    var c = document.createElement("DIV");
+    c.setAttribute("child", "yes");
+	c.setAttribute("id", "c_1");
+	c.setAttribute("class", "CHILD");
+    c.style.borderLeft = arChildGrade[ oChild.grade ];
+    var r = '';
+    r += '<div style="border-bottom:1px solid lightgray;" >' + oChild.child_name + '</div>';
+    r += '<div style="font-size:10px;" >type:' + oChild.child_type + '&nbsp; Grade:' + oChild.grade + '</div>';
+
+	c.innerHTML = r;
+    var cc = oParent.appendChild( c );
 
 }
 
@@ -166,4 +208,46 @@ function checkclearChild(){
     propChild.removeAttribute('checkout' );
 }
 
+
+//
+//  アカウントプロパティ
+//
+function propertyAccount(){
+	var r = "";
+	r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;opacity:0.75;overflow:hidden;' >";
+        r += "<div id='OPAQUESHAFT_LOGINTITLE' >";
+        r += "&nbsp;&nbsp;OpaqueShaft";
+        r += "</div>"; 
+        r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Property of Account</div>";
+        r += "<div style='border-left:3px solid red;border-bottom:1px solid lightgrey;' >";
+        r += "";
+        r += "</div>";
+        r += "<div>";
+            r += "<form name='sign_form' >";
+                r += "<table align='center' >";
+                r += "<tr>";
+                r += "<td>Account ID:</td>";
+                r += "</tr>";
+                r += "<tr>";
+                r += "<td><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 /></td>";
+                r += "</tr>";
+                r += "<tr>";
+                r += "<td>Account Name:</td>";
+                r += "<tr>";
+                r += "<tr>";
+                r += "<td><input style='width:200px;height:18px;' type='text' name='pwd' tabindex=2 /></td>";
+                r += "<tr>";
+                r += "</table>";
+            r += "</form>";
+        r += "</div>";
+        r += "<div style='padding-top:60px;border-top:1px solid lightgrey;' >";
+        r += "<button type='button' onclick=''                   >ok</button>";
+        r += "<button type='button' onclick='clearArea();'       >close</button>";
+        r += "</div>";
+    r += "</div>";
+	var o = document.getElementById('AREA');
+	o.innerHTML = r;
+	o.style.visibility = 'visible';
+
+}
 

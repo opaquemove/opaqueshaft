@@ -27,6 +27,10 @@ function init()
 			if ( e.target == wb)	resetChildMark();
 		});
 	fitWhiteboardFrame();
+	new Button( 'ACCOUNTS',    null ).play();
+	new Button( 'CHILDREN',    manageChildren ).play();
+	new Button( 'COMMIT',      null ).play();
+	new Button( 'SIGN_STATUS', signMenu ).play();
 
 	ctlToolbar();
 	if ( !checkSign() )  signForm();
@@ -64,7 +68,9 @@ function clearArea(){
 
 }
 
-
+//
+//	ホワイトボードエリアのフィッティング処理
+//
 function fitWhiteboardFrame(){
 	var w = document.documentElement.clientWidth;
 	var h = document.documentElement.clientHeight;
@@ -115,7 +121,41 @@ function postWebBackend(){
 
 }
 
-function sign( cmd )
+//
+//	サインアウト処理（同期処理）
+//
+function signout(){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/signout", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send();
+	ctlToolbar();
+	signForm();
+}
+
+function showSignid(){
+	var id = signid();
+	alert( id );
+}
+//
+//	サインインしているIDを取得
+//
+function signid(){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/sign", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send();
+	if ( xmlhttp.status == 200 ){
+		var result = JSON.parse( xmlhttp.responseText );
+		return ( result != null )? result.status:null;	
+	} else return null;
+
+}
+
+//
+//	サイン処理
+//
+function sign()
 {
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
@@ -124,28 +164,25 @@ function sign( cmd )
 			case 1://opened
 			case 2://header received
 			case 3://loading
+				var o = document.getElementById( 'SIGN_STATUS' );
+				o.innerText = 'access...';
 				break;
 			case 4://done
-//				o.style.visibility = 'visible';
 				r = "";
-				//r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;overflow:hidden;' >";
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
-					r += xmlhttp.responseText;
+					//r += xmlhttp.responseText;
 					switch( result.cmd ){
 						case 'signin':
 							var o = document.getElementById('SIGNIN_STATUS');
 							if ( result.status == 'SUCCESS' ){
 								ctlToolbar();
 								clearArea();
+								clearWhiteboard();
 							} else {
 								r += 'sign in error'
 							}
 							o.innerText = r;
-							break;
-						case 'signout':
-							if ( result.status == 'SUCCESS' ) ctlToolbar();
-							signForm();
 							break;
 					}
 				} else{
@@ -155,37 +192,66 @@ function sign( cmd )
 		}
 	}
 	try{
-//		xmlhttp.open("POST", "/webbackend", true );
-
-		switch (cmd )
-		{
-			case "signin":
-				var sign_id = sign_form.id.value;
-				var sign_pwd = sign_form.pwd.value;
-				xmlhttp.open("POST", "/accounts/signin", false );
-				xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-				xmlhttp.send( "cmd=" + cmd + "&acc=" + sign_id + "&pwd=" + sign_pwd );
-				break;
-			case "signout":
-				xmlhttp.open("POST", "/accounts/signout", false );
-				xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-				xmlhttp.send( "cmd=" + cmd );
-				break;
-			case "signstatus":
-			case "sign":
-				xmlhttp.open("POST", "/accounts/signstatus", false );
-				xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-				xmlhttp.send( "cmd=" + cmd );
-				break;
-		}
+		var sign_id = sign_form.id.value;
+		var sign_pwd = sign_form.pwd.value;
+		xmlhttp.open("POST", "/accounts/signin", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( "acc=" + sign_id + "&pwd=" + sign_pwd );
 
 	} catch ( e ) { alert( e );}
 }
 
+//
+//	サインインメニュー
+//
+function signMenu( e ){
+	e.stopPropagation();
+	var o = document.createElement('DIV');
+	o.setAttribute( 'id', 'SIGN_SUBMENU');
+	o.style.position		= 'relative';
+	o.style.padding			= '2px';
+	o.style.top             = '18px';
+	o.style.left            = '-34px';
+	o.style.width           = '100px';
+	o.style.height          = '100px';
+	o.style.backgroundColor = 'white';
+	o.style.textAlign		='left';
+	o.style.zIndex			= 30000;
+	o.innerText = 'sign menu...';
+	var p = document.getElementById('SIGN_STATUS');
+	var m = p.appendChild( o );
+	var r = '';
+	var id = signid();
+	r += '<div id="ID_SIGN_OUT"         style="height:20px;padding:2px;" >sign out</div>';
+	r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding:2px;" >property...</div>';
+	r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding:2px;" >sign in ' + id + '</div>';
+	m.innerHTML = r;
+
+	new Button( 'ID_SIGN_OUT', signout ).play();
+	new Button( 'ID_PROPERTY_ACCOUNT', propertyAccount ).play();
+
+	m.addEventListener('mouseleave', function(e) {
+		var p = document.getElementById('SIGN_STATUS');
+		var c = document.getElementById('SIGN_SUBMENU');
+		//if ( e == c )
+			p.removeChild( c );
+		//p.removeChild( e );
+		//while ( p.firstChild) {
+		//		p.removeChild( p.firstChild );
+		//}
+	});
+	m.addEventListener('mouseup', function(e) {
+		e.stopPropagation();
+	});
+}
+
+//
+//	サインインフォーム
+//
 function signForm()
 {
 	if ( checkSign()) {
-		sign('signstatus');
+		alert('already signin.');
 		return;
 	}
 	var r = "";
@@ -202,7 +268,7 @@ function signForm()
 			r += "<td>Sign in ID:</td>";
 			r += "</tr>";
 			r += "<tr>";
-			r += "<td><input style='width:200px;' type='text' id='id' name='id' tabindex=1 /></td>";
+			r += "<td><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 /></td>";
 			r += "</tr>";
 			r += "<tr>";
 			r += "<td>Password:</td>";
@@ -212,8 +278,7 @@ function signForm()
 			r += "<tr>";
 			r += "</table>";
 			r += "<div style='text-align:center;' >";
-				r += "<button style='width:208px;' type='button' tabindex=3 onclick='sign(\"signin\");' >signin</button>";
-			//	r += "<button type='button' tabindex=4 onclick='clearArea();' >cancel</button>";
+				r += "<button style='width:208px;height:20px;' type='button' tabindex=3 onclick='sign();' >signin</button>";
 			r += "</div>";
 		r += "</form>";
 		r += "<div style='padding-top:20px;text-align:center;' >";
@@ -223,13 +288,84 @@ function signForm()
 	var o = document.getElementById('AREA');
 	o.innerHTML = r;
 	o.style.visibility = 'visible';
-	o = document.getElementById( 'id' );
+	o = document.getElementById( 'acc_id' );
 	o.focus();
+	
+}
+
+//
+//	チャイルド管理
+//
+function manageChildren(){
+	var r = "";
+	
+	r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;overflow:hidden;' >";
+		r += "<div id='OPAQUESHAFT_LOGINTITLE' >";
+		r += "&nbsp;&nbsp;OpaqueShaft";
+		r += "</div>"; 
+		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Manage Children</div>";
+		r += "<div id='CHILD_STATUS' style='height:20px;text-align:center;' >status</div>";
+		r += "<div id='CHILD_LIST'   style='height:100px;border:1px solid lightgray;overflow-y:auto;' >";
+		r += "</div>";
+		r += "<div style='padding-top:4px;border-top:1px solid lightgrey;' >";
+        r += "<button type='button' onclick=''                   >ok</button>";
+        r += "<button type='button' onclick='clearArea();'       >close</button>";
+        r += "</div>";
+
+	r += "</div>";
+	var o = document.getElementById('AREA');
+	o.innerHTML = r;
+	o.style.visibility = 'visible';
+	loadChildList();
+
+}
+
+//
+//	チャイルドリスト生成処理
+//
+function loadChildList()
+{
+	var r = "";
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				var o = document.getElementById( 'CHILD_STATUS' );
+				o.innerText = 'access...';
+				break;
+			case 4://done
+				r = "";
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					//r += xmlhttp.responseText;
+					var o = document.getElementById('CHILD_LIST');
+					for ( var i=0; i<result.length; i++ ){
+					//	r += '<div>';
+					//	r += result[i].child_id + ':' + result[i].child_name;
+					//	r += '</div>';
+						addChildManage( o, result[i] );
+					}
+					//o.innerHTML = r;
+				} else{
+					alert( xmlhttp.status );
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/childlist", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send();
+
+	} catch ( e ) { alert( e );}
 }
 
 
-
-
+//
+//	チャイルド操作
+//
 function mDown( e ) {
 
 		curChild = this;
@@ -253,6 +389,9 @@ function mDown( e ) {
         document.body.addEventListener("touchmove", mMove, false);	
 }
 
+//
+//	チャイルド操作
+//
 function mMove( e ){
 
         //ドラッグしている要素を取得
@@ -284,6 +423,9 @@ function mMove( e ){
 
 }
 
+//
+//	チャイルド操作
+//
 function mUp( e ) {
 	//var drag = document.getElementsByClassName("drag")[0];
 	//var drag = e.target;
@@ -311,6 +453,9 @@ function mUp( e ) {
 	curChild              = null;
 }
 
+//
+//	チャイルドのマークをリセット
+//
 function resetChildMark(){
 	var wb = document.getElementById('WHITEBOARD');
 	if ( wb.childNodes.length == 0 ) return;

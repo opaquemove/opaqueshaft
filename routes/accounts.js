@@ -13,6 +13,9 @@ router.post('/', function(req, res, next ){
     res.send('hoge');
 });
 
+//
+//  アカウントリスト取得
+//
 router.get('/list', function(req, res, next ){
     db.any( 'SELECT * FROM accounts ' )
       .then( rows => {
@@ -26,12 +29,31 @@ router.get('/list', function(req, res, next ){
 });
 
 //
+//  アカウントプロパティ取得
+//
+router.post('/property', function(req, res, next ){
+    var id = req.body.acc;
+    console.log( 'acc:' + id );
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    if ( id == null ){
+        res.json( null );
+    }else {
+        db.any( {
+            text: 'SELECT acc_id FROM accounts WHERE acc_id = $1 ',
+            values: [id] } )
+          .then( rows => {
+                res.json( rows );
+          });
+    }
+});
+
+//
 //  サインイン処理
 //
 router.post('/signin', function(req, res, next ){
     var id  = req.body.acc;
     var pwd = req.body.pwd;
-    console.log( 'acc:' + id + ':');
+    console.log( 'acc:' + id );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.any( {
         text: 'SELECT acc_id FROM accounts WHERE acc_id = $1 AND password = $2',
@@ -58,10 +80,28 @@ router.post('/signout', function(req, res, next ){
     res.json( { cmd:'signout',status:'SUCCESS'} );
 });
 
-router.post('/signstatus', function(req, res, next ){
+//
+//  サインステータス
+//
+router.post('/sign', function(req, res, next ){
     var id  = req.cookies.acc;
+    console.log( 'sign acc:' + id );
 
-    res.json( { cmd:'signstatus',status:id} );
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    res.json( { cmd:'sign',status:id} );
+});
+
+
+
+
+//
+//  チャイルドリスト取得
+//
+router.post('/childlist', function(req, res, next ){
+    db.any( 'SELECT * FROM children ' )
+      .then( rows => {
+            res.json( rows );
+      });
 });
 
 module.exports = router;

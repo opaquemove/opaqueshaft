@@ -8,6 +8,7 @@
 -->
 <script type="text/javascript" src="/socket.io/socket.io.js" ></script>
 <script type="text/javascript" src="./index.js"></script>
+<script type="text/javascript" src="./util.js" ></script>
 <link rel="stylesheet" type="text/css" href="./index.css" />
 </head>
 <body>
@@ -17,19 +18,27 @@
 			&nbsp;OpaqueShaft
 		</div> 
 		<div style="float:left;padding-top:10px;padding-left: 20px;">
-			<button onclick="postWebBackend()"             >sign status(webbackend)</button>
-			<button onclick="signForm()"                   >signIn(REST)...</button>
-<!--
-	<button onclick="sign('signout')"              >signOut(REST)</button>
--->	
+			<!--
+				<button onclick="postWebBackend()"             >sign status(webbackend)</button>
+				<button onclick="signForm()"                   >signIn(REST)...</button>
+				<button onclick="sign('signout')"              >signOut(REST)</button>
+			-->	
 			<button onclick="getAccountList()"             >getAccountList(socket.io)...</button>
-			<button onclick="loadChildren()"               >load Children(socket.io)</button>
+			<button onclick="loadChildrenForm()"           >load Children(socket.io)</button>
 			<button onclick="clearWhiteboard()"            >clear Whiteboard</button>
 			<button onclick="countChild()"                 >count Child...</button>
 			<button onclick="resetChildMark()"             >reset Child Mark</button>
 		</div>
-		<div style="float:rigjt;padding-top:10px;">
-			<button onclick="sign('sign')" id='SIGN_STATE' >sign(REST)...</button>
+		<!--
+			<div style="float:right;padding-top:10px;">
+				<button onclick="showSignid()" id='SIGN_STATE' >sign(REST)...</button>
+			</div>
+		-->
+		<div id="SIGN_STATUS" style="width:70px;height:32px;text-align:center;float:right;padding-top:10px;">
+			sign...
+		</div>
+		<div id="COMMIT" style="width:70px;height:32px;text-align:center;float:right;padding-top:10px;">
+			commit...
 		</div>
 	</div>
 
@@ -39,6 +48,9 @@
 	<div id="STATUS" >status:</div>
 
 	<div id="AREA" >&nbsp;</div>
+
+	<div id="ACCOUNTS" >Accounts...</div>
+	<div id="CHILDREN" >Children...</div>
 
 </body>
 </html>

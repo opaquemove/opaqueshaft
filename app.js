@@ -2,7 +2,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-//const e = require('express');
 const { resolve } = require('path');
 var app = express();
 var server = require('http').Server(app);
@@ -12,7 +11,8 @@ var io     = require('socket.io').listen(server);
 //  io.set("polling duration", 10 );
 //});
 
-var accounts = require('./routes/accounts')
+var accounts = require('./routes/accounts');
+
 var ipaddr = "0.0.0.0";
 var port   = process.env.PORT || 8080;
 
@@ -43,18 +43,19 @@ io.on( 'connection', ( socket ) => {
   })
 })
 
+//
+//  予備コード
+//
 app.post( '/webbackend', ( req, res ) => {
   var r = '';
   var rc = false;
 //  res.set( 'Content-Type', 'application/json' );
   console.log( 'cmd:' + req.body.cmd );
   switch( req.body.cmd ){
-    case 'signstatus':
-      r += 'SIGNSTATUS:';
+    case 'sign':
+      r += 'SIGN:';
       r += ( req.cookies.acc == undefined )? 
           'sign out':'sign in (' + req.cookies.acc + ')';
-      break;
-    case 'sign':
       break;
   }
 //  res.send( req.body );
