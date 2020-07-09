@@ -14,12 +14,37 @@ BODY{
 BUTTON{
 	color:				gray;
 }
+
+#MODAL_OVERLAY{
+	z-index:			70000;
+	visibility:			hidden;
+	position:			fixed;
+	top:				0px;
+	left:				0px;
+	width:				100%;
+	height:				100%;
+	background-color:	rgba(100, 100, 100, 0.75);
+}
+
+#MODAL_MESSSAGE{
+	position: relative;
+	top:				0px;
+	left:				0px;
+	width:				500px;
+	height:				300px;
+	color:				gray;
+	background-color:	snow;
+	border:				1px solid lightgrey;
+	padding:			0px;
+	margin:				70px auto;
+}
+
 #TOOLBAR{
 	padding-top:		0px;
 	padding-bottom:		2px;
 	height:				40px;
 	color:				gray;
-	background-color:	white;
+	background-color:	rgb(241, 241, 241);
 	z-index:			0;
 	overflow:			visible;
 }
@@ -51,8 +76,9 @@ BUTTON{
 #WHITEBOARD_FRAME{
 	width:				100%;
 	height:				100%;
-	background-color:	lightgray;
+	background-color:	snow;
 	padding:			0px;
+	overflow:			hidden;
 }
 #WHITEBOARD{
 	position:			relative;
@@ -60,10 +86,6 @@ BUTTON{
 	height:				100%;
 	border:				1px solid darkgrey;
 	padding:			0px;
-	background-image: 	url(./images/mina.jpg);
-	background-repeat: 	no-repeat;
-	background-size:	70%;
-	overflow:			hidden;
 }
 
 #SIGN_STATUS{
@@ -95,7 +117,7 @@ BUTTON{
 	height:				24px;
 	padding-top:		6px;
 	color:				gray;
-	background-color:	white;
+	background-color:	rgb(241, 241, 241);
 	font-size:			12px;
 	overflow:			hidden;
 }
@@ -105,7 +127,7 @@ BUTTON{
 	top:		42px;
 	left:		0px;
 	width:		100%;
-	height:		300px;
+	height:		400px;
 	color:		gray;
 	font-size:	12px;
 	overflow:	hidden;
@@ -157,8 +179,40 @@ BUTTON{
 	border:				1px solid lightgrey;
 }
 
+#CHILDREN_PALLETE_FRAME{
+	position:			absolute;
+	top:				43px;
+	left:				0px;
+	width:				200px;
+	height:				90%;
+	margin-left:		0px;
+	padding:			0px;
+	font-size:			12px;
+}
+
+#CHILDREN_PALLETE_TAB{
+	width:				20px;
+	height:				70px;
+	float: 				left;
+	font-size:			12px;
+	color:				snow;
+	background-color:	red;
+	padding-top:		14px;
+	writing-mode: 		vertical-lr;		
+}
+
+#CHILDREN_PALLETE_CONTENT{
+	width:				179px;
+	height:				100%;
+	float: 				left;
+	font-size:			12px;
+	color:				gray;
+	background-color:	rgb(241, 241, 241);
+	padding:			0px;
+}
+
 .drag-and-drop {
-	cursor:		move;
+/*	cursor:		move;*/
 	position:	absolute;
 	z-index:	1000;
 }

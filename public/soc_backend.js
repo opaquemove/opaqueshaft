@@ -41,7 +41,7 @@ socket.on( 'getchildrenlist', function ( msg ) {
     for (var i=0; i<children.length; i++) {
         r += children[i].child_name + '<br/>'; 
         addChild( i * 20, i * 20,
-             children[i].child_name, children[i].child_type, children[i].grade );
+             children[i].child_name, children[i].child_type, children[i].child_grade );
     }
     r += '<br/>length:' + children.length;
 
@@ -120,12 +120,13 @@ function addChildManage( oParent, oChild ){
 
     var c = document.createElement("DIV");
     c.setAttribute("child", "yes");
+    c.setAttribute("child_id", oChild.child_id );
 	c.setAttribute("id", "c_1");
 	c.setAttribute("class", "CHILD");
-    c.style.borderLeft = arChildGrade[ oChild.grade ];
+    c.style.borderLeft = arChildGrade[ oChild.child_grade ];
     var r = '';
     r += '<div style="border-bottom:1px solid lightgray;" >' + oChild.child_name + '</div>';
-    r += '<div style="font-size:10px;" >type:' + oChild.child_type + '&nbsp; Grade:' + oChild.grade + '</div>';
+    r += '<div style="font-size:10px;" >type:' + oChild.child_type + '&nbsp; Grade:' + oChild.child_grade + '</div>';
 
 	c.innerHTML = r;
     var cc = oParent.appendChild( c );

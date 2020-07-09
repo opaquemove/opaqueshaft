@@ -14,6 +14,10 @@ router.post('/', function(req, res, next ){
 });
 
 //
+//  アカウント関連
+//
+
+//
 //  アカウントリスト取得
 //
 router.get('/list', function(req, res, next ){
@@ -92,15 +96,51 @@ router.post('/sign', function(req, res, next ){
 });
 
 
+//
+//  チャイルド関連
+//
 
 
 //
 //  チャイルドリスト取得
 //
 router.post('/childlist', function(req, res, next ){
+    res.header('Content-Type', 'application/json;charset=utf-8');
     db.any( 'SELECT * FROM children ' )
       .then( rows => {
             res.json( rows );
+      });
+});
+
+//
+//  チャイルド取得
+//
+router.post('/child', function(req, res, next ){
+    var id  = req.body.id;
+    console.log('child_id:' + id);
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    db.one( {
+        text: 'SELECT * FROM children WHERE child_id = $1',
+        values: [ id ] } )
+      .then( rows => {
+            res.json( rows );
+      });
+});
+
+//
+//  チャイルド追加
+//
+router.post('/childadd', function(req, res, next ){
+    var name  = req.body.child_name;
+    var grade = req.body.child_grade;
+    var type  = req.body.child_type;
+    console.log('childadd:' + name );
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    db.none( {
+        text: 'INSERT INTO children (child_name,child_grade,child_type) VALUES($1,$2,$3)',
+        values: [ name,grade,type ] } )
+      .then( function() {
+        res.json( {status: 'SUCCESS', message:  'add child'});
       });
 });
 

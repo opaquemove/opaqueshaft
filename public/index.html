@@ -22,8 +22,9 @@
 				<button onclick="postWebBackend()"             >sign status(webbackend)</button>
 				<button onclick="signForm()"                   >signIn(REST)...</button>
 				<button onclick="sign('signout')"              >signOut(REST)</button>
+				<button onclick="getAccountList()"             >getAccountList(socket.io)...</button>
 			-->	
-			<button onclick="getAccountList()"             >getAccountList(socket.io)...</button>
+			<button onclick="openModalDialog()"            >test...</button>
 			<button onclick="loadChildrenForm()"           >load Children(socket.io)</button>
 			<button onclick="clearWhiteboard()"            >clear Whiteboard</button>
 			<button onclick="countChild()"                 >count Child...</button>
@@ -51,6 +52,15 @@
 
 	<div id="ACCOUNTS" >Accounts...</div>
 	<div id="CHILDREN" >Children...</div>
+	<div id="CHILDREN_PALLETE_FRAME" >
+		<div id="CHILDREN_PALLETE_TAB" >Children</div>
+		<div id="CHILDREN_PALLETE_CONTENT" ></div>
+	</div>
 
+	<div id="MODAL_OVERLAY" >
+		<div id="MODAL_MESSSAGE" >
+			<button type="button" onclick="closeModalDialog();" >Close</button>
+		</div>
+	</div>
 </body>
 </html>
