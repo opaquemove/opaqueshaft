@@ -140,11 +140,12 @@ BUTTON{
 .CHILD{
 	width:				120px;
 	height:				30px;
+	color:				gray;
 	background-color:	white;
-	padding:			2px;
+	padding:			0px;
 	border-top:			1px solid lightgrey;
-	border-left:		4px solid red;
-	border-right:		4px solid lightgrey;
+	border-left:		1px solid lightgrey;
+	border-right:		1px solid lightgrey;
 	border-bottom:		1px solid lightgrey;
 	font-size:			15px;
 	overflow:			hidden;

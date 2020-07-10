@@ -6,6 +6,7 @@
 var socket = io();
 
 const arChildGrade = ['','4px solid red', '4px solid green', '4px solid blue'];
+const arChildGradeColor = ['','red', 'green', 'blue'];
 
 socket.on( 'getaccountlist', function ( msg ) {
     var r = "";
@@ -100,10 +101,13 @@ function addChild( top, left, name, child_type, child_grade ){
     c.style.position = 'absolute;'
 	c.style.top = top + 'px';
     c.style.left = left + 'px';
-    c.style.borderLeft = arChildGrade[ child_grade ];
+//    c.style.borderLeft = arChildGrade[ child_grade ];
     var r = '';
-    r += '<div style="border-bottom:1px solid lightgray;" >' + name + '</div>';
-    r += '<div style="font-size:10px;" >type:' + child_type + '&nbsp; Grade:' + child_grade + '</div>';
+    r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
+    r += '<div style="width:110px;height:100%;float:left;padding-left:2px;" >';
+        r += '<div style="font-size:12px;border-bottom:1px solid lightgray;" >' + name + '</div>';
+        r += '<div style="font-size:10px;" >type:' + child_type + '&nbsp; Grade:' + child_grade + '</div>';
+    r += '</div>';
 
 	c.innerHTML = r;
     var cc = wb.appendChild( c );
@@ -174,12 +178,14 @@ function markChild( c ) {
     if ( !c ) return;
     c.setAttribute('marked', 'MARKED' );
     c.style.backgroundColor = 'royalblue';
+    c.style.color           = 'snow';
 }
 
 function unmarkChild( c ) {
     if ( !c ) return;
     c.removeAttribute('marked');
     c.style.backgroundColor = '';
+    c.style.color           = '';
 }
 
 function countChild(){

@@ -19,7 +19,7 @@ function init()
 {
 	var wb = document.getElementById('WHITEBOARD');
 	wb.addEventListener("touchmove",
-	 function( e ) { e.preventDefault();e.stopPropagation(); }, { passive:false } );
+	 function( e ) { e.preventDefault(); }, { passive:false } );
 	wb.addEventListener('selectstart', function(e){return false;})
 	wb.addEventListener('click', 
 		function(e) {
@@ -94,17 +94,23 @@ function foldingChildrenPallete(){
 //	サインアウトデザイン
 //
 function ctlToolbar(){
-	var tb     = document.getElementById('TOOLBAR');
-	var wbf    = document.getElementById('WHITEBOARD_FRAME');
-	var status = document.getElementById('STATUS');
+	var tb       = document.getElementById('TOOLBAR');
+	var wbf      = document.getElementById('WHITEBOARD_FRAME');
+	var status   = document.getElementById('STATUS');
+	var acc      = document.getElementById('ACCOUNTS');
+	var children = document.getElementById('CHILDREN');
 	if ( checkSign()) {
 		tb.style.visibility     = 'visible';
 		wbf.style.visibility    = 'visible';
 		status.style.visibility = 'visible';
+		acc.style.visibility	= 'visible';
+		children.style.visibility= 'visible';
 	} else {
 		tb.style.visibility     = 'hidden';
 		wbf.style.visibility    = 'hidden';
 		status.style.visibility = 'hidden';
+		acc.style.visibility	= 'hidden';
+		children.style.visibility= 'hidden';
 	}
 }
 
