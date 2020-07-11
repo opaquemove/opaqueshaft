@@ -26,12 +26,32 @@ function init()
 			initArea();
 			if ( e.target == wb)	resetChildMark();
 		});
+	wb.addEventListener('dragover', 
+		function(e) {
+			e.preventDefault();
+		});
+		wb.addEventListener('drop', 
+		function(e) {
+			e.preventDefault();
+			//alert( e.dataTransfer.getData('text') );
+			console.log( e.pageY, e.pageX );
+			var c = document.createElement('DIV');
+			c.innerHTML = e.dataTransfer.getData('text');
+			c.style.position	= 'absolute';
+			c.style.top			= e.pageY + 'px';
+			c.style.left		= e.pageX + 'px';
+			var p = document.getElementById('WHITEBOARD');
+			p.appendChild( c );
+		});
+
+
 	fitting();
 	new Button( 'ACCOUNTS',             null           ).play();
 	new Button( 'CHILDREN',             manageChildren ).play();
-	new Button( 'COMMIT',               null           ).play();
+//	new Button( 'COMMIT',               null           ).play();
 	new Button( 'SIGN_STATUS',          signMenu       ).play();
 	new Button( 'CHILDREN_PALLETE_TAB', foldingChildrenPallete ).play();
+
 
 	ctlToolbar();
 	makeChildrenPalleteList();
@@ -69,6 +89,7 @@ function fitting(){
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.style.height = ( h - 42 - 30 ) + 'px';
 	var cpf  = document.getElementById('CHILDREN_PALLETE_FRAME');
+	cpf.style.height  = ( h -42 - 30 ) + 'px';
 	cpf.style.left    = ( w - 20 ) + 'px';
 }
 
@@ -252,15 +273,21 @@ function sign()
 //
 function signMenu( e ){
 	e.stopPropagation();
+	if ( document.getElementById('SIGN_SUBMENU') != null ){
+		var p = document.getElementById('SIGN_STATUS');
+		var c = document.getElementById('SIGN_SUBMENU');
+		p.removeChild( c );
+		return;
+	}
 	var o = document.createElement('DIV');
 	o.setAttribute( 'id', 'SIGN_SUBMENU');
 	o.style.position		= 'relative';
 	o.style.padding			= '2px';
-	o.style.top             = '18px';
-	o.style.left            = '-34px';
-	o.style.width           = '100px';
-	o.style.height          = '100px';
-	o.style.backgroundColor = 'white';
+	o.style.top             = '15px';
+	o.style.left            = '-53px';
+	o.style.width           = '120px';
+	o.style.height          = '200px';
+	o.style.backgroundColor = '#EEEEEE';
 	o.style.textAlign		='left';
 	o.style.zIndex			= 30000;
 	o.innerText = 'sign menu...';
@@ -270,21 +297,21 @@ function signMenu( e ){
 	var id = signid();
 	r += '<div id="ID_SIGN_OUT"         style="height:20px;padding:2px;" >sign out</div>';
 	r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding:2px;" >property...</div>';
+	r += '<div id="ID_LOAD_CHILDREN"    style="height:20px;padding:2px;" >load...</div>';
+	r += '<div id="ID_CLEAR_WHITEBOARD" style="height:20px;padding:2px;" >clear whiteboard</div>';
 	r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding:2px;" >sign in ' + id + '</div>';
 	m.innerHTML = r;
 
 	new Button( 'ID_SIGN_OUT', signout ).play();
 	new Button( 'ID_PROPERTY_ACCOUNT', propertyAccount ).play();
+	new Button( 'ID_LOAD_CHILDREN',     loadChildrenForm ).play();
+	new Button( 'ID_CLEAR_WHITEBOARD',  clearWhiteboard  ).play();
 
 	m.addEventListener('mouseleave', function(e) {
 		var p = document.getElementById('SIGN_STATUS');
 		var c = document.getElementById('SIGN_SUBMENU');
-		//if ( e == c )
-			p.removeChild( c );
-		//p.removeChild( e );
-		//while ( p.firstChild) {
-		//		p.removeChild( p.firstChild );
-		//}
+		p.removeChild( c );
+
 	});
 	m.addEventListener('mouseup', function(e) {
 		e.stopPropagation();
@@ -611,6 +638,11 @@ function mDown( e ) {
         //ムーブイベントにコールバック
         document.body.addEventListener("mousemove", mMove, false);
         document.body.addEventListener("touchmove", mMove, false);	
+        //マウスボタンが離されたとき、またはカーソルが外れたとき発火
+        curChild.addEventListener("mouseup", mUp, false);
+        document.body.addEventListener("mouseleave", mUp, false);
+        curChild.addEventListener("touchend", mUp, false);
+        document.body.addEventListener("touchleave", mUp, false);
 }
 
 //
@@ -634,16 +666,18 @@ function mMove( e ){
 		e.preventDefault();
 		e.stopPropagation();
 
-        //マウスが動いた場所に要素を動かす
-        drag.style.top  = event.pageY - y + "px";
-		drag.style.left = event.pageX - x + "px";
-		curChildMoved   = true;
+		//マウスが動いた場所に要素を動かす
+		if ( event.buttons & 1 ){
+			drag.style.top  = event.pageY - y + "px";
+			drag.style.left = event.pageX - x + "px";
+			curChildMoved   = true;
+		}
 
         //マウスボタンが離されたとき、またはカーソルが外れたとき発火
-        drag.addEventListener("mouseup", mUp, false);
-        document.body.addEventListener("mouseleave", mUp, false);
-        drag.addEventListener("touchend", mUp, false);
-        document.body.addEventListener("touchleave", mUp, false);
+//        drag.addEventListener("mouseup", mUp, false);
+//        document.body.addEventListener("mouseleave", mUp, false);
+//        drag.addEventListener("touchend", mUp, false);
+//        document.body.addEventListener("touchleave", mUp, false);
 
 }
 
@@ -656,23 +690,25 @@ function mUp( e ) {
 	var drag = curChild;
 	//ムーブベントハンドラの消去
 	document.body.removeEventListener("mousemove", mMove, false);
-	if ( !drag ) drag.removeEventListener("mouseup", mUp, false);
+	if ( drag != null) drag.removeEventListener("mouseup", mUp, false);
 	document.body.removeEventListener("touchmove", mMove, false);
-	if ( !drag ) drag.removeEventListener("touchend", mUp, false);
+	if ( drag != null ) drag.removeEventListener("touchend", mUp, false);
 
 	e.stopPropagation();
 
 	//クラス名 .drag も消す
-	if ( !drag ) drag.classList.remove("drag");
+	if ( drag != null ) drag.classList.remove("drag");
 	if ( !curChildMoved ){
-		if ( curChild.getAttribute('marked') == 'MARKED' ) {
-			unmarkChild( curChild );
-		}else {
-			markChild( curChild );
+		if ( curChild != null ){
+			if ( curChild.getAttribute('marked') == 'MARKED' ) {
+				unmarkChild( curChild );
+			}else {
+				markChild( curChild );
+			}
 		}
 	} 
 
-	curChild.style.zIndex = '';
+	if ( curChild != null ) curChild.style.zIndex = '';
 	curChildMoved         = false;
 	curChild              = null;
 }
@@ -688,6 +724,7 @@ function resetChildMark(){
 	while ( c ) {
 		if ( c.getAttribute('marked') == 'MARKED') {
 			c.style.backgroundColor = '';
+			c.style.color 			= '';
 			c.removeAttribute('marked');
 		}
 		c = c.nextSibling;

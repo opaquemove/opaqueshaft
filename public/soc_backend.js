@@ -5,8 +5,8 @@
 
 var socket = io();
 
-const arChildGrade = ['','4px solid red', '4px solid green', '4px solid blue'];
-const arChildGradeColor = ['','red', 'green', 'blue'];
+const arChildGrade = ['','4px solid lightcoral', '4px solid lightgreen', '4px solid lightblue'];
+const arChildGradeColor = ['','lightcoral', 'lightgreen', 'lightblue'];
 
 socket.on( 'getaccountlist', function ( msg ) {
     var r = "";
@@ -126,14 +126,21 @@ function addChildManage( oParent, oChild ){
     c.setAttribute("child", "yes");
     c.setAttribute("child_id", oChild.child_id );
 	c.setAttribute("id", "c_1");
-	c.setAttribute("class", "CHILD");
-    c.style.borderLeft = arChildGrade[ oChild.child_grade ];
+    c.setAttribute("class", "CHILD");
+    c.setAttribute("draggable", "true");
+    c.style.width       = '97%';
+    c.style.borderRight = arChildGrade[ oChild.child_grade ];
     var r = '';
-    r += '<div style="border-bottom:1px solid lightgray;" >' + oChild.child_name + '</div>';
-    r += '<div style="font-size:10px;" >type:' + oChild.child_type + '&nbsp; Grade:' + oChild.child_grade + '</div>';
+    r += '<div style="font-size:10px;border-bottom:1px solid lightgray;" >' + oChild.child_name + '</div>';
+    r += '<div style="font-size:9px;" >type:' + oChild.child_type + '&nbsp; Grade:' + oChild.child_grade + '</div>';
 
 	c.innerHTML = r;
     var cc = oParent.appendChild( c );
+	cc.addEventListener('dragstart',
+		function(e) {
+            console.log( e.dataTransfer );
+			e.dataTransfer.setData('text', e.target.innerHTML );
+		} );
 
 }
 
@@ -175,14 +182,14 @@ function scanChild( o ) {
     }
 }
 function markChild( c ) {
-    if ( !c ) return;
+    if ( c == null ) return;
     c.setAttribute('marked', 'MARKED' );
-    c.style.backgroundColor = 'royalblue';
+    c.style.backgroundColor = 'lightcoral';
     c.style.color           = 'snow';
 }
 
 function unmarkChild( c ) {
-    if ( !c ) return;
+    if ( c == null ) return;
     c.removeAttribute('marked');
     c.style.backgroundColor = '';
     c.style.color           = '';

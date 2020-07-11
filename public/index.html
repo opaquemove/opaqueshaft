@@ -23,12 +23,11 @@
 				<button onclick="signForm()"                   >signIn(REST)...</button>
 				<button onclick="sign('signout')"              >signOut(REST)</button>
 				<button onclick="getAccountList()"             >getAccountList(socket.io)...</button>
+				<button onclick="resetChildMark()"             >reset Child Mark</button>
+				<button onclick="loadChildrenForm()"           >load Children(socket.io)</button>
+				<button onclick="clearWhiteboard()"            >clear Whiteboard</button>
 			-->	
 			<button onclick="openModalDialog()"            >test...</button>
-			<button onclick="loadChildrenForm()"           >load Children(socket.io)</button>
-			<button onclick="clearWhiteboard()"            >clear Whiteboard</button>
-			<button onclick="countChild()"                 >count Child...</button>
-			<button onclick="resetChildMark()"             >reset Child Mark</button>
 		</div>
 		<!--
 			<div style="float:right;padding-top:10px;">
@@ -42,11 +41,16 @@
 			commit...
 		</div>
 	</div>
-
+	
 	<div id="WHITEBOARD_FRAME">
 		<div id="WHITEBOARD" ></div>
 	</div>
-	<div id="STATUS" >status:</div>
+	<div id="STATUS" >
+		<div style="float:left;" >status:</div>
+		<div style="float:left;" >
+			<button onclick="countChild()"                 >count Child...</button>
+		</div>
+	</div>
 
 	<div id="AREA" >&nbsp;</div>
 
@@ -54,7 +58,17 @@
 	<div id="CHILDREN" >Children...</div>
 	<div id="CHILDREN_PALLETE_FRAME" >
 		<div id="CHILDREN_PALLETE_TAB" >Children</div>
-		<div id="CHILDREN_PALLETE_CONTENT" ></div>
+		<div id="CHILDREN_PALLETE_CONTENT_FRAME" >
+			<div id="CHILDREN_PALLETE_CONTENT_TOOLBAR" >
+				<div id="CPC_RELOAD" style="font-size:9px;padding-top:4px;padding-left:4px;float:left;width:50px;height:100%;border-right:1px solid lightgrey;" >
+					Reload
+				</div>
+				<div id="CPC_ADD_CHILD" style="font-size:9px;padding-top:3px;text-align:center;float:left;width:20px;height:100%;border-right:1px solid lightgrey;" >
+					+
+				</div>
+			</div>
+			<div id="CHILDREN_PALLETE_CONTENT" ></div>
+		</div>
 	</div>
 
 	<div id="MODAL_OVERLAY" >
