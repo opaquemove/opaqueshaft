@@ -105,7 +105,8 @@ function addChild( top, left, name, child_type, child_grade ){
     var r = '';
     r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
     r += '<div style="width:110px;height:100%;float:left;padding-left:2px;" >';
-        r += '<div style="font-size:12px;border-bottom:1px solid lightgray;" >' + name + '</div>';
+        r += '<div style="font-size:12px;border-bottom:1px solid lightgray;" >';
+        r += name + '</div>';
         r += '<div style="font-size:10px;" >type:' + child_type + '&nbsp; Grade:' + child_grade + '</div>';
     r += '</div>';
 
@@ -181,6 +182,10 @@ function scanChild( o ) {
         o = o.parentNode;
     }
 }
+
+//
+//  チャイルドのマーク
+//
 function markChild( c ) {
     if ( c == null ) return;
     c.setAttribute('marked', 'MARKED' );
@@ -188,6 +193,9 @@ function markChild( c ) {
     c.style.color           = 'snow';
 }
 
+//
+//  チャイルドのマーク解除
+//
 function unmarkChild( c ) {
     if ( c == null ) return;
     c.removeAttribute('marked');
