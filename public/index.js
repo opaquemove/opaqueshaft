@@ -657,12 +657,12 @@ function mMove( e ){
 		//e.stopPropagation();
 
 		//マウスが動いた場所に要素を動かす
-		if ( event.type == 'touchmove' 
-		    || (( event.buttons & 1 ) && event.type == 'mousemove' ) ){
+//		if ( event.type == 'touchmove' 
+//		    || (( event.buttons & 1 ) && event.type == 'mousemove' ) ){
 			drag.style.top  = event.pageY - y + "px";
 			drag.style.left = event.pageX - x + "px";
 			curChildMoved   = true;
-		}
+//		}
 
         //マウスボタンが離されたとき、またはカーソルが外れたとき発火
         drag.addEventListener("mouseup", mUp, false);
