@@ -657,7 +657,8 @@ function mMove( e ){
 		//e.stopPropagation();
 
 		//マウスが動いた場所に要素を動かす
-		if ( event.buttons & 1 ){
+		if ( event.type == 'touchmove' 
+		    || ( event.buttons & 1 && event.type == 'mousemove' ) ){
 			drag.style.top  = event.pageY - y + "px";
 			drag.style.left = event.pageX - x + "px";
 			curChildMoved   = true;
