@@ -5,6 +5,7 @@
  */
 
 var x, y;
+var wbx, wby;
 var curChild  = null;
 var propChild = null;
 var curChildZIndex = null;
@@ -18,10 +19,29 @@ window.onresize = fitting;
 function init()
 {
 	var wb = document.getElementById('WHITEBOARD');
-	wb.addEventListener("touchmove",
-	 function( e ) { e.preventDefault(); }, { passive:false } );
+//	wb.addEventListener("touchmove",
+//	 function( e ) { e.preventDefault(); }, { passive:false } );
 	wb.addEventListener('selectstart', function(e){return false;})
-	wb.addEventListener('click', 
+	wb.addEventListener('mousedown',
+		function(e) {
+			e.preventDefault();
+			if ( document.getElementById('WHITEBOARD') != e.target ) return;
+			e.target.position = 'absolute';
+			wbx = event.pageX - e.target.offsetLeft;
+			wby = event.pageY - e.target.offsetTop + 42;
+		});
+	wb.addEventListener('mousemove',
+		function(e) {
+			e.preventDefault();
+			if ( document.getElementById('WHITEBOARD') != e.target ) return;
+			if ( e.buttons & 1 ){
+				document.getElementById('WHITEBOARD').style.top  = event.pageY - wby + "px";
+				document.getElementById('WHITEBOARD').style.left = event.pageX - wbx + "px";
+				//curChildMoved   = true;
+			}
+	
+		});	
+	wb.addEventListener('mouseup', 
 		function(e) {
 			initArea();
 			if ( e.target == wb)	resetChildMark();
@@ -36,12 +56,19 @@ function init()
 			//alert( e.dataTransfer.getData('text') );
 			console.log( e.pageY, e.pageX );
 			var c = document.createElement('DIV');
-			c.innerHTML = e.dataTransfer.getData('text');
+			c.setAttribute("child", "yes");
+			c.setAttribute("id", "c_1");
+			c.setAttribute("class", "CHILD drag-and-drop");
 			c.style.position	= 'absolute';
 			c.style.top			= e.pageY + 'px';
 			c.style.left		= e.pageX + 'px';
+			c.innerHTML			= e.dataTransfer.getData('text');
 			var p = document.getElementById('WHITEBOARD');
-			p.appendChild( c );
+			var cc = p.appendChild( c );
+			cc.addEventListener( 'dblclick',   propertyChild, false );
+			cc.addEventListener( "mousedown",  mDown, false );
+			cc.addEventListener( "touchstart", mDown, false );
+		
 		});
 
 
@@ -90,7 +117,7 @@ function fitting(){
 	wbf.style.height = ( h - 42 - 30 ) + 'px';
 	var cpf  = document.getElementById('CHILDREN_PALLETE_FRAME');
 	cpf.style.height  = ( h -42 - 30 ) + 'px';
-	cpf.style.left    = ( w - 20 ) + 'px';
+	cpf.style.left    = ( w - 30 ) + 'px';
 }
 
 //
@@ -283,7 +310,7 @@ function signMenu( e ){
 	o.setAttribute( 'id', 'SIGN_SUBMENU');
 	o.style.position		= 'relative';
 	o.style.padding			= '2px';
-	o.style.top             = '15px';
+	o.style.top             = '14px';
 	o.style.left            = '-53px';
 	o.style.width           = '120px';
 	o.style.height          = '200px';
