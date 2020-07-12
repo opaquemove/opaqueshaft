@@ -101,13 +101,17 @@ function addChild( top, left, name, child_type, child_grade ){
     c.style.position = 'absolute;'
 	c.style.top = top + 'px';
     c.style.left = left + 'px';
+    c.style.borderRight = arChildGrade[ child_grade ];
 //    c.style.borderLeft = arChildGrade[ child_grade ];
     var r = '';
-    r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
-    r += '<div style="width:110px;height:100%;float:left;padding-left:2px;" >';
-        r += '<div style="font-size:12px;border-bottom:1px solid lightgray;" >';
-        r += name + '</div>';
-        r += '<div style="font-size:10px;" >type:' + child_type + '&nbsp; Grade:' + child_grade + '</div>';
+ //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
+    r += '<div style="height:100%;padding-left:2px;" >';
+        r += '<div style="font-size:14px;border-bottom:1px solid lightgray;" >';
+        r += name;
+        r += '</div>';
+        r += '<div style="font-size:12px;" >';
+        r += 'type2:' + child_type + '&nbsp; Grade:' + child_grade
+        r += '</div>';
     r += '</div>';
 
 	c.innerHTML = r;
@@ -119,7 +123,7 @@ function addChild( top, left, name, child_type, child_grade ){
 }
 
 //
-//  管理用チャイルドを実体化
+//  管理用・パレット用チャイルドを実体化
 //
 function addChildManage( oParent, oChild ){
 
@@ -132,15 +136,19 @@ function addChildManage( oParent, oChild ){
     c.style.width       = '97%';
     c.style.borderRight = arChildGrade[ oChild.child_grade ];
     var r = '';
-    r += '<div style="font-size:10px;border-bottom:1px solid lightgray;" >' + oChild.child_name + '</div>';
-    r += '<div style="font-size:9px;" >type:' + oChild.child_type + '&nbsp; Grade:' + oChild.child_grade + '</div>';
+    r += '<div style="height:20px;font-size:12px;border-bottom:1px solid lightgrey;">';
+    r += oChild.child_name;
+    r += '</div>';
+    r += '<div style="font-size:10px;" >';
+    r += 'type:' + oChild.child_type + '&nbsp; Grade:' + oChild.child_grade;
+    r += '</div>';
 
 	c.innerHTML = r;
     var cc = oParent.appendChild( c );
 	cc.addEventListener('dragstart',
 		function(e) {
             console.log( e.dataTransfer );
-			e.dataTransfer.setData('text', e.target.innerHTML );
+			e.dataTransfer.setData('text', e.target.getAttribute( 'child_id' ) );
 		} );
 
 }
@@ -171,6 +179,23 @@ function propertyChild( e ){
 
 }
 
+//
+//  マークしたチャイルドの削除
+//
+function deleteWhiteboardChild(){
+    var p = document.getElementById( 'WHITEBOARD');
+    var c = p.firstChild;
+    //console.log(c);
+    while ( c ){
+        if ( c.getAttribute('marked') == 'MARKED'){
+            p.removeChild( c );
+            c = p.firstChild;
+        } else {
+            c = c.nextSibling;
+        }
+
+    }
+}
 //
 //  ダブルクリックしたノードからChildノードを検索
 //

@@ -50,27 +50,26 @@ function init()
 		function(e) {
 			e.preventDefault();
 		});
-		wb.addEventListener('drop', 
+	wb.addEventListener('drop', 
 		function(e) {
 			e.preventDefault();
 			//alert( e.dataTransfer.getData('text') );
-			console.log( e.pageY, e.pageX );
-			var c = document.createElement('DIV');
-			c.setAttribute("child", "yes");
-			c.setAttribute("id", "c_1");
-			c.setAttribute("class", "CHILD drag-and-drop");
-			c.style.position	= 'absolute';
-			c.style.top			= e.pageY + 'px';
-			c.style.left		= e.pageX + 'px';
-			c.innerHTML			= e.dataTransfer.getData('text');
-			var p = document.getElementById('WHITEBOARD');
-			var cc = p.appendChild( c );
-			cc.addEventListener( 'dblclick',   propertyChild, false );
-			cc.addEventListener( "mousedown",  mDown, false );
-			cc.addEventListener( "touchstart", mDown, false );
-		
+			var id = e.dataTransfer.getData('text');
+			console.log( e.pageY, e.pageX, id );
+			var oChild = getChild(id);
+			addChild( e.pageY, e.pageX, oChild.child_name, oChild.child_type,oChild.child_grade );
 		});
 
+	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
+	cpc.addEventListener('dblclick', selectChild );
+	cpc.addEventListener('mouseover', function(e){
+			var c = scanChild( e.target );
+			c.style.backgroundColor = 'lightgrey';
+		});
+	cpc.addEventListener('mouseout', function(e){
+		var c = scanChild( e.target );
+		c.style.backgroundColor = '';
+});
 
 	fitting();
 	new Button( 'ACCOUNTS',             null           ).play();
@@ -78,6 +77,8 @@ function init()
 //	new Button( 'COMMIT',               null           ).play();
 	new Button( 'SIGN_STATUS',          signMenu       ).play();
 	new Button( 'CHILDREN_PALLETE_TAB', foldingChildrenPallete ).play();
+	new Button( 'CPC_RELOAD',           makeChildrenPalleteList ).play();
+	new Button( 'ID_CHILD_DELETE',      deleteWhiteboardChild ).play();
 
 
 	ctlToolbar();
@@ -88,8 +89,10 @@ function init()
 //
 //	モーダルダイアログをオープン
 //
-function openModalDialog(){
+function openModalDialog( r ){
 	var mo = document.getElementById('MODAL_OVERLAY');
+	var mm = document.getElementById('MODAL_MESSAGE');
+	mm.innerHTML = r;
 	mo.style.visibility = 'visible';
 }
 
@@ -456,8 +459,8 @@ function manageChildren(){
 		r += "</div>"; 
 		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Manage Children</div>";
 		r += "<div id='CHILD_STATUS' style='height:20px;text-align:center;' >status</div>";
-		r += "<div id='CHILD_LIST'   style='float:left;width:170px;height:200px;border:1px solid lightgray;overflow-y:auto;' >";
-		r += "</div>";
+//		r += "<div id='CHILD_LIST'   style='float:left;width:170px;height:200px;border:1px solid lightgray;overflow-y:auto;' >";
+//		r += "</div>";
 		r += "<div id='CHILD_PROP'   style='float:left;width:280px;height:200px;padding-left:12px;border:1px solid lightgrey;' ></div>";
 		r += "<div style='clear:both;padding-top:4px;border-top:1px solid lightgrey;' >";
 			r += "<button type='button' onclick='newChildForm()'     >+</button>";
@@ -469,10 +472,6 @@ function manageChildren(){
 	var o = document.getElementById('AREA');
 	o.innerHTML = r;
 	o.style.visibility = 'visible';
-	loadChildList();
-	var cl = document.getElementById('CHILD_LIST');
-	cl.addEventListener('click', selectChild );
-	cl.addEventListener('dblclick', selectCandidateChild );
 
 }
 
@@ -480,12 +479,9 @@ function manageChildren(){
 //	チャイルド選択し、プロパティ表示
 //
 function selectChild( e ){
-	var c = e.target;
-	while ( true ){
-		if ( c.getAttribute('child') == 'yes' ) break;
-		c = c.parentNode;
-	}
-
+	var c = scanChild( e.target );
+	openModalDialog( c.outerHTML );
+/*
 	var id = c.getAttribute('child_id');
 	var oChild = getChild(id);
 	
@@ -498,6 +494,7 @@ function selectChild( e ){
 	r += '</div>';
 
 	p.innerHTML = r;
+*/
 
 }
 
@@ -591,6 +588,7 @@ function getChild( id ){
 //
 //	候補チャイルド
 //
+/*
 function selectCandidateChild( e ){
 	var c = e.target;
 	while ( true ){
@@ -600,46 +598,7 @@ function selectCandidateChild( e ){
 //	alert(c.innerHTML);
 	addChild( 0, 0, 'Yurie.K', 'A', 4 );
 }
-
-//
-//	チャイルドリスト生成処理
-//
-function loadChildList()
-{
-	var r = "";
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		switch ( xmlhttp.readyState){
-			case 1://opened
-			case 2://header received
-			case 3://loading
-				var o = document.getElementById( 'CHILD_STATUS' );
-				o.innerText = 'access...';
-				break;
-			case 4://done
-				r = "";
-				if ( xmlhttp.status == 200 ){
-					var result = JSON.parse( xmlhttp.responseText );
-					//r += xmlhttp.responseText;
-					var o = document.getElementById('CHILD_LIST');
-					o.innerHTML = '';
-					for ( var i=0; i<result.length; i++ ){
-						addChildManage( o, result[i] );
-					}
-				} else{
-					document.getElementById( 'CHILD_STATUS' ).innerText = xmlhttp.status;
-				}
-				break;
-		}
-	}
-	try{
-		xmlhttp.open("POST", "/accounts/childlist", true );
-		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send();
-
-	} catch ( e ) { alert( e );}
-}
-
+*/
 
 //
 //	チャイルド操作
