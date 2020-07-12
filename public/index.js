@@ -22,6 +22,7 @@ function init()
 	wb.addEventListener("touchmove",
 	 function( e ) { e.preventDefault(); }, { passive:false } );
 	wb.addEventListener('selectstart', function(e){return false;})
+/*
 	wb.addEventListener('mousedown',
 		function(e) {
 			e.preventDefault();
@@ -41,6 +42,7 @@ function init()
 			}
 	
 		});	
+*/
 	wb.addEventListener('mouseup', 
 		function(e) {
 			initArea();
