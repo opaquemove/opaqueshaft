@@ -618,7 +618,7 @@ function mDown( e ) {
         } else {
             var event = e.changedTouches[0];
         }
-		e.stopPropagation();
+		//e.stopPropagation();
         //要素内の相対座標を取得
         x = event.pageX - curChild.offsetLeft;
         y = event.pageY - curChild.offsetTop;
@@ -654,7 +654,7 @@ function mMove( e ){
 
         //フリックしたときに画面を動かさないようにデフォルト動作を抑制
 		e.preventDefault();
-		e.stopPropagation();
+		//e.stopPropagation();
 
 		//マウスが動いた場所に要素を動かす
 		if ( event.buttons & 1 ){
@@ -684,7 +684,7 @@ function mUp( e ) {
 	document.body.removeEventListener("touchmove", mMove, false);
 	if ( drag != null ) drag.removeEventListener("touchend", mUp, false);
 
-	e.stopPropagation();
+	//e.stopPropagation();
 
 	//クラス名 .drag も消す
 	if ( drag != null ) drag.classList.remove("drag");
