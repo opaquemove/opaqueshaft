@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html style="width:100%;height:100%;" >
+<head>
+<meta charset="UTF-8">
+<title>Test touch</title>
+<style>
+#SQUARE{
+    position:   absolute;
+    top:        0px;
+    left:       0p;
+    width:      500px;
+    height:     500px;
+    border:     1px solid gray;
+}
+
+#CHILD{
+    position:   absolute;
+    top:        100px;
+    left:       100px;
+    width:      100px;
+    height:     100px;
+    border:     1px solid red;
+}
+
+.drag-and-drop {
+/*	cursor:		move;*/
+	position:	absolute;
+	z-index:	1000;
+}
+
+.drag {
+	z-index:	1001;
+}
+
+
+</style>
+<script>
+var x, y;
+var wbx, wby;
+var curChild  = null;
+
+window.onload = init;
+
+function init(){
+    var cc = document.getElementById('CHILD');
+    cc.addEventListener( "mousedown",  mDown, false );
+	cc.addEventListener( "touchstart", mDown, false );
+
+}
+
+//
+//	チャイルド操作
+//
+function mDown( e ) {
+
+    curChild = this;
+    //クラス名に .drag を追加
+    curChild.classList.add("drag");
+    curChild.style.zIndex = 2001;
+    //タッチデイベントとマウスのイベントの差異を吸収
+    if(e.type === "mousedown") {
+        var event = e;
+    } else {
+        var event = e.changedTouches[0];
+    }
+    //e.stopPropagation();
+    //要素内の相対座標を取得
+    x = event.pageX - curChild.offsetLeft;
+    y = event.pageY - curChild.offsetTop;
+
+    //ムーブイベントにコールバック
+    document.body.addEventListener("mousemove", mMove, false);
+    document.body.addEventListener("touchmove", mMove, false);	
+
+}
+
+//
+//	チャイルド操作
+//
+function mMove( e ){
+
+    //ドラッグしている要素を取得
+    //var drag = document.getElementsByClassName("drag")[0];
+    //		var drag = e.target;
+    var drag = curChild;
+
+    //同様にマウスとタッチの差異を吸収
+    if(e.type === "mousemove") {
+        var event = e;
+    } else {
+        var event = e.changedTouches[0];
+    }
+
+    //フリックしたときに画面を動かさないようにデフォルト動作を抑制
+    e.preventDefault();
+    //e.stopPropagation();
+
+    //マウスが動いた場所に要素を動かす
+    if ( event.buttons & 1 ){
+        drag.style.top  = event.pageY - y + "px";
+        drag.style.left = event.pageX - x + "px";
+ //       curChildMoved   = true;
+    }
+
+    //マウスボタンが離されたとき、またはカーソルが外れたとき発火
+    drag.addEventListener("mouseup", mUp, false);
+    document.body.addEventListener("mouseleave", mUp, false);
+    drag.addEventListener("touchend", mUp, false);
+    document.body.addEventListener("touchleave", mUp, false);
+
+}
+
+//
+//	チャイルド操作
+//
+function mUp( e ) {
+    //var drag = document.getElementsByClassName("drag")[0];
+    //var drag = e.target;
+    var drag = curChild;
+    //ムーブベントハンドラの消去
+    document.body.removeEventListener("mousemove", mMove, false);
+    if ( drag != null) drag.removeEventListener("mouseup", mUp, false);
+    document.body.removeEventListener("touchmove", mMove, false);
+    if ( drag != null ) drag.removeEventListener("touchend", mUp, false);
+
+    //e.stopPropagation();
+
+    //クラス名 .drag も消す
+    if ( drag != null ) drag.classList.remove("drag");
+
+    curChild              = null;
+}
+
+
+
+</script>
+
+</head>
+<body style="width:100%;height:100%;">
+<h2>Touch Text</h2>
+<div id="SQUARE" >
+<div id="CHILD" >Child</div>
+
+</div>
+</body>
+</html>
