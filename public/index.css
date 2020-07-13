@@ -71,6 +71,7 @@ BUTTON{
 	color:				gray;
 	background-color:	snow;
 	border:				1px solid lightgrey;
+	text-align:			right;
 	padding-top:		2px;
 	margin-top:			-340px;
 	margin-left:		auto;
@@ -383,6 +384,12 @@ BUTTON{
 	margin-top:			24px;
 	padding:			0px;
 	overflow-y:			scroll;
+}
+
+.not_select {
+	-moz-user-select:		none;
+	-webkit-user-select:	none;
+	user-select: 			none;
 }
 
 .drag-and-drop {

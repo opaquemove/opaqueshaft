@@ -11,7 +11,11 @@ var propChild = null;
 var curChildZIndex = null;
 var curChildMoved  = false;
 
-var openWhiteboard = true;
+var openWhiteboard = false;
+var dayWhiteboard  = '';
+
+var neverCloseDialog = false;
+
 window.onload = init;
 window.onresize = fitting;
 
@@ -104,10 +108,57 @@ function init()
 		if ( e.target == this ) closeModalDialog();
 		});
 
-	ctlToolbar();
-	makeChildrenPalleteList();
-	if ( !checkSign() )  signForm();
+		ctlToolbar();
+		makeChildrenPalleteList();
+		if ( !checkSign() ){
+			signForm();
+		} else {
+			if ( !openWhiteboard ){
+				hiddenWhiteboard();
+				showGuidanceWhiteboard();
+			}
+
+		}
 }
+
+//
+//	ホワイトボードガイダンス表示
+//
+function showGuidanceWhiteboard(){
+	var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-bottom:24px;" >create or open whiteboard</div>';
+	r += '<form name="guidedance_whiteboard_form" >';
+		r += '<div>';
+		r += 'Date:';
+		r += '</div>';
+		r += '<div>';
+		r += '<input type="text" name="day" />';
+		r += '</div>';
+		r += '</form>';
+	r += '</form>';
+	r += '<div style="margin:0 auto;width:220px;">';
+		r += '<div id="DLG_CREATE_WHITEBOARD" style="float:left;width:100px;height:100px;font-size:18px;background-color:lightgray;text-align:center;border:2px solid gray;">create...</div>';
+		r += '<div style="float:left;width:100px;height:100px;font-size:18px;background-color:lightgray;text-align:center;border:2px solid gray;margin-left:4px;">open...</div>';
+	r += '</div>';
+	neverCloseDialog = true;
+	openModalDialog( r );
+	new Button( 'DLG_CREATE_WHITEBOARD', createWhiteboard ).play();
+}
+
+//
+//
+//
+function createWhiteboard(){
+	var target_day = guidedance_whiteboard_form.day.value;
+	var cwd = document.getElementById('CUR_WHITEBOARD_DAY');
+	dayWhiteboard = target_day;
+	cwd.innerText = target_day;
+	//alert( target_day );
+	neverCloseDialog = false;
+	closeModalDialog();
+}
+
+
 
 function alreadyExistChildOnWhiteboard( id ){
 	var rc = false;
@@ -120,6 +171,9 @@ function alreadyExistChildOnWhiteboard( id ){
 	return rc;
 }
 
+//
+//	ホワイトボード表示切換
+//
 function turnWhiteboard(){
 	switch ( openWhiteboard ){
 		case true:
@@ -185,10 +239,17 @@ function openModalDialog( r ){
 //	モーダルダイアログをクローズ
 //
 function closeModalDialog(){
+	if ( neverCloseDialog) return;
 	var mo = document.getElementById('MODAL_OVERLAY');
+	var mm = document.getElementById('MODAL_MESSAGE');
+	mm.innerHTML = '';
 	mo.style.visibility = 'hidden';
+	neverCloseDialog = false;
 }
 
+//
+//	AREA初期化（削除予定）
+//
 function initArea(){
 	var o = document.getElementById('AREA');
 	if ( o.style.visibility != 'hidden' )

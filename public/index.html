@@ -14,7 +14,7 @@
 </head>
 <body>
 	<script type="text/javascript" src="./soc_backend.js"></script>
-	<div id="TOOLBAR">
+	<div id="TOOLBAR" class="not_select">
 		<div id="OPAQUESHAFT_TITLE">
 			&nbsp;OpaqueShaft
 		</div> 
@@ -29,7 +29,7 @@
 				<button onclick="clearWhiteboard()"            >clear Whiteboard</button>
 			-->	
 		</div>
-		<div id="SIGN_STATUS" >
+		<div id="SIGN_STATUS" class="not_select">
 			sign...
 		</div>
 <!--
@@ -40,14 +40,14 @@
 		</div>
 	</div>
 	
-	<div id="WHITEBOARD_FRAME">
+	<div id="WHITEBOARD_FRAME" class="not_select">
 		<div id="WHITEBOARD" ></div>
 	</div>
-	<div id="STATUS" >
+	<div id="STATUS" class="not_select">
 		<div style="float:left;" >&nbsp;status:</div>
 		<div style="float:left;width:40px;height:100%;margin-right:2px;border:1px solid lightgrey;" ></div>
 		<div style="float:left;width:40px;height:100%;margin-right:2px;border:1px solid lightgrey;" ></div>
-		<div style="float:left;width:40px;height:100%;margin-right:2px;border:1px solid lightgrey;" ></div>
+		<div id="CUR_WHITEBOARD_DAY" style="float:left;font-size:10px;width:80px;height:100%;margin-right:2px;border:1px solid lightgrey;" ></div>
 		<div style="float:left;" >
 			<button onclick="countChild()"                 >count Child...</button>
 		</div>
@@ -55,12 +55,12 @@
 
 	<div id="AREA" >&nbsp;</div>
 
-	<div id="ACCOUNTS" >Accounts...</div>
-	<div id="CHILDREN" >Children...</div>
-	<div id="WHITEBOARD_BAY" >
+	<div id="ACCOUNTS" class="not_select">Accounts...</div>
+	<div id="CHILDREN" class="not_select">Children...</div>
+	<div id="WHITEBOARD_BAY" class="not_select">
 		<div id="ID_CHILD_DELETE" >-</div>
 	</div>
-	<div id="WHITEBOARD_PALLETE_FRAME" >
+	<div id="WHITEBOARD_PALLETE_FRAME" class="not_select">
 		<div id="WHITEBOARD_PALLETE_TAB" >Whiteboard</div>
 		<div id="WHITEBOARD_PALLETE_CONTENT_FRAME" >
 			<div id="WHITEBOARD_PALLETE_CONTENT_TOOLBAR" >
@@ -80,7 +80,7 @@
 		</div>
 	</div>
 
-	<div id="CHILDREN_PALLETE_FRAME" >
+	<div id="CHILDREN_PALLETE_FRAME" class="not_select">
 		<div id="CHILDREN_PALLETE_TAB" >Children</div>
 		<div id="CHILDREN_PALLETE_CONTENT_FRAME" >
 			<div id="CHILDREN_PALLETE_CONTENT_TOOLBAR" >
@@ -95,7 +95,7 @@
 		</div>
 	</div>
 
-	<div id="MODAL_OVERLAY" >
+	<div id="MODAL_OVERLAY" class="not_select">
 		<div id="MODAL_MESSAGE_HEADER" >
 			<div id="OPAQUESHAFT_DIALOG_TITLE">
 				&nbsp;OpaqueShaft
