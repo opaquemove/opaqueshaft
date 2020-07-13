@@ -627,12 +627,12 @@ function mDown( e ) {
         document.body.addEventListener("mousemove", mMove, false);
         document.body.addEventListener("touchmove", mMove, false);	
         //マウスボタンが離されたとき、またはカーソルが外れたとき発火
-/*
+
 		curChild.addEventListener("mouseup", mUp, false);
         document.body.addEventListener("mouseleave", mUp, false);
         curChild.addEventListener("touchend", mUp, false);
         document.body.addEventListener("touchleave", mUp, false);
-*/
+
 	}
 
 //
@@ -665,11 +665,12 @@ function mMove( e ){
 //		}
 
         //マウスボタンが離されたとき、またはカーソルが外れたとき発火
+/*
         drag.addEventListener("mouseup", mUp, false);
         document.body.addEventListener("mouseleave", mUp, false);
         drag.addEventListener("touchend", mUp, false);
         document.body.addEventListener("touchleave", mUp, false);
-
+*/
 }
 
 //
