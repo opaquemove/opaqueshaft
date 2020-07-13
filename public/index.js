@@ -56,14 +56,21 @@ function init()
 		function(e) {
 			e.preventDefault();
 		});
+	//
+	//	チャイルドをドロップした時の処理	
+	//
 	wb.addEventListener('drop', 
 		function(e) {
 			e.preventDefault();
 			//alert( e.dataTransfer.getData('text') );
 			var id = e.dataTransfer.getData('text');
 			console.log( e.pageY, e.pageX, id );
+			if ( alreadyExistChildOnWhiteboard( id )){
+				alert('すでにホワイトボードに配置されています．');
+				return;
+			}
 			var oChild = getChild(id);
-			addChild( e.pageY, e.pageX, oChild.child_name, oChild.child_type,oChild.child_grade );
+			addChild( e.pageY, e.pageX, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
 		});
 
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
@@ -75,7 +82,7 @@ function init()
 	cpc.addEventListener('mouseout', function(e){
 		var c = scanChild( e.target );
 		c.style.backgroundColor = '';
-});
+		});
 
 	fitting();
 	new Button( 'ACCOUNTS',             null           ).play();
@@ -90,6 +97,17 @@ function init()
 	ctlToolbar();
 	makeChildrenPalleteList();
 	if ( !checkSign() )  signForm();
+}
+
+function alreadyExistChildOnWhiteboard( id ){
+	var rc = false;
+	var wb = document.getElementById('WHITEBOARD');
+	for ( var i=0; i<wb.childNodes.length; i++ ){
+		console.log(wb.childNodes[i].getAttribute('child_id'));
+		if ( wb.childNodes[i].getAttribute('child_id') == id )
+			return true;
+	}
+	return rc;
 }
 
 function locateWhiteboard( e ){

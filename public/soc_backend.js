@@ -41,7 +41,7 @@ socket.on( 'getchildrenlist', function ( msg ) {
     o.style.visibility = 'visible';
     for (var i=0; i<children.length; i++) {
         r += children[i].child_name + '<br/>'; 
-        addChild( i * 20, i * 20,
+        addChild( i * 20, i * 20, children[i].child_id,
              children[i].child_name, children[i].child_type, children[i].child_grade );
     }
     r += '<br/>length:' + children.length;
@@ -89,13 +89,14 @@ function clearWhiteboard(){
 //
 //  WhiteBoardにチャイルドを実体化
 //
-function addChild( top, left, name, child_type, child_grade ){
+function addChild( top, left, child_id, child_name, child_type, child_grade ){
 	var o = document.getElementById('AREA');
 	o.style.visibility = 'hidden';
 
 	var wb = document.getElementById('WHITEBOARD');
     var c = document.createElement("DIV");
     c.setAttribute("child", "yes");
+    c.setAttribute('child_id', child_id ) ;
 	c.setAttribute("id", "c_1");
     c.setAttribute("class", "CHILD drag-and-drop");
     c.style.position = 'absolute;'
@@ -107,7 +108,7 @@ function addChild( top, left, name, child_type, child_grade ){
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
     r += '<div style="height:100%;padding-left:2px;" >';
         r += '<div style="font-size:14px;border-bottom:1px solid lightgray;" >';
-        r += name;
+        r += child_name;
         r += '</div>';
         r += '<div style="font-size:12px;" >';
         r += 'type2:' + child_type + '&nbsp; Grade:' + child_grade
