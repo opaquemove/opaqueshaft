@@ -124,19 +124,18 @@ function turnWhiteboard(){
 	switch ( openWhiteboard ){
 		case true:
 			hiddenWhiteboard();
-			openWhiteboard = false;
 			break;
 		case false:
 			visibleWhiteboard();
-			openWhiteboard = true;
 			break;
 	}
 }
-
+		
 //
 //	ホワイトボードを非表示（操作不可）
 //
 function hiddenWhiteboard(){
+	openWhiteboard = false;
 	var wb = document.getElementById('WHITEBOARD');
 	wb.style.visibility = 'hidden';
 }
@@ -145,6 +144,7 @@ function hiddenWhiteboard(){
 //	ホワイトボードを表示（操作可能）
 //
 function visibleWhiteboard(){
+	openWhiteboard = true;
 	var wb = document.getElementById('WHITEBOARD');
 	wb.style.visibility = 'visible';
 }
