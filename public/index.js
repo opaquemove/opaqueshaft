@@ -10,6 +10,8 @@ var curChild  = null;
 var propChild = null;
 var curChildZIndex = null;
 var curChildMoved  = false;
+
+var openWhiteboard = false;
 window.onload = init;
 window.onresize = fitting;
 
@@ -77,22 +79,29 @@ function init()
 	cpc.addEventListener('dblclick', selectChild );
 	cpc.addEventListener('mouseover', function(e){
 			var c = scanChild( e.target );
-			c.style.backgroundColor = 'lightgrey';
+			if ( c != null ) c.style.backgroundColor = 'lightgrey';
 		});
 	cpc.addEventListener('mouseout', function(e){
-		var c = scanChild( e.target );
-		c.style.backgroundColor = '';
+			var c = scanChild( e.target );
+			if ( c!= null ) c.style.backgroundColor = '';
 		});
 
-	fitting();
-	new Button( 'ACCOUNTS',             null           ).play();
-	new Button( 'CHILDREN',             manageChildren ).play();
-//	new Button( 'COMMIT',               null           ).play();
-	new Button( 'SIGN_STATUS',          signMenu       ).play();
-	new Button( 'CHILDREN_PALLETE_TAB', foldingChildrenPallete ).play();
-	new Button( 'CPC_RELOAD',           makeChildrenPalleteList ).play();
-	new Button( 'ID_CHILD_DELETE',      deleteWhiteboardChild ).play();
 
+	fitting();
+	new Button( 'ACCOUNTS',               null           ).play();
+	new Button( 'CHILDREN',               manageChildren ).play();
+//	new Button( 'COMMIT',                 null           ).play();
+	new Button( 'SIGN_STATUS',            signMenu       ).play();
+	new Button( 'WHITEBOARD_PALLETE_TAB', foldingWhiteboardPallete ).play();
+	new Button( 'CHILDREN_PALLETE_TAB',   foldingChildrenPallete ).play();
+	new Button( 'CPC_RELOAD',             makeChildrenPalleteList ).play();
+	new Button( 'CPC_ADD_CHILD',          newChildForm ).play();
+	new Button( 'ID_CHILD_DELETE',        deleteWhiteboardChild ).play();
+
+	var mo = document.getElementById('MODAL_OVERLAY');
+	mo.addEventListener('click', function(e){
+		if ( e.target == this ) closeModalDialog();
+		});
 
 	ctlToolbar();
 	makeChildrenPalleteList();
@@ -164,9 +173,33 @@ function fitting(){
 	var h = document.documentElement.clientHeight;
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.style.height = ( h - 42 - 30 ) + 'px';
+
 	var cpf  = document.getElementById('CHILDREN_PALLETE_FRAME');
 	cpf.style.height  = ( h -42 - 30 ) + 'px';
 	cpf.style.left    = ( w - 30 ) + 'px';
+
+	var wpf  = document.getElementById('WHITEBOARD_PALLETE_FRAME');
+	wpf.style.height  = ( h -42 - 30 ) + 'px';
+//	wpf.style.left    = ( w - 30 ) + 'px';
+
+}
+
+//
+//	ホワイトボードパレットのフォールディング
+//
+var flagWhiteboardPallete = false;
+function foldingWhiteboardPallete(){
+	var wpf = document.getElementById('WHITEBOARD_PALLETE_FRAME');
+	var left = parseInt( wpf.style.left );
+	console.log(left);
+	//alert( '[' + cpf.style.marginLeft + ']' );
+	if ( left < 0 || isNaN(left ) ){
+		wpf.style.left = '0px';
+		flagWhiteboardPallete = true;
+	} else {
+		wpf.style.left = '-170px';
+		flagWhiteboardPallete = false;
+	}
 }
 
 //
@@ -545,9 +578,10 @@ function selectChild( e ){
 }
 
 //
+//	チャイルド作成フォーム
 //
-//
-function newChildForm(){
+/*
+function newChildFormOld(){
 	var p = document.getElementById('CHILD_PROP');
 	var r = '';
 	r += makeChildForm( null );
@@ -556,9 +590,21 @@ function newChildForm(){
 		r += "<button type='button' onclick=''       >cancel</button>";
 	r += '</div>';
 	
-	p.innerHTML = r;
-
 }
+*/
+
+//
+//	チャイルド作成フォーム
+//
+function newChildForm(){
+	var r = '';
+	r += makeChildForm( null );
+	r += '<div>';
+	r += "<button type='button' onclick='newChildSend()' >add</button>";
+	r += '</div>';	
+	openModalDialog( r );
+}
+
 
 //
 //	チャイルドフォームの生成
