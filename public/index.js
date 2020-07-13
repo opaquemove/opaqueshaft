@@ -614,21 +614,6 @@ function getChild( id ){
 }
 
 //
-//	候補チャイルド
-//
-/*
-function selectCandidateChild( e ){
-	var c = e.target;
-	while ( true ){
-		if ( c.getAttribute('child') == 'yes' ) break;
-		c = c.parentNode;
-	}
-//	alert(c.innerHTML);
-	addChild( 0, 0, 'Yurie.K', 'A', 4 );
-}
-*/
-
-//
 //	チャイルド操作
 //
 function mDown( e ) {
@@ -638,7 +623,7 @@ function mDown( e ) {
 		curChild.classList.add("drag");
 		curChildZIndex = curChild.style.zIndex;
 		curChild.style.zIndex = 2001;
-        //タッチデイベントとマウスのイベントの差異を吸収
+        //タッチイベントとマウスのイベントの差異を吸収
         if(e.type === "mousedown") {
             var event = e;
         } else {
@@ -670,6 +655,7 @@ function mMove( e ){
 		//var drag = document.getElementsByClassName("drag")[0];
 //		var drag = e.target;
 		var drag = curChild;
+		curChildMoved   = true;
 
         //同様にマウスとタッチの差異を吸収
         if(e.type === "mousemove") {
@@ -687,7 +673,6 @@ function mMove( e ){
 //		    || (( event.buttons & 1 ) && event.type == 'mousemove' ) ){
 			drag.style.top  = event.pageY - y + "px";
 			drag.style.left = event.pageX - x + "px";
-			curChildMoved   = true;
 //		}
 
         //マウスボタンが離されたとき、またはカーソルが外れたとき発火
@@ -719,7 +704,7 @@ function mUp( e ) {
 	if ( !curChildMoved ){
 		if ( curChild != null ){
 			if ( curChild.getAttribute('marked') == 'MARKED' ) {
-				unmarkChild( curChild );
+			//	unmarkChild( curChild );
 			}else {
 				markChild( curChild );
 			}
