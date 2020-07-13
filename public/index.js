@@ -25,13 +25,6 @@ function init()
 	wb.addEventListener('mousedown', locateWhiteboard );
 	wb.addEventListener('mousemove', locateWhiteboard );
 	wb.addEventListener('mouseup',   locateWhiteboard );
-	wb.addEventListener('touchmove', 
-		function(e){
-			//e.preventDefault();
-			if ( document.getElementById('WHITEBOARD') != e.target ) return;
-			document.getElementById('WHITEBOARD').style.top  = event.pageY - wby + "px";
-			document.getElementById('WHITEBOARD').style.left = event.pageX - wbx + "px";
-		});
 
 /*
 	wb.addEventListener('mousedown',
