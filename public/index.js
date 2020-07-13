@@ -22,6 +22,17 @@ function init()
 //	wb.addEventListener("touchmove",
 //	 function( e ) { e.preventDefault(); }, { passive:false } );
 //	wb.addEventListener('selectstart', function(e){return false;})
+	wb.addEventListener('mousedown', locateWhiteboard );
+	wb.addEventListener('mousemove', locateWhiteboard );
+	wb.addEventListener('mouseup',   locateWhiteboard );
+	wb.addEventListener('touchmove', 
+		function(e){
+			e.preventDefault();
+			if ( document.getElementById('WHITEBOARD') != e.target ) return;
+			document.getElementById('WHITEBOARD').style.top  = event.pageY - wby + "px";
+			document.getElementById('WHITEBOARD').style.left = event.pageX - wbx + "px";
+		});
+
 /*
 	wb.addEventListener('mousedown',
 		function(e) {
@@ -35,19 +46,19 @@ function init()
 		function(e) {
 			e.preventDefault();
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
-			if ( e.buttons & 1 ){
+//			if ( e.buttons & 1 ){
 				document.getElementById('WHITEBOARD').style.top  = event.pageY - wby + "px";
 				document.getElementById('WHITEBOARD').style.left = event.pageX - wbx + "px";
-				//curChildMoved   = true;
-			}
+//			}
 	
 		});	
-*/
+
 	wb.addEventListener('mouseup', 
 		function(e) {
 			initArea();
 			if ( e.target == wb)	resetChildMark();
 		});
+*/
 	wb.addEventListener('dragover', 
 		function(e) {
 			e.preventDefault();
@@ -88,6 +99,28 @@ function init()
 	if ( !checkSign() )  signForm();
 }
 
+function locateWhiteboard( e ){
+	e.preventDefault();
+	switch ( e.type ){
+		case 'mousedown':
+			if ( document.getElementById('WHITEBOARD') != e.target ) return;
+			e.target.position = 'absolute';
+			wbx = event.pageX - e.target.offsetLeft;
+			wby = event.pageY - e.target.offsetTop + 42;
+			break;
+		case 'mousemove':
+			if ( document.getElementById('WHITEBOARD') != e.target ) return;
+			if ( e.buttons & 1 ){
+				document.getElementById('WHITEBOARD').style.top  = event.pageY - wby + "px";
+				document.getElementById('WHITEBOARD').style.left = event.pageX - wbx + "px";
+			}
+			break;
+		case 'mouseup':
+			initArea();
+			if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
+			break;
+	}
+}
 //
 //	モーダルダイアログをオープン
 //
