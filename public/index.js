@@ -701,15 +701,17 @@ function mUp( e ) {
 
 	//クラス名 .drag も消す
 	if ( drag != null ) drag.classList.remove("drag");
-	if ( !curChildMoved ){
-		if ( curChild != null ){
-			if ( curChild.getAttribute('marked') == 'MARKED' ) {
-			//	unmarkChild( curChild );
-			}else {
-				markChild( curChild );
+	if ( e.type == 'mouseup'){
+		if ( !curChildMoved ){
+			if ( curChild != null ){
+				if ( curChild.getAttribute('marked') == 'MARKED' ) {
+					unmarkChild( curChild );
+				}else {
+					markChild( curChild );
+				}
 			}
-		}
-	} 
+		} 
+	}
 
 	if ( curChild != null ) curChild.style.zIndex = '';
 	curChildMoved         = false;
