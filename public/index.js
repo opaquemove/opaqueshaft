@@ -110,7 +110,7 @@ function locateWhiteboard( e ){
 			break;
 		case 'mouseup':
 			initArea();
-		//	if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
+			if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
 			break;
 	}
 }
@@ -701,7 +701,7 @@ function mUp( e ) {
 
 	//クラス名 .drag も消す
 	if ( drag != null ) drag.classList.remove("drag");
-	if ( e.type == 'mouseup'){
+	if ( e.type == 'mouseup'){		//	touchendで反応しないように！
 		if ( !curChildMoved ){
 			if ( curChild != null ){
 				if ( curChild.getAttribute('marked') == 'MARKED' ) {
