@@ -11,7 +11,7 @@ var propChild = null;
 var curChildZIndex = null;
 var curChildMoved  = false;
 
-var openWhiteboard = false;
+var openWhiteboard = true;
 window.onload = init;
 window.onresize = fitting;
 
@@ -88,15 +88,16 @@ function init()
 
 
 	fitting();
-	new Button( 'ACCOUNTS',               null           ).play();
-	new Button( 'CHILDREN',               manageChildren ).play();
-//	new Button( 'COMMIT',                 null           ).play();
-	new Button( 'SIGN_STATUS',            signMenu       ).play();
-	new Button( 'WHITEBOARD_PALLETE_TAB', foldingWhiteboardPallete ).play();
-	new Button( 'CHILDREN_PALLETE_TAB',   foldingChildrenPallete ).play();
-	new Button( 'CPC_RELOAD',             makeChildrenPalleteList ).play();
-	new Button( 'CPC_ADD_CHILD',          newChildForm ).play();
-	new Button( 'ID_CHILD_DELETE',        deleteWhiteboardChild ).play();
+	new Button( 'ACCOUNTS',                 null           ).play();
+	new Button( 'CHILDREN',                 manageChildren ).play();
+//	new Button( 'COMMIT',                   null           ).play();
+	new Button( 'SIGN_STATUS',              signMenu       ).play();
+	new Button( 'WHITEBOARD_PALLETE_TAB',   foldingWhiteboardPallete ).play();
+	new Button( 'WPC_TURNONOFF_WHITEBOARD', turnWhiteboard ).play();
+	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
+	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
+	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
+	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardChild ).play();
 
 	var mo = document.getElementById('MODAL_OVERLAY');
 	mo.addEventListener('click', function(e){
@@ -117,6 +118,35 @@ function alreadyExistChildOnWhiteboard( id ){
 			return true;
 	}
 	return rc;
+}
+
+function turnWhiteboard(){
+	switch ( openWhiteboard ){
+		case true:
+			hiddenWhiteboard();
+			openWhiteboard = false;
+			break;
+		case false:
+			visibleWhiteboard();
+			openWhiteboard = true;
+			break;
+	}
+}
+
+//
+//	ホワイトボードを非表示（操作不可）
+//
+function hiddenWhiteboard(){
+	var wb = document.getElementById('WHITEBOARD');
+	wb.style.visibility = 'hidden';
+}
+
+//
+//	ホワイトボードを表示（操作可能）
+//
+function visibleWhiteboard(){
+	var wb = document.getElementById('WHITEBOARD');
+	wb.style.visibility = 'visible';
 }
 
 function locateWhiteboard( e ){
