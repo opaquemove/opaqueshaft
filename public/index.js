@@ -110,7 +110,7 @@ function locateWhiteboard( e ){
 			break;
 		case 'mouseup':
 			initArea();
-			if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
+		//	if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
 			break;
 	}
 }
