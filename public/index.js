@@ -175,7 +175,7 @@ function locateTimelinebar( e ){
 			if ( ( event.pageY - tlx ) >= tlbOffset + 2 
 				&& ( event.pageY - tlx ) <= tlbOffset + 146 ){
 				itb.style.top = event.pageY - tlx + "px";
-				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) - ( 60 * 17 ) - 10;
+				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) - ( 60 * 17 ) - 30;
 				var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
 								+ ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
 				itb.innerText = cur_time2;
