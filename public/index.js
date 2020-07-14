@@ -159,25 +159,21 @@ function locateTimelinebar( e ){
 			break;
 		case 'touchmove':
 		case 'mousemove':
-		//	if ( document.getElementById('ID_TIMELINE_BAR') != e.target ) return;
-		//	if ( e.buttons & 1 ){
+			if ( e.target != itb ) return;
 			if(e.type === "mousemove" ) {
 				var event = e;
 			} else {
 				var event = e.changedTouches[0];
 			}
-				if ( ( event.pageX - tlx ) >= 0 && ( event.pageX - tlx ) <= 138 ){
-					itb.style.left = event.pageX - tlx + "px";
-					var cur_time = ( 60 * 8 ) + ((event.pageX - tlx) * 5);
-					var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
-								 + ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
-					itb.innerText = cur_time2;
-					itb.style.backgroundColor = 'lightcoral';
-				}
-		//	}
+			if ( ( event.pageX - tlx ) >= 0 && ( event.pageX - tlx ) <= 138 ){
+				itb.style.left = event.pageX - tlx + "px";
+				var cur_time = ( 60 * 8 ) + ((event.pageX - tlx) * 5);
+				var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
+								+ ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
+				itb.innerText = cur_time2;
+			}
 			break;
 		case 'mouseup':
-			itb.style.backgroundColor = '';
 			break;
 	}
 }

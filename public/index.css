@@ -204,12 +204,15 @@ INPUT{
 
 #ID_TIMELINE_BAR{
 	position:			relative;
+	margin-top:			-18px;
 	top:				1px;
 	left:				0px;
 	width:				32px;
 	height:				14px;
 	border:				1px solid lightgrey;
-	font-size:			10px;
+	font-size:			9px;
+	color:				gray;
+	background-color:	rgb(241, 241, 241);
 }
 
 
@@ -272,7 +275,7 @@ INPUT{
 #ACCOUNTS{
 	position:			absolute;
 	top:				20px;
-	left:				700px;
+	left:				500px;
 	width:				80px;
 	height:				18px;
 	font-size:			12px;
