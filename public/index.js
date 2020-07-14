@@ -80,7 +80,9 @@ function init()
 		});
 
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
-	cpc.addEventListener('dblclick', selectChild );
+	cpc.addEventListener('dblclick',  selectChild );
+	cpc.addEventListener('mouseup',   markPalleteChild );
+/*
 	cpc.addEventListener('mouseover', function(e){
 			var c = scanChild( e.target );
 			if ( c != null ) c.style.backgroundColor = 'lightgrey';
@@ -89,11 +91,11 @@ function init()
 			var c = scanChild( e.target );
 			if ( c!= null ) c.style.backgroundColor = '';
 		});
-
+*/
 
 	fitting();
 	new Button( 'ACCOUNTS',                 null           ).play();
-	new Button( 'CHILDREN',                 manageChildren ).play();
+	new Button( 'CHILDREN',                 null           ).play();
 //	new Button( 'COMMIT',                   null           ).play();
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
 	new Button( 'WHITEBOARD_PALLETE_TAB',   foldingWhiteboardPallete ).play();
@@ -101,6 +103,7 @@ function init()
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
+	new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
 	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardChild ).play();
 
 	var mo = document.getElementById('MODAL_OVERLAY');
@@ -109,6 +112,7 @@ function init()
 		});
 
 		ctlToolbar();
+		makeWhiteboardPalleteList();
 		makeChildrenPalleteList();
 		if ( !checkSign() ){
 			signForm();
@@ -125,28 +129,32 @@ function init()
 //	ホワイトボードガイダンス表示
 //
 function showGuidanceWhiteboard(){
+	var today = new Date();
+	var y = today.getFullYear();
+	var m = ('00' + (today.getMonth() + 1 ) ).slice(-2);
+	var d = ('00' + today.getDate() ).slice(-2);
+	var ymd = y + '/' + m + '/' + d;
+
 	var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-bottom:24px;" >create or open whiteboard</div>';
-	r += '<form name="guidedance_whiteboard_form" >';
-		r += '<div>';
-		r += 'Date:';
-		r += '</div>';
-		r += '<div>';
-		r += '<input type="text" name="day" />';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >create or open whiteboard</div>';
+	r += '<div style="margin:0 auto;width:110px;">';
+		r += '<form name="guidedance_whiteboard_form" >';
+		r += '<div>Date:</div>';
+		r += '<div style="padding-bottom:20px;" >';
+		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" value="' + ymd + '" />';
 		r += '</div>';
 		r += '</form>';
-	r += '</form>';
-	r += '<div style="margin:0 auto;width:220px;">';
-		r += '<div id="DLG_CREATE_WHITEBOARD" style="float:left;width:100px;height:100px;font-size:18px;background-color:lightgray;text-align:center;border:2px solid gray;">create...</div>';
-		r += '<div style="float:left;width:100px;height:100px;font-size:18px;background-color:lightgray;text-align:center;border:2px solid gray;margin-left:4px;">open...</div>';
+		r += '<button type="button"  style="width:100px;height:20px;font-size:12px;" onclick="createWhiteboard();" >Next &gt;</button>';
 	r += '</div>';
 	neverCloseDialog = true;
-	openModalDialog( r );
-	new Button( 'DLG_CREATE_WHITEBOARD', createWhiteboard ).play();
+	openModalDialog( r, 'NOBUTTON' );
+	document.getElementById('whiteboard_day').focus();
+	visibleWhiteboard();
+
 }
 
 //
-//
+//	ホワイトボード作成
 //
 function createWhiteboard(){
 	var target_day = guidedance_whiteboard_form.day.value;
@@ -228,10 +236,23 @@ function locateWhiteboard( e ){
 //
 //	モーダルダイアログをオープン
 //
-function openModalDialog( r ){
-	var mo = document.getElementById('MODAL_OVERLAY');
-	var mm = document.getElementById('MODAL_MESSAGE');
+function openModalDialog( r , option ){
+	var mo  = document.getElementById('MODAL_OVERLAY');
+	var mm  = document.getElementById('MODAL_MESSAGE');
+	var mmf = document.getElementById('MODAL_MESSAGE_FOOTER');
 	mm.innerHTML = r;
+
+	var f = '';
+	switch ( option ){
+		case 'NOBUTTON':
+			f += '';
+			break;
+		case 'NORMAL':
+		default:
+			f += '<button type="button" onclick="closeModalDialog();" >Close</button>';
+			break;
+	}
+	mmf.innerHTML = f;
 	mo.style.visibility = 'visible';
 }
 
@@ -394,6 +415,7 @@ function signout(){
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send();
 	ctlToolbar();
+	makeWhiteboardPalleteList();
 	makeChildrenPalleteList();
 	if ( flagChildrenPallete ) foldingChildrenPallete();
 	signForm();
@@ -445,6 +467,7 @@ function sign()
 								ctlToolbar();
 								clearArea();
 								clearWhiteboard();
+								makeWhiteboardPalleteList();
 								makeChildrenPalleteList();
 							} else {
 								r += 'sign in error'
@@ -535,25 +558,17 @@ function signForm()
 		r += "</div>"; 
 		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign in to your account</div>";
 		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
-		r += "<form name='sign_form' >";
-			r += "<table align='center' >";
-			r += "<tr>";
-			r += "<td>Sign in ID:</td>";
-			r += "</tr>";
-			r += "<tr>";
-			r += "<td><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 /></td>";
-			r += "</tr>";
-			r += "<tr>";
-			r += "<td>Password:</td>";
-			r += "<tr>";
-			r += "<tr>";
-			r += "<td><input style='width:200px;height:18px;' type='password' name='pwd' tabindex=2 /></td>";
-			r += "<tr>";
-			r += "</table>";
-			r += "<div style='text-align:center;' >";
+		r += "<div style='margin:10px auto;width:210px;' >";
+			r += "<form name='sign_form' >";
+			r += "<div>Signin ID:</div>";
+			r += "<div><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 /></div>";
+			r += "<div style='padding-top:20px;' >Password:</div>";
+			r += "<div><input style='width:200px;height:18px;' type='password' name='pwd' tabindex=2 /></div>";
+			r += "<div style='padding-top:20px;text-align:center;' >";
 				r += "<button style='width:208px;height:20px;' type='button' tabindex=3 onclick='sign();' >signin</button>";
 			r += "</div>";
-		r += "</form>";
+			r += "</form>";
+		r += "</div>";
 		r += "<div style='padding-top:20px;text-align:center;' >";
 			r += "created by MASATO.NAKANISHI. 2020"
 		r += "</div>";
@@ -565,6 +580,25 @@ function signForm()
 	o.focus();
 	
 }
+
+//
+//
+//
+//
+//	ホワイトボードパレットリスト生成処理
+//
+function makeWhiteboardPalleteList()
+{
+	document.getElementById( 'WHITEBOARD_PALLETE_CONTENT' ).innerHTML = '';
+	if ( !checkSign()){
+		document.getElementById( 'WHITEBOARD_PALLETE_FRAME' ).style.visibility = 'hidden';
+		return;
+	}
+	document.getElementById( 'WHITEBOARD_PALLETE_FRAME' ).style.visibility = 'visible';
+	var r = "";
+}
+
+
 
 
 //
@@ -650,21 +684,68 @@ function manageChildren(){
 //
 function selectChild( e ){
 	var c = scanChild( e.target );
-	openModalDialog( c.outerHTML );
-/*
-	var id = c.getAttribute('child_id');
-	var oChild = getChild(id);
-	
-	var p = document.getElementById('CHILD_PROP');
-	var r = '';
-	r += makeChildForm( oChild );
-	r += '<div>';
-		r += "<button type='button' onclick=''       >apply</button>";
-		r += "<button type='button' onclick=''       >close</button>";
-	r += '</div>';
+	if ( c != null ){
+		var id = c.getAttribute('child_id');
+		console.log( c.getAttribute( id ));
+		propertyChild2( id );
+	}
+}
 
-	p.innerHTML = r;
-*/
+//
+//	パレット内のチャイルド選択
+//
+function markPalleteChild( e ){
+	var c = scanChild( e.target );
+	if ( c != null ){
+		var m = c.getAttribute('selected');
+		if ( m == null ){
+			c.style.color			= 'white';
+			c.style.backgroundColor = 'lightcoral';
+			c.setAttribute('selected', 'yes' );
+		} else {
+			c.style.color			= '';
+			c.style.backgroundColor = '';
+			c.removeAttribute('selected' );
+		}
+		var id = c.getAttribute('child_id');
+	} else{
+		var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
+		for ( var i=0; i<cpc.childNodes.length; i++ ){
+			if ( cpc.childNodes[i].getAttribute('selected') != null ){
+				cpc.childNodes[i].style.color = '';
+				cpc.childNodes[i].style.backgroundColor = '';
+				cpc.childNodes[i].removeAttribute('selected');
+			}
+		}
+
+	}
+}
+
+//
+//	パレット内のマークしたチャイルドをホワイトボードにドラッグ
+//
+function dragPalleteChild(){
+	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
+	for ( var i=0; i<cpc.childNodes.length; i++ ){
+		if ( cpc.childNodes[i].getAttribute('selected') != null ){
+			var id = cpc.childNodes[i].getAttribute('child_id');
+			if ( alreadyExistChildOnWhiteboard( id ) ) continue;
+			var oChild = getChild( id );
+			if ( oChild != null ){
+				var top  = 0;
+				var left = 0;
+				var lchild = latestWhiteboardChild();
+				if ( lchild != null ){
+					top  = parseInt( lchild.style.top ) + 20;
+					left = parseInt( lchild.style.left ) + 20;
+				}
+				addChild( top, left, oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
+			}
+			cpc.childNodes[i].style.color = '';
+			cpc.childNodes[i].style.backgroundColor = '';
+			cpc.childNodes[i].removeAttribute('selected');
+		}
+	}
 
 }
 
@@ -690,20 +771,27 @@ function newChildFormOld(){
 function newChildForm(){
 	var r = '';
 	r += makeChildForm( null );
-	r += '<div>';
-	r += "<button type='button' onclick='newChildSend()' >add</button>";
-	r += '</div>';	
-	openModalDialog( r );
+	openModalDialog( r, 'NOBUTTON' );
 }
 
+//
+//	チャイルドプロパティフォーム
+//
+function propertyChild2( id ){
+	var r = '';
+	var oChild = getChild( id );
+	r += makeChildForm( oChild );
+	openModalDialog( r, 'NORMAL' );
+
+}
 
 //
 //	チャイルドフォームの生成
 //
 function makeChildForm( oChild ){
-	var id = '';
-	var name = '';
-	var type = '';
+	var id    = null;
+	var name  = '';
+	var type  = '';
 	var grade = '';
 	if ( oChild != null ) {
 		id = oChild.child_id;
@@ -712,16 +800,25 @@ function makeChildForm( oChild ){
 		grade = oChild.child_grade;
 	}
 	var r = '';
-	r += '<form name="child_form" >';
-	r += '<div>id:</div>';
-	r += '<div><input type="text" name="child_id"    value="' + id    + '" readonly /></div>';
-	r += '<div>name:</div>';
-	r += '<div><input type="text" name="child_name"  value="' + name  + '" /></div>';
-	r += '<div>type:</div>';
-	r += '<div><input type="text" name="child_type"  value="' + type  + '" /></div>';
-	r += '<div>grade:</div>';
-	r += '<div><input type="text" name="child_grade" value="' + grade + '" /></div>';
-	r += '</form>';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >create child</div>';
+	r += '<div style="margin:0 auto;width:110px;">';
+		r += '<form name="child_form" >';
+		if ( id != null ){
+			r += '<input type="hidden" name="child_id" value="' + id + '"  />';
+		}
+//		r += '<div>id:</div>';
+//		r += '<div><input type="text" name="child_id"    value="' + id    + '" readonly /></div>';
+		r += '<div>name:</div>';
+		r += '<div><input type="text" name="child_name"  value="' + name  + '" /></div>';
+		r += '<div>type:</div>';
+		r += '<div><input type="text" name="child_type"  value="' + type  + '" /></div>';
+		r += '<div>grade:</div>';
+		r += '<div><input type="text" name="child_grade" value="' + grade + '" /></div>';
+		r += '</form>';
+		r += '<div style="padding-top:10px;" >';
+			r += "<button type='button' onclick='newChildSend()' >next...</button>";
+		r += '</div>';	
+	r += '</div>';
 	return r;
 
 }
@@ -735,7 +832,7 @@ function newChildSend(){
 }
 
 //
-//
+//	チャイルドの登録（REST)
 //
 function newChildSendHelper(){
 	var name  = child_form.child_name.value;

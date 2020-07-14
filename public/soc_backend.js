@@ -110,14 +110,17 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
         r += '<div style="font-size:14px;border-bottom:1px solid lightgray;" >';
         r += child_name;
         r += '</div>';
-        r += '<div style="font-size:12px;" >';
-        r += 'type2:' + child_type + '&nbsp; Grade:' + child_grade
+        r += '<div style="text-align:right;font-size:10px;border-bottom:1px solid lightgrey;" >';
+        r += 'type:' + child_type + '&nbsp; Grade:' + child_grade
+        r += '</div>';
+        r += '<div id="CHECKOUT_' + child_id + '" style="text-align:right;font-size:10px;" >';
+        r += 'checkout:'
         r += '</div>';
     r += '</div>';
 
 	c.innerHTML = r;
     var cc = wb.appendChild( c );
-    cc.addEventListener( 'dblclick',   propertyChild, false );
+    cc.addEventListener( 'dblclick',   propertyWhiteboardChild, false );
 	cc.addEventListener( "mousedown",  mDown, false );
 	cc.addEventListener( "touchstart", mDown, false );
 
@@ -129,18 +132,19 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
 function addChildManage( oParent, oChild ){
 
     var c = document.createElement("DIV");
-    c.setAttribute("child", "yes");
-    c.setAttribute("child_id", oChild.child_id );
-	c.setAttribute("id", "c_1");
-    c.setAttribute("class", "CHILD");
+    c.setAttribute("child",     "yes");
+    c.setAttribute("child_id",  oChild.child_id );
+	c.setAttribute("id",        "c_1");
+    c.setAttribute("class",     "CHILD");
     c.setAttribute("draggable", "true");
-    c.style.width       = '97%';
+//    c.style.width       = '97%';
+    c.style.height      = '40px';
     c.style.borderRight = arChildGrade[ oChild.child_grade ];
     var r = '';
-    r += '<div style="height:20px;font-size:12px;border-bottom:1px solid lightgrey;">';
+    r += '<div style="height:20px;font-size:14px;padding-left:2px;border-bottom:1px solid lightgrey;">';
     r += oChild.child_name;
     r += '</div>';
-    r += '<div style="font-size:10px;" >';
+    r += '<div style="font-size:10px;text-align:right;padding-top:2px;" >';
     r += 'type:' + oChild.child_type + '&nbsp; Grade:' + oChild.child_grade;
     r += '</div>';
 
@@ -157,28 +161,39 @@ function addChildManage( oParent, oChild ){
 //
 //  チャイルドプロパティ
 //
-function propertyChild( e ){
+
+function propertyWhiteboardChild( e ){
     var c = scanChild( e.target );
+    if ( c == null ){
+        alert('プロパティが見つかりません');
+        return;
+    }
     markChild( c );
     propChild = c;
 
+
+    var id = c.getAttribute('child_id');
+    console.log( id );
+    var oChild = getChild( id );
 	var r = "";
-	r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;opacity:0.75;' >";
-        r += "<div style='border-left:3px solid red;border-bottom:1px solid lightgrey;' >";
-        r += c.innerText;
+	r += "<div style='width:300px;height:100%;margin:10px auto;background-color:white;opacity:0.75;' >";
+        r += "<div style='font-size:16px;border-bottom:1px solid lightgrey;' >";
+        r += oChild.child_name;
         r += "</div>";
-        r += "<div>checkout time:" + c.getAttribute('checkout') + "</div>";
+        r += "<div style='padding-top:10px;' >checkout time:" + c.getAttribute('checkout') + "</div>";
         r += "<div style='padding-top:60px;border-top:1px solid lightgrey;' >";
-        r += "<button type='button' onclick='checkclearChild();' >check clear</button>";
-        r += "<button type='button' onclick='checkoutChild();'   >check out</button>";
-        r += "<button type='button' onclick='clearArea();'       >close</button>";
+        r += "<button type='button' onclick='checkclearChild();' >checkout clear</button>";
+        r += "&nbsp;<button type='button' onclick='checkoutChild();'   >checkout</button>";
         r += "</div>";
     r += "</div>";
-	var o = document.getElementById('AREA');
-	o.innerHTML = r;
-	o.style.visibility = 'visible';
+    openModalDialog( r, 'NORMAL' );
+
+//	var o = document.getElementById('AREA');
+//	o.innerHTML = r;
+//	o.style.visibility = 'visible';
 
 }
+
 
 //
 //  マークしたチャイルドの削除
@@ -229,9 +244,20 @@ function unmarkChild( c ) {
     c.style.color           = '';
 }
 
+//
+//  ホワイトボードのチルドレン数
+//
 function countChild(){
 	var wb = document.getElementById('WHITEBOARD');
     alert( wb.childNodes.length);
+}
+
+//
+//  ホワイトボード内の最後尾のチャイルド取得
+//
+function latestWhiteboardChild(){
+    var wb = document.getElementById('WHITEBOARD');
+    return wb.lastChild;
 }
 
 //
@@ -245,7 +271,10 @@ function checkoutChild(){
     var s = ( '00' + now.getSeconds() ).slice(-2);
     var checkout_time = h + ':' + m + ':' + s;
     propChild.setAttribute('checkout', checkout_time );
-    alert();
+    console.log( propChild.getAttribute('child_id') );
+    document.getElementById( 'CHECKOUT_' + propChild.getAttribute('child_id') ).innerText =
+        'checkout:' + checkout_time;
+    
 }
 
 //
@@ -254,6 +283,7 @@ function checkoutChild(){
 function checkclearChild(){
     if ( ! propChild ) return;
     propChild.removeAttribute('checkout' );
+    document.getElementById( 'CHECKOUT_' + propChild.getAttribute('child_id') ).innerText = 'checkout:';
 }
 
 

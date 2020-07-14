@@ -18,6 +18,14 @@ BUTTON{
 	color:				lightcoral;
 }
 
+INPUT{
+	color:				gray;
+	border-top:			none;
+	border-left:		none;
+	border-right:		none;
+	border-bottom:		1px solid lightgrey;
+}
+
 #MODAL_OVERLAY{
 	z-index:			70000;
 	visibility:			hidden;
@@ -35,8 +43,8 @@ BUTTON{
 	left:				0px;
 	width:				500px;
 	height:				28px;
-	color:				gray;
-	background-color:	rgb(241, 241, 241);
+	color:				whitesmoke;
+	background-color:	gray;
 	border:				1px solid lightgray;
 	padding:			0px;
 	margin-top:			70px;
@@ -103,10 +111,10 @@ BUTTON{
 #OPAQUESHAFT_DIALOG_TITLE{
 	float:				left;
 	height:				24px;
-	color:				rgb(73, 73, 73);
+	color:				whitesmoke;
 	font-size:			12px;
 	border-left:		10px solid red;
-	border-right:		1px solid lightgrey;
+/*	border-right:		1px solid lightgrey;	*/
 	padding-top:		4px;
 	padding-right:		8px;
 }
@@ -198,7 +206,7 @@ BUTTON{
 	padding-bottom:		3px;
 	color:				gray;
 	background-color:	rgb(241, 241, 241);
-	font-size:			12px;
+	font-size:			10px;
 	overflow:			hidden;
 }
 
@@ -219,7 +227,7 @@ BUTTON{
 
 .CHILD{
 	width:				160px;
-	height:				40px;
+	height:				60px;
 	color:				gray;
 	background-color:	white;
 	padding:			0px;
@@ -302,7 +310,7 @@ BUTTON{
 	position:			absolute;
 	top:				0px;
 	left:				0px;
-	width:				169px;
+	width:				167px;
 	height:				23px;
 	border-bottom:		1px solid lightgrey;
 	overflow:			hidden;
@@ -312,7 +320,7 @@ BUTTON{
 	position:			absolute;
 	top:				0px;
 	height:				0px;
-	width:				169px;
+	width:				167px;
 	height:				90%;
 	float: 				left;
 	font-size:			12px;
