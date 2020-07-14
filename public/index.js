@@ -123,7 +123,50 @@ function init()
 			}
 
 		}
+	
+	//
+	//	タイムラインバー初期化
+	//
+	var tmb = document.getElementById('ID_TIMELINE_BAR');
+	tmb.addEventListener( 'mousedown', locateTimelinebar );
+	tmb.addEventListener( 'mousemove', locateTimelinebar );
+	tmb.addEventListener( 'mouseup',   locateTimelinebar );
+
 }
+
+//
+//	タイムラインバー操作
+//
+var tlx = 0;
+function locateTimelinebar( e ){
+	e.preventDefault();
+
+	var itb = document.getElementById('ID_TIMELINE_BAR');
+	switch ( e.type ){
+		case 'mousedown':
+			if ( itb != e.target ) return;
+			e.target.position = 'absolute';
+			tlx = event.pageX - e.target.offsetLeft;
+			break;
+		case 'mousemove':
+		//	if ( document.getElementById('ID_TIMELINE_BAR') != e.target ) return;
+		//	if ( e.buttons & 1 ){
+				if ( ( event.pageX - tlx ) >= 0 && ( event.pageX - tlx ) <= 138 ){
+					itb.style.left = event.pageX - tlx + "px";
+					var cur_time = ( 60 * 8 ) + ((event.pageX - tlx) * 5);
+					var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
+								 + ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
+					itb.innerText = cur_time2;
+					itb.style.backgroundColor = 'lightcoral';
+				}
+		//	}
+			break;
+		case 'mouseup':
+			itb.style.backgroundColor = '';
+			break;
+	}
+}
+
 
 //
 //	ホワイトボードガイダンス表示
@@ -144,11 +187,11 @@ function showGuidanceWhiteboard(){
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" value="' + ymd + '" />';
 		r += '</div>';
 		r += '</form>';
-		r += '<button type="button"  style="width:100px;height:20px;font-size:12px;" onclick="createWhiteboard();" >Next &gt;</button>';
+		r += '<button id="BTN_OPENWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="createWhiteboard();" >Next &gt;</button>';
 	r += '</div>';
 	neverCloseDialog = true;
 	openModalDialog( r, 'NOBUTTON' );
-	document.getElementById('whiteboard_day').focus();
+	document.getElementById('BTN_OPENWHITEBOARD').focus();
 	visibleWhiteboard();
 
 }
@@ -512,7 +555,7 @@ function signMenu( e ){
 	o.style.height          = '200px';
 	o.style.backgroundColor = '#EEEEEE';
 	o.style.textAlign		='left';
-	o.style.zIndex			= 30000;
+	o.style.zIndex			= 50000;
 	o.innerText = 'sign menu...';
 	var p = document.getElementById('SIGN_STATUS');
 	var m = p.appendChild( o );

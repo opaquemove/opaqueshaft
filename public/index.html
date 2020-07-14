@@ -47,7 +47,7 @@
 		<div style="float:left;padding-top:4px;" >&nbsp;status&nbsp;</div>
 		<div style="float:left;width:40px;height:100%;margin-right:2px;border:1px solid lightgrey;" ></div>
 		<div style="float:left;width:40px;height:100%;margin-right:2px;border:1px solid lightgrey;" ></div>
-		<div id="CUR_WHITEBOARD_DAY" style="float:left;font-size:10px;width:80px;height:18px;margin-right:2px;text-align:center;padding-top:4px;border:1px solid lightgrey;" ></div>
+		<div style="float:left;font-size:10px;width:80px;height:18px;margin-right:2px;text-align:center;padding-top:4px;border:1px solid lightgrey;" ></div>
 		<div style="float:left;" >
 			<button onclick="countChild()"                 >count Child...</button>
 		</div>
@@ -55,13 +55,16 @@
 
 	<div id="AREA" >&nbsp;</div>
 
-	<div id="ACCOUNTS" class="not_select">Accounts...</div>
-	<div id="CHILDREN" class="not_select">Children...</div>
+	<div id="ACCOUNTS"     class="not_select">Accounts...</div>
+	<div id="CHILDREN"     class="not_select">Children...</div>
+	<div id="TIMELINE_BAY" class="not_select">
+		<div id="ID_TIMELINE_BAR" >-</div>
+	</div>
 	<div id="WHITEBOARD_BAY" class="not_select">
 		<div id="ID_CHILD_DELETE" >-</div>
 	</div>
 	<div id="WHITEBOARD_PALLETE_FRAME" class="not_select">
-		<div id="WHITEBOARD_PALLETE_TAB" >Whiteboard</div>
+		<div id="WHITEBOARD_PALLETE_TAB" >Whiteboard:<span id="CUR_WHITEBOARD_DAY" ></span></div>
 		<div id="WHITEBOARD_PALLETE_CONTENT_FRAME" >
 			<div id="WHITEBOARD_PALLETE_CONTENT_TOOLBAR" >
 				<div id="WPC_RELOAD" style="font-size:12px;padding-top:4px;padding-left:4px;float:left;width:50px;height:100%;border-right:1px solid lightgrey;" >
