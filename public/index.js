@@ -139,7 +139,8 @@ function init()
 //
 //	タイムラインバー操作
 //
-var tlx = 0;
+var tlx = null;
+var tlbOffset = null;
 function locateTimelinebar( e ){
 	e.preventDefault();
 
@@ -148,32 +149,45 @@ function locateTimelinebar( e ){
 	switch ( e.type ){
 		case 'touchstart':
 		case 'mousedown':
-			if(e.type === "mousedown" ) {
+			if(e.type == "mousedown" ) {
 				var event = e;
 			} else {
 				var event = e.changedTouches[0];
 			}
 			if ( itb != e.target ) return;
-			e.target.position = 'absolute';
-			tlx = event.pageX - e.target.offsetLeft;
+			if ( tlbOffset == null ) tlbOffset = e.target.offsetTop;
+			//e.target.position = 'absolute';
+//			tlx = event.pageX - e.target.offsetLeft;
+			tlx = event.pageY - e.target.offsetTop;
+			console.log('tlx:' + tlx );
+			console.log( 'offsetTop' + e.target.offsetTop );
 			break;
 		case 'touchmove':
 		case 'mousemove':
+			if ( tlx == null ) return;
 			if ( e.target != itb ) return;
-			if(e.type === "mousemove" ) {
+			if(e.type == "mousemove" ) {
 				var event = e;
 			} else {
 				var event = e.changedTouches[0];
 			}
-			if ( ( event.pageX - tlx ) >= 0 && ( event.pageX - tlx ) <= 138 ){
-				itb.style.left = event.pageX - tlx + "px";
-				var cur_time = ( 60 * 8 ) + ((event.pageX - tlx) * 5);
+			console.log( e.target.offsetTop + ':' + tlbOffset );
+//			if ( ( event.pageX - tlx ) >= 0 && ( event.pageX - tlx ) <= 138 ){
+			if ( ( event.pageY - tlx ) >= tlbOffset + 2 
+				&& ( event.pageY - tlx ) <= tlbOffset + 146 ){
+//				itb.style.left = event.pageX - tlx + "px";
+				itb.style.top = event.pageY - tlx + "px";
+//				var cur_time = ( 60 * 8 ) + ((event.pageX - tlx) * 5);
+				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) - ( 60 * 17 ) - 10;
 				var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
 								+ ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
 				itb.innerText = cur_time2;
+			} else {
+				console.log( 'other:' + e.target.offsetTop + ':' + tlbOffset );
 			}
 			break;
 		case 'mouseup':
+			tlx = null;
 			break;
 	}
 }

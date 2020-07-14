@@ -204,7 +204,7 @@ INPUT{
 
 #ID_TIMELINE_BAR{
 	position:			relative;
-	margin-top:			-18px;
+	margin-top:			0px;
 	top:				1px;
 	left:				0px;
 	width:				32px;
@@ -313,10 +313,22 @@ INPUT{
 	z-index:			40000;
 }
 
+#WHITEBOARD_PALLETE_TAB_CONTAINER{
+	position:			relative;
+	width:				30px;
+	height:				300px;
+	float: 				right;
+	margin:				0px;
+	padding:			0px;
+	font-size:			14px;
+	writing-mode: 		vertical-lr;		
+}
+
 #WHITEBOARD_PALLETE_TAB{
+	position:			relative;
 	width:				26px;
 	height:				190px;
-	float: 				right;
+/*	float: 				right;*/
 	font-size:			14px;
 	color:				snow;
 	background-color:	red;
@@ -324,6 +336,7 @@ INPUT{
 	padding-left:		4px;
 	writing-mode: 		vertical-lr;		
 }
+
 
 #WHITEBOARD_PALLETE_CONTENT_FRAME{
 	position:			relative;
