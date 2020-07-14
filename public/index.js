@@ -128,9 +128,11 @@ function init()
 	//	タイムラインバー初期化
 	//
 	var tmb = document.getElementById('ID_TIMELINE_BAR');
-	tmb.addEventListener( 'mousedown', locateTimelinebar );
-	tmb.addEventListener( 'mousemove', locateTimelinebar );
-	tmb.addEventListener( 'mouseup',   locateTimelinebar );
+	tmb.addEventListener( 'mousedown',  locateTimelinebar );
+	tmb.addEventListener( 'touchstart', locateTimelinebar );
+	tmb.addEventListener( 'mousemove',  locateTimelinebar );
+	tmb.addEventListener( 'touchmove',  locateTimelinebar );
+	tmb.addEventListener( 'mouseup',    locateTimelinebar );
 
 }
 
@@ -141,16 +143,29 @@ var tlx = 0;
 function locateTimelinebar( e ){
 	e.preventDefault();
 
+	
 	var itb = document.getElementById('ID_TIMELINE_BAR');
 	switch ( e.type ){
+		case 'touchstart':
 		case 'mousedown':
+			if(e.type === "mousedown" ) {
+				var event = e;
+			} else {
+				var event = e.changedTouches[0];
+			}
 			if ( itb != e.target ) return;
 			e.target.position = 'absolute';
 			tlx = event.pageX - e.target.offsetLeft;
 			break;
+		case 'touchmove':
 		case 'mousemove':
 		//	if ( document.getElementById('ID_TIMELINE_BAR') != e.target ) return;
 		//	if ( e.buttons & 1 ){
+			if(e.type === "mousemove" ) {
+				var event = e;
+			} else {
+				var event = e.changedTouches[0];
+			}
 				if ( ( event.pageX - tlx ) >= 0 && ( event.pageX - tlx ) <= 138 ){
 					itb.style.left = event.pageX - tlx + "px";
 					var cur_time = ( 60 * 8 ) + ((event.pageX - tlx) * 5);
