@@ -144,4 +144,34 @@ router.post('/childadd', function(req, res, next ){
       });
 });
 
+//
+//  ホワイトボード関連
+//
+
+//
+//  ホワイトボード追加
+//
+router.post('/whiteboardadd', function(req, res, next ){
+    var day  = req.body.day;
+    console.log('day:' + day );
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    db.none( {
+        text: "INSERT INTO whiteboards ( day ) SELECT  $1 WHERE NOT EXISTS ( SELECT * FROM whiteboards WHERE day = $2)",
+        values: [ day, day ] } )
+      .then( function() {
+        res.json( { status: 'SUCCESS', message:  'add whiteboard' });
+      });
+});
+
+//
+//  ホワイトボードリスト取得
+//
+router.post('/whiteboardlist', function(req, res, next ){
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    db.any( 'SELECT * FROM whiteboards ORDER BY day' )
+      .then( rows => {
+            res.json( rows );
+      });
+});
+
 module.exports = router;

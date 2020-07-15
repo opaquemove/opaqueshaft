@@ -28,9 +28,10 @@ function init()
 //	wb.addEventListener("touchmove",
 //	 function( e ) { e.preventDefault(); }, { passive:false } );
 //	wb.addEventListener('selectstart', function(e){return false;})
-	wb.addEventListener('mousedown', locateWhiteboard );
-	wb.addEventListener('mousemove', locateWhiteboard );
-	wb.addEventListener('mouseup',   locateWhiteboard );
+
+//	wb.addEventListener('mousedown', locateWhiteboard );
+//	wb.addEventListener('mousemove', locateWhiteboard );
+//	wb.addEventListener('mouseup',   locateWhiteboard );
 
 /*
 	wb.addEventListener('mousedown',
@@ -79,6 +80,16 @@ function init()
 			addChild( e.pageY, e.pageX, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
 		});
 
+	//
+	//	ホワイトボードパレットのイベント登録
+	//	
+	var wpc = document.getElementById('WHITEBOARD_PALLETE_CONTENT');
+	//wpc.addEventListener('dblclick',  selectWhiteboard );
+	//wpc.addEventListener('mouseup',   markPalleteWhiteboard );
+
+	//
+	//	チルドレンパレットのイベント登録
+	//	
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
 	cpc.addEventListener('dblclick',  selectChild );
 	cpc.addEventListener('mouseup',   markPalleteChild );
@@ -94,12 +105,13 @@ function init()
 */
 
 	fitting();
-	new Button( 'ACCOUNTS',                 null           ).play();
-	new Button( 'CHILDREN',                 null           ).play();
+//	new Button( 'ACCOUNTS',                 null           ).play();
+//	new Button( 'CHILDREN',                 null           ).play();
 //	new Button( 'COMMIT',                   null           ).play();
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
 	new Button( 'WHITEBOARD_PALLETE_TAB',   foldingWhiteboardPallete ).play();
 	new Button( 'WPC_TURNONOFF_WHITEBOARD', turnWhiteboard ).play();
+	new Button( 'WPC_SAVE_WHITEBOARD',      saveWhiteboard ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
@@ -111,18 +123,17 @@ function init()
 		if ( e.target == this ) closeModalDialog();
 		});
 
-		ctlToolbar();
-		makeWhiteboardPalleteList();
-		makeChildrenPalleteList();
-		if ( !checkSign() ){
-			signForm();
-		} else {
-			if ( !openWhiteboard ){
-				hiddenWhiteboard();
-				showGuidanceWhiteboard();
-			}
-
+	ctlToolbar();
+	makeWhiteboardPalleteList();
+	makeChildrenPalleteList();
+	if ( !checkSign() ){			//サインアウトしている
+		signForm();
+	} else {						//サインインしている
+		if ( !openWhiteboard ){
+			hiddenWhiteboard();
+			showGuidanceWhiteboard();
 		}
+	}
 	
 	//
 	//	タイムラインバー初期化
@@ -137,14 +148,14 @@ function init()
 }
 
 //
-//	タイムラインバー操作
+//	タイムライン・バー操作
 //
 var tlx = null;
 var tlbOffset = null;
+
 function locateTimelinebar( e ){
 	e.preventDefault();
 
-	
 	var itb = document.getElementById('ID_TIMELINE_BAR');
 	switch ( e.type ){
 		case 'touchstart':
@@ -157,10 +168,9 @@ function locateTimelinebar( e ){
 			if ( itb != e.target ) return;
 			if ( tlbOffset == null ) tlbOffset = e.target.offsetTop;
 			//e.target.position = 'absolute';
-//			tlx = event.pageX - e.target.offsetLeft;
 			tlx = event.pageY - e.target.offsetTop;
-			console.log('tlx:' + tlx );
-			console.log( 'offsetTop' + e.target.offsetTop );
+//			console.log('tlx:' + tlx );
+//			console.log( 'offsetTop' + e.target.offsetTop );
 			break;
 		case 'touchmove':
 		case 'mousemove':
@@ -171,22 +181,31 @@ function locateTimelinebar( e ){
 			} else {
 				var event = e.changedTouches[0];
 			}
-			console.log( e.target.offsetTop + ':' + tlbOffset );
-			if ( ( event.pageY - tlx ) >= tlbOffset + 2 
-				&& ( event.pageY - tlx ) <= tlbOffset + 146 ){
+			//console.log( e.target.offsetTop + ':' + tlbOffset );
+			if ( ( event.pageY - tlx ) >= tlbOffset + 0 
+				&& ( event.pageY - tlx ) <= tlbOffset + 144 ){
 				itb.style.top = event.pageY - tlx + "px";
-				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) - ( 60 * 17 ) - 30;
+				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) - ( 60 * 17 ) - 20;
 				var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
 								+ ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
 				itb.innerText = cur_time2;
+				scrollWhiteboard( Math.floor( cur_time / 60 ) );
 			} else {
-				console.log( 'other:' + e.target.offsetTop + ':' + tlbOffset );
+				//console.log( 'other:' + e.target.offsetTop + ':' + tlbOffset );
 			}
 			break;
 		case 'mouseup':
 			tlx = null;
 			break;
 	}
+}
+
+//
+//	タイムライン・バーに連動してホワイトボードをスクロール
+//
+function scrollWhiteboard(){
+	var wb = document.getElementById('WHITEBOARD');
+	wb.style.top = ( ( hour - 8 ) * 100 ) +42 + 'px';
 }
 
 
@@ -201,7 +220,9 @@ function showGuidanceWhiteboard(){
 	var ymd = y + '/' + m + '/' + d;
 
 	var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >create or open whiteboard</div>';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+		r += 'open whiteboard';
+	r += '</div>';
 	r += '<div style="margin:0 auto;width:110px;">';
 		r += '<form name="guidedance_whiteboard_form" >';
 		r += '<div>Date:</div>';
@@ -226,12 +247,21 @@ function createWhiteboard(){
 	var cwd = document.getElementById('CUR_WHITEBOARD_DAY');
 	dayWhiteboard = target_day;
 	cwd.innerText = target_day;
+	createWhiteboardHelper( dayWhiteboard );
 	//alert( target_day );
 	neverCloseDialog = false;
 	closeModalDialog();
 }
 
-
+//
+//	ホワイトボードIDをデータベースに登録する
+//
+function createWhiteboardHelper( day ){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/whiteboardadd", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'day=' + day );
+}
 
 function alreadyExistChildOnWhiteboard( id ){
 	var rc = false;
@@ -242,6 +272,33 @@ function alreadyExistChildOnWhiteboard( id ){
 			return true;
 	}
 	return rc;
+}
+
+//
+//	ホワイトボードを保存する
+//
+function saveWhiteboard(){
+	var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+		r += 'save whiteboard';
+	r += '</div>';
+	r += '<div style="margin:0 auto;width:110px;">';
+		r += '<form name="guidedance_whiteboard_form" >';
+		r += '<div>Date:</div>';
+		r += '<div style="padding-bottom:20px;" >';
+		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" readonly value="' + dayWhiteboard + '" />';
+		r += '</div>';
+		r += '</form>';
+		r += '<button id="BTN_SAVEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="saveWhiteboardHelper();" >Save</button>';
+	r += '</div>';
+	openModalDialog( r, 'NOBUTTON' );
+}
+
+//
+//	ホワイトボードを保存するヘルパー
+//
+function saveWhiteboardHelper(){
+	closeModalDialog();
 }
 
 //
@@ -281,6 +338,7 @@ function locateWhiteboard( e ){
 	switch ( e.type ){
 		case 'mousedown':
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
+			console.log('WHITEBOARD offsetTop:' + e.target.offsetTop );
 			e.target.position = 'absolute';
 			wbx = event.pageX - e.target.offsetLeft;
 			wby = event.pageY - e.target.offsetTop + 42;
@@ -404,20 +462,20 @@ function ctlToolbar(){
 	var tb       = document.getElementById('TOOLBAR');
 	var wbf      = document.getElementById('WHITEBOARD_FRAME');
 	var status   = document.getElementById('STATUS');
-	var acc      = document.getElementById('ACCOUNTS');
-	var children = document.getElementById('CHILDREN');
+//	var acc      = document.getElementById('ACCOUNTS');
+//	var children = document.getElementById('CHILDREN');
 	if ( checkSign()) {
 		tb.style.visibility     = 'visible';
 		wbf.style.visibility    = 'visible';
 		status.style.visibility = 'visible';
-		acc.style.visibility	= 'visible';
-		children.style.visibility= 'visible';
+//		acc.style.visibility	= 'visible';
+//		children.style.visibility= 'visible';
 	} else {
 		tb.style.visibility     = 'hidden';
 		wbf.style.visibility    = 'hidden';
 		status.style.visibility = 'hidden';
-		acc.style.visibility	= 'hidden';
-		children.style.visibility= 'hidden';
+//		acc.style.visibility	= 'hidden';
+//		children.style.visibility= 'hidden';
 	}
 }
 
@@ -482,6 +540,7 @@ function signout(){
 	ctlToolbar();
 	makeWhiteboardPalleteList();
 	makeChildrenPalleteList();
+	hiddenWhiteboard();
 	if ( flagChildrenPallete ) foldingChildrenPallete();
 	signForm();
 }
@@ -512,6 +571,7 @@ function sign()
 {
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
+/*
 	xmlhttp.onreadystatechange = function() {
 		switch ( xmlhttp.readyState){
 			case 1://opened
@@ -539,6 +599,9 @@ function sign()
 							}
 							o.innerText = r;
 							break;
+						default:
+							alert( 'cmd:' + result );
+							break;
 					}
 				} else{
 					alert( xmlhttp.status );
@@ -546,12 +609,43 @@ function sign()
 				break;
 		}
 	}
+*/
 	try{
 		var sign_id = sign_form.id.value;
 		var sign_pwd = sign_form.pwd.value;
-		xmlhttp.open("POST", "/accounts/signin", true );
+		xmlhttp.open("POST", "/accounts/signin", false );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( "acc=" + sign_id + "&pwd=" + sign_pwd );
+		r = "";
+		if ( xmlhttp.status == 200 ){
+			var result = JSON.parse( xmlhttp.responseText );
+			//r += xmlhttp.responseText;
+			switch( result.cmd ){
+				case 'signin':
+					var o = document.getElementById('SIGNIN_STATUS');
+					if ( result.status == 'SUCCESS' ){
+						ctlToolbar();
+						clearArea();
+						clearWhiteboard();
+						makeWhiteboardPalleteList();
+						makeChildrenPalleteList();
+						if ( !openWhiteboard ){
+							hiddenWhiteboard();
+							showGuidanceWhiteboard();
+						}
+				
+					} else {
+						r += 'sign in error'
+					}
+					o.innerText = r;
+					break;
+				default:
+					alert( 'cmd:' + result );
+					break;
+			}
+		} else{
+			alert( xmlhttp.status );
+		}
 
 	} catch ( e ) { alert( e );}
 }
@@ -647,9 +741,6 @@ function signForm()
 }
 
 //
-//
-//
-//
 //	ホワイトボードパレットリスト生成処理
 //
 function makeWhiteboardPalleteList()
@@ -661,9 +752,65 @@ function makeWhiteboardPalleteList()
 	}
 	document.getElementById( 'WHITEBOARD_PALLETE_FRAME' ).style.visibility = 'visible';
 	var r = "";
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				var o = document.getElementById( 'WHITEBOARD_PALLETE_CONTENT' );
+				o.innerText = 'access...';
+				break;
+			case 4://done
+				r = "";
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					//r += xmlhttp.responseText;
+					var o = document.getElementById('WHITEBOARD_PALLETE_CONTENT');
+					o.innerText = '';
+					for ( var i=0; i<result.length; i++ ){
+						addWhiteboardManage( o, result[i] );
+					}
+					//o.innerHTML = r;
+				} else{
+					document.getElementById('WHITEBOARD_PALLETE_CONTENT').innerText = xmlhttp.status;
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/whiteboardlist", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send();
+
+	} catch ( e ) { alert( e );}
+
 }
 
+//
+//	ホワイトボードリスト用DIV生成
+//
+function addWhiteboardManage( oParent, Result ){
 
+	var c = document.createElement("DIV");
+    c.setAttribute("whiteboard_id",  Result.child_id );
+//    c.setAttribute("draggable", "true");
+//    c.style.width       = '97%';
+	c.style.backgroundColor	= 'white';
+	c.style.height			= '40px';
+	c.style.marginBottom	= '1px';
+
+	var day = new Date( Result.day );
+	var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDay() ).slice(-2);
+
+	var r = '';
+    r += '<div style="height:20px;font-size:14px;padding-left:2px;border-bottom:1px solid lightgrey;">';
+    r += ymd;
+    r += '</div>';
+	c.innerHTML = r;
+    var cc = oParent.appendChild( c );
+
+}
 
 
 //
