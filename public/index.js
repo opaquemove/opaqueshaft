@@ -29,9 +29,9 @@ function init()
 //	 function( e ) { e.preventDefault(); }, { passive:false } );
 //	wb.addEventListener('selectstart', function(e){return false;})
 
-//	wb.addEventListener('mousedown', locateWhiteboard );
-//	wb.addEventListener('mousemove', locateWhiteboard );
-//	wb.addEventListener('mouseup',   locateWhiteboard );
+	wb.addEventListener('mousedown', locateWhiteboard );
+	wb.addEventListener('mousemove', locateWhiteboard );
+	wb.addEventListener('mouseup',   locateWhiteboard );
 
 /*
 	wb.addEventListener('mousedown',
@@ -203,9 +203,9 @@ function locateTimelinebar( e ){
 //
 //	タイムライン・バーに連動してホワイトボードをスクロール
 //
-function scrollWhiteboard(){
+function scrollWhiteboard( hour ){
 	var wb = document.getElementById('WHITEBOARD');
-	wb.style.top = ( ( hour - 8 ) * 100 ) +42 + 'px';
+	wb.style.top = 0 - ( ( hour - 8 ) * 100 ) + 'px';
 }
 
 
@@ -1083,6 +1083,7 @@ function getChild( id ){
 function mDown( e ) {
 
 		curChild = this;
+		//console.log( this.style.top + ',' + this.style.left );
         //クラス名に .drag を追加
 		curChild.classList.add("drag");
 		curChildZIndex = curChild.style.zIndex;
