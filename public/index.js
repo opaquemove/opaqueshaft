@@ -76,8 +76,12 @@ function init()
 				alert('すでにホワイトボードに配置されています．');
 				return;
 			}
+			var itb = document.getElementById('ID_TIMELINE_BAR');
+			var hm  = itb.innerText;
+			var arHM = hm.split(':');
+		
 			var oChild = getChild(id);
-			addChild( e.pageY, e.pageX, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
+			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
 		});
 
 	//
@@ -205,7 +209,7 @@ function locateTimelinebar( e ){
 //
 function scrollWhiteboard( hour ){
 	var wb = document.getElementById('WHITEBOARD');
-	wb.style.top = 0 - ( ( hour - 8 ) * 100 ) + 'px';
+	wb.style.top = 0 - ( ( hour - 8 ) * 100  ) + 'px';
 }
 
 
@@ -266,9 +270,17 @@ function createWhiteboardHelper( day ){
 function alreadyExistChildOnWhiteboard( id ){
 	var rc = false;
 	var wb = document.getElementById('WHITEBOARD');
+/*
 	for ( var i=0; i<wb.childNodes.length; i++ ){
-		console.log(wb.childNodes[i].getAttribute('child_id'));
-		if ( wb.childNodes[i].getAttribute('child_id') == id )
+		if ( wb.childNodes[i].tagName.toLowerCase() == 'div' ){
+			if ( wb.childNodes[i].getAttribute('child_id') == id )
+				return true;
+		}
+	}
+*/
+	var children = wb.getElementsByClassName('CHILD');
+	for ( var i=0; i<children.length; i++ ){
+		if ( children[i].getAttribute('child_id') == id )
 			return true;
 	}
 	return rc;
@@ -801,7 +813,7 @@ function addWhiteboardManage( oParent, Result ){
 	c.style.marginBottom	= '1px';
 
 	var day = new Date( Result.day );
-	var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDay() ).slice(-2);
+	var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDate() ).slice(-2);
 
 	var r = '';
     r += '<div style="height:20px;font-size:14px;padding-left:2px;border-bottom:1px solid lightgrey;">';
@@ -938,6 +950,11 @@ function markPalleteChild( e ){
 //
 function dragPalleteChild(){
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
+	var itb = document.getElementById('ID_TIMELINE_BAR');
+	var hm  = itb.innerText;
+	var arHM = hm.split(':');
+	
+	var cursor = 0;
 	for ( var i=0; i<cpc.childNodes.length; i++ ){
 		if ( cpc.childNodes[i].getAttribute('selected') != null ){
 			var id = cpc.childNodes[i].getAttribute('child_id');
@@ -952,6 +969,7 @@ function dragPalleteChild(){
 					left = parseInt( lchild.style.left ) + 20;
 				}
 				addChild( top, left, oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
+				cursor++;
 			}
 			cpc.childNodes[i].style.color = '';
 			cpc.childNodes[i].style.backgroundColor = '';
@@ -1188,6 +1206,7 @@ function mUp( e ) {
 //
 function resetChildMark(){
 	var wb = document.getElementById('WHITEBOARD');
+/*
 	if ( wb.childNodes.length == 0 ) return;
 	var c = null;
 	c = wb.firstChild;
@@ -1198,6 +1217,16 @@ function resetChildMark(){
 			c.removeAttribute('marked');
 		}
 		c = c.nextSibling;
+	}
+*/
+	var children = wb.getElementsByClassName('CHILD');
+	if ( children == null ) return;
+	for ( var i=0; i<children.length; i++ ){
+		if ( children[i].getAttribute('marked') == 'MARKED') {
+			children[i].style.backgroundColor = '';
+			children[i].style.color 			= '';
+			children[i].removeAttribute('marked');
+		}
 	}
 
 }

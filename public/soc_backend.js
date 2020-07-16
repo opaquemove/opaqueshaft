@@ -82,8 +82,17 @@ function loadChildren(){
 
 function clearWhiteboard(){
     var wb = document.getElementById('WHITEBOARD');
-    while ( wb.firstChild)
-        wb.removeChild( wb.firstChild );
+/*
+    while ( wb.firstChild){
+        if ( wb.firstChild.tagName == 'div' )
+            wb.removeChild( wb.firstChild );
+    }
+*/
+    var children = wb.getElementsByClassName('CHILD');
+    for ( var i=0; i<children.length; i++ ){
+        wb.removeChild( children[i] );
+    }
+
 }
 
 //
@@ -248,8 +257,9 @@ function unmarkChild( c ) {
 //  ホワイトボードのチルドレン数
 //
 function countChild(){
-	var wb = document.getElementById('WHITEBOARD');
-    alert( wb.childNodes.length);
+    var wb = document.getElementById('WHITEBOARD');
+    var children = wb.getElementsByClassName('CHILD');
+    alert( children.length );
 }
 
 //
@@ -257,7 +267,10 @@ function countChild(){
 //
 function latestWhiteboardChild(){
     var wb = document.getElementById('WHITEBOARD');
-    return wb.lastChild;
+    var children = wb.getElementsByClassName('CHILD');
+    if ( children == null ) return null;
+
+    return children[children.length-1];
 }
 
 //
