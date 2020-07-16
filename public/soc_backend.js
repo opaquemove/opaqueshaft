@@ -108,22 +108,24 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
     c.setAttribute('child_id', child_id ) ;
 	c.setAttribute("id", "c_1");
     c.setAttribute("class", "CHILD drag-and-drop");
-    c.style.position = 'absolute;'
-	c.style.top = top + 'px';
-    c.style.left = left + 'px';
+    c.style.position    = 'absolute;'
+	c.style.top         = top + 'px';
+    c.style.left        = left + 'px';
     c.style.borderRight = arChildGrade[ child_grade ];
-//    c.style.borderLeft = arChildGrade[ child_grade ];
+
+    var hm = coordinateToTime( top, left );
     var r = '';
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
     r += '<div style="height:100%;padding-left:2px;" >';
-        r += '<div style="font-size:14px;border-bottom:1px solid lightgray;" >';
-        r += child_name;
+        r += '<div style="width:100%;height:30px;font-size:14px;border-bottom:1px solid lightgrey;" >';
+            r += '<div style="float:left;" >' + child_name + '</div>';
+            r += '<div style="float:right;text-align:right;" >';
+            r += child_type + '' + child_grade;
+            r += '</div>';
         r += '</div>';
-        r += '<div style="text-align:right;font-size:10px;border-bottom:1px solid lightgrey;" >';
-        r += 'type:' + child_type + '&nbsp; Grade:' + child_grade
-        r += '</div>';
-        r += '<div id="CHECKOUT_' + child_id + '" style="text-align:right;font-size:10px;" >';
-        r += 'checkout:'
+        r += '<div id="CHECKOUT_' + child_id + '" style="clear:both;text-align:right;font-size:10px;" >';
+        r += 'co:<span class="CO_TIME" >' + hm + '</span>';
+        r += '&nbsp;&nbsp;checkout:'
         r += '</div>';
     r += '</div>';
 
@@ -209,18 +211,30 @@ function propertyWhiteboardChild( e ){
 //
 function deleteWhiteboardChild(){
     var p = document.getElementById( 'WHITEBOARD');
-    var c = p.firstChild;
-    //console.log(c);
-    while ( c ){
-        if ( c.getAttribute('marked') == 'MARKED'){
-            p.removeChild( c );
-            c = p.firstChild;
-        } else {
-            c = c.nextSibling;
-        }
+    var children = p.getElementsByClassName('CHILD');
 
+    if ( children.length == 0) return;
+    
+    var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+		r += 'delete child';
+	r += '</div>';
+	r += '<div style="margin:0 auto;width:110px;">';
+		r += '<button id="BTN_OPENWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="createWhiteboard();" >Next &gt;</button>';
+	r += '</div>';
+	openModalDialog( r, 'NOBUTTON' );
+ 
+}
+
+function deleteWhiteboardChildHelper(){
+    var p = document.getElementById( 'WHITEBOARD');
+    var children = p.getElementsByClassName('CHILD');
+    if ( children == null ) return;
+    while ( children.length > 0 ){
+        p.removeChild( children[0]);
     }
 }
+
 //
 //  ダブルクリックしたノードからChildノードを検索
 //

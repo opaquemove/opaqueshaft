@@ -1096,6 +1096,17 @@ function getChild( id ){
 }
 
 //
+//	ホワイトボードの座標から時間軸への変換
+//
+function coordinateToTime( top, left ){
+	var h = 8 + Math.floor( top / 100 );
+	var m = Math.floor( left / 70 ) * 5;
+	if ( m <= 0  ) m = 0;
+	if ( m >= 55 ) m = 55;
+	return ( '00' + h ).slice(-2) + ('00' + m ).slice(-2);
+}
+
+//
 //	チャイルド操作
 //
 function mDown( e ) {
@@ -1156,6 +1167,16 @@ function mMove( e ){
 //		    || (( event.buttons & 1 ) && event.type == 'mousemove' ) ){
 			drag.style.top  = event.pageY - y + "px";
 			drag.style.left = event.pageX - x + "px";
+			var co = drag.getElementsByClassName('CO_TIME');
+			//console.log('co check');
+			if ( co != null ){
+				var hm = coordinateToTime( parseInt( drag.style.top ),
+							parseInt( drag.style.left ));
+				//co[0].innerText = drag.style.top + ',' + drag.style.left;
+				co[0].innerText = hm;
+				//console.log('co found');
+			}
+			//	else console.out('co not found')
 //		}
 
         //マウスボタンが離されたとき、またはカーソルが外れたとき発火
