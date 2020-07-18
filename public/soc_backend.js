@@ -80,7 +80,23 @@ function loadChildren(){
 	socket.emit( 'cmd', 'getchildrenlist' );
 }
 
+//
+//  ホワイトボードの全チャイルドを削除
+//
 function clearWhiteboard(){
+	var r = "";
+    var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+		r += 'clear whiteboard';
+	r += '</div>';
+	r += '<div style="margin:0 auto;width:110px;">';
+		r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="clearWhiteboardHelper();" >Clear</button>';
+	r += '</div>';
+    openModalDialog( r, 'NORMAL' );
+    document.getElementById('BTN_CLEARWHITEBOARD').focus();
+
+}
+function clearWhiteboardHelper(){
     var wb = document.getElementById('WHITEBOARD');
     while ( wb.firstChild){
             wb.removeChild( wb.firstChild );
@@ -322,6 +338,7 @@ function checkoutChild(){
     console.log( propChild.getAttribute('child_id') );
     document.getElementById( 'CHECKOUT_' + propChild.getAttribute('child_id') ).innerText =
         'checkout:' + checkout_time;
+    propChild.style.opacity = 0.3;
     
 }
 
@@ -332,6 +349,7 @@ function checkclearChild(){
     if ( ! propChild ) return;
     propChild.removeAttribute('checkout' );
     document.getElementById( 'CHECKOUT_' + propChild.getAttribute('child_id') ).innerText = 'checkout:';
+    propChild.style.opacity = 1;
 }
 
 

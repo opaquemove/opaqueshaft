@@ -6,6 +6,7 @@
 
 var x, y;
 var wbx, wby;
+var delta_x, delta_y;
 var curChild  = null;
 var propChild = null;
 var curChildZIndex = null;
@@ -24,6 +25,7 @@ window.onresize = fitting;
 //
 function init()
 {
+	document.oncontextmenu = function(e) { return false; }
 	var wb = document.getElementById('WHITEBOARD');
 //	wb.addEventListener("touchmove",
 //	 function( e ) { e.preventDefault(); }, { passive:false } );
@@ -288,6 +290,7 @@ function createWhiteboard(){
 	closeModalDialog();
 	visibleWhiteboard();
 	loadWhiteboard();
+
 }
 
 //
@@ -335,14 +338,14 @@ function loadWhiteboard(){
 			//alert( result.whiteboard );
 			wb.innerHTML = result.whiteboard;
 			//
-			//	チャイルドにイベントハンドラを割り当てる
+			//	チャイルドにイベントハンドラを割り当てる 
 			//
 			for ( var i=0; i<wb.childNodes.length; i++ ){
 				wb.childNodes[i].addEventListener( 'dblclick',   propertyWhiteboardChild, false );
 				wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
 				wb.childNodes[i].addEventListener( "touchstart", mDown, false );
-			
 			}
+			showWhiteboardChildCount();
 		}	
 	} else alert(http.status);
 
@@ -528,6 +531,16 @@ function foldingWhiteboardPallete(){
 }
 
 //
+//	ホワイトボードパレット強制クローズ
+//
+function closeWhiteboardPallete(){
+	var wbf = document.getElementById('WHITEBOARD_FRAME');
+	var wpf = document.getElementById('WHITEBOARD_PALLETE_FRAME');
+	wpf.style.left = '-170px';
+	wbf.style.paddingLeft = '0px';
+	flagWhiteboardPallete = false;
+}
+//
 //	チルドレンパレットのフォールディング
 //
 var flagChildrenPallete = false;
@@ -631,6 +644,7 @@ function signout(){
 	makeWhiteboardPalleteList();
 	makeChildrenPalleteList();
 	hiddenWhiteboard();
+	closeWhiteboardPallete();
 	if ( flagChildrenPallete ) foldingChildrenPallete();
 	signForm();
 }
@@ -1233,6 +1247,9 @@ function mMove( e ){
 		var drag = curChild;
 		curChildMoved   = true;
 
+		//チェックアウト(checkout)しているチャイルドは対象外
+		if ( drag.hasAttribute('checkout')) return;
+
         //同様にマウスとタッチの差異を吸収
         if(e.type === "mousemove") {
             var event = e;
@@ -1247,18 +1264,19 @@ function mMove( e ){
 		//マウスが動いた場所に要素を動かす
 //		if ( event.type == 'touchmove' 
 //		    || (( event.buttons & 1 ) && event.type == 'mousemove' ) ){
+			var old_top  = parseInt( drag.style.top  );
+			var old_left = parseInt( drag.style.left );
 			drag.style.top  = event.pageY - y + "px";
 			drag.style.left = event.pageX - x + "px";
+			delta_x = parseInt( drag.style.left ) - old_left;
+			delta_y = parseInt( drag.style.top  ) - old_top;
+			moveOtherChild( drag, delta_x, delta_y );
+
 			var co = drag.getElementsByClassName('CO_TIME');
-			//console.log('co check');
 			if ( co != null ){
-				var hm = coordinateToTime( parseInt( drag.style.top ),
-							parseInt( drag.style.left ));
-				//co[0].innerText = drag.style.top + ',' + drag.style.left;
+				var hm = coordinateToTime( parseInt( drag.style.top ),parseInt( drag.style.left ));
 				co[0].innerText = hm;
-				//console.log('co found');
 			}
-			//	else console.out('co not found')
 //		}
 
 		var icc = document.getElementById('ID_CHILD_COORDINATE');
@@ -1273,6 +1291,28 @@ function mMove( e ){
 */
 }
 
+//
+//	マークしている他のチャイルドも移動
+//
+function moveOtherChild( base_child, x, y ){
+	var children = getMarkedChild();
+	if ( children.length == 0 ) return;
+	for ( var i=0; i<children.length; i++ ){
+		if ( base_child != children[i]){
+			if ( ! children[i].hasAttribute('checkout')){
+				children[i].style.top  = parseInt( children[i].style.top )  + y + 'px';
+				children[i].style.left = parseInt( children[i].style.left ) + x + 'px';
+				var co = children[i].getElementsByClassName('CO_TIME');
+				if ( co != null ){
+					var hm = coordinateToTime( parseInt( children[i].style.top ),
+												parseInt( children[i].style.left ));
+					co[0].innerText = hm;
+				}
+			}
+
+		}
+	}
+}
 //
 //	チャイルド操作
 //
