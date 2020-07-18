@@ -59,7 +59,24 @@ function init()
 			if ( e.target == wb)	resetChildMark();
 		});
 */
+	//
+	//	ドラッグオーバー時の処理
+	//
 	wb.addEventListener('dragover', 
+		function(e) {
+			e.preventDefault();
+		});
+	//
+	//	ドラッグオーバー時の処理
+	//
+	wb.addEventListener('dragenter', 
+		function(e) {
+			e.preventDefault();
+		});
+	//
+	//	ドラッグリーブ時の処理
+	//
+	wb.addEventListener('dragleave', 
 		function(e) {
 			e.preventDefault();
 		});
@@ -71,6 +88,7 @@ function init()
 			e.preventDefault();
 			//alert( e.dataTransfer.getData('text') );
 			var id = e.dataTransfer.getData('text');
+			var wb = document.getElementById('WHITEBOARD');
 			console.log( e.pageY, e.pageX, id );
 			if ( alreadyExistChildOnWhiteboard( id )){
 				alert('すでにホワイトボードに配置されています．');
@@ -79,9 +97,15 @@ function init()
 			var itb = document.getElementById('ID_TIMELINE_BAR');
 			var hm  = itb.innerText;
 			var arHM = hm.split(':');
+
+			var p = e.target.parentNode;
 		
 			var oChild = getChild(id);
-			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
+//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
+			addChild( e.pageY - e.target.offsetTop,
+				 e.pageX - e.target.offsetLeft - p.offsetLeft,
+				  oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
+			showWhiteboardChildCount();
 		});
 
 	//
@@ -148,6 +172,7 @@ function init()
 	tmb.addEventListener( 'mousemove',  locateTimelinebar );
 	tmb.addEventListener( 'touchmove',  locateTimelinebar );
 	tmb.addEventListener( 'mouseup',    locateTimelinebar );
+	tmb.addEventListener( 'touchend',   locateTimelinebar );
 
 }
 
@@ -156,7 +181,7 @@ function init()
 //
 var tlx = null;
 var tlbOffset = null;
-
+var tl_drag = false;
 function locateTimelinebar( e ){
 	e.preventDefault();
 
@@ -171,8 +196,10 @@ function locateTimelinebar( e ){
 			}
 			if ( itb != e.target ) return;
 			if ( tlbOffset == null ) tlbOffset = e.target.offsetTop;
+			var wb = document.getElementById('WHITEBOARD');
 			//e.target.position = 'absolute';
 			tlx = event.pageY - e.target.offsetTop;
+			tl_drag = true;
 //			console.log('tlx:' + tlx );
 //			console.log( 'offsetTop' + e.target.offsetTop );
 			break;
@@ -180,6 +207,7 @@ function locateTimelinebar( e ){
 		case 'mousemove':
 			if ( tlx == null ) return;
 			if ( e.target != itb ) return;
+			if ( !tl_drag ) return;
 			if(e.type == "mousemove" ) {
 				var event = e;
 			} else {
@@ -189,16 +217,18 @@ function locateTimelinebar( e ){
 			if ( ( event.pageY - tlx ) >= tlbOffset + 0 
 				&& ( event.pageY - tlx ) <= tlbOffset + 144 ){
 				itb.style.top = event.pageY - tlx + "px";
-				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) - ( 60 * 17 ) - 20;
+				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) - ( 60 * 18 ) - 20;
 				var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
 								+ ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
 				itb.innerText = cur_time2;
-				scrollWhiteboard( Math.floor( cur_time / 60 ) );
+			//	scrollWhiteboard( Math.floor( cur_time / 60 ) );
 			} else {
 				//console.log( 'other:' + e.target.offsetTop + ':' + tlbOffset );
 			}
 			break;
 		case 'mouseup':
+		case 'touchend':
+			tl_drag = false;
 			tlx = null;
 			break;
 	}
@@ -208,8 +238,10 @@ function locateTimelinebar( e ){
 //	タイムライン・バーに連動してホワイトボードをスクロール
 //
 function scrollWhiteboard( hour ){
-	var wb = document.getElementById('WHITEBOARD');
-	wb.style.top = 0 - ( ( hour - 8 ) * 100  ) + 'px';
+	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
+	var wb  = document.getElementById('WHITEBOARD');
+	wbt.style.top = 0 - ( ( hour - 8 ) * 100  ) - 0 + 'px';
+	wb.style.top  = 0 - ( ( hour - 8 ) * 100  ) - 1202 + 'px';
 }
 
 
@@ -239,8 +271,7 @@ function showGuidanceWhiteboard(){
 	neverCloseDialog = true;
 	openModalDialog( r, 'NOBUTTON' );
 	document.getElementById('BTN_OPENWHITEBOARD').focus();
-	visibleWhiteboard();
-
+	
 }
 
 //
@@ -255,6 +286,8 @@ function createWhiteboard(){
 	//alert( target_day );
 	neverCloseDialog = false;
 	closeModalDialog();
+	visibleWhiteboard();
+	loadWhiteboard();
 }
 
 //
@@ -287,6 +320,35 @@ function alreadyExistChildOnWhiteboard( id ){
 }
 
 //
+//	ホワイトボードをロードする
+//
+function loadWhiteboard(){
+	var day = dayWhiteboard;
+	var wb = document.getElementById('WHITEBOARD');
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/whiteboardload", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'day=' + day );
+	if ( xmlhttp.status == 200 ){
+		var result = JSON.parse( xmlhttp.responseText );
+		if ( result != null ){
+			//alert( result.whiteboard );
+			wb.innerHTML = result.whiteboard;
+			//
+			//	チャイルドにイベントハンドラを割り当てる
+			//
+			for ( var i=0; i<wb.childNodes.length; i++ ){
+				wb.childNodes[i].addEventListener( 'dblclick',   propertyWhiteboardChild, false );
+				wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
+				wb.childNodes[i].addEventListener( "touchstart", mDown, false );
+			
+			}
+		}	
+	} else alert(http.status);
+
+}
+
+//
 //	ホワイトボードを保存する
 //
 function saveWhiteboard(){
@@ -294,6 +356,7 @@ function saveWhiteboard(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'save whiteboard';
 	r += '</div>';
+	r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
 	r += '<div style="margin:0 auto;width:110px;">';
 		r += '<form name="guidedance_whiteboard_form" >';
 		r += '<div>Date:</div>';
@@ -301,6 +364,8 @@ function saveWhiteboard(){
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" readonly value="' + dayWhiteboard + '" />';
 		r += '</div>';
 		r += '</form>';
+		r += '<div style="height:50px;border:1px solid gray;" >';
+		r += '</div>';
 		r += '<button id="BTN_SAVEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="saveWhiteboardHelper();" >Save</button>';
 	r += '</div>';
 	openModalDialog( r, 'NOBUTTON' );
@@ -310,6 +375,13 @@ function saveWhiteboard(){
 //	ホワイトボードを保存するヘルパー
 //
 function saveWhiteboardHelper(){
+	var day = dayWhiteboard;
+	var wb = document.getElementById('WHITEBOARD');
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/whiteboardupdate", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'day=' + day + '&html=' + encodeURIComponent( wb.innerHTML ) );
+
 	closeModalDialog();
 }
 
@@ -347,13 +419,16 @@ function visibleWhiteboard(){
 
 function locateWhiteboard( e ){
 	e.preventDefault();
+	var wb = document.getElementById('WHITEBOARD');
 	switch ( e.type ){
 		case 'mousedown':
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
-			console.log('WHITEBOARD offsetTop:' + e.target.offsetTop );
 			e.target.position = 'absolute';
 			wbx = event.pageX - e.target.offsetLeft;
-			wby = event.pageY - e.target.offsetTop + 42;
+			wby = event.pageY - e.target.offsetTop + 42 + 1202;
+			console.log('event.pageY:', event.pageX );
+			console.log('WHITEBOARD top:' + wb.style.top );
+			console.log('WHITEBOARD offsetTop:' + e.target.offsetTop );
 			break;
 		case 'mousemove':
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
@@ -436,15 +511,18 @@ function fitting(){
 //
 var flagWhiteboardPallete = false;
 function foldingWhiteboardPallete(){
+	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	var wpf = document.getElementById('WHITEBOARD_PALLETE_FRAME');
 	var left = parseInt( wpf.style.left );
-	console.log(left);
+	//console.log(left);
 	//alert( '[' + cpf.style.marginLeft + ']' );
 	if ( left < 0 || isNaN(left ) ){
 		wpf.style.left = '0px';
+		wbf.style.paddingLeft = '170px';
 		flagWhiteboardPallete = true;
 	} else {
 		wpf.style.left = '-170px';
+		wbf.style.paddingLeft = '0px';
 		flagWhiteboardPallete = false;
 	}
 }
@@ -976,6 +1054,7 @@ function dragPalleteChild(){
 			cpc.childNodes[i].removeAttribute('selected');
 		}
 	}
+	showWhiteboardChildCount();
 
 }
 
@@ -1126,7 +1205,10 @@ function mDown( e ) {
 		//e.stopPropagation();
         //要素内の相対座標を取得
         x = event.pageX - curChild.offsetLeft;
-        y = event.pageY - curChild.offsetTop;
+		y = event.pageY - curChild.offsetTop;
+		
+		var icc = document.getElementById('ID_CHILD_COORDINATE');
+		icc.innerText = curChild.style.top + ' x ' + curChild.style.left;
 
         //ムーブイベントにコールバック
         document.body.addEventListener("mousemove", mMove, false);
@@ -1179,6 +1261,9 @@ function mMove( e ){
 			//	else console.out('co not found')
 //		}
 
+		var icc = document.getElementById('ID_CHILD_COORDINATE');
+		icc.innerText = curChild.style.top + ' x ' + curChild.style.left;
+
         //マウスボタンが離されたとき、またはカーソルが外れたとき発火
 /*
         drag.addEventListener("mouseup", mUp, false);
@@ -1216,6 +1301,9 @@ function mUp( e ) {
 			}
 		} 
 	}
+
+	var icc = document.getElementById('ID_CHILD_COORDINATE');
+	icc.innerText = '';
 
 	if ( curChild != null ) curChild.style.zIndex = '';
 	curChildMoved         = false;

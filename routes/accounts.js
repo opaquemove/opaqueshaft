@@ -164,6 +164,41 @@ router.post('/whiteboardadd', function(req, res, next ){
 });
 
 //
+//  ホワイトボードロード
+//
+router.post('/whiteboardload', function(req, res, next ){
+    var day  = req.body.day;
+    console.log('day:' + day );
+    res.header('Content-Type', 'application/json;charset=utf-8');
+//    res.json( { status:'SUCCESS'});
+    
+    db.one( {
+        text: 'SELECT * FROM whiteboards WHERE day = $1',
+        values: [ day ] } )
+      .then( rows => {
+            res.json( rows );
+      });
+    
+});
+
+//
+//  ホワイトボードアップデート
+//
+router.post('/whiteboardupdate', function(req, res, next ){
+    var day  = req.body.day;
+    var html = req.body.html;
+    console.log('day:' + day );
+    console.log('html:' + html );
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    db.none( {
+        text: "UPDATE whiteboards SET whiteboard = $1 WHERE whiteboard_id = ( SELECT whiteboard_id FROM whiteboards WHERE day = $2)",
+        values: [ html, day ] } )
+      .then( function() {
+        res.json( { status: 'SUCCESS', message:  'update whiteboard' });
+      });
+});
+
+//
 //  ホワイトボードリスト取得
 //
 router.post('/whiteboardlist', function(req, res, next ){

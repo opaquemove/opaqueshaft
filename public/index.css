@@ -100,7 +100,8 @@ INPUT{
 #OPAQUESHAFT_TITLE{
 	float:				left;
 	height:				32px;
-	color:				gray;
+	color:				white;
+	background-color:	black;
 	font-size:			16px;
 	border-left:		30px solid red;
 	border-right:		1px solid lightgrey;
@@ -187,19 +188,6 @@ INPUT{
 #TIMELINE_BAY{
 }
 
-#ID_TIMELINE_BAR{
-	position:			relative;
-	margin-top:			0px;
-	top:				208px;
-	left:				-30px;
-	width:				26px;
-	height:				50px;
-	font-size:			14px;
-	color:				white;
-	background-color:	red;
-	padding-left:		4px;
-	text-align:			center;
-}
 
 
 #WHITEBOARD_FRAME{
@@ -210,17 +198,33 @@ INPUT{
 	padding:			0px;
 	overflow:			scroll;
 }
+#WHITEBOARD_TIMELINE{
+	position: 			relative;
+	width:				52px;
+	height:				1200px;
+	float:				left;
+	border-top:			1px solid lightgrey;
+	border-bottom:		1px solid lightgrey;
+	padding:			0px;
+	
+/*	background-color:	slateblue;*/
+
+}
 #WHITEBOARD{
-	position:			relative;
+	position: 			relative;
+	top:				-1202px;
+	left:				52px;
 	width:				100%;
 	height:				1200px;
+/*	background-color:	lightcoral;*/
+	float:				left;
 	border:				1px solid lightgrey;
 	padding:			0px 0px 0px 0px;
 }
 #TIMELINE0800{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -231,13 +235,13 @@ INPUT{
 	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE0900{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -245,16 +249,16 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE1000{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -262,16 +266,16 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE1100{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -279,16 +283,16 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE1200{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -296,16 +300,16 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE1300{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -313,16 +317,16 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE1400{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -330,16 +334,16 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE1500{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -347,16 +351,16 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE1600{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -364,16 +368,16 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE1700{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -381,16 +385,16 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE1800{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -398,16 +402,16 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 #TIMELINE1900{
 	position:			relative;
 	top:				000px;
-	left:				-21px;
+	left:				31px;
 	width:				20px;
 	height:				98px;
 	color:				snow;
@@ -415,10 +419,10 @@ INPUT{
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px solid red;
 	border-bottom:		1px solid white;
 	z-index:			3000;
-	opacity:			0.6;
+	opacity:			1;
 	writing-mode: 		vertical-lr;
 }
 
@@ -502,6 +506,7 @@ INPUT{
 	left:				-170px;
 	width:				200px;
 	height:				90%;
+	background-color:	black;
 	margin-left:		0px;
 	padding:			0px;
 	font-size:			12px;
@@ -523,7 +528,7 @@ INPUT{
 #WHITEBOARD_PALLETE_TAB{
 	position:			relative;
 	width:				26px;
-	height:				190px;
+	height:				160px;
 /*	float: 				right;*/
 	font-size:			14px;
 	color:				snow;
@@ -533,6 +538,19 @@ INPUT{
 	writing-mode: 		vertical-lr;		
 }
 
+#ID_TIMELINE_BAR{
+	position:			relative;
+	margin-top:			0px;
+	top:				220px;
+	left:				-30px;
+	width:				26px;
+	height:				50px;
+	font-size:			14px;
+	color:				white;
+	background-color:	red;
+	padding-left:		4px;
+	text-align:			center;
+}
 
 #WHITEBOARD_PALLETE_CONTENT_FRAME{
 	position:			relative;

@@ -82,17 +82,10 @@ function loadChildren(){
 
 function clearWhiteboard(){
     var wb = document.getElementById('WHITEBOARD');
-/*
     while ( wb.firstChild){
-        if ( wb.firstChild.tagName == 'div' )
             wb.removeChild( wb.firstChild );
     }
-*/
-    var children = wb.getElementsByClassName('CHILD');
-    for ( var i=0; i<children.length; i++ ){
-        wb.removeChild( children[i] );
-    }
-
+    showWhiteboardChildCount();
 }
 
 //
@@ -214,25 +207,52 @@ function deleteWhiteboardChild(){
     var children = p.getElementsByClassName('CHILD');
 
     if ( children.length == 0) return;
-    
+
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'delete child';
 	r += '</div>';
 	r += '<div style="margin:0 auto;width:110px;">';
-		r += '<button id="BTN_OPENWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="createWhiteboard();" >Next &gt;</button>';
+		r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="deleteWhiteboardChildHelper();" >Delete</button>';
 	r += '</div>';
-	openModalDialog( r, 'NOBUTTON' );
+    openModalDialog( r, 'NOBUTTON' );
+    document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();
  
 }
 
+//
+//  マークしているチャイルドを削除（非表示処理）
+//
 function deleteWhiteboardChildHelper(){
+    closeModalDialog();
     var p = document.getElementById( 'WHITEBOARD');
-    var children = p.getElementsByClassName('CHILD');
-    if ( children == null ) return;
-    while ( children.length > 0 ){
-        p.removeChild( children[0]);
+    var c = p.firstChild;
+    while( c ){
+        if ( c.getAttribute('marked') == 'MARKED'){
+            p.removeChild( c );
+            c = p.firstChild;
+        } else {
+            c = c.nextSibling;
+        }
     }
+    showWhiteboardChildCount();
+}
+
+//
+//  マークしたチャイルドのコレクション取得
+//
+function getMarkedChild(){
+    var children = [];
+    var index = 0;
+    var p = document.getElementById( 'WHITEBOARD');
+    var c = p.firstChild;
+    while( c ){
+        if ( c.getAttribute('marked') == 'MARKED')
+            children[index++] = c;
+        c = c.nextSibling;
+    }
+    return children;
+
 }
 
 //
@@ -268,12 +288,13 @@ function unmarkChild( c ) {
 }
 
 //
-//  ホワイトボードのチルドレン数
+//  ホワイトボードのチャイルド数をステータス表示
 //
-function countChild(){
-    var wb = document.getElementById('WHITEBOARD');
+function showWhiteboardChildCount(){
+    var wb  = document.getElementById('WHITEBOARD');
     var children = wb.getElementsByClassName('CHILD');
-    alert( children.length );
+    var wcc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT');
+    wcc.innerText = children.length;
 }
 
 //
