@@ -5,8 +5,8 @@
 
 var socket = io();
 
-const arChildGrade = ['','4px solid lightcoral', '4px solid lightgreen', '4px solid lightblue'];
-const arChildGradeColor = ['','lightcoral', 'lightgreen', 'lightblue'];
+const arChildGrade = ['','4px solid lightcoral', '4px solid lightgreen', '4px solid lightblue','4px solid lightcyan','4px solid lightyellow','4px solid lightseagreen'];
+const arChildGradeColor = ['','lightcoral', 'lightgreen', 'lightblue', 'lightcyan', 'lightyellow','lightseagreen'];
 
 socket.on( 'getaccountlist', function ( msg ) {
     var r = "";

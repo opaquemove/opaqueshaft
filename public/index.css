@@ -567,7 +567,40 @@ INPUT{
 	left:				-90px;
 	width:				26px;
 	height:				19px;
-	color:				lightgreen;
+	color:				lightblue;
+	padding-top:		4px;
+	padding-left:		4px;
+}
+#ID_GRADE4{
+	position:			relative;
+	margin-top:			0px;
+	top:				252px;
+	left:				-120px;
+	width:				26px;
+	height:				19px;
+	color:				lightcyan;
+	padding-top:		4px;
+	padding-left:		4px;
+}
+#ID_GRADE5{
+	position:			relative;
+	margin-top:			0px;
+	top:				278px;
+	left:				-150px;
+	width:				26px;
+	height:				19px;
+	color:				lightyellow;
+	padding-top:		4px;
+	padding-left:		4px;
+}
+#ID_GRADE6{
+	position:			relative;
+	margin-top:			0px;
+	top:				304px;
+	left:				-180px;
+	width:				26px;
+	height:				19px;
+	color:				lightseagreen;
 	padding-top:		4px;
 	padding-left:		4px;
 }
@@ -576,8 +609,8 @@ INPUT{
 #ID_TIMELINE_BAR{
 	position:			relative;
 	margin-top:			0px;
-	top:				320px;
-	left:				-90px;
+	top:				340px;
+	left:				-210px;
 	width:				26px;
 	height:				50px;
 	font-size:			14px;
