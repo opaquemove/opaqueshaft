@@ -332,8 +332,7 @@ function checkoutChild(){
     var now = new Date();
     var h = ( '00' + now.getHours() ).slice(-2);
     var m = ( '00' + now.getMinutes() ).slice(-2);
-    var s = ( '00' + now.getSeconds() ).slice(-2);
-    var checkout_time = h + ':' + m + ':' + s;
+    var checkout_time = h + ':' + m;
     propChild.setAttribute('checkout', checkout_time );
     console.log( propChild.getAttribute('child_id') );
     document.getElementById( 'CHECKOUT_' + propChild.getAttribute('child_id') ).innerText =

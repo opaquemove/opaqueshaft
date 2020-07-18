@@ -147,6 +147,8 @@ function init()
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
 	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardChild ).play();
+	new Button( 'ID_GRADE1',                null           ).play();
+	new Button( 'ID_GRADE2',                null           ).play();
 
 	var mo = document.getElementById('MODAL_OVERLAY');
 	mo.addEventListener('click', function(e){
@@ -219,7 +221,7 @@ function locateTimelinebar( e ){
 			if ( ( event.pageY - tlx ) >= tlbOffset + 0 
 				&& ( event.pageY - tlx ) <= tlbOffset + 144 ){
 				itb.style.top = event.pageY - tlx + "px";
-				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) - ( 60 * 18 ) - 20;
+				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) - ( 60 * 26 ) - 40;
 				var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
 								+ ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
 				itb.innerText = cur_time2;
