@@ -106,7 +106,7 @@ router.post('/sign', function(req, res, next ){
 //
 router.post('/childlist', function(req, res, next ){
     res.header('Content-Type', 'application/json;charset=utf-8');
-    db.any( 'SELECT * FROM children ' )
+    db.any( 'SELECT * FROM children ORDER BY child_grade ASC' )
       .then( rows => {
             res.json( rows );
       });

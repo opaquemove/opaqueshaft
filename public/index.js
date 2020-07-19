@@ -103,10 +103,11 @@ function init()
 			var p = e.target.parentNode;
 		
 			var oChild = getChild(id);
+			var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
 //			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
 			addChild( e.pageY - e.target.offsetTop,
 				 e.pageX - e.target.offsetLeft - p.offsetLeft,
-				  oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
+				 escort, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
 			showWhiteboardChildCount();
 		});
 
@@ -147,12 +148,15 @@ function init()
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
 	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardChild ).play();
+	new Button( 'ID_CHILD_ESCORT',          escortChild ).play();
+	new Button( 'ID_CHILD_UNESCORT',        unescortChild ).play();
 	new Button( 'ID_GRADE1',                null           ).play();
 	new Button( 'ID_GRADE2',                null           ).play();
 	new Button( 'ID_GRADE3',                null           ).play();
 	new Button( 'ID_GRADE4',                null           ).play();
 	new Button( 'ID_GRADE5',                null           ).play();
 	new Button( 'ID_GRADE6',                null           ).play();
+	new Checkbox('CPC_ESCORT_CHILD', 'ON').play();
 
 	var mo = document.getElementById('MODAL_OVERLAY');
 	mo.addEventListener('click', function(e){
@@ -571,18 +575,21 @@ function ctlToolbar(){
 	var tb       = document.getElementById('TOOLBAR');
 	var wbf      = document.getElementById('WHITEBOARD_FRAME');
 	var status   = document.getElementById('STATUS');
+	var wbb      = document.getElementById('WHITEBOARD_BAY');
 //	var acc      = document.getElementById('ACCOUNTS');
 //	var children = document.getElementById('CHILDREN');
 	if ( checkSign()) {
 		tb.style.visibility     = 'visible';
 		wbf.style.visibility    = 'visible';
 		status.style.visibility = 'visible';
+		wbb.style.visibility	= 'visible';
 //		acc.style.visibility	= 'visible';
 //		children.style.visibility= 'visible';
 	} else {
 		tb.style.visibility     = 'hidden';
 		wbf.style.visibility    = 'hidden';
 		status.style.visibility = 'hidden';
+		wbb.style.visibility	= 'hidden';
 //		acc.style.visibility	= 'hidden';
 //		children.style.visibility= 'hidden';
 	}
@@ -1022,7 +1029,7 @@ function markPalleteChild( e ){
 		var m = c.getAttribute('selected');
 		if ( m == null ){
 			c.style.color			= 'white';
-			c.style.backgroundColor = 'lightcoral';
+			c.style.backgroundColor = 'gray';
 			c.setAttribute('selected', 'yes' );
 		} else {
 			c.style.color			= '';
@@ -1052,6 +1059,8 @@ function dragPalleteChild(){
 	var hm  = itb.innerText;
 	var arHM = hm.split(':');
 	
+	var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
+
 	var cursor = 0;
 	for ( var i=0; i<cpc.childNodes.length; i++ ){
 		if ( cpc.childNodes[i].getAttribute('selected') != null ){
@@ -1066,7 +1075,7 @@ function dragPalleteChild(){
 					top  = parseInt( lchild.style.top ) + 20;
 					left = parseInt( lchild.style.left ) + 20;
 				}
-				addChild( top, left, oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
+				addChild( top, left, escort, oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
 				cursor++;
 			}
 			cpc.childNodes[i].style.color = '';

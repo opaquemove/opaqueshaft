@@ -41,7 +41,7 @@ socket.on( 'getchildrenlist', function ( msg ) {
     o.style.visibility = 'visible';
     for (var i=0; i<children.length; i++) {
         r += children[i].child_name + '<br/>'; 
-        addChild( i * 20, i * 20, children[i].child_id,
+        addChild( i * 20, i * 20, 'OFF', children[i].child_id,
              children[i].child_name, children[i].child_type, children[i].child_grade );
     }
     r += '<br/>length:' + children.length;
@@ -107,7 +107,7 @@ function clearWhiteboardHelper(){
 //
 //  WhiteBoardにチャイルドを実体化
 //
-function addChild( top, left, child_id, child_name, child_type, child_grade ){
+function addChild( top, left, escort, child_id, child_name, child_type, child_grade ){
 	var o = document.getElementById('AREA');
 	o.style.visibility = 'hidden';
 
@@ -117,6 +117,8 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
     c.setAttribute('child_id', child_id ) ;
 	c.setAttribute("id", "c_1");
     c.setAttribute("class", "CHILD drag-and-drop");
+    if ( escort == 'ON')
+        c.setAttribute('escort', 'yes' );
     c.style.position    = 'absolute;'
 	c.style.top         = top + 'px';
     c.style.left        = left + 'px';
@@ -137,9 +139,11 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
         r += '&nbsp;&nbsp;checkout:'
         r += '</div>';
     r += '</div>';
+    r += '<img width="12px" style="position:absolute;top:46px;left:74px;" src="./images/arrow-down.png" />';
 
 	c.innerHTML = r;
     var cc = wb.appendChild( c );
+    setEscortHelper( cc, escort );
     cc.addEventListener( 'dblclick',   propertyWhiteboardChild, false );
 	cc.addEventListener( "mousedown",  mDown, false );
 	cc.addEventListener( "touchstart", mDown, false );
@@ -289,7 +293,7 @@ function scanChild( o ) {
 function markChild( c ) {
     if ( c == null ) return;
     c.setAttribute('marked', 'MARKED' );
-    c.style.backgroundColor = 'lightcoral';
+    c.style.backgroundColor = 'gray';
     c.style.color           = 'snow';
 }
 
@@ -325,6 +329,64 @@ function latestWhiteboardChild(){
 }
 
 //
+//  マークしているチャイルドをエスコート設定（お迎え）
+//
+function escortChild(){
+    var children = getMarkedChild();
+    if ( children.length == 0 ) return;
+    for ( var i=0; i<children.length; i++){
+        var c = children[i];
+        if ( ! c.hasAttribute('escort') ){
+            c.setAttribute('escort', 'yes');
+            setEscortHelper( c, 'ON' );
+            // c.firstChild.style.backgroundImage = 'url(./images/user.png)';
+            // c.firstChild.style.backgroundPosition = 'right bottom';
+            // c.firstChild.style.backgroundRepeat = 'no-repeat';
+            // c.firstChild.style.backgroundSize   = '16px';
+        }
+    }
+}
+
+//
+//  マークしているチャイルドをエスコート設定（お迎え）
+//
+function unescortChild(){
+    var children = getMarkedChild();
+    if ( children.length == 0 ) return;
+    for ( var i=0; i<children.length; i++){
+        var c = children[i];
+        if ( c.hasAttribute('escort') ){
+            c.removeAttribute('escort');
+            setEscortHelper( c, 'OFF' );
+            // c.firstChild.style.backgroundImage = '';
+            // c.firstChild.style.backgroundPosition = '';
+            // c.firstChild.style.backgroundRepeat = '';
+            // c.firstChild.style.backgroundSize   = '';
+        }
+    }
+}
+
+//
+//
+//
+function setEscortHelper( c, flag ){
+    switch ( flag ){
+        case 'ON':
+            c.firstChild.style.backgroundImage = 'url(./images/user.png)';
+            c.firstChild.style.backgroundPosition = 'right bottom';
+            c.firstChild.style.backgroundRepeat = 'no-repeat';
+            c.firstChild.style.backgroundSize   = '16px';
+            break;
+        case 'OFF':
+        default:
+            c.firstChild.style.backgroundImage = '';
+            c.firstChild.style.backgroundPosition = '';
+            c.firstChild.style.backgroundRepeat = '';
+            c.firstChild.style.backgroundSize   = '';
+            break;
+    }
+}
+//
 //  Childをチェックアウト（帰宅）
 //
 function checkoutChild(){
@@ -337,18 +399,27 @@ function checkoutChild(){
     console.log( propChild.getAttribute('child_id') );
     document.getElementById( 'CHECKOUT_' + propChild.getAttribute('child_id') ).innerText =
         'checkout:' + checkout_time;
-    propChild.style.opacity = 0.3;
+    //propChild.style.opacity = 0.3;
+    propChild.style.backgroundImage    = 'url(./images/check.png)';
+    propChild.style.backgroundPosition = 'left bottom';
+    propChild.style.backgroundRepeat   = 'no-repeat';
+    propChild.style.backgroundSize     = '16px';
     
 }
 
 //
-//  Childをチェックアウト（帰宅）
+//  Childをチェッククリア（帰宅）
 //
 function checkclearChild(){
     if ( ! propChild ) return;
     propChild.removeAttribute('checkout' );
     document.getElementById( 'CHECKOUT_' + propChild.getAttribute('child_id') ).innerText = 'checkout:';
-    propChild.style.opacity = 1;
+    //propChild.style.opacity = 1;
+    propChild.style.backgroundImage    = 'url(./images/check.png)';
+    propChild.style.backgroundPosition = 'left bottom';
+    propChild.style.backgroundRepeat   = 'no-repeat';
+    propChild.style.backgroundSize     = '16px';
+
 }
 
 
