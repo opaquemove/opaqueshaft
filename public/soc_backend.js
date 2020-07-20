@@ -130,7 +130,7 @@ function addChild( top, left, escort, child_id, child_name, child_type, child_gr
     r += '<div style="height:100%;padding-left:2px;" >';
         r += '<div style="width:100%;height:30px;font-size:14px;border-bottom:1px solid lightgrey;" >';
             r += '<div style="float:left;" >' + child_name + '</div>';
-            r += '<div class="ESCORT_FLG" style="float:right;width:16px;" >&nbsp;';
+            r += '<div class="ESCORT_FLG" style="padding-left:2px;float:right;width:16px;height:16px;" >&nbsp;';
             r += '</div>';
             r += '<div class="CO_TIME" style="padding-left:2px;float:right;text-align:right;" >';
                 r += hm;
@@ -181,7 +181,10 @@ function addChildManage( oParent, oChild ){
     var cc = oParent.appendChild( c );
 	cc.addEventListener('dragstart',
 		function(e) {
+            dndOffsetX = e.offsetX;
+            dndOffsetY = e.offsetY;
             console.log( e.dataTransfer );
+            console.log('offsetY:' + dndOffsetY + ' OffsetX:' + dndOffsetX );
 			e.dataTransfer.setData('text', e.target.getAttribute( 'child_id' ) );
 		} );
 
@@ -379,9 +382,9 @@ function setEscortHelper( c, flag ){
     switch ( flag ){
         case 'ON':
             escort.style.backgroundImage = 'url(./images/user.png)';
-            escort.style.backgroundPosition = 'center middle';
+            escort.style.backgroundPosition = 'right middle';
             escort.style.backgroundRepeat = 'no-repeat';
-            escort.style.backgroundSize   = '16px';
+            escort.style.backgroundSize   = '14px';
             break;
         case 'OFF':
         default:

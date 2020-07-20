@@ -12,6 +12,11 @@ var propChild = null;
 var curChildZIndex = null;
 var curChildMoved  = false;
 
+var criteriaEscortPixel = 600;
+
+var dndOffsetX = 0;
+var dndOffsetY = 0;
+
 var openWhiteboard = false;
 var dayWhiteboard  = '';
 
@@ -26,7 +31,14 @@ window.onresize = fitting;
 function init()
 {
 	document.oncontextmenu = function(e) { return false; }
+	var wbf = document.getElementById('WHITEBOARD_FRAME');
+	// wbf.addEventListener('scroll',
+	// 	function(e){
+	// 		console.log( 'scrollTop:' + e.target.scrollTop );
+	// 	});
+
 	var wb = document.getElementById('WHITEBOARD');
+//  touchmoveを抑制すると返って使いづらいので抑制はしないよ！
 //	wb.addEventListener("touchmove",
 //	 function( e ) { e.preventDefault(); }, { passive:false } );
 //	wb.addEventListener('selectstart', function(e){return false;})
@@ -81,9 +93,11 @@ function init()
 			var oChild = getChild(id);
 			var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
 //			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
-			addChild( e.pageY - e.target.offsetTop,
-				 e.pageX - e.target.offsetLeft - p.offsetLeft,
+			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop,
+				 e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft,
 				 escort, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
+			dndOffsetX = 0;
+			dndOffsetY = 0;
 			showWhiteboardChildCount();
 		});
 
@@ -525,11 +539,11 @@ function foldingWhiteboardPallete(){
 	//console.log(left);
 	//alert( '[' + cpf.style.marginLeft + ']' );
 	if ( left < 0 || isNaN(left ) ){
-		wpf.style.left = '0px';
+		wpf.style.left = '0px';				//	open pallete
 		wbf.style.paddingLeft = '170px';
 		flagWhiteboardPallete = true;
 	} else {
-		wpf.style.left = '-170px';
+		wpf.style.left = '-170px';			// close pallete
 		wbf.style.paddingLeft = '0px';
 		flagWhiteboardPallete = false;
 	}
@@ -554,10 +568,10 @@ function foldingChildrenPallete(){
 	var mleft = parseInt( cpf.style.marginLeft );
 	//alert( '[' + cpf.style.marginLeft + ']' );
 	if ( mleft == 0 || isNaN(mleft ) ){
-		cpf.style.marginLeft = '-180px';
+		cpf.style.marginLeft = '-170px';	// open pallete
 		flagChildrenPallete = true;
 	} else {
-		cpf.style.marginLeft = '0px';
+		cpf.style.marginLeft = '0px';		// close pallete
 		flagChildrenPallete = false;
 	}
 }
@@ -1202,8 +1216,8 @@ function getChild( id ){
 //	ホワイトボードの座標から時間軸への変換
 //
 function coordinateToTime( top, left ){
-	var escort = Math.floor( left / 600 );
-	var left2  = left - ( escort * 600 );
+	var escort = Math.floor( left / criteriaEscortPixel );
+	var left2  = left - ( escort * criteriaEscortPixel );
 	var h = 8 + Math.floor( top / 200 );		//200px:1hour
 	var m = Math.floor( left2 / 200 ) * 15;		// 210px:15min
 	if ( m <= 0  ) m = 0;
@@ -1215,7 +1229,7 @@ function coordinateToTime( top, left ){
 //	ホワイトボードの座標からエスコート（お迎え）判断
 //
 function coordinateToEscort( top, left ){
-	var escort = Math.floor( left / 600 );
+	var escort = Math.floor( left / criteriaEscortPixel );
 	return ( escort > 0 )?true:false;
 }
 
