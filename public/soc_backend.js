@@ -130,12 +130,17 @@ function addChild( top, left, escort, child_id, child_name, child_type, child_gr
     r += '<div style="height:100%;padding-left:2px;" >';
         r += '<div style="width:100%;height:30px;font-size:14px;border-bottom:1px solid lightgrey;" >';
             r += '<div style="float:left;" >' + child_name + '</div>';
+            r += '<div class="ESCORT_FLG" style="float:right;width:16px;" >&nbsp;';
+            r += '</div>';
+            r += '<div class="CO_TIME" style="padding-left:2px;float:right;text-align:right;" >';
+                r += hm;
+            r += '</div>';
             r += '<div style="float:right;text-align:right;" >';
             r += child_type + '' + child_grade;
             r += '</div>';
         r += '</div>';
-        r += '<div id="CHECKOUT_' + child_id + '" style="clear:both;text-align:right;font-size:10px;" >';
-        r += 'co:<span class="CO_TIME" >' + hm + '</span>';
+        r += '<div id="CHECKOUT_' + child_id + '" style="clear:both;text-align:right;font-size:10px;border-bottom:1px solid gray;" >';
+        //r += 'co:<span class="CO_TIME" >' + hm + '</span>';
         r += '&nbsp;&nbsp;checkout:'
         r += '</div>';
     r += '</div>';
@@ -159,7 +164,7 @@ function addChildManage( oParent, oChild ){
     c.setAttribute("child",     "yes");
     c.setAttribute("child_id",  oChild.child_id );
 	c.setAttribute("id",        "c_1");
-    c.setAttribute("class",     "CHILD");
+    c.setAttribute("class",     "PALLETE_CHILD");
     c.setAttribute("draggable", "true");
 //    c.style.width       = '97%';
     c.style.height      = '40px';
@@ -185,7 +190,6 @@ function addChildManage( oParent, oChild ){
 //
 //  チャイルドプロパティ
 //
-
 function propertyWhiteboardChild( e ){
     var c = scanChild( e.target );
     if ( c == null ){
@@ -293,8 +297,8 @@ function scanChild( o ) {
 function markChild( c ) {
     if ( c == null ) return;
     c.setAttribute('marked', 'MARKED' );
-    c.style.backgroundColor = 'gray';
-    c.style.color           = 'snow';
+    c.style.backgroundColor = '#EEEEEE';
+    c.style.color           = 'gray';
 }
 
 //
@@ -370,19 +374,21 @@ function unescortChild(){
 //
 //
 function setEscortHelper( c, flag ){
+    var escort_flg = c.getElementsByClassName('ESCORT_FLG');
+    var escort = escort_flg[0];
     switch ( flag ){
         case 'ON':
-            c.firstChild.style.backgroundImage = 'url(./images/user.png)';
-            c.firstChild.style.backgroundPosition = 'right bottom';
-            c.firstChild.style.backgroundRepeat = 'no-repeat';
-            c.firstChild.style.backgroundSize   = '16px';
+            escort.style.backgroundImage = 'url(./images/user.png)';
+            escort.style.backgroundPosition = 'center middle';
+            escort.style.backgroundRepeat = 'no-repeat';
+            escort.style.backgroundSize   = '16px';
             break;
         case 'OFF':
         default:
-            c.firstChild.style.backgroundImage = '';
-            c.firstChild.style.backgroundPosition = '';
-            c.firstChild.style.backgroundRepeat = '';
-            c.firstChild.style.backgroundSize   = '';
+            escort.style.backgroundImage = '';
+            escort.style.backgroundPosition = '';
+            escort.style.backgroundRepeat = '';
+            escort.style.backgroundSize   = '';
             break;
     }
 }
@@ -415,10 +421,10 @@ function checkclearChild(){
     propChild.removeAttribute('checkout' );
     document.getElementById( 'CHECKOUT_' + propChild.getAttribute('child_id') ).innerText = 'checkout:';
     //propChild.style.opacity = 1;
-    propChild.style.backgroundImage    = 'url(./images/check.png)';
-    propChild.style.backgroundPosition = 'left bottom';
-    propChild.style.backgroundRepeat   = 'no-repeat';
-    propChild.style.backgroundSize     = '16px';
+    propChild.style.backgroundImage    = '';
+    propChild.style.backgroundPosition = '';
+    propChild.style.backgroundRepeat   = '';
+    propChild.style.backgroundSize     = '';
 
 }
 
@@ -437,7 +443,7 @@ function propertyAccount(){
         r += "";
         r += "</div>";
         r += "<div>";
-            r += "<form name='sign_form' >";
+            r += "<form name='sign_form' onsubmit='return false;' >";
                 r += "<table align='center' >";
                 r += "<tr>";
                 r += "<td>Account ID:</td>";

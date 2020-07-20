@@ -34,33 +34,9 @@ function init()
 	wb.addEventListener('mousedown', locateWhiteboard );
 	wb.addEventListener('mousemove', locateWhiteboard );
 	wb.addEventListener('mouseup',   locateWhiteboard );
+	document.addEventListener('keydown',   keyWhiteboard );
 
-/*
-	wb.addEventListener('mousedown',
-		function(e) {
-			e.preventDefault();
-			if ( document.getElementById('WHITEBOARD') != e.target ) return;
-			e.target.position = 'absolute';
-			wbx = event.pageX - e.target.offsetLeft;
-			wby = event.pageY - e.target.offsetTop + 42;
-		});
-	wb.addEventListener('mousemove',
-		function(e) {
-			e.preventDefault();
-			if ( document.getElementById('WHITEBOARD') != e.target ) return;
-//			if ( e.buttons & 1 ){
-				document.getElementById('WHITEBOARD').style.top  = event.pageY - wby + "px";
-				document.getElementById('WHITEBOARD').style.left = event.pageX - wbx + "px";
-//			}
-	
-		});	
 
-	wb.addEventListener('mouseup', 
-		function(e) {
-			initArea();
-			if ( e.target == wb)	resetChildMark();
-		});
-*/
 	//
 	//	ドラッグオーバー時の処理
 	//
@@ -73,7 +49,7 @@ function init()
 	//
 	wb.addEventListener('dragenter', 
 		function(e) {
-			e.preventDefault();
+			e.preventDefault();	
 		});
 	//
 	//	ドラッグリーブ時の処理
@@ -252,8 +228,8 @@ function locateTimelinebar( e ){
 function scrollWhiteboard( hour ){
 	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
 	var wb  = document.getElementById('WHITEBOARD');
-	wbt.style.top = 0 - ( ( hour - 8 ) * 100  ) - 0 + 'px';
-	wb.style.top  = 0 - ( ( hour - 8 ) * 100  ) - 1202 + 'px';
+	wbt.style.top = 0 - ( ( hour - 8 ) * 200  ) - 0 + 'px';
+	wb.style.top  = 0 - ( ( hour - 8 ) * 200  ) - 2402 + 'px';
 }
 
 
@@ -272,7 +248,7 @@ function showGuidanceWhiteboard(){
 		r += 'open whiteboard';
 	r += '</div>';
 	r += '<div style="margin:0 auto;width:110px;">';
-		r += '<form name="guidedance_whiteboard_form" >';
+		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
 		r += '<div style="padding-bottom:20px;" >';
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" value="' + ymd + '" />';
@@ -371,7 +347,7 @@ function saveWhiteboard(){
 	r += '</div>';
 	r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
 	r += '<div style="margin:0 auto;width:110px;">';
-		r += '<form name="guidedance_whiteboard_form" >';
+		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
 		r += '<div style="padding-bottom:20px;" >';
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" readonly value="' + dayWhiteboard + '" />';
@@ -430,6 +406,9 @@ function visibleWhiteboard(){
 	wb.style.visibility = 'visible';
 }
 
+//
+//	ホワイトボード自体のドラッグ操作
+//
 function locateWhiteboard( e ){
 	e.preventDefault();
 	var wb = document.getElementById('WHITEBOARD');
@@ -438,7 +417,7 @@ function locateWhiteboard( e ){
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
 			e.target.position = 'absolute';
 			wbx = event.pageX - e.target.offsetLeft;
-			wby = event.pageY - e.target.offsetTop + 42 + 1202;
+			wby = event.pageY - e.target.offsetTop + 42 + 2402;
 			console.log('event.pageY:', event.pageX );
 			console.log('WHITEBOARD top:' + wb.style.top );
 			console.log('WHITEBOARD offsetTop:' + e.target.offsetTop );
@@ -447,12 +426,28 @@ function locateWhiteboard( e ){
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
 			if ( e.buttons & 1 ){
 				document.getElementById('WHITEBOARD').style.top  = event.pageY - wby + "px";
-				document.getElementById('WHITEBOARD').style.left = event.pageX - wbx + "px";
+			//	document.getElementById('WHITEBOARD').style.left = event.pageX - wbx + "px";
 			}
 			break;
 		case 'mouseup':
 			initArea();
 			if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
+			break;
+	}
+}
+
+//
+//	キーボード操作
+//
+function keyWhiteboard(e){
+	//e.preventDefault();
+	var icc = document.getElementById('ID_CHILD_COORDINATE' );
+	icc.innerText = 'Key:' + e.keyCode + ' tag:' + e.target.tagName;
+	switch ( e.keyCode ){
+		case 46:	//Delete
+			var children = getMarkedChild();
+			if ( children.length != 0)
+				deleteWhiteboardChild();		//マークしたチャイルドの削除操作 
 			break;
 	}
 }
@@ -835,7 +830,7 @@ function signForm()
 		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign in to your account</div>";
 		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
 		r += "<div style='margin:10px auto;width:210px;' >";
-			r += "<form name='sign_form' >";
+			r += "<form name='sign_form' onsubmit='return false;' >";
 			r += "<div>Signin ID:</div>";
 			r += "<div><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 /></div>";
 			r += "<div style='padding-top:20px;' >Password:</div>";
@@ -1028,8 +1023,8 @@ function markPalleteChild( e ){
 	if ( c != null ){
 		var m = c.getAttribute('selected');
 		if ( m == null ){
-			c.style.color			= 'white';
-			c.style.backgroundColor = 'gray';
+			c.style.color			= 'gray';
+			c.style.backgroundColor = '#EEEEEE';
 			c.setAttribute('selected', 'yes' );
 		} else {
 			c.style.color			= '';
@@ -1140,7 +1135,7 @@ function makeChildForm( oChild ){
 	var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >create child</div>';
 	r += '<div style="margin:0 auto;width:110px;">';
-		r += '<form name="child_form" >';
+		r += '<form name="child_form" onsubmit="return false;" >';
 		if ( id != null ){
 			r += '<input type="hidden" name="child_id" value="' + id + '"  />';
 		}
@@ -1207,11 +1202,21 @@ function getChild( id ){
 //	ホワイトボードの座標から時間軸への変換
 //
 function coordinateToTime( top, left ){
-	var h = 8 + Math.floor( top / 100 );
-	var m = Math.floor( left / 70 ) * 5;
+	var escort = Math.floor( left / 600 );
+	var left2  = left - ( escort * 600 );
+	var h = 8 + Math.floor( top / 200 );		//200px:1hour
+	var m = Math.floor( left2 / 200 ) * 15;		// 210px:15min
 	if ( m <= 0  ) m = 0;
-	if ( m >= 55 ) m = 55;
+	if ( m >= 15 ) m = 15;
 	return ( '00' + h ).slice(-2) + ('00' + m ).slice(-2);
+}
+
+//
+//	ホワイトボードの座標からエスコート（お迎え）判断
+//
+function coordinateToEscort( top, left ){
+	var escort = Math.floor( left / 600 );
+	return ( escort > 0 )?true:false;
 }
 
 //
@@ -1281,16 +1286,32 @@ function mMove( e ){
 //		    || (( event.buttons & 1 ) && event.type == 'mousemove' ) ){
 			var old_top  = parseInt( drag.style.top  );
 			var old_left = parseInt( drag.style.left );
+			if ( ( event.pageY - y ) < 0 || ( event.pageX - x ) < 0 ) return;
+			if ( !checkOtherChildCoordinate( drag, event.pageX - x, event.pageY - y ) ) return;
 			drag.style.top  = event.pageY - y + "px";
 			drag.style.left = event.pageX - x + "px";
-			delta_x = parseInt( drag.style.left ) - old_left;
-			delta_y = parseInt( drag.style.top  ) - old_top;
+			// delta_x = parseInt( drag.style.left ) - old_left;
+			// delta_y = parseInt( drag.style.top  ) - old_top;
+			 delta_x = ( event.pageX - x ) - old_left;
+			 delta_y = ( event.pageY - y ) - old_top;
 			moveOtherChild( drag, delta_x, delta_y );
 
 			var co = drag.getElementsByClassName('CO_TIME');
 			if ( co != null ){
 				var hm = coordinateToTime( parseInt( drag.style.top ),parseInt( drag.style.left ));
 				co[0].innerText = hm;
+			}
+			var escort = coordinateToEscort( parseInt( drag.style.top ), parseInt( drag.style.left ) );
+			switch ( escort ){
+				case true:
+					drag.setAttribute('escort', 'yes');
+					setEscortHelper( drag, 'ON' );
+					break;
+				case false:
+					drag.removeAttribute('escort');
+					setEscortHelper( drag, 'OFF' );
+		
+					break;
 			}
 //		}
 
@@ -1306,6 +1327,21 @@ function mMove( e ){
 */
 }
 
+//
+//	他のチャイルドの座標をチェック
+//
+function checkOtherChildCoordinate( base_child, x, y ){
+	var children = getMarkedChild();
+	if ( children.length == 0 ) return true;
+	for ( var i=0; i<children.length; i++ ){
+		if ( base_child != children[i]){
+			if ( parseInt( children[i].style.top )  + y < 0
+			 || parseInt( children[i].style.left ) + x < 0 ) return false;
+		}
+	}
+	return true;
+
+}
 //
 //	マークしている他のチャイルドも移動
 //
@@ -1323,6 +1359,20 @@ function moveOtherChild( base_child, x, y ){
 												parseInt( children[i].style.left ));
 					co[0].innerText = hm;
 				}
+
+				var escort = coordinateToEscort( parseInt( children[i].style.top ), parseInt( children[i].style.left ) );
+				switch ( escort ){
+					case true:
+						children[i].setAttribute('escort', 'yes');
+						setEscortHelper( children[i], 'ON' );
+						break;
+					case false:
+						children[i].removeAttribute('escort');
+						setEscortHelper( children[i], 'OFF' );
+			
+						break;
+				}
+	
 			}
 
 		}
