@@ -147,6 +147,13 @@ function init()
 	new Button( 'ID_GRADE5',                null           ).play();
 	new Button( 'ID_GRADE6',                null           ).play();
 	new Checkbox('CPC_ESCORT_CHILD', 'ON').play();
+	new Checkbox('CPC_GRADE1', 'OFF', null ).play();
+	new Checkbox('CPC_GRADE2', 'OFF', null ).play();
+	new Checkbox('CPC_GRADE3', 'OFF', null ).play();
+	new Checkbox('CPC_GRADE4', 'OFF', null ).play();
+	new Checkbox('CPC_GRADE5', 'OFF', null ).play();
+	new Checkbox('CPC_GRADE6', 'OFF', null ).play();
+
 
 	var mo = document.getElementById('MODAL_OVERLAY');
 	mo.addEventListener('click', function(e){

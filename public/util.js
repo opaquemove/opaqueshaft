@@ -22,18 +22,20 @@ Button.prototype = {
   }
 };
 
-function Checkbox( id, flag ){
+function Checkbox( id, flag, func ){
   this.id = id;
   this.o  = null;
   this.flag = flag;
+  this.func = func;
+  this.backgroundColor = '#DEDEDE';
 }
 Checkbox.prototype = {
   play: function(){
     this.o = document.getElementById( this.id );
     switch ( this.flag ){
       case 'ON':
-        this.o.style.color            = 'snow';
-        this.o.style.backgroundColor  = 'red';
+      //  this.o.style.color            = 'snow';
+        this.o.style.backgroundColor  = this.backgroundColor;
         this.o.setAttribute('flag','ON');
         break;
       case 'OFF':
@@ -52,8 +54,8 @@ Checkbox.prototype = {
     this.o.addEventListener( 'mouseleave', ( function( e ) {
       switch ( this.o.getAttribute('flag') ){
         case 'ON':
-          this.o.style.color            = 'snow';
-          this.o.style.backgroundColor  = 'red';
+        //  this.o.style.color            = 'snow';
+          this.o.style.backgroundColor  = this.backgroundColor;
           break;
         case 'OFF':
         default:
@@ -72,13 +74,17 @@ Checkbox.prototype = {
           break;
         case 'OFF':
         default:
-          this.o.style.color            = 'snow';
-          this.o.style.backgroundColor  = 'red';
+        //  this.o.style.color            = 'snow';
+          this.o.style.backgroundColor  = this.backgroundColor;
           this.o.setAttribute('flag','ON');
           break;
       }
       e.stopPropagation();
     }).bind( this ), false );
+
+    if ( this.func != null )
+      this.o.addEventListener( 'mouseup', this.func, false ); 
+
   }
 };
 
