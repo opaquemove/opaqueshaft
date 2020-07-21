@@ -105,7 +105,7 @@ function clearWhiteboardHelper(){
 }
 
 //
-//  WhiteBoardにチャイルドを実体化
+//  WhiteBoardにチャイルド(200x60)を実体化
 //
 function addChild( top, left, escort, child_id, child_name, child_type, child_grade ){
 	var o = document.getElementById('AREA');
@@ -127,31 +127,48 @@ function addChild( top, left, escort, child_id, child_name, child_type, child_gr
     var hm = coordinateToTime( top, left );
     var r = '';
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
-    r += '<div style="height:100%;padding-left:2px;" >';
+    r += '<div style="height:47px;padding-left:2px;" >';
         r += '<div style="width:100%;height:30px;font-size:14px;border-bottom:1px solid lightgrey;" >';
-            r += '<div style="float:left;" >' + child_name + '</div>';
-            r += '<div class="ESCORT_FLG" style="padding-left:2px;float:right;width:16px;height:16px;" >&nbsp;';
+            r += '<div style="height:20px;float:left;" >' + child_name + '</div>';
+            r += '<div class="ESCORT_FLG" style="height:20px;padding-left:2px;float:right;width:18px;" >&nbsp;';
             r += '</div>';
-            r += '<div class="CO_TIME" style="padding-left:2px;float:right;text-align:right;" >';
+            r += '<div class="CO_TIME" style="height:20px;padding-left:2px;float:right;text-align:right;" >';
                 r += hm;
             r += '</div>';
             r += '<div style="float:right;text-align:right;" >';
             r += child_type + '' + child_grade;
             r += '</div>';
         r += '</div>';
-        r += '<div id="CHECKOUT_' + child_id + '" style="clear:both;text-align:right;font-size:10px;border-bottom:1px solid gray;" >';
-        //r += 'co:<span class="CO_TIME" >' + hm + '</span>';
-        r += '&nbsp;&nbsp;checkout:'
+        r += '<div id="CHECKOUT_' + child_id + '" style="clear:both;height:15px;text-align:right;font-size:10px;" >';
+            r += '&nbsp;&nbsp;checkout:'
         r += '</div>';
     r += '</div>';
-    r += '<img width="12px" style="position:absolute;top:46px;left:74px;" src="./images/arrow-down.png" />';
+    r += '<div class="CHILD_TRAY" >tray</div>';
+    r += '<div class="CHILD_KNOB" ></div>';
 
 	c.innerHTML = r;
     var cc = wb.appendChild( c );
     setEscortHelper( cc, escort );
     cc.addEventListener( 'dblclick',   propertyWhiteboardChild, false );
 	cc.addEventListener( "mousedown",  mDown, false );
-	cc.addEventListener( "touchstart", mDown, false );
+    cc.addEventListener( "touchstart", mDown, false );
+    cc.getElementsByClassName('CHILD_KNOB')[0].addEventListener('mousedown',
+        (function(e){
+            e.stopPropagation();
+         //   e.target.style.backgroundColor = 'red';
+            console.log( this.previousSibling.innerText );
+            switch( this.previousSibling.style.display ){
+                case '':
+                case 'none':
+                    this.previousSibling.style.display = 'inline';
+                    this.style.backgroundImage = 'url(./images/arrow-up.png)';
+                    break;
+                default:
+                    this.previousSibling.style.display = 'none';
+                    this.style.backgroundImage = 'url(./images/arrow-down.png)';
+                    break;
+            }
+        }).bind(cc.getElementsByClassName('CHILD_KNOB')[0]), false );
 
 }
 
@@ -382,7 +399,7 @@ function setEscortHelper( c, flag ){
     switch ( flag ){
         case 'ON':
             escort.style.backgroundImage = 'url(./images/user.png)';
-            escort.style.backgroundPosition = 'right middle';
+            escort.style.backgroundPosition = 'center center';
             escort.style.backgroundRepeat = 'no-repeat';
             escort.style.backgroundSize   = '14px';
             break;

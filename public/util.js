@@ -27,22 +27,24 @@ function Checkbox( id, flag, func ){
   this.o  = null;
   this.flag = flag;
   this.func = func;
-  this.backgroundColor = '#DEDEDE';
+  this.color = 'red';
 }
 Checkbox.prototype = {
   play: function(){
     this.o = document.getElementById( this.id );
     switch ( this.flag ){
       case 'ON':
-      //  this.o.style.color            = 'snow';
-        this.o.style.backgroundColor  = this.backgroundColor;
+        this.o.style.borderLeftColor    = this.color;
+        this.o.style.borderLeftStyle    = 'solid';
+        this.o.style.borderLeftWidth    = '4px';
         this.o.setAttribute('flag','ON');
         break;
       case 'OFF':
       default:
-        this.o.style.color            = '';
-        this.o.style.backgroundColor  = '';
-      this.o.setAttribute('flag','OFF');
+        this.o.style.borderLeftColor    = '';
+        this.o.style.borderLeftStyle    = 'solid';
+        this.o.style.borderLeftWidth    = '4px';
+        this.o.setAttribute('flag','OFF');
         break;
     }
     this.o.addEventListener( 'mouseover', ( function( e ) {
@@ -54,28 +56,35 @@ Checkbox.prototype = {
     this.o.addEventListener( 'mouseleave', ( function( e ) {
       switch ( this.o.getAttribute('flag') ){
         case 'ON':
-        //  this.o.style.color            = 'snow';
-          this.o.style.backgroundColor  = this.backgroundColor;
+          this.o.style.backgroundColor  = '';
+          this.o.style.borderLeftColor    = this.color;
+          this.o.style.borderLeftStyle    = 'solid';
+          this.o.style.borderLeftWidth    = '4px';
           break;
         case 'OFF':
         default:
-          this.o.style.color            = '';
-          this.o.style.backgroundColor  = '';
-          break;
+            this.o.style.backgroundColor  = '';
+            this.o.style.borderLeftColor    = '';
+            this.o.style.borderLeftStyle    = 'solid';
+            this.o.style.borderLeftWidth    = '4px';
+            break;
       }
       e.stopPropagation();
     }).bind( this ), false );
     this.o.addEventListener( 'click', ( function( e ) {
       switch ( this.o.getAttribute('flag') ){
         case 'ON':
-          this.o.style.color            = '';
-          this.o.style.backgroundColor  = '';
-          this.o.setAttribute('flag','OFF');
+          // this.o.style.backgroundColor  = '';
+            this.o.style.borderLeftColor    = '';
+            this.o.style.borderLeftStyle    = 'solid';
+            this.o.style.borderLeftWidth    = '4px';
+            this.o.setAttribute('flag','OFF');
           break;
         case 'OFF':
         default:
-        //  this.o.style.color            = 'snow';
-          this.o.style.backgroundColor  = this.backgroundColor;
+          this.o.style.borderLeftColor    = this.color;
+          this.o.style.borderLeftStyle    = 'solid';
+          this.o.style.borderLeftWidth    = '4px';
           this.o.setAttribute('flag','ON');
           break;
       }
