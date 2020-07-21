@@ -1303,8 +1303,8 @@ function mMove( e ){
 		e.stopPropagation();
 
 		//マウスが動いた場所に要素を動かす
-//		if ( event.type == 'touchmove' 
-//		    || (( event.buttons & 1 ) && event.type == 'mousemove' ) ){
+		if ( e.type == 'touchmove' 
+		    || (( e.buttons & 1 ) && e.type == 'mousemove' ) ){
 			var old_top  = parseInt( drag.style.top  );
 			var old_left = parseInt( drag.style.left );
 			if ( ( event.pageY - y ) < 0 || ( event.pageX - x ) < 0 ) return;
@@ -1334,7 +1334,7 @@ function mMove( e ){
 		
 					break;
 			}
-//		}
+		}
 
 		var icc = document.getElementById('ID_CHILD_COORDINATE');
 		icc.innerText = curChild.style.top + ' x ' + curChild.style.left;
@@ -1426,6 +1426,7 @@ function mUp( e ) {
 				//		curChild.removeChild(cMenu);
 				}else {
 					markChild( curChild );
+					// コンテキストメニュー
 					var cMenu = document.createElement('DIV');
 					cMenu.setAttribute('class', 'CHILD_CONTEXTMENU' );
 					cMenu.setAttribute('cmenu', 'yes');
@@ -1435,7 +1436,29 @@ function mUp( e ) {
 					// cMenu.style.width		= '40px';
 					// cMenu.style.height		= '100px';
 					// cMenu.style.backgroundColor = 'red';
-					curChild.appendChild( cMenu );
+					var menu = curChild.appendChild( cMenu );
+					var r = '';
+					r += '<div id="CM_CHECKOUT"  >checkout</div>';
+					r += '<div id="CM_DELETE"    >delete...</div>';
+					menu.innerHTML = r;
+					menu.addEventListener('mouseover',
+						function(e) {
+							var c = e.target;
+							if ( c != null && c != menu ){
+								c.style.color			= 'gray';
+								c.style.backgroundColor = '#EEEEEE';
+							}
+
+						} );
+						menu.addEventListener('mouseout',
+						function(e) {
+							var c = e.target;
+							if ( c != null ){
+								c.style.color			= '';
+								c.style.backgroundColor = '';
+							}
+
+						} );
 
 				}
 			}
