@@ -1421,8 +1421,22 @@ function mUp( e ) {
 			if ( curChild != null ){
 				if ( curChild.getAttribute('marked') == 'MARKED' ) {
 					unmarkChild( curChild );
+				//	var cMenu = curChild.lastChild;
+				//	if ( cMenu.hasAttribute('cmenu'))
+				//		curChild.removeChild(cMenu);
 				}else {
 					markChild( curChild );
+					var cMenu = document.createElement('DIV');
+					cMenu.setAttribute('class', 'CHILD_CONTEXTMENU' );
+					cMenu.setAttribute('cmenu', 'yes');
+					cMenu.style.position	= 'absolute';
+					cMenu.style.top			= '-1px';
+					cMenu.style.left		= curChild.offsetWidth + 'px';
+					// cMenu.style.width		= '40px';
+					// cMenu.style.height		= '100px';
+					// cMenu.style.backgroundColor = 'red';
+					curChild.appendChild( cMenu );
+
 				}
 			}
 		} 
@@ -1457,11 +1471,12 @@ function resetChildMark(){
 	var children = wb.getElementsByClassName('CHILD');
 	if ( children == null ) return;
 	for ( var i=0; i<children.length; i++ ){
-		if ( children[i].getAttribute('marked') == 'MARKED') {
-			children[i].style.backgroundColor = '';
-			children[i].style.color 			= '';
-			children[i].removeAttribute('marked');
-		}
+		unmarkChild( children[i]);
+		// if ( children[i].getAttribute('marked') == 'MARKED') {
+		// 	children[i].style.backgroundColor = '';
+		// 	children[i].style.color 			= '';
+		// 	children[i].removeAttribute('marked');
+		// }
 	}
 
 }

@@ -329,6 +329,11 @@ function unmarkChild( c ) {
     c.removeAttribute('marked');
     c.style.backgroundColor = '';
     c.style.color           = '';
+    // コンテキストメニューの削除
+    var cMenu = c.lastChild;
+    if ( cMenu.hasAttribute('cmenu'))
+        c.removeChild(cMenu);
+
 }
 
 //
