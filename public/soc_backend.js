@@ -149,7 +149,7 @@ function addChild( top, left, escort, child_id, child_name, child_type, child_gr
 	c.innerHTML = r;
     var cc = wb.appendChild( c );
     setEscortHelper( cc, escort );
-    cc.addEventListener( 'dblclick',   propertyWhiteboardChild, false );
+//    cc.addEventListener( 'dblclick',   propertyWhiteboardChild, false );
 	cc.addEventListener( "mousedown",  mDown, false );
     cc.addEventListener( "touchstart", mDown, false );
     cc.getElementsByClassName('CHILD_KNOB')[0].addEventListener('mousedown',
@@ -210,15 +210,14 @@ function addChildManage( oParent, oChild ){
 //
 //  チャイルドプロパティ
 //
-function propertyWhiteboardChild( e ){
-    var c = scanChild( e.target );
-    if ( c == null ){
-        alert('プロパティが見つかりません');
-        return;
-    }
-    markChild( c );
+function propertyWhiteboardChild( c ){
+    // var c = scanChild( e.target );
+    // if ( c == null ){
+    //     alert('プロパティが見つかりません');
+    //     return;
+    // }
+    // markChild( c );
     propChild = c;
-
 
     var id = c.getAttribute('child_id');
     console.log( id );
@@ -250,7 +249,10 @@ function deleteWhiteboardChild(){
     var p = document.getElementById( 'WHITEBOARD');
     var children = p.getElementsByClassName('CHILD');
 
-    if ( children.length == 0) return;
+    if ( children.length == 0){
+        console.log('deleteWhiteboardChild:' + children.length);
+        return;
+    }
 
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
@@ -271,8 +273,10 @@ function deleteWhiteboardChildHelper(){
     closeModalDialog();
     var p = document.getElementById( 'WHITEBOARD');
     var c = p.firstChild;
+    var i=0;
     while( c ){
         if ( c.getAttribute('marked') == 'MARKED'){
+            i++;
             p.removeChild( c );
             c = p.firstChild;
         } else {
@@ -280,6 +284,7 @@ function deleteWhiteboardChildHelper(){
         }
     }
     showWhiteboardChildCount();
+    console.log('delete child:' + i );
 }
 
 //
@@ -336,6 +341,18 @@ function unmarkChild( c ) {
 
 }
 
+//
+//  コンテキストメニューが複数表示されないように他のメニューは削除する
+//
+function clearOtherContextMenu( c ){
+    var wb = document.getElementById('WHITEBOARD');
+    for ( var i=0; i<wb.childNodes.length; i++ ){
+        var o = wb.childNodes[i];
+        if ( c != o && o.lastChild.hasAttribute('cmenu') ){
+            o.removeChild( o.lastChild );
+        }
+    }    
+}
 //
 //  ホワイトボードのチャイルド数をステータス表示
 //

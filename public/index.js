@@ -1421,44 +1421,68 @@ function mUp( e ) {
 			if ( curChild != null ){
 				if ( curChild.getAttribute('marked') == 'MARKED' ) {
 					unmarkChild( curChild );
-				//	var cMenu = curChild.lastChild;
-				//	if ( cMenu.hasAttribute('cmenu'))
-				//		curChild.removeChild(cMenu);
 				}else {
 					markChild( curChild );
+					clearOtherContextMenu( curChild );
 					// コンテキストメニュー
 					var cMenu = document.createElement('DIV');
 					cMenu.setAttribute('class', 'CHILD_CONTEXTMENU' );
 					cMenu.setAttribute('cmenu', 'yes');
 					cMenu.style.position	= 'absolute';
 					cMenu.style.top			= '-1px';
-					cMenu.style.left		= curChild.offsetWidth + 'px';
-					// cMenu.style.width		= '40px';
-					// cMenu.style.height		= '100px';
-					// cMenu.style.backgroundColor = 'red';
+					cMenu.style.left		= (curChild.offsetWidth - 1) + 'px';
 					var menu = curChild.appendChild( cMenu );
+					var contextFunc = [ checkoutChild, deleteWhiteboardChild, propertyWhiteboardChild  ];
 					var r = '';
 					r += '<div id="CM_CHECKOUT"  >checkout</div>';
 					r += '<div id="CM_DELETE"    >delete...</div>';
+					r += '<div id="CM_PROPERTY"  >Property...</div>';
 					menu.innerHTML = r;
+					
+					var c = menu.firstChild;
+					c.addEventListener('mouseup',
+						function(e){
+							e.stopPropagation();
+							console.log('checkout');
+							contextFunc[0]();
+						});
+					c = c.nextSibling;
+					c.addEventListener('mouseup',
+						function(e){
+							e.stopPropagation();
+							console.log('delete');
+							contextFunc[1]();
+						});
+					c = c.nextSibling;
+					c.addEventListener('mouseup',
+						function(e){
+							e.stopPropagation();
+							console.log('property');
+							contextFunc[2](curChild);
+						});
 					menu.addEventListener('mouseover',
-						function(e) {
-							var c = e.target;
-							if ( c != null && c != menu ){
-								c.style.color			= 'gray';
-								c.style.backgroundColor = '#EEEEEE';
-							}
-
-						} );
-						menu.addEventListener('mouseout',
-						function(e) {
-							var c = e.target;
-							if ( c != null ){
-								c.style.color			= '';
-								c.style.backgroundColor = '';
-							}
-
-						} );
+					function(e) {
+						e.stopPropagation();
+						var c = e.target;
+						if ( c != menu ){
+							c.style.color			= 'gray';
+							c.style.backgroundColor = '#EEEEEE';
+						}
+					} );
+					menu.addEventListener('mouseout',
+					function(e) {
+						e.stopPropagation();
+						var c = e.target;
+						if ( c != menu ){
+							c.style.color			= '';
+							c.style.backgroundColor = '';
+						}
+					} );
+					menu.addEventListener('mouseleave',
+					function(e) {
+						e.stopPropagation();
+						this.parentNode.removeChild(menu);
+					} );
 
 				}
 			}
