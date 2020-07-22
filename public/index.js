@@ -1478,11 +1478,11 @@ function mUp( e ) {
 							c.style.backgroundColor = '';
 						}
 					} );
-					menu.addEventListener('mouseleave',
-					function(e) {
-						e.stopPropagation();
-						this.parentNode.removeChild(menu);
-					} );
+					// menu.addEventListener('mouseleave',
+					// function(e) {
+					// 	e.stopPropagation();
+					// 	this.parentNode.removeChild(menu);
+					// } );
 
 				}
 			}

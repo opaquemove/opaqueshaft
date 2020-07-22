@@ -575,6 +575,7 @@ INPUT{
 	padding-left:			20px;
 	padding-top:			2px;
 	padding-bottom:			2px;
+	background-color:		lightblue;
 }
 
 #CM_DELETE{
@@ -588,6 +589,7 @@ INPUT{
 	padding-left:			20px;
 	padding-top:			2px;
 	padding-bottom:			2px;
+	background-color:		lightgreen;
 }
 
 #CM_PROPERTY{
@@ -601,6 +603,8 @@ INPUT{
 	padding-left:			20px;
 	padding-top:			2px;
 	padding-bottom:			2px;
+	background-color:		orange;
+
 }
 
 
