@@ -140,6 +140,7 @@ function init()
 	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardChild ).play();
 	new Button( 'ID_CHILD_ESCORT',          escortChild ).play();
 	new Button( 'ID_CHILD_UNESCORT',        unescortChild ).play();
+	new Button( 'ID_CHILD_CHECKOUT',        checkoutMarkChild ).play();
 	new Button( 'ID_GRADE1',                null           ).play();
 	new Button( 'ID_GRADE2',                null           ).play();
 	new Button( 'ID_GRADE3',                null           ).play();

@@ -167,7 +167,7 @@ INPUT{
 	position:			absolute;
 	top:				18px;
 	left:				180px;
-	width:				220px;
+	width:				300px;
 	height:				21px;
 	font-size:			12px;
 	color:				gray;
@@ -225,6 +225,22 @@ INPUT{
 	background-position: left center;
 	background-repeat: no-repeat;
 	background-size: 	16px;
+	padding-top:		2px;
+	margin-left:		1px;
+}
+#ID_CHILD_CHECKOUT{
+	position:			relative;
+	float:				left;
+	top:				0px;
+	left:				1px;
+	width:				70px;
+	height:				18px;
+	font-size:			10px;
+	border:				1px solid lightgray;
+	background-image: url(./images/check.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	background-size: 	14px;
 	padding-top:		2px;
 	margin-left:		1px;
 }

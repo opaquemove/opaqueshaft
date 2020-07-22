@@ -84,7 +84,6 @@ function loadChildren(){
 //  ホワイトボードの全チャイルドを削除
 //
 function clearWhiteboard(){
-	var r = "";
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'clear whiteboard';
@@ -453,6 +452,33 @@ function checkoutChild(){
     propChild.style.backgroundRepeat   = 'no-repeat';
     propChild.style.backgroundSize     = '16px';
     
+}
+
+//
+//  マークしているチャイルドをチェックアウト
+//
+function checkoutMarkChild(){
+    var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+		r += 'checkout children';
+    r += '</div>';
+    r += '<div id="ID_MARKEDCHILDREN_LIST" style="width:70%;height:100px;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '</div>';
+	r += '<div style="margin:0 auto;width:110px;margin:0 auto;">';
+		r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="checkoutMarkChildHelper();" >Checkout</button>';
+	r += '</div>';
+    openModalDialog( r, 'NOBUTTON' );
+    var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
+    var children = getMarkedChild();
+    for ( var i=0; i<children.length; i++ ){
+        var o = document.createElement('DIV');
+        o.innerHTML = children[i].innerHTML;
+        imcl.appendChild( o );
+    }
+}
+
+function checkoutMarkChildHelper(){
+
 }
 
 //
