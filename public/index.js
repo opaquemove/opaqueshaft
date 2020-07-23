@@ -195,6 +195,8 @@ var tl_drag = false;
 function locateTimelinebar( e ){
 	e.preventDefault();
 
+	var wbf = document.getElementById('WHITEBOARD_FRAME');
+	var wb = document.getElementById('WHITEBOARD');
 	var itb = document.getElementById('ID_TIMELINE_BAR');
 	switch ( e.type ){
 		case 'touchstart':
@@ -206,7 +208,6 @@ function locateTimelinebar( e ){
 			}
 			if ( itb != e.target ) return;
 			if ( tlbOffset == null ) tlbOffset = e.target.offsetTop;
-			var wb = document.getElementById('WHITEBOARD');
 			//e.target.position = 'absolute';
 			tlx = event.pageY - e.target.offsetTop;
 			tl_drag = true;
@@ -276,11 +277,17 @@ function showGuidanceWhiteboard(){
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" value="' + ymd + '" />';
 		r += '</div>';
 		r += '</form>';
-		r += '<button id="BTN_OPENWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="createWhiteboard();" >Next &gt;</button>';
+		r += '<button id="BTN_OPENWHITEBOARD" style="background-color:transparent;border:none;" onclick="createWhiteboard()" ><img width="50px;" src="/images/arrow-right.png" ></button>';
+//		r += '<button id="BTN_OPENWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="createWhiteboard();" >Next &gt;</button>';
 	r += '</div>';
 	neverCloseDialog = true;
 	openModalDialog( r, 'NOBUTTON' );
-	document.getElementById('BTN_OPENWHITEBOARD').focus();
+	document.getElementById('whiteboard_day').focus();
+	document.getElementById('whiteboard_day').addEventListener('keydown',
+		function (e){
+			if ( e.keyCode == 13) // Enter key
+				createWhiteboard();
+		});
 	
 }
 
@@ -470,6 +477,11 @@ function keyWhiteboard(e){
 			var children = getMarkedChild();
 			if ( children.length != 0)
 				deleteWhiteboardChild();		//マークしたチャイルドの削除操作 
+			break;
+		case 27:	//ESC
+			var mo  = document.getElementById('MODAL_OVERLAY');
+			if ( mo.style.visibility == 'visible')
+				closeModalDialog();
 			break;
 	}
 }
@@ -813,14 +825,14 @@ function signMenu( e ){
 	var id = signid();
 	r += '<div id="ID_SIGN_OUT"         style="height:20px;padding:2px;" >sign out</div>';
 	r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding:2px;" >property...</div>';
-	r += '<div id="ID_LOAD_CHILDREN"    style="height:20px;padding:2px;" >load...</div>';
+//	r += '<div id="ID_LOAD_CHILDREN"    style="height:20px;padding:2px;" >load...</div>';
 	r += '<div id="ID_CLEAR_WHITEBOARD" style="height:20px;padding:2px;" >clear whiteboard</div>';
 	r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding:2px;" >sign in ' + id + '</div>';
 	m.innerHTML = r;
 
 	new Button( 'ID_SIGN_OUT', signout ).play();
 	new Button( 'ID_PROPERTY_ACCOUNT', propertyAccount ).play();
-	new Button( 'ID_LOAD_CHILDREN',     loadChildrenForm ).play();
+//	new Button( 'ID_LOAD_CHILDREN',     loadChildrenForm ).play();
 	new Button( 'ID_CLEAR_WHITEBOARD',  clearWhiteboard  ).play();
 
 	m.addEventListener('mouseleave', function(e) {
@@ -846,19 +858,19 @@ function signForm()
 	var r = "";
 	
 	r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;overflow:hidden;' >";
-		r += "<div id='OPAQUESHAFT_LOGINTITLE' >";
-		r += "&nbsp;&nbsp;OpaqueShaft";
-		r += "</div>"; 
+		// r += "<div id='OPAQUESHAFT_LOGINTITLE' >";
+		// r += "&nbsp;&nbsp;OpaqueShaft";
+		// r += "</div>"; 
 		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign in to your account</div>";
 		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
 		r += "<div style='margin:10px auto;width:210px;' >";
 			r += "<form name='sign_form' onsubmit='return false;' >";
-			r += "<div>Signin ID:</div>";
+			r += "<div>ID:</div>";
 			r += "<div><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 /></div>";
 			r += "<div style='padding-top:20px;' >Password:</div>";
 			r += "<div><input style='width:200px;height:18px;' type='password' name='pwd' tabindex=2 /></div>";
 			r += "<div style='padding-top:20px;text-align:center;' >";
-				r += "<button style='width:208px;height:20px;' type='button' tabindex=3 onclick='sign();' >signin</button>";
+				r += "<button style='background-color:transparent;border:none;' onclick='sign()' ><img width='50px;' src='/images/arrow-right.png' ></button>";
 			r += "</div>";
 			r += "</form>";
 		r += "</div>";
@@ -866,9 +878,9 @@ function signForm()
 			r += "created by MASATO.NAKANISHI. 2020"
 		r += "</div>";
 	r += "</div>";
-	var o = document.getElementById('AREA');
-	o.innerHTML = r;
-	o.style.visibility = 'visible';
+
+	neverCloseDialog = true;
+	openModalDialog( r, 'NOBUTTON' );
 	o = document.getElementById( 'acc_id' );
 	o.focus();
 	
@@ -996,34 +1008,6 @@ function makeChildrenPalleteList()
 	} catch ( e ) { alert( e );}
 }
 
-
-//
-//	チャイルド管理
-//
-function manageChildren(){
-	var r = "";
-	
-	r += "<div style='width:500px;height:100%;margin:10px auto;background-color:white;overflow:hidden;' >";
-		r += "<div id='OPAQUESHAFT_LOGINTITLE' >";
-		r += "&nbsp;&nbsp;OpaqueShaft";
-		r += "</div>"; 
-		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Manage Children</div>";
-		r += "<div id='CHILD_STATUS' style='height:20px;text-align:center;' >status</div>";
-//		r += "<div id='CHILD_LIST'   style='float:left;width:170px;height:200px;border:1px solid lightgray;overflow-y:auto;' >";
-//		r += "</div>";
-		r += "<div id='CHILD_PROP'   style='float:left;width:280px;height:200px;padding-left:12px;border:1px solid lightgrey;' ></div>";
-		r += "<div style='clear:both;padding-top:4px;border-top:1px solid lightgrey;' >";
-			r += "<button type='button' onclick='newChildForm()'     >+</button>";
-			r += "<button type='button' onclick=''                   >ok</button>";
-			r += "<button type='button' onclick='clearArea();'       >close</button>";
-        r += "</div>";
-
-	r += "</div>";
-	var o = document.getElementById('AREA');
-	o.innerHTML = r;
-	o.style.visibility = 'visible';
-
-}
 
 //
 //	チャイルド選択し、プロパティ表示
@@ -1421,11 +1405,21 @@ function mUp( e ) {
 		if ( !curChildMoved ){
 			if ( curChild != null ){
 				if ( curChild.getAttribute('marked') == 'MARKED' ) {
-					unmarkChild( curChild );
+					if ( existContextMenu( curChild ) ){
+						console.log('existContextMenu');
+						unmarkChild( curChild );
+					} else {
+							if ( !existContextMenu( curChild)){
+								clearOtherContextMenu( curChild );
+								makeContextMenu();
+							}
+						}
 				}else {
 					markChild( curChild );
 					clearOtherContextMenu( curChild );
 					// コンテキストメニュー
+					makeContextMenu();
+/*
 					var cMenu = document.createElement('DIV');
 					cMenu.setAttribute('class', 'CHILD_CONTEXTMENU' );
 					cMenu.setAttribute('cmenu', 'yes');
@@ -1484,7 +1478,7 @@ function mUp( e ) {
 					// 	e.stopPropagation();
 					// 	this.parentNode.removeChild(menu);
 					// } );
-
+*/
 				}
 			}
 		} 
@@ -1498,6 +1492,69 @@ function mUp( e ) {
 	curChild              = null;
 }
 
+//
+//	コンテキストメニューの作成
+//
+function makeContextMenu(){
+	var cMenu = document.createElement('DIV');
+	cMenu.setAttribute('class', 'CHILD_CONTEXTMENU' );
+	cMenu.setAttribute('cmenu', 'yes');
+	cMenu.style.position	= 'absolute';
+	cMenu.style.top			= '-1px';
+	cMenu.style.left		= (curChild.offsetWidth - 1) + 'px';
+	var menu = curChild.appendChild( cMenu );
+	var contextFunc = [ checkoutChild, deleteWhiteboardChild, propertyWhiteboardChild  ];
+	var r = '';
+	r += '<div id="CM_CHECKOUT"  >checkout</div>';
+	r += '<div id="CM_DELETE"    >delete...</div>';
+	r += '<div id="CM_PROPERTY"  >Property...</div>';
+	menu.innerHTML = r;
+	var c = menu.firstChild;
+	c.addEventListener('mouseup',
+		function(e){
+			e.stopPropagation();
+			console.log('checkout');
+			contextFunc[0]();
+		});
+	c = c.nextSibling;
+	c.addEventListener('mouseup',
+		function(e){
+			e.stopPropagation();
+			console.log('delete');
+			contextFunc[1]();
+		});
+	c = c.nextSibling;
+	c.addEventListener('mouseup',
+		function(e){
+			e.stopPropagation();
+			console.log('property');
+			contextFunc[2](curChild);
+		});
+	menu.addEventListener('mouseover',
+	function(e) {
+		e.stopPropagation();
+		var c = e.target;
+		if ( c != menu ){
+			c.style.color			= 'gray';
+			c.style.backgroundColor = '#EEEEEE';
+		}
+	} );
+	menu.addEventListener('mouseout',
+	function(e) {
+		e.stopPropagation();
+		var c = e.target;
+		if ( c != menu ){
+			c.style.color			= '';
+			c.style.backgroundColor = '';
+		}
+	} );
+	// menu.addEventListener('mouseleave',
+	// function(e) {
+	// 	e.stopPropagation();
+	// 	this.parentNode.removeChild(menu);
+	// } );
+
+}
 //
 //	チャイルドのマークをリセット
 //

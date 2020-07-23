@@ -53,7 +53,7 @@ socket.on( 'getchildrenlist', function ( msg ) {
 
 })
 
-
+/*
 function loadChildrenForm(){
 	var r = "";
 	
@@ -73,6 +73,8 @@ function loadChildrenForm(){
 	o.style.visibility = 'visible';
 	o = document.getElementById( 'id' ); 
 }
+*/
+
 //
 //  チャイルドローディング
 //
@@ -107,8 +109,6 @@ function clearWhiteboardHelper(){
 //  WhiteBoardにチャイルド(200x60)を実体化
 //
 function addChild( top, left, escort, child_id, child_name, child_type, child_grade ){
-	var o = document.getElementById('AREA');
-	o.style.visibility = 'hidden';
 
 	var wb = document.getElementById('WHITEBOARD');
     var c = document.createElement("DIV");
@@ -142,8 +142,6 @@ function addChild( top, left, escort, child_id, child_name, child_type, child_gr
             r += '&nbsp;&nbsp;checkout:'
         r += '</div>';
     r += '</div>';
-    r += '<div class="CHILD_TRAY" >tray</div>';
-    r += '<div class="CHILD_KNOB" ></div>';
 
 	c.innerHTML = r;
     var cc = wb.appendChild( c );
@@ -151,23 +149,6 @@ function addChild( top, left, escort, child_id, child_name, child_type, child_gr
 //    cc.addEventListener( 'dblclick',   propertyWhiteboardChild, false );
 	cc.addEventListener( "mousedown",  mDown, false );
     cc.addEventListener( "touchstart", mDown, false );
-    cc.getElementsByClassName('CHILD_KNOB')[0].addEventListener('mousedown',
-        (function(e){
-            e.stopPropagation();
-         //   e.target.style.backgroundColor = 'red';
-            console.log( this.previousSibling.innerText );
-            switch( this.previousSibling.style.display ){
-                case '':
-                case 'none':
-                    this.previousSibling.style.display = 'inline';
-                    this.style.backgroundImage = 'url(./images/arrow-up.png)';
-                    break;
-                default:
-                    this.previousSibling.style.display = 'none';
-                    this.style.backgroundImage = 'url(./images/arrow-down.png)';
-                    break;
-            }
-        }).bind(cc.getElementsByClassName('CHILD_KNOB')[0]), false );
 
 }
 
@@ -183,14 +164,15 @@ function addChildManage( oParent, oChild ){
     c.setAttribute("class",     "PALLETE_CHILD");
     c.setAttribute("draggable", "true");
 //    c.style.width       = '97%';
-    c.style.height      = '40px';
+    c.style.height      = '30px';
+    c.style.borderBottom= '1px solid lightgrey;'
     c.style.borderRight = arChildGrade[ oChild.child_grade ];
     var r = '';
-    r += '<div style="height:20px;font-size:14px;padding-left:2px;border-bottom:1px solid lightgrey;">';
+    r += '<div style="float:left;height:20px;font-size:14px;padding-left:2px;">';
     r += oChild.child_name;
     r += '</div>';
-    r += '<div style="font-size:10px;text-align:right;padding-top:2px;" >';
-    r += 'type:' + oChild.child_type + '&nbsp; Grade:' + oChild.child_grade;
+    r += '<div style="float:right;font-size:14px;text-align:right;padding-top:2px;" >';
+    r += oChild.child_type + oChild.child_grade;
     r += '</div>';
 
 	c.innerHTML = r;
@@ -233,10 +215,6 @@ function propertyWhiteboardChild( c ){
         r += "</div>";
     r += "</div>";
     openModalDialog( r, 'NORMAL' );
-
-//	var o = document.getElementById('AREA');
-//	o.innerHTML = r;
-//	o.style.visibility = 'visible';
 
 }
 
@@ -340,6 +318,12 @@ function unmarkChild( c ) {
 
 }
 
+//  コンテキストメニューが表示されているかをチェック
+function existContextMenu( c ){
+    var cMenu = c.lastChild;
+    return ( cMenu.hasAttribute('cmenu') );
+
+}
 //
 //  コンテキストメニューが複数表示されないように他のメニューは削除する
 //
@@ -471,8 +455,19 @@ function checkoutMarkChild(){
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
     var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
+        var id = children[i].getAttribute('child_id');
+        var oChild = getChild( id );
         var o = document.createElement('DIV');
-        o.innerHTML = children[i].innerHTML;
+        o.style.width = '100%';
+        o.style.height = '40px';
+        o.style.clear = "both";
+        o.style.borderBottom = '1px solid lightgrey';
+        r = '';
+        r += '<div style="float:left;width:100px;font-size:18px;" >' + oChild.child_name + '</div>';
+        r += '<div style="float:right;padding:4px;" ><img width="30px" src="./images/arrow-right.png" /></div>';
+        r += '<div style="float:right;padding:4px;" ><img width="30px" src="./images/arrow-left.png" /></div>';
+
+        o.innerHTML = r;
         imcl.appendChild( o );
     }
 }
@@ -501,41 +496,31 @@ function checkclearChild(){
 //  アカウントプロパティ
 //
 function propertyAccount(){
-	var r = "";
-	r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;opacity:0.75;overflow:hidden;' >";
-        r += "<div id='OPAQUESHAFT_LOGINTITLE' >";
-        r += "&nbsp;&nbsp;OpaqueShaft";
-        r += "</div>"; 
-        r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Property of Account</div>";
-        r += "<div style='border-left:3px solid red;border-bottom:1px solid lightgrey;' >";
-        r += "";
-        r += "</div>";
-        r += "<div>";
-            r += "<form name='sign_form' onsubmit='return false;' >";
-                r += "<table align='center' >";
-                r += "<tr>";
-                r += "<td>Account ID:</td>";
-                r += "</tr>";
-                r += "<tr>";
-                r += "<td><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 /></td>";
-                r += "</tr>";
-                r += "<tr>";
-                r += "<td>Account Name:</td>";
-                r += "<tr>";
-                r += "<tr>";
-                r += "<td><input style='width:200px;height:18px;' type='text' name='pwd' tabindex=2 /></td>";
-                r += "<tr>";
-                r += "</table>";
-            r += "</form>";
-        r += "</div>";
-        r += "<div style='padding-top:60px;border-top:1px solid lightgrey;' >";
-        r += "<button type='button' onclick=''                   >ok</button>";
-        r += "<button type='button' onclick='clearArea();'       >close</button>";
-        r += "</div>";
-    r += "</div>";
-	var o = document.getElementById('AREA');
-	o.innerHTML = r;
-	o.style.visibility = 'visible';
+
+    var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+		r += 'Account property';
+    r += '</div>';
+    r += "<div>";
+    r += "<form name='sign_form' onsubmit='return false;' >";
+        r += "<table align='center' >";
+        r += "<tr>";
+        r += "<td>Account ID:</td>";
+        r += "</tr>";
+        r += "<tr>";
+        r += "<td><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 /></td>";
+        r += "</tr>";
+        r += "<tr>";
+        r += "<td>Account Name:</td>";
+        r += "<tr>";
+        r += "<tr>";
+        r += "<td><input style='width:200px;height:18px;' type='text' name='pwd' tabindex=2 /></td>";
+        r += "<tr>";
+        r += "</table>";
+    r += "</form>";
+r += "</div>";
+
+    openModalDialog( r, 'NORMAL' );
 
 }
 

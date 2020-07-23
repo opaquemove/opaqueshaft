@@ -59,7 +59,7 @@ INPUT{
 	top:				31px;
 	left:				0px;
 	width:				496px;
-	height:				296px;
+	height:				326px;
 	color:				gray;
 	background-color:	snow;
 	border:				1px solid lightgrey;
@@ -72,7 +72,7 @@ INPUT{
 
 #MODAL_MESSAGE_FOOTER{
 	position: 			relative;
-	top:				350px;
+	top:				370px;
 	left:				0px;
 	width:				500px;
 	height:				24px;
@@ -150,6 +150,23 @@ INPUT{
 	background-repeat:		no-repeat;
 }
 
+#REPORT{
+	width:				70px;
+	height:				29px;
+	text-align:			center;
+	float:				right;
+	font-size:			14px;
+	color:				gray;
+	background-color:	rgb(241, 241, 241);
+	background-image:	url(./images/report.png);
+	background-position: left center;
+	background-repeat: 	no-repeat;
+	background-size:	16px;
+	padding-top:		12px;
+	padding-left:		18px;
+	border-left:		1px solid lightgrey;
+
+}
 #COMMIT{
 	width:				70px;
 	height:				29px;
@@ -526,31 +543,6 @@ INPUT{
 	font-size:			15px;
 	overflow:			visible;
 	-webkit-user-select: none;
-}
-
-.CHILD_KNOB{
-	position:				absolute;
-	top:					62px;
-	left:					0px;
-	width:					100%;
-	height:					12px;
-	background-color:		white;
-	border:					1px solid lightgrey;
-	background-image:		url(./images/arrow-down.png);
-	background-position:	center center;
-	background-repeat: 		no-repeat;
-	background-size: 		10px;
-
-}
-
-.CHILD_TRAY{
-	width:					100%;
-	height:					60px;
-	font-size:				12px;
-	background-color:		white;
-	border-left:			1px solid lightgrey;
-	border-right:			1px solid lightgrey;
-	display:				none;
 }
 
 .PALLETE_CHILD{
