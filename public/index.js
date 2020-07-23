@@ -277,7 +277,7 @@ function showGuidanceWhiteboard(){
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" value="' + ymd + '" />';
 		r += '</div>';
 		r += '</form>';
-		r += '<button id="BTN_OPENWHITEBOARD" style="background-color:transparent;border:none;" onclick="createWhiteboard()" ><img width="50px;" src="/images/arrow-right.png" ></button>';
+		r += '<button id="BTN_OPENWHITEBOARD" style="background-color:transparent;border:none;" onclick="createWhiteboard()" ><img width="50px;" src="./images/next.png" ></button>';
 //		r += '<button id="BTN_OPENWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="createWhiteboard();" >Next &gt;</button>';
 	r += '</div>';
 	neverCloseDialog = true;
@@ -1258,7 +1258,22 @@ function mDown( e ) {
 		curChild.addEventListener("mouseup", mUp, false);
         document.body.addEventListener("mouseleave", mUp, false);
         curChild.addEventListener("touchend", mUp, false);
-        document.body.addEventListener("touchleave", mUp, false);
+		document.body.addEventListener("touchleave", mUp, false);
+
+		// エスコートガイド表示		
+		var tri = document.createElement('DIV');
+		tri.setAttribute('id', 'ESCORT_GUIDE');
+		tri.style.top    = '42px';
+		tri.style.left   = ( criteriaEscortPixel + 50 - 18 ) + 'px';
+		tri.style.width  = '40px';
+		tri.style.height = '40px';
+		tri.style.backgroundImage 		= 'url(./images/arrow-down.png)';
+		tri.style.backgroundSize 		= '30px';
+		tri.style.backgroundPosition 	= 'center center';
+		tri.style.backgroundRepeat 		= 'no-repeat';
+		tri.style.position 				= 'absolute';
+		tri.style.zIndex 				= 4000;
+		document.body.appendChild( tri );
 
 	}
 
@@ -1490,6 +1505,12 @@ function mUp( e ) {
 	if ( curChild != null ) curChild.style.zIndex = '';
 	curChildMoved         = false;
 	curChild              = null;
+
+	// エスコートガイド消去
+	var eg = document.getElementById('ESCORT_GUIDE');
+	if ( eg != null )
+		eg.parentNode.removeChild( eg );
+
 }
 
 //
@@ -1503,7 +1524,9 @@ function makeContextMenu(){
 	cMenu.style.top			= '-1px';
 	cMenu.style.left		= (curChild.offsetWidth - 1) + 'px';
 	var menu = curChild.appendChild( cMenu );
-	var contextFunc = [ checkoutChild, deleteWhiteboardChild, propertyWhiteboardChild  ];
+	propChild = curChild;		//	カレントのチャイルドを設定
+
+	var contextFunc = [ checkoutMarkChild, deleteWhiteboardChild, propertyWhiteboardChild  ];
 	var r = '';
 	r += '<div id="CM_CHECKOUT"  >checkout</div>';
 	r += '<div id="CM_DELETE"    >delete...</div>';

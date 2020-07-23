@@ -216,7 +216,7 @@ function propertyWhiteboardChild( c ){
         r += "<div style='padding-top:10px;' >checkout time:" + c.getAttribute('checkout') + "</div>";
         r += "<div style='padding-top:60px;border-top:1px solid lightgrey;' >";
         r += "<button type='button'       onclick='checkclearChild();' >checkout clear</button>";
-        r += "&nbsp;<button type='button' onclick='checkoutChild();'   >checkout</button>";
+        r += "&nbsp;<button type='button' onclick='checkoutChild(propChild);'   >checkout</button>";
         r += "</div>";
     r += "</div>";
     openModalDialog( r, 'NORMAL' );
@@ -434,21 +434,21 @@ function setEscortHelper( c, flag ){
 //
 //  Childをチェックアウト（帰宅）
 //
-function checkoutChild(){
-    if ( ! propChild ) return;
+function checkoutChild( c ){
+    if ( c == null ) return;
     var now = new Date();
     var h = ( '00' + now.getHours() ).slice(-2);
     var m = ( '00' + now.getMinutes() ).slice(-2);
     var checkout_time = h + ':' + m;
-    propChild.setAttribute('checkout', checkout_time );
-    console.log( propChild.getAttribute('child_id') );
-    document.getElementById( 'CHECKOUT_' + propChild.getAttribute('child_id') ).innerText =
+    c.setAttribute('checkout', checkout_time );
+    console.log( c.getAttribute('child_id') );
+    document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText =
         'checkout:' + checkout_time;
-    //propChild.style.opacity = 0.3;
-    propChild.style.backgroundImage    = 'url(./images/check.png)';
-    propChild.style.backgroundPosition = 'left bottom';
-    propChild.style.backgroundRepeat   = 'no-repeat';
-    propChild.style.backgroundSize     = '16px';
+    //c.style.opacity = 0.3;
+    c.style.backgroundImage    = 'url(./images/check.png)';
+    c.style.backgroundPosition = 'left bottom';
+    c.style.backgroundRepeat   = 'no-repeat';
+    c.style.backgroundSize     = '16px';
 
     showWhiteboardChildCountCheckout();
     
@@ -488,7 +488,14 @@ function checkoutMarkChild(){
     }
 }
 
+//
+//  マークしているチャイルドをチェックアウト（ヘルパー）
+//
 function checkoutMarkChildHelper(){
+    var children = getMarkedChild();
+    for ( var i=0; i<children.length; i++ ){
+        checkoutChild( children[i]);
+    }
 
 }
 
