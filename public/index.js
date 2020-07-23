@@ -174,6 +174,22 @@ function init()
 	}
 	
 	//
+	//	タイムラインガイド初期化
+	//
+	makeTimelineContextMenu( 'TIMELINE0800' );
+	makeTimelineContextMenu( 'TIMELINE0900' );
+	makeTimelineContextMenu( 'TIMELINE1000' );
+	makeTimelineContextMenu( 'TIMELINE1100' );
+	makeTimelineContextMenu( 'TIMELINE1200' );
+	makeTimelineContextMenu( 'TIMELINE1300' );
+	makeTimelineContextMenu( 'TIMELINE1400' );
+	makeTimelineContextMenu( 'TIMELINE1500' );
+	makeTimelineContextMenu( 'TIMELINE1600' );
+	makeTimelineContextMenu( 'TIMELINE1700' );
+	makeTimelineContextMenu( 'TIMELINE1800' );
+	makeTimelineContextMenu( 'TIMELINE1900' );
+
+	//
 	//	タイムラインバー初期化
 	//
 	var tmb = document.getElementById('ID_TIMELINE_BAR');
@@ -356,7 +372,7 @@ function loadWhiteboard(){
 			//	チャイルドにイベントハンドラを割り当てる 
 			//
 			for ( var i=0; i<wb.childNodes.length; i++ ){
-				wb.childNodes[i].addEventListener( 'dblclick',   propertyWhiteboardChild, false );
+//				wb.childNodes[i].addEventListener( 'dblclick',   propertyWhiteboardChild, false );
 				wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
 				wb.childNodes[i].addEventListener( "touchstart", mDown, false );
 			}
@@ -1139,7 +1155,7 @@ function makeChildForm( oChild ){
 		grade = oChild.child_grade;
 	}
 	var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >create child</div>';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >Child</div>';
 	r += '<div style="margin:0 auto;width:110px;">';
 		r += '<form name="child_form" onsubmit="return false;" >';
 		if ( id != null ){
@@ -1224,6 +1240,43 @@ function coordinateToEscort( top, left ){
 	var escort = Math.floor( left / criteriaEscortPixel );
 	return ( escort > 0 )?true:false;
 }
+
+//
+//	タイムラインガイド操作
+//
+function makeTimelineContextMenu( id ){
+	var p = document.getElementById( id );
+	p.addEventListener( 'mouseup',
+		function(e){
+			console.log('timeline context menu');
+			var m = document.createElement('DIV');
+			m.setAttribute('cmenu', 'yes');
+			m.style.position 		= 'absolute';
+			m.style.top				= '0px';
+			m.style.left			= '20px';
+			m.style.width			= '100px';
+			m.style.height			= '70px';
+			m.style.color			= 'white';
+			m.style.backgroundColor	= 'red';
+			m.style.textAlign		= 'left';
+			m.style.border			= '1px solid lightgrey';
+			m.style.writingMode		= 'horizontal-tb';
+			var r = '';
+			r += '<div>Move...</div>';
+			r += '<div>Checkout...</div>';
+			m.innerHTML				= r;
+			var mm = p.appendChild(m);
+
+		});
+		p.addEventListener( 'mouseleave',
+		function(e){
+			var c = this.lastChild;
+			if ( c.hasAttribute('cmenu'))
+				this.removeChild(c);
+		});
+
+}
+
 
 //
 //	チャイルド操作

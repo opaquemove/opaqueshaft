@@ -151,7 +151,6 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
 	c.innerHTML = r;
     var cc = wb.appendChild( c );
     setEscortHelper( cc, (escort)?'ON':'OFF' );
-//    cc.addEventListener( 'dblclick',   propertyWhiteboardChild, false );
 	cc.addEventListener( "mousedown",  mDown, false );
     cc.addEventListener( "touchstart", mDown, false );
 
