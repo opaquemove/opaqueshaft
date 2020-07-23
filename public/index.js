@@ -91,11 +91,11 @@ function init()
 			var p = e.target.parentNode;
 		
 			var oChild = getChild(id);
-			var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
+			//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
 //			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
 			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop,
 				 e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft,
-				 escort, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
+				 oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
 			dndOffsetX = 0;
 			dndOffsetY = 0;
 			showWhiteboardChildCount();
@@ -138,8 +138,8 @@ function init()
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
 	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardChild ).play();
-	new Button( 'ID_CHILD_ESCORT',          escortChild ).play();
-	new Button( 'ID_CHILD_UNESCORT',        unescortChild ).play();
+	// new Button( 'ID_CHILD_ESCORT',          escortChild ).play();
+	// new Button( 'ID_CHILD_UNESCORT',        unescortChild ).play();
 	new Button( 'ID_CHILD_CHECKOUT',        checkoutMarkChild ).play();
 	new Button( 'ID_GRADE1',                null           ).play();
 	new Button( 'ID_GRADE2',                null           ).play();
@@ -147,7 +147,7 @@ function init()
 	new Button( 'ID_GRADE4',                null           ).play();
 	new Button( 'ID_GRADE5',                null           ).play();
 	new Button( 'ID_GRADE6',                null           ).play();
-	new Checkbox('CPC_ESCORT_CHILD', 'ON').play();
+	// new Checkbox('CPC_ESCORT_CHILD', 'ON').play();
 	new Checkbox('CPC_GRADE1', 'OFF', null ).play();
 	new Checkbox('CPC_GRADE2', 'OFF', null ).play();
 	new Checkbox('CPC_GRADE3', 'OFF', null ).play();
@@ -1060,7 +1060,7 @@ function dragPalleteChild(){
 	var hm  = itb.innerText;
 	var arHM = hm.split(':');
 	
-	var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
+//	var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
 
 	var cursor = 0;
 	for ( var i=0; i<cpc.childNodes.length; i++ ){
@@ -1076,7 +1076,7 @@ function dragPalleteChild(){
 					top  = parseInt( lchild.style.top ) + 20;
 					left = parseInt( lchild.style.left ) + 20;
 				}
-				addChild( top, left, escort, oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
+				addChild( top, left, oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
 				cursor++;
 			}
 			cpc.childNodes[i].style.color = '';

@@ -41,7 +41,7 @@ socket.on( 'getchildrenlist', function ( msg ) {
     o.style.visibility = 'visible';
     for (var i=0; i<children.length; i++) {
         r += children[i].child_name + '<br/>'; 
-        addChild( i * 20, i * 20, 'OFF', children[i].child_id,
+        addChild( i * 20, i * 20, children[i].child_id,
              children[i].child_name, children[i].child_type, children[i].child_grade );
     }
     r += '<br/>length:' + children.length;
@@ -108,7 +108,7 @@ function clearWhiteboardHelper(){
 //
 //  WhiteBoardにチャイルド(200x60)を実体化
 //
-function addChild( top, left, escort, child_id, child_name, child_type, child_grade ){
+function addChild( top, left, child_id, child_name, child_type, child_grade ){
 
 	var wb = document.getElementById('WHITEBOARD');
     var c = document.createElement("DIV");
@@ -116,14 +116,19 @@ function addChild( top, left, escort, child_id, child_name, child_type, child_gr
     c.setAttribute('child_id', child_id ) ;
 	c.setAttribute("id", "c_1");
     c.setAttribute("class", "CHILD drag-and-drop");
-    if ( escort == 'ON')
-        c.setAttribute('escort', 'yes' );
+    // if ( escort == 'ON')
+    //     c.setAttribute('escort', 'yes' );
     c.style.position    = 'absolute;'
 	c.style.top         = top + 'px';
     c.style.left        = left + 'px';
     c.style.borderRight = arChildGrade[ child_grade ];
 
     var hm = coordinateToTime( top, left );
+    var escort = coordinateToEscort( top, left );
+    if ( escort ){
+        c.setAttribute('escort', 'yes' );
+    }
+
     var r = '';
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
     r += '<div style="height:47px;padding-left:2px;" >';
@@ -145,7 +150,7 @@ function addChild( top, left, escort, child_id, child_name, child_type, child_gr
 
 	c.innerHTML = r;
     var cc = wb.appendChild( c );
-    setEscortHelper( cc, escort );
+    setEscortHelper( cc, (escort)?'ON':'OFF' );
 //    cc.addEventListener( 'dblclick',   propertyWhiteboardChild, false );
 	cc.addEventListener( "mousedown",  mDown, false );
     cc.addEventListener( "touchstart", mDown, false );
@@ -210,7 +215,7 @@ function propertyWhiteboardChild( c ){
         r += "</div>";
         r += "<div style='padding-top:10px;' >checkout time:" + c.getAttribute('checkout') + "</div>";
         r += "<div style='padding-top:60px;border-top:1px solid lightgrey;' >";
-        r += "<button type='button' onclick='checkclearChild();' >checkout clear</button>";
+        r += "<button type='button'       onclick='checkclearChild();' >checkout clear</button>";
         r += "&nbsp;<button type='button' onclick='checkoutChild();'   >checkout</button>";
         r += "</div>";
     r += "</div>";
@@ -336,6 +341,7 @@ function clearOtherContextMenu( c ){
         }
     }    
 }
+
 //
 //  ホワイトボードのチャイルド数をステータス表示
 //
@@ -344,6 +350,22 @@ function showWhiteboardChildCount(){
     var children = wb.getElementsByClassName('CHILD');
     var wcc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT');
     wcc.innerText = children.length;
+    showWhiteboardChildCountCheckout();
+}
+
+//
+//  ホワイトボードのチェックアウトしたチャイルド数をステータス表示
+//
+function showWhiteboardChildCountCheckout(){
+    var wb  = document.getElementById('WHITEBOARD');
+    var wccc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT_CHECKOUT');
+    var children = wb.childNodes.length;
+    var c = 0;
+    for ( var i=0; i<wb.childNodes.length; i++ ){
+        var o = wb.childNodes[i];
+        if ( o.hasAttribute('checkout')) c++;
+    }
+    wccc.innerText = c;
 }
 
 //
@@ -360,40 +382,32 @@ function latestWhiteboardChild(){
 //
 //  マークしているチャイルドをエスコート設定（お迎え）
 //
-function escortChild(){
-    var children = getMarkedChild();
-    if ( children.length == 0 ) return;
-    for ( var i=0; i<children.length; i++){
-        var c = children[i];
-        if ( ! c.hasAttribute('escort') ){
-            c.setAttribute('escort', 'yes');
-            setEscortHelper( c, 'ON' );
-            // c.firstChild.style.backgroundImage = 'url(./images/user.png)';
-            // c.firstChild.style.backgroundPosition = 'right bottom';
-            // c.firstChild.style.backgroundRepeat = 'no-repeat';
-            // c.firstChild.style.backgroundSize   = '16px';
-        }
-    }
-}
+// function escortChild(){
+//     var children = getMarkedChild();
+//     if ( children.length == 0 ) return;
+//     for ( var i=0; i<children.length; i++){
+//         var c = children[i];
+//         if ( ! c.hasAttribute('escort') ){
+//             c.setAttribute('escort', 'yes');
+//             setEscortHelper( c, 'ON' );
+//         }
+//     }
+// }
 
 //
 //  マークしているチャイルドをエスコート設定（お迎え）
 //
-function unescortChild(){
-    var children = getMarkedChild();
-    if ( children.length == 0 ) return;
-    for ( var i=0; i<children.length; i++){
-        var c = children[i];
-        if ( c.hasAttribute('escort') ){
-            c.removeAttribute('escort');
-            setEscortHelper( c, 'OFF' );
-            // c.firstChild.style.backgroundImage = '';
-            // c.firstChild.style.backgroundPosition = '';
-            // c.firstChild.style.backgroundRepeat = '';
-            // c.firstChild.style.backgroundSize   = '';
-        }
-    }
-}
+// function unescortChild(){
+//     var children = getMarkedChild();
+//     if ( children.length == 0 ) return;
+//     for ( var i=0; i<children.length; i++){
+//         var c = children[i];
+//         if ( c.hasAttribute('escort') ){
+//             c.removeAttribute('escort');
+//             setEscortHelper( c, 'OFF' );
+//         }
+//     }
+// }
 
 //
 //
@@ -435,6 +449,8 @@ function checkoutChild(){
     propChild.style.backgroundPosition = 'left bottom';
     propChild.style.backgroundRepeat   = 'no-repeat';
     propChild.style.backgroundSize     = '16px';
+
+    showWhiteboardChildCountCheckout();
     
 }
 
@@ -488,6 +504,8 @@ function checkclearChild(){
     propChild.style.backgroundPosition = '';
     propChild.style.backgroundRepeat   = '';
     propChild.style.backgroundSize     = '';
+
+    showWhiteboardChildCountCheckout();
 
 }
 
