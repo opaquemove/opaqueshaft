@@ -678,7 +678,7 @@ INPUT{
 #WHITEBOARD_PALLETE_CONTENT_FRAME{
 	position:			relative;
 	top:				0px;
-	left:				0px;
+	left:				0px;		/*  dummy coordinate -> fix to fitting()*/
 	width:				167px;
 	height:				100%;
 	float: 				right;
@@ -820,7 +820,7 @@ INPUT{
 #CHILDREN_PALLETE_FRAME{
 	position:			absolute;
 	top:				42px;
-	left:				0px;		/*  dummy coordinate -> fix to fitting()*/
+	left:				-200px;		/*  dummy coordinate -> fix to fitting()*/
 	width:				200px;
 	height:				90%;		/*  dummy coordinate -> fix to fitting()*/
 	margin-left:		0px;

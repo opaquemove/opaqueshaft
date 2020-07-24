@@ -560,11 +560,13 @@ function locateWhiteboard( e ){
 			console.log('WHITEBOARD offsetTop:' + e.target.offsetTop );
 			break;
 		case 'mousemove':
+/*
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
 			if ( e.buttons & 1 ){
 				document.getElementById('WHITEBOARD').style.top  = event.pageY - wby + "px";
 			//	document.getElementById('WHITEBOARD').style.left = event.pageX - wbx + "px";
 			}
+*/
 			break;
 		case 'mouseup':
 			if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();

@@ -167,6 +167,7 @@ function addChildManage( oParent, oChild ){
 	c.setAttribute("id",        "c_1");
     c.setAttribute("class",     "PALLETE_CHILD");
     c.setAttribute("draggable", "true");
+    c.style.position    = 'relative';
 //    c.style.width       = '97%';
     c.style.height      = '30px';
     c.style.borderBottom= '1px solid lightgrey;'
