@@ -902,8 +902,8 @@ function signMenu( e ){
 	o.setAttribute( 'id', 'SIGN_SUBMENU');
 	o.style.position		= 'relative';
 	o.style.padding			= '2px';
-	o.style.top             = '14px';
-	o.style.left            = '-53px';
+	o.style.top             = '8px';
+	o.style.left            = '-91px';
 	o.style.width           = '120px';
 	o.style.height          = '200px';
 	o.style.backgroundColor = '#EEEEEE';
@@ -1124,10 +1124,24 @@ function markPalleteChild( e ){
 			c.style.color			= 'gray';
 			c.style.backgroundColor = '#EEEEEE';
 			c.setAttribute('selected', 'yes' );
+			var mot = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
+			mot.style.visibility = 'visible';
 		} else {
 			c.style.color			= '';
 			c.style.backgroundColor = '';
 			c.removeAttribute('selected' );
+			var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
+			var c_selected = 0;
+			for ( var i=0; i<cpc.childNodes.length; i++ ){
+				if ( cpc.childNodes[i].hasAttribute('selected') )
+					c_selected++;
+			}
+			console.log('c_selected:' + c_selected );
+			if ( c_selected == 0 ){
+				var mot = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
+				mot.style.visibility = 'hidden';
+				}
+	
 		}
 		var id = c.getAttribute('child_id');
 	} else{
@@ -1139,6 +1153,8 @@ function markPalleteChild( e ){
 				cpc.childNodes[i].removeAttribute('selected');
 			}
 		}
+		var mot = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
+		mot.style.visibility = 'hidden';
 
 	}
 }

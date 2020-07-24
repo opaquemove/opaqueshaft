@@ -116,7 +116,7 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
     c.setAttribute('child_id', child_id ) ;
 	c.setAttribute("id", "c_1");
     c.setAttribute("class", "CHILD drag-and-drop");
-    c.setAttribute("draggable", "true");
+    //c.setAttribute("draggable", "true");
 
     // if ( escort == 'ON')
     //     c.setAttribute('escort', 'yes' );
