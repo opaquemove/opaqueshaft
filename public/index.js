@@ -43,10 +43,14 @@ function init()
 //	 function( e ) { e.preventDefault(); }, { passive:false } );
 //	wb.addEventListener('selectstart', function(e){return false;})
 
-	var cpf = document.getElementById('CHILDREN_PALLETE_FRAME');
-	cpf.addEventListener("touchmove",
-	 function( e ) { e.preventDefault(); }, { passive:false } );
-
+	// iPadでドラッグできなくなるのでコメント
+	// var cpf = document.getElementById('CHILDREN_PALLETE_FRAME');
+	// cpf.addEventListener("touchmove",
+	//  function( e ) { e.preventDefault(); }, { passive:false } );
+	 var wpf = document.getElementById('WHITEBOARD_PALLETE_FRAME');
+	 wpf.addEventListener("touchmove",
+	  function( e ) { e.preventDefault(); }, { passive:false } );
+ 
 
 	wb.addEventListener('mousedown', locateWhiteboard );
 	wb.addEventListener('mousemove', locateWhiteboard );
