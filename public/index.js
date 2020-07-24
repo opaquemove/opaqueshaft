@@ -358,8 +358,8 @@ function locateTimelinebar( e ){
 function scrollWhiteboard( hour ){
 	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
 	var wb  = document.getElementById('WHITEBOARD');
-	wbt.style.top = 0 - ( ( hour - 8 ) * 200  ) - 0 + 'px';
-	wb.style.top  = 0 - ( ( hour - 8 ) * 200  ) - 2402 + 'px';
+	wbt.style.top = 0 - ( ( hour - 8 ) * 400  ) - 0 + 'px';
+	wb.style.top  = 0 - ( ( hour - 8 ) * 400  ) - 4802 + 'px';
 }
 
 
@@ -554,7 +554,7 @@ function locateWhiteboard( e ){
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
 			e.target.position = 'absolute';
 			wbx = event.pageX - e.target.offsetLeft;
-			wby = event.pageY - e.target.offsetTop + 42 + 2402;
+			wby = event.pageY - e.target.offsetTop + 42 + 4802;
 			console.log('event.pageY:', event.pageX );
 			console.log('WHITEBOARD top:' + wb.style.top );
 			console.log('WHITEBOARD offsetTop:' + e.target.offsetTop );
@@ -1302,8 +1302,8 @@ function getChild( id ){
 function coordinateToTime( top, left ){
 	var escort = Math.floor( left / criteriaEscortPixel );
 	var left2  = left - ( escort * criteriaEscortPixel );
-	var h = 8 + Math.floor( top / 200 );		//200px:1hour
-	var m = Math.floor( left2 / 200 ) * 15;		// 210px:15min
+	var h = 8 + Math.floor( top / 400 );		//200px:1hour
+	var m = Math.floor( left2 / 400 ) * 15;		// 210px:15min
 	if ( m <= 0  ) m = 0;
 	if ( m >= 15 ) m = 15;
 	return ( '00' + h ).slice(-2) + ('00' + m ).slice(-2);
