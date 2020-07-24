@@ -43,6 +43,11 @@ function init()
 //	 function( e ) { e.preventDefault(); }, { passive:false } );
 //	wb.addEventListener('selectstart', function(e){return false;})
 
+	var cpf = document.getElementById('CHILDREN_PALLETE_FRAME');
+	cpf.addEventListener("touchmove",
+	 function( e ) { e.preventDefault(); }, { passive:false } );
+
+
 	wb.addEventListener('mousedown', locateWhiteboard );
 	wb.addEventListener('mousemove', locateWhiteboard );
 	wb.addEventListener('mouseup',   locateWhiteboard );
