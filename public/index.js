@@ -137,10 +137,9 @@ function init()
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
-	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardChild ).play();
-	// new Button( 'ID_CHILD_ESCORT',          escortChild ).play();
-	// new Button( 'ID_CHILD_UNESCORT',        unescortChild ).play();
-	new Button( 'ID_CHILD_CHECKOUT',        checkoutMarkChild ).play();
+	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardMarkChild ).play();
+	new Button( 'ID_CHILD_CHECKOUT',        checkoutWhiteboardMarkChild ).play();
+	new Button( 'ID_CHILD_CHECKCLEAR',      checkoutClearWhiteboardMarkChild ).play();
 	new Button( 'ID_GRADE1',                null           ).play();
 	new Button( 'ID_GRADE2',                null           ).play();
 	new Button( 'ID_GRADE3',                null           ).play();
@@ -176,18 +175,77 @@ function init()
 	//
 	//	タイムラインガイド初期化
 	//
-	makeTimelineContextMenu( 'TIMELINE0800' );
-	makeTimelineContextMenu( 'TIMELINE0900' );
-	makeTimelineContextMenu( 'TIMELINE1000' );
-	makeTimelineContextMenu( 'TIMELINE1100' );
-	makeTimelineContextMenu( 'TIMELINE1200' );
-	makeTimelineContextMenu( 'TIMELINE1300' );
-	makeTimelineContextMenu( 'TIMELINE1400' );
-	makeTimelineContextMenu( 'TIMELINE1500' );
-	makeTimelineContextMenu( 'TIMELINE1600' );
-	makeTimelineContextMenu( 'TIMELINE1700' );
-	makeTimelineContextMenu( 'TIMELINE1800' );
-	makeTimelineContextMenu( 'TIMELINE1900' );
+	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
+	wbt.addEventListener( 'mouseup',
+		function(e){
+			e.stopPropagation();
+			if ( alreadyTimelineContextMenu( e.target )){
+				console.log('already');
+				document.getElementById('TIMELINE_CONTEXTMENU').parentNode.removeChild( document.getElementById('TIMELINE_CONTEXTMENU') );
+				return;
+			}
+			if ( wbt != e.target.parentNode ) return;
+			resetTimelineContextMenu();
+			var m = document.createElement('DIV');
+			m.setAttribute( 'id',      'TIMELINE_CONTEXTMENU' );
+			m.setAttribute('cmenu', 'yes');
+			m.style.position 		= 'absolute';
+			m.style.top				= '-1px';
+			m.style.left			= '28px';
+			m.style.width			= '100px';
+			m.style.height			= '70px';
+			m.style.color			= 'white';
+			m.style.backgroundColor	= 'red';
+			m.style.textAlign		= 'left';
+			m.style.border			= '1px solid lightgrey';
+			m.style.writingMode		= 'horizontal-tb';
+			m.style.overflow		= 'hidden';
+			var r = '';
+			//r += '<div>' + e.target.innerText + '</div>';
+			r += '<div class="CM_MOVE"     >Move...</div>';
+			r += '<div class="CM_CHECKOUT" >Checkout...</div>';
+			r += '<div class="CM_DELETE"   >Delete...</div>';
+			m.innerHTML				= r;
+			var mm = e.target.appendChild(m);
+			mm.addEventListener('mouseover',
+			function(e) {
+				e.stopPropagation();
+				var c = e.target;
+				if ( c != mm ){
+					c.style.color			= 'gray';
+					c.style.backgroundColor = '#EEEEEE';
+				}
+			} );
+			mm.addEventListener('mouseout',
+			function(e) {
+				e.stopPropagation();
+				var c = e.target;
+				if ( c != mm ){
+					c.style.color			= '';
+					c.style.backgroundColor = '';
+				}
+			} );
+		
+
+			var contextFunc = [ moveTimelineWhiteboardChild, checkoutTimelineWhiteboardChild, null ];
+			var c = mm.firstChild;
+			c.addEventListener('mouseup',
+				function(e){
+					e.stopPropagation();
+					console.log('move');
+					contextFunc[0]( e.target.innerText );
+				});
+			c = c.nextSibling;
+			c.addEventListener('mouseup',
+				function(e){
+					e.stopPropagation();
+					console.log('checkout');
+					contextFunc[1]( e.target.innerText );
+				});
+		
+		}
+	);
+
 
 	//
 	//	タイムラインバー初期化
@@ -199,6 +257,30 @@ function init()
 	tmb.addEventListener( 'touchmove',  locateTimelinebar );
 	tmb.addEventListener( 'mouseup',    locateTimelinebar );
 	tmb.addEventListener( 'touchend',   locateTimelinebar );
+
+}
+
+//
+//	開いているタイムラインコンテキストメニューを閉じる
+//
+function resetTimelineContextMenu(){
+	var cmenu = document.getElementById('TIMELINE_CONTEXTMENU');
+	if ( cmenu != null ){
+		cmenu.parentNode.removeChild( cmenu );
+	}
+
+}
+
+//
+//	選択したタイムラインにすでにコンテキストメニューが開いているかをチェック
+//
+function alreadyTimelineContextMenu( o ){
+	var cmenu = document.getElementById('TIMELINE_CONTEXTMENU');
+	if ( cmenu != null ){
+		if ( o == cmenu.parentNode ) return true;
+	}
+	return false;
+
 
 }
 
@@ -293,8 +375,9 @@ function showGuidanceWhiteboard(){
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" value="' + ymd + '" />';
 		r += '</div>';
 		r += '</form>';
+		r += '<div style="text-align:center;padding-top:40px;" >';
 		r += '<button id="BTN_OPENWHITEBOARD" style="background-color:transparent;border:none;" onclick="createWhiteboard()" ><img width="50px;" src="./images/next.png" ></button>';
-//		r += '<button id="BTN_OPENWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="createWhiteboard();" >Next &gt;</button>';
+		r += '</div>';
 	r += '</div>';
 	neverCloseDialog = true;
 	openModalDialog( r, 'NOBUTTON' );
@@ -475,7 +558,6 @@ function locateWhiteboard( e ){
 			}
 			break;
 		case 'mouseup':
-			initArea();
 			if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
 			break;
 	}
@@ -492,7 +574,7 @@ function keyWhiteboard(e){
 		case 46:	//Delete
 			var children = getMarkedChild();
 			if ( children.length != 0)
-				deleteWhiteboardChild();		//マークしたチャイルドの削除操作 
+				deleteWhiteboardChild('MARK');		//マークしたチャイルドの削除操作 
 			break;
 		case 27:	//ESC
 			var mo  = document.getElementById('MODAL_OVERLAY');
@@ -536,14 +618,6 @@ function closeModalDialog(){
 	neverCloseDialog = false;
 }
 
-//
-//	AREA初期化（削除予定）
-//
-function initArea(){
-	var o = document.getElementById('AREA');
-	if ( o.style.visibility != 'hidden' )
-		clearArea();
-}
 
 //
 //	ホワイトボードエリアのフィッティング処理
@@ -640,14 +714,6 @@ function ctlToolbar(){
 	}
 }
 
-function clearArea(){
-	var r = "";
-	var o = document.getElementById('AREA');
-	o.style.visibility = 'hidden';
-	o.innerHTML = r;
-
-}
-
 
 function getCookie(){
 	var c = document.cookie;
@@ -666,17 +732,17 @@ function checkSign(){
 //
 //	バックエンド処理
 //
-function postWebBackend(){
+function postWebBackend( area_id ){
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var o = document.getElementById('AREA');
+			var o = document.getElementById('area_id');
 			o.style.visibility = 'visible';
 			r += "<pre>";
 			r += xmlhttp.responseText;
 			r += "</pre>";
-			r += "<button onclick='clearArea();' >OK</button>";
+			r += "<button onclick='' >OK</button>";
 			o.innerHTML = r;
 		}
 	}
@@ -752,7 +818,6 @@ function sign()
 							var o = document.getElementById('SIGNIN_STATUS');
 							if ( result.status == 'SUCCESS' ){
 								ctlToolbar();
-								clearArea();
 								clearWhiteboard();
 								makeWhiteboardPalleteList();
 								makeChildrenPalleteList();
@@ -787,7 +852,6 @@ function sign()
 					var o = document.getElementById('SIGNIN_STATUS');
 					if ( result.status == 'SUCCESS' ){
 						ctlToolbar();
-						clearArea();
 						clearWhiteboard();
 						makeWhiteboardPalleteList();
 						makeChildrenPalleteList();
@@ -959,14 +1023,15 @@ function addWhiteboardManage( oParent, Result ){
 //    c.setAttribute("draggable", "true");
 //    c.style.width       = '97%';
 	c.style.backgroundColor	= 'white';
-	c.style.height			= '40px';
+	// c.style.width = '80px';
+	c.style.height			= '30px';
 	c.style.marginBottom	= '1px';
 
 	var day = new Date( Result.day );
 	var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDate() ).slice(-2);
 
 	var r = '';
-    r += '<div style="height:20px;font-size:14px;padding-left:2px;border-bottom:1px solid lightgrey;">';
+    r += '<div style="height:20px;padding-left:2px;">';
     r += ymd;
     r += '</div>';
 	c.innerHTML = r;
@@ -1248,7 +1313,6 @@ function makeTimelineContextMenu( id ){
 	var p = document.getElementById( id );
 	p.addEventListener( 'mouseup',
 		function(e){
-			console.log('timeline context menu');
 			var m = document.createElement('DIV');
 			m.setAttribute('cmenu', 'yes');
 			m.style.position 		= 'absolute';
@@ -1579,25 +1643,25 @@ function makeContextMenu(){
 	var menu = curChild.appendChild( cMenu );
 	propChild = curChild;		//	カレントのチャイルドを設定
 
-	var contextFunc = [ checkoutMarkChild, deleteWhiteboardChild, propertyWhiteboardChild  ];
+	var contextFunc = [ checkoutWhiteboardChild, deleteWhiteboardChild, propertyWhiteboardChild  ];
 	var r = '';
-	r += '<div id="CM_CHECKOUT"  >checkout</div>';
-	r += '<div id="CM_DELETE"    >delete...</div>';
-	r += '<div id="CM_PROPERTY"  >Property...</div>';
+	r += '<div class="CM_CHECKOUT"  >checkout</div>';
+	r += '<div class="CM_DELETE"    >delete...</div>';
+	r += '<div class="CM_PROPERTY"  >Property...</div>';
 	menu.innerHTML = r;
 	var c = menu.firstChild;
 	c.addEventListener('mouseup',
 		function(e){
 			e.stopPropagation();
 			console.log('checkout');
-			contextFunc[0]();
+			contextFunc[0]('SINGLE');
 		});
 	c = c.nextSibling;
 	c.addEventListener('mouseup',
 		function(e){
 			e.stopPropagation();
 			console.log('delete');
-			contextFunc[1]();
+			contextFunc[1]('SINGLE');
 		});
 	c = c.nextSibling;
 	c.addEventListener('mouseup',

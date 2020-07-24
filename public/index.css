@@ -222,13 +222,30 @@ INPUT{
 	height:				18px;
 	font-size:			10px;
 	border:				1px solid lightgray;
-	background-image: url(./images/check.png);
+	background-image: 	url(./images/check.png);
 	background-position: left center;
-	background-repeat: no-repeat;
+	background-repeat: 	no-repeat;
 	background-size: 	14px;
 	padding-top:		2px;
 	margin-left:		1px;
 }
+#ID_CHILD_CHECKCLEAR{
+	position:			relative;
+	float:				left;
+	top:				0px;
+	left:				1px;
+	width:				90px;
+	height:				18px;
+	font-size:			10px;
+	border:				1px solid lightgray;
+	background-image: 	url(./images/close.png);
+	background-position: left center;
+	background-repeat: 	no-repeat;
+	background-size: 	14px;
+	padding-top:		2px;
+	margin-left:		1px;
+}
+
 #TIMELINE_BAY{
 }
 
@@ -243,22 +260,10 @@ INPUT{
 	overflow-x:			none;
 	overflow-y:			scroll;
 }
-#WHITEBOARD_TIMELINE{
-	position: 			relative;
-	width:				52px;
-	height:				2400px;
-	float:				left;
-	border-top:			1px solid red;
-	border-bottom:		1px solid lightgrey;
-	padding:			0px;
-	
-/*	background-color:	slateblue;*/
-
-}
 #WHITEBOARD{
 	position: 			relative;
 	top:				-2402px;
-	left:				50px;
+	left:				59px;
 	width:				100%;
 	height:				2400px;
 /*	background-color:	lightcoral;*/
@@ -266,11 +271,23 @@ INPUT{
 	border:				1px dotted lightgrey;
 	padding:			0px 0px 0px 0px;
 }
+#WHITEBOARD_TIMELINE{
+	position: 			relative;
+	width:				60px;
+	height:				2400px;
+	float:				left;
+	border-top:			0px solid red;
+	border-bottom:		1px solid lightgrey;
+	padding:			0px;
+	
+/*	background-color:	slateblue;*/
+
+}
 #TIMELINE0800{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -287,7 +304,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -304,7 +321,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -321,7 +338,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -338,7 +355,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -355,7 +372,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -372,7 +389,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -389,7 +406,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -406,7 +423,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -423,7 +440,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -440,7 +457,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -457,7 +474,7 @@ INPUT{
 	position:			relative;
 	top:				000px;
 	left:				30px;
-	width:				20px;
+	width:				28px;
 	height:				198px;
 	color:				snow;
 	background-color:	red;
@@ -483,24 +500,10 @@ INPUT{
 	overflow:			hidden;
 }
 
-#AREA{
-	position:			absolute;
-	top:				42px;
-	left:				0px;
-	width:				100%;
-	height:				400px;
-	color:				gray;
-	font-size:			12px;
-	overflow:			hidden;
-	z-index:			20000;
-	visibility:			hidden;
-}
-
-
 .CHILD{
 	position:			absolute;
 	width:				200px;
-	height:				60px;
+	height:				50px;
 	color:				gray;
 	background-color:	white;
 	padding:			0px;
@@ -540,8 +543,8 @@ INPUT{
 	overflow:			hidden;
 }
 
-#CM_CHECKOUT{
-	width:					100px;
+.CM_CHECKOUT{
+	width:					100%;
 	height:					20px;
 	background-image:		url(./images/check.png);
 	background-position:	left center;
@@ -554,8 +557,8 @@ INPUT{
 	background-color:		lightblue;
 }
 
-#CM_DELETE{
-	width:					100px;
+.CM_DELETE{
+	width:					100%;
 	height:					20px;
 	background-image:		url(./images/minus.png);
 	background-position:	left center;
@@ -568,8 +571,22 @@ INPUT{
 	background-color:		lightgreen;
 }
 
-#CM_PROPERTY{
-	width:					100px;
+.CM_MOVE{
+	width:					100%;
+	height:					20px;
+	background-image:		url(./images/next.png);
+	background-position:	left center;
+	background-repeat:		no-repeat;
+	background-size: 		16px;
+	border-bottom:			1px solid lightgrey;
+	padding-left:			20px;
+	padding-top:			2px;
+	padding-bottom:			2px;
+	background-color:		gray;
+}
+
+.CM_PROPERTY{
+	width:					100%;
 	height:					20px;
 	background-image:		url(./images/user.png);
 	background-position:	left center;
@@ -622,7 +639,7 @@ INPUT{
 
 #WHITEBOARD_PALLETE_FRAME{
 	position:			absolute;
-	top:				43px;
+	top:				42px;
 	left:				-170px;
 	width:				200px;
 	height:				90%;
@@ -656,6 +673,47 @@ INPUT{
 	padding-top:		14px;
 	padding-left:		4px;
 	writing-mode: 		vertical-lr;		
+}
+
+#WHITEBOARD_PALLETE_CONTENT_FRAME{
+	position:			relative;
+	top:				0px;
+	left:				0px;
+	width:				167px;
+	height:				100%;
+	float: 				right;
+	font-size:			12px;
+	color:				gray;
+	background-color:	rgb(241, 241, 241);
+	border-bottom:		1px solid red;
+	padding:			0px 0px 0px 2px;
+}
+
+#WHITEBOARD_PALLETE_CONTENT_TOOLBAR{
+	position:			absolute;
+	top:				1px;
+	left:				0px;
+	width:				167px;
+	height:				23px;
+	border-bottom:		1px solid lightgrey;
+	overflow:			hidden;
+}
+
+#WHITEBOARD_PALLETE_CONTENT{
+	position:			absolute;
+	top:				0px;
+	left:				0px;
+	height:				0px;
+	width:				167px;
+	height:				90%;
+	float: 				left;
+	font-size:			12px;
+	color:				gray;
+	background-color:	rgb(241, 241, 241);
+	border-bottom:		1px solid red;
+	margin-top:			24px;
+	padding:			0px;
+	overflow-y:			scroll;
 }
 
 .C_GRADE1{
@@ -759,50 +817,9 @@ INPUT{
 	text-align:			center;
 }
 
-#WHITEBOARD_PALLETE_CONTENT_FRAME{
-	position:			relative;
-	top:				0px;
-	left:				0px;
-	width:				167px;
-	height:				100%;
-	float: 				right;
-	font-size:			12px;
-	color:				gray;
-	background-color:	rgb(241, 241, 241);
-	border-bottom:		1px solid red;
-	padding:			0px 0px 0px 2px;
-}
-
-#WHITEBOARD_PALLETE_CONTENT_TOOLBAR{
-	position:			absolute;
-	top:				1px;
-	left:				0px;
-	width:				167px;
-	height:				23px;
-	border-bottom:		1px solid lightgrey;
-	overflow:			hidden;
-}
-
-#WHITEBOARD_PALLETE_CONTENT{
-	position:			absolute;
-	top:				0px;
-	left:				0px;
-	height:				0px;
-	width:				167px;
-	height:				90%;
-	float: 				left;
-	font-size:			12px;
-	color:				gray;
-	background-color:	rgb(241, 241, 241);
-	border-bottom:		1px solid red;
-	margin-top:			24px;
-	padding:			0px;
-	overflow-y:			scroll;
-}
-
 #CHILDREN_PALLETE_FRAME{
 	position:			absolute;
-	top:				43px;
+	top:				42px;
 	left:				0px;		/*  dummy coordinate -> fix to fitting()*/
 	width:				200px;
 	height:				90%;		/*  dummy coordinate -> fix to fitting()*/

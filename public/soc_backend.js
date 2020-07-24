@@ -131,8 +131,8 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
 
     var r = '';
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
-    r += '<div style="height:47px;padding-left:2px;" >';
-        r += '<div style="width:100%;height:30px;font-size:14px;border-bottom:1px solid lightgrey;" >';
+    r += '<div style="height:40px;padding-left:2px;" >';
+        r += '<div style="width:100%;height:28px;font-size:14px;border-bottom:1px solid lightgrey;" >';
             r += '<div style="height:20px;float:left;" >' + child_name + '</div>';
             r += '<div class="ESCORT_FLG" style="height:20px;padding-left:2px;float:right;width:18px;" >&nbsp;';
             r += '</div>';
@@ -143,7 +143,7 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
             r += child_type + '' + child_grade;
             r += '</div>';
         r += '</div>';
-        r += '<div id="CHECKOUT_' + child_id + '" style="clear:both;height:15px;text-align:right;font-size:10px;" >';
+        r += '<div id="CHECKOUT_' + child_id + '" style="clear:both;height:12px;text-align:right;font-size:10px;" >';
             r += '&nbsp;&nbsp;checkout:'
         r += '</div>';
     r += '</div>';
@@ -193,17 +193,11 @@ function addChildManage( oParent, oChild ){
 }
 
 //
-//  チャイルドプロパティ
+//  チャイルドプロパティ(SINGLE base)
 //
 function propertyWhiteboardChild( c ){
-    // var c = scanChild( e.target );
-    // if ( c == null ){
-    //     alert('プロパティが見つかりません');
-    //     return;
-    // }
-    // markChild( c );
-    propChild = c;
 
+    propChild = c;
     var id = c.getAttribute('child_id');
     console.log( id );
     var oChild = getChild( id );
@@ -214,25 +208,46 @@ function propertyWhiteboardChild( c ){
         r += "</div>";
         r += "<div style='padding-top:10px;' >checkout time:" + c.getAttribute('checkout') + "</div>";
         r += "<div style='padding-top:60px;border-top:1px solid lightgrey;' >";
-        r += "<button type='button'       onclick='checkclearChild();' >checkout clear</button>";
-        r += "&nbsp;<button type='button' onclick='checkoutChild(propChild);'   >checkout</button>";
+        r += "<button type='button' style='width:260px;font-size:24px;' ";
+        r += " onclick='checkoutClearChild(propChild);closeModalDialog();' >";
+            r += "<img width='32px' src='./images/close.png' />checkout clear";
+        r += "</button>";
+        r += "&nbsp;";
+        r += "<button type='button' style='width:260px;font-size:24px;' ";
+        r += " onclick='checkoutChild(propChild);closeModalDialog();'   >";
+            r += "<img width='32px' src='./images/check.png' />checkout";
+        r += "</button>";
         r += "</div>";
     r += "</div>";
     openModalDialog( r, 'NORMAL' );
 
 }
 
+//
+//  チャイルドの削除（マーク用ラッパー）
+//
+function deleteWhiteboardMarkChild(){
+    deleteWhiteboardChild( 'MARK' );
+}
 
 //
-//  マークしたチャイルドの削除
-//
-function deleteWhiteboardChild(){
+//  チャイルドの削除
+//  
+function deleteWhiteboardChild( proc_mode ){
+
     var p = document.getElementById( 'WHITEBOARD');
-    var children = p.getElementsByClassName('CHILD');
-
-    if ( children.length == 0){
-        console.log('deleteWhiteboardChild:' + children.length);
-        return;
+    
+    switch ( proc_mode ){
+        case 'SINGLE':
+            if ( propChild == null ) return;
+            break;
+        case 'MARK':
+            var children = p.getElementsByClassName('CHILD');
+            if ( children.length == 0){
+                console.log('deleteWhiteboardChild:' + children.length);
+                return;
+            }
+            break;
     }
 
     var r = '';
@@ -240,7 +255,16 @@ function deleteWhiteboardChild(){
 		r += 'delete child';
 	r += '</div>';
 	r += '<div style="margin:0 auto;width:110px;">';
-		r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="deleteWhiteboardChildHelper();" >Delete</button>';
+        r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button" ';
+        r += ' style="width:100px;height:20px;font-size:12px;" ';
+        switch( proc_mode ){
+            case 'SINGLE':
+                r += ' onclick="deleteWhiteboardChildSingleHelper();" >Delete</button>';
+                break;
+            case 'MARK':
+                r += " onclick='deleteWhiteboardChildMarkHelper();' >Delete</button>";
+                break;
+        }
 	r += '</div>';
     openModalDialog( r, 'NOBUTTON' );
     document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();
@@ -248,9 +272,21 @@ function deleteWhiteboardChild(){
 }
 
 //
+//  チャイルドを削除（シングル）
+//
+function deleteWhiteboardChildSingleHelper(){
+    console.log('deleteWhiteboardMarkChildHelper' );
+    closeModalDialog();
+    propChild.parentNode.removeChild( propChild );
+    propChild = null;
+    showWhiteboardChildCount();
+}
+
+//
 //  マークしているチャイルドを削除（非表示処理）
 //
-function deleteWhiteboardChildHelper(){
+function deleteWhiteboardChildMarkHelper(){
+    console.log('deleteWhiteboardMarkChildHelper' );
     closeModalDialog();
     var p = document.getElementById( 'WHITEBOARD');
     var c = p.firstChild;
@@ -454,67 +490,249 @@ function checkoutChild( c ){
 }
 
 //
-//  マークしているチャイルドをチェックアウト
+//  チャイルドをチェックアウト(マーク用ラッパー)
 //
-function checkoutMarkChild(){
+function checkoutWhiteboardMarkChild(){
+    checkoutWhiteboardChild('MARK');
+}
+
+
+//
+//  チャイルドをチェックアウト
+//
+function checkoutWhiteboardChild( proc_mode ){
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'checkout children';
     r += '</div>';
-    r += '<div id="ID_MARKEDCHILDREN_LIST" style="width:70%;height:100px;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '<div id="ID_MARKEDCHILDREN_LIST" style="margin:0 auto;width:70%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
 	r += '<div style="margin:0 auto;width:110px;margin:0 auto;">';
-		r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="checkoutMarkChildHelper();" >Checkout</button>';
+        r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
+        r += 'style="width:100px;height:30px;font-size:12px;" ';
+        switch ( proc_mode ){
+            case 'SINGLE':
+                r += 'onclick="checkoutWhiteboardChildSingleHelper();closeModalDialog();" >';
+                break;
+            case 'MARK':
+                r += 'onclick="checkoutWhiteboardChildMarkHelper();closeModalDialog();" >';
+                break;
+        }
+        r += '<img width="20px" src="./images/check.png" />Checkout</button>'
 	r += '</div>';
     openModalDialog( r, 'NOBUTTON' );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
-    var children = getMarkedChild();
-    for ( var i=0; i<children.length; i++ ){
-        var id = children[i].getAttribute('child_id');
-        var oChild = getChild( id );
-        var o = document.createElement('DIV');
-        o.style.width = '100%';
-        o.style.height = '40px';
-        o.style.clear = "both";
-        o.style.borderBottom = '1px solid lightgrey';
-        r = '';
-        r += '<div style="float:left;width:100px;font-size:18px;" >' + oChild.child_name + '</div>';
-        r += '<div style="float:right;padding:4px;" ><img width="30px" src="./images/arrow-right.png" /></div>';
-        r += '<div style="float:right;padding:4px;" ><img width="30px" src="./images/arrow-left.png" /></div>';
-
-        o.innerHTML = r;
-        imcl.appendChild( o );
+    switch ( proc_mode ){
+        case 'SINGLE':
+            var id = propChild.getAttribute('child_id');
+            var oChild = getChild( id );
+            var o = document.createElement('DIV');
+            o.style.width = '100%';
+            o.style.height = '40px';
+            o.style.clear = "both";
+            o.style.borderBottom = '1px solid lightgrey';
+            r = '';
+            r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
+            r += '<div style="float:right;padding:4px;" ><img width="20px" src="./images/arrow-right.png" /></div>';
+            r += '<div style="float:right;padding:4px;" ><img width="20px" src="./images/arrow-left.png" /></div>';
+    
+            o.innerHTML = r;
+            imcl.appendChild( o );
+        break;
+        case 'MARK':
+            var children = getMarkedChild();
+            for ( var i=0; i<children.length; i++ ){
+                var id = children[i].getAttribute('child_id');
+                var oChild = getChild( id );
+                var o = document.createElement('DIV');
+                o.style.width = '100%';
+                o.style.height = '40px';
+                o.style.clear = "both";
+                o.style.borderBottom = '1px solid lightgrey';
+                r = '';
+                r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
+                r += '<div style="float:right;padding:4px;" ><img width="30px" src="./images/arrow-right.png" /></div>';
+                r += '<div style="float:right;padding:4px;" ><img width="30px" src="./images/arrow-left.png" /></div>';
+        
+                o.innerHTML = r;
+                imcl.appendChild( o );
+            }
+            break;
     }
 }
 
 //
-//  マークしているチャイルドをチェックアウト（ヘルパー）
+//  チェックアウトヘルパーラッパー
 //
-function checkoutMarkChildHelper(){
-    var children = getMarkedChild();
-    for ( var i=0; i<children.length; i++ ){
-        checkoutChild( children[i]);
+function checkoutWhiteboardChildSingleHelper(){
+    checkoutWhiteboardChildHelper( 'SINGLE' );
+}
+
+//
+//  チェックアウトヘルパーラッパー
+//
+function checkoutWhiteboardChildMarkHelper(){
+    checkoutWhiteboardChildHelper( 'MARK' );
+}
+
+
+//
+//  チャイルドをチェックアウト（ヘルパー）
+//
+function checkoutWhiteboardChildHelper( proc_mode ){
+    switch ( proc_mode ){
+        case 'SINGLE':
+            if ( propChild == null ) return;
+            checkoutChild( propChild );
+            break;
+        case 'MARK':
+            var children = getMarkedChild();
+            for ( var i=0; i<children.length; i++ ){
+                checkoutChild( children[i]);
+            }
+            break;
     }
 
 }
 
 //
-//  Childをチェッククリア（帰宅）
+//  チャイルドをチェックアウトクリア(シングル用ラッパー)
 //
-function checkclearChild(){
+function checkoutClearWhiteboardSingleChild(){
+    checkoutClearWhiteboardChild('SINGLE');
+}
+//
+//  チャイルドをチェックアウトクリア(マーク用ラッパー)
+//
+function checkoutClearWhiteboardMarkChild(){
+    checkoutClearWhiteboardChild('MARK');
+}
+
+
+//
+//
+//
+// function checkclearWhiteboardChild( proc_mode ){
+//     switch ( proc_mode ){
+//         case 'SINGLE':
+//             checkclearChild(propChild);
+//             break;
+//         case 'MARK':
+//             break;
+//     }
+// }
+
+//
+//  チャイルドをチェックアウトクリア
+//
+function checkoutClearWhiteboardChild( proc_mode ){
+    var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+		r += 'checkout clear children';
+    r += '</div>';
+    r += '<div id="ID_MARKEDCHILDREN_LIST" style="margin:0 auto;width:70%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '</div>';
+	r += '<div style="margin:0 auto;width:110px;margin:0 auto;">';
+        r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
+        r += 'style="width:140px;height:30px;font-size:12px;" ';
+        switch ( proc_mode ){
+            case 'SINGLE':
+                r += 'onclick="checkoutClearWhiteboardChildSingleHelper();closeModalDialog();" >';
+                break;
+            case 'MARK':
+                r += 'onclick="checkoutClearWhiteboardChildMarkHelper();closeModalDialog();" >';
+                break;
+        }
+        r += '<img width="24px" src="./images/close.png" />Checkout Clear</button>';
+	r += '</div>';
+    openModalDialog( r, 'NOBUTTON' );
+    var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
+    switch ( proc_mode ){
+        case 'SINGLE':
+            var id = propChild.getAttribute('child_id');
+            var oChild = getChild( id );
+            var o = document.createElement('DIV');
+            o.style.width = '100%';
+            o.style.height = '40px';
+            o.style.clear = "both";
+            o.style.borderBottom = '1px solid lightgrey';
+            r = '';
+            r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
+    
+            o.innerHTML = r;
+            imcl.appendChild( o );
+        break;
+        case 'MARK':
+            var children = getMarkedChild();
+            for ( var i=0; i<children.length; i++ ){
+                var id = children[i].getAttribute('child_id');
+                var oChild = getChild( id );
+                var o = document.createElement('DIV');
+                o.style.width = '100%';
+                o.style.height = '40px';
+                o.style.clear = "both";
+                o.style.borderBottom = '1px solid lightgrey';
+                r = '';
+                r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
+        
+                o.innerHTML = r;
+                imcl.appendChild( o );
+            }
+            break;
+    }
+}
+
+
+//
+//  Childをチェックアウトクリア（帰宅解除）:single
+//
+function checkoutClearWhiteboardChildSingleHelper(){
     if ( ! propChild ) return;
-    propChild.removeAttribute('checkout' );
-    document.getElementById( 'CHECKOUT_' + propChild.getAttribute('child_id') ).innerText = 'checkout:';
-    //propChild.style.opacity = 1;
-    propChild.style.backgroundImage    = '';
-    propChild.style.backgroundPosition = '';
-    propChild.style.backgroundRepeat   = '';
-    propChild.style.backgroundSize     = '';
-
+    checkoutClearChild( propChild );
     showWhiteboardChildCountCheckout();
 
 }
 
+//
+//  Childをチェッククリア（帰宅解除）:mark
+//
+function checkoutClearWhiteboardChildMarkHelper(){
+
+    var children = getMarkedChild();
+    for ( var i=0; i<children.length; i++ ){
+        checkoutClearChild( children[i] );
+    }
+    showWhiteboardChildCountCheckout();
+
+}
+
+//
+//  指定したチャイルドのチェックアウトクリア処理
+//
+function checkoutClearChild( c ){
+    if ( c == null ) return;
+    c.removeAttribute('checkout' );
+    document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText = 'checkout:';
+    c.style.backgroundImage    = '';
+    c.style.backgroundPosition = '';
+    c.style.backgroundRepeat   = '';
+    c.style.backgroundSize     = '';
+
+}
+
+//
+//  タイムラインにチャイルドを移動
+//
+function moveTimelineWhiteboardChild( timeline ){
+
+}
+
+//
+//  タイムラインのチャイルドをチェックアウト
+//
+function checkoutTimelineWhiteboardChild( timeline ){
+
+}
 
 //
 //  アカウントプロパティ
