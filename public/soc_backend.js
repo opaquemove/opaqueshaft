@@ -259,15 +259,16 @@ function deleteWhiteboardChild( proc_mode ){
 	r += '</div>';
 	r += '<div style="margin:0 auto;width:110px;">';
         r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button" ';
-        r += ' style="width:100px;height:20px;font-size:12px;" ';
+        r += ' style="width:100px;height:30px;font-size:12px;" ';
         switch( proc_mode ){
             case 'SINGLE':
-                r += ' onclick="deleteWhiteboardChildSingleHelper();" >Delete</button>';
+                r += ' onclick="deleteWhiteboardChildSingleHelper();" >';
                 break;
             case 'MARK':
-                r += " onclick='deleteWhiteboardChildMarkHelper();' >Delete</button>";
+                r += ' onclick="deleteWhiteboardChildMarkHelper();"   >';
                 break;
         }
+        r += '<img width="24px" src="./images/minus.png" />Delete</button>';
 	r += '</div>';
     openModalDialog( r, 'NOBUTTON' );
     document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();

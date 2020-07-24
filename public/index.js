@@ -145,7 +145,7 @@ function init()
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
-	new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
+	// new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
 	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardMarkChild ).play();
 	new Button( 'ID_CHILD_CHECKOUT',        checkoutWhiteboardMarkChild ).play();
 	new Button( 'ID_CHILD_CHECKCLEAR',      checkoutClearWhiteboardMarkChild ).play();
@@ -255,6 +255,28 @@ function init()
 		}
 	);
 
+	//
+	//	タイムセレクタ初期化
+	//
+	var mts = document.getElementById('MODAL_TIMESELECTOR');
+	mts.addEventListener('mouseover',
+		function(e){
+			var o = e.target;
+			o.style.backgroundColor	= 'darkred';
+		});
+	mts.addEventListener('mouseout',
+		function(e){
+			var o = e.target;
+			o.style.backgroundColor	= '';
+		});
+	mts.addEventListener('mouseup',
+		function(e){
+			var h = e.target.innerText;
+			console.log( h );
+			var mots = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
+			mots.style.visibility = 'hidden';
+			dragPalleteChild2( h + ':00' );
+		});
 
 	//
 	//	タイムラインバー初期化
@@ -385,7 +407,12 @@ function showGuidanceWhiteboard(){
 		r += '</div>';
 		r += '</form>';
 		r += '<div style="text-align:center;padding-top:40px;" >';
-		r += '<button id="BTN_OPENWHITEBOARD" style="background-color:transparent;border:none;" onclick="createWhiteboard()" ><img width="50px;" src="./images/next.png" ></button>';
+		r += '<button id="BTN_OPENWHITEBOARD" ';
+		r += ' style="width:140px;height:60px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/next.png);background-size:50px;background-repeat:no-repeat;background-position:left center;" ';
+		r += ' onclick="createWhiteboard()" >';
+		// r += '<img width="50px;" src="./images/next.png" >';
+			r += 'Next...';
+		r += '</button>';
 		r += '</div>';
 	r += '</div>';
 	neverCloseDialog = true;
@@ -638,6 +665,9 @@ function fitting(){
 	var h = document.documentElement.clientHeight;
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.style.height = ( h - 42 - 30 ) + 'px';
+
+	var wb = document.getElementById('WHITEBOARD');
+//	wb.style.width   = ( w - 70 ) + 'px';
 
 	var cpf  = document.getElementById('CHILDREN_PALLETE_FRAME');
 	cpf.style.height  = ( h -42 - 30 ) + 'px';
@@ -1162,6 +1192,7 @@ function markPalleteChild( e ){
 //
 //	パレット内のマークしたチャイルドをホワイトボードにドラッグ
 //
+/*
 function dragPalleteChild(){
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
 	var itb = document.getElementById('ID_TIMELINE_BAR');
@@ -1195,6 +1226,39 @@ function dragPalleteChild(){
 	showWhiteboardChildCount();
 
 }
+*/
+
+//
+//	パレット内のマークしたチャイルドをホワイトボードにドラッグ2
+//
+function dragPalleteChild2( hm ){
+	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
+	var arHM = hm.split(':');
+	
+	var cursor	= 0;
+	var top		= ( parseInt( arHM[0] ) - 8 ) * 400;
+	var left	= ( parseInt( arHM[1] ) );
+	console.log( 'hm:' + hm );
+	console.log( 'top:' + top + ' left:' + left );
+
+	for ( var i=0; i<cpc.childNodes.length; i++ ){
+		if ( cpc.childNodes[i].getAttribute('selected') != null ){
+			var id = cpc.childNodes[i].getAttribute('child_id');
+			if ( alreadyExistChildOnWhiteboard( id ) ) continue;
+			var oChild = getChild( id );
+			if ( oChild != null ){
+				addChild( top + ( cursor * 20 ), left + ( cursor * 10 ), oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
+				cursor++;
+			}
+			cpc.childNodes[i].style.color = '';
+			cpc.childNodes[i].style.backgroundColor = '';
+			cpc.childNodes[i].removeAttribute('selected');
+		}
+	}
+	showWhiteboardChildCount();
+
+}
+
 
 //
 //	チャイルド作成フォーム
@@ -1586,7 +1650,7 @@ function mUp( e ) {
 					cMenu.style.top			= '-1px';
 					cMenu.style.left		= (curChild.offsetWidth - 1) + 'px';
 					var menu = curChild.appendChild( cMenu );
-					var contextFunc = [ checkoutChild, deleteWhiteboardChild, propertyWhiteboardChild  ];
+					var contextFunc = [ checkoutChild, WhiteboardChild, propertyWhiteboardChild  ];
 					var r = '';
 					r += '<div id="CM_CHECKOUT"  >checkout</div>';
 					r += '<div id="CM_DELETE"    >delete...</div>';

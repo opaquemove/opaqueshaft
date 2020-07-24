@@ -15,8 +15,14 @@ BODY{
 }
 
 BUTTON{
-	color:				lightcoral;
+	color:				darkgray;
 }
+
+/*
+BUTTON IMG {
+	display:			block;
+}
+*/
 
 INPUT{
 	color:				gray;
@@ -44,7 +50,7 @@ INPUT{
 	width:				500px;
 	height:				28px;
 	color:				whitesmoke;
-	background-color:	gray;
+	background-color:	black;
 	border:				1px solid lightgray;
 	padding:			0px;
 	margin-top:			70px;
@@ -103,27 +109,26 @@ INPUT{
 }
 
 #MODAL_TIMESELECTOR{
-	width:				100px;
-	height:				100px;
+	float:				left;
+	pointer-events: 	auto;
+	width:				150px;
+	height:				150px;
 	color:				whitesmoke;
 	background-color:	red;
-	border:				1px solid lightgray;
-/*
-	position: 			relative;
-	top:				0px;
-	left:				0px;
-	width:				100px;
-	height:				100px;
+	opacity: 			0.8;
+	font-size:			18px;
+}
+
+#MODAL_TIMESELECTOR2{
+	float:				left;
+	pointer-events: 	auto;
+	width:				160px;
+	height:				150px;
 	color:				whitesmoke;
 	background-color:	red;
-	border:				1px solid lightgray;
-	padding:			0px;
-	margin-top:			auto;
-	margin-left:		auto;
-	margin-right:		auto;
-	margin-bottom: 		auto;
-	overflow:			hidden;
-*/
+	margin-left:		10px;
+	opacity: 			0.8;
+	font-size:			18px;
 }
 
 
@@ -155,7 +160,7 @@ INPUT{
 	color:				whitesmoke;
 	font-size:			12px;
 	border-left:		10px solid red;
-/*	border-right:		1px solid lightgrey;	*/
+	border-right:		1px solid lightgrey;
 	padding-top:		4px;
 	padding-right:		8px;
 }
