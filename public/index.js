@@ -306,14 +306,19 @@ function TimeSelector( func ){
 	this.func		= func;
 }
 
+//
+//	onmouseover = ontouchstart
+//	onmousemove = ontouchmove
+//	onmouseup   near ontouchend
+//	event       = event.touches[0]
 TimeSelector.prototype = {
 	play : function(){
 		this.frame		= document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
 		this.selector	= document.getElementById('MODAL_TIMESELECTOR');
-		this.selector.addEventListener('touchstart',
-			(function(e){
-				e.preventDefault();
-			}).bind(this), false );
+		// this.selector.addEventListener('touchstart',
+		// 	(function(e){
+		// 		e.preventDefault();
+		// 	}).bind(this), false );
 		this.selector.addEventListener('mouseover',
 			(function(e){
 				var o = e.target;
