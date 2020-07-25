@@ -362,7 +362,7 @@ TimeSelector.prototype = {
 		// 	} ).bind( this ), false );
 		this.selector.addEventListener( this.evtEnd,	// mouseup/touchend
 			( function(e){
-				var o = e.target;
+				var o = ( this.touchdevice ) ? e.changedTouches[0] : e.target;
 				while( true ){
 					if ( this.selector == o.parentNode) break;
 					 else o = o.parentNode;
