@@ -304,10 +304,14 @@ function TimeSelector( func ){
 	this.frame 		= null;
 	this.selector	= null;
 	this.func		= func;
+	this.device		= null;
+	this.evtStart	= null;
+	this.evtMove	= null;
+	this.evtEnd		= null;
 }
 
 //
-//	onmouseover = ontouchstart
+//	onmouseover(down) = ontouchstart
 //	onmousemove = ontouchmove
 //	onmouseup   near ontouchend
 //	event       = event.touches[0]
@@ -315,13 +319,27 @@ TimeSelector.prototype = {
 	play : function(){
 		this.frame		= document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
 		this.selector	= document.getElementById('MODAL_TIMESELECTOR');
+		this.touchdevice	= ( 'ontouchend' in document );
+		console.log('touch device:' + this.device);
+		switch ( this.touchdevice ){
+			case true:		// touch device( iPad/iPhone/Android/Tablet )
+				this.evtStart	= 'touchstart';
+				this.evtMove	= 'touchmove';
+				this.evtEnd		= 'touchend';
+				break;
+			case false:	// pc
+				this.evtStart	= 'mousedown';
+				this.evtMove	= 'mousemove';
+				this.evtEnd		= 'mouseup';
+				break;
+		}
 		// this.selector.addEventListener('touchstart',
 		// 	(function(e){
 		// 		e.preventDefault();
 		// 	}).bind(this), false );
-		this.selector.addEventListener('mouseover',
+		this.selector.addEventListener( this.evtStart,		//	mousedown/touchstart
 			(function(e){
-				var o = e.target;
+				var o = ( this.touchdevice )? e.changedTouches[0]: e.target;
 				while( true ){
 					if ( this.selector == o.parentNode) break;
 					 else o = o.parentNode;
@@ -332,17 +350,17 @@ TimeSelector.prototype = {
 						document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
 				}
 			}).bind(this), false );
-		this.selector.addEventListener('mouseout',
-			( function(e){
-				var o = e.target;
-				while( true ){
-					if ( this.selector == o.parentNode) break;
-					 else o = o.parentNode;
-				}
-				if ( o.hasAttribute('target'))
-					o.style.backgroundColor	= '';
-			} ).bind( this ), false );
-		this.selector.addEventListener('mouseup',
+		// this.selector.addEventListener('mouseout',
+		// 	( function(e){
+		// 		var o = e.target;
+		// 		while( true ){
+		// 			if ( this.selector == o.parentNode) break;
+		// 			 else o = o.parentNode;
+		// 		}
+		// 		if ( o.hasAttribute('target'))
+		// 			o.style.backgroundColor	= '';
+		// 	} ).bind( this ), false );
+		this.selector.addEventListener( this.evtEnd,	// mouseup/touchend
 			( function(e){
 				var o = e.target;
 				while( true ){
