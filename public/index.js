@@ -40,7 +40,7 @@ function init()
 	// 	});
 
 	var wb = document.getElementById('WHITEBOARD');
-//  touchmoveを抑制すると返って使いづらいので抑制はしないよ！
+//  touchmoveを抑制すると返って使いづらいので抑制はしないよ！ 
 //	wb.addEventListener("touchmove",
 //	 function( e ) { e.preventDefault(); }, { passive:false } );
 //	wb.addEventListener('selectstart', function(e){return false;})
