@@ -407,6 +407,13 @@ TimeSelector.prototype = {
 	},
 	open : function(){
 		this.frame.style.visibility = 'visible';
+		for ( var i=0; i<this.selector.childNodes.length; i++ ){
+			var o = this.selector.childNodes[i];
+			if ( 'hasAttribute' in o ){
+				//if ( o.hasAttribute('target') )
+					o.style.backgroundColor = '';
+			}
+		}
 	},
 	close : function(){
 		this.frame.style.visibility = 'hidden';
