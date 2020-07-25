@@ -112,7 +112,7 @@ INPUT{
 	float:				left;
 	pointer-events: 	auto;
 	width:				150px;
-	height:				150px;
+	height:				200px;
 	color:				whitesmoke;
 	background-color:	red;
 	opacity: 			0.8;
@@ -122,8 +122,8 @@ INPUT{
 #MODAL_TIMESELECTOR2{
 	float:				left;
 	pointer-events: 	auto;
-	width:				160px;
-	height:				150px;
+	width:				150px;
+	height:				200px;
 	color:				whitesmoke;
 	background-color:	red;
 	margin-left:		10px;

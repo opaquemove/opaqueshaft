@@ -313,23 +313,46 @@ TimeSelector.prototype = {
 		this.selector.addEventListener('mouseover',
 			(function(e){
 				var o = e.target;
-				o.style.backgroundColor	= 'darkred';
+				while( true ){
+					if ( this.selector == o.parentNode) break;
+					 else o = o.parentNode;
+				}
+				if ( o.hasAttribute('target'))
+					o.style.backgroundColor	= 'darkred';
 			}).bind(this), false );
 		this.selector.addEventListener('mouseout',
 			( function(e){
 				var o = e.target;
-				o.style.backgroundColor	= '';
+				while( true ){
+					if ( this.selector == o.parentNode) break;
+					 else o = o.parentNode;
+				}
+				if ( o.hasAttribute('target'))
+					o.style.backgroundColor	= '';
 			} ).bind( this ), false );
 		this.selector.addEventListener('mouseup',
 			( function(e){
-				var h = e.target.innerText;
-				//console.log( h );
-				//ctlTimelineSelector( 'close', null );
-				// dragPalleteChild2( h + ':00' );
-				if ( this.func != null ){
-					this.close();
-					this.func( h + ':00' );
+				var o = e.target;
+				while( true ){
+					if ( this.selector == o.parentNode) break;
+					 else o = o.parentNode;
 				}
+				if ( o.hasAttribute('target')){
+					console.log('target:' + o.getAttribute('target'));
+					switch ( o.getAttribute('target')){
+						case 'on':
+							var h = e.target.innerText;
+							if ( this.func != null ){
+								this.close();
+								this.func( h + ':00' );
+							}
+							break;
+						case 'close':
+							this.close();
+							break;
+					}
+				}
+
 			} ).bind( this ), false );
 	
 	},
