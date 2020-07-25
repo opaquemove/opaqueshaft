@@ -308,6 +308,7 @@ function TimeSelector( func ){
 	this.evtStart	= null;
 	this.evtMove	= null;
 	this.evtEnd		= null;
+	this.current	= null;
 }
 
 //
@@ -345,6 +346,21 @@ TimeSelector.prototype = {
 					 else o = o.parentNode;
 				}
 				if ( o.hasAttribute('target')){
+					this.current = o;
+					o.style.backgroundColor	= 'darkred';
+					if ( o.getAttribute('target') == 'on' )
+						document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
+				}
+			}).bind(this), false );
+		this.selector.addEventListener( this.evtMove,		//	mousedown/touchstart
+			(function(e){
+				var o = ( this.touchdevice )? e.changedTouches[0].target: e.target;
+				while( true ){
+					if ( this.selector == o.parentNode) break;
+						else o = o.parentNode;
+				}
+				if ( o.hasAttribute('target')){
+					this.current = o;
 					o.style.backgroundColor	= 'darkred';
 					if ( o.getAttribute('target') == 'on' )
 						document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
@@ -362,7 +378,7 @@ TimeSelector.prototype = {
 		// 	} ).bind( this ), false );
 		this.selector.addEventListener( this.evtEnd,	// mouseup/touchend
 			( function(e){
-				var o = ( this.touchdevice ) ? e.changedTouches[0].target : e.target;
+				var o = ( this.touchdevice ) ? this.current : e.target;
 				while( true ){
 					if ( this.selector == o.parentNode) break;
 					 else o = o.parentNode;
