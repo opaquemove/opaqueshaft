@@ -366,16 +366,19 @@ TimeSelector.prototype = {
 						document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
 				}
 			}).bind(this), false );
-		// this.selector.addEventListener('mouseout',
-		// 	( function(e){
-		// 		var o = e.target;
-		// 		while( true ){
-		// 			if ( this.selector == o.parentNode) break;
-		// 			 else o = o.parentNode;
-		// 		}
-		// 		if ( o.hasAttribute('target'))
-		// 			o.style.backgroundColor	= '';
-		// 	} ).bind( this ), false );
+		if ( !this.touchdevice ){
+			this.selector.addEventListener('mouseout',
+				( function(e){
+					var o = e.target;
+					while( true ){
+						if ( this.selector == o.parentNode) break;
+						 else o = o.parentNode;
+					}
+					if ( o.hasAttribute('target'))
+						o.style.backgroundColor	= '';
+				} ).bind( this ), false );
+		}
+
 		this.selector.addEventListener( this.evtEnd,	// mouseup/touchend
 			( function(e){
 				var o = ( this.touchdevice ) ? this.current : e.target;
