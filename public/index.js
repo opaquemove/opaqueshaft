@@ -339,7 +339,7 @@ TimeSelector.prototype = {
 		// 	}).bind(this), false );
 		this.selector.addEventListener( this.evtStart,		//	mousedown/touchstart
 			(function(e){
-				var o = ( this.touchdevice )? e.changedTouches[0]: e.target;
+				var o = ( this.touchdevice )? e.changedTouches[0].target: e.target;
 				while( true ){
 					if ( this.selector == o.parentNode) break;
 					 else o = o.parentNode;
@@ -362,7 +362,7 @@ TimeSelector.prototype = {
 		// 	} ).bind( this ), false );
 		this.selector.addEventListener( this.evtEnd,	// mouseup/touchend
 			( function(e){
-				var o = ( this.touchdevice ) ? e.changedTouches[0] : e.target;
+				var o = ( this.touchdevice ) ? e.changedTouches[0].target : e.target;
 				while( true ){
 					if ( this.selector == o.parentNode) break;
 					 else o = o.parentNode;
