@@ -151,6 +151,7 @@ function init()
 	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardMarkChild ).play();
 	new Button( 'ID_CHILD_CHECKOUT',        checkoutWhiteboardMarkChild ).play();
 	new Button( 'ID_CHILD_CHECKCLEAR',      checkoutClearWhiteboardMarkChild ).play();
+	new Button( 'ID_CHILD_TIMEUPDATE',		showTimelineSelector ).play();
 	new Button( 'ID_GRADE1',                null           ).play();
 	new Button( 'ID_GRADE2',                null           ).play();
 	new Button( 'ID_GRADE3',                null           ).play();
@@ -260,7 +261,8 @@ function init()
 	//
 	//	タイムセレクタ初期化
 	//
-	palleteTimeSelector = new TimeSelector( dragPalleteChild2 ).play();
+	palleteTimeSelector = new TimeSelector( dragPalleteChild2 );
+	palleteTimeSelector.play();
 /*
 	var mts = document.getElementById('MODAL_TIMESELECTOR');
 	mts.addEventListener('mouseover',
@@ -336,12 +338,16 @@ TimeSelector.prototype = {
 	},
 	close : function(){
 		this.frame.style.visibility = 'hidden';
+	},
+	opened : function(){
+		return ( this.frame.visibility == 'visible' );
 	}
 };
 
 //
 //	タイムラインセレクタ制御
 //
+/*
 function ctlTimelineSelector( cmd, func ){
 	var mots = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
 	switch ( cmd ){
@@ -353,6 +359,7 @@ function ctlTimelineSelector( cmd, func ){
 			break;
 	}
 }
+*/
 
 //
 //	開いているタイムラインコンテキストメニューを閉じる
@@ -1217,7 +1224,8 @@ function markPalleteChild( e ){
 			c.style.color			= 'gray';
 			c.style.backgroundColor = '#EEEEEE';
 			c.setAttribute('selected', 'yes' );
-			ctlTimelineSelector( 'open', null );
+			palleteTimeSelector.open();
+			//ctlTimelineSelector( 'open', null );
 		} else {
 			c.style.color			= '';
 			c.style.backgroundColor = '';
@@ -1230,7 +1238,8 @@ function markPalleteChild( e ){
 			}
 			console.log('c_selected:' + c_selected );
 			if ( c_selected == 0 ){
-				ctlTimelineSelector('close', null );
+				palleteTimeSelector.close();
+				// ctlTimelineSelector('close', null );
 				}
 	
 		}
@@ -1244,7 +1253,8 @@ function markPalleteChild( e ){
 				cpc.childNodes[i].removeAttribute('selected');
 			}
 		}
-		ctlTimelineSelector('close', null );
+		palleteTimeSelector.close();
+		// ctlTimelineSelector('close', null );
 
 	}
 }
@@ -1307,7 +1317,7 @@ function dragPalleteChild2( hm ){
 			if ( alreadyExistChildOnWhiteboard( id ) ) continue;
 			var oChild = getChild( id );
 			if ( oChild != null ){
-				addChild( top + ( cursor * 20 ), left + ( cursor * 10 ), oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
+				addChild( top + ( cursor * 20 ), left + ( cursor * 1 ), oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
 				cursor++;
 			}
 			cpc.childNodes[i].style.color = '';

@@ -959,3 +959,10 @@ INPUT{
 .drag {
 	z-index:	1001;
 }
+
+.vh-center{
+	display:			flex;
+	justify-content: 	center;
+	align-items: 		center;
+
+}

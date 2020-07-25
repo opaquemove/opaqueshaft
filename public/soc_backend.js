@@ -725,6 +725,12 @@ function checkoutClearChild( c ){
 }
 
 //
+//  パレットタイムセレクタを表示
+//
+function showTimelineSelector(){
+    palleteTimeSelector.open();
+} 
+//
 //  タイムラインにチャイルドを移動
 //
 function moveTimelineWhiteboardChild( timeline ){
