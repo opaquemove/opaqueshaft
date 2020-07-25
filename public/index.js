@@ -310,6 +310,10 @@ TimeSelector.prototype = {
 	play : function(){
 		this.frame		= document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
 		this.selector	= document.getElementById('MODAL_TIMESELECTOR');
+		this.selector.addEventListener('touchstart',
+			(function(e){
+				e.preventDefault();
+			}).bind(this), false );
 		this.selector.addEventListener('mouseover',
 			(function(e){
 				var o = e.target;
