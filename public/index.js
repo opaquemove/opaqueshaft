@@ -317,8 +317,11 @@ TimeSelector.prototype = {
 					if ( this.selector == o.parentNode) break;
 					 else o = o.parentNode;
 				}
-				if ( o.hasAttribute('target'))
+				if ( o.hasAttribute('target')){
 					o.style.backgroundColor	= 'darkred';
+					if ( o.getAttribute('target') == 'on' )
+						document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
+				}
 			}).bind(this), false );
 		this.selector.addEventListener('mouseout',
 			( function(e){
