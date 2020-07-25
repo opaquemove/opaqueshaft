@@ -22,6 +22,8 @@ var dayWhiteboard  = '';
 
 var neverCloseDialog = false;
 
+var palleteTimeSelector = null;
+
 window.onload = init;
 window.onresize = fitting;
 
@@ -258,6 +260,8 @@ function init()
 	//
 	//	タイムセレクタ初期化
 	//
+	palleteTimeSelector = new TimeSelector( dragPalleteChild2 ).play();
+/*
 	var mts = document.getElementById('MODAL_TIMESELECTOR');
 	mts.addEventListener('mouseover',
 		function(e){
@@ -273,10 +277,10 @@ function init()
 		function(e){
 			var h = e.target.innerText;
 			console.log( h );
-			var mots = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
-			mots.style.visibility = 'hidden';
+			ctlTimelineSelector( 'close', null );
 			dragPalleteChild2( h + ':00' );
 		});
+*/
 
 	//
 	//	タイムラインバー初期化
@@ -289,6 +293,65 @@ function init()
 	tmb.addEventListener( 'mouseup',    locateTimelinebar );
 	tmb.addEventListener( 'touchend',   locateTimelinebar );
 
+}
+
+//
+//	タイムセレクタのプロトタイプ
+//
+function TimeSelector( func ){
+	this.frame 		= null;
+	this.selector	= null;
+	this.func		= func;
+}
+
+TimeSelector.prototype = {
+	play : function(){
+		this.frame		= document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
+		this.selector	= document.getElementById('MODAL_TIMESELECTOR');
+		this.selector.addEventListener('mouseover',
+			(function(e){
+				var o = e.target;
+				o.style.backgroundColor	= 'darkred';
+			}).bind(this), false );
+		this.selector.addEventListener('mouseout',
+			( function(e){
+				var o = e.target;
+				o.style.backgroundColor	= '';
+			} ).bind( this ), false );
+		this.selector.addEventListener('mouseup',
+			( function(e){
+				var h = e.target.innerText;
+				//console.log( h );
+				//ctlTimelineSelector( 'close', null );
+				// dragPalleteChild2( h + ':00' );
+				if ( this.func != null ){
+					this.close();
+					this.func( h + ':00' );
+				}
+			} ).bind( this ), false );
+	
+	},
+	open : function(){
+		this.frame.style.visibility = 'visible';
+	},
+	close : function(){
+		this.frame.style.visibility = 'hidden';
+	}
+};
+
+//
+//	タイムラインセレクタ制御
+//
+function ctlTimelineSelector( cmd, func ){
+	var mots = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
+	switch ( cmd ){
+		case 'open':
+			mots.style.visibility = 'visible';
+			break;
+		case 'close':
+			mots.style.visibility = 'hidden';
+			break;
+	}
 }
 
 //
@@ -1154,8 +1217,7 @@ function markPalleteChild( e ){
 			c.style.color			= 'gray';
 			c.style.backgroundColor = '#EEEEEE';
 			c.setAttribute('selected', 'yes' );
-			var mot = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
-			mot.style.visibility = 'visible';
+			ctlTimelineSelector( 'open', null );
 		} else {
 			c.style.color			= '';
 			c.style.backgroundColor = '';
@@ -1168,8 +1230,7 @@ function markPalleteChild( e ){
 			}
 			console.log('c_selected:' + c_selected );
 			if ( c_selected == 0 ){
-				var mot = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
-				mot.style.visibility = 'hidden';
+				ctlTimelineSelector('close', null );
 				}
 	
 		}
@@ -1183,8 +1244,7 @@ function markPalleteChild( e ){
 				cpc.childNodes[i].removeAttribute('selected');
 			}
 		}
-		var mot = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
-		mot.style.visibility = 'hidden';
+		ctlTimelineSelector('close', null );
 
 	}
 }
