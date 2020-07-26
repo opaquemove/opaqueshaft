@@ -731,7 +731,7 @@ function visibleWhiteboard(){
 //	ホワイトボード自体のドラッグ操作
 //
 function locateWhiteboard( e ){
-	e.preventDefault();
+	//e.preventDefault();
 	var wb = document.getElementById('WHITEBOARD');
 	switch ( e.type ){
 		case 'touchstart':
@@ -770,7 +770,6 @@ function locateWhiteboard( e ){
 			} else {
 				var event = e.changedTouches[0];
 				enabled = ( e.changedTouches.length > 1 );	// ２本指
-				//e.preventDefault();
 			}
 
 			if ( ! enabled ) return;
