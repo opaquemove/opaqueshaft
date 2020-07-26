@@ -753,10 +753,10 @@ function locateWhiteboard( e ){
 			m.style.zIndex			= 80000;
 			m.innerText				= 'NAVI';
 			var nav = document.body.appendChild( m );
-			nav.addEventListener( 'mouseleave',
-				function(e){
-					e.target.parentNode.removeChild( e.target );
-				});
+			// nav.addEventListener( 'mouseleave',
+			// 	function(e){
+			// 		e.target.parentNode.removeChild( e.target );
+			// 	});
 			
 
 			break;
