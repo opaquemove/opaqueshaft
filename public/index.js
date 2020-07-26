@@ -727,7 +727,7 @@ function locateWhiteboard( e ){
 			if(e.type === "mousedown") {
 				var event = e;
 				} else {
-				e.preventDefault();
+				//e.preventDefault();
 				var event = e.changedTouches[0];
 				}
 	
@@ -792,7 +792,7 @@ function locateWhiteboard( e ){
 				var event = e;
 			} else {
 				var event = e.changedTouches[0];
-				e.preventDefault();
+				//e.preventDefault();
 			}
 			var nav = document.getElementById('NAVI');
 			// if ( nav != null )
