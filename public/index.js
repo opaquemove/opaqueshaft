@@ -57,6 +57,7 @@ function init()
 	wb.addEventListener('mousedown',  locateWhiteboard );
 	wb.addEventListener('touchstart', locateWhiteboard );
 	wb.addEventListener('mousemove',  locateWhiteboard );
+	wb.addEventListener('touchmove',  locateWhiteboard );
 	wb.addEventListener('mouseup',    locateWhiteboard );
 	wb.addEventListener('touchend',   locateWhiteboard );
 	document.addEventListener('keydown',   keyWhiteboard );
@@ -731,12 +732,31 @@ function locateWhiteboard( e ){
 				var event = e.changedTouches[0];
 				}
 	
-			e.target.position = 'absolute';
-			wbx = event.pageX - e.target.offsetLeft;
-			wby = event.pageY - e.target.offsetTop + 42 + 4802;
-			console.log('event.pageY:', event.pageX );
-			console.log('WHITEBOARD top:' + wb.style.top );
-			console.log('WHITEBOARD offsetTop:' + e.target.offsetTop );
+			// e.target.position = 'absolute';
+			// wbx = event.pageX - e.target.offsetLeft;
+			// wby = event.pageY - e.target.offsetTop + 42 + 4802;
+			// console.log('event.pageY:', event.pageX );
+			// console.log('WHITEBOARD top:' + wb.style.top );
+			// console.log('WHITEBOARD offsetTop:' + e.target.offsetTop );
+			var nav = document.getElementById('NAVI');
+			if ( nav != null )
+				nav.parentNode.removeChild( nav );
+
+			break;
+		case 'mousemove':
+		case 'touchmove':
+			var nav = document.getElementById('NAVI');
+			if ( nav != null )
+				nav.parentNode.removeChild( nav );
+			break;
+		case 'touchend':
+		case 'mouseup':
+			if(e.type === "mouseup") {
+				var event = e;
+			} else {
+				var event = e.changedTouches[0];
+				//e.preventDefault();
+			}
 
 			//
 			//	NAVI
@@ -775,29 +795,7 @@ function locateWhiteboard( e ){
 			// 		e.target.parentNode.removeChild( e.target );
 			// 	});
 			
-
-			break;
-		case 'mousemove':
-/*
-			if ( document.getElementById('WHITEBOARD') != e.target ) return;
-			if ( e.buttons & 1 ){
-				document.getElementById('WHITEBOARD').style.top  = event.pageY - wby + "px";
-			//	document.getElementById('WHITEBOARD').style.left = event.pageX - wbx + "px";
-			}
-*/
-			break;
-		case 'touchend':
-		case 'mouseup':
-			if(e.type === "mouseup") {
-				var event = e;
-			} else {
-				var event = e.changedTouches[0];
-				//e.preventDefault();
-			}
-			var nav = document.getElementById('NAVI');
-			// if ( nav != null )
-			// 	nav.parentNode.removeChild( nav );
-
+			
 			if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
 			break;
 	}
