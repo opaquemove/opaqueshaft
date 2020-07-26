@@ -1652,8 +1652,8 @@ function mMove( e ){
         }
 
         //フリックしたときに画面を動かさないようにデフォルト動作を抑制
-		event.preventDefault();
-		event.stopPropagation();
+		e.preventDefault();
+		e.stopPropagation();
 
 		//マウスが動いた場所に要素を動かす
 		if ( e.type == 'touchmove' 
