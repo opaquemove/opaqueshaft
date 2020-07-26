@@ -762,14 +762,15 @@ function locateWhiteboard( e ){
 			break;
 		case 'touchend':
 		case 'mouseup':
-			document.getElementById('ID_CHILD_COORDINATE').innerText = e.type;
 			var enabled = false;
 			if(e.type === "mouseup") {
 				var event = e;
 				enabled = true;
 			} else {
 				var event = e.changedTouches[0];
+				document.getElementById('ID_CHILD_COORDINATE').innerText = 'touches:' + e.changedTouches.length;
 				enabled = ( e.changedTouches.length > 1 );	// 2本指
+
 			}
 
 			if ( ! enabled ) return;
