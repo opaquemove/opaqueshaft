@@ -44,53 +44,29 @@ INPUT{
 }
 
 #MODAL_MESSAGE_HEADER{
-	position: 			relative;
-	top:				0px;
-	left:				0px;
-	width:				500px;
+	width:				518px;
 	height:				28px;
-	color:				whitesmoke;
 	background-color:	black;
 	border:				1px solid lightgray;
 	padding:			0px;
-	margin-top:			70px;
-	margin-left:		auto;
-	margin-right:		auto;
-	margin-bottom: 		0px;
-	overflow:			hidden;
 }
 
 #MODAL_MESSAGE{
-	position: 			relative;
-	top:				31px;
-	left:				0px;
-	width:				496px;
+	width:				514px;
 	height:				326px;
-	color:				gray;
 	background-color:	snow;
 	border:				1px solid lightgrey;
 	padding:			2px;
-	margin-top:			-32px;
-	margin-left:		auto;
-	margin-right:		auto;
-	margin-bottom: 		0px;;
 }
 
 #MODAL_MESSAGE_FOOTER{
-	position: 			relative;
-	top:				370px;
-	left:				0px;
-	width:				500px;
+	width:				518px;
 	height:				24px;
 	color:				gray;
 	background-color:	snow;
 	border:				1px solid lightgrey;
 	text-align:			right;
 	padding-top:		2px;
-	margin-top:			-340px;
-	margin-left:		auto;
-	margin-right:		auto;
-	margin-bottom: 		0px;;
 }
 
 #MODAL_OVERLAY_TIMESELECTOR{
@@ -195,35 +171,6 @@ INPUT{
 	background-repeat:		no-repeat;
 }
 
-#REPORT{
-	width:				70px;
-	height:				29px;
-	text-align:			center;
-	float:				right;
-	font-size:			14px;
-	color:				gray;
-	background-color:	rgb(241, 241, 241);
-	background-image:	url(./images/report.png);
-	background-position: left center;
-	background-repeat: 	no-repeat;
-	background-size:	16px;
-	padding-top:		12px;
-	padding-left:		18px;
-	border-left:		1px solid lightgrey;
-
-}
-#COMMIT{
-	width:				70px;
-	height:				29px;
-	text-align:			center;
-	float:				right;
-	font-size:			14px;
-	color:				gray;
-	background-color:	rgb(241, 241, 241);
-	padding-top:		12px;
-	border-left:		1px solid lightgrey;
-/*	border-right:		1px solid lightgrey; */
-}
 
 #WHITEBOARD_BAY{
 	position:			absolute;
@@ -310,8 +257,7 @@ INPUT{
 #TIMELINE_BAY{
 }
 
-
-
+/*
 #WHITEBOARD_FRAME{
 	position:			static;
 	width:				100%;
@@ -327,7 +273,6 @@ INPUT{
 	left:				59px;
 	width:				100%;
 	height:				4800px;
-/*	background-color:	lightcoral;*/
 	float:				left;
 	border:				1px dotted lightgrey;
 	padding:			0px 0px 0px 0px;
@@ -340,10 +285,43 @@ INPUT{
 	border-top:			0px solid red;
 	border-bottom:		1px solid lightgrey;
 	padding:			0px;
-	
-/*	background-color:	slateblue;*/
-
 }
+*/
+
+#WHITEBOARD_FRAME{
+	position:			absolute;
+	top:				42px;
+	left:				0px;
+	width:				100%;
+	height:				100%;
+	background-color:	snow;
+	padding:			0px;
+	overflow-x:			hidden;
+	overflow-y:			scroll;
+}
+#WHITEBOARD{
+	position: 			absolute;
+	top:				0px;
+	left:				59px;
+	width:				100%;
+	height:				4800px;
+	float:				left;
+	border:				1px dotted lightgrey;
+	padding:			0px 0px 0px 0px;
+}
+#WHITEBOARD_TIMELINE{
+	position: 			absolute;
+	top:				0px;
+	left:				0;
+	width:				60px;
+	height:				4800px;
+	float:				left;
+	border-top:			0px solid red;
+	border-bottom:		1px solid lightgrey;
+	padding:			0px;
+}
+
+
 #TIMELINE0800{
 	position:			relative;
 	top:				000px;
@@ -549,8 +527,10 @@ INPUT{
 	writing-mode: 		vertical-lr;
 }
 
-
 #STATUS{
+	position:			absolute;
+	top:				-100px;
+	left:				0px;
 	width:				100%;
 	height:				22px;
 	padding-top:		3px;

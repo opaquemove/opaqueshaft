@@ -916,6 +916,9 @@ function fitting(){
 	wpf.style.height  = ( h -42 - 30 ) + 'px';
 //	wpf.style.left    = ( w - 30 ) + 'px';
 
+	var sts = document.getElementById('STATUS');
+	sts.style.top		= ( h - 30 ) + 'px';
+
 }
 
 //
@@ -1217,7 +1220,7 @@ function signForm()
 	}
 	var r = "";
 	
-	r += "<div style='width:400px;height:100%;margin:10px auto;background-color:white;overflow:hidden;' >";
+	r += "<div style='width:400px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
 		// r += "<div id='OPAQUESHAFT_LOGINTITLE' >";
 		// r += "&nbsp;&nbsp;OpaqueShaft";
 		// r += "</div>"; 
@@ -1862,7 +1865,7 @@ function mUp( e ) {
 	document.body.removeEventListener("touchmove", mMove, false);
 	if ( drag != null ) drag.removeEventListener("touchend", mUp, false);
 
-	//e.stopPropagation();
+	e.stopPropagation();
 
 	//クラス名 .drag も消す
 	if ( drag != null ) drag.classList.remove("drag");
