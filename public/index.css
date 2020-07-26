@@ -179,8 +179,8 @@ INPUT{
 
 
 #SIGN_STATUS{
-	width:					32px;
-	height:					28px;
+	width:					28px;
+	height:					29px;
 	text-align:				center;
 	float:					right;
 	font-size:				14px;
@@ -228,7 +228,7 @@ INPUT{
 #WHITEBOARD_BAY{
 	position:			absolute;
 	top:				18px;
-	left:				180px;
+	left:				210px;
 	width:				300px;
 	height:				21px;
 	font-size:			12px;
@@ -318,7 +318,7 @@ INPUT{
 	height:				100%;
 	background-color:	snow;
 	padding:			0px;
-	overflow-x:			none;
+	overflow-x:			hidden;
 	overflow-y:			scroll;
 }
 #WHITEBOARD{
@@ -350,13 +350,13 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px dotted white;
+	border-top:			1px solid gray;
+	border-bottom:		1px dotted gray;
 	z-index:			3000;
 	opacity:			1;
 	writing-mode: 		vertical-lr;
@@ -367,8 +367,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -384,8 +384,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -401,8 +401,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -418,8 +418,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -435,8 +435,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -452,8 +452,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -469,8 +469,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -486,8 +486,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -503,8 +503,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -520,8 +520,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -537,8 +537,8 @@ INPUT{
 	left:				30px;
 	width:				28px;
 	height:				398px;
-	color:				snow;
-	background-color:	red;
+	color:				gray;
+	background-color:	snow;
 	font-size:			12px;
 	text-align:			center;
 	padding:			0px;
@@ -563,7 +563,7 @@ INPUT{
 
 .CHILD{
 	position:			absolute;
-	width:				200px;
+	width:				240px;
 	height:				50px;
 	color:				gray;
 	background-color:	white;
@@ -888,6 +888,7 @@ INPUT{
 	padding:			0px;
 	font-size:			12px;
 	overflow-y:			auto;
+	overflow-x:			visible;
 	z-index:			40000;
 }
 

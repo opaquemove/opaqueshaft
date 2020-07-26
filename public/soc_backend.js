@@ -106,16 +106,21 @@ function clearWhiteboardHelper(){
 }
 
 //
-//  WhiteBoardにチャイルド(200x60)を実体化
+//  WhiteBoardにチャイルド(240x60)を実体化
 //
 function addChild( top, left, child_id, child_name, child_type, child_grade ){
-
+    var now = new Date();
+    var h = ( '00' + now.getHours() ).slice(-2);
+    var m = ( '00' + now.getMinutes() ).slice(-2);
+    var checkin_time = h + ':' + m;
+    
 	var wb = document.getElementById('WHITEBOARD');
     var c = document.createElement("DIV");
-    c.setAttribute("child", "yes");
+	c.setAttribute("id",       "c_1");
+    c.setAttribute("class",    "CHILD drag-and-drop");
+    c.setAttribute("child",    "yes");
     c.setAttribute('child_id', child_id ) ;
-	c.setAttribute("id", "c_1");
-    c.setAttribute("class", "CHILD drag-and-drop");
+    c.setAttribute('checkin',  checkin_time );
     //c.setAttribute("draggable", "true");
 
     // if ( escort == 'ON')
@@ -125,7 +130,7 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
     c.style.left        = left + 'px';
     c.style.borderRight = arChildGrade[ child_grade ];
 
-    var hm = coordinateToTime( top, left );
+    var hm    = coordinateToTime( top, left );
     var escort = coordinateToEscort( top, left );
     if ( escort ){
         c.setAttribute('escort', 'yes' );
@@ -136,7 +141,9 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
     r += '<div style="height:40px;padding-left:2px;" >';
         r += '<div style="width:100%;height:28px;font-size:14px;border-bottom:1px solid lightgrey;" >';
             r += '<div style="height:20px;float:left;" >' + child_name + '</div>';
-            r += '<div class="ESCORT_FLG" style="height:20px;padding-left:2px;float:right;width:18px;" >&nbsp;';
+            r += '<div class="CHECKOUT_FLG" style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
+            r += '</div>';
+            r += '<div class="ESCORT_FLG"   style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
             r += '</div>';
             r += '<div class="CO_TIME" style="height:20px;padding-left:2px;float:right;text-align:right;" >';
                 r += hm;
@@ -483,11 +490,11 @@ function checkoutChild( c ){
     console.log( c.getAttribute('child_id') );
     document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText =
         'checkout:' + checkout_time;
-    //c.style.opacity = 0.3;
-    c.style.backgroundImage    = 'url(./images/check.png)';
-    c.style.backgroundPosition = 'left bottom';
-    c.style.backgroundRepeat   = 'no-repeat';
-    c.style.backgroundSize     = '16px';
+    var cf = c.getElementsByClassName('CHECKOUT_FLG')[0];
+    cf.style.backgroundImage    = 'url(./images/check.png)';
+    cf.style.backgroundPosition = 'center center';
+    cf.style.backgroundRepeat   = 'no-repeat';
+    cf.style.backgroundSize     = '14px';
 
     showWhiteboardChildCountCheckout();
     
@@ -717,10 +724,11 @@ function checkoutClearChild( c ){
     if ( c == null ) return;
     c.removeAttribute('checkout' );
     document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText = 'checkout:';
-    c.style.backgroundImage    = '';
-    c.style.backgroundPosition = '';
-    c.style.backgroundRepeat   = '';
-    c.style.backgroundSize     = '';
+    var cf = c.getElementsByClassName('CHECKOUT_FLG')[0];
+    cf.style.backgroundImage    = '';
+    cf.style.backgroundPosition = '';
+    cf.style.backgroundRepeat   = '';
+    cf.style.backgroundSize     = '';
 
 }
 
@@ -728,7 +736,10 @@ function checkoutClearChild( c ){
 //  パレットタイムセレクタを表示
 //
 function showTimelineSelector(){
-    palleteTimeSelector.open();
+    if ( ! palleteTimeSelector.opened() )
+        palleteTimeSelector.open();
+        else
+        palleteTimeSelector.close();
 } 
 //
 //  タイムラインにチャイルドを移動

@@ -18,7 +18,12 @@ Button.prototype = {
       e.stopPropagation();
     }).bind( this ), false );
     if ( this.func != null )
-      this.o.addEventListener( 'mouseup', this.func, false ); 
+      this.o.addEventListener( 'mouseup', ( function( e ) {
+        var e2 = document.getElementById( this.id );
+        if ( e2 != null ) e2.style.backgroundColor = '';
+          e.stopPropagation();
+        this.func(e);
+      }).bind( this ), false ); 
   }
 };
 

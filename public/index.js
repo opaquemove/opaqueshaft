@@ -172,6 +172,13 @@ function init()
 		if ( e.target == this ) closeModalDialog();
 		});
 
+	//
+	//	タイムセレクタ初期化
+	//
+	palleteTimeSelector = new TimeSelector( dragPalleteChild2 );
+	palleteTimeSelector.play();
+
+
 	ctlToolbar();
 	makeWhiteboardPalleteList();
 	makeChildrenPalleteList();
@@ -258,31 +265,6 @@ function init()
 		}
 	);
 
-	//
-	//	タイムセレクタ初期化
-	//
-	palleteTimeSelector = new TimeSelector( dragPalleteChild2 );
-	palleteTimeSelector.play();
-/*
-	var mts = document.getElementById('MODAL_TIMESELECTOR');
-	mts.addEventListener('mouseover',
-		function(e){
-			var o = e.target;
-			o.style.backgroundColor	= 'darkred';
-		});
-	mts.addEventListener('mouseout',
-		function(e){
-			var o = e.target;
-			o.style.backgroundColor	= '';
-		});
-	mts.addEventListener('mouseup',
-		function(e){
-			var h = e.target.innerText;
-			console.log( h );
-			ctlTimelineSelector( 'close', null );
-			dragPalleteChild2( h + ':00' );
-		});
-*/
 
 	//
 	//	タイムラインバー初期化
@@ -295,6 +277,14 @@ function init()
 	tmb.addEventListener( 'mouseup',    locateTimelinebar );
 	tmb.addEventListener( 'touchend',   locateTimelinebar );
 
+	// testcode
+	var ti = document.getElementById('ID_TEST');
+	ti.addEventListener('click',
+		function(e){
+			e.stopPropagation();
+			var o = e.target;
+			o.style.left = '-80px';
+		});
 }
 
 //
@@ -419,7 +409,7 @@ TimeSelector.prototype = {
 		this.frame.style.visibility = 'hidden';
 	},
 	opened : function(){
-		return ( this.frame.visibility == 'visible' );
+		return ( this.frame.style.visibility == 'visible' );
 	}
 };
 
@@ -554,6 +544,10 @@ function showGuidanceWhiteboard(){
 		r += '<div style="padding-bottom:20px;" >';
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" value="' + ymd + '" />';
 		r += '</div>';
+		r += '<div style="padding-bottom:20px;" >';
+		r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/plus.png" /></button>';
+		r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/minus.png" /></button>';
+		r += '</div>';
 		r += '</form>';
 		r += '<div style="text-align:center;padding-top:40px;" >';
 		r += '<button id="BTN_OPENWHITEBOARD" ';
@@ -566,7 +560,7 @@ function showGuidanceWhiteboard(){
 	r += '</div>';
 	neverCloseDialog = true;
 	openModalDialog( r, 'NOBUTTON' );
-	document.getElementById('whiteboard_day').focus();
+	document.getElementById('BTN_OPENWHITEBOARD').focus();
 	document.getElementById('whiteboard_day').addEventListener('keydown',
 		function (e){
 			if ( e.keyCode == 13) // Enter key
@@ -774,6 +768,8 @@ function keyWhiteboard(e){
 //	モーダルダイアログをオープン
 //
 function openModalDialog( r , option ){
+	// タイムセレクタを非表示
+	palleteTimeSelector.close();
 	var mo  = document.getElementById('MODAL_OVERLAY');
 	var mm  = document.getElementById('MODAL_MESSAGE');
 	var mmf = document.getElementById('MODAL_MESSAGE_FOOTER');
@@ -1082,8 +1078,8 @@ function signMenu( e ){
 	o.style.position		= 'relative';
 	o.style.padding			= '2px';
 	o.style.top             = '8px';
-	o.style.left            = '-91px';
-	o.style.width           = '120px';
+	o.style.left            = '-121px';
+	o.style.width           = '150px';
 	o.style.height          = '200px';
 	o.style.backgroundColor = '#EEEEEE';
 	o.style.textAlign		='left';
@@ -1093,11 +1089,11 @@ function signMenu( e ){
 	var m = p.appendChild( o );
 	var r = '';
 	var id = signid();
-	r += '<div id="ID_SIGN_OUT"         style="height:20px;padding:2px;" >sign out</div>';
-	r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding:2px;" >property...</div>';
+	r += '<div id="ID_SIGN_OUT"         style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
+	r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
 //	r += '<div id="ID_LOAD_CHILDREN"    style="height:20px;padding:2px;" >load...</div>';
-	r += '<div id="ID_CLEAR_WHITEBOARD" style="height:20px;padding:2px;" >clear whiteboard</div>';
-	r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding:2px;" >sign in ' + id + '</div>';
+	r += '<div id="ID_CLEAR_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
+	r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding:2px;border-top:1px solid gray;" >sign in ' + id + '</div>';
 	m.innerHTML = r;
 
 	new Button( 'ID_SIGN_OUT', signout ).play();
@@ -1656,8 +1652,8 @@ function mMove( e ){
         }
 
         //フリックしたときに画面を動かさないようにデフォルト動作を抑制
-		e.preventDefault();
-		e.stopPropagation();
+		event.preventDefault();
+		event.stopPropagation();
 
 		//マウスが動いた場所に要素を動かす
 		if ( e.type == 'touchmove' 
