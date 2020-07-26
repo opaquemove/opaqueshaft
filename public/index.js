@@ -769,7 +769,7 @@ function locateWhiteboard( e ){
 				enabled = true;
 			} else {
 				var event = e.changedTouches[0];
-				enabled = ( e.changedTouches.length > 1 );	// ２本指
+				enabled = ( e.changedTouches.length > 3 );	// ３本指
 			}
 
 			if ( ! enabled ) return;
@@ -803,9 +803,29 @@ function locateWhiteboard( e ){
 			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >6</div>';
 			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >7</div>';
 			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >8</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >9</div>';
+			r += '<div target="close" class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >';
+				r += '<img width="40px" src="./images/close.png" />';
+			r += '</div>';
 			m.innerHTML				= r;
 			var nav = document.body.appendChild( m );
+			nav.addEventListener('mouseup',
+				function(e){
+					console.log('nav close');
+					var o = e.target;
+					while ( true ){
+						if ( o.parentNode == nav ) break;
+						else o = o.parentNode;
+					}
+					switch ( o.getAttribute('target')) {
+						case 'close':
+							var n = document.getElementById('NAVI');
+							if ( n != null ){
+								n.parentNode.removeChild( n );
+							}
+							break;
+					}
+				}
+			);
 			// nav.addEventListener( 'mouseleave',
 			// 	function(e){
 			// 		e.target.parentNode.removeChild( e.target );
