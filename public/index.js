@@ -794,8 +794,9 @@ function locateWhiteboard( e ){
 				var event = e.changedTouches[0];
 			}
 			var nav = document.getElementById('NAVI');
-			if ( nav != null )
-				nav.parentNode.removeChild( nav );
+			// if ( nav != null )
+			// 	nav.parentNode.removeChild( nav );
+
 			if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
 			break;
 	}
