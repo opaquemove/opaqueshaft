@@ -762,6 +762,7 @@ function locateWhiteboard( e ){
 			break;
 		case 'touchend':
 		case 'mouseup':
+			document.getElementById('ID_CHILD_COORDINATE').innerText = e.type;
 			var enabled = false;
 			if(e.type === "mouseup") {
 				var event = e;
