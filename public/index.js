@@ -541,7 +541,7 @@ function showGuidanceWhiteboard(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'open whiteboard';
 	r += '</div>';
-	r += '<div style="margin:0 auto;width:110px;">';
+	r += '<div style="margin:0 auto;width:150px;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
 		r += '<div style="padding-bottom:20px;" >';
@@ -751,12 +751,17 @@ function locateWhiteboard( e ){
 			break;
 		case 'touchend':
 		case 'mouseup':
+			var enabled = false;
 			if(e.type === "mouseup") {
 				var event = e;
+				enabled = true;
 			} else {
 				var event = e.changedTouches[0];
+				enabled = ( e.changedTouches.length > 1 );	// ２本指
 				//e.preventDefault();
 			}
+
+			if ( ! enabled ) return;
 
 			//
 			//	NAVI
@@ -775,19 +780,19 @@ function locateWhiteboard( e ){
 			m.style.width			= '120px';
 			m.style.height			= '120px';
 			m.style.color			= 'snow';
-			m.style.backgroundColor	= 'red';
+			m.style.backgroundColor	= 'transparent';
 			m.style.fontSize		= '14px';
 			m.style.zIndex			= 80000;
 			var r = '';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:snow;" >1</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;" >2</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:snow;" >3</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;" >4</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;" >NAV</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;" >6</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:snow;" >7</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;" >8</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:snow;" >9</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >1</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background:red;" >2</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >3</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >4</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >NAV</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >6</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >7</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >8</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >9</div>';
 			m.innerHTML				= r;
 			var nav = document.body.appendChild( m );
 			// nav.addEventListener( 'mouseleave',
