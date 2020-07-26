@@ -54,9 +54,11 @@ function init()
 	  function( e ) { e.preventDefault(); }, { passive:false } );
  
 
-	wb.addEventListener('mousedown', locateWhiteboard );
-	wb.addEventListener('mousemove', locateWhiteboard );
-	wb.addEventListener('mouseup',   locateWhiteboard );
+	wb.addEventListener('mousedown',  locateWhiteboard );
+	wb.addEventListener('touchstart', locateWhiteboard );
+	wb.addEventListener('mousemove',  locateWhiteboard );
+	wb.addEventListener('mouseup',    locateWhiteboard );
+	wb.addEventListener('touchend',   locateWhiteboard );
 	document.addEventListener('keydown',   keyWhiteboard );
 
 
@@ -720,8 +722,15 @@ function locateWhiteboard( e ){
 	e.preventDefault();
 	var wb = document.getElementById('WHITEBOARD');
 	switch ( e.type ){
+		case 'touchstart':
 		case 'mousedown':
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
+			if(e.type === "mousedown") {
+				var event = e;
+			} else {
+				var event = e.changedTouches[0];
+			}
+	
 			e.target.position = 'absolute';
 			wbx = event.pageX - e.target.offsetLeft;
 			wby = event.pageY - e.target.offsetTop + 42 + 4802;
@@ -735,10 +744,10 @@ function locateWhiteboard( e ){
 			var m = document.createElement('DIV');
 			m.setAttribute('id', 'NAVI' );
 			m.style.position		= 'absolute';
-			m.style.top 			= ( event.pageY - 100 ) + 'px';
-			m.style.left			= ( event.pageX - 100 )+ 'px';
-			m.style.width			= '200px';
-			m.style.height			= '200px';
+			m.style.top 			= ( event.pageY - 50 ) + 'px';
+			m.style.left			= ( event.pageX - 50 )+ 'px';
+			m.style.width			= '100px';
+			m.style.height			= '100px';
 			m.style.color			= 'snow';
 			m.style.backgroundColor	= 'red';
 			m.style.zIndex			= 80000;
@@ -760,7 +769,13 @@ function locateWhiteboard( e ){
 			}
 */
 			break;
+		case 'touchend':
 		case 'mouseup':
+			if(e.type === "mouseup") {
+				var event = e;
+			} else {
+				var event = e.changedTouches[0];
+			}
 			var nav = document.getElementById('NAVI');
 			if ( nav != null )
 				nav.parentNode.removeChild( nav );
