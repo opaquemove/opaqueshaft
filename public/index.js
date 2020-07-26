@@ -743,8 +743,8 @@ function locateWhiteboard( e ){
 				var event = e;
 				} else {
 				var event = e.changedTouches[0];
+				wb_touch_cnt += e.changedTouches.length;
 				}
-			wb_touch_cnt++;
 	
 			// e.target.position = 'absolute';
 			// wbx = event.pageX - e.target.offsetLeft;
@@ -773,12 +773,12 @@ function locateWhiteboard( e ){
 				var event = e.changedTouches[0];
 				document.getElementById('ID_CHILD_COORDINATE').innerText = 'touches:' + wb_touch_cnt;
 				enabled = ( e.changedTouches.length > 1 );	// 2本指
+				wb_touch_cnt -= e.changedTouches.length;
 
 			}
 
 			//if ( ! enabled ) return;
 
-			wb_touch_cnt--;
 			//
 			//	NAVI
 			//
