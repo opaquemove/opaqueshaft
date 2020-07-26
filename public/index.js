@@ -12,6 +12,8 @@ var propChild = null;
 var curChildZIndex = null;
 var curChildMoved  = false;
 
+var wb_touch_cnt		= 0;
+
 var criteriaEscortPixel = 600;
 
 var dndOffsetX = 0;
@@ -68,10 +70,10 @@ function init()
 	  function( e ) { e.preventDefault(); }, { passive:false } );
  
 
-	wb.addEventListener( evtStart,    locateWhiteboard );
-	wb.addEventListener( evtMove,     locateWhiteboard );
-	wb.addEventListener( evtEnd,      locateWhiteboard );
-	document.addEventListener('keydown',   keyWhiteboard );
+	wb.addEventListener( evtStart,    		locateWhiteboard );
+	wb.addEventListener( evtMove,     		locateWhiteboard );
+	wb.addEventListener( evtEnd,      		locateWhiteboard );
+	document.addEventListener('keydown',	keyWhiteboard );
 
 
 	//
@@ -118,7 +120,7 @@ function init()
 			var oChild = getChild(id);
 			//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
 //			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
-			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop,
+			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop,
 				 e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft,
 				 oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
 			dndOffsetX = 0;
@@ -742,6 +744,7 @@ function locateWhiteboard( e ){
 				} else {
 				var event = e.changedTouches[0];
 				}
+			wb_touch_cnt++;
 	
 			// e.target.position = 'absolute';
 			// wbx = event.pageX - e.target.offsetLeft;
@@ -768,13 +771,14 @@ function locateWhiteboard( e ){
 				enabled = true;
 			} else {
 				var event = e.changedTouches[0];
-				document.getElementById('ID_CHILD_COORDINATE').innerText = 'touches:' + e.changedTouches.length;
+				document.getElementById('ID_CHILD_COORDINATE').innerText = 'touches:' + wb_touch_cnt;
 				enabled = ( e.changedTouches.length > 1 );	// 2本指
 
 			}
 
-			if ( ! enabled ) return;
+			//if ( ! enabled ) return;
 
+			wb_touch_cnt--;
 			//
 			//	NAVI
 			//
