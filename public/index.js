@@ -1651,9 +1651,11 @@ function mMove( e ){
             var event = e.changedTouches[0];
         }
 
-        //フリックしたときに画面を動かさないようにデフォルト動作を抑制
-		e.preventDefault();
-		e.stopPropagation();
+		//フリックしたときに画面を動かさないようにデフォルト動作を抑制
+		if ( e.type != "mouseover" ){
+			e.preventDefault();
+			e.stopPropagation();
+		}
 
 		//マウスが動いた場所に要素を動かす
 		if ( e.type == 'touchmove' 
