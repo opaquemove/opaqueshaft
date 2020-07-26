@@ -741,17 +741,34 @@ function locateWhiteboard( e ){
 			//
 			//	NAVI
 			//
+			var nav = document.getElementById('NAVI');
+			if ( nav != null ){
+				nav.parentNode.removeChild( nav );
+				return;
+			}
+
 			var m = document.createElement('DIV');
 			m.setAttribute('id', 'NAVI' );
 			m.style.position		= 'absolute';
-			m.style.top 			= ( event.pageY - 50 ) + 'px';
-			m.style.left			= ( event.pageX - 50 )+ 'px';
-			m.style.width			= '100px';
-			m.style.height			= '100px';
+			m.style.top 			= ( event.pageY - 60 ) + 'px';
+			m.style.left			= ( event.pageX - 60 )+ 'px';
+			m.style.width			= '120px';
+			m.style.height			= '120px';
 			m.style.color			= 'snow';
 			m.style.backgroundColor	= 'red';
+			m.style.fontSize		= '14px';
 			m.style.zIndex			= 80000;
-			m.innerText				= 'NAVI';
+			var r = '';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:snow;" >1</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;" >2</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:snow;" >3</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;" >4</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;" >NAV</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;" >6</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:snow;" >7</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;" >8</div>';
+			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:snow;" >9</div>';
+			m.innerHTML				= r;
 			var nav = document.body.appendChild( m );
 			// nav.addEventListener( 'mouseleave',
 			// 	function(e){
