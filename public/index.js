@@ -769,7 +769,7 @@ function locateWhiteboard( e ){
 				enabled = true;
 			} else {
 				var event = e.changedTouches[0];
-				enabled = ( e.changedTouches.length > 2 );	// ３本指
+				enabled = ( e.changedTouches.length > 1 );	// 2本指
 			}
 
 			if ( ! enabled ) return;
