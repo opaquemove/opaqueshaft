@@ -728,6 +728,28 @@ function locateWhiteboard( e ){
 			console.log('event.pageY:', event.pageX );
 			console.log('WHITEBOARD top:' + wb.style.top );
 			console.log('WHITEBOARD offsetTop:' + e.target.offsetTop );
+
+			//
+			//	NAVI
+			//
+			var m = document.createElement('DIV');
+			m.setAttribute('id', 'NAVI' );
+			m.style.position		= 'absolute';
+			m.style.top 			= ( event.pageY - 100 ) + 'px';
+			m.style.left			= ( event.pageX - 100 )+ 'px';
+			m.style.width			= '200px';
+			m.style.height			= '200px';
+			m.style.color			= 'snow';
+			m.style.backgroundColor	= 'red';
+			m.style.zIndex			= 80000;
+			m.innerText				= 'NAVI';
+			var nav = document.body.appendChild( m );
+			nav.addEventListener( 'mouseleave',
+				function(e){
+					e.target.parentNode.removeChild( e.target );
+				});
+			
+
 			break;
 		case 'mousemove':
 /*
@@ -739,6 +761,9 @@ function locateWhiteboard( e ){
 */
 			break;
 		case 'mouseup':
+			var nav = document.getElementById('NAVI');
+			if ( nav != null )
+				nav.parentNode.removeChild( nav );
 			if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
 			break;
 	}
@@ -1627,6 +1652,7 @@ function mDown( e ) {
 		tri.style.position 				= 'absolute';
 		tri.style.zIndex 				= 4000;
 		document.body.appendChild( tri );
+
 
 	}
 
