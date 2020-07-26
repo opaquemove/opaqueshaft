@@ -32,7 +32,7 @@ window.onresize = fitting;
 //
 function init()
 {
-	var touchdevice = ( 'touchend' in document );
+	var touchdevice = ( 'ontouchend' in document );
 	switch ( touchdevice ){
 		case true:		// touch device( iPad/iPhone/Android/Tablet )
 			var evtStart	= 'touchstart';
