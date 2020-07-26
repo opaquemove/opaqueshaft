@@ -32,6 +32,20 @@ window.onresize = fitting;
 //
 function init()
 {
+	var touchdevice = ( 'touchend' in document );
+	switch ( touchdevice ){
+		case true:		// touch device( iPad/iPhone/Android/Tablet )
+			var evtStart	= 'touchstart';
+			var evtMove	    = 'touchmove';
+			var evtEnd		= 'touchend';
+			break;
+		case false:	// pc
+			var evtStart	= 'mousedown';
+			var evtMove	    = 'mousemove';
+			var evtEnd		= 'mouseup';
+			break;
+	}
+
 	document.oncontextmenu = function(e) { return false; }
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	// wbf.addEventListener('scroll',
@@ -54,12 +68,9 @@ function init()
 	  function( e ) { e.preventDefault(); }, { passive:false } );
  
 
-	wb.addEventListener('mousedown',  locateWhiteboard );
-	wb.addEventListener('touchstart', locateWhiteboard );
-	wb.addEventListener('mousemove',  locateWhiteboard );
-	wb.addEventListener('touchmove',  locateWhiteboard );
-	wb.addEventListener('mouseup',    locateWhiteboard );
-	wb.addEventListener('touchend',   locateWhiteboard );
+	wb.addEventListener( evtStart,    locateWhiteboard );
+	wb.addEventListener( evtMove,     locateWhiteboard );
+	wb.addEventListener( evtEnd,      locateWhiteboard );
 	document.addEventListener('keydown',   keyWhiteboard );
 
 
@@ -720,6 +731,7 @@ function visibleWhiteboard(){
 //	ホワイトボード自体のドラッグ操作
 //
 function locateWhiteboard( e ){
+	e.preventDefault();
 	var wb = document.getElementById('WHITEBOARD');
 	switch ( e.type ){
 		case 'touchstart':
@@ -728,7 +740,6 @@ function locateWhiteboard( e ){
 			if(e.type === "mousedown") {
 				var event = e;
 				} else {
-				//e.preventDefault();
 				var event = e.changedTouches[0];
 				}
 	
