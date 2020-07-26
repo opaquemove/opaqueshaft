@@ -719,7 +719,6 @@ function visibleWhiteboard(){
 //	ホワイトボード自体のドラッグ操作
 //
 function locateWhiteboard( e ){
-	e.preventDefault();
 	var wb = document.getElementById('WHITEBOARD');
 	switch ( e.type ){
 		case 'touchstart':
@@ -727,9 +726,10 @@ function locateWhiteboard( e ){
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
 			if(e.type === "mousedown") {
 				var event = e;
-			} else {
+				} else {
+				e.preventDefault();
 				var event = e.changedTouches[0];
-			}
+				}
 	
 			e.target.position = 'absolute';
 			wbx = event.pageX - e.target.offsetLeft;
@@ -792,6 +792,7 @@ function locateWhiteboard( e ){
 				var event = e;
 			} else {
 				var event = e.changedTouches[0];
+				e.preventDefault();
 			}
 			var nav = document.getElementById('NAVI');
 			// if ( nav != null )
