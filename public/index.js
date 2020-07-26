@@ -765,16 +765,13 @@ function locateWhiteboard( e ){
 			break;
 		case 'touchend':
 		case 'mouseup':
-			var enabled = false;
 			if(e.type === "mouseup") {
 				var event = e;
-				enabled = true;
 			} else {
 				var event = e.changedTouches[0];
 				document.getElementById('ID_CHILD_COORDINATE').innerText = 'touches:' + wb_touch_cnt;
-				enabled = ( e.changedTouches.length > 1 );	// 2本指
 				wb_touch_cnt -= e.changedTouches.length;
-
+				if ( wb_touch_cnt < 2 ) return;
 			}
 
 			//if ( ! enabled ) return;
