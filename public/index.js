@@ -929,11 +929,11 @@ function foldingWhiteboardPallete(){
 	//alert( '[' + cpf.style.marginLeft + ']' );
 	if ( left < 0 || isNaN(left ) ){
 		wpf.style.left = '0px';				//	open pallete
-		wbf.style.paddingLeft = '170px';
+		wbf.style.left = '170px';
 		flagWhiteboardPallete = true;
 	} else {
 		wpf.style.left = '-170px';			// close pallete
-		wbf.style.paddingLeft = '0px';
+		wbf.style.left = '0px';
 		flagWhiteboardPallete = false;
 	}
 }
