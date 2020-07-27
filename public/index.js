@@ -891,6 +891,7 @@ function Nav( func ){
 
 	var m = document.createElement('DIV');
 	m.setAttribute('id', 'NAVI2' );
+	m.setAttribute('class', 'not_select' );
 	m.style.position		= 'absolute';
 	m.style.top 			= ( ( h / 2 ) - 60 ) + 'px';
 	m.style.left			= ( ( w / 2 ) - 60 )+ 'px';
@@ -903,20 +904,31 @@ function Nav( func ){
 	m.style.visibility		= 'hidden';
 	var r = '';
 	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >1</div>';
-	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background:red;" >2</div>';
+	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background:red;" >';
+		r += '<img width="20px" src="./images/minus-2.png" />';
+	r += '</div>';
 	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >3</div>';
-	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >4</div>';
+	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >';
+	r += '<img width="20px" src="./images/check-3.png" />';
+	r += '</div>';
 	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >NAV</div>';
 	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >6</div>';
 	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >7</div>';
 	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >8</div>';
 	r += '<div target="close" class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >';
-		r += '<img width="40px" src="./images/close.png" />';
+		r += '<img width="20px" src="./images/close.png" />';
 	r += '</div>';
 	m.innerHTML				= r;
 	this.frame = document.body.appendChild( m );
 	this.frame.addEventListener( this.evtStart,
-		( function(e){}).bind( this ), false );
+		( function(e){
+			var o = ( this.touchdevice )? e.changedTouches[0].target : e.target;
+			while ( true ){
+				if ( o.parentNode == this.frame ) break;
+				else o = o.parentNode;
+			}
+
+		}).bind( this ), false );
 	this.frame.addEventListener( this.evtMove,
 		( function(e){}).bind( this ), false );
 	this.frame.addEventListener( this.evtEnd,
@@ -926,29 +938,37 @@ function Nav( func ){
 				if ( o.parentNode == this.frame ) break;
 				else o = o.parentNode;
 			}
-			switch ( o.getAttribute('target')) {
-				case 'close':
-				//	this.frame.parentNode.removeChild( this.frame );
-				//	wb_touch_cnt_max = 0;
-					this.close();
-					break;
-			}
+			this.proc( o );
+			// switch ( o.getAttribute('target')) {
+			// 	case 'close':
+			// 	//	this.frame.parentNode.removeChild( this.frame );
+			// 	//	wb_touch_cnt_max = 0;
+			// 		this.close();
+			// 		break;
+			// }
 		}).bind( this ), false );
 
 }
 
+//
+//	Navメソッド定義
+//
 Nav.prototype = {
 	open : function(){
-		console.log('open');
 		this.frame.style.visibility	= 'visible';
 	},
 	close : function(){
-		console.log('close');
 		this.frame.style.visibility	= 'hidden';
 	},
 	opened : function(){
-		console.log( this.frame.style.visibility );
 		return ( this.frame.style.visibility == 'visible');
+	},
+	proc : function( o ){
+		switch ( o.getAttribute('target')) {
+			case 'close':
+				this.close();
+				break;
+		}
 	}
 };
 
