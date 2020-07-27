@@ -300,6 +300,7 @@ function init()
 			e.stopPropagation();
 			var o = e.target;
 			o.style.left = '-80px';
+			document.getElementById('WHITEBOARD').style.transform = 'scale(0.5,0.5)';
 		});
 }
 
@@ -740,28 +741,22 @@ function locateWhiteboard( e ){
 		case 'mousedown':
 			if ( document.getElementById('WHITEBOARD') != e.target ) return;
 			if(e.type === "mousedown") {
-				var event = e;
+					var event = e;
 				} else {
-				var event = e.changedTouches[0];
-				wb_touch_cnt += e.changedTouches.length;
+					var event = e.changedTouches[0];
+					wb_touch_cnt += e.changedTouches.length;
 				}
 	
-			// e.target.position = 'absolute';
-			// wbx = event.pageX - e.target.offsetLeft;
-			// wby = event.pageY - e.target.offsetTop + 42 + 4802;
-			// console.log('event.pageY:', event.pageX );
-			// console.log('WHITEBOARD top:' + wb.style.top );
-			// console.log('WHITEBOARD offsetTop:' + e.target.offsetTop );
-			var nav = document.getElementById('NAVI');
-			if ( nav != null )
-				nav.parentNode.removeChild( nav );
+			// var nav = document.getElementById('NAVI');
+			// if ( nav != null )
+			// 	nav.parentNode.removeChild( nav );
 
 			break;
 		case 'mousemove':
 		case 'touchmove':
-			var nav = document.getElementById('NAVI');
-			if ( nav != null )
-				nav.parentNode.removeChild( nav );
+			// var nav = document.getElementById('NAVI');
+			// if ( nav != null )
+			// 	nav.parentNode.removeChild( nav );
 			break;
 		case 'touchend':
 		case 'mouseup':
@@ -769,71 +764,69 @@ function locateWhiteboard( e ){
 				var event = e;
 			} else {
 				var event = e.changedTouches[0];
-				document.getElementById('ID_CHILD_COORDINATE').innerText = 'touches:' + wb_touch_cnt;
+				document.getElementById('ID_CHILD_COORDINATE').innerText = 'touches:' + wb_touch_cnt + ' force:' + event.force;
 				wb_touch_cnt -= e.changedTouches.length;
 				if ( wb_touch_cnt < 2 ) return;
 			}
 
-			//if ( ! enabled ) return;
-
 			//
 			//	NAVI
 			//
-			var nav = document.getElementById('NAVI');
-			if ( nav != null ){
-				nav.parentNode.removeChild( nav );
-				return;
-			}
+			// var nav = document.getElementById('NAVI');
+			// if ( nav != null ){
+			// 	nav.parentNode.removeChild( nav );
+			// 	return;
+			// }
 
-			var m = document.createElement('DIV');
-			m.setAttribute('id', 'NAVI' );
-			m.style.position		= 'absolute';
-			m.style.top 			= ( event.pageY - 60 ) + 'px';
-			m.style.left			= ( event.pageX - 60 )+ 'px';
-			m.style.width			= '120px';
-			m.style.height			= '120px';
-			m.style.color			= 'snow';
-			m.style.backgroundColor	= 'transparent';
-			m.style.fontSize		= '14px';
-			m.style.zIndex			= 80000;
-			var r = '';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >1</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background:red;" >2</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >3</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >4</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >NAV</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >6</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >7</div>';
-			r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >8</div>';
-			r += '<div target="close" class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >';
-				r += '<img width="40px" src="./images/close.png" />';
-			r += '</div>';
-			m.innerHTML				= r;
-			var nav = document.body.appendChild( m );
-			nav.addEventListener('mouseup',
-				function(e){
-					console.log('nav close');
-					var o = e.target;
-					while ( true ){
-						if ( o.parentNode == nav ) break;
-						else o = o.parentNode;
-					}
-					switch ( o.getAttribute('target')) {
-						case 'close':
-							var n = document.getElementById('NAVI');
-							if ( n != null ){
-								n.parentNode.removeChild( n );
-							}
-							break;
-					}
-				}
-			);
-			// nav.addEventListener( 'mouseleave',
+			// var m = document.createElement('DIV');
+			// m.setAttribute('id', 'NAVI' );
+			// m.style.position		= 'absolute';
+			// m.style.top 			= ( event.pageY - 60 ) + 'px';
+			// m.style.left			= ( event.pageX - 60 )+ 'px';
+			// m.style.width			= '120px';
+			// m.style.height			= '120px';
+			// m.style.color			= 'snow';
+			// m.style.backgroundColor	= 'transparent';
+			// m.style.fontSize		= '14px';
+			// m.style.zIndex			= 80000;
+			// var r = '';
+			// r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >1</div>';
+			// r += '<div class="vh-center" style="float:left;width:40px;height:40px;background:red;" >2</div>';
+			// r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >3</div>';
+			// r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >4</div>';
+			// r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >NAV</div>';
+			// r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >6</div>';
+			// r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >7</div>';
+			// r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >8</div>';
+			// r += '<div target="close" class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >';
+			// 	r += '<img width="40px" src="./images/close.png" />';
+			// r += '</div>';
+			// m.innerHTML				= r;
+			// var nav = document.body.appendChild( m );
+			// nav.addEventListener('mouseup',
 			// 	function(e){
-			// 		e.target.parentNode.removeChild( e.target );
-			// 	});
+			// 		console.log('nav close');
+			// 		var o = e.target;
+			// 		while ( true ){
+			// 			if ( o.parentNode == nav ) break;
+			// 			else o = o.parentNode;
+			// 		}
+			// 		switch ( o.getAttribute('target')) {
+			// 			case 'close':
+			// 				var n = document.getElementById('NAVI');
+			// 				if ( n != null ){
+			// 					n.parentNode.removeChild( n );
+			// 				}
+			// 				break;
+			// 		}
+			// 	}
+			// );
+			// // nav.addEventListener( 'mouseleave',
+			// // 	function(e){
+			// // 		e.target.parentNode.removeChild( e.target );
+			// // 	});
 			
-			
+	
 			if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
 			break;
 	}

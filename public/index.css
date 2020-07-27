@@ -54,6 +54,7 @@ INPUT{
 #MODAL_MESSAGE{
 	width:				514px;
 	height:				326px;
+	color:				gray;
 	background-color:	snow;
 	border:				1px solid lightgrey;
 	padding:			2px;
