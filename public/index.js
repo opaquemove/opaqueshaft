@@ -555,8 +555,8 @@ function showGuidanceWhiteboard(){
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" value="' + ymd + '" />';
 		r += '</div>';
 		r += '<div style="padding-bottom:20px;" >';
-		r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/plus.png" /></button>';
-		r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/minus.png" /></button>';
+		r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/add.png" /></button>';
+		r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/minus-2.png" /></button>';
 		r += '</div>';
 		r += '</form>';
 		r += '<div style="text-align:center;padding-top:40px;" >';

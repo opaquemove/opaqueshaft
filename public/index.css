@@ -130,6 +130,17 @@ INPUT{
 	padding-top:		10px;
 	padding-right:		8px;
 }
+#ID_NAV{
+	float: 				left;
+	width:				32px;
+	height:				41px;
+	background-color: 		rgb(241, 241, 241);
+	background-image: 	url(./images/compass.png);
+	background-position: center center;
+	background-repeat: 	no-repeat;
+	background-size: 	18px;
+	border-right:		1px solid lightgrey;
+}
 
 #OPAQUESHAFT_DIALOG_TITLE{
 	float:				left;
@@ -876,12 +887,16 @@ INPUT{
 #CHILDREN_PALLETE_TAB{
 	position: 			relative;
 	width:				26px;
-	height:				70px;
+	height:				100px;
 	float: 				left;
 	font-size:			14px;
 	color:				snow;
 	background-color:	red;
-	padding-top:		14px;
+	background-image: 	url(./images/godzilla.png);
+	background-size: 	16px;
+	background-position: top center;
+	background-repeat: no-repeat;
+	padding-top:		34px;
 	padding-left:		4px;
 	writing-mode: 		vertical-lr;		
 }
