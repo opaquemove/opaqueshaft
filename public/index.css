@@ -165,6 +165,18 @@ INPUT{
 	padding-top:		13px;
 }
 
+#WHITEBOARD_DAY_FRAME{
+	width:					140px;
+	height:					29px;
+	text-align:				center;
+	float:					right;
+	font-size:				16px;
+	color:					snow;
+	padding-top:			12px;
+	border-left:			1px solid darkgrey;
+	background-color: 		transparent;
+
+}
 
 #SIGN_STATUS{
 	width:					28px;

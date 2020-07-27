@@ -15,6 +15,7 @@ var curChildMoved  = false;
 var wb_touch_cnt		= 0;
 var wb_touch_cnt_max	= 0;
 
+var oNav	= null;
 
 var criteriaEscortPixel = 600;
 
@@ -154,11 +155,14 @@ function init()
 		});
 */
 
+	oNav = new Nav( null );
+
 	fitting();
 //	new Button( 'ACCOUNTS',                 null           ).play();
 //	new Button( 'CHILDREN',                 null           ).play();
 //	new Button( 'COMMIT',                   null           ).play();
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
+	new Button( 'ID_NAV',                   ctlNav         ).play();
 	new Button( 'WHITEBOARD_PALLETE_TAB',   foldingWhiteboardPallete ).play();
 	new Button( 'WPC_TURNONOFF_WHITEBOARD', turnWhiteboard ).play();
 	new Button( 'WPC_SAVE_WHITEBOARD',      saveWhiteboard ).play();
@@ -301,14 +305,14 @@ function init()
 //	タイムセレクタのプロトタイプ
 //
 function TimeSelector( func ){
-	this.frame 		= null;
-	this.selector	= null;
-	this.func		= func;
-	this.device		= null;
-	this.evtStart	= null;
-	this.evtMove	= null;
-	this.evtEnd		= null;
-	this.current	= null;
+	this.frame 			= null;
+	this.selector		= null;
+	this.func			= func;
+	this.touchdevice	= null;
+	this.evtStart		= null;
+	this.evtMove		= null;
+	this.evtEnd			= null;
+	this.current		= null;
 }
 
 //
@@ -321,7 +325,7 @@ TimeSelector.prototype = {
 		this.frame		= document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
 		this.selector	= document.getElementById('MODAL_TIMESELECTOR');
 		this.touchdevice	= ( 'ontouchend' in document );
-		console.log('touch device:' + this.device);
+		console.log('touch device:' + this.touchdevice);
 		switch ( this.touchdevice ){
 			case true:		// touch device( iPad/iPhone/Android/Tablet )
 				this.evtStart	= 'touchstart';
@@ -854,6 +858,100 @@ function keyWhiteboard(e){
 			break;
 	}
 }
+
+//
+//	NAV関連
+//
+function Nav( func ){
+	this.frame 			= null;
+	this.selector		= null;
+	this.func			= func;
+	this.touchdevice	= null;
+	this.evtStart		= null;
+	this.evtMove		= null;
+	this.evtEnd			= null;
+	this.current		= null;
+
+	this.touchdevice	= ( 'ontouchend' in document );
+	switch ( this.touchdevice ){
+		case true:		// touch device( iPad/iPhone/Android/Tablet )
+			this.evtStart	= 'touchstart';
+			this.evtMove	= 'touchmove';
+			this.evtEnd		= 'touchend';
+			break;
+		case false:	// pc
+			this.evtStart	= 'mousedown';
+			this.evtMove	= 'mousemove';
+			this.evtEnd		= 'mouseup';
+			break;
+	}
+
+	var w = document.documentElement.clientWidth;
+	var h = document.documentElement.clientHeight;
+
+	var m = document.createElement('DIV');
+	m.setAttribute('id', 'NAVI2' );
+	m.style.position		= 'absolute';
+	m.style.top 			= ( ( h / 2 ) - 60 ) + 'px';
+	m.style.left			= ( ( w / 2 ) - 60 )+ 'px';
+	m.style.width			= '120px';
+	m.style.height			= '120px';
+	m.style.color			= 'snow';
+	m.style.backgroundColor	= 'transparent';
+	m.style.fontSize		= '14px';
+	m.style.zIndex			= 80000;
+	m.style.visibility		= 'hidden';
+	var r = '';
+	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >1</div>';
+	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background:red;" >2</div>';
+	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >3</div>';
+	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >4</div>';
+	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >NAV</div>';
+	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >6</div>';
+	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >7</div>';
+	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >8</div>';
+	r += '<div target="close" class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >';
+		r += '<img width="40px" src="./images/close.png" />';
+	r += '</div>';
+	m.innerHTML				= r;
+	this.frame = document.body.appendChild( m );
+	this.frame.addEventListener( this.evtStart,
+		( function(e){}).bind( this ), false );
+	this.frame.addEventListener( this.evtMove,
+		( function(e){}).bind( this ), false );
+	this.frame.addEventListener( this.evtEnd,
+		( function(e){
+			var o = ( this.touchdevice )? e.changedTouches[0].target : e.target;
+			while ( true ){
+				if ( o.parentNode == this.frame ) break;
+				else o = o.parentNode;
+			}
+			switch ( o.getAttribute('target')) {
+				case 'close':
+				//	this.frame.parentNode.removeChild( this.frame );
+				//	wb_touch_cnt_max = 0;
+					this.close();
+					break;
+			}
+		}).bind( this ), false );
+
+}
+
+Nav.prototype = {
+	open : function(){
+		console.log('open');
+		this.frame.style.visibility	= 'visible';
+	},
+	close : function(){
+		console.log('close');
+		this.frame.style.visibility	= 'hidden';
+	},
+	opened : function(){
+		console.log( this.frame.style.visibility );
+		return ( this.frame.style.visibility == 'visible');
+	}
+};
+
 //
 //	モーダルダイアログをオープン
 //
@@ -1245,6 +1343,14 @@ function signForm()
 	
 }
 
+//
+//	Nav表示制御
+//
+function ctlNav(){
+	console.log( 'oNav:' + oNav.opened() );
+	if ( ! oNav.opened() )	oNav.open();
+		else				oNav.close();
+}
 //
 //	ホワイトボードパレットリスト生成処理
 //
