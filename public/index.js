@@ -141,7 +141,7 @@ function init()
 	//	チルドレンパレットのイベント登録
 	//	
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
-	cpc.addEventListener('dblclick',  selectChild );
+	// cpc.addEventListener('dblclick',  selectChild );
 	cpc.addEventListener('mouseup',   markPalleteChild );
 /*
 	cpc.addEventListener('mouseover', function(e){
@@ -295,16 +295,6 @@ function init()
 	tmb.addEventListener( 'mouseup',    locateTimelinebar );
 	tmb.addEventListener( 'touchend',   locateTimelinebar );
 
-	// testcode
-	var ti = document.getElementById('ID_TEST');
-	ti.addEventListener('click',
-		function(e){
-			e.stopPropagation();
-			var o = e.target;
-			o.style.left = '-80px';
-			document.getElementById('WHITEBOARD_FRAME').style.transformOrigin = 'top left';
-			document.getElementById('WHITEBOARD_FRAME').style.transform = 'scale(0.5,0.5)';
-		});
 }
 
 //
@@ -752,15 +742,19 @@ function locateWhiteboard( e ){
 				}
 	
 			var nav = document.getElementById('NAVI');
-			if ( nav != null )
+			if ( nav != null ){
 				nav.parentNode.removeChild( nav );
+				wb_touch_cnt_max = 0;
+			}
 
 			break;
 		case 'mousemove':
 		case 'touchmove':
 			var nav = document.getElementById('NAVI');
-			if ( nav != null )
+			if ( nav != null ){
 				nav.parentNode.removeChild( nav );
+				wb_touch_cnt_max = 0;
+			}
 			break;
 		case 'touchend':
 		case 'mouseup':
@@ -782,6 +776,7 @@ function locateWhiteboard( e ){
 				var nav = document.getElementById('NAVI');
 				if ( nav != null ){
 					nav.parentNode.removeChild( nav );
+					wb_touch_cnt_max = 0;
 					return;
 				}
 	
@@ -823,6 +818,7 @@ function locateWhiteboard( e ){
 								var n = document.getElementById('NAVI');
 								if ( n != null ){
 									n.parentNode.removeChild( n );
+									wb_touch_cnt_max = 0;
 								}
 								break;
 						}
