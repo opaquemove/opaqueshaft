@@ -169,7 +169,6 @@ function init()
 	new Button( 'ID_NAV',                   ctlNav         ).play();
 	new Button( 'WHITEBOARD_PALLETE_TAB',   foldingWhiteboardPallete ).play();
 	new Button( 'WPC_TURNONOFF_WHITEBOARD', turnWhiteboard ).play();
-	new Button( 'WPC_SAVE_WHITEBOARD',      saveWhiteboard ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
@@ -556,20 +555,20 @@ function showGuidanceWhiteboard(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'open whiteboard';
 	r += '</div>';
-	r += '<div style="margin:0 auto;width:150px;">';
+	r += '<div style="margin:0 auto;font-size:14px;width:150px;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
 		r += '<div style="padding-bottom:20px;" >';
-		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" value="' + ymd + '" />';
+		r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:14px;" value="' + ymd + '" />';
 		r += '</div>';
-		r += '<div style="padding-bottom:20px;" >';
-		r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/add.png" /></button>';
-		r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/minus-2.png" /></button>';
+		r += '<div style="padding-bottom:20px;text-align:center;" >';
+			r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/add.png" /></button>';
+			r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/minus-2.png" /></button>';
 		r += '</div>';
 		r += '</form>';
 		r += '<div style="text-align:center;padding-top:40px;" >';
 		r += '<button id="BTN_OPENWHITEBOARD" ';
-		r += ' style="width:140px;height:60px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/next.png);background-size:50px;background-repeat:no-repeat;background-position:left center;" ';
+		r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/next.png);background-size:50px;background-repeat:no-repeat;background-position:left center;" ';
 		r += ' onclick="createWhiteboard()" >';
 		// r += '<img width="50px;" src="./images/next.png" >';
 			r += 'Next...';
@@ -588,7 +587,7 @@ function showGuidanceWhiteboard(){
 }
 
 //
-//	ホワイトボード作成
+//	ホワイトボード作成・開く
 //
 function createWhiteboard(){
 	var target_day = guidedance_whiteboard_form.day.value;
@@ -1309,7 +1308,7 @@ function whiteboardMenu( e ){
 	var m = p.appendChild( o );
 	var r = '';
 	r += '<div id="ID_SAVE_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
-	r += '<div id="ID_LOAD_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >load whiteboard</div>';
+	r += '<div id="ID_LOAD_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >open whiteboard</div>';
 	r += '<div id="ID_CLOSE_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cancel.png);background-size:10px;background-position:left center;background-repeat:no-repeat;" >close</div>';
 	r += '<div id="ID_CLEAR_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
 	m.innerHTML = r;
