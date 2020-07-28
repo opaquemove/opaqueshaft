@@ -1891,8 +1891,8 @@ function mDown( e ) {
 		icc.innerText = curChild.style.top + ' x ' + curChild.style.left;
 
         //ムーブイベントにコールバック
-        document.body.addEventListener("mousemove", mMove, false);
-        document.body.addEventListener("touchmove", mMove, false);	
+        document.body.addEventListener("mousemove", mMove, { passive : false } );
+        document.body.addEventListener("touchmove", mMove, { passive : false } ) ;	
         //マウスボタンが離されたとき、またはカーソルが外れたとき発火
 
 		curChild.addEventListener("mouseup", mUp, false);
