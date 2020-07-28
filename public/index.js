@@ -55,6 +55,9 @@ function init()
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.addEventListener('scroll',
 		function(e){
+			return false;
+			// if ( curChildMoved )
+				 e.preventDefault();
 			document.getElementById('ID_ON_SCROLL').innerText = 'scrollTop:' + e.target.scrollTop;
 		});
 
@@ -73,9 +76,9 @@ function init()
 	  function( e ) { e.preventDefault(); }, { passive:false } );
  
 
-	wb.addEventListener( evtStart,    		locateWhiteboard );
-	wb.addEventListener( evtMove,     		locateWhiteboard );
-	wb.addEventListener( evtEnd,      		locateWhiteboard );
+	wb.addEventListener( evtStart,    		locateWhiteboard, { passive : false } );
+	wb.addEventListener( evtMove,     		locateWhiteboard, { passive : false } );
+	wb.addEventListener( evtEnd,      		locateWhiteboard, { passive : false } );
 	document.addEventListener('keydown',	keyWhiteboard );
 
 
