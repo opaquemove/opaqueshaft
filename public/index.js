@@ -53,10 +53,10 @@ function init()
 
 	document.oncontextmenu = function(e) { return false; }
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
-	// wbf.addEventListener('scroll',
-	// 	function(e){
-	// 		console.log( 'scrollTop:' + e.target.scrollTop );
-	// 	});
+	wbf.addEventListener('scroll',
+		function(e){
+			document.getElementById('ID_ON_SCROLL').innerText = 'scrollTop:' + e.target.scrollTop;
+		});
 
 	var wb = document.getElementById('WHITEBOARD');
 //  touchmoveを抑制すると返って使いづらいので抑制はしないよ！ 
