@@ -23,13 +23,9 @@
 		</div> 
 		<div style="float:left;padding-top:10px;padding-left: 20px;">
 			<!--
-				<button onclick="postWebBackend()"             >sign status(webbackend)</button>
-				<button onclick="signForm()"                   >signIn(REST)...</button>
-				<button onclick="sign('signout')"              >signOut(REST)</button>
-				<button onclick="getAccountList()"             >getAccountList(socket.io)...</button>
-				<button onclick="resetChildMark()"             >reset Child Mark</button>
-				<button onclick="loadChildrenForm()"           >load Children(socket.io)</button>
-				<button onclick="clearWhiteboard()"            >clear Whiteboard</button>
+				<button onclick="postWebBackend()"       >sign status(webbackend)</button>
+				<button onclick="getAccountList()"       >getAccountList(socket.io)...</button>
+				<button onclick="loadChildrenForm()"     >load Children(socket.io)</button>
 			-->	
 		</div>
 		<div id="SIGN_STATUS" class="not_select">
@@ -56,6 +52,7 @@
 			<div id="TIMELINE1900" >19:00</div>
 		</div>
 		<div id="WHITEBOARD" ></div>
+		<div id="WHITEBOARD_CHECKOUT" ></div>
 	</div>
 	<div id="STATUS" class="not_select">
 		<div style="float:left;padding-top:4px;" >&nbsp;status&nbsp;</div>
@@ -83,7 +80,7 @@
 		<div id="WHITEBOARD_PALLETE_CONTENT_FRAME" >
 			<div id="WHITEBOARD_PALLETE_CONTENT_TOOLBAR" >
 				<div id="WPC_RELOAD" style="font-size:12px;padding-top:4px;padding-left:4px;float:left;width:20px;height:100%;border-right:1px solid lightgrey;" >
-					<img width="14px" src="/images/refresh.png" title="Reload" />
+					<img width="14px" src="/images/recycle.png" title="Reload" />
 				</div>
 				<div id="WPC_ADD_WHITEBOARD" style="font-size:12px;padding-top:3px;text-align:center;float:left;width:20px;height:100%;border-right:1px solid lightgrey;" >
 					<img width="14px" src="./images/plus.png" />
@@ -115,7 +112,7 @@
 -->
 					<div id="CPC_RELOAD"    style="font-size:12px;padding-top:4px;
 					padding-left:2px;float:right;width:23px;height:22px;border-left:1px solid lightgrey;" >
-						<img width="14px" src="/images/refresh.png" />
+						<img width="14px" src="/images/recycle.png" />
 					</div>
 					<div id="CPC_ADD_CHILD" style="font-size:12px;padding-top:4px;text-align:center;float:right;width:23px;height:23px;border-left:1px solid lightgrey;" >
 						<img width="14px" src="./images/plus.png" />

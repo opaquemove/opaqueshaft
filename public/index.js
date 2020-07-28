@@ -162,6 +162,7 @@ function init()
 //	new Button( 'CHILDREN',                 null           ).play();
 //	new Button( 'COMMIT',                   null           ).play();
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
+	new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
 	new Button( 'ID_NAV',                   ctlNav         ).play();
 	new Button( 'WHITEBOARD_PALLETE_TAB',   foldingWhiteboardPallete ).play();
 	new Button( 'WPC_TURNONOFF_WHITEBOARD', turnWhiteboard ).play();
@@ -903,20 +904,24 @@ function Nav( func ){
 	m.style.zIndex			= 80000;
 	m.style.visibility		= 'hidden';
 	var r = '';
-	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >1</div>';
-	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background:red;" >';
+	r += '<div class="vh-center nav_icon_blank" >1</div>';
+	r += '<div class="vh-center nav_icon" >';
 		r += '<img width="20px" src="./images/minus-2.png" />';
 	r += '</div>';
-	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >3</div>';
-	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >';
-	r += '<img width="20px" src="./images/check-3.png" />';
+	r += '<div class="vh-center nav_icon_blank" >3</div>';
+	r += '<div class="vh-center nav_icon" >';
+		r += '<img width="20px" src="./images/check-3.png" />';
 	r += '</div>';
-	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >NAV</div>';
-	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >6</div>';
-	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >7</div>';
-	r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >8</div>';
-	r += '<div target="close" class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >';
-		r += '<img width="20px" src="./images/close.png" />';
+	r += '<div class="vh-center nav_icon" >NAV</div>';
+	r += '<div class="vh-center nav_icon" >';
+		r += '<img width="20px" src="./images/dry-clean.png" />';
+	r += '</div>';
+	r += '<div class="vh-center nav_icon_blank" >7</div>';
+	r += '<div target="timeselector"  class="vh-center nav_icon" >';
+		r += '<img width="20px" src="./images/time.png" />';
+	r += '</div>';
+	r += '<div target="close" class="vh-center nav_icon" >';
+		r += '<img width="16px" src="./images/cancel.png" />';
 	r += '</div>';
 	m.innerHTML				= r;
 	this.frame = document.body.appendChild( m );
@@ -1274,6 +1279,62 @@ function sign()
 }
 
 //
+//	ホワイトボードメニュー
+//
+function whiteboardMenu( e ){
+	e.stopPropagation();
+	if ( document.getElementById('WHITEBOARD_SUBMENU') != null ){
+		var p = document.getElementById('WHITEBOARD_DAY_FRAME');
+		var c = document.getElementById('WHITEBOARD_SUBMENU');
+		p.removeChild( c );
+		return;
+	}
+	var o = document.createElement('DIV');
+	o.setAttribute( 'id', 'WHITEBOARD_SUBMENU');
+	o.style.position		= 'relative';
+	o.style.padding			= '2px';
+	o.style.top             = '8px';
+	o.style.left            = '-14px';
+	o.style.width           = '150px';
+	o.style.height          = '100px';
+	o.style.color			= ' gray';
+	o.style.backgroundColor = '#EEEEEE';
+	o.style.textAlign		='left';
+	o.style.zIndex			= 50000;
+	o.innerText = 'whiteboard menu...';
+	var p = document.getElementById('WHITEBOARD_DAY_FRAME');
+	var m = p.appendChild( o );
+	var r = '';
+	r += '<div id="ID_SAVE_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
+	r += '<div id="ID_LOAD_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >load whiteboard</div>';
+	r += '<div id="ID_CLOSE_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cancel.png);background-size:10px;background-position:left center;background-repeat:no-repeat;" >close</div>';
+	r += '<div id="ID_CLEAR_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
+	m.innerHTML = r;
+
+	new Button( 'ID_SAVE_WHITEBOARD',   saveWhiteboard   ).play();
+	new Button( 'ID_LOAD_WHITEBOARD',   null             ).play();
+	new Button( 'ID_LOAD_WHITEBOARD',   null             ).play();
+	new Button( 'ID_CLEAR_WHITEBOARD',  clearWhiteboard  ).play();
+
+	p.addEventListener('mouseleave', function(e) {
+		var c = document.getElementById('WHITEBOARD_SUBMENU');
+		if ( c!= null ) p.removeChild( c );
+
+	});
+	m.addEventListener('mouseleave', function(e) {
+		var p = document.getElementById('WHITEBOARD_DAY_FRAME');
+		var c = document.getElementById('WHITEBOARD_SUBMENU');
+		p.removeChild( c );
+
+	});
+	m.addEventListener('mouseup', function(e) {
+		e.stopPropagation();
+	});
+
+}
+
+
+//
 //	サインインメニュー
 //
 function signMenu( e ){
@@ -1303,15 +1364,19 @@ function signMenu( e ){
 	r += '<div id="ID_SIGN_OUT"         style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
 	r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
 //	r += '<div id="ID_LOAD_CHILDREN"    style="height:20px;padding:2px;" >load...</div>';
-	r += '<div id="ID_CLEAR_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
+//	r += '<div id="ID_CLEAR_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
 	r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding:2px;border-top:1px solid gray;" >sign in ' + id + '</div>';
 	m.innerHTML = r;
 
 	new Button( 'ID_SIGN_OUT', signout ).play();
 	new Button( 'ID_PROPERTY_ACCOUNT', propertyAccount ).play();
 //	new Button( 'ID_LOAD_CHILDREN',     loadChildrenForm ).play();
-	new Button( 'ID_CLEAR_WHITEBOARD',  clearWhiteboard  ).play();
 
+	p.addEventListener('mouseleave', function(e) {
+		var c = document.getElementById('SIGN_SUBMENU');
+		if ( c!= null ) p.removeChild( c );
+
+	});
 	m.addEventListener('mouseleave', function(e) {
 		var p = document.getElementById('SIGN_STATUS');
 		var c = document.getElementById('SIGN_SUBMENU');
