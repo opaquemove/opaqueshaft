@@ -117,9 +117,9 @@ function init()
 				alert('すでにホワイトボードに配置されています．');
 				return;
 			}
-			var itb = document.getElementById('ID_TIMELINE_BAR');
-			var hm  = itb.innerText;
-			var arHM = hm.split(':');
+			// var itb = document.getElementById('ID_TIMELINE_BAR');
+			// var hm  = itb.innerText;
+			// var arHM = hm.split(':');
 
 			var p = e.target.parentNode;
 		
@@ -293,12 +293,16 @@ function init()
 	//	タイムラインバー初期化
 	//
 	var tmb = document.getElementById('ID_TIMELINE_BAR');
-	tmb.addEventListener( 'mousedown',  locateTimelinebar );
-	tmb.addEventListener( 'touchstart', locateTimelinebar );
-	tmb.addEventListener( 'mousemove',  locateTimelinebar );
-	tmb.addEventListener( 'touchmove',  locateTimelinebar );
-	tmb.addEventListener( 'mouseup',    locateTimelinebar );
-	tmb.addEventListener( 'touchend',   locateTimelinebar );
+	tmb.addEventListener( evtStart,    		locateTimelinebar, { passive : false } );
+	tmb.addEventListener( evtMove,     		locateTimelinebar, { passive : false } );
+	tmb.addEventListener( evtEnd,      		locateTimelinebar, { passive : false } );
+
+	// tmb.addEventListener( 'mousedown',  locateTimelinebar );
+	// tmb.addEventListener( 'touchstart', locateTimelinebar );
+	// tmb.addEventListener( 'mousemove',  locateTimelinebar );
+	// tmb.addEventListener( 'touchmove',  locateTimelinebar );
+	// tmb.addEventListener( 'mouseup',    locateTimelinebar );
+	// tmb.addEventListener( 'touchend',   locateTimelinebar );
 
 }
 
@@ -508,8 +512,6 @@ function locateTimelinebar( e ){
 			//e.target.position = 'absolute';
 			tlx = event.pageY - e.target.offsetTop;
 			tl_drag = true;
-//			console.log('tlx:' + tlx );
-//			console.log( 'offsetTop' + e.target.offsetTop );
 			break;
 		case 'touchmove':
 		case 'mousemove':
