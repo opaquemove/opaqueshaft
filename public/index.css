@@ -119,13 +119,19 @@ INPUT{
 	z-index:			0;
 	overflow:			visible;
 }
+#OPAQUESHAFT_NAV{
+	float:				left;
+	width:				42px;
+	height:				42px;
+	background-color:	red;
+}
 #OPAQUESHAFT_TITLE{
 	float:				left;
 	height:				32px;
 	color:				white;
 	background-color:	black;
 	font-size:			16px;
-	border-left:		42px solid red;
+/*	border-left:		42px solid red; */
 	border-right:		1px solid lightgrey;
 	padding-top:		10px;
 	padding-right:		8px;
@@ -191,7 +197,7 @@ INPUT{
 }
 
 #WHITEBOARD_DAY_FRAME{
-	width:					140px;
+	width:					128px;
 	height:					30px;
 	text-align:				center;
 	float:					right;
@@ -220,7 +226,7 @@ INPUT{
 	background-repeat:		no-repeat;
 }
 
-
+/*
 #WHITEBOARD_BAY{
 	position:			absolute;
 	top:				18px;
@@ -238,6 +244,7 @@ INPUT{
 	border-bottom:		none;
 
 }
+*/
 
 #ID_CHILD_DELETE{
 	position:			relative;
@@ -1111,13 +1118,14 @@ INPUT{
 #ID_TIMELINE_BAR{
 	position:			absolute;
 	margin-top:			0px;
-	top:				340px;
+	top:				42px;
 	left:				0px;
 	width:				38px;
-	height:				42px;
+	height:				41px;
 	font-size:			12px;
 	color:				white;
 	background-color:	red;
+	border-top:			1px solid snow;
 	padding-left:		4px;
 	text-align:			center;
 	writing-mode: 		vertical-lr;		

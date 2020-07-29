@@ -525,14 +525,18 @@ function locateTimelinebar( e ){
 				var event = e.changedTouches[0];
 			}
 			//console.log( e.target.offsetTop + ':' + tlbOffset );
+			//console.log( event.pageY - tlx );
 			if ( ( event.pageY - tlx ) >= tlbOffset + 0 
-				&& ( event.pageY - tlx ) <= tlbOffset + 144 ){
+				&& ( event.pageY - tlx ) <= tlbOffset + 130 ){
 				itb.style.top = event.pageY - tlx + "px";
-				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) - ( 60 * 28 ) - 20;
-				var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
-								+ ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
+				//	8:00からマウス増分
+				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) -( 42 * 4 );
+				// var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
+				// 				+ ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
+				var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2) + ':00';
+								// + ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
 				itb.innerText = cur_time2;
-			//	scrollWhiteboard( Math.floor( cur_time / 60 ) );
+				scrollWhiteboard( Math.floor( cur_time / 60 ) );
 			} else {
 				//console.log( 'other:' + e.target.offsetTop + ':' + tlbOffset );
 			}
@@ -549,10 +553,11 @@ function locateTimelinebar( e ){
 //	タイムライン・バーに連動してホワイトボードをスクロール
 //
 function scrollWhiteboard( hour ){
-	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
-	var wb  = document.getElementById('WHITEBOARD');
-	wbt.style.top = 0 - ( ( hour - 8 ) * 400  ) - 0 + 'px';
-	wb.style.top  = 0 - ( ( hour - 8 ) * 400  ) - 4802 + 'px';
+	// var wbt = document.getElementById('WHITEBOARD_TIMELINE');
+	// var wb  = document.getElementById('WHITEBOARD');
+	// wbt.style.top = 0 - ( ( hour - 8 ) * 400  ) - 0 + 'px';
+	// wb.style.top  = 0 - ( ( hour - 8 ) * 400  ) - 4802 + 'px';
+	document.getElementById('WHITEBOARD_FRAME').scrollTop = ( hour - 8 ) * 400;
 }
 
 
@@ -769,7 +774,9 @@ function locateWhiteboard( e ){
 					wb_touch_cnt += e.changedTouches.length;
 					if ( wb_touch_cnt_max < wb_touch_cnt ) wb_touch_cnt_max = wb_touch_cnt;
 				}
-	
+
+			// document.getElementById('WHITEBOARD').style.pointerEvents = 'none';
+				
 			var nav = document.getElementById('NAVI');
 			if ( nav != null ){
 				nav.parentNode.removeChild( nav );
@@ -787,6 +794,7 @@ function locateWhiteboard( e ){
 			break;
 		case 'touchend':
 		case 'mouseup':
+			// document.getElementById('WHITEBOARD').style.pointerEvents = 'auto';
 			if(e.type === "mouseup") {
 				var event = e;
 			} else {
