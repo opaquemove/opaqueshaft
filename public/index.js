@@ -58,7 +58,7 @@ function init()
 			//return false;
 			 if ( curChildMoved )
 				 e.preventDefault();
-			document.getElementById('ID_ON_SCROLL').innerText = 'scrollTop:' + e.target.scrollTop;
+			document.getElementById('ID_ON_SCROLL').innerText = 'scroll:' + e.target.scrollTop;
 		});
 
 	var wb = document.getElementById('WHITEBOARD');
@@ -168,9 +168,9 @@ function init()
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	// new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
-	new Button( 'ID_CHILD_DELETE',          deleteWhiteboardMarkChild ).play();
-	new Button( 'ID_CHILD_CHECKOUT',        checkoutWhiteboardMarkChild ).play();
-	new Button( 'ID_CHILD_CHECKCLEAR',      checkoutClearWhiteboardMarkChild ).play();
+	// new Button( 'ID_CHILD_DELETE',          deleteWhiteboardMarkChild ).play();
+	// new Button( 'ID_CHILD_CHECKOUT',        checkoutWhiteboardMarkChild ).play();
+	// new Button( 'ID_CHILD_CHECKCLEAR',      checkoutClearWhiteboardMarkChild ).play();
 	new Button( 'ID_CHILD_TIMEUPDATE',		showTimelineSelector ).play();
 	new Button( 'ID_GRADE1',                null           ).play();
 	new Button( 'ID_GRADE2',                null           ).play();
@@ -575,8 +575,8 @@ function showGuidanceWhiteboard(){
 				r += '<input type="text" id="whiteboard_day" name="day" style="width:100%;font-size:14px;" value="' + ymd + '" />';
 			r += '</div>';
 			r += '<div style="float:right;width:48%;" >';
-				r += '<button style="background-color:transparent;border:none;" ><img width="12px" src="./images/add.png" /></button>';
-				r += '<button style="background-color:transparent;border:none;" ><img width="12px" src="./images/minus-2.png" /></button>';
+				r += '<button style="background-color:transparent;border:none;" disabled ><img width="12px" src="./images/add.png" /></button>';
+				r += '<button style="background-color:transparent;border:none;" disabled ><img width="12px" src="./images/minus-2.png" /></button>';
 			r += '</div>';
 		r += '</div>';
 		r += '<div id="WHITEBOARD_LIST" style="clear:both;height:70px;font-size:10px;padding:2px;overflow-y:scroll;border:1px solid lightgrey;" >';
@@ -927,24 +927,24 @@ function Nav( func ){
 	m.style.visibility		= 'hidden';
 	var r = '';
 	r += '<div class="vh-center nav_icon_blank" >1</div>';
-	r += '<div class="vh-center nav_icon" >';
+	r += '<div target="delete" class="vh-center nav_icon" >';	// Delete Mark Child
 		r += '<img width="20px" src="./images/minus-2.png" />';
 	r += '</div>';
 	r += '<div class="vh-center nav_icon_blank" >3</div>';
-	r += '<div class="vh-center nav_icon" >';
+	r += '<div target="checkout" class="vh-center nav_icon" >';	// Checkout Mark Child
 		r += '<img width="20px" src="./images/check-3.png" />';
 	r += '</div>';
 	r += '<div class="vh-center nav_icon" >';
 		r += 'NAV';
 	r += '</div>';
-	r += '<div class="vh-center nav_icon" >';
+	r += '<div target="checkoutclear" class="vh-center nav_icon" >';	// Checkout Clear Mark Child
 		r += '<img width="20px" src="./images/dry-clean.png" />';
 	r += '</div>';
 	r += '<div class="vh-center nav_icon_blank" >7</div>';
 	r += '<div target="timeselector"  class="vh-center nav_icon" >';
 		r += '<img width="20px" src="./images/time.png" />';
 	r += '</div>';
-	r += '<div target="close" class="vh-center nav_icon" >';
+	r += '<div target="close" class="vh-center nav_icon" >';	//	Close NAV
 		r += '<img width="16px" src="./images/cancel.png" />';
 	r += '</div>';
 	m.innerHTML				= r;
@@ -968,13 +968,6 @@ function Nav( func ){
 				else o = o.parentNode;
 			}
 			this.proc( o );
-			// switch ( o.getAttribute('target')) {
-			// 	case 'close':
-			// 	//	this.frame.parentNode.removeChild( this.frame );
-			// 	//	wb_touch_cnt_max = 0;
-			// 		this.close();
-			// 		break;
-			// }
 		}).bind( this ), false );
 
 }
@@ -998,6 +991,18 @@ Nav.prototype = {
 	},
 	proc : function( o ){
 		switch ( o.getAttribute('target')) {
+			case 'delete':
+				this.close();
+				deleteWhiteboardMarkChild();
+				break;
+			case 'checkout':
+				this.close();
+				checkoutWhiteboardMarkChild();
+				break;
+			case 'checkoutclear':
+				this.close();
+				checkoutClearWhiteboardMarkChild();
+				break;
 			case 'close':
 				this.close();
 				break;
