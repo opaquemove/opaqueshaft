@@ -467,10 +467,10 @@ function setEscortHelper( c, flag ){
     var escort = escort_flg[0];
     switch ( flag ){
         case 'ON':
-            escort.style.backgroundImage = 'url(./images/user.png)';
+            escort.style.backgroundImage = 'url(./images/family.png)';
             escort.style.backgroundPosition = 'center center';
             escort.style.backgroundRepeat = 'no-repeat';
-            escort.style.backgroundSize   = '14px';
+            escort.style.backgroundSize   = '18px';
             break;
         case 'OFF':
         default:
@@ -499,6 +499,7 @@ function checkoutChild( c ){
     cf.style.backgroundPosition = 'center center';
     cf.style.backgroundRepeat   = 'no-repeat';
     cf.style.backgroundSize     = '14px';
+    c.style.transformOrigin     = 'top left;'
     c.style.transform           = 'rotate(-45deg)';
 
     //WHITEBOARD_CHECKOUTへ移動
@@ -739,6 +740,7 @@ function checkoutClearChild( c ){
     cf.style.backgroundPosition = '';
     cf.style.backgroundRepeat   = '';
     cf.style.backgroundSize     = '';
+    c.style.transformOrigin     = 'top left;'
     c.style.transform           = 'rotate(0deg)';
 
 

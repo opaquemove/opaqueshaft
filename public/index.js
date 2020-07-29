@@ -164,6 +164,7 @@ function init()
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
 	new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
 	new Button( 'ID_NAV',                   ctlNav         ).play();
+	new Button( 'NAVI_START_ICON',			ctlNav         ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
@@ -896,6 +897,7 @@ function keyWhiteboard(e){
 //	NAV関連
 //
 function Nav( func ){
+	this.starticon		= null;
 	this.frame 			= null;
 	this.selector		= null;
 	this.func			= func;
@@ -923,18 +925,38 @@ function Nav( func ){
 	var w = document.documentElement.clientWidth;
 	var h = document.documentElement.clientHeight;
 
+	var si = document.createElement('DIV');
+	si.setAttribute('id', 'NAVI_START_ICON' );
+	si.setAttribute('class', 'not_select vh-center');
+	si.style.position			= 'absolute';
+	si.style.top				= ( ( h / 2 ) - this.size + 42 ) + 'px';
+	si.style.left				= '42px';
+	si.style.width				= '42px';
+	si.style.height				= '42px';
+	si.style.color				= 'snow';
+	si.style.backgroundColor	= 'red';
+	si.style.backgroundImage	= 'url(./images/compass.png)';
+	si.style.backgroundSize		= '30px';
+	si.style.backgroundRepeat	= 'no-repeat';
+	si.style.backgroundPosition	= 'center center';
+	si.style.fontSize			= '14px';
+	si.style.zIndex				= 65001;
+	si.innerText				= 'NAV';
+	this.starticon = document.body.appendChild( si );
+
 	var m = document.createElement('DIV');
 	m.setAttribute('id', 'NAVI2' );
 	m.setAttribute('class', 'not_select' );
 	m.style.position		= 'absolute';
 	m.style.top 			= ( ( h / 2 ) - this.size ) + 'px';
-	m.style.left			= ( ( w / 2 ) - this.size )+ 'px';
-	m.style.width			= '120px';
-	m.style.height			= '120px';
+	// m.style.left			= ( ( w / 2 ) - this.size )+ 'px';
+	m.style.left			= '0px';
+	m.style.width			= '126px';
+	m.style.height			= '126px';
 	m.style.color			= 'snow';
 	m.style.backgroundColor	= 'transparent';
 	m.style.fontSize		= '14px';
-	m.style.zIndex			= 80000;
+	m.style.zIndex			= 65000;
 	m.style.visibility		= 'hidden';
 	var r = '';
 	r += '<div class="vh-center nav_icon_blank" >1</div>';
@@ -991,7 +1013,8 @@ Nav.prototype = {
 		var w = document.documentElement.clientWidth;
 		var h = document.documentElement.clientHeight;
 		this.frame.style.top 		= ( ( h / 2 ) - this.size ) + 'px';
-		this.frame.style.left		= ( ( w / 2 ) - this.size )+ 'px';
+		// this.frame.style.left		= ( ( w / 2 ) - this.size )+ 'px';
+		this.frame.style.left		= '0px';
 		this.frame.style.visibility	= 'visible';
 	},
 	close : function(){
@@ -1084,7 +1107,8 @@ function fitting(){
 	//	NAVリロケーション
 	if ( oNav.opened() ){
 		oNav.frame.style.top	= ( ( h / 2 ) - ( oNav.frame.offsetHeight / 2 ) ) + 'px';
-		oNav.frame.style.left	= ( ( w / 2 ) - ( oNav.frame.offsetWidth  / 2 ) ) + 'px';	
+		// oNav.frame.style.left	= ( ( w / 2 ) - ( oNav.frame.offsetWidth  / 2 ) ) + 'px';	
+		oNav.frame.style.left	= '0px';
 	}
 
 }
@@ -1308,10 +1332,10 @@ function whiteboardMenu( e ){
 	o.setAttribute( 'id', 'WHITEBOARD_SUBMENU');
 	o.style.position		= 'relative';
 	o.style.padding			= '2px';
-	o.style.top             = '8px';
-	o.style.left            = '-14px';
-	o.style.width           = '150px';
-	o.style.height          = '150px';
+	o.style.top             = '14px';
+	o.style.left            = '-44px';
+	o.style.width           = '120px';
+	o.style.height          = '120px';
 	o.style.color			= ' gray';
 	o.style.backgroundColor = '#EEEEEE';
 	o.style.textAlign		='left';
@@ -1977,7 +2001,7 @@ function moveOtherChild( base_child, x, y ){
 	if ( children.length == 0 ) return;
 	for ( var i=0; i<children.length; i++ ){
 		if ( base_child != children[i]){
-			if ( ! children[i].hasAttribute('checkout')){
+			// if ( ! children[i].hasAttribute('checkout')){
 				children[i].style.top  = parseInt( children[i].style.top )  + y + 'px';
 				children[i].style.left = parseInt( children[i].style.left ) + x + 'px';
 				var co = children[i].getElementsByClassName('CO_TIME');
@@ -2000,7 +2024,7 @@ function moveOtherChild( base_child, x, y ){
 						break;
 				}
 	
-			}
+			// }
 
 		}
 	}
