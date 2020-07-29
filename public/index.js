@@ -171,6 +171,7 @@ function init()
 	// new Button( 'ID_CHILD_DELETE',          deleteWhiteboardMarkChild ).play();
 	// new Button( 'ID_CHILD_CHECKOUT',        checkoutWhiteboardMarkChild ).play();
 	// new Button( 'ID_CHILD_CHECKCLEAR',      checkoutClearWhiteboardMarkChild ).play();
+	new Button( 'ID_SHEET_ESCORT',          turnWhiteboard ).play();
 	new Button( 'ID_CHILD_TIMEUPDATE',		showTimelineSelector ).play();
 	new Button( 'ID_GRADE1',                null           ).play();
 	new Button( 'ID_GRADE2',                null           ).play();
@@ -722,16 +723,16 @@ function saveWhiteboardHelper(){
 //
 //	ホワイトボード表示切換
 //
-// function turnWhiteboard(){
-// 	switch ( openWhiteboard ){
-// 		case true:
-// 			hiddenWhiteboard();
-// 			break;
-// 		case false:
-// 			visibleWhiteboard();
-// 			break;
-// 	}
-// }
+function turnWhiteboard(){
+	switch ( openWhiteboard ){
+		case true:
+			hiddenWhiteboard();
+			break;
+		case false:
+			visibleWhiteboard();
+			break;
+	}
+}
 		
 //
 //	ホワイトボードを非表示（操作不可）
@@ -1064,7 +1065,7 @@ function fitting(){
 
 	var cpf  = document.getElementById('CHILDREN_PALLETE_FRAME');
 	cpf.style.height  = ( h -42 - 30 ) + 'px';
-	cpf.style.left    = ( w - 30 ) + 'px';
+	cpf.style.left    = ( w - 42 ) + 'px';
 
 	// var wpf  = document.getElementById('WHITEBOARD_PALLETE_FRAME');
 	// wpf.style.height  = ( h -42 - 30 ) + 'px';
@@ -1106,21 +1107,21 @@ function ctlToolbar(){
 	var tb       = document.getElementById('TOOLBAR');
 	var wbf      = document.getElementById('WHITEBOARD_FRAME');
 	var status   = document.getElementById('STATUS');
-	var wbb      = document.getElementById('WHITEBOARD_BAY');
+//	var wbb      = document.getElementById('WHITEBOARD_BAY');
 //	var acc      = document.getElementById('ACCOUNTS');
 //	var children = document.getElementById('CHILDREN');
 	if ( checkSign()) {
 		tb.style.visibility     = 'visible';
 		wbf.style.visibility    = 'visible';
 		status.style.visibility = 'visible';
-		wbb.style.visibility	= 'visible';
+//		wbb.style.visibility	= 'visible';
 //		acc.style.visibility	= 'visible';
 //		children.style.visibility= 'visible';
 	} else {
 		tb.style.visibility     = 'hidden';
 		wbf.style.visibility    = 'hidden';
 		status.style.visibility = 'hidden';
-		wbb.style.visibility	= 'hidden';
+//		wbb.style.visibility	= 'hidden';
 //		acc.style.visibility	= 'hidden';
 //		children.style.visibility= 'hidden';
 	}
@@ -1302,7 +1303,7 @@ function whiteboardMenu( e ){
 	o.style.top             = '8px';
 	o.style.left            = '-14px';
 	o.style.width           = '150px';
-	o.style.height          = '100px';
+	o.style.height          = '150px';
 	o.style.color			= ' gray';
 	o.style.backgroundColor = '#EEEEEE';
 	o.style.textAlign		='left';
@@ -1356,9 +1357,9 @@ function signMenu( e ){
 	o.style.position		= 'relative';
 	o.style.padding			= '2px';
 	o.style.top             = '8px';
-	o.style.left            = '-121px';
+	o.style.left            = '-113px';
 	o.style.width           = '150px';
-	o.style.height          = '200px';
+	o.style.height          = '150px';
 	o.style.backgroundColor = '#EEEEEE';
 	o.style.textAlign		='left';
 	o.style.zIndex			= 50000;
@@ -1823,6 +1824,7 @@ function makeTimelineContextMenu( id ){
 //
 function mDown( e ) {
 
+		console.log('mDown');
 		curChild = this;
 		//console.log( this.style.top + ',' + this.style.left );
         //クラス名に .drag を追加
@@ -1875,7 +1877,7 @@ function mDown( e ) {
 //	チャイルド操作
 //
 function mMove( e ){
-
+		console.log('mMove');
         //ドラッグしている要素を取得
 		//var drag = document.getElementsByClassName("drag")[0];
 //		var drag = e.target;
@@ -1883,7 +1885,7 @@ function mMove( e ){
 		curChildMoved   = true;
 
 		//チェックアウト(checkout)しているチャイルドは対象外
-		if ( drag.hasAttribute('checkout')) return;
+		//if ( drag.hasAttribute('checkout')) return;
 
         //同様にマウスとタッチの差異を吸収
         if(e.type === "mousemove") {

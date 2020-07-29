@@ -140,7 +140,7 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
     r += '<div style="height:40px;padding-left:2px;" >';
         r += '<div style="width:100%;height:28px;font-size:14px;border-bottom:1px solid lightgrey;" >';
-            r += '<div style="height:20px;float:left;" >' + child_name + '</div>';
+            r += '<div style="height:20px;float:left;text-overflow:ellipsis;" >' + child_name + '</div>';
             r += '<div class="CHECKOUT_FLG" style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
             r += '</div>';
             r += '<div class="ESCORT_FLG"   style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
@@ -157,7 +157,11 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
         r += '</div>';
     r += '</div>';
 
-	c.innerHTML = r;
+    c.innerHTML = r;
+    //
+    //  WHITEBOARDに追加
+    //  WHITEBOARD_ESCORTに追加
+    //
     var cc = wb.appendChild( c );
     setEscortHelper( cc, (escort)?'ON':'OFF' );
 	cc.addEventListener( "mousedown",  mDown, false );
@@ -495,6 +499,13 @@ function checkoutChild( c ){
     cf.style.backgroundPosition = 'center center';
     cf.style.backgroundRepeat   = 'no-repeat';
     cf.style.backgroundSize     = '14px';
+
+    //WHITEBOARD_CHECKOUTへ移動
+    var wbc = document.getElementById('WHITEBOARD_CHECKOUT');
+    var cc = wbc.appendChild( c );
+    // cc.addEventListener( "mousedown",  mDown, false );
+    // cc.addEventListener( "touchstart", mDown, false );
+
 
     showWhiteboardChildCountCheckout();
     
