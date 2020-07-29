@@ -893,6 +893,7 @@ function Nav( func ){
 	this.evtMove		= null;
 	this.evtEnd			= null;
 	this.current		= null;
+	this.size 			= 60;
 
 	this.touchdevice	= ( 'ontouchend' in document );
 	switch ( this.touchdevice ){
@@ -915,8 +916,8 @@ function Nav( func ){
 	m.setAttribute('id', 'NAVI2' );
 	m.setAttribute('class', 'not_select' );
 	m.style.position		= 'absolute';
-	m.style.top 			= ( ( h / 2 ) - 60 ) + 'px';
-	m.style.left			= ( ( w / 2 ) - 60 )+ 'px';
+	m.style.top 			= ( ( h / 2 ) - this.size ) + 'px';
+	m.style.left			= ( ( w / 2 ) - this.size )+ 'px';
 	m.style.width			= '120px';
 	m.style.height			= '120px';
 	m.style.color			= 'snow';
@@ -983,6 +984,10 @@ function Nav( func ){
 //
 Nav.prototype = {
 	open : function(){
+		var w = document.documentElement.clientWidth;
+		var h = document.documentElement.clientHeight;
+		this.frame.style.top 		= ( ( h / 2 ) - this.size ) + 'px';
+		this.frame.style.left		= ( ( w / 2 ) - this.size )+ 'px';
 		this.frame.style.visibility	= 'visible';
 	},
 	close : function(){
