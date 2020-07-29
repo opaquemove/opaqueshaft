@@ -71,9 +71,9 @@ function init()
 	// var cpf = document.getElementById('CHILDREN_PALLETE_FRAME');
 	// cpf.addEventListener("touchmove",
 	//  function( e ) { e.preventDefault(); }, { passive:false } );
-	 var wpf = document.getElementById('WHITEBOARD_PALLETE_FRAME');
-	 wpf.addEventListener("touchmove",
-	  function( e ) { e.preventDefault(); }, { passive:false } );
+	//  var wpf = document.getElementById('WHITEBOARD_PALLETE_FRAME');
+	//  wpf.addEventListener("touchmove",
+	//   function( e ) { e.preventDefault(); }, { passive:false } );
  
 
 	wb.addEventListener( evtStart,    		locateWhiteboard, { passive : false } );
@@ -137,7 +137,7 @@ function init()
 	//
 	//	ホワイトボードパレットのイベント登録
 	//	
-	var wpc = document.getElementById('WHITEBOARD_PALLETE_CONTENT');
+	// var wpc = document.getElementById('WHITEBOARD_PALLETE_CONTENT');
 	//wpc.addEventListener('dblclick',  selectWhiteboard );
 	//wpc.addEventListener('mouseup',   markPalleteWhiteboard );
 
@@ -161,14 +161,9 @@ function init()
 	oNav = new Nav( null );
 
 	fitting();
-//	new Button( 'ACCOUNTS',                 null           ).play();
-//	new Button( 'CHILDREN',                 null           ).play();
-//	new Button( 'COMMIT',                   null           ).play();
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
 	new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
 	new Button( 'ID_NAV',                   ctlNav         ).play();
-	new Button( 'WHITEBOARD_PALLETE_TAB',   foldingWhiteboardPallete ).play();
-	new Button( 'WPC_TURNONOFF_WHITEBOARD', turnWhiteboard ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
@@ -200,12 +195,11 @@ function init()
 	//
 	//	タイムセレクタ初期化
 	//
-	palleteTimeSelector = new TimeSelector( dragPalleteChild2 );
+	palleteTimeSelector = new TimeSelector( dragPalleteChild );
 	palleteTimeSelector.play();
 
 
 	ctlToolbar();
-	makeWhiteboardPalleteList();
 	makeChildrenPalleteList();
 	if ( !checkSign() ){			//サインアウトしている
 		signForm();
@@ -290,6 +284,10 @@ function init()
 		}
 	);
 
+	//
+	//	タイムラインインジケータの生成
+	//
+	makeTimelineIndicator();
 
 	//
 	//	タイムラインバー初期化
@@ -304,6 +302,20 @@ function init()
 
 }
 
+//
+//	タイムラインインジケータの生成
+//
+function makeTimelineIndicator(){
+	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
+	arTL = [ '08:00', '09:00', '10:00', '11:00', '12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00' ];
+	for ( var i=0; i<arTL.length; i++ ){
+		var o = document.createElement('DIV');
+		o.setAttribute('class', 'timeline_class' );
+		o.innerText = arTL[i];
+		wbt.appendChild( o );
+	}
+
+}
 //
 //	タイムセレクタのプロトタイプ
 //
@@ -558,15 +570,21 @@ function showGuidanceWhiteboard(){
 	r += '<div style="margin:0 auto;font-size:14px;width:150px;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
-		r += '<div style="padding-bottom:20px;" >';
-		r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:14px;" value="' + ymd + '" />';
+		r += '<div style="padding-bottom:10px;" >';
+			r += '<div style="width:50%;float:left;" >';
+				r += '<input type="text" id="whiteboard_day" name="day" style="width:100%;font-size:14px;" value="' + ymd + '" />';
+			r += '</div>';
+			r += '<div style="float:right;width:48%;" >';
+				r += '<button style="background-color:transparent;border:none;" ><img width="12px" src="./images/add.png" /></button>';
+				r += '<button style="background-color:transparent;border:none;" ><img width="12px" src="./images/minus-2.png" /></button>';
+			r += '</div>';
 		r += '</div>';
-		r += '<div style="padding-bottom:20px;text-align:center;" >';
-			r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/add.png" /></button>';
-			r += '<button style="background-color:transparent;border:none;" ><img width="32px" src="./images/minus-2.png" /></button>';
+		r += '<div id="WHITEBOARD_LIST" style="clear:both;height:70px;font-size:10px;padding:2px;overflow-y:scroll;border:1px solid lightgrey;" >';
+		r += '</div>';
+		r += '<div style="padding-bottom:5px;text-align:center;" >';
 		r += '</div>';
 		r += '</form>';
-		r += '<div style="text-align:center;padding-top:40px;" >';
+		r += '<div style="text-align:center;padding-top:5px;" >';
 		r += '<button id="BTN_OPENWHITEBOARD" ';
 		r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/next.png);background-size:50px;background-repeat:no-repeat;background-position:left center;" ';
 		r += ' onclick="createWhiteboard()" >';
@@ -577,6 +595,7 @@ function showGuidanceWhiteboard(){
 	r += '</div>';
 	neverCloseDialog = true;
 	openModalDialog( r, 'NOBUTTON' );
+	makeWhiteboardList();
 	document.getElementById('BTN_OPENWHITEBOARD').focus();
 	document.getElementById('whiteboard_day').addEventListener('keydown',
 		function (e){
@@ -701,16 +720,16 @@ function saveWhiteboardHelper(){
 //
 //	ホワイトボード表示切換
 //
-function turnWhiteboard(){
-	switch ( openWhiteboard ){
-		case true:
-			hiddenWhiteboard();
-			break;
-		case false:
-			visibleWhiteboard();
-			break;
-	}
-}
+// function turnWhiteboard(){
+// 	switch ( openWhiteboard ){
+// 		case true:
+// 			hiddenWhiteboard();
+// 			break;
+// 		case false:
+// 			visibleWhiteboard();
+// 			break;
+// 	}
+// }
 		
 //
 //	ホワイトボードを非表示（操作不可）
@@ -914,7 +933,9 @@ function Nav( func ){
 	r += '<div class="vh-center nav_icon" >';
 		r += '<img width="20px" src="./images/check-3.png" />';
 	r += '</div>';
-	r += '<div class="vh-center nav_icon" >NAV</div>';
+	r += '<div class="vh-center nav_icon" >';
+		r += 'NAV';
+	r += '</div>';
 	r += '<div class="vh-center nav_icon" >';
 		r += '<img width="20px" src="./images/dry-clean.png" />';
 	r += '</div>';
@@ -1033,46 +1054,21 @@ function fitting(){
 	cpf.style.height  = ( h -42 - 30 ) + 'px';
 	cpf.style.left    = ( w - 30 ) + 'px';
 
-	var wpf  = document.getElementById('WHITEBOARD_PALLETE_FRAME');
-	wpf.style.height  = ( h -42 - 30 ) + 'px';
-//	wpf.style.left    = ( w - 30 ) + 'px';
+	// var wpf  = document.getElementById('WHITEBOARD_PALLETE_FRAME');
+	// wpf.style.height  = ( h -42 - 30 ) + 'px';
 
 	var sts = document.getElementById('STATUS');
 	sts.style.top		= ( h - 30 ) + 'px';
 
-}
-
-//
-//	ホワイトボードパレットのフォールディング
-//
-var flagWhiteboardPallete = false;
-function foldingWhiteboardPallete(){
-	var wbf = document.getElementById('WHITEBOARD_FRAME');
-	var wpf = document.getElementById('WHITEBOARD_PALLETE_FRAME');
-	var left = parseInt( wpf.style.left );
-	//console.log(left);
-	//alert( '[' + cpf.style.marginLeft + ']' );
-	if ( left < 0 || isNaN(left ) ){
-		wpf.style.left = '0px';				//	open pallete
-		wbf.style.left = '170px';
-		flagWhiteboardPallete = true;
-	} else {
-		wpf.style.left = '-170px';			// close pallete
-		wbf.style.left = '0px';
-		flagWhiteboardPallete = false;
+	//	NAVリロケーション
+	if ( oNav.opened() ){
+		oNav.frame.style.top	= ( ( h / 2 ) - ( oNav.frame.offsetHeight / 2 ) ) + 'px';
+		oNav.frame.style.left	= ( ( w / 2 ) - ( oNav.frame.offsetWidth  / 2 ) ) + 'px';	
 	}
+
 }
 
-//
-//	ホワイトボードパレット強制クローズ
-//
-function closeWhiteboardPallete(){
-	var wbf = document.getElementById('WHITEBOARD_FRAME');
-	var wpf = document.getElementById('WHITEBOARD_PALLETE_FRAME');
-	wpf.style.left = '-170px';
-	wbf.style.paddingLeft = '0px';
-	flagWhiteboardPallete = false;
-}
+
 //
 //	チルドレンパレットのフォールディング
 //
@@ -1169,10 +1165,8 @@ function signout(){
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send();
 	ctlToolbar();
-	makeWhiteboardPalleteList();
 	makeChildrenPalleteList();
 	hiddenWhiteboard();
-	closeWhiteboardPallete();
 	if ( flagChildrenPallete ) foldingChildrenPallete();
 	signForm();
 }
@@ -1223,7 +1217,6 @@ function sign()
 							if ( result.status == 'SUCCESS' ){
 								ctlToolbar();
 								clearWhiteboard();
-								makeWhiteboardPalleteList();
 								makeChildrenPalleteList();
 							} else {
 								r += 'sign in error'
@@ -1257,7 +1250,6 @@ function sign()
 					if ( result.status == 'SUCCESS' ){
 						ctlToolbar();
 						clearWhiteboard();
-						makeWhiteboardPalleteList();
 						makeChildrenPalleteList();
 						if ( !openWhiteboard ){
 							hiddenWhiteboard();
@@ -1402,9 +1394,6 @@ function signForm()
 	var r = "";
 	
 	r += "<div style='width:400px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
-		// r += "<div id='OPAQUESHAFT_LOGINTITLE' >";
-		// r += "&nbsp;&nbsp;OpaqueShaft";
-		// r += "</div>"; 
 		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign in to your account</div>";
 		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
 		r += "<div style='margin:10px auto;width:210px;' >";
@@ -1438,17 +1427,13 @@ function ctlNav(){
 	if ( ! oNav.opened() )	oNav.open();
 		else				oNav.close();
 }
+
 //
-//	ホワイトボードパレットリスト生成処理
+//	ホワイトボードリスト生成処理
 //
-function makeWhiteboardPalleteList()
+function makeWhiteboardList()
 {
-	document.getElementById( 'WHITEBOARD_PALLETE_CONTENT' ).innerHTML = '';
-	if ( !checkSign()){
-		document.getElementById( 'WHITEBOARD_PALLETE_FRAME' ).style.visibility = 'hidden';
-		return;
-	}
-	document.getElementById( 'WHITEBOARD_PALLETE_FRAME' ).style.visibility = 'visible';
+	document.getElementById( 'WHITEBOARD_LIST' ).innerHTML = '';
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -1456,7 +1441,7 @@ function makeWhiteboardPalleteList()
 			case 1://opened
 			case 2://header received
 			case 3://loading
-				var o = document.getElementById( 'WHITEBOARD_PALLETE_CONTENT' );
+				var o = document.getElementById( 'WHITEBOARD_LIST' );
 				o.innerText = 'access...';
 				break;
 			case 4://done
@@ -1464,14 +1449,14 @@ function makeWhiteboardPalleteList()
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
 					//r += xmlhttp.responseText;
-					var o = document.getElementById('WHITEBOARD_PALLETE_CONTENT');
+					var o = document.getElementById('WHITEBOARD_LIST');
 					o.innerText = '';
 					for ( var i=0; i<result.length; i++ ){
 						addWhiteboardManage( o, result[i] );
 					}
 					//o.innerHTML = r;
 				} else{
-					document.getElementById('WHITEBOARD_PALLETE_CONTENT').innerText = xmlhttp.status;
+					document.getElementById('WHITEBOARD_LIST').innerText = xmlhttp.status;
 				}
 				break;
 		}
@@ -1480,7 +1465,6 @@ function makeWhiteboardPalleteList()
 		xmlhttp.open("POST", "/accounts/whiteboardlist", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send();
-
 	} catch ( e ) { alert( e );}
 
 }
@@ -1492,25 +1476,21 @@ function addWhiteboardManage( oParent, Result ){
 
 	var c = document.createElement("DIV");
     c.setAttribute("whiteboard_id",  Result.child_id );
-//    c.setAttribute("draggable", "true");
-//    c.style.width       = '97%';
 	c.style.backgroundColor	= 'white';
-	// c.style.width = '80px';
-	c.style.height			= '30px';
+	c.style.height			= '14px';
 	c.style.marginBottom	= '1px';
 
 	var day = new Date( Result.day );
 	var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDate() ).slice(-2);
 
 	var r = '';
-    r += '<div style="height:20px;padding-left:2px;">';
-    r += ymd;
+    r += '<div>';
+    	r += ymd;
     r += '</div>';
 	c.innerHTML = r;
     var cc = oParent.appendChild( c );
 
 }
-
 
 //
 //	チルドレンパレット関連
@@ -1620,49 +1600,11 @@ function markPalleteChild( e ){
 	}
 }
 
-//
-//	パレット内のマークしたチャイルドをホワイトボードにドラッグ
-//
-/*
-function dragPalleteChild(){
-	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
-	var itb = document.getElementById('ID_TIMELINE_BAR');
-	var hm  = itb.innerText;
-	var arHM = hm.split(':');
-	
-//	var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
-
-	var cursor = 0;
-	for ( var i=0; i<cpc.childNodes.length; i++ ){
-		if ( cpc.childNodes[i].getAttribute('selected') != null ){
-			var id = cpc.childNodes[i].getAttribute('child_id');
-			if ( alreadyExistChildOnWhiteboard( id ) ) continue;
-			var oChild = getChild( id );
-			if ( oChild != null ){
-				var top  = 0;
-				var left = 0;
-				var lchild = latestWhiteboardChild();
-				if ( lchild != null ){
-					top  = parseInt( lchild.style.top ) + 20;
-					left = parseInt( lchild.style.left ) + 20;
-				}
-				addChild( top, left, oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
-				cursor++;
-			}
-			cpc.childNodes[i].style.color = '';
-			cpc.childNodes[i].style.backgroundColor = '';
-			cpc.childNodes[i].removeAttribute('selected');
-		}
-	}
-	showWhiteboardChildCount();
-
-}
-*/
 
 //
 //	パレット内のマークしたチャイルドをホワイトボードにドラッグ2
 //
-function dragPalleteChild2( hm ){
+function dragPalleteChild( hm ){
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
 	var arHM = hm.split(':');
 	
