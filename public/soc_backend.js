@@ -138,8 +138,8 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
 
     var r = '';
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
-    r += '<div style="height:40px;padding-left:2px;" >';
-        r += '<div style="width:100%;height:28px;font-size:14px;border-bottom:1px solid lightgrey;" >';
+    r += '<div style="padding:4px;" >';
+        r += '<div style="width:100%;height:28px;font-size:14px;" >';
             r += '<div style="height:20px;float:left;text-overflow:ellipsis;" >' + child_name + '</div>';
             r += '<div class="CHECKOUT_FLG" style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
             r += '</div>';
@@ -152,9 +152,9 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
             r += child_type + '' + child_grade;
             r += '</div>';
         r += '</div>';
-        r += '<div id="CHECKOUT_' + child_id + '" style="clear:both;height:12px;text-align:right;font-size:10px;" >';
-            r += '&nbsp;&nbsp;checkout:'
-        r += '</div>';
+        // r += '<div id="CHECKOUT_' + child_id + '" style="clear:both;height:12px;text-align:right;font-size:10px;" >';
+        //     r += '&nbsp;&nbsp;checkout:'
+        // r += '</div>';
     r += '</div>';
 
     c.innerHTML = r;
@@ -491,20 +491,19 @@ function checkoutChild( c ){
     var m = ( '00' + now.getMinutes() ).slice(-2);
     var checkout_time = h + ':' + m;
     c.setAttribute('checkout', checkout_time );
-    console.log( c.getAttribute('child_id') );
-    document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText =
-        'checkout:' + checkout_time;
+    // console.log( c.getAttribute('child_id') );
+    // document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText =
+    //     'checkout:' + checkout_time;
     var cf = c.getElementsByClassName('CHECKOUT_FLG')[0];
     cf.style.backgroundImage    = 'url(./images/check.png)';
     cf.style.backgroundPosition = 'center center';
     cf.style.backgroundRepeat   = 'no-repeat';
     cf.style.backgroundSize     = '14px';
+    c.style.transform           = 'rotate(-45deg)';
 
     //WHITEBOARD_CHECKOUTへ移動
-    var wbc = document.getElementById('WHITEBOARD_CHECKOUT');
-    var cc = wbc.appendChild( c );
-    // cc.addEventListener( "mousedown",  mDown, false );
-    // cc.addEventListener( "touchstart", mDown, false );
+    // var wbc = document.getElementById('WHITEBOARD_CHECKOUT');
+    // var cc = wbc.appendChild( c );
 
 
     showWhiteboardChildCountCheckout();
@@ -733,13 +732,15 @@ function checkoutClearWhiteboardChildMarkHelper(){
 //
 function checkoutClearChild( c ){
     if ( c == null ) return;
-    c.removeAttribute('checkout' );
-    document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText = 'checkout:';
+    c.removeAttribute( 'checkout' );
+    // document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText = 'checkout:';
     var cf = c.getElementsByClassName('CHECKOUT_FLG')[0];
     cf.style.backgroundImage    = '';
     cf.style.backgroundPosition = '';
     cf.style.backgroundRepeat   = '';
     cf.style.backgroundSize     = '';
+    c.style.transform           = 'rotate(0deg)';
+
 
 }
 
