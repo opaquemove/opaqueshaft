@@ -164,7 +164,7 @@ function init()
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
 	new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
 	new Button( 'ID_NAV',                   ctlNav         ).play();
-	new Button( 'NAVI_START_ICON',			ctlNav         ).play();
+	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
@@ -925,24 +925,24 @@ function Nav( func ){
 	var w = document.documentElement.clientWidth;
 	var h = document.documentElement.clientHeight;
 
-	var si = document.createElement('DIV');
-	si.setAttribute('id', 'NAVI_START_ICON' );
-	si.setAttribute('class', 'not_select vh-center');
-	si.style.position			= 'absolute';
-	si.style.top				= ( ( h / 2 ) - this.size + 42 ) + 'px';
-	si.style.left				= '42px';
-	si.style.width				= '42px';
-	si.style.height				= '42px';
-	si.style.color				= 'snow';
-	si.style.backgroundColor	= 'red';
-	si.style.backgroundImage	= 'url(./images/compass.png)';
-	si.style.backgroundSize		= '30px';
-	si.style.backgroundRepeat	= 'no-repeat';
-	si.style.backgroundPosition	= 'center center';
-	si.style.fontSize			= '14px';
-	si.style.zIndex				= 65001;
-	si.innerText				= 'NAV';
-	this.starticon = document.body.appendChild( si );
+	// var si = document.createElement('DIV');
+	// si.setAttribute('id', 'NAV_START_ICON' );
+	// si.setAttribute('class', 'not_select vh-center');
+	// si.style.position			= 'absolute';
+	// si.style.top				= ( ( h / 2 ) - this.size + 42 ) + 'px';
+	// si.style.left				= '42px';
+	// si.style.width				= '42px';
+	// si.style.height				= '42px';
+	// si.style.color				= 'snow';
+	// si.style.backgroundColor	= 'red';
+	// si.style.backgroundImage	= 'url(./images/compass.png)';
+	// si.style.backgroundSize		= '30px';
+	// si.style.backgroundRepeat	= 'no-repeat';
+	// si.style.backgroundPosition	= 'center center';
+	// si.style.fontSize			= '14px';
+	// si.style.zIndex				= 65001;
+	// si.innerText				= 'NAV';
+	// this.starticon = document.body.appendChild( si );
 
 	var m = document.createElement('DIV');
 	m.setAttribute('id', 'NAVI2' );
@@ -1104,6 +1104,8 @@ function fitting(){
 	var sts = document.getElementById('STATUS');
 	sts.style.top		= ( h - 30 ) + 'px';
 
+	var nsi = document.getElementById('NAV_START_ICON');
+	nsi.style.top = ( ( h / 2 ) - oNav.size + 42 ) + 'px'
 	//	NAVリロケーション
 	if ( oNav.opened() ){
 		oNav.frame.style.top	= ( ( h / 2 ) - ( oNav.frame.offsetHeight / 2 ) ) + 'px';

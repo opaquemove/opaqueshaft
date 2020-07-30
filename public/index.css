@@ -136,6 +136,21 @@ INPUT{
 	padding-top:		10px;
 	padding-right:		8px;
 }
+#NAV_START_ICON{
+	position:				absolute;
+	top:					-42px;		/* dummy */ 
+	left:					42px;
+	width:					42px;
+	height:					42px;
+	color:					snow;
+	background-color:		red;
+	background-image:		url(./images/compass.png);
+	background-size:		30px;
+	background-repeat:		no-repeat;
+	background-position:	center center;
+	font-size:				14px;
+	z-index:				65001;
+}
 #ID_NAV{
 	float: 				left;
 	width:				41px;
