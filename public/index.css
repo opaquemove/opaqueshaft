@@ -216,7 +216,7 @@ INPUT{
 	height:					30px;
 	text-align:				center;
 	float:					right;
-	font-size:				10px;
+	font-size:				12px;
 	color:					snow;
 	padding-top:			12px;
 	border-left:			1px solid darkgrey;
@@ -894,6 +894,15 @@ INPUT{
 
 }
 
+#ESCORT_AREA_MARKER{
+	position:			absolute;
+	top:				42px;
+	left:				-10px;		/*	dummy */
+	width:				4px;
+	height:				4px;
+	background-color:	red;
+	z-index:			4000;
+}
 
 .ESCORT_FLG{
 

@@ -292,6 +292,13 @@ function init()
 	makeTimelineIndicator();
 
 	//
+	//	エスコートエリアの位置マーカーの生成
+	//
+	var eam = document.getElementById('ESCORT_AREA_MARKER');
+	eam.style.left   = ( criteriaEscortPixel + 42 ) + 'px';
+
+
+	//
 	//	タイムラインバー初期化
 	//
 	var tmb = document.getElementById('ID_TIMELINE_BAR');
@@ -1890,19 +1897,19 @@ function mDown( e ) {
 		document.body.addEventListener("touchleave", mUp, false);
 
 		// エスコートガイド表示		
-		var tri = document.createElement('DIV');
-		tri.setAttribute('id', 'ESCORT_GUIDE');
-		tri.style.top    = '42px';
-		tri.style.left   = ( criteriaEscortPixel + 50 - 18 ) + 'px';
-		tri.style.width  = '40px';
-		tri.style.height = '40px';
-		tri.style.backgroundImage 		= 'url(./images/arrow-down.png)';
-		tri.style.backgroundSize 		= '30px';
-		tri.style.backgroundPosition 	= 'center center';
-		tri.style.backgroundRepeat 		= 'no-repeat';
-		tri.style.position 				= 'absolute';
-		tri.style.zIndex 				= 4000;
-		document.body.appendChild( tri );
+		// var tri = document.createElement('DIV');
+		// tri.setAttribute('id', 'ESCORT_GUIDE');
+		// tri.style.top    = '42px';
+		// tri.style.left   = ( criteriaEscortPixel + 50 - 18 ) + 'px';
+		// tri.style.width  = '40px';
+		// tri.style.height = '40px';
+		// tri.style.backgroundImage 		= 'url(./images/arrow-down.png)';
+		// tri.style.backgroundSize 		= '30px';
+		// tri.style.backgroundPosition 	= 'center center';
+		// tri.style.backgroundRepeat 		= 'no-repeat';
+		// tri.style.position 				= 'absolute';
+		// tri.style.zIndex 				= 4000;
+		// document.body.appendChild( tri );
 
 
 	}
