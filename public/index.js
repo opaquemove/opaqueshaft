@@ -904,7 +904,6 @@ function keyWhiteboard(e){
 //	NAV関連
 //
 function Nav( func ){
-	this.starticon		= null;
 	this.frame 			= null;
 	this.selector		= null;
 	this.func			= func;
@@ -931,25 +930,6 @@ function Nav( func ){
 
 	var w = document.documentElement.clientWidth;
 	var h = document.documentElement.clientHeight;
-
-	// var si = document.createElement('DIV');
-	// si.setAttribute('id', 'NAV_START_ICON' );
-	// si.setAttribute('class', 'not_select vh-center');
-	// si.style.position			= 'absolute';
-	// si.style.top				= ( ( h / 2 ) - this.size + 42 ) + 'px';
-	// si.style.left				= '42px';
-	// si.style.width				= '42px';
-	// si.style.height				= '42px';
-	// si.style.color				= 'snow';
-	// si.style.backgroundColor	= 'red';
-	// si.style.backgroundImage	= 'url(./images/compass.png)';
-	// si.style.backgroundSize		= '30px';
-	// si.style.backgroundRepeat	= 'no-repeat';
-	// si.style.backgroundPosition	= 'center center';
-	// si.style.fontSize			= '14px';
-	// si.style.zIndex				= 65001;
-	// si.innerText				= 'NAV';
-	// this.starticon = document.body.appendChild( si );
 
 	var m = document.createElement('DIV');
 	m.setAttribute('id', 'NAVI2' );
@@ -1148,23 +1128,14 @@ function ctlToolbar(){
 	var tb       = document.getElementById('TOOLBAR');
 	var wbf      = document.getElementById('WHITEBOARD_FRAME');
 	var status   = document.getElementById('STATUS');
-//	var wbb      = document.getElementById('WHITEBOARD_BAY');
-//	var acc      = document.getElementById('ACCOUNTS');
-//	var children = document.getElementById('CHILDREN');
 	if ( checkSign()) {
 		tb.style.visibility     = 'visible';
 		wbf.style.visibility    = 'visible';
 		status.style.visibility = 'visible';
-//		wbb.style.visibility	= 'visible';
-//		acc.style.visibility	= 'visible';
-//		children.style.visibility= 'visible';
 	} else {
 		tb.style.visibility     = 'hidden';
 		wbf.style.visibility    = 'hidden';
 		status.style.visibility = 'hidden';
-//		wbb.style.visibility	= 'hidden';
-//		acc.style.visibility	= 'hidden';
-//		children.style.visibility= 'hidden';
 	}
 }
 
@@ -1412,7 +1383,6 @@ function signMenu( e ){
 	r += '<div id="ID_SIGN_OUT"         style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
 	r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
 //	r += '<div id="ID_LOAD_CHILDREN"    style="height:20px;padding:2px;" >load...</div>';
-//	r += '<div id="ID_CLEAR_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
 	r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding:2px;border-top:1px solid gray;" >sign in ' + id + '</div>';
 	m.innerHTML = r;
 
@@ -1810,9 +1780,11 @@ function coordinateToTime( top, left ){
 	var escort = Math.floor( left / criteriaEscortPixel );
 	var left2  = left - ( escort * criteriaEscortPixel );
 	var h = 8 + Math.floor( top / 400 );		//200px:1hour
-	var m = Math.floor( left2 / 400 ) * 15;		// 210px:15min
+	var m = Math.floor( 60 * left2 / criteriaEscortPixel );
+	m = Math.floor( m / 15 ) * 15;
 	if ( m <= 0  ) m = 0;
-	if ( m >= 15 ) m = 15;
+//	if ( m >= 15 ) m = 15;
+
 	return ( '00' + h ).slice(-2) + ('00' + m ).slice(-2);
 }
 
