@@ -968,7 +968,7 @@ function Nav( func ){
 		r += '<img width="20px" src="./images/check-3.png" />';
 	r += '</div>';
 	r += '<div class="vh-center nav_icon" >';
-		r += 'NAV';
+		r += '&nbsp;';
 	r += '</div>';
 	r += '<div target="checkoutclear" class="vh-center nav_icon" >';	// Checkout Clear Mark Child
 		r += '<img width="20px" src="./images/dry-clean.png" />';
