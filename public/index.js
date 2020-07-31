@@ -934,8 +934,10 @@ function Nav( func ){
 			break;
 	}
 
-	var w = document.documentElement.clientWidth;
-	var h = document.documentElement.clientHeight;
+	var w = document.body.clientWidth;
+	var h = document.body.clientHeight;
+	// var w = document.documentElement.clientWidth;
+	// var h = document.documentElement.clientHeight;
 
 	var m = document.createElement('DIV');
 	m.setAttribute('id', 'NAVI2' );
@@ -1003,8 +1005,8 @@ function Nav( func ){
 //
 Nav.prototype = {
 	open : function(){
-		var w = document.documentElement.clientWidth;
-		var h = document.documentElement.clientHeight;
+		var w = document.body.clientWidth;
+		var h = document.body.clientHeight;
 		this.frame.style.top 		= ( ( h / 2 ) - this.size ) + 'px';
 		// this.frame.style.left		= ( ( w / 2 ) - this.size )+ 'px';
 		this.frame.style.left		= '0px';
@@ -1079,8 +1081,8 @@ function closeModalDialog(){
 //	ホワイトボードエリアのフィッティング処理
 //
 function fitting(){
-	var w = document.documentElement.clientWidth;
-	var h = document.documentElement.clientHeight;
+	var w = document.body.clientWidth;
+	var h = document.body.clientHeight;
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.style.height = ( h - 42 - 30 ) + 'px';
 
@@ -1920,17 +1922,17 @@ function mMove( e ){
 		}
 
 		//
-		var wb_height = parseInt( document.getElementById('WHITEBOARD').style.height );
+		var wb_height = document.getElementById('WHITEBOARD').offsetHeight;
 		var wb_width  = parseInt( document.getElementById('WHITEBOARD').style.width );
-		wb_height -= drag.offsetHeight;
-		wb_width  -= drag.offsetWidth;
+		wb_height -= parseInt( drag.offsetHeight / 2 );
+		wb_width  -= parseInt( drag.offsetWidth  / 2 );
 		//マウスが動いた場所に要素を動かす
 		if ( e.type == 'touchmove' 
 		    || (( e.buttons & 1 ) && e.type == 'mousemove' ) ){
 			var old_top  = parseInt( drag.style.top  );
 			var old_left = parseInt( drag.style.left );
 			if ( ( event.pageY - y ) < 0 || ( event.pageX - x ) < 0 ) return;
-			if ( ( event.pageY - y ) >= wb_height || ( event.pageX - x ) >= wb_width  ) return;
+			if ( ( event.pageY - y ) >= wb_height || ( event.pageX - x  ) >= wb_width  ) return;
 			//if ( !checkOtherChildCoordinate( drag, event.pageX - x, event.pageY - y ) ) return;
 			if ( !checkOtherChildCoordinate( drag, event.pageX - x - old_left, event.pageY - y - old_top ) ) return;
 			drag.style.top  = event.pageY - y + "px";
@@ -1977,6 +1979,11 @@ function mMove( e ){
 //	他のチャイルドの座標をチェック
 //
 function checkOtherChildCoordinate( base_child, x, y ){
+	var wb_height = document.getElementById('WHITEBOARD').offsetHeight;
+	var wb_width  = parseInt( document.getElementById('WHITEBOARD').style.width );
+	wb_height -= parseInt( base_child.offsetHeight / 2 );
+	wb_width  -= parseInt( base_child.offsetWidth  / 2 );
+	
 	var children = getMarkedChild();
 	if ( children.length == 0 ) return true;
 	for ( var i=0; i<children.length; i++ ){
@@ -1984,6 +1991,8 @@ function checkOtherChildCoordinate( base_child, x, y ){
 			console.log( 'checkOtherChildCoordi:' + children[i].style.top );
 			if ( parseInt( children[i].style.top )  + y < 0
 			 || parseInt( children[i].style.left ) + x < 0 ) return false;
+			if ( parseInt( children[i].style.top  ) + y >= wb_height ) return false;
+			if ( parseInt( children[i].style.left ) + x >= wb_width ) return false;
 		}
 	}
 	return true;
