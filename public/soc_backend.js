@@ -138,17 +138,19 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
 
     var r = '';
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
-    r += '<div style="padding:4px;" >';
-        r += '<div style="width:100%;height:28px;font-size:14px;" >';
+    r += '<div style="padding:2px;" >';
+        r += '<div style="width:100%;height:20px;font-size:14px;" >';
             r += '<div style="height:20px;float:left;text-overflow:ellipsis;" >' + child_name + '</div>';
+            r += '<div class="CO_TIME" style="height:20px;padding-left:2px;float:right;text-align:right;" >';
+            r += hm;
+            r += '</div>';
+        r += '</div>';
+        r += '<div>';
             r += '<div class="CHECKOUT_FLG" style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
             r += '</div>';
             r += '<div class="ESCORT_FLG"   style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
             r += '</div>';
-            r += '<div class="CO_TIME" style="height:20px;padding-left:2px;float:right;text-align:right;" >';
-                r += hm;
-            r += '</div>';
-            r += '<div style="float:right;text-align:right;" >';
+            r += '<div style="float:right;font-size:10px;text-align:right;" >';
             r += child_type + '' + child_grade;
             r += '</div>';
         r += '</div>';
@@ -307,7 +309,7 @@ function deleteWhiteboardChildMarkHelper(){
     var c = p.firstChild;
     var i=0;
     while( c ){
-        if ( c.getAttribute('marked') == 'MARKED'){
+        if ( isMarkedChild( c ) ) {
             i++;
             p.removeChild( c );
             c = p.firstChild;
@@ -328,12 +330,18 @@ function getMarkedChild(){
     var p = document.getElementById( 'WHITEBOARD');
     var c = p.firstChild;
     while( c ){
-        if ( c.getAttribute('marked') == 'MARKED')
+        if ( isMarkedChild( c ) )
             children[index++] = c;
         c = c.nextSibling;
     }
     return children;
+}
 
+//
+//  指定したチャイルドがマークされているかをチェック
+//
+function isMarkedChild( c ){
+    return c.hasAttribute( 'marked' );
 }
 
 //
@@ -374,23 +382,24 @@ function unmarkChild( c ) {
 }
 
 //  コンテキストメニューが表示されているかをチェック
-function existContextMenu( c ){
-    var cMenu = c.lastChild;
-    return ( cMenu.hasAttribute('cmenu') );
+// function existContextMenu( c ){
+//     var cMenu = c.lastChild;
+//     return ( cMenu.hasAttribute('cmenu') );
 
-}
+// }
+
 //
 //  コンテキストメニューが複数表示されないように他のメニューは削除する
 //
-function clearOtherContextMenu( c ){
-    var wb = document.getElementById('WHITEBOARD');
-    for ( var i=0; i<wb.childNodes.length; i++ ){
-        var o = wb.childNodes[i];
-        if ( c != o && o.lastChild.hasAttribute('cmenu') ){
-            o.removeChild( o.lastChild );
-        }
-    }    
-}
+// function clearOtherContextMenu( c ){
+//     var wb = document.getElementById('WHITEBOARD');
+//     for ( var i=0; i<wb.childNodes.length; i++ ){
+//         var o = wb.childNodes[i];
+//         if ( c != o && o.lastChild.hasAttribute('cmenu') ){
+//             o.removeChild( o.lastChild );
+//         }
+//     }    
+// }
 
 //
 //  ホワイトボードのチャイルド数をステータス表示

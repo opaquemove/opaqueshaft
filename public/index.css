@@ -796,8 +796,8 @@ INPUT{
 
 .CHILD{
 	position:			absolute;
-	width:				240px;
-	height:				32px;
+	width:				182px;
+	height:				40px;
 	color:				gray;
 	background-color:	white;
 	padding:			0px;
@@ -805,7 +805,7 @@ INPUT{
 	border-left:		1px solid lightgrey;
 	border-right:		1px solid lightgrey;
 	border-bottom:		1px solid lightgrey;
-	font-size:			15px;
+	font-size:			14px;
 	overflow:			visible;
 	-webkit-user-select: none;
 }

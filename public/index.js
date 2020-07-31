@@ -215,6 +215,7 @@ function init()
 	//
 	//	タイムラインガイド初期化
 	//
+/*
 	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
 	wbt.addEventListener( 'mouseup',
 		function(e){
@@ -285,6 +286,7 @@ function init()
 		
 		}
 	);
+*/
 
 	//
 	//	タイムラインインジケータの生成
@@ -784,21 +786,23 @@ function locateWhiteboard( e ){
 				}
 
 			// document.getElementById('WHITEBOARD').style.pointerEvents = 'none';
-				
+/*				
 			var nav = document.getElementById('NAVI');
 			if ( nav != null ){
 				nav.parentNode.removeChild( nav );
 				wb_touch_cnt_max = 0;
 			}
-
+*/
 			break;
 		case 'mousemove':
 		case 'touchmove':
+/*
 			var nav = document.getElementById('NAVI');
 			if ( nav != null ){
 				nav.parentNode.removeChild( nav );
 				wb_touch_cnt_max = 0;
 			}
+*/
 			break;
 		case 'touchend':
 		case 'mouseup':
@@ -818,13 +822,14 @@ function locateWhiteboard( e ){
 				//
 				//	NAVI
 				//
+/*
 				var nav = document.getElementById('NAVI');
 				if ( nav != null ){
 					nav.parentNode.removeChild( nav );
 					wb_touch_cnt_max = 0;
 					return;
 				}
-	
+
 				var m = document.createElement('DIV');
 				m.setAttribute('id', 'NAVI' );
 				m.style.position		= 'absolute';
@@ -873,6 +878,7 @@ function locateWhiteboard( e ){
 				// 	function(e){
 				// 		e.target.parentNode.removeChild( e.target );
 				// 	});
+*/
 			}
 
 			break;
@@ -1913,20 +1919,28 @@ function mMove( e ){
 			e.stopPropagation();
 		}
 
+		//
+		var wb_height = parseInt( document.getElementById('WHITEBOARD').style.height );
+		var wb_width  = parseInt( document.getElementById('WHITEBOARD').style.width );
+		wb_height -= drag.offsetHeight;
+		wb_width  -= drag.offsetWidth;
 		//マウスが動いた場所に要素を動かす
 		if ( e.type == 'touchmove' 
 		    || (( e.buttons & 1 ) && e.type == 'mousemove' ) ){
 			var old_top  = parseInt( drag.style.top  );
 			var old_left = parseInt( drag.style.left );
 			if ( ( event.pageY - y ) < 0 || ( event.pageX - x ) < 0 ) return;
-			if ( !checkOtherChildCoordinate( drag, event.pageX - x, event.pageY - y ) ) return;
+			if ( ( event.pageY - y ) >= wb_height || ( event.pageX - x ) >= wb_width  ) return;
+			//if ( !checkOtherChildCoordinate( drag, event.pageX - x, event.pageY - y ) ) return;
+			if ( !checkOtherChildCoordinate( drag, event.pageX - x - old_left, event.pageY - y - old_top ) ) return;
 			drag.style.top  = event.pageY - y + "px";
 			drag.style.left = event.pageX - x + "px";
 			// delta_x = parseInt( drag.style.left ) - old_left;
 			// delta_y = parseInt( drag.style.top  ) - old_top;
 			 delta_x = ( event.pageX - x ) - old_left;
 			 delta_y = ( event.pageY - y ) - old_top;
-			moveOtherChild( drag, delta_x, delta_y );
+			if ( isMarkedChild( drag ) )
+				moveOtherChild( drag, delta_x, delta_y );
 
 			var co = drag.getElementsByClassName('CO_TIME');
 			if ( co != null ){
@@ -1967,6 +1981,7 @@ function checkOtherChildCoordinate( base_child, x, y ){
 	if ( children.length == 0 ) return true;
 	for ( var i=0; i<children.length; i++ ){
 		if ( base_child != children[i]){
+			console.log( 'checkOtherChildCoordi:' + children[i].style.top );
 			if ( parseInt( children[i].style.top )  + y < 0
 			 || parseInt( children[i].style.left ) + x < 0 ) return false;
 		}
@@ -2030,21 +2045,21 @@ function mUp( e ) {
 	if ( e.type == 'mouseup'){		//	touchendで反応しないように！
 		if ( !curChildMoved ){
 			if ( curChild != null ){
-				if ( curChild.getAttribute('marked') == 'MARKED' ) {
-					if ( existContextMenu( curChild ) ){
-						console.log('existContextMenu');
+				if ( isMarkedChild( curChild ) ) {
+						// if ( existContextMenu( curChild ) ){
+					// console.log('existContextMenu');
 						unmarkChild( curChild );
-					} else {
-							if ( !existContextMenu( curChild)){
-								clearOtherContextMenu( curChild );
-								makeContextMenu();
-							}
-						}
+					// } else {
+							// if ( !existContextMenu( curChild)){
+								// clearOtherContextMenu( curChild );
+								// makeContextMenu();
+							// }
+					// }
 				}else {
 					markChild( curChild );
-					clearOtherContextMenu( curChild );
+					// clearOtherContextMenu( curChild );
 					// コンテキストメニュー
-					makeContextMenu();
+					// makeContextMenu();
 /*
 					var cMenu = document.createElement('DIV');
 					cMenu.setAttribute('class', 'CHILD_CONTEXTMENU' );
@@ -2194,28 +2209,10 @@ function makeContextMenu(){
 //
 function resetChildMark(){
 	var wb = document.getElementById('WHITEBOARD');
-/*
-	if ( wb.childNodes.length == 0 ) return;
-	var c = null;
-	c = wb.firstChild;
-	while ( c ) {
-		if ( c.getAttribute('marked') == 'MARKED') {
-			c.style.backgroundColor = '';
-			c.style.color 			= '';
-			c.removeAttribute('marked');
-		}
-		c = c.nextSibling;
-	}
-*/
 	var children = wb.getElementsByClassName('CHILD');
 	if ( children == null ) return;
 	for ( var i=0; i<children.length; i++ ){
 		unmarkChild( children[i]);
-		// if ( children[i].getAttribute('marked') == 'MARKED') {
-		// 	children[i].style.backgroundColor = '';
-		// 	children[i].style.color 			= '';
-		// 	children[i].removeAttribute('marked');
-		// }
 	}
 
 }
