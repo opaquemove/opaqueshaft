@@ -935,7 +935,9 @@ function Nav( func ){
 	}
 
 	var w = document.body.clientWidth;
-	var h = document.body.clientHeight;
+//	var h = document.body.clientHeight;
+	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
+
 	// var w = document.documentElement.clientWidth;
 	// var h = document.documentElement.clientHeight;
 
@@ -1006,7 +1008,9 @@ function Nav( func ){
 Nav.prototype = {
 	open : function(){
 		var w = document.body.clientWidth;
-		var h = document.body.clientHeight;
+		// var h = document.body.clientHeight;
+		var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
+
 		this.frame.style.top 		= ( ( h / 2 ) - this.size ) + 'px';
 		// this.frame.style.left		= ( ( w / 2 ) - this.size )+ 'px';
 		this.frame.style.left		= '0px';
