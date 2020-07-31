@@ -1082,7 +1082,7 @@ function closeModalDialog(){
 //
 function fitting(){
 	var w = document.body.clientWidth;
-	var h = document.body.clientHeight;
+	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.style.height = ( h - 42 - 30 ) + 'px';
 
