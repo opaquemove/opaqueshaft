@@ -106,6 +106,99 @@ function clearWhiteboardHelper(){
 }
 
 //
+//  レポーティング
+//
+function reportWhiteboard(){
+    var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
+		r += 'report : ' + dayWhiteboard;
+    r += '</div>';
+    r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
+        r += 'Summary:'
+    r += '</div>';
+    r += '<div style="width:90%;height:;;clear:both;margin:0 auto;" >';
+        r += 'child:';
+    r += '</div>';
+
+    r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
+        r += 'Detail:'
+    r += '</div>';
+    r += '<div id="REPORT_HDR"  style="width:90%;height:20px;clear:both;color:red;background-color:lightgray;margin:0 auto;" >';
+        r += '<div style="float:left;" >Name</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckOut</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckIn</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Escort</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Type</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Grade</div>';
+    r += '</div>';
+    r += '<div id="REPORT_LIST" style="width:90%;height:180px;clear:both;margin:0 auto;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '</div>';
+    openModalDialog( r, 'NORMAL' );
+    reportWhiteboardHelper();
+}
+
+//
+//  レポーティングヘルパー
+//
+function reportWhiteboardHelper(){
+    var lst_area = document.getElementById('REPORT_LIST');
+    var wb = document.getElementById('WHITEBOARD');
+    for ( var i=0; i<12; i++ ){
+        var c = wb.childNodes[i];
+        var o = document.createElement('DIV');
+        o.style.color           = 'gray';
+        o.style.backgroundColor = 'transparent';
+        o.style.borderBottom    = '1px solid lightgrey';
+        o.style.padding         = '2px';
+        o.style.marginBottom    = '2px';
+        o.style.clear           = 'both';
+        o.innerHTML             = '<div style="float:reft;width:50px;color:snow;background-color:red;" >' + ( '00' + ( i + 8 ) ).slice(-2) + ':00' + '</div>';
+        lst_area.appendChild( o );
+        var children = getChildrenByHour( i + 8 );
+        for ( var j=0; j<children.length; j++ ){
+            var cc = document.createElement('DIV');
+            var child_name  = children[j].getElementsByClassName('CHILD_NAME')[0].innerText;
+            var child_type  = children[j].getAttribute('child_type');
+            var child_grade = children[j].getAttribute('child_grade');
+            var checkin     = children[j].getAttribute('checkin');
+            var checkout    = children[j].getAttribute('checkout');
+                checkout    = ( checkout != null )? checkout : '---';
+            var escort      = ( children[j].hasAttribute('escort') )?'yes':'no';
+            var r = '';
+            r += '<div style="clear:both;" >';
+                r += '<div style="float:left;"  >' + child_name + '</div>';
+                r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';
+                r += '<div style="float:right;width:50px;" >' + checkin     + '</div>';
+                r += '<div style="float:right;width:50px;" >' + escort      + '</div>';
+                r += '<div style="float:right;width:50px;" >' + child_type  + '</div>';
+                r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
+            r += '</div>';
+            cc.innerHTML = r;
+            lst_area.appendChild( cc );
+        }
+    }
+}
+
+//
+//  指定した時間帯のチャイルドリストを取得する
+//
+function getChildrenByHour( h ){
+    var h_children = [];
+    var i = 0;
+    var children = document.getElementById('WHITEBOARD').childNodes;
+    for ( var j=0; j<children.length; j++ ){
+        var c = children[j];
+        var s = ( h - 8 ) * 400;
+        var e = s + 400 - 1;
+        if ( parseInt( c.style.top ) >= s &&
+             parseInt( c.style.top ) <= e )
+             h_children[i++] = c;  
+    }
+    return h_children;
+
+}
+
+//
 //  WhiteBoardにチャイルド(240x60)を実体化
 //
 function addChild( top, left, child_id, child_name, child_type, child_grade ){
@@ -116,11 +209,14 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
     
 	var wb = document.getElementById('WHITEBOARD');
     var c = document.createElement("DIV");
-	c.setAttribute("id",       "c_1");
-    c.setAttribute("class",    "CHILD drag-and-drop");
-    c.setAttribute("child",    "yes");
-    c.setAttribute('child_id', child_id ) ;
-    c.setAttribute('checkin',  checkin_time );
+	c.setAttribute("id",          "c_1");
+    c.setAttribute("class",       "CHILD drag-and-drop");
+    c.setAttribute("child",       "yes");
+    c.setAttribute('child_id',    child_id ) ;
+    c.setAttribute('checkin',     checkin_time );
+    c.setAttribute('child_type',  child_type );
+    c.setAttribute('child_grade', child_grade );
+
     //c.setAttribute("draggable", "true");
 
     // if ( escort == 'ON')
@@ -140,8 +236,8 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
     r += '<div style="padding:2px;" >';
         r += '<div style="width:100%;height:20px;font-size:14px;" >';
-            r += '<div style="height:20px;float:left;text-overflow:ellipsis;" >' + child_name + '</div>';
-            r += '<div class="CO_TIME" style="height:20px;padding-left:2px;float:right;text-align:right;" >';
+            r += '<div class="CHILD_NAME" style="height:20px;float:left;text-overflow:ellipsis;" >' + child_name + '</div>';
+            r += '<div class="CO_TIME"    style="height:20px;padding-left:2px;float:right;text-align:right;" >';
             r += hm;
             r += '</div>';
         r += '</div>';
@@ -150,7 +246,7 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
             r += '</div>';
             r += '<div class="ESCORT_FLG"   style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
             r += '</div>';
-            r += '<div style="float:right;font-size:10px;text-align:right;" >';
+            r += '<div class="TYPE_GRADE" style="float:right;font-size:10px;text-align:right;" >';
             r += child_type + '' + child_grade;
             r += '</div>';
         r += '</div>';

@@ -1336,16 +1336,18 @@ function whiteboardMenu( e ){
 	var p = document.getElementById('WHITEBOARD_DAY_FRAME');
 	var m = p.appendChild( o );
 	var r = '';
-	r += '<div id="ID_SAVE_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
-	r += '<div id="ID_LOAD_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >open whiteboard</div>';
-	r += '<div id="ID_CLOSE_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cancel.png);background-size:10px;background-position:left center;background-repeat:no-repeat;" >close</div>';
-	r += '<div id="ID_CLEAR_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
+	r += '<div id="ID_SAVE_WHITEBOARD"   style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
+	r += '<div id="ID_LOAD_WHITEBOARD"   style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >open whiteboard</div>';
+	r += '<div id="ID_CLOSE_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cancel.png);background-size:10px;background-position:left center;background-repeat:no-repeat;" >close</div>';
+	r += '<div id="ID_CLEAR_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
+	r += '<div id="ID_REPORT_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/report.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >report...</div>';
 	m.innerHTML = r;
 
 	new Button( 'ID_SAVE_WHITEBOARD',   saveWhiteboard   ).play();
 	new Button( 'ID_LOAD_WHITEBOARD',   null             ).play();
 	new Button( 'ID_LOAD_WHITEBOARD',   null             ).play();
 	new Button( 'ID_CLEAR_WHITEBOARD',  clearWhiteboard  ).play();
+	new Button( 'ID_REPORT_WHITEBOARD', reportWhiteboard ).play();
 
 	p.addEventListener('mouseleave', function(e) {
 		var c = document.getElementById('WHITEBOARD_SUBMENU');
