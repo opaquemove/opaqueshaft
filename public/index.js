@@ -2056,6 +2056,7 @@ function moveOtherChild( base_child, x, y ){
 //
 function mUp( e ) {
 	var touchdevice = ( 'ontouchend' in document );
+	console.log('mUp:' + e.type );
 
 	//var drag = document.getElementsByClassName("drag")[0];
 	//var drag = e.target;
