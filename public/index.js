@@ -1920,6 +1920,9 @@ function mMove( e ){
 		//var drag = document.getElementsByClassName("drag")[0];
 //		var drag = e.target;
 		var drag = curChild;
+
+		if ( drag == null ) return;
+		
 		curChildMoved   = true;
 
 		//チェックアウト(checkout)しているチャイルドは対象外
