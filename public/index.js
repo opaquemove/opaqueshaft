@@ -545,6 +545,7 @@ function locateTimelinebar( e ){
 				var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2) + ':00';
 								// + ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
 				itb.innerText = cur_time2;
+				moveMarkedChildByTimelinebar( Math.floor( cur_time / 60 ) );
 				scrollWhiteboard( Math.floor( cur_time / 60 ) );
 			} else {
 				//console.log( 'other:' + e.target.offsetTop + ':' + tlbOffset );
@@ -558,6 +559,27 @@ function locateTimelinebar( e ){
 	}
 }
 
+//
+//	タイムラインバーに連動してマークしているチャイルドの移動を行う
+//
+function moveMarkedChildByTimelinebar( hour ){
+	var children = getMarkedChild();
+	if ( children.length == 0 ) return;
+	for ( var i=0; i<children.length; i++ ){
+		var c = children[i];
+		var top_delta = parseInt( c.style.top ) % 400;
+		// 座標変更
+		c.style.top = ( ( hour - 8 ) * 400 + top_delta ) + 'px';
+		// チェックアウト予定時刻変更
+		var co = c.getElementsByClassName('CO_TIME');
+		if ( co != null ){
+			var hm = coordinateToTime( parseInt( c.style.top ),parseInt( c.style.left ));
+			co[0].innerText = hm;
+		}
+
+	}
+
+}
 //
 //	タイムライン・バーに連動してホワイトボードをスクロール
 //
