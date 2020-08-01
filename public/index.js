@@ -1876,12 +1876,17 @@ function mDown( e ) {
         //ムーブイベントにコールバック
         document.body.addEventListener("mousemove", mMove, { passive : false } );
         document.body.addEventListener("touchmove", mMove, { passive : false } ) ;	
-        //マウスボタンが離されたとき、またはカーソルが外れたとき発火
-
+		
 		if ( touchdevice ){
+			//ムーブイベントにコールバック
+			document.body.addEventListener("touchmove", mMove, { passive : false } ) ;	
+			//マウスボタンが離されたとき、またはカーソルが外れたとき発火
 			curChild.addEventListener("touchend", mUp, false);
 //			document.body.addEventListener("touchleave", mUp, false);
 		} else{
+			//ムーブイベントにコールバック
+			document.body.addEventListener("mousemove", mMove, { passive : false } );
+			//マウスボタンが離されたとき、またはカーソルが外れたとき発火
 			curChild.addEventListener("mouseup", mUp, false);
 			document.body.addEventListener("mouseleave", mUp, false);
 		}
