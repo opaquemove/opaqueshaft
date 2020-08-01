@@ -2074,7 +2074,7 @@ function mUp( e ) {
 
 	//クラス名 .drag も消す
 	if ( drag != null ) drag.classList.remove("drag");
-	if ( e.type == 'mouseup'){		//	touchendで反応しないように！
+//	if ( e.type == 'mouseup'){		//	touchendで反応しないように！
 		if ( !curChildMoved ){
 			if ( curChild != null ){
 				if ( isMarkedChild( curChild ) ) {
@@ -2155,7 +2155,7 @@ function mUp( e ) {
 				}
 			}
 		} 
-	}
+//	}
 
 	var icc = document.getElementById('ID_CHILD_COORDINATE');
 	icc.innerText = '';
