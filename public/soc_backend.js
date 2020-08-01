@@ -116,8 +116,7 @@ function reportWhiteboard(){
     r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Summary:'
     r += '</div>';
-    r += '<div style="width:90%;height:;;clear:both;margin:0 auto;" >';
-        r += 'child:';
+    r += '<div id="REPORT_SUMMARY" style="width:90%;height:;;clear:both;margin:0 auto;" >';
     r += '</div>';
 
     r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
@@ -134,13 +133,40 @@ function reportWhiteboard(){
     r += '<div id="REPORT_LIST" style="width:90%;height:180px;clear:both;margin:0 auto;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
     openModalDialog( r, 'NORMAL' );
-    reportWhiteboardHelper();
+    reportWhiteboardSummary();
+    reportWhiteboardDetail();
 }
 
 //
-//  レポーティングヘルパー
+//レポーティングサマリー
 //
-function reportWhiteboardHelper(){
+function reportWhiteboardSummary(){
+    var r = '';
+    var c_checkout  = 0;
+    var c_escort    = 0;
+    var c_children  = 0;
+    var wb = document.getElementById('WHITEBOARD');
+
+    c_children = wb.childNodes.length;
+    for ( var i=0; i<wb.childNodes.length; i++ ){
+        var c = wb.childNodes[i];
+        if ( c.hasAttribute('checkout'))    c_checkout++;
+        if ( c.hasAttribute('escort'))      c_escort++;
+    }
+    r += '<div style="float:left;padding-left:10px;" >children:'   + c_children + '</div>';
+    r += '<div style="float:left;padding-left:10px;" >checkout:'   + c_checkout + '</div>';
+    r += '<div style="float:left;padding-left:10px;" >no checkout:'   + ( c_children - c_checkout ) + '</div>';
+    r += '<div style="float:left;padding-left:10px;" >escort:'     + c_escort   + '</div>';
+    r += '<div style="float:left;padding-left:10px;" >no escort:'  + ( c_children - c_escort ) + '</div>';
+
+    var summary_area = document.getElementById('REPORT_SUMMARY');
+    summary_area.innerHTML  = r;
+
+}
+//
+//  レポーティング詳細
+//
+function reportWhiteboardDetail(){
     var lst_area = document.getElementById('REPORT_LIST');
     var wb = document.getElementById('WHITEBOARD');
     for ( var i=0; i<12; i++ ){
