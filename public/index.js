@@ -1324,7 +1324,7 @@ function whiteboardMenu( e ){
 	o.setAttribute( 'id', 'WHITEBOARD_SUBMENU');
 	o.style.position		= 'relative';
 	o.style.padding			= '2px';
-	o.style.top             = '14px';
+	o.style.top             = '12px';
 	o.style.left            = '-44px';
 	o.style.width           = '120px';
 	o.style.height          = '120px';
@@ -1850,6 +1850,7 @@ function makeTimelineContextMenu( id ){
 //	チャイルド操作
 //
 function mDown( e ) {
+	var touchdevice = ( 'ontouchend' in document );
 
 		console.log('mDown');
 		curChild = this;
@@ -1877,10 +1878,13 @@ function mDown( e ) {
         document.body.addEventListener("touchmove", mMove, { passive : false } ) ;	
         //マウスボタンが離されたとき、またはカーソルが外れたとき発火
 
-		curChild.addEventListener("mouseup", mUp, false);
-        document.body.addEventListener("mouseleave", mUp, false);
-        curChild.addEventListener("touchend", mUp, false);
-		document.body.addEventListener("touchleave", mUp, false);
+		if ( touchdevice ){
+			curChild.addEventListener("touchend", mUp, false);
+//			document.body.addEventListener("touchleave", mUp, false);
+		} else{
+			curChild.addEventListener("mouseup", mUp, false);
+			document.body.addEventListener("mouseleave", mUp, false);
+		}
 
 		// エスコートガイド表示		
 		// var tri = document.createElement('DIV');
@@ -1904,6 +1908,8 @@ function mDown( e ) {
 //	チャイルド操作
 //
 function mMove( e ){
+	var touchdevice = ( 'ontouchend' in document );
+
 		console.log('mMove');
         //ドラッグしている要素を取得
 		//var drag = document.getElementsByClassName("drag")[0];
@@ -2044,14 +2050,19 @@ function moveOtherChild( base_child, x, y ){
 //	チャイルド操作
 //
 function mUp( e ) {
+	var touchdevice = ( 'ontouchend' in document );
+
 	//var drag = document.getElementsByClassName("drag")[0];
 	//var drag = e.target;
 	var drag = curChild;
 	//ムーブベントハンドラの消去
-	document.body.removeEventListener("mousemove", mMove, false);
-	if ( drag != null) drag.removeEventListener("mouseup", mUp, false);
-	document.body.removeEventListener("touchmove", mMove, false);
-	if ( drag != null ) drag.removeEventListener("touchend", mUp, false);
+	if ( touchdevice ){
+		document.body.removeEventListener("touchmove", mMove, false);
+		if ( drag != null ) drag.removeEventListener("touchend", mUp, false);
+	} else{
+		document.body.removeEventListener("mousemove", mMove, false);
+		if ( drag != null) drag.removeEventListener("mouseup", mUp, false);
+	}
 
 	e.stopPropagation();
 

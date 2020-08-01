@@ -178,7 +178,7 @@ function reportWhiteboardDetail(){
         o.style.padding         = '2px';
         o.style.marginBottom    = '2px';
         o.style.clear           = 'both';
-        o.innerHTML             = '<div style="float:reft;width:50px;color:snow;background-color:red;" >' + ( '00' + ( i + 8 ) ).slice(-2) + ':00' + '</div>';
+        o.innerHTML             = '<div style="float:reft;width:36px;color:snow;background-color:red;" >' + ( '00' + ( i + 8 ) ).slice(-2) + ':00' + '</div>';
         lst_area.appendChild( o );
         var children = getChildrenByHour( i + 8 );
         for ( var j=0; j<children.length; j++ ){
@@ -288,8 +288,9 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
     //
     var cc = wb.appendChild( c );
     setEscortHelper( cc, (escort)?'ON':'OFF' );
-	cc.addEventListener( "mousedown",  mDown, false );
-    cc.addEventListener( "touchstart", mDown, false );
+    var touchdevice = ( 'ontouchend' in document );
+    if ( touchdevice )  cc.addEventListener( "touchstart", mDown, false );
+	    else            cc.addEventListener( "mousedown",  mDown, false );
 
 }
 
