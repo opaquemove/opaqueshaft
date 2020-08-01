@@ -55,9 +55,8 @@ function init()
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.addEventListener('scroll',
 		function(e){
-			//return false;
-			 if ( curChildMoved )
-				 e.preventDefault();
+			//  if ( curChildMoved )
+			// 	 e.preventDefault();
 			document.getElementById('ID_ON_SCROLL').innerText = 'scroll:' + e.target.scrollTop;
 		});
 

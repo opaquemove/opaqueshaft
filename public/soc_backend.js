@@ -353,7 +353,7 @@ function propertyWhiteboardChild( c ){
         r += "</button>";
         r += "&nbsp;";
         r += "<button type='button' style='width:260px;font-size:24px;' ";
-        r += " onclick='checkoutChild(propChild);closeModalDialog();'   >";
+        r += " onclick='checkoutChild(propChild, null );closeModalDialog();'   >";
             r += "<img width='32px' src='./images/check.png' />checkout";
         r += "</button>";
         r += "</div>";
@@ -616,7 +616,7 @@ function setEscortHelper( c, flag ){
 //
 //  Childをチェックアウト（帰宅）
 //
-function checkoutChild( c ){
+function checkoutChild( c, direction ){
     if ( c == null ) return;
     var now = new Date();
     var h = ( '00' + now.getHours() ).slice(-2);
@@ -659,9 +659,14 @@ function checkoutWhiteboardChild( proc_mode ){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'checkout children';
     r += '</div>';
-    r += '<div id="ID_MARKEDCHILDREN_LIST" style="margin:0 auto;width:70%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '<div style="clear:both;margin:0 auto;width:70%;height:16px;border:1px solid lightgrey;" >';
+        r += '<div style="float:left;" >Name</div>';
+        r += '<div style="float:right;width:26px;" >Right</div>';
+        r += '<div style="float:right;width:26px;" >Left</div>';
     r += '</div>';
-	r += '<div style="margin:0 auto;width:110px;margin:0 auto;">';
+    r += '<div id="ID_MARKEDCHILDREN_LIST" style="clear:both;margin:0 auto;width:70%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '</div>';
+	r += '<div style="clear:both;margin:0 auto;width:110px;margin:0 auto;">';
         r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
         r += 'style="width:100px;height:30px;font-size:12px;" ';
         switch ( proc_mode ){
@@ -682,13 +687,13 @@ function checkoutWhiteboardChild( proc_mode ){
             var oChild = getChild( id );
             var o = document.createElement('DIV');
             o.style.width = '100%';
-            o.style.height = '40px';
+            o.style.height = '30px';
             o.style.clear = "both";
             o.style.borderBottom = '1px solid lightgrey';
             r = '';
             r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
-            r += '<div style="float:right;padding:4px;" ><img width="20px" src="./images/arrow-right.png" /></div>';
-            r += '<div style="float:right;padding:4px;" ><img width="20px" src="./images/arrow-left.png" /></div>';
+            r += '<div style="float:right;width:18px;padding:4px;" ><img width="14px" src="./images/arrow-right.png" /></div>';
+            r += '<div style="float:right;width:18px;padding:4px;" ><img width="14px" src="./images/arrow-left.png" /></div>';
     
             o.innerHTML = r;
             imcl.appendChild( o );
@@ -700,13 +705,13 @@ function checkoutWhiteboardChild( proc_mode ){
                 var oChild = getChild( id );
                 var o = document.createElement('DIV');
                 o.style.width = '100%';
-                o.style.height = '40px';
+                o.style.height = '30px';
                 o.style.clear = "both";
                 o.style.borderBottom = '1px solid lightgrey';
                 r = '';
                 r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
-                r += '<div style="float:right;padding:4px;" ><img width="30px" src="./images/arrow-right.png" /></div>';
-                r += '<div style="float:right;padding:4px;" ><img width="30px" src="./images/arrow-left.png" /></div>';
+                r += '<div style="float:right;width:18px;padding:4px;" ><img width="14px" src="./images/arrow-right.png" /></div>';
+                r += '<div style="float:right;width:18px;padding:4px;" ><img width="14px" src="./images/arrow-left.png" /></div>';
         
                 o.innerHTML = r;
                 imcl.appendChild( o );
@@ -737,12 +742,12 @@ function checkoutWhiteboardChildHelper( proc_mode ){
     switch ( proc_mode ){
         case 'SINGLE':
             if ( propChild == null ) return;
-            checkoutChild( propChild );
+            checkoutChild( propChild, null );
             break;
         case 'MARK':
             var children = getMarkedChild();
             for ( var i=0; i<children.length; i++ ){
-                checkoutChild( children[i]);
+                checkoutChild( children[i], null );
             }
             break;
     }
