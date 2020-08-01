@@ -352,8 +352,8 @@ function TimeSelector( func ){
 //	event       = event.touches[0]
 TimeSelector.prototype = {
 	play : function(){
-		this.frame		= document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
-		this.selector	= document.getElementById('MODAL_TIMESELECTOR');
+		this.frame			= document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
+		this.selector		= document.getElementById('MODAL_TIMESELECTOR');
 		this.touchdevice	= ( 'ontouchend' in document );
 		console.log('touch device:' + this.touchdevice);
 		switch ( this.touchdevice ){
@@ -673,6 +673,8 @@ function alreadyExistChildOnWhiteboard( id ){
 //	ホワイトボードをロードする
 //
 function loadWhiteboard(){
+	var touchdevice = ( 'ontouchend' in document );
+
 	var day = dayWhiteboard;
 	var wb = document.getElementById('WHITEBOARD');
 	var xmlhttp = new XMLHttpRequest();
@@ -688,9 +690,8 @@ function loadWhiteboard(){
 			//	チャイルドにイベントハンドラを割り当てる 
 			//
 			for ( var i=0; i<wb.childNodes.length; i++ ){
-//				wb.childNodes[i].addEventListener( 'dblclick',   propertyWhiteboardChild, false );
-				wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
-				wb.childNodes[i].addEventListener( "touchstart", mDown, false );
+				if ( touchdevice )	wb.childNodes[i].addEventListener( "touchstart", mDown, false );
+					else			wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
 			}
 			showWhiteboardChildCount();
 		}	
@@ -1922,7 +1923,7 @@ function mMove( e ){
 		var drag = curChild;
 
 		if ( drag == null ) return;
-		
+
 		curChildMoved   = true;
 
 		//チェックアウト(checkout)しているチャイルドは対象外
