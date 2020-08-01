@@ -162,7 +162,7 @@ function init()
 	fitting();
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
 	new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
-	new Button( 'ID_NAV',                   ctlNav         ).play();
+//	new Button( 'ID_NAV',                   ctlNav         ).play();
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
@@ -724,23 +724,27 @@ function loadWhiteboard(){
 //	ホワイトボードを保存する
 //
 function saveWhiteboard(){
+
+	//	マーク状態をクリア
+	resetChildMark();
 	var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'save whiteboard';
 	r += '</div>';
-	r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
-	r += '<div style="margin:0 auto;width:110px;">';
+//	r += "<div id='SAVE_STATUS' style='height:20px;text-align:center;' >status</div>";
+	r += '<div style="margin:0 auto;width:70%;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
 		r += '<div style="padding-bottom:20px;" >';
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" readonly value="' + dayWhiteboard + '" />';
 		r += '</div>';
 		r += '</form>';
-		r += '<div style="height:50px;border:1px solid gray;" >';
+		r += '<div>Progress:</div>';
+		r += '<div id="SAVE_PROGRESS" style="clear:both;width:100%;height:100px;border:1px solid gray;overflow:auto;" >';
 		r += '</div>';
 		r += '<button id="BTN_SAVEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="saveWhiteboardHelper();" >Save</button>';
 	r += '</div>';
-	openModalDialog( r, 'NOBUTTON' );
+	openModalDialog( r, 'NORMAL' );
 }
 
 //
@@ -754,7 +758,22 @@ function saveWhiteboardHelper(){
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send( 'day=' + day + '&html=' + encodeURIComponent( wb.innerHTML ) );
 
-	closeModalDialog();
+	var progress = document.getElementById('SAVE_PROGRESS');
+	var r = '';
+	if ( xmlhttp.status == 200)
+		r += '<div>save whiteboard html data.</div>';
+	
+	var children = wb.childNodes;
+	for ( var i=0; i<children.length; i++ ){
+		var c = children[i];
+		r += '<div>';
+		r += 'save child(' + c.getElementsByClassName('CHILD_NAME')[0].innerText + ')';
+		r += '</div>';
+	}
+	r += '<div>save completed.</div>';
+	progress.innerHTML = r;
+
+	// closeModalDialog();
 }
 
 //
@@ -1119,8 +1138,8 @@ function fitting(){
 	cpf.style.height  = ( h -42 - 30 ) + 'px';
 	cpf.style.left    = ( w - 42 ) + 'px';
 
-	// var wpf  = document.getElementById('WHITEBOARD_PALLETE_FRAME');
-	// wpf.style.height  = ( h -42 - 30 ) + 'px';
+	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
+	cpc.style.height	= ( parseInt( cpf.style.height ) - parseInt(cpc.style.marginTop ) - 1 ) + 'px'; 
 
 	var sts = document.getElementById('STATUS');
 	sts.style.top		= ( h - 30 ) + 'px';
@@ -1365,11 +1384,11 @@ function whiteboardMenu( e ){
 	r += '<div id="ID_REPORT_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/report.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >report...</div>';
 	m.innerHTML = r;
 
-	new Button( 'ID_SAVE_WHITEBOARD',   saveWhiteboard   ).play();
-	new Button( 'ID_LOAD_WHITEBOARD',   null             ).play();
-	new Button( 'ID_LOAD_WHITEBOARD',   null             ).play();
-	new Button( 'ID_CLEAR_WHITEBOARD',  clearWhiteboard  ).play();
-	new Button( 'ID_REPORT_WHITEBOARD', reportWhiteboard ).play();
+	new Button( 'ID_SAVE_WHITEBOARD',   saveWhiteboard         ).play();
+	new Button( 'ID_LOAD_WHITEBOARD',   showGuidanceWhiteboard ).play();
+	new Button( 'ID_CLOSE_WHITEBOARD',  null                   ).play();
+	new Button( 'ID_CLEAR_WHITEBOARD',  clearWhiteboard        ).play();
+	new Button( 'ID_REPORT_WHITEBOARD', reportWhiteboard       ).play();
 
 	p.addEventListener('mouseleave', function(e) {
 		var c = document.getElementById('WHITEBOARD_SUBMENU');

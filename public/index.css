@@ -1195,7 +1195,7 @@ INPUT{
 	font-size:			12px;
 	color:				gray;
 	background-color:	rgb(241, 241, 241);
-	border-bottom:		1px solid red;
+/*	border-bottom:		1px solid blue;*/
 	padding:			0px 0px 0px 2px;
 }
 
@@ -1214,7 +1214,7 @@ INPUT{
 	top:				0px;
 	height:				0px;
 	width:				169px;
-	height:				90%;
+	height:				90%;			/* dummy -> fitting proc*/
 	float: 				left;
 	font-size:			12px;
 	color:				gray;
