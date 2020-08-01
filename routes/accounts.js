@@ -209,4 +209,33 @@ router.post('/whiteboardlist', function(req, res, next ){
       });
 });
 
+//
+//  チャイルド履歴追加
+//
+router.post('/resultadd', function(req, res, next ){
+    var acc_id      = req.body.acc_id;
+    var day         = req.body.day;
+    var checkin     = req.body.checkin;
+    var checkout    = req.body.checkout;
+    var escort      = req.body.escort;
+    var direction   = req.body.direction;
+    if ( checkout == null || checkout == 'null') checkout = '';
+    console.log('acc_id:' + acc_id );      // number
+    console.log('day:' + day );         // YYYY/MM/DD
+    console.log('checkin:' + checkin );     // HH:MM
+    console.log('checkout:' + checkout );    // HH:MM
+    console.log('escort:' + escort );      // 0: no escort, 1: escort
+    console.log('direction:' + direction );   // none,left,right
+
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    db.none( {
+        text: "insert into results( acc_id, day, child_id, child_name, child_grade,child_type, checkin, checkout,escort, direction, lastupdate )select $1, $2, child_id,child_name,child_grade,child_type,$3, $4 , $5, $6, now() from children where child_id = $7",
+        values: [ acc_id, day, checkin, checkout, escort, direction, child_id ] } )
+      .then( function() {
+        res.json( { status: 'SUCCESS', message:  'add child result' });
+      });
+});
+
+
+
 module.exports = router;

@@ -767,8 +767,16 @@ function saveWhiteboardHelper(){
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
 		r += '<div>';
-		r += 'save child(' + c.getElementsByClassName('CHILD_NAME')[0].innerText + ')';
+		r += 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
 		r += '</div>';
+		var day = dayWhiteboard;
+		var child_id	= 1;
+		var checkin		= c.getAttribute('checkin');
+		var checkout	= c.getAttribute('checkout');
+		if ( checkout == null ) checkout = checkin;
+		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
+		var direction	= 'left';
+		saveChild( day, child_id, checkin, checkout, escort, direction );
 	}
 	r += '<div>save completed.</div>';
 	progress.innerHTML = r;

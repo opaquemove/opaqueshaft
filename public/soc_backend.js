@@ -938,3 +938,20 @@ r += "</div>";
 
 }
 
+//
+//  チャイルド履歴追加
+//
+function saveChild( day, child_id, checkin, checkout, escort, direction ){
+
+    var acc_id = 'masa';
+    var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/resultadd", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'acc_id=' + acc_id + '&day=' + day + '&child_id=' + child_id + '&checkin=' + checkin + '&checkout=' + checkout + '&escort=' + escort + '&direction=' + direction );
+	if ( xmlhttp.status == 200 ){
+        var result = JSON.parse( xmlhttp.responseText );
+        alert( result.status + result.message );
+		return ( result != null )? result:null;	
+	} else return null;
+
+}
