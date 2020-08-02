@@ -305,17 +305,18 @@ function addChildManage( oParent, oChild ){
 	c.setAttribute("id",        "c_1");
     c.setAttribute("class",     "PALLETE_CHILD");
     c.setAttribute("draggable", "true");
-    c.style.position    = 'relative';
-//    c.style.width       = '97%';
-    c.style.height      = '30px';
+    // c.style.position    = 'relative';
+    c.style.height      = '22px';
+    c.style.clear       = 'both';
     c.style.borderBottom= '1px solid lightgrey;'
     c.style.borderRight = arChildGrade[ oChild.child_grade ];
+    c.style.float       ='left';
     var r = '';
-    r += '<div style="float:left;height:20px;font-size:14px;padding-left:2px;">';
-    r += oChild.child_name;
+    r += '<div style="float:left;height:20px;font-size:12px;padding-left:2px;">';
+        r += oChild.child_name;
     r += '</div>';
-    r += '<div style="float:right;font-size:14px;text-align:right;padding-top:2px;" >';
-    r += oChild.child_type + oChild.child_grade;
+    r += '<div style="float:right;font-size:12px;text-align:right;padding-top:2px;" >';
+        r += oChild.child_type + oChild.child_grade;
     r += '</div>';
 
 	c.innerHTML = r;

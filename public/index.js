@@ -380,7 +380,7 @@ TimeSelector.prototype = {
 				}
 				if ( o.hasAttribute('target')){
 					this.current = o;
-					o.style.backgroundColor	= 'darkred';
+					o.style.backgroundColor	= 'gray';
 					if ( o.getAttribute('target') == 'on' )
 						document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
 				}
@@ -394,7 +394,7 @@ TimeSelector.prototype = {
 				}
 				if ( o.hasAttribute('target')){
 					this.current = o;
-					o.style.backgroundColor	= 'darkred';
+					o.style.backgroundColor	= 'lightgrey';
 					if ( o.getAttribute('target') == 'on' )
 						document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
 				}

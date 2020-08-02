@@ -90,8 +90,8 @@ INPUT{
 	pointer-events: 	auto;
 	width:				150px;
 	height:				200px;
-	color:				whitesmoke;
-	background-color:	red;
+	color:				red;
+	background-color:	transparent;
 	opacity: 			0.8;
 	font-size:			18px;
 }
@@ -108,6 +108,13 @@ INPUT{
 	font-size:			18px;
 }
 
+.circle_button{
+	font-size:			16px;
+	background-image:	url(./images/dry-clean.png);
+	background-position: center center;
+	background-size:	40px;
+	background-repeat: 	no-repeat;
+}
 
 #TOOLBAR{
 	padding-top:		0px;
@@ -818,7 +825,7 @@ INPUT{
 
 .PALLETE_CHILD{
 	width:				165px;
-	height:				60px;
+	height:				22px;
 	color:				gray;
 	background-color:	white;
 	padding:			0px;
@@ -1227,7 +1234,7 @@ INPUT{
 	float: 				left;
 	font-size:			12px;
 	color:				gray;
-	background-color:	rgb(241, 241, 241);
+	background-color:	white;
 	border-bottom:		1px solid red;
 	margin-top:			54px;
 	padding:			0px;
