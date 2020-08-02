@@ -564,6 +564,36 @@ function latestWhiteboardChild(){
 }
 
 //
+//  マークしているチャイルドのエスコートを反転
+//  alone -> escort, escort -> alone
+//
+function escortWhiteboardMarkChild(){
+    var children = getMarkedChild();
+    if ( children.length == 0 ) return;
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        var top = parseInt( c.style.top );
+        var left = parseInt( c.style.left );
+        var escort = coordinateToEscort( top, left );
+        // escort反転処理
+        switch ( escort ){
+            case true:          // escort -> alone
+                c.style.left = ( parseInt( c.style.left ) - criteriaEscortPixel ) + 'px';
+                c.removeAttribute('escort');
+                setEscortHelper( c, 'OFF' );
+                break;
+            case false:         // alone -> escort
+                c.style.left = ( parseInt( c.style.left ) + criteriaEscortPixel ) + 'px';
+                c.setAttribute('escort', 'yes');
+                setEscortHelper( c, 'ON' );
+                break;
+        }
+
+
+    }
+}
+
+//
 //  マークしているチャイルドをエスコート設定（お迎え）
 //
 // function escortChild(){
@@ -594,7 +624,7 @@ function latestWhiteboardChild(){
 // }
 
 //
-//
+//  エスコート表示処理
 //
 function setEscortHelper( c, flag ){
     var escort_flg = c.getElementsByClassName('ESCORT_FLG');

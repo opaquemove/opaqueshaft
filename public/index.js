@@ -172,7 +172,7 @@ function init()
 	// new Button( 'ID_CHILD_CHECKOUT',        checkoutWhiteboardMarkChild ).play();
 	// new Button( 'ID_CHILD_CHECKCLEAR',      checkoutClearWhiteboardMarkChild ).play();
 	new Button( 'ID_SHEET_ESCORT',          turnWhiteboard ).play();
-	new Button( 'ID_CHILD_TIMEUPDATE',		showTimelineSelector ).play();
+	new Button( 'CPC_UPDATE_CHILD_TIME',	showTimelineSelector ).play();
 	new Button( 'ID_GRADE1',                null           ).play();
 	new Button( 'ID_GRADE2',                null           ).play();
 	new Button( 'ID_GRADE3',                null           ).play();
@@ -1061,8 +1061,8 @@ function Nav( func ){
 	r += '<div class="vh-center nav_icon2" style="position:absolute;top:42px;left:42px;" >';
 		r += '&nbsp;';
 	r += '</div>';
-	r += '<div target="timeselector"  class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';
-		r += '<img width="22px" src="./images/time.png" />';
+	r += '<div target="escort"  class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';
+		r += '<img width="22px" src="./images/family.png" />';
 	r += '</div>';
 	// r += '<div target="close" class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';	//	Close NAV
 	// 	r += '<img width="16px" src="./images/cancel.png" />';
@@ -1160,6 +1160,10 @@ Nav.prototype = {
 			case 'checkoutclear':
 				this.close();
 				checkoutClearWhiteboardMarkChild();
+				break;
+			case 'escort':
+				this.close();
+				escortWhiteboardMarkChild();
 				break;
 			case 'close':
 				this.close();
