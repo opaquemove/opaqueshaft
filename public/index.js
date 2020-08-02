@@ -571,10 +571,12 @@ function moveMarkedChildByTimelinebar( hour ){
 		// 座標変更
 		c.style.top = ( ( hour - 8 ) * 400 + top_delta ) + 'px';
 		// チェックアウト予定時刻変更
-		var co = c.getElementsByClassName('CO_TIME');
-		if ( co != null ){
+		var et = c.getElementsByClassName('ESTIMATE_TIME');
+		if ( et != null ){
 			var hm = coordinateToTime( parseInt( c.style.top ),parseInt( c.style.left ));
-			co[0].innerText = hm;
+			et[0].innerText = hm;
+			if ( c.hasAttribute('checkout') )  c.setAttribute('checkout', hm );
+
 		}
 
 	}
@@ -632,7 +634,10 @@ function showGuidanceWhiteboard(){
 		r += '</button>';
 		r += '</div>';
 	r += '</div>';
-	neverCloseDialog = true;
+
+	 var children = document.getElementById('WHITEBOARD').childNodes;
+	 neverCloseDialog = ( children.length == 0 ) ? true : false;
+	// neverCloseDialog = true;
 	openModalDialog( r, 'NOBUTTON' );
 	makeWhiteboardList();
 	document.getElementById('BTN_OPENWHITEBOARD').focus();
@@ -752,6 +757,8 @@ function saveWhiteboard(){
 //
 function saveWhiteboardHelper(){
 	var day = dayWhiteboard;
+	var rc = '';
+
 	var wb = document.getElementById('WHITEBOARD');
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/whiteboardupdate", false );
@@ -760,29 +767,75 @@ function saveWhiteboardHelper(){
 
 	var progress = document.getElementById('SAVE_PROGRESS');
 	var r = '';
-	if ( xmlhttp.status == 200)
+	if ( xmlhttp.status == 200){
 		r += '<div>save whiteboard html data.</div>';
+	} else{
+		r += '<div>save whiteboard html data. FAILED</div>';
+	}
 	
+	rc = deleteChildResult( dayWhiteboard );
+	r += '<div>';
+		r += 'delete child result...' + rc;
+	r += '</div>';
+
 	var children = wb.childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
-		r += '<div>';
-		r += 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
-		r += '</div>';
 		var day = dayWhiteboard;
-		var child_id	= 1;
+		var child_id	= c.getAttribute('child_id');
 		var checkin		= c.getAttribute('checkin');
+		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
 		var checkout	= c.getAttribute('checkout');
-		if ( checkout == null ) checkout = checkin;
+		//	if ( checkout == null ) checkout = checkin;
 		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
 		var direction	= 'left';
-		saveChild( day, child_id, checkin, checkout, escort, direction );
+		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction );
+		r += '<div>';
+		r += 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
+		r += ' rc:' + rc;
+		r += '</div>';
 	}
 	r += '<div>save completed.</div>';
 	progress.innerHTML = r;
 
 	// closeModalDialog();
 }
+
+//
+//  チャイルド履歴追加
+//
+function saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction ){
+
+    var acc_id = 'masa';
+    var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/resultadd", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'acc_id=' + acc_id + '&day=' + day + '&child_id=' + child_id + '&checkin=' + checkin + '&estimate=' + estimate + '&checkout=' + checkout + '&escort=' + escort + '&direction=' + direction );
+	if ( xmlhttp.status == 200 ){
+        var result = JSON.parse( xmlhttp.responseText );
+        //alert( result.status + result.message );
+		return ( result != null )? result.status : 'error';	
+	} else return 'error status:' + xmlhttp.status;
+
+}
+
+//
+//  チャイルド履歴削除
+//
+function deleteChildResult( day ){
+
+    var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/resultdelete", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'day=' + day );
+	if ( xmlhttp.status == 200 ){
+        var result = JSON.parse( xmlhttp.responseText );
+        //alert( result.status + result.message );
+		return ( result != null )? result.status : 'error';	
+	} else return 'error status:' + xmlhttp.status;
+
+}
+
 
 //
 //	ホワイトボード表示切換
@@ -991,7 +1044,7 @@ function Nav( func ){
 	// var h = document.documentElement.clientHeight;
 
 	var m = document.createElement('DIV');
-	m.setAttribute('id', 'NAVI2' );
+	m.setAttribute('id',    'NAVI2' );
 	m.setAttribute('class', 'not_select' );
 	m.style.position		= 'absolute';
 	m.style.top 			= ( ( h / 2 ) - this.size ) + 'px';
@@ -1005,33 +1058,54 @@ function Nav( func ){
 	m.style.zIndex			= 65000;
 	m.style.visibility		= 'hidden';
 	var r = '';
-	r += '<div class="vh-center nav_icon_blank" >1</div>';
-	r += '<div target="delete" class="vh-center nav_icon" >';	// Delete Mark Child
-		r += '<img width="20px" src="./images/minus-2.png" />';
-	r += '</div>';
-	r += '<div class="vh-center nav_icon_blank" >3</div>';
-	r += '<div target="checkout" class="vh-center nav_icon" >';	// Checkout Mark Child
-		r += '<img width="20px" src="./images/check-3.png" />';
-	r += '</div>';
-	r += '<div class="vh-center nav_icon" >';
+	r += '<div class="vh-center nav_icon2" style="position:absolute;top:42px;left:42px;" >';
 		r += '&nbsp;';
 	r += '</div>';
-	r += '<div target="checkoutclear" class="vh-center nav_icon" >';	// Checkout Clear Mark Child
-		r += '<img width="20px" src="./images/dry-clean.png" />';
+	r += '<div target="timeselector"  class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';
+		r += '<img width="22px" src="./images/time.png" />';
 	r += '</div>';
-	r += '<div class="vh-center nav_icon_blank" >7</div>';
-	r += '<div target="timeselector"  class="vh-center nav_icon" >';
-		r += '<img width="20px" src="./images/time.png" />';
+	// r += '<div target="close" class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';	//	Close NAV
+	// 	r += '<img width="16px" src="./images/cancel.png" />';
+	// r += '</div>';
+	r += '<div target="delete" class="vh-center nav_icon2" style="position:absolute;top:0px;left:42px;" >';	// Delete Mark Child
+		r += '<img width="22px" src="./images/minus-2.png" />';
 	r += '</div>';
-	r += '<div target="close" class="vh-center nav_icon" >';	//	Close NAV
-		r += '<img width="16px" src="./images/cancel.png" />';
+	r += '<div target="checkout" class="vh-center nav_icon2" style="position:absolute;top:21px;left:84px;" >';	// Checkout Mark Child
+		r += '<img width="22px" src="./images/check-3.png" />';
 	r += '</div>';
+	r += '<div target="checkoutclear" class="vh-center nav_icon2" style="position:absolute;top:63px;left:84px;" >';	// Checkout Clear Mark Child
+		r += '<img width="22px" src="./images/dry-clean.png" />';
+	r += '</div>';
+
+	// r += '<div class="vh-center nav_icon_blank" >1</div>';
+	// r += '<div target="delete" class="vh-center nav_icon" >';	// Delete Mark Child
+	// 	r += '<img width="20px" src="./images/minus-2.png" />';
+	// r += '</div>';
+	// r += '<div class="vh-center nav_icon_blank" >3</div>';
+	// r += '<div target="checkout" class="vh-center nav_icon" >';	// Checkout Mark Child
+	// 	r += '<img width="20px" src="./images/check-3.png" />';
+	// r += '</div>';
+	// r += '<div class="vh-center nav_icon" >';
+	// 	r += '&nbsp;';
+	// r += '</div>';
+	// r += '<div target="checkoutclear" class="vh-center nav_icon" >';	// Checkout Clear Mark Child
+	// 	r += '<img width="20px" src="./images/dry-clean.png" />';
+	// r += '</div>';
+	// r += '<div class="vh-center nav_icon_blank" >7</div>';
+	// r += '<div target="timeselector"  class="vh-center nav_icon" >';
+	// 	r += '<img width="20px" src="./images/time.png" />';
+	// r += '</div>';
+	// r += '<div target="close" class="vh-center nav_icon" >';	//	Close NAV
+	// 	r += '<img width="16px" src="./images/cancel.png" />';
+	// r += '</div>';
 	m.innerHTML				= r;
 	this.frame = document.body.appendChild( m );
 	this.frame.addEventListener( this.evtStart,
 		( function(e){
 			var o = ( this.touchdevice )? e.changedTouches[0].target : e.target;
+			if ( o == this.frame ) return;
 			while ( true ){
+				if ( ! ( 'parentNode' in o ) ) return;
 				if ( o.parentNode == this.frame ) break;
 				else o = o.parentNode;
 			}
@@ -1042,6 +1116,8 @@ function Nav( func ){
 	this.frame.addEventListener( this.evtEnd,
 		( function(e){
 			var o = ( this.touchdevice )? e.changedTouches[0].target : e.target;
+			if ( o == this.frame ) return;
+			if ( ! ( 'parentNode' in o ) ) return;
 			while ( true ){
 				if ( o.parentNode == this.frame ) break;
 				else o = o.parentNode;
@@ -1499,6 +1575,8 @@ function signForm()
 		r += "</div>";
 	r += "</div>";
 
+	// var children = document.getElementById('WHITEBOARD').childNodes;
+	// neverCloseDialog = ( children.length == 0 ) ? true : false;
 	neverCloseDialog = true;
 	openModalDialog( r, 'NOBUTTON' );
 	o = document.getElementById( 'acc_id' );
@@ -2013,10 +2091,12 @@ function mMove( e ){
 			if ( isMarkedChild( drag ) )
 				moveOtherChild( drag, delta_x, delta_y );
 
-			var co = drag.getElementsByClassName('CO_TIME');
-			if ( co != null ){
+			var et = drag.getElementsByClassName('ESTIMATE_TIME');
+			if ( et != null ){
 				var hm = coordinateToTime( parseInt( drag.style.top ),parseInt( drag.style.left ));
-				co[0].innerText = hm;
+				et[0].innerText = hm;
+				if ( drag.hasAttribute('checkout') ) drag.setAttribute('checkout', hm );
+
 			}
 			var escort = coordinateToEscort( parseInt( drag.style.top ), parseInt( drag.style.left ) );
 			switch ( escort ){
@@ -2078,11 +2158,13 @@ function moveOtherChild( base_child, x, y ){
 			// if ( ! children[i].hasAttribute('checkout')){
 				children[i].style.top  = parseInt( children[i].style.top )  + y + 'px';
 				children[i].style.left = parseInt( children[i].style.left ) + x + 'px';
-				var co = children[i].getElementsByClassName('CO_TIME');
-				if ( co != null ){
+				var et = children[i].getElementsByClassName('ESTIMATE_TIME');
+				if ( et != null ){
 					var hm = coordinateToTime( parseInt( children[i].style.top ),
 												parseInt( children[i].style.left ));
-					co[0].innerText = hm;
+					et[0].innerText = hm;
+					if ( children[i].hasAttribute('checkout') ) children[i].setAttribute('checkout', hm );
+
 				}
 
 				var escort = coordinateToEscort( parseInt( children[i].style.top ), parseInt( children[i].style.left ) );

@@ -125,6 +125,7 @@ function reportWhiteboard(){
     r += '<div id="REPORT_HDR"  style="width:90%;height:20px;clear:both;color:red;background-color:lightgray;margin:0 auto;" >';
         r += '<div style="float:left;" >Name</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckOut</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Estimate</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckIn</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Escort</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Type</div>';
@@ -187,6 +188,7 @@ function reportWhiteboardDetail(){
             var child_type  = children[j].getAttribute('child_type');
             var child_grade = children[j].getAttribute('child_grade');
             var checkin     = children[j].getAttribute('checkin');
+            var estimate    = children[j].getElementsByClassName('ESTIMATE_TIME')[0].innerText;
             var checkout    = children[j].getAttribute('checkout');
                 checkout    = ( checkout != null )? checkout : '---';
             var escort      = ( children[j].hasAttribute('escort') )?'yes':'no';
@@ -194,6 +196,7 @@ function reportWhiteboardDetail(){
             r += '<div style="clear:both;" >';
                 r += '<div style="float:left;"  >' + child_name + '</div>';
                 r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';
+                r += '<div style="float:right;width:50px;" >' + estimate    + '</div>';
                 r += '<div style="float:right;width:50px;" >' + checkin     + '</div>';
                 r += '<div style="float:right;width:50px;" >' + escort      + '</div>';
                 r += '<div style="float:right;width:50px;" >' + child_type  + '</div>';
@@ -262,8 +265,8 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
     r += '<div style="padding:2px;" >';
         r += '<div style="width:100%;height:20px;font-size:14px;" >';
-            r += '<div class="CHILD_NAME" style="height:20px;float:left;text-overflow:ellipsis;" >' + child_name + '</div>';
-            r += '<div class="CO_TIME"    style="height:20px;padding-left:2px;float:right;text-align:right;" >';
+            r += '<div class="CHILD_NAME"    style="height:20px;float:left;text-overflow:ellipsis;" >' + child_name + '</div>';
+            r += '<div class="ESTIMATE_TIME" style="height:20px;padding-left:2px;float:right;text-align:right;" >';
             r += hm;
             r += '</div>';
         r += '</div>';
@@ -276,9 +279,6 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
             r += child_type + '' + child_grade;
             r += '</div>';
         r += '</div>';
-        // r += '<div id="CHECKOUT_' + child_id + '" style="clear:both;height:12px;text-align:right;font-size:10px;" >';
-        //     r += '&nbsp;&nbsp;checkout:'
-        // r += '</div>';
     r += '</div>';
 
     c.innerHTML = r;
@@ -366,6 +366,8 @@ function propertyWhiteboardChild( c ){
 //  チャイルドの削除（マーク用ラッパー）
 //
 function deleteWhiteboardMarkChild(){
+    var children = getMarkedChild();
+    if ( children.length == 0 ) return;
     deleteWhiteboardChild( 'MARK' );
 }
 
@@ -647,6 +649,8 @@ function checkoutChild( c, direction ){
 //  チャイルドをチェックアウト(マーク用ラッパー)
 //
 function checkoutWhiteboardMarkChild(){
+    var children = getMarkedChild();
+    if ( children.length == 0 ) return;
     checkoutWhiteboardChild('MARK');
 }
 
@@ -764,6 +768,8 @@ function checkoutClearWhiteboardSingleChild(){
 //  チャイルドをチェックアウトクリア(マーク用ラッパー)
 //
 function checkoutClearWhiteboardMarkChild(){
+    var children = getMarkedChild();
+    if ( children.length == 0 ) return;
     checkoutClearWhiteboardChild('MARK');
 }
 
@@ -932,26 +938,9 @@ function propertyAccount(){
         r += "<tr>";
         r += "</table>";
     r += "</form>";
-r += "</div>";
+    r += "</div>";
 
     openModalDialog( r, 'NORMAL' );
 
 }
 
-//
-//  チャイルド履歴追加
-//
-function saveChild( day, child_id, checkin, checkout, escort, direction ){
-
-    var acc_id = 'masa';
-    var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "/accounts/resultadd", false );
-	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send( 'acc_id=' + acc_id + '&day=' + day + '&child_id=' + child_id + '&checkin=' + checkin + '&checkout=' + checkout + '&escort=' + escort + '&direction=' + direction );
-	if ( xmlhttp.status == 200 ){
-        var result = JSON.parse( xmlhttp.responseText );
-        alert( result.status + result.message );
-		return ( result != null )? result:null;	
-	} else return null;
-
-}

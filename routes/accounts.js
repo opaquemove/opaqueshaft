@@ -214,28 +214,52 @@ router.post('/whiteboardlist', function(req, res, next ){
 //
 router.post('/resultadd', function(req, res, next ){
     var acc_id      = req.body.acc_id;
+    var child_id    = req.body.child_id;
     var day         = req.body.day;
     var checkin     = req.body.checkin;
+    var estimate    = req.body.estimate;
     var checkout    = req.body.checkout;
     var escort      = req.body.escort;
     var direction   = req.body.direction;
-    if ( checkout == null || checkout == 'null') checkout = '';
+    if ( checkout == null || checkout == 'null') checkout = null;
     console.log('acc_id:' + acc_id );      // number
+    console.log('child_id:' + child_id );   // child_id
     console.log('day:' + day );         // YYYY/MM/DD
     console.log('checkin:' + checkin );     // HH:MM
+    console.log('estimate:' + estimate );   // HH:MM
     console.log('checkout:' + checkout );    // HH:MM
     console.log('escort:' + escort );      // 0: no escort, 1: escort
     console.log('direction:' + direction );   // none,left,right
 
+    var sql = "insert into results( acc_id, day, child_id, child_name, child_grade,child_type, checkin, estimate, checkout, escort, direction, lastupdate ) select $1 acc_id, $2, child_id,child_name,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, now() lastupdate from children where child_id = $8";
+    console.log( 'sql:' + sql );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
-        text: "insert into results( acc_id, day, child_id, child_name, child_grade,child_type, checkin, checkout,escort, direction, lastupdate )select $1, $2, child_id,child_name,child_grade,child_type,$3, $4 , $5, $6, now() from children where child_id = $7",
-        values: [ acc_id, day, checkin, checkout, escort, direction, child_id ] } )
+        text: sql,
+        values: [ acc_id, day, checkin, estimate, checkout, escort, direction, child_id ] } )
       .then( function() {
         res.json( { status: 'SUCCESS', message:  'add child result' });
       });
 });
 
+//
+//  チャイルド履歴削除
+//
+router.post('/resultdelete', function(req, res, next ){
+    var day         = req.body.day;
+
+    console.log('day:' + day );         // YYYY/MM/DD
+
+    var sql = "delete from results where day = $1";
+    console.log( 'sql:' + sql );
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    db.none( {
+        text: sql,
+        values: [ day ] } )
+      .then( function() {
+        res.json( { status: 'SUCCESS', message:  'delete child result' });
+      });
+});
 
 
 module.exports = router;
