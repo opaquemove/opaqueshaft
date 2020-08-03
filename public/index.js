@@ -181,6 +181,7 @@ function init()
 	new Button( 'ID_GRADE4',                null           ).play();
 	new Button( 'ID_GRADE5',                null           ).play();
 	new Button( 'ID_GRADE6',                null           ).play();
+	new Button( 'ID_REPORT',				reportWhiteboard ).play();
 	// new Checkbox('CPC_ESCORT_CHILD', 'ON').play();
 	new Checkbox('CPC_GRADE1', 'OFF', null ).play();
 	new Checkbox('CPC_GRADE2', 'OFF', null ).play();
@@ -620,8 +621,10 @@ function showGuidanceWhiteboard(){
 				r += '<input type="text" id="whiteboard_day" name="day" style="width:100%;font-size:14px;" value="' + ymd + '" />';
 			r += '</div>';
 			r += '<div style="float:right;width:48%;" >';
-				r += '<button style="background-color:transparent;border:none;" disabled ><img width="12px" src="./images/add.png" /></button>';
-				r += '<button style="background-color:transparent;border:none;" disabled ><img width="12px" src="./images/minus-2.png" /></button>';
+				// r += '<button id="BTN_ADD_DATE"   style="background-color:transparent;border:none;" ><img width="12px" src="./images/add.png" /></button>';
+				// r += '<button id="BTN_MINUS_DATE" style="background-color:transparent;border:none;" ><img width="12px" src="./images/minus-2.png" /></button>';
+				r += '<img id="BTN_ADD_DATE"   width="12px" style="padding-right:3px;" src="./images/add.png" />';
+				r += '<img id="BTN_MINUS_DATE" width="12px" src="./images/minus-2.png" />';
 			r += '</div>';
 		r += '</div>';
 		r += '<div id="WHITEBOARD_LIST" style="clear:both;height:70px;font-size:10px;padding:2px;overflow-y:scroll;border:1px solid lightgrey;" >';
@@ -650,6 +653,22 @@ function showGuidanceWhiteboard(){
 			if ( e.keyCode == 13) // Enter key
 				createWhiteboard();
 		});
+	document.getElementById('BTN_ADD_DATE').addEventListener('click',
+		function(e){
+			var d = guidedance_whiteboard_form.day.value;
+			var dd = new Date( d );
+			dd.setDate( dd.getDate() + 1 );
+			guidedance_whiteboard_form.day.value =
+				dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+		}, false );
+	document.getElementById('BTN_MINUS_DATE').addEventListener('click',
+		function(e){
+			var d = guidedance_whiteboard_form.day.value;
+			var dd = new Date( d );
+			dd.setDate( dd.getDate() - 1 );
+			guidedance_whiteboard_form.day.value =
+				dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+		}, false );
 	
 }
 
@@ -723,6 +742,8 @@ function loadWhiteboard(){
 				if ( touchdevice )	wb.childNodes[i].addEventListener( "touchstart", mDown, false );
 					else			wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
 			}
+			//	WHITEBOARD_FRAMEのスクロール情報を初期化する
+			document.getElementById('WHITEBOARD_FRAME').scrollTop = 0;
 			showWhiteboardChildCount();
 		}	
 	} else alert(http.status);
@@ -1086,6 +1107,9 @@ function Nav( func ){
 	r += '<div target="absent" class="vh-center nav_icon2" style="position:absolute;top:63px;left:0px;" >';	// Checkout Clear Mark Child
 		r += '<img width="22px" src="./images/sleep-2.png" />';
 	r += '</div>';
+	r += '<div target="exchange"   class="vh-center nav_icon2" style="position:absolute;top:105px;left:84px;height:21px;" >';
+		r += '<img width="11px" src="./images/exchange.png" />';
+	r += '</div>';
 
 	// r += '<div class="vh-center nav_icon_blank" >1</div>';
 	// r += '<div target="delete" class="vh-center nav_icon" >';	// Delete Mark Child
@@ -1183,6 +1207,9 @@ Nav.prototype = {
 				this.close();
 				absentWhiteboardChild();
 				break;
+			case 'exchange':
+				this.close();
+				exchange();
 			case 'close':
 				this.close();
 				break;

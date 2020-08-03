@@ -27,10 +27,20 @@ socket.on( 'getaccountlist', function ( msg ) {
 
 })
 
+socket.on( 'exchange', function( msg ){
+    alert( msg );
+})
+
 function getAccountList(){
 	socket.emit( 'cmd', 'getaccountlist' );
 }
 
+//
+//
+//
+function exchange(){
+    socket.emit( 'cmd', 'exchange' );
+}
 //
 //  サーバからチャイルドリストを取得し、実体化
 //
@@ -111,7 +121,7 @@ function clearWhiteboardHelper(){
 function reportWhiteboard(){
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
-		r += 'report : ' + dayWhiteboard;
+		r += 'report  ' + dayWhiteboard;
     r += '</div>';
     r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Summary:'
@@ -211,6 +221,44 @@ function reportWhiteboardDetail(){
             lst_area.appendChild( cc );
         }
     }
+
+    // アブセント（欠席者）リスト
+    var o = document.createElement('DIV');
+    o.style.color           = 'gray';
+    o.style.backgroundColor = 'transparent';
+    o.style.borderBottom    = '1px solid lightgrey';
+    o.style.padding         = '2px';
+    o.style.marginBottom    = '2px';
+    o.style.clear           = 'both';
+    o.innerHTML             = '<div style="float:reft;width:36px;color:snow;background-color:red;" >Absent</div>';
+    lst_area.appendChild( o );
+    var wba = document.getElementById('WHITEBOARD_ABSENT');
+    for ( var i=0; i<wba.childNodes.length; i++ ){
+        var c = wba.childNodes[i];
+        var cc = document.createElement('DIV');
+        var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+        var child_type  = c.getAttribute('child_type');
+        var child_grade = c.getAttribute('child_grade');
+        var checkin     = c.getAttribute('checkin');
+        var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+        var checkout    = c.getAttribute('checkout');
+            checkout    = ( checkout != null )? checkout : '---';
+        var escort      = ( c.hasAttribute('escort') )?'yes':'no';
+        var r = '';
+        r += '<div style="clear:both;" >';
+            r += '<div style="float:left;"  >' + child_name + '</div>';
+            r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';
+            r += '<div style="float:right;width:50px;" >' + estimate    + '</div>';
+            r += '<div style="float:right;width:50px;" >' + checkin     + '</div>';
+            r += '<div style="float:right;width:50px;" >' + escort      + '</div>';
+            r += '<div style="float:right;width:50px;" >' + child_type  + '</div>';
+            r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
+        r += '</div>';
+        cc.style.backgroundColor = 'orange';
+        cc.innerHTML = r;
+        lst_area.appendChild( cc );
+    }
+
 }
 
 //
@@ -439,7 +487,7 @@ function addChildManage( oParent, oChild ){
     c.setAttribute("class",     "PALLETE_CHILD");
     c.setAttribute("draggable", "true");
     // c.style.position    = 'relative';
-    c.style.height      = '22px';
+//    c.style.height      = '30px';
     c.style.clear       = 'both';
     c.style.borderBottom= '1px solid lightgrey;'
     c.style.borderRight = arChildGrade[ oChild.child_grade ];

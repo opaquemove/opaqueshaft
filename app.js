@@ -35,6 +35,9 @@ io.on( 'connection', ( socket ) => {
       case 'getchildrenlist':
         getChildrenList( socket );
         break;
+      case 'exchange':
+        exchange( socket );
+        break;
       default:
         //socket.broadcast.emit( msg, 'hogehoge' );
         socket.emit( msg, 'hogehoge' );
@@ -147,6 +150,22 @@ function getAccountList( socket ){
 //    r += "Working..."
   return r;
 }
+
+//
+//
+//
+function exchange( socket ){
+  var r = '';
+  r += 'exchange...';
+
+  console.log( 'r:' + r );
+  
+//  socket.emit( 'exchange', r );
+  socket.broadcast.emit( 'exchange', r );
+
+  return r;
+}
+
 
 function checkAcc( id ){
   var rc = 'FAIL';
