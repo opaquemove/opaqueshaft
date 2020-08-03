@@ -91,7 +91,7 @@ function clearWhiteboard(){
 		r += 'clear whiteboard';
 	r += '</div>';
 	r += '<div style="margin:0 auto;width:110px;">';
-		r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="clearWhiteboardHelper();" >Clear</button>';
+		r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="clearWhiteboardHelper();closeModalDialog();" >Clear</button>';
 	r += '</div>';
     openModalDialog( r, 'NORMAL' );
     document.getElementById('BTN_CLEARWHITEBOARD').focus();
@@ -147,23 +147,28 @@ function reportWhiteboardSummary(){
     var c_escort    = 0;
     var c_children  = 0;
     var wb = document.getElementById('WHITEBOARD');
-
+    
     c_children = wb.childNodes.length;
     for ( var i=0; i<wb.childNodes.length; i++ ){
         var c = wb.childNodes[i];
         if ( c.hasAttribute('checkout'))    c_checkout++;
         if ( c.hasAttribute('escort'))      c_escort++;
     }
+    
+    var c_absent = document.getElementById('WHITEBOARD_ABSENT').childNodes.length;
+
     r += '<div style="float:left;padding-left:10px;" >children:'   + c_children + '</div>';
     r += '<div style="float:left;padding-left:10px;" >checkout:'   + c_checkout + '</div>';
     r += '<div style="float:left;padding-left:10px;" >no checkout:'   + ( c_children - c_checkout ) + '</div>';
     r += '<div style="float:left;padding-left:10px;" >escort:'     + c_escort   + '</div>';
     r += '<div style="float:left;padding-left:10px;" >no escort:'  + ( c_children - c_escort ) + '</div>';
+    r += '<div style="float:left;padding-left:10px;" >absent:'     + c_absent + '</div>';
 
     var summary_area = document.getElementById('REPORT_SUMMARY');
     summary_area.innerHTML  = r;
 
 }
+
 //
 //  レポーティング詳細
 //
@@ -205,6 +210,63 @@ function reportWhiteboardDetail(){
             cc.innerHTML = r;
             lst_area.appendChild( cc );
         }
+    }
+}
+
+//
+//  アブセント管理
+//
+function absentWhiteboard(){
+    var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
+		r += 'absent  ' + dayWhiteboard;
+    r += '</div>';
+    r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
+        r += 'Summary:'
+    r += '</div>';
+    r += '<div id="ABSENT_SUMMARY" style="width:90%;height:;;clear:both;margin:0 auto;" >';
+    r += '</div>';
+
+    r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
+        r += 'Detail:'
+    r += '</div>';
+    r += '<div id="ABSENT_LIST" style="width:90%;height:180px;clear:both;margin:0 auto;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '</div>';
+    r += '<button>Attend</button>';
+    openModalDialog( r, 'NORMAL' );
+    absentWhiteboardDetail();
+}
+
+//
+//  アブセント詳細
+//
+function absentWhiteboardDetail(){
+    var lst_area = document.getElementById('ABSENT_LIST');
+    var wba = document.getElementById('WHITEBOARD_ABSENT');
+    for ( var j=0; j<wba.childNodes.length; j++ ){
+        var c = wba.childNodes[j];
+
+        var cc = document.createElement('DIV');
+        var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+        var child_type  = c.getAttribute('child_type');
+        var child_grade = c.getAttribute('child_grade');
+        var checkin     = c.getAttribute('checkin');
+        var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+        var checkout    = c.getAttribute('checkout');
+            checkout    = ( checkout != null )? checkout : '---';
+        var escort      = ( c.hasAttribute('escort') )?'yes':'no';
+        var r = '';
+        r += '<div style="clear:both;" >';
+            r += '<div style="float:left;"  >' + child_name + '</div>';
+            r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';
+            r += '<div style="float:right;width:50px;" >' + estimate    + '</div>';
+            r += '<div style="float:right;width:50px;" >' + checkin     + '</div>';
+            r += '<div style="float:right;width:50px;" >' + escort      + '</div>';
+            r += '<div style="float:right;width:50px;" >' + child_type  + '</div>';
+            r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
+        r += '</div>';
+        cc.innerHTML = r;
+        lst_area.appendChild( cc );
     }
 }
 
@@ -336,29 +398,47 @@ function addChildManage( oParent, oChild ){
 //  チャイルドプロパティ(SINGLE base)
 //
 function propertyWhiteboardChild( c ){
+    var children = getMarkedChild();
+    if ( children.length != 1 ) return;
 
-    propChild = c;
+    var c = children[0];
     var id = c.getAttribute('child_id');
     console.log( id );
-    var oChild = getChild( id );
-	var r = "";
-	r += "<div style='width:300px;height:100%;margin:10px auto;background-color:white;opacity:0.75;' >";
-        r += "<div style='font-size:16px;border-bottom:1px solid lightgrey;' >";
-        r += oChild.child_name;
-        r += "</div>";
-        r += "<div style='padding-top:10px;' >checkout time:" + c.getAttribute('checkout') + "</div>";
+
+    var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+    var child_grade = c.getAttribute('child_grade');
+    var child_type  = c.getAttribute('child_type');
+    var checkin     = c.getAttribute('checkin');
+    var checkout    = ( c.hasAttribute('checkout') )? c.getAttribute('checkout') : '---';
+    var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+    var escort      = ( c.hasAttribute('escort') )? 'yes':'no';
+    var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+		r += 'Property of whiteboard child';
+	r += '</div>';
+
+    r += '<div style="width:300px;height:;margin:10px auto;" >';
+        r += '<div style="font-size:16px;border-bottom:1px solid lightgrey;" >';
+        r += child_name + '&nbsp;' + child_grade + child_type;
+        r += '</div>';
+        r += '<div style="padding-top:10px;" >checkin time:'  + checkin  + '</div>';
+        r += '<div style="padding-top:10px;" >estimate time:' + estimate + '</div>';
+        r += '<div style="padding-top:10px;" >checkout time:' + checkout + '</div>';
+        r += '<div style="padding-top:10px;" >escort:'        + escort   + '</div>';
+/*
         r += "<div style='padding-top:60px;border-top:1px solid lightgrey;' >";
-        r += "<button type='button' style='width:260px;font-size:24px;' ";
-        r += " onclick='checkoutClearChild(propChild);closeModalDialog();' >";
-            r += "<img width='32px' src='./images/close.png' />checkout clear";
-        r += "</button>";
-        r += "&nbsp;";
-        r += "<button type='button' style='width:260px;font-size:24px;' ";
-        r += " onclick='checkoutChild(propChild, null );closeModalDialog();'   >";
-            r += "<img width='32px' src='./images/check.png' />checkout";
-        r += "</button>";
+            r += "<button type='button' style='width:260px;font-size:24px;' ";
+            r += " onclick='checkoutClearChild(propChild);closeModalDialog();' >";
+                r += "<img width='32px' src='./images/close.png' />checkout clear";
+            r += "</button>";
+            r += "&nbsp;";
+            r += "<button type='button' style='width:260px;font-size:24px;' ";
+            r += " onclick='checkoutChild(propChild, null );closeModalDialog();'   >";
+                r += "<img width='32px' src='./images/check.png' />checkout";
+            r += "</button>";
         r += "</div>";
-    r += "</div>";
+*/
+        r += "</div>";
     openModalDialog( r, 'NORMAL' );
 
 }
@@ -396,7 +476,9 @@ function deleteWhiteboardChild( proc_mode ){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'delete child';
 	r += '</div>';
-	r += '<div style="margin:0 auto;width:110px;">';
+    r += '<div id="CHILD_LST" style="margin:0 auto;width:60%;height:150px;border:1px solid lightgrey;">';
+	r += '</div>';
+	r += '<div style="margin:0 auto;width:60%;text-align:center;border:1px solid lightgrey;">';
         r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button" ';
         r += ' style="width:100px;height:30px;font-size:12px;" ';
         switch( proc_mode ){
@@ -411,9 +493,21 @@ function deleteWhiteboardChild( proc_mode ){
 	r += '</div>';
     openModalDialog( r, 'NOBUTTON' );
     document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();
+    makeDeleteChildList();
  
 }
 
+function makeDeleteChildList(){
+    var children = getMarkedChild();
+    var lst = document.getElementById('CHILD_LST');
+    
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        var o = document.createElement('DIV');
+        o.innerText = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+        lst.appendChild( o );
+    }
+}
 //
 //  チャイルドを削除（シングル）
 //
@@ -920,6 +1014,27 @@ function checkoutClearChild( c ){
 
 }
 
+//
+//  マークしたチャイルドをアブセント（欠席）する処理（UI)
+//
+function absentWhiteboardChild(){
+    absentChild();
+}
+
+//
+//  マークしたチャイルドをアブセント（欠席）処理
+//
+function absentChild(){
+    var children = getMarkedChild();
+    var abs = document.getElementById('WHITEBOARD_ABSENT');
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        unmarkChild( c );
+        c.style.backgroundColor = 'orange';
+        abs.appendChild( c );
+    }
+    showWhiteboardChildCount();
+}
 //
 //  パレットタイムセレクタを表示
 //

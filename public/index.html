@@ -44,7 +44,7 @@
 		<div id="WHITEBOARD_TIMELINE">
 		</div>
 		<div id="WHITEBOARD" ></div>
-		<div id="WHITEBOARD_CHECKOUT" ></div>
+		<div id="WHITEBOARD_ABSENT" ></div>
 	</div>
 	<div id="STATUS" class="not_select">
 		<div style="float:left;padding-top:4px;" >&nbsp;status&nbsp;</div>
@@ -54,8 +54,6 @@
 		<div id="ID_ON_SCROLL"                       class="status_column" style="width:70px;" ></div>
 		
 		<div id="ID_SHEET_CHECKOUT"                  class="sheet-button">Checkout</div>
-		<div id="ID_SHEET_ESCORT"                    class="sheet-button">Escort</div>
-		<div id="ID_SHEET_NOESCORT"                  class="sheet-button" >NoEscort</div>
 		<div id="ID_GRADE6"       >●</div>
 		<div id="ID_GRADE5"       >●</div>
 		<div id="ID_GRADE4"       >●</div>
@@ -72,26 +70,6 @@
 			<div id="ID_CHILD_TIMEUPDATE" >&nbsp;Time...</div>
 		</div>
 	-->	
-<!--
-
-	<div id="WHITEBOARD_PALLETE_FRAME" class="not_select">
-		<div id="WHITEBOARD_PALLETE_TAB_CONTAINER" >
-			<div id="WHITEBOARD_PALLETE_TAB" >WB:<span id="CUR_WHITEBOARD_DAY_OLD" ></span></div>
-			<div id="ID_GRADE1"       >●</div>
-			<div id="ID_GRADE2"       >●</div>
-			<div id="ID_GRADE3"       >●</div>
-			<div id="ID_GRADE4"       >●</div>
-			<div id="ID_GRADE5"       >●</div>
-			<div id="ID_GRADE6"       >●</div>
-			<div id="ID_TIMELINE_BAR" >08:00</div>
-		</div>
-		<div id="WHITEBOARD_PALLETE_CONTENT_FRAME" >
-			<div id="WHITEBOARD_PALLETE_CONTENT_TOOLBAR" >
-			</div>		
-			<div id="WHITEBOARD_PALLETE_CONTENT" ></div>		
-		</div>
-	</div>
--->	
 
 	<div id="ID_TIMELINE_BAR" class="not_select" >08:00</div>
 
@@ -100,11 +78,6 @@
 		<div id="CHILDREN_PALLETE_CONTENT_FRAME" >
 			<div id="CHILDREN_PALLETE_CONTENT_TOOLBAR" >
 				<div style="border-bottom:1px solid lightgrey;height:26px;" >
-<!--
-					<div id="CPC_DND_CHILD" style="font-size:12px;padding-top:4px;text-align:center;float:left;width:26px;height:23px;border-right:1px solid lightgrey;" >
-						<img width="14px" src="./images/arrow-left.png" />
-					</div>
--->
 					<div id="CPC_RELOAD"    style="font-size:12px;padding-top:4px;
 					padding-left:2px;float:right;width:23px;height:22px;border-left:1px solid lightgrey;" >
 						<img width="14px" src="/images/recycle.png" />
@@ -115,11 +88,6 @@
 					<div id="CPC_ADD_CHILD" style="font-size:12px;padding-top:4px;text-align:center;float:right;width:23px;height:23px;border-left:1px solid lightgrey;" >
 						<img width="14px" src="./images/plus.png" />
 					</div>
-<!--
-					<div id="CPC_ESCORT_CHILD" style="font-size:12px;padding-top:2px;text-align:center;float:left;width:65px;height:24px;border-right:1px solid lightgrey;" >
-						<img valign="center" width="16px" src="./images/user.png" />Escort
-					</div>
--->
 				</div>
 				<div style="border-bottom:1px solid lightgrey;height:26px;" >
 					<div id="CPC_GRADE1" class="C_GRADE1" style="float:left;padding:2px;"  >●</div>
@@ -160,9 +128,6 @@
 			<div target="on" class="vh-center circle_button" style="float:left;width:50px;height:50px;" >18</div>
 			<div target="on" class="vh-center circle_button" style="float:left;width:50px;height:50px;" >19</div>
 			<div             class="vh-center" style="float:left;width:50px;height:50px;" >
-<!--
-				<img width="30px" src="./images/family.png" />
--->	
 			</div>
 			<div target="close" class="vh-center" style="float:left;width:50px;height:50px;" >
 				<img width="30px" src="./images/close.png" />
