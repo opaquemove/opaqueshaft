@@ -380,12 +380,12 @@ TimeSelector.prototype = {
 					if ( this.selector == o.parentNode) break;
 					 else o = o.parentNode;
 				}
-				// if ( o.hasAttribute('target')){
-				// 	this.current = o;
-				// 	o.style.backgroundColor	= 'gray';
-				// 	if ( o.getAttribute('target') == 'on' )
-				// 		document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
-				// }
+				if ( o.hasAttribute('target')){
+				 	this.current = o;
+					// 	o.style.backgroundColor	= 'gray';
+					// 	if ( o.getAttribute('target') == 'on' )
+					// 		document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
+				}
 			}).bind(this), false );
 		this.selector.addEventListener( this.evtMove,		//	mousedown/touchstart
 			(function(e){
@@ -394,12 +394,12 @@ TimeSelector.prototype = {
 					if ( this.selector == o.parentNode) break;
 						else o = o.parentNode;
 				}
-				// if ( o.hasAttribute('target')){
-				// 	this.current = o;
+				if ( o.hasAttribute('target')){
+				 	this.current = o;
 				// 	o.style.backgroundColor	= 'lightgrey';
 				// 	if ( o.getAttribute('target') == 'on' )
 				// 		document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
-				// }
+				}
 			}).bind(this), false );
 		if ( !this.touchdevice ){
 			this.selector.addEventListener('mouseout',
