@@ -232,7 +232,7 @@ function absentWhiteboard(){
     r += '</div>';
     r += '<div id="ABSENT_LIST" style="width:90%;height:180px;clear:both;margin:0 auto;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
-    r += '<button>Attend</button>';
+    r += '<button onclick="attendChild();" >Attend</button>';
     openModalDialog( r, 'NORMAL' );
     absentWhiteboardDetail();
 }
@@ -247,6 +247,7 @@ function absentWhiteboardDetail(){
         var c = wba.childNodes[j];
 
         var cc = document.createElement('DIV');
+        var child_id    = c.getAttribute('child_id');
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
         var child_type  = c.getAttribute('child_type');
         var child_grade = c.getAttribute('child_grade');
@@ -257,7 +258,7 @@ function absentWhiteboardDetail(){
         var escort      = ( c.hasAttribute('escort') )?'yes':'no';
         var r = '';
         r += '<div style="clear:both;" >';
-            r += '<div style="float:left;"  >' + child_name + '</div>';
+            r += '<div style="float:left;"  >' + child_name +'(' + child_id + ')' + '</div>';
             r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';
             r += '<div style="float:right;width:50px;" >' + estimate    + '</div>';
             r += '<div style="float:right;width:50px;" >' + checkin     + '</div>';
@@ -265,9 +266,76 @@ function absentWhiteboardDetail(){
             r += '<div style="float:right;width:50px;" >' + child_type  + '</div>';
             r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
         r += '</div>';
+        cc.setAttribute( 'child_id', child_id );
+        cc.style.height = '30px';
         cc.innerHTML = r;
         lst_area.appendChild( cc );
     }
+    lst_area.addEventListener( 'mouseup',
+    function (e){
+        console.log(e.type);
+        var o = e.target;
+        while( true ){
+            if ( o == lst_area ) return;
+            if ( o.hasAttribute('child_id' ) ) break;
+            o = o.parentNode;
+        }
+        if ( o.hasAttribute('marked')){
+            console.log('un mark:' + o.getAttribute('child_id'));
+            o.style.backgroundColor = '';
+            o.removeAttribute('marked');
+        } else {
+            console.log('mark:' + o.getAttribute('child_id'));
+            o.style.backgroundColor = 'lightgrey';
+            o.setAttribute('marked', 'yes');
+        }
+    }, false );
+
+}
+
+
+//
+//  指定したアブセントチャイルドリストをアテンド（出席）にする
+//
+function attendChild(){
+    var lst_area = document.getElementById('ABSENT_LIST');
+    var attend_list = [];
+    for ( var i=0; i<lst_area.childNodes.length; i++ ){
+        var c = lst_area.childNodes[i];
+        if ( c.hasAttribute('marked')){
+            attend_list.push( c.getAttribute('child_id') );
+        }
+    }
+    console.log( 'attend_lst:' + attend_list );
+    for ( var i=0; i<attend_list.length; i++ ){
+        var c = scanAbsentChild( attend_list[i] );
+        if ( c != null )
+            attendChildHelper( c );
+    }
+    showWhiteboardChildCount();
+
+}
+
+//
+//  アブセントチャイルドからchild_idを指定して検索する
+//
+function scanAbsentChild( child_id ){
+    var wba = document.getElementById('WHITEBOARD_ABSENT');
+    for ( var i=0; i<wba.childNodes.length; i++ ){
+        c = wba.childNodes[i];
+        if ( c.getAttribute('child_id') == child_id )
+            return c;
+    }
+    return null;
+}
+//
+//  指定したアブセントチャイルドをアテンド（出席）に変更する
+//
+function attendChildHelper( c ){
+    var wb = document.getElementById('WHITEBOARD');
+    c.style.backgroundColor  = '';
+    wb.appendChild( c );
+
 }
 
 //
