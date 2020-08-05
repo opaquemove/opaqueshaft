@@ -36,14 +36,17 @@ io.on( 'connection', ( socket ) => {
         getChildrenList( socket );
         break;
       case 'exchange':
-        exchange( socket );
         break;
-      default:
-        //socket.broadcast.emit( msg, 'hogehoge' );
-        socket.emit( msg, 'hogehoge' );
-        break;
-    }
-  })
+        default:
+          //socket.broadcast.emit( msg, 'hogehoge' );
+          socket.emit( msg, 'hogehoge' );
+          break;
+        }
+      });
+  socket.on('opaqueshaft', (data) => {
+    console.log('data:' + data );
+    socket.emit( 'opaqueshaft', data );
+    });
 })
 
 //
@@ -92,6 +95,9 @@ function getAccountList( socket ){
 }
 */
 
+//
+//  チルドレンリストを取得すrsocket.io
+//
 function getChildrenList( socket ){
   var r = '';
 
@@ -118,6 +124,9 @@ function getChildrenList( socket ){
   return r;
 }
 
+//
+//  アカウントリストを取得するsocket.io
+//
 function getAccountList( socket ){
   var r = '';
 
@@ -152,16 +161,16 @@ function getAccountList( socket ){
 }
 
 //
+//  サインインしているクライアントにブロードキャスト(socket.io)
 //
-//
-function exchange( socket ){
+function exchange( socket, msg ){
   var r = '';
   r += 'exchange...';
 
-  console.log( 'r:' + r );
+  console.log( 'msg:' + msg );
   
-//  socket.emit( 'exchange', r );
-  socket.broadcast.emit( 'exchange', r );
+  socket.emit( 'exchange', msg );
+  // socket.broadcast.emit( 'exchange', msg );
 
   return r;
 }

@@ -27,19 +27,36 @@ socket.on( 'getaccountlist', function ( msg ) {
 
 })
 
-socket.on( 'exchange', function( msg ){
-    alert( msg );
+//
+//  アカウントリストを取得するsocket.io
+//
+function getAccountList(){
+    socket.emit( 'cmd', 'getaccountlist' );
+}
+
+socket.on( 'opaqueshaft', function( data ){
+    alert( data );
+    var pac = eval( '(' + data + ')' );
+    alert( pac.cmd );
+    alert( pac.data.estimate );
+    switch( pac.cmd ){
+        case 'addchild':
+            arHM = pac.data.estimate.split(':');
+            var top		= ( parseInt( arHM[0] ) - 8 ) * 400;
+            var left	= ( parseInt( arHM[1] ) );
+            var child_id = pac.data.child_id;
+            var oChild  = getChild( child_id );
+            addChild( top, left, child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
+            break;
+    }
 })
 
-function getAccountList(){
-	socket.emit( 'cmd', 'getaccountlist' );
-}
 
 //
 //
 //
 function exchange(){
-    socket.emit( 'cmd', 'exchange' );
+    socket.emit( 'opaqueshaft', '{ "cmd":"addchild", "data":{"child_id":1, "estimate":"17:00"} }' );
 }
 //
 //  サーバからチャイルドリストを取得し、実体化
@@ -86,7 +103,7 @@ function loadChildrenForm(){
 */
 
 //
-//  チャイルドローディング
+//  チャイルドローディング(socket.ioベース)
 //
 function loadChildren(){
 	socket.emit( 'cmd', 'getchildrenlist' );
@@ -132,8 +149,9 @@ function reportWhiteboard(){
     r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Detail:'
     r += '</div>';
-    r += '<div id="REPORT_HDR"  style="width:90%;height:20px;clear:both;color:red;background-color:lightgray;margin:0 auto;" >';
+    r += '<div id="REPORT_HDR"  style="width:90%;height:20px;clear:both;color:red;background-color:lightgray;margin:0 auto;border:1px solid lightgrey;" >';
         r += '<div style="float:left;" >Name</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Direction</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckOut</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Estimate</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckIn</div>';
@@ -191,8 +209,8 @@ function reportWhiteboardDetail(){
         o.style.color           = 'gray';
         o.style.backgroundColor = 'transparent';
         o.style.borderBottom    = '1px solid lightgrey';
-        o.style.padding         = '2px';
-        o.style.marginBottom    = '2px';
+        o.style.padding         = '2px 2px 0px 0px';
+        o.style.marginBottom    = '0px';
         o.style.clear           = 'both';
         o.innerHTML             = '<div style="float:reft;width:36px;color:snow;background-color:red;" >' + ( '00' + ( i + 8 ) ).slice(-2) + ':00' + '</div>';
         lst_area.appendChild( o );
@@ -206,10 +224,13 @@ function reportWhiteboardDetail(){
             var estimate    = children[j].getElementsByClassName('ESTIMATE_TIME')[0].innerText;
             var checkout    = children[j].getAttribute('checkout');
                 checkout    = ( checkout != null )? checkout : '---';
+            var direction   = children[j].getAttribute('direction');
+                direction   = ( direction != null )? direction : '---';
             var escort      = ( children[j].hasAttribute('escort') )?'yes':'no';
             var r = '';
             r += '<div style="clear:both;" >';
                 r += '<div style="float:left;"  >' + child_name + '</div>';
+                r += '<div style="float:right;width:50px;" >' + direction   + '</div>';
                 r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';
                 r += '<div style="float:right;width:50px;" >' + estimate    + '</div>';
                 r += '<div style="float:right;width:50px;" >' + checkin     + '</div>';
@@ -217,7 +238,8 @@ function reportWhiteboardDetail(){
                 r += '<div style="float:right;width:50px;" >' + child_type  + '</div>';
                 r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
             r += '</div>';
-            cc.innerHTML = r;
+            cc.style.height = '16px';
+            cc.innerHTML    = r;
             lst_area.appendChild( cc );
         }
     }
@@ -227,8 +249,8 @@ function reportWhiteboardDetail(){
     o.style.color           = 'gray';
     o.style.backgroundColor = 'transparent';
     o.style.borderBottom    = '1px solid lightgrey';
-    o.style.padding         = '2px';
-    o.style.marginBottom    = '2px';
+    o.style.padding         = '2px 2px 0px 0px';
+    o.style.marginBottom    = '0px';
     o.style.clear           = 'both';
     o.innerHTML             = '<div style="float:reft;width:36px;color:snow;background-color:red;" >Absent</div>';
     lst_area.appendChild( o );
@@ -243,10 +265,13 @@ function reportWhiteboardDetail(){
         var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
         var checkout    = c.getAttribute('checkout');
             checkout    = ( checkout != null )? checkout : '---';
+        var direction   = c.getAttribute('direction');
+            direction   = ( direction != null )? direction : '---';
         var escort      = ( c.hasAttribute('escort') )?'yes':'no';
         var r = '';
         r += '<div style="clear:both;" >';
             r += '<div style="float:left;"  >' + child_name + '</div>';
+            r += '<div style="float:right;width:50px;" >' + direction   + '</div>';
             r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';
             r += '<div style="float:right;width:50px;" >' + estimate    + '</div>';
             r += '<div style="float:right;width:50px;" >' + checkin     + '</div>';
@@ -255,7 +280,8 @@ function reportWhiteboardDetail(){
             r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
         r += '</div>';
         cc.style.backgroundColor = 'orange';
-        cc.innerHTML = r;
+        cc.style.height = '16px';
+        cc.innerHTML    = r;
         lst_area.appendChild( cc );
     }
 
@@ -278,13 +304,37 @@ function absentWhiteboard(){
     r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Detail:'
     r += '</div>';
+    r += '<div id="ABSENT_HDR"  style="width:90%;height:20px;clear:both;color:red;background-color:lightgray;margin:0 auto;border:1px solid lightgrey;" >';
+        r += '<div style="float:left;" >Name</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Direction</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckOut</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Estimate</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckIn</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Escort</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Type</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Grade</div>';
+    r += '</div>';
+
     r += '<div id="ABSENT_LIST" style="width:90%;height:140px;clear:both;margin:0 auto;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
     r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += '<button onclick="attendChild();" style="width:180px;height:40px;border:none;background-color:transparent;font-size:24px;background-image:url(./images/entry.png);background-size:30px;background-repeat:no-repeat;background-position:left center;" >Attend</button>';
     r += '</div>';
     openModalDialog( r, 'NORMAL' );
+    absentWhiteboardSummary();
     absentWhiteboardDetail();
+}
+
+//
+//
+//
+function absentWhiteboardSummary(){
+    var lst_area = document.getElementById('ABSENT_SUMMARY');
+    var wba = document.getElementById('WHITEBOARD_ABSENT');
+    var r = '';
+    r += '<div style="padding-left:4px;" >children:' + wba.childNodes.length + '</div>';
+    lst_area.innerHTML = r;
+
 }
 
 //
@@ -305,10 +355,12 @@ function absentWhiteboardDetail(){
         var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
         var checkout    = c.getAttribute('checkout');
             checkout    = ( checkout != null )? checkout : '---';
+        var direction   = ( direction != null )? direction : '---';
         var escort      = ( c.hasAttribute('escort') )?'yes':'no';
         var r = '';
         r += '<div style="clear:both;" >';
             r += '<div style="float:left;"  >' + child_name +'(' + child_id + ')' + '</div>';
+            r += '<div style="float:right;width:50px;" >' + direction   + '</div>';
             r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';
             r += '<div style="float:right;width:50px;" >' + estimate    + '</div>';
             r += '<div style="float:right;width:50px;" >' + checkin     + '</div>';
@@ -317,7 +369,7 @@ function absentWhiteboardDetail(){
             r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
         r += '</div>';
         cc.setAttribute( 'child_id', child_id );
-        cc.style.height = '30px';
+        cc.style.height = '20px';
         cc.innerHTML = r;
         lst_area.appendChild( cc );
     }
@@ -326,7 +378,16 @@ function absentWhiteboardDetail(){
         console.log(e.type);
         var o = e.target;
         while( true ){
-            if ( o == lst_area ) return;
+            if ( o == lst_area ){
+                for ( var i=0; i<lst_area.childNodes.length; i++ ){
+                    var o = lst_area.childNodes[i];
+                    if ( o.hasAttribute('marked')){
+                        o.style.backgroundColor = '';
+                        o.removeAttribute('marked');
+                    }
+                }
+                return;
+            }
             if ( o.hasAttribute('child_id' ) ) break;
             o = o.parentNode;
         }
@@ -452,6 +513,8 @@ function addChild( top, left, child_id, child_name, child_type, child_grade ){
             r += '</div>';
         r += '</div>';
         r += '<div>';
+            r += '<div class="DIRECTION_FLG" style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
+            r += '</div>';
             r += '<div class="CHECKOUT_FLG" style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
             r += '</div>';
             r += '<div class="ESCORT_FLG"   style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
@@ -529,21 +592,38 @@ function propertyWhiteboardChild( c ){
     var child_type  = c.getAttribute('child_type');
     var checkin     = c.getAttribute('checkin');
     var checkout    = ( c.hasAttribute('checkout') )? c.getAttribute('checkout') : '---';
+    var direction   = ( c.hasAttribute('direction') )? c.getAttribute('direction') : '---';
     var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
     var escort      = ( c.hasAttribute('escort') )? 'yes':'no';
     var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
 		r += 'Property of whiteboard child';
 	r += '</div>';
 
-    r += '<div style="width:300px;height:;margin:10px auto;" >';
+    r += '<div style="width:400px;height:;margin:10px auto;" >';
         r += '<div style="font-size:16px;border-bottom:1px solid lightgrey;" >';
         r += child_name + '&nbsp;' + child_grade + child_type;
         r += '</div>';
-        r += '<div style="padding-top:10px;" >checkin time:'  + checkin  + '</div>';
-        r += '<div style="padding-top:10px;" >estimate time:' + estimate + '</div>';
-        r += '<div style="padding-top:10px;" >checkout time:' + checkout + '</div>';
-        r += '<div style="padding-top:10px;" >escort:'        + escort   + '</div>';
+        r += '<div style="padding-top:2px;" >checkin time:'  + checkin   + '</div>';
+        r += '<div style="padding-top:2px;" >estimate time:' + estimate  + '</div>';
+        r += '<div style="padding-top:2px;" >checkout time:' + checkout  + '</div>';
+        r += '<div style="padding-top:2px;" >direction:'     + direction + '</div>';
+        r += '<div style="padding-top:2px;" >escort:'        + escort    + '</div>';
+
+        r += '<div style="font-size:16px;" >';
+            r += 'Histories:'
+        r += '</div>';
+        r += '<div id="HISTORY_HDR" style="clear:both;color:red;height:16px;background-color:lightgrey;border:1px solid lightgrey;" >';
+            r += '<div style="float:left;width:80px;text-align:center;border-right:1px solid gray;" >Day</div>';
+            r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >checkin</div>';
+            r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >estimate</div>';
+            r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >checkout</div>';
+            r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >direction</div>';
+            r += '<div style="float:left;width:30px;text-align:center;" >escort</div>';
+        r += '</div>';
+
+        r += '<div id="HISTORY_LST" style="height:100px;font-size:10px;border:1px solid lightgrey;" >';
+        r += '</div>';
 /*
         r += "<div style='padding-top:60px;border-top:1px solid lightgrey;' >";
             r += "<button type='button' style='width:260px;font-size:24px;' ";
@@ -559,6 +639,67 @@ function propertyWhiteboardChild( c ){
 */
         r += "</div>";
     openModalDialog( r, 'NORMAL' );
+    propertyWhiteboardChildHelper( id );
+
+}
+
+//
+//  チャイルドの利用履歴をリストアップする
+//
+function propertyWhiteboardChildHelper( child_id ){
+
+	var r = "";
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				var o = document.getElementById( 'HISTORY_LST' );
+				o.innerText = 'access...';
+				break;
+			case 4://done
+				r = '';
+				if ( xmlhttp.status == 200 ){
+                    var result = JSON.parse( xmlhttp.responseText );
+                    
+					//r += xmlhttp.responseText;
+					var o = document.getElementById('HISTORY_LST');
+					o.innerText = '';
+					for ( var i=0; i<result.length; i++ ){
+                        // addChildManage( o, result[i] );
+                        var wday = new Date( result[i].day );
+                        var hmd =
+                            wday.getFullYear() + '/' + ( '00' + ( wday.getMonth() + 1 ) ).slice(-2) + '/' + 
+                            ( '00' + wday.getDate() ).slice(-2);
+                        var checkin     = result[i].checkin;
+                        var estimate    = result[i].estimate;
+                        var checkout    = result[i].checkout;
+                        var direction   = result[i].direction;
+                        var escort      = result[i].escort;
+                        r += '<div style="clear:both;height:20px;border-bottom:1px solid lightgrey;" >';
+                            r += '<div style="float:left;width:80px;text-align:center;" >' + hmd       + '</div>';
+                            r += '<div style="float:left;width:60px;text-align:center;" >' + checkin   + '</div>';
+                            r += '<div style="float:left;width:60px;text-align:center;" >' + estimate  + '</div>';
+                            r += '<div style="float:left;width:60px;text-align:center;" >' + checkout  + '</div>';
+                            r += '<div style="float:left;width:60px;text-align:center;" >' + direction + '</div>';
+                            r += '<div style="float:left;width:30px;text-align:center;" >' + escort    + '</div>';
+
+                        r += '</div>';
+					}
+					o.innerHTML = r;
+				} else{
+					document.getElementById('HISTORY_LST').innerText = xmlhttp.status;
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/resultlist", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'child_id=' + child_id );
+
+	} catch ( e ) { alert( e );}
 
 }
 
@@ -595,11 +736,11 @@ function deleteWhiteboardChild( proc_mode ){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'delete child';
 	r += '</div>';
-    r += '<div id="CHILD_LST" style="margin:0 auto;width:60%;height:150px;border:1px solid lightgrey;">';
+    r += '<div id="CHILD_LST" style="margin:0 auto;width:60%;height:150px;font-size:14px;border:1px solid lightgrey;">';
 	r += '</div>';
-	r += '<div style="margin:0 auto;width:60%;text-align:center;border:1px solid lightgrey;">';
+	r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
         r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button" ';
-        r += ' style="width:100px;height:30px;font-size:12px;" ';
+        r += ' style="width:130px;height:30px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/minus.png);background-size:24px;background-position:left center;background-repeat:no-repeat;" ';
         switch( proc_mode ){
             case 'SINGLE':
                 r += ' onclick="deleteWhiteboardChildSingleHelper();" >';
@@ -608,7 +749,7 @@ function deleteWhiteboardChild( proc_mode ){
                 r += ' onclick="deleteWhiteboardChildMarkHelper();"   >';
                 break;
         }
-        r += '<img width="24px" src="./images/minus.png" />Delete</button>';
+        r += 'Delete</button>';
 	r += '</div>';
     openModalDialog( r, 'NOBUTTON' );
     document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();
@@ -623,6 +764,8 @@ function makeDeleteChildList(){
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         var o = document.createElement('DIV');
+        o.style.borderBottom    = '1px solid lightgrey;'
+        o.style.height          = '20px';
         o.innerText = c.getElementsByClassName('CHILD_NAME')[0].innerText;
         lst.appendChild( o );
     }
@@ -749,6 +892,7 @@ function showWhiteboardChildCount(){
     var wcc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT');
     wcc.innerText = children.length;
     showWhiteboardChildCountCheckout();
+    showWhiteboardChildCountAbsent();
 }
 
 //
@@ -766,6 +910,16 @@ function showWhiteboardChildCountCheckout(){
     wccc.innerText = c;
 }
 
+//
+//  ホワイトボード内のアブセント（欠席）チャイルド数を表示
+//
+function showWhiteboardChildCountAbsent(){
+    var wba  = document.getElementById('WHITEBOARD_ABSENT');
+    var wcca = document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT');
+    var c = wba.childNodes.length;
+    wcca.innerText = c;
+
+}
 //
 //  ホワイトボード内の最後尾のチャイルド取得
 //
@@ -868,7 +1022,9 @@ function checkoutChild( c, direction ){
     var h = ( '00' + now.getHours() ).slice(-2);
     var m = ( '00' + now.getMinutes() ).slice(-2);
     var checkout_time = h + ':' + m;
+    if ( direction == '' || direction == null ) direction = '---';
     c.setAttribute('checkout', checkout_time );
+    c.setAttribute('direction', direction );
     // console.log( c.getAttribute('child_id') );
     // document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText =
     //     'checkout:' + checkout_time;
@@ -877,6 +1033,25 @@ function checkoutChild( c, direction ){
     cf.style.backgroundPosition = 'center center';
     cf.style.backgroundRepeat   = 'no-repeat';
     cf.style.backgroundSize     = '14px';
+
+    var df = c.getElementsByClassName('DIRECTION_FLG')[0];
+    switch ( direction ){
+        case 'left':
+            df.style.backgroundImage    = 'url(./images/arrow-left.png)';
+            df.style.backgroundPosition = 'center center';
+            df.style.backgroundRepeat   = 'no-repeat';
+            df.style.backgroundSize     = '14px';
+            break;
+        case 'right':
+            df.style.backgroundImage    = 'url(./images/arrow-right.png)';
+            df.style.backgroundPosition = 'center center';
+            df.style.backgroundRepeat   = 'no-repeat';
+            df.style.backgroundSize     = '14px';
+            break;
+        default:
+            break;
+    }
+
     c.style.transformOrigin     = 'top left;'
     c.style.transform           = 'rotate(-45deg)';
 
@@ -912,11 +1087,13 @@ function checkoutWhiteboardChild( proc_mode ){
         r += '<div style="float:right;width:26px;" >Right</div>';
         r += '<div style="float:right;width:26px;" >Left</div>';
     r += '</div>';
+    r += '<form name="directions" onsubmit="return false;" >';
     r += '<div id="ID_MARKEDCHILDREN_LIST" style="clear:both;margin:0 auto;width:70%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
+    r += '</form>';
 	r += '<div style="clear:both;margin:0 auto;width:110px;margin:0 auto;">';
         r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
-        r += 'style="width:100px;height:30px;font-size:12px;" ';
+        r += 'style="font-size:20px;width:160px;height:40px;border:none;background-color:transparent;background-image:url(./images/check.png);background-position:left center;background-size:30px;background-repeat:no-repeat;" ';
         switch ( proc_mode ){
             case 'SINGLE':
                 r += 'onclick="checkoutWhiteboardChildSingleHelper();closeModalDialog();" >';
@@ -925,7 +1102,7 @@ function checkoutWhiteboardChild( proc_mode ){
                 r += 'onclick="checkoutWhiteboardChildMarkHelper();closeModalDialog();" >';
                 break;
         }
-        r += '<img width="20px" src="./images/check.png" />Checkout</button>'
+        r += 'Checkout</button>'
 	r += '</div>';
     openModalDialog( r, 'NOBUTTON' );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
@@ -940,9 +1117,15 @@ function checkoutWhiteboardChild( proc_mode ){
             o.style.borderBottom = '1px solid lightgrey';
             r = '';
             r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
-            r += '<div style="float:right;width:18px;padding:4px;" ><img width="14px" src="./images/arrow-right.png" /></div>';
-            r += '<div style="float:right;width:18px;padding:4px;" ><img width="14px" src="./images/arrow-left.png" /></div>';
-    
+            r += '<div style="float:right;width:18px;padding:4px;" >';
+                r += '<input type="radio" id="child_' +  id + '_left" name="child_' + id + '" value="left" >';
+                r += '<label for="child_' + id + '_left" ><img width="14px" src="./images/arrow-right.png" /></label>';
+            r += '</div>';
+            r += '<div style="float:right;width:18px;padding:4px;" >';
+                r += '<input type="radio" id="child_' + id + '_right" name="child_' + id + '" value="right" >';
+                r += '<label for="child_'+ id + '_right" ><img width="14px" src="./images/arrow-left.png" /></label>';
+            r += '</div>';
+
             o.innerHTML = r;
             imcl.appendChild( o );
         break;
@@ -958,9 +1141,15 @@ function checkoutWhiteboardChild( proc_mode ){
                 o.style.borderBottom = '1px solid lightgrey';
                 r = '';
                 r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
-                r += '<div style="float:right;width:18px;padding:4px;" ><img width="14px" src="./images/arrow-right.png" /></div>';
-                r += '<div style="float:right;width:18px;padding:4px;" ><img width="14px" src="./images/arrow-left.png" /></div>';
-        
+                r += '<div style="float:right;width:18px;padding:4px;" >';
+                    r += '<input type="radio" id="child_' +  id + '_right" name="child_' + id + '" value="right" >';
+                    r += '<label for="child_' + id + '_right"  ><img width="14px" src="./images/arrow-right.png" /></label>';
+                r += '</div>';
+                r += '<div style="float:right;width:18px;padding:4px;" >';
+                    r += '<input type="radio" id="child_' + id + '_left"   name="child_' + id + '" value="left" >';
+                    r += '<label for="child_'+ id + '_left"  ><img width="14px" src="./images/arrow-left.png" /></label>';
+                r += '</div>';
+
                 o.innerHTML = r;
                 imcl.appendChild( o );
             }
@@ -995,7 +1184,11 @@ function checkoutWhiteboardChildHelper( proc_mode ){
         case 'MARK':
             var children = getMarkedChild();
             for ( var i=0; i<children.length; i++ ){
-                checkoutChild( children[i], null );
+                var c = children[i];
+                var id = c.getAttribute('child_id')
+                //alert( '[' + document.forms['directions'].elements['child_' + id].value + ']' );
+                var direction = document.forms['directions'].elements['child_' + id].value;
+                checkoutChild( children[i], direction );
             }
             break;
     }
@@ -1121,12 +1314,19 @@ function checkoutClearWhiteboardChildMarkHelper(){
 function checkoutClearChild( c ){
     if ( c == null ) return;
     c.removeAttribute( 'checkout' );
+    c.removeAttribute( 'direction' );
     // document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText = 'checkout:';
     var cf = c.getElementsByClassName('CHECKOUT_FLG')[0];
     cf.style.backgroundImage    = '';
     cf.style.backgroundPosition = '';
     cf.style.backgroundRepeat   = '';
     cf.style.backgroundSize     = '';
+    var df = c.getElementsByClassName('DIRECTION_FLG')[0];
+    df.style.backgroundImage    = '';
+    df.style.backgroundPosition = '';
+    df.style.backgroundRepeat   = '';
+    df.style.backgroundSize     = '';
+
     c.style.transformOrigin     = 'top left;'
     c.style.transform           = 'rotate(0deg)';
 

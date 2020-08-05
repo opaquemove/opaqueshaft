@@ -525,6 +525,10 @@ function locateTimelinebar( e ){
 			if ( itb != e.target ) return;
 			if ( tlbOffset == null ) tlbOffset = e.target.offsetTop;
 			//e.target.position = 'absolute';
+			itb.style.width 		= '24px';
+			itb.style.paddingLeft	= '60px'
+			itb.style.height		= '84px';
+			itb.style.fontSize 		= '20px';
 			tlx = event.pageY - e.target.offsetTop;
 			tl_drag = true;
 			break;
@@ -558,6 +562,10 @@ function locateTimelinebar( e ){
 			break;
 		case 'mouseup':
 		case 'touchend':
+			itb.style.width 		= '';
+			itb.style.paddingLeft	= '';
+			itb.style.height		= '';
+			itb.style.fontSize 		= '';
 			tl_drag = false;
 			tlx = null;
 			break;
@@ -1108,7 +1116,7 @@ function Nav( func ){
 		r += '<img width="22px" src="./images/sleep-2.png" />';
 	r += '</div>';
 	r += '<div target="exchange"   class="vh-center nav_icon2" style="position:absolute;top:105px;left:84px;height:21px;" >';
-		r += '<img width="11px" src="./images/exchange.png" />';
+		r += '<img width="12px" src="./images/exchange.png" />';
 	r += '</div>';
 
 	// r += '<div class="vh-center nav_icon_blank" >1</div>';
@@ -1577,7 +1585,6 @@ function signMenu( e ){
 
 	new Button( 'ID_SIGN_OUT', signout ).play();
 	new Button( 'ID_PROPERTY_ACCOUNT', propertyAccount ).play();
-//	new Button( 'ID_LOAD_CHILDREN',     loadChildrenForm ).play();
 
 	p.addEventListener('mouseleave', function(e) {
 		var c = document.getElementById('SIGN_SUBMENU');

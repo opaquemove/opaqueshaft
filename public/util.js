@@ -27,6 +27,7 @@ Button.prototype = {
   }
 };
 
+
 function Checkbox( id, flag, func ){
   this.id = id;
   this.o  = null;

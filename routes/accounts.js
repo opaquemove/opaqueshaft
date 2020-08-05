@@ -203,7 +203,7 @@ router.post('/whiteboardupdate', function(req, res, next ){
 //
 router.post('/whiteboardlist', function(req, res, next ){
     res.header('Content-Type', 'application/json;charset=utf-8');
-    db.any( 'SELECT * FROM whiteboards ORDER BY day' )
+    db.any( 'SELECT whiteboards.* FROM whiteboards ORDER BY whiteboards.day' )
       .then( rows => {
             res.json( rows );
       });
@@ -258,6 +258,20 @@ router.post('/resultdelete', function(req, res, next ){
         values: [ day ] } )
       .then( function() {
         res.json( { status: 'SUCCESS', message:  'delete child result' });
+      });
+});
+
+//
+//  チャイルド履歴リスト取得
+//
+router.post('/resultlist', function(req, res, next ){
+    var child_id    = req.body.child_id;
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    db.any( {
+        text: 'SELECT * FROM results WHERE child_id = $1 ORDER BY day',
+        values: [ child_id ] } )
+      .then( rows => {
+            res.json( rows );
       });
 });
 
