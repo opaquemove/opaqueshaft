@@ -203,7 +203,7 @@ router.post('/whiteboardupdate', function(req, res, next ){
 //
 router.post('/whiteboardlist', function(req, res, next ){
     res.header('Content-Type', 'application/json;charset=utf-8');
-    db.any( 'SELECT whiteboards.* FROM whiteboards ORDER BY whiteboards.day' )
+    db.any( 'SELECT w.*, ( SELECT count(*) FROM results r WHERE r.day = w.day ) c_children FROM whiteboards w ORDER BY w.day' )
       .then( rows => {
             res.json( rows );
       });

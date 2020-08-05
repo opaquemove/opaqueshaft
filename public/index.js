@@ -677,6 +677,15 @@ function showGuidanceWhiteboard(){
 			guidedance_whiteboard_form.day.value =
 				dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
 		}, false );
+	document.getElementById('WHITEBOARD_LIST').addEventListener('click',
+		function(e) {
+			var o = e.target;
+			if ( o == document.getElementById('WHITEBOARD_LIST')) return;
+			while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
+				o = o.parentNode;
+			}
+			guidedance_whiteboard_form.day.value = o.firstChild.innerText;
+		}, false );
 	
 }
 
@@ -1507,12 +1516,13 @@ function whiteboardMenu( e ){
 	o.style.position		= 'relative';
 	o.style.padding			= '2px';
 	o.style.top             = '12px';
-	o.style.left            = '-44px';
-	o.style.width           = '120px';
+	o.style.left            = '-84px';
+	o.style.width           = '160px';
 	o.style.height          = '140px';
 	o.style.color			= ' gray';
 	o.style.backgroundColor = '#EEEEEE';
 	o.style.textAlign		='left';
+	o.style.fontSize		= '14px';
 	o.style.zIndex			= 50000;
 	o.innerText = 'whiteboard menu...';
 	var p = document.getElementById('WHITEBOARD_DAY_FRAME');
@@ -1700,14 +1710,20 @@ function addWhiteboardManage( oParent, Result ){
     c.setAttribute("whiteboard_id",  Result.child_id );
 	c.style.backgroundColor	= 'white';
 	c.style.height			= '14px';
+	c.style.borderBottom	= '1px solid lightgrey';
 	c.style.marginBottom	= '1px';
+	c.style.clear			= 'both';
 
 	var day = new Date( Result.day );
+	var c_children	= Result.c_children;
 	var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDate() ).slice(-2);
 
 	var r = '';
-    r += '<div>';
+    r += '<div style="float:left;"  >';
     	r += ymd;
+    r += '</div>';
+    r += '<div style="float:right;" >';
+    	r += c_children;
     r += '</div>';
 	c.innerHTML = r;
     var cc = oParent.appendChild( c );
