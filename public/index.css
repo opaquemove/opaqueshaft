@@ -58,6 +58,17 @@ INPUT[type=radio]:checked + label{
 	padding:			0px;
 }
 
+#MODAL_TITLE{
+	float:				left;
+	height:				25px;
+	color:				whitesmoke;
+	font-size:			12px;
+	padding-top:		4px;
+	padding-left:		4px;
+	padding-right:		8px;
+}
+
+
 #MODAL_MESSAGE{
 	width:				516px;
 	height:				327px;
@@ -229,6 +240,25 @@ INPUT[type=radio]:checked + label{
 	border-left:		10px solid red;
 	border-bottom:		1px solid gray;
 	padding-top:		13px;
+}
+
+#CHILD_FINDER{
+	width:					140px;
+	height:					30px;
+	text-align:				center;
+	float:					right;
+	font-size:				14px;
+	color:					gray;
+	padding-top:			12px;
+	border-left:			1px solid darkgray;
+/*
+	border-right:			1px solid lightgrey;
+*/
+	background-color: 		black;
+	background-image: 		url(./images/loupe.png);
+	background-size:		18px;
+	background-position: 	center right;
+	background-repeat:		no-repeat;
 }
 
 #WHITEBOARD_DAY_FRAME{

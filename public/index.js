@@ -164,6 +164,7 @@ function init()
 	fitting();
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
 	new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
+//	new Button( 'CHILD_FINDER',				childFinder    ).play();
 //	new Button( 'ID_NAV',                   ctlNav         ).play();
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
@@ -1247,8 +1248,10 @@ function openModalDialog( title, r , option, proc ){
 	// タイムセレクタを非表示
 	palleteTimeSelector.close();
 	var mo  = document.getElementById('MODAL_OVERLAY');
+	var mt	= document.getElementById('MODAL_TITLE');
 	var mm  = document.getElementById('MODAL_MESSAGE');
 	var mmf = document.getElementById('MODAL_MESSAGE_FOOTER');
+	if ( title != null ) mt.innerText = title;
 	mm.innerHTML = r;
 
 	var f = '';
