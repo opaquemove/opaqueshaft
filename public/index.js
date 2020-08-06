@@ -212,6 +212,14 @@ function init()
 	}
 	
 	//
+	//	チャイルドファインダー初期化
+	//
+	var tk = document.getElementById('TXT_KEYWORD');
+	tk.addEventListener('keyup', childFinder, false );
+
+
+
+	//
 	//	タイムラインガイド初期化
 	//
 /*
@@ -1522,6 +1530,7 @@ function sign()
 
 	} catch ( e ) { alert( e );}
 }
+
 
 //
 //	ホワイトボードメニュー

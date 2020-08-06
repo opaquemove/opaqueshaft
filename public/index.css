@@ -260,6 +260,13 @@ INPUT[type=radio]:checked + label{
 	background-position: 	center right;
 	background-repeat:		no-repeat;
 }
+#TXT_KEYWORD{
+	width:					100px;
+	color:					lightgrey;
+	font-size:				12px;
+	background-color:		transparent;
+	border:					none;
+}
 
 #WHITEBOARD_DAY_FRAME{
 	width:					80px;
