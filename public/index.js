@@ -170,9 +170,6 @@ function init()
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	// new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
-	// new Button( 'ID_CHILD_DELETE',          deleteWhiteboardMarkChild ).play();
-	// new Button( 'ID_CHILD_CHECKOUT',        checkoutWhiteboardMarkChild ).play();
-	// new Button( 'ID_CHILD_CHECKCLEAR',      checkoutClearWhiteboardMarkChild ).play();
 	// new Button( 'ID_SHEET_ESCORT',          turnWhiteboard ).play();
 	new Button( 'CPC_UPDATE_CHILD_TIME',	showTimelineSelector ).play();
 	new Button( 'ID_GRADE1',                null           ).play();
@@ -182,13 +179,12 @@ function init()
 	new Button( 'ID_GRADE5',                null           ).play();
 	new Button( 'ID_GRADE6',                null           ).play();
 	new Button( 'ID_REPORT',				reportWhiteboard ).play();
-	// new Checkbox('CPC_ESCORT_CHILD', 'ON').play();
-	new Checkbox('CPC_GRADE1', 'OFF', null ).play();
-	new Checkbox('CPC_GRADE2', 'OFF', null ).play();
-	new Checkbox('CPC_GRADE3', 'OFF', null ).play();
-	new Checkbox('CPC_GRADE4', 'OFF', null ).play();
-	new Checkbox('CPC_GRADE5', 'OFF', null ).play();
-	new Checkbox('CPC_GRADE6', 'OFF', null ).play();
+	// new Checkbox('CPC_GRADE1', 'OFF', null ).play();
+	// new Checkbox('CPC_GRADE2', 'OFF', null ).play();
+	// new Checkbox('CPC_GRADE3', 'OFF', null ).play();
+	// new Checkbox('CPC_GRADE4', 'OFF', null ).play();
+	// new Checkbox('CPC_GRADE5', 'OFF', null ).play();
+	// new Checkbox('CPC_GRADE6', 'OFF', null ).play();
 
 
 	var mo = document.getElementById('MODAL_OVERLAY');
@@ -316,6 +312,30 @@ function init()
 	// tmb.addEventListener( 'touchmove',  locateTimelinebar );
 	// tmb.addEventListener( 'mouseup',    locateTimelinebar );
 	// tmb.addEventListener( 'touchend',   locateTimelinebar );
+
+}
+
+//
+//	共通処理をまとめる
+//
+function commonProc(){
+
+	var children = getMarkedChild();
+	var visible  = ( children.length > 0);
+	if ( oNav.opened()){
+		for ( var i=0; i< oNav.frame.childNodes.length; i++ ){
+			var n = oNav.frame.childNodes[i];
+			if ( n.hasAttribute('marked'))
+				n.style.visibility = ( visible )?'visible':'hidden';
+		}
+	}else{
+		for ( var i=0; i< oNav.frame.childNodes.length; i++ ){
+			var n = oNav.frame.childNodes[i];
+			if ( n.hasAttribute('marked'))
+				n.style.visibility = 'hidden';
+		}
+
+	}
 
 }
 
@@ -461,22 +481,6 @@ TimeSelector.prototype = {
 	}
 };
 
-//
-//	タイムラインセレクタ制御
-//
-/*
-function ctlTimelineSelector( cmd, func ){
-	var mots = document.getElementById('MODAL_OVERLAY_TIMESELECTOR');
-	switch ( cmd ){
-		case 'open':
-			mots.style.visibility = 'visible';
-			break;
-		case 'close':
-			mots.style.visibility = 'hidden';
-			break;
-	}
-}
-*/
 
 //
 //	開いているタイムラインコンテキストメニューを閉じる
@@ -653,7 +657,7 @@ function showGuidanceWhiteboard(){
 	 var children = document.getElementById('WHITEBOARD').childNodes;
 	 neverCloseDialog = ( children.length == 0 ) ? true : false;
 	// neverCloseDialog = true;
-	openModalDialog( r, 'NOBUTTON' );
+	openModalDialog( null, r, 'NOBUTTON', null );
 	makeWhiteboardList();
 	document.getElementById('BTN_OPENWHITEBOARD').focus();
 	document.getElementById('whiteboard_day').addEventListener('keydown',
@@ -791,7 +795,7 @@ function saveWhiteboard(){
 		r += '</div>';
 		r += '<button id="BTN_SAVEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="saveWhiteboardHelper();" >Save</button>';
 	r += '</div>';
-	openModalDialog( r, 'NORMAL' );
+	openModalDialog( null, r, 'CANCEL', null );
 }
 
 //
@@ -1040,7 +1044,7 @@ function keyWhiteboard(e){
 		case 46:	//Delete
 			var children = getMarkedChild();
 			if ( children.length != 0)
-				deleteWhiteboardChild('MARK');		//マークしたチャイルドの削除操作 
+				deleteWhiteboardChild();		//マークしたチャイルドの削除操作 
 			break;
 		case 27:	//ESC
 			var mo  = document.getElementById('MODAL_OVERLAY');
@@ -1103,25 +1107,25 @@ function Nav( func ){
 	r += '<div                        class="vh-center nav_icon2" style="position:absolute;top:42px;left:42px;" >';
 		r += '&nbsp;';
 	r += '</div>';
-	r += '<div target="escort"        class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';
+	r += '<div marked="yes" target="escort"        class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';
 		r += '<img width="22px" src="./images/family.png" />';
 	r += '</div>';
 	// r += '<div target="close" class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';	//	Close NAV
 	// 	r += '<img width="16px" src="./images/cancel.png" />';
 	// r += '</div>';
-	r += '<div target="delete"        class="vh-center nav_icon2" style="position:absolute;top:0px;left:42px;" >';	// Delete Mark Child
+	r += '<div marked="yes" target="delete"        class="vh-center nav_icon2" style="position:absolute;top:0px;left:42px;" >';	// Delete Mark Child
 		r += '<img width="22px" src="./images/minus-2.png" />';
 	r += '</div>';
-	r += '<div target="checkout"      class="vh-center nav_icon2" style="position:absolute;top:21px;left:84px;" >';	// Checkout Mark Child
+	r += '<div marked="yes" target="checkout"      class="vh-center nav_icon2" style="position:absolute;top:21px;left:84px;" >';	// Checkout Mark Child
 		r += '<img width="22px" src="./images/check-3.png" />';
 	r += '</div>';
-	r += '<div target="checkoutclear" class="vh-center nav_icon2" style="position:absolute;top:63px;left:84px;" >';	// Checkout Clear Mark Child
+	r += '<div marked="yes" target="checkoutclear" class="vh-center nav_icon2" style="position:absolute;top:63px;left:84px;" >';	// Checkout Clear Mark Child
 		r += '<img width="22px" src="./images/dry-clean.png" />';
 	r += '</div>';
-	r += '<div target="property"      class="vh-center nav_icon2" style="position:absolute;top:21px;left:0px;" >';	// Checkout Mark Child
+	r += '<div marked="yes" target="property"      class="vh-center nav_icon2" style="position:absolute;top:21px;left:0px;" >';	// Checkout Mark Child
 		r += '<img width="22px" src="./images/hexagon.png" />';
 	r += '</div>';
-	r += '<div target="absent" class="vh-center nav_icon2" style="position:absolute;top:63px;left:0px;" >';	// Checkout Clear Mark Child
+	r += '<div marked="yes" target="absent" class="vh-center nav_icon2" style="position:absolute;top:63px;left:0px;" >';	// Checkout Clear Mark Child
 		r += '<img width="22px" src="./images/sleep-2.png" />';
 	r += '</div>';
 	r += '<div target="exchange"   class="vh-center nav_icon2" style="position:absolute;top:105px;left:84px;height:21px;" >';
@@ -1191,9 +1195,11 @@ Nav.prototype = {
 		// this.frame.style.left		= ( ( w / 2 ) - this.size )+ 'px';
 		this.frame.style.left		= '0px';
 		this.frame.style.visibility	= 'visible';
+		commonProc();
 	},
 	close : function(){
 		this.frame.style.visibility	= 'hidden';
+		commonProc();
 	},
 	opened : function(){
 		return ( this.frame.style.visibility == 'visible');
@@ -1202,19 +1208,19 @@ Nav.prototype = {
 		switch ( o.getAttribute('target')) {
 			case 'delete':
 				this.close();
-				deleteWhiteboardMarkChild();
+				deleteWhiteboardChild();
 				break;
 			case 'checkout':
 				this.close();
-				checkoutWhiteboardMarkChild();
+				checkoutWhiteboardChild();
 				break;
 			case 'checkoutclear':
 				this.close();
-				checkoutClearWhiteboardMarkChild();
+				checkoutClearWhiteboardChild();
 				break;
 			case 'escort':
 				this.close();
-				escortWhiteboardMarkChild();
+				escortWhiteboardChild();
 				break;
 			case 'property':
 				this.close();
@@ -1237,7 +1243,7 @@ Nav.prototype = {
 //
 //	モーダルダイアログをオープン
 //
-function openModalDialog( r , option ){
+function openModalDialog( title, r , option, proc ){
 	// タイムセレクタを非表示
 	palleteTimeSelector.close();
 	var mo  = document.getElementById('MODAL_OVERLAY');
@@ -1250,13 +1256,27 @@ function openModalDialog( r , option ){
 		case 'NOBUTTON':
 			f += '';
 			break;
+		case 'OK_CANCEL':
+			f += '<button id="MDL_OK"     type="button"  >OK</button>';
+			f += '<button id="MDL_CANCEL" type="button" onclick="closeModalDialog();" >Cancel</button>';
+			break;
+		case 'CANCEL':
+			f += '<button id="MDL_CANCEL" type="button" onclick="closeModalDialog();" >Cancel</button>';
+			break;
 		case 'NORMAL':
 		default:
-			f += '<button type="button" onclick="closeModalDialog();" >Close</button>';
+			f += '<button id="MDL_CLOSE"  type="button" onclick="closeModalDialog();" >Close</button>';
 			break;
 	}
 	mmf.innerHTML = f;
 	mo.style.visibility = 'visible';
+	if ( proc != null ){
+		document.getElementById('MDL_OK').addEventListener( 'click',
+			function(e){
+				proc();
+				closeModalDialog();
+			}, false );
+	}
 }
 
 //
@@ -1645,7 +1665,7 @@ function signForm()
 	// var children = document.getElementById('WHITEBOARD').childNodes;
 	// neverCloseDialog = ( children.length == 0 ) ? true : false;
 	neverCloseDialog = true;
-	openModalDialog( r, 'NOBUTTON' );
+	openModalDialog( null, r, 'NOBUTTON', null );
 	o = document.getElementById( 'acc_id' );
 	o.focus();
 	
@@ -1893,7 +1913,7 @@ function newChildFormOld(){
 function newChildForm(){
 	var r = '';
 	r += makeChildForm( null );
-	openModalDialog( r, 'NOBUTTON' );
+	openModalDialog( null, r, 'NOBUTTON', null );
 }
 
 //
@@ -1903,7 +1923,7 @@ function propertyChild2( id ){
 	var r = '';
 	var oChild = getChild( id );
 	r += makeChildForm( oChild );
-	openModalDialog( r, 'NORMAL' );
+	openModalDialog( null, r, 'NORMAL', null );
 
 }
 

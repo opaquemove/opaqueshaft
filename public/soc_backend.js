@@ -120,7 +120,7 @@ function clearWhiteboard(){
 	r += '<div style="margin:0 auto;width:110px;">';
 		r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="clearWhiteboardHelper();closeModalDialog();" >Clear</button>';
 	r += '</div>';
-    openModalDialog( r, 'NORMAL' );
+    openModalDialog( null, r, 'CANCEL', null );
     document.getElementById('BTN_CLEARWHITEBOARD').focus();
 
 }
@@ -161,7 +161,7 @@ function reportWhiteboard(){
     r += '</div>';
     r += '<div id="REPORT_LIST" style="width:90%;height:180px;clear:both;margin:0 auto;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
-    openModalDialog( r, 'NORMAL' );
+    openModalDialog( null, r, 'NORMAL', null );
     reportWhiteboardSummary();
     reportWhiteboardDetail();
 }
@@ -320,7 +320,7 @@ function absentWhiteboard(){
     r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += '<button onclick="attendChild();" style="width:180px;height:40px;border:none;background-color:transparent;font-size:24px;background-image:url(./images/entry.png);background-size:30px;background-repeat:no-repeat;background-position:left center;" >Attend</button>';
     r += '</div>';
-    openModalDialog( r, 'NORMAL' );
+    openModalDialog( null, r, 'NORMAL', null );
     absentWhiteboardSummary();
     absentWhiteboardDetail();
 }
@@ -638,7 +638,7 @@ function propertyWhiteboardChild( c ){
         r += "</div>";
 */
         r += "</div>";
-    openModalDialog( r, 'NORMAL' );
+    openModalDialog( null, r, 'NORMAL', null );
     propertyWhiteboardChildHelper( id );
 
 }
@@ -706,30 +706,23 @@ function propertyWhiteboardChildHelper( child_id ){
 //
 //  チャイルドの削除（マーク用ラッパー）
 //
-function deleteWhiteboardMarkChild(){
-    var children = getMarkedChild();
-    if ( children.length == 0 ) return;
-    deleteWhiteboardChild( 'MARK' );
-}
+// function deleteWhiteboardMarkChild(){
+//     var children = getMarkedChild();
+//     if ( children.length == 0 ) return;
+//     deleteWhiteboardChild();
+// }
 
 //
 //  チャイルドの削除
 //  
-function deleteWhiteboardChild( proc_mode ){
+function deleteWhiteboardChild(){
 
     var p = document.getElementById( 'WHITEBOARD');
     
-    switch ( proc_mode ){
-        case 'SINGLE':
-            if ( propChild == null ) return;
-            break;
-        case 'MARK':
-            var children = p.getElementsByClassName('CHILD');
-            if ( children.length == 0){
-                console.log('deleteWhiteboardChild:' + children.length);
-                return;
-            }
-            break;
+    var children = p.getElementsByClassName('CHILD');
+    if ( children.length == 0){
+        console.log('deleteWhiteboardChild:' + children.length);
+        return;
     }
 
     var r = '';
@@ -741,17 +734,10 @@ function deleteWhiteboardChild( proc_mode ){
 	r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
         r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button" ';
         r += ' style="width:130px;height:30px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/minus.png);background-size:24px;background-position:left center;background-repeat:no-repeat;" ';
-        switch( proc_mode ){
-            case 'SINGLE':
-                r += ' onclick="deleteWhiteboardChildSingleHelper();" >';
-                break;
-            case 'MARK':
-                r += ' onclick="deleteWhiteboardChildMarkHelper();"   >';
-                break;
-        }
+        r += ' onclick="deleteWhiteboardChildHelper();"   >';
         r += 'Delete</button>';
 	r += '</div>';
-    openModalDialog( r, 'NOBUTTON' );
+    openModalDialog( null, r, 'NOBUTTON', null );
     document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();
     makeDeleteChildList();
  
@@ -773,19 +759,19 @@ function makeDeleteChildList(){
 //
 //  チャイルドを削除（シングル）
 //
-function deleteWhiteboardChildSingleHelper(){
-    console.log('deleteWhiteboardMarkChildHelper' );
-    closeModalDialog();
-    propChild.parentNode.removeChild( propChild );
-    propChild = null;
-    showWhiteboardChildCount();
-}
+// function deleteWhiteboardChildSingleHelper(){
+//     console.log('deleteWhiteboardMarkChildHelper' );
+//     closeModalDialog();
+//     propChild.parentNode.removeChild( propChild );
+//     propChild = null;
+//     showWhiteboardChildCount();
+// }
 
 //
 //  マークしているチャイルドを削除（非表示処理）
 //
-function deleteWhiteboardChildMarkHelper(){
-    console.log('deleteWhiteboardMarkChildHelper' );
+function deleteWhiteboardChildHelper(){
+    console.log('deleteWhiteboardChildHelper' );
     closeModalDialog();
     var p = document.getElementById( 'WHITEBOARD');
     var c = p.firstChild;
@@ -846,6 +832,7 @@ function markChild( c ) {
     c.setAttribute('marked', 'MARKED' );
     c.style.backgroundColor = '#EEEEEE';
     c.style.color           = 'gray';
+    commonProc();
 }
 
 //
@@ -860,7 +847,7 @@ function unmarkChild( c ) {
     var cMenu = c.lastChild;
     if ( cMenu.hasAttribute('cmenu'))
         c.removeChild(cMenu);
-
+    commonProc();
 }
 
 //  コンテキストメニューが表示されているかをチェック
@@ -935,7 +922,7 @@ function latestWhiteboardChild(){
 //  マークしているチャイルドのエスコートを反転
 //  alone -> escort, escort -> alone
 //
-function escortWhiteboardMarkChild(){
+function escortWhiteboardChild(){
     var children = getMarkedChild();
     if ( children.length == 0 ) return;
     for ( var i=0; i<children.length; i++ ){
@@ -1067,17 +1054,17 @@ function checkoutChild( c, direction ){
 //
 //  チャイルドをチェックアウト(マーク用ラッパー)
 //
-function checkoutWhiteboardMarkChild(){
-    var children = getMarkedChild();
-    if ( children.length == 0 ) return;
-    checkoutWhiteboardChild('MARK');
-}
+// function checkoutWhiteboardMarkChild(){
+//     var children = getMarkedChild();
+//     if ( children.length == 0 ) return;
+//     checkoutWhiteboardChild();
+// }
 
 
 //
 //  チャイルドをチェックアウト
 //
-function checkoutWhiteboardChild( proc_mode ){
+function checkoutWhiteboardChild(){
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'checkout children';
@@ -1094,103 +1081,62 @@ function checkoutWhiteboardChild( proc_mode ){
 	r += '<div style="clear:both;margin:0 auto;width:110px;margin:0 auto;">';
         r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
         r += 'style="font-size:20px;width:160px;height:40px;border:none;background-color:transparent;background-image:url(./images/check.png);background-position:left center;background-size:30px;background-repeat:no-repeat;" ';
-        switch ( proc_mode ){
-            case 'SINGLE':
-                r += 'onclick="checkoutWhiteboardChildSingleHelper();closeModalDialog();" >';
-                break;
-            case 'MARK':
-                r += 'onclick="checkoutWhiteboardChildMarkHelper();closeModalDialog();" >';
-                break;
-        }
+        r += 'onclick="checkoutWhiteboardChildHelper();closeModalDialog();" >';
         r += 'Checkout</button>'
 	r += '</div>';
-    openModalDialog( r, 'NOBUTTON' );
+    openModalDialog( null, r, 'NOBUTTON', null );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
-    switch ( proc_mode ){
-        case 'SINGLE':
-            var id = propChild.getAttribute('child_id');
-            var oChild = getChild( id );
-            var o = document.createElement('DIV');
-            o.style.width = '100%';
-            o.style.height = '30px';
-            o.style.clear = "both";
-            o.style.borderBottom = '1px solid lightgrey';
-            r = '';
-            r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
-            r += '<div style="float:right;width:18px;padding:4px;" >';
-                r += '<input type="radio" id="child_' +  id + '_left" name="child_' + id + '" value="left" >';
-                r += '<label for="child_' + id + '_left" ><img width="14px" src="./images/arrow-right.png" /></label>';
-            r += '</div>';
-            r += '<div style="float:right;width:18px;padding:4px;" >';
-                r += '<input type="radio" id="child_' + id + '_right" name="child_' + id + '" value="right" >';
-                r += '<label for="child_'+ id + '_right" ><img width="14px" src="./images/arrow-left.png" /></label>';
-            r += '</div>';
+    var children = getMarkedChild();
+    for ( var i=0; i<children.length; i++ ){
+        var id = children[i].getAttribute('child_id');
+        var oChild = getChild( id );
+        var o = document.createElement('DIV');
+        o.style.width = '100%';
+        o.style.height = '30px';
+        o.style.clear = "both";
+        o.style.borderBottom = '1px solid lightgrey';
+        r = '';
+        r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
+        r += '<div style="float:right;width:18px;padding:4px;" >';
+            r += '<input type="radio" id="child_' +  id + '_right" name="child_' + id + '" value="right" >';
+            r += '<label for="child_' + id + '_right"  ><img width="14px" src="./images/arrow-right.png" /></label>';
+        r += '</div>';
+        r += '<div style="float:right;width:18px;padding:4px;" >';
+            r += '<input type="radio" id="child_' + id + '_left"   name="child_' + id + '" value="left" >';
+            r += '<label for="child_'+ id + '_left"  ><img width="14px" src="./images/arrow-left.png" /></label>';
+        r += '</div>';
 
-            o.innerHTML = r;
-            imcl.appendChild( o );
-        break;
-        case 'MARK':
-            var children = getMarkedChild();
-            for ( var i=0; i<children.length; i++ ){
-                var id = children[i].getAttribute('child_id');
-                var oChild = getChild( id );
-                var o = document.createElement('DIV');
-                o.style.width = '100%';
-                o.style.height = '30px';
-                o.style.clear = "both";
-                o.style.borderBottom = '1px solid lightgrey';
-                r = '';
-                r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
-                r += '<div style="float:right;width:18px;padding:4px;" >';
-                    r += '<input type="radio" id="child_' +  id + '_right" name="child_' + id + '" value="right" >';
-                    r += '<label for="child_' + id + '_right"  ><img width="14px" src="./images/arrow-right.png" /></label>';
-                r += '</div>';
-                r += '<div style="float:right;width:18px;padding:4px;" >';
-                    r += '<input type="radio" id="child_' + id + '_left"   name="child_' + id + '" value="left" >';
-                    r += '<label for="child_'+ id + '_left"  ><img width="14px" src="./images/arrow-left.png" /></label>';
-                r += '</div>';
-
-                o.innerHTML = r;
-                imcl.appendChild( o );
-            }
-            break;
+        o.innerHTML = r;
+        imcl.appendChild( o );
     }
 }
 
 //
 //  チェックアウトヘルパーラッパー
 //
-function checkoutWhiteboardChildSingleHelper(){
-    checkoutWhiteboardChildHelper( 'SINGLE' );
-}
+// function checkoutWhiteboardChildSingleHelper(){
+//     checkoutWhiteboardChildHelper( 'SINGLE' );
+// }
 
 //
 //  チェックアウトヘルパーラッパー
 //
-function checkoutWhiteboardChildMarkHelper(){
-    checkoutWhiteboardChildHelper( 'MARK' );
-}
+// function checkoutWhiteboardChildMarkHelper(){
+//     checkoutWhiteboardChildHelper();
+// }
 
 
 //
 //  チャイルドをチェックアウト（ヘルパー）
 //
-function checkoutWhiteboardChildHelper( proc_mode ){
-    switch ( proc_mode ){
-        case 'SINGLE':
-            if ( propChild == null ) return;
-            checkoutChild( propChild, null );
-            break;
-        case 'MARK':
-            var children = getMarkedChild();
-            for ( var i=0; i<children.length; i++ ){
-                var c = children[i];
-                var id = c.getAttribute('child_id')
-                //alert( '[' + document.forms['directions'].elements['child_' + id].value + ']' );
-                var direction = document.forms['directions'].elements['child_' + id].value;
-                checkoutChild( children[i], direction );
-            }
-            break;
+function checkoutWhiteboardChildHelper(){
+    var children = getMarkedChild();
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        var id = c.getAttribute('child_id')
+        //alert( '[' + document.forms['directions'].elements['child_' + id].value + ']' );
+        var direction = document.forms['directions'].elements['child_' + id].value;
+        checkoutChild( children[i], direction );
     }
 
 }
@@ -1198,17 +1144,17 @@ function checkoutWhiteboardChildHelper( proc_mode ){
 //
 //  チャイルドをチェックアウトクリア(シングル用ラッパー)
 //
-function checkoutClearWhiteboardSingleChild(){
-    checkoutClearWhiteboardChild('SINGLE');
-}
+// function checkoutClearWhiteboardSingleChild(){
+//     checkoutClearWhiteboardChild('SINGLE');
+// }
 //
 //  チャイルドをチェックアウトクリア(マーク用ラッパー)
 //
-function checkoutClearWhiteboardMarkChild(){
-    var children = getMarkedChild();
-    if ( children.length == 0 ) return;
-    checkoutClearWhiteboardChild('MARK');
-}
+// function checkoutClearWhiteboardMarkChild(){
+//     var children = getMarkedChild();
+//     if ( children.length == 0 ) return;
+//     checkoutClearWhiteboardChild();
+// }
 
 
 //
@@ -1227,7 +1173,7 @@ function checkoutClearWhiteboardMarkChild(){
 //
 //  チャイルドをチェックアウトクリア
 //
-function checkoutClearWhiteboardChild( proc_mode ){
+function checkoutClearWhiteboardChild(){
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'checkout clear children';
@@ -1237,50 +1183,25 @@ function checkoutClearWhiteboardChild( proc_mode ){
 	r += '<div style="margin:0 auto;width:110px;margin:0 auto;">';
         r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
         r += 'style="width:140px;height:30px;font-size:12px;" ';
-        switch ( proc_mode ){
-            case 'SINGLE':
-                r += 'onclick="checkoutClearWhiteboardChildSingleHelper();closeModalDialog();" >';
-                break;
-            case 'MARK':
-                r += 'onclick="checkoutClearWhiteboardChildMarkHelper();closeModalDialog();" >';
-                break;
-        }
+        r += 'onclick="checkoutClearWhiteboardChildHelper();closeModalDialog();" >';
         r += '<img width="24px" src="./images/close.png" />Checkout Clear</button>';
 	r += '</div>';
-    openModalDialog( r, 'NOBUTTON' );
+    openModalDialog( null, r, 'NOBUTTON', null );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
-    switch ( proc_mode ){
-        case 'SINGLE':
-            var id = propChild.getAttribute('child_id');
-            var oChild = getChild( id );
-            var o = document.createElement('DIV');
-            o.style.width = '100%';
-            o.style.height = '40px';
-            o.style.clear = "both";
-            o.style.borderBottom = '1px solid lightgrey';
-            r = '';
-            r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
-    
-            o.innerHTML = r;
-            imcl.appendChild( o );
-        break;
-        case 'MARK':
-            var children = getMarkedChild();
-            for ( var i=0; i<children.length; i++ ){
-                var id = children[i].getAttribute('child_id');
-                var oChild = getChild( id );
-                var o = document.createElement('DIV');
-                o.style.width = '100%';
-                o.style.height = '40px';
-                o.style.clear = "both";
-                o.style.borderBottom = '1px solid lightgrey';
-                r = '';
-                r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
-        
-                o.innerHTML = r;
-                imcl.appendChild( o );
-            }
-            break;
+    var children = getMarkedChild();
+    for ( var i=0; i<children.length; i++ ){
+        var id = children[i].getAttribute('child_id');
+        var oChild = getChild( id );
+        var o = document.createElement('DIV');
+        o.style.width = '100%';
+        o.style.height = '40px';
+        o.style.clear = "both";
+        o.style.borderBottom = '1px solid lightgrey';
+        r = '';
+        r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
+
+        o.innerHTML = r;
+        imcl.appendChild( o );
     }
 }
 
@@ -1288,17 +1209,16 @@ function checkoutClearWhiteboardChild( proc_mode ){
 //
 //  Childをチェックアウトクリア（帰宅解除）:single
 //
-function checkoutClearWhiteboardChildSingleHelper(){
-    if ( ! propChild ) return;
-    checkoutClearChild( propChild );
-    showWhiteboardChildCountCheckout();
-
-}
+// function checkoutClearWhiteboardChildSingleHelper(){
+//     if ( ! propChild ) return;
+//     checkoutClearChild( propChild );
+//     showWhiteboardChildCountCheckout();
+// }
 
 //
 //  Childをチェッククリア（帰宅解除）:mark
 //
-function checkoutClearWhiteboardChildMarkHelper(){
+function checkoutClearWhiteboardChildHelper(){
 
     var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
@@ -1405,7 +1325,7 @@ function propertyAccount(){
     r += "</form>";
     r += "</div>";
 
-    openModalDialog( r, 'NORMAL' );
+    openModalDialog( null, r, 'NORMAL', null );
 
 }
 
