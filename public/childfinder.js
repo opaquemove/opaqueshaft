@@ -17,9 +17,17 @@ function childFinder( e ){
             r += '<div style="height:19px;padding:2px;border-bottom:1px solid lightgrey;" >';
             //    r += 'keyword:<span id="HOGE" ></span>';
                 r += '<div style="float:left;width:19px;height:19px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+                r += '<div id="BTN_CLOSE_FINDER_AREA" style="float:right;width:19px;height:19px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
             r += '</div>';
             r += '<div id="FIND_CHILD_LST" ></div>';
             m.innerHTML = r;
+            new Button( 'BTN_CLOSE_FINDER_AREA',
+                function(e){
+                     document.getElementById('TXT_KEYWORD').value = '';
+                     var p = document.getElementById('CHILD_FINDER');
+                     var fa = document.getElementById('FINDER_AREA');
+                     p.removeChild( fa );                 
+                } ).play();
             fitting();
         }
     } else {
@@ -138,6 +146,7 @@ function findWhiteboardChild( parent, keyword ){
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+        var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText
         //child_name      = child_name.toLowerCase();
         var kana        = ( c.getAttribute('kana') != null )? c.getAttribute('kana') : '';
     
@@ -145,7 +154,14 @@ function findWhiteboardChild( parent, keyword ){
              kana.indexOf(keyword.toLowerCase(), 0, keyword.length ) == 0  ){
             var o = document.createElement('DIV');
             o.innerText = child_name;
-            parent.appendChild( o );
+            var cc = parent.appendChild( o );
+            cc.addEventListener( 'click', 
+                function (e){
+                    var child_name = e.target.innerText;
+                    var h = estimate.substr(0, 2 );
+                    var wbf = document.getElementById('WHITEBOARD_FRAME');
+                    wbf.scrollTop = ( h - 8 ) * 400;
+                } );
         }
     }
 }
