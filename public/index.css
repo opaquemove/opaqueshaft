@@ -17,6 +17,9 @@ BODY{
 BUTTON{
 	color:				darkgray;
 }
+BUTTON:focus{
+	outline:			none;
+}
 
 /*
 BUTTON IMG {
@@ -40,7 +43,12 @@ INPUT[type=radio]:checked + label{
 }
 INPUT[type=text]:focus{
 	outline:			none;
-	background-color:	#darkgray;
+	background-color:	transparent;
+/*	border-bottom:		1px solid red; */
+}
+INPUT[type=password]:focus{
+	outline:			none;
+	background-color:	transparent;
 /*	border-bottom:		1px solid red; */
 }
 

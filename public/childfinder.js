@@ -139,7 +139,8 @@ function findWhiteboardChild( parent, keyword ){
         var c = children[i];
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
         //child_name      = child_name.toLowerCase();
-        var kana        = c.getAttribute('kana');
+        var kana        = ( c.getAttribute('kana') != null )? c.getAttribute('kana') : '';
+    
         if ( child_name.toLowerCase().indexOf( keyword.toLowerCase(), 0, keyword.length ) == 0 ||
              kana.indexOf(keyword.toLowerCase(), 0, keyword.length ) == 0  ){
             var o = document.createElement('DIV');

@@ -1673,7 +1673,7 @@ function signForm()
 		r += "<div style='margin:10px auto;width:210px;' >";
 			r += "<form name='sign_form' onsubmit='return false;' >";
 			r += "<div>ID:</div>";
-			r += "<div><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 /></div>";
+			r += "<div><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
 			r += "<div style='padding-top:20px;' >Password:</div>";
 			r += "<div><input style='width:200px;height:18px;' type='password' name='pwd' tabindex=2 /></div>";
 			r += "<div style='padding-top:20px;text-align:center;' >";
