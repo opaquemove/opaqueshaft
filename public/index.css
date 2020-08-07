@@ -38,6 +38,11 @@ INPUT[type=radio]{
 INPUT[type=radio]:checked + label{
 	border-bottom:		2px solid red;
 }
+INPUT[type=text]:focus{
+	outline:			none;
+	background-color:	#darkgray;
+/*	border-bottom:		1px solid red; */
+}
 
 #MODAL_OVERLAY{
 	z-index:			70000;
@@ -267,7 +272,28 @@ INPUT[type=radio]:checked + label{
 	background-color:		transparent;
 	border:					none;
 }
+#FINDER_AREA{
+	position:				relative;
+	top:					12px;
+	left:					-88px;
+	width:					220px;
+	height:					360px;
+	color:					gray;
+	background-color:		#FEFEFE;
+	text-align:				left;
+	font-size:				14px;
+	border:					1px solid lightgrey;
+	padding:				2px;
+	z-index:				50000;
 
+}
+#FIND_CHILD_LST{
+	clear:					both;
+	width:					100%;
+	height:					336px;
+	border:					1px solid lightgrey;
+	overflow:				scroll;
+}
 #WHITEBOARD_DAY_FRAME{
 	width:					80px;
 	height:					30px;

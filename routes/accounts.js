@@ -100,6 +100,18 @@ router.post('/sign', function(req, res, next ){
 //  チャイルド関連
 //
 
+//
+//  チャイルドリスト取得
+//
+router.post('/childfind', function(req, res, next ){
+    var keyword = req.body.keyword;
+    console.log('childfind:' + keyword );
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    db.any( "SELECT * FROM children WHERE kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ORDER BY child_grade ASC" )
+      .then( rows => {
+            res.json( rows );
+      });
+});
 
 //
 //  チャイルドリスト取得

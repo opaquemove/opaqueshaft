@@ -5,40 +5,98 @@
 function childFinder( e ){
     var tk = document.getElementById('TXT_KEYWORD');
     var keyword = tk.value;
-    var fa = document.getElementById('FINDER_AREA');
     var p = document.getElementById('CHILD_FINDER');
+    var fa = document.getElementById('FINDER_AREA');
     if ( keyword  != '' ){
-        if ( fa == null )
+        if ( fa == null )   //  表示エリアなし
         {
             var o = document.createElement('DIV');
             o.setAttribute( 'id', 'FINDER_AREA');
-            o.style.position		= 'relative';
-            o.style.padding			= '2px';
-            o.style.top             = '12px';
-            o.style.left            = '-84px';
-            o.style.width           = '220px';
-            o.style.height          = '140px';
-            o.style.color			= ' gray';
-            o.style.backgroundColor = '#EEEEEE';
-            o.style.textAlign		='left';
-            o.style.fontSize		= '14px';
-            o.style.zIndex			= 50000;
             var m = p.appendChild( o );
             var r = '';
-            r += '<div>keyword:<span id="HOGE" ></span></div>';
-
+            r += '<div style="height:19px;padding:2px;border-bottom:1px solid lightgrey;" >';
+            //    r += 'keyword:<span id="HOGE" ></span>';
+                r += '<div style="float:left;width:19px;height:19px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+            r += '</div>';
+            r += '<div id="FIND_CHILD_LST" ></div>';
             m.innerHTML = r;
         }
     } else {
-        if ( fa != null )
+        if ( fa != null )   //  表示エリアあれば削除
         {
             p.removeChild( fa );
         }
     }
-    if ( fa != null ){
-        var hoge = document.getElementById('HOGE');
-        hoge.innerText = keyword;
-    }
+    // if ( fa != null ){
+    //     var hoge = document.getElementById('HOGE');
+    //     if ( hoge == null ) return;
+    //     hoge.innerText = keyword;
+    // }
+
+
+	r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				var fcl = document.getElementById( 'FIND_CHILD_LST' );
+				if ( fcl != null ) fcl.innerText = 'access...';
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+                    var result = JSON.parse( xmlhttp.responseText );
+                    
+					//r += xmlhttp.responseText;
+                    var fcl = document.getElementById('FIND_CHILD_LST');
+                    if ( fcl == null ) return;
+					fcl.innerHTML = '';
+					for ( var i=0; i<result.length; i++ ){
+                        var child_id = result[i].child_id;
+                        var child_name = result[i].child_name;
+                        var c = document.createElement('DIV');
+                        c.setAttribute("child",     "yes");
+                        c.setAttribute("child_id",  child_id );
+                        c.setAttribute("id",        "c_1");
+                        //c.setAttribute("class",     "PALLETE_CHILD");
+                        c.setAttribute("draggable", "true");
+                        c.style.clear           = 'both';
+                        c.style.width           = '100%';
+                        c.style.height          = '24px';
+                        c.style.backgroundColor = '';
+                        c.style.borderBottom    = '1px solid lightgray';
+                        //c.style.borderRight = arChildGrade[ oChild.child_grade ];
+                        c.style.float           = 'left';
+                        r = '';
+                        r += '<div style="height:20px;font-size:12px;padding-left:2px;">';
+                            r += child_name;
+                        r += '</div>';
+                        c.innerHTML = r;
+                        var cc = fcl.appendChild( c );
+                        cc.addEventListener('dragstart',
+                        function(e) {
+                            dndOffsetX = e.offsetX;
+                            dndOffsetY = e.offsetY;
+                            console.log( e.dataTransfer );
+                            console.log('offsetY:' + dndOffsetY + ' OffsetX:' + dndOffsetX );
+                            e.dataTransfer.setData('text', e.target.getAttribute( 'child_id' ) );
+                        } );
+                                                                            
+					}
+					//o.innerHTML = r;
+				} else{
+					document.getElementById('HISTORY_LST').innerText = xmlhttp.status;
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/childfind", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'keyword=' + keyword );
+
+	} catch ( e ) { alert( e );}
 
 }
 
