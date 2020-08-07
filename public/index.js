@@ -136,7 +136,7 @@ function init()
 //			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
 			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
 				 e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
-				 oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
+				 oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade );
 			dndOffsetX = 0;
 			dndOffsetY = 0;
 			showWhiteboardChildCount();
@@ -1048,7 +1048,7 @@ function locateWhiteboard( e ){
 function keyWhiteboard(e){
 	//e.preventDefault();
 	var icc = document.getElementById('ID_CHILD_COORDINATE' );
-	icc.innerText = 'Key:' + e.keyCode + ' tag:' + e.target.tagName;
+	icc.innerText = 'Ky:' + e.keyCode + ' tg:' + e.target.tagName;
 	switch ( e.keyCode ){
 		case 46:	//Delete
 			var children = getMarkedChild();
@@ -1333,6 +1333,18 @@ function fitting(){
 		// oNav.frame.style.left	= ( ( w / 2 ) - ( oNav.frame.offsetWidth  / 2 ) ) + 'px';	
 		oNav.frame.style.left	= '0px';
 	}
+
+	// FIND_AREAリロケーション
+	var fa = document.getElementById('FINDER_AREA');
+	if ( fa != null ){
+		fa.style.height = wbf.style.height;
+		// console.log('fa:' + fa.style.height );
+		var fcl = document.getElementById('FIND_CHILD_LST');
+		if ( fcl != null )
+			fcl.style.height = ( parseInt( fa.style.height ) - 24 ) + 'px';
+		// console.log('fcl:' + fcl.style.height );
+	}
+
 
 }
 
@@ -1890,7 +1902,7 @@ function dragPalleteChild( hm ){
 			if ( alreadyExistChildOnWhiteboard( id ) ) continue;
 			var oChild = getChild( id );
 			if ( oChild != null ){
-				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.child_type, oChild.child_grade );
+				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade );
 				cursor++;
 			}
 			cpc.childNodes[i].style.color = '';

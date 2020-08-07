@@ -20,11 +20,13 @@ function childFinder( e ){
             r += '</div>';
             r += '<div id="FIND_CHILD_LST" ></div>';
             m.innerHTML = r;
+            fitting();
         }
     } else {
         if ( fa != null )   //  表示エリアあれば削除
         {
             p.removeChild( fa );
+            return;
         }
     }
     // if ( fa != null ){
@@ -33,6 +35,34 @@ function childFinder( e ){
     //     hoge.innerText = keyword;
     // }
 
+    var fcl = document.getElementById( 'FIND_CHILD_LST' );
+    fcl.innerHTML = '';
+
+    //  WHITEBOARD内を検索
+    var o = document.createElement('DIV');
+    o.style.color           = 'gray';
+    o.style.backgroundColor = 'transparent';
+    o.style.fontSize        = '10px';
+    o.style.borderBottom    = '1px solid lightgrey';
+    o.style.padding         = '2px 2px 0px 0px';
+    o.style.marginBottom    = '0px';
+    o.style.clear           = 'both';
+    o.innerHTML             = '<div style="float:reft;width:80px;color:snow;background-color:red;" >Whiteboard...</div>';
+    fcl.appendChild( o );
+
+    findWhiteboardChild( fcl, keyword );
+
+    //  childrenテーブル検索
+    var o = document.createElement('DIV');
+    o.style.color           = 'gray';
+    o.style.backgroundColor = 'transparent';
+    o.style.fontSize        = '10px';
+    o.style.borderBottom    = '1px solid lightgrey';
+    o.style.padding         = '2px 2px 0px 0px';
+    o.style.marginBottom    = '0px';
+    o.style.clear           = 'both';
+    o.innerHTML             = '<div style="float:reft;width:80px;color:snow;background-color:red;" >Children...</div>';
+    fcl.appendChild( o );
 
 	r = '';
 	var xmlhttp = new XMLHttpRequest();
@@ -42,7 +72,7 @@ function childFinder( e ){
 			case 2://header received
 			case 3://loading
 				var fcl = document.getElementById( 'FIND_CHILD_LST' );
-				if ( fcl != null ) fcl.innerText = 'access...';
+				//if ( fcl != null ) fcl.innerText = 'access...';
 				break;
 			case 4://done
 				if ( xmlhttp.status == 200 ){
@@ -51,7 +81,7 @@ function childFinder( e ){
 					//r += xmlhttp.responseText;
                     var fcl = document.getElementById('FIND_CHILD_LST');
                     if ( fcl == null ) return;
-					fcl.innerHTML = '';
+					//fcl.innerHTML = '';
 					for ( var i=0; i<result.length; i++ ){
                         var child_id = result[i].child_id;
                         var child_name = result[i].child_name;
@@ -98,6 +128,25 @@ function childFinder( e ){
 
 	} catch ( e ) { alert( e );}
 
+}
+
+//
+//
+//
+function findWhiteboardChild( parent, keyword ){
+    var children = document.getElementById('WHITEBOARD').childNodes;
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+        //child_name      = child_name.toLowerCase();
+        var kana        = c.getAttribute('kana');
+        if ( child_name.toLowerCase().indexOf( keyword.toLowerCase(), 0, keyword.length ) == 0 ||
+             kana.indexOf(keyword.toLowerCase(), 0, keyword.length ) == 0  ){
+            var o = document.createElement('DIV');
+            o.innerText = child_name;
+            parent.appendChild( o );
+        }
+    }
 }
 
 //
