@@ -557,12 +557,47 @@ Tile.prototype = {
 	},
 	open : function(){
 		this.frame.style.visibility = 'visible';
+		var children 	= document.getElementById('WHITEBOARD').childNodes;
+		var c_child 	= children.length;
+		var c_checkout 	= 0;
+		for ( var i=0; i<children.length; i++ ){
+			var c = children[i];
+			if ( c.hasAttribute('checkout')) c_checkout++;
+		}
+		//console.log(c_child + ',' + c_checkout );
+		var progress_ratio =  70;
+		console.log( progress_ratio );
+	//	this.progress( progress_ratio );
 	},
 	close : function(){
 		this.frame.style.visibility = 'hidden';
+		var mt3 = document.getElementById('MODAL_TILE3');
+		mt3.innerHTML = '';
 	},
 	opened : function(){
 		return ( this.frame.style.visibility == 'visible' );
+	},
+	progress : function( progress_ratio ){
+		var mt3 = document.getElementById('MODAL_TILE3');
+		var r = '';
+		r += '<ul class="progress" >';
+			r += '<li data-name="Checkout Ratio" data-percent="100%" >';
+				r += '<svg  viewBox="-10 -10 220 220">';
+					r += '<g fill="none" stroke-width="3" transform="translate(100,100)">';
+						r += '<path d="M 0,-100 A 100,100 0 0,1 86.6,-50" stroke="url(#cl1)"/>';
+						r += '<path d="M 86.6,-50 A 100,100 0 0,1 86.6,50" stroke="url(#cl2)"/>';
+						r += '<path d="M 86.6,50 A 100,100 0 0,1 0,100" stroke="url(#cl3)"/>';
+						r += '<path d="M 0,100 A 100,100 0 0,1 -86.6,50" stroke="url(#cl4)"/>';
+						r += '<path d="M -86.6,50 A 100,100 0 0,1 -86.6,-50" stroke="url(#cl5)"/>';
+						r += '<path d="M -86.6,-50 A 100,100 0 0,1 0,-100" stroke="url(#cl6)"/>';
+					r += '</g>';
+				r += '</svg>';
+				r += '<svg viewBox="-10 -10 220 220">';
+					r += '<path d="M200,100 C200,44.771525 155.228475,0 100,0 C44.771525,0 0,44.771525 0,100 C0,155.228475 44.771525,200 100,200 C155.228475,200 200,155.228475 200,100 Z" stroke-dashoffset="81" />';
+				r += '</svg>';
+			r += '</li>';
+		r += '</ul>';
+		mt3.innerHTML = r;
 	}
 }
 

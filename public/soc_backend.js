@@ -167,7 +167,7 @@ function reportWhiteboard(){
 }
 
 //
-//
+//  タイル表示制御
 //
 function showTile(){
 
