@@ -59,6 +59,7 @@
 		<div id="ID_ON_SCROLL"                       class="status_column" style="width:70px;" ></div>
 		
 		<div id="ID_REPORT"                          class="sheet-button">Report</div>
+		<div id="ID_TILE"                            class="sheet-button">Tile</div>
 		<div id="ID_GRADE6"       >●</div>
 		<div id="ID_GRADE5"       >●</div>
 		<div id="ID_GRADE4"       >●</div>
@@ -134,6 +135,35 @@
 			</div>
 			<div             class="vh-center" style="float:left;width:50px;height:50px;" >&nbsp;</div>
 		</div>
+	</div>
+
+	<div id="MODAL_OVERLAY_TILE" class="not_select">
+		<div id="MODAL_TILE1" ></div>
+		<div id="MODAL_TILE2" ></div>
+		<div id="MODAL_TILE3" >
+			<ul class="progress" >
+				<!--子要素にdata属性でテキストとパーセントを設定-->
+					<li id="ID_CHECKOUT_RATIO" data-name="Checkout Ratio" data-percent="17%" >
+					<!--グラデーション付きのプログレスバー-->
+					<svg  viewBox="-10 -10 220 220">
+						<g fill="none" stroke-width="3" transform="translate(100,100)">
+							<path d="M 0,-100 A 100,100 0 0,1 86.6,-50" stroke="url(#cl1)"/>
+							<path d="M 86.6,-50 A 100,100 0 0,1 86.6,50" stroke="url(#cl2)"/>
+							<path d="M 86.6,50 A 100,100 0 0,1 0,100" stroke="url(#cl3)"/>
+							<path d="M 0,100 A 100,100 0 0,1 -86.6,50" stroke="url(#cl4)"/>
+							<path d="M -86.6,50 A 100,100 0 0,1 -86.6,-50" stroke="url(#cl5)"/>
+							<path d="M -86.6,-50 A 100,100 0 0,1 0,-100" stroke="url(#cl6)"/>
+						</g>
+					</svg>
+					<svg viewBox="-10 -10 220 220">
+							<path d="M200,100 C200,44.771525 155.228475,0 100,0 C44.771525,0 0,44.771525 0,100 C0,155.228475 44.771525,200 100,200 C155.228475,200 200,155.228475 200,100 Z" stroke-dashoffset="81"></path>
+					</svg>
+					</li>
+			</ul>
+			
+		</div>
+	</div>
+
 <!--
 	<div id="MODAL_TIMESELECTOR2" >
 	</div>

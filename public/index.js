@@ -29,6 +29,8 @@ var neverCloseDialog = false;
 
 var palleteTimeSelector = null;
 
+var oTile				= null;
+
 window.onload = init;
 window.onresize = fitting;
 
@@ -180,6 +182,8 @@ function init()
 	new Button( 'ID_GRADE5',                null           ).play();
 	new Button( 'ID_GRADE6',                null           ).play();
 	new Button( 'ID_REPORT',				reportWhiteboard ).play();
+	new Button( 'ID_TILE',					showTile ).play();
+
 	// new Checkbox('CPC_GRADE1', 'OFF', null ).play();
 	// new Checkbox('CPC_GRADE2', 'OFF', null ).play();
 	// new Checkbox('CPC_GRADE3', 'OFF', null ).play();
@@ -198,6 +202,12 @@ function init()
 	//
 	palleteTimeSelector = new TimeSelector( dragPalleteChild );
 	palleteTimeSelector.play();
+
+	//
+	//	タイル初期化
+	//
+	oTile = new Tile( null );
+	oTile.play();
 
 
 	ctlToolbar();
@@ -514,6 +524,48 @@ function alreadyTimelineContextMenu( o ){
 
 
 }
+
+//
+//	タイルのプロトタイプ
+//
+function Tile( func ){
+	this.frame 			= null;
+	this.func			= func;
+	this.touchdevice	= null;
+	this.evtStart		= null;
+	this.evtMove		= null;
+	this.evtEnd			= null;
+}
+Tile.prototype = {
+	play : function(){
+		this.frame			= document.getElementById('MODAL_OVERLAY_TILE');
+		this.touchdevice	= ( 'ontouchend' in document );
+
+		switch ( this.touchdevice ){
+			case true:		// touch device( iPad/iPhone/Android/Tablet )
+				this.evtStart	= 'touchstart';
+				this.evtMove	= 'touchmove';
+				this.evtEnd		= 'touchend';
+				break;
+			case false:	// pc
+				this.evtStart	= 'mousedown';
+				this.evtMove	= 'mousemove';
+				this.evtEnd		= 'mouseup';
+				break;
+		}
+
+	},
+	open : function(){
+		this.frame.style.visibility = 'visible';
+	},
+	close : function(){
+		this.frame.style.visibility = 'hidden';
+	},
+	opened : function(){
+		return ( this.frame.style.visibility == 'visible' );
+	}
+}
+
 
 //
 //	タイムライン・バー操作
@@ -974,68 +1026,11 @@ function locateWhiteboard( e ){
 			}
 
 			if ( wb_touch_cnt_max < 2){
-				if ( document.getElementById('WHITEBOARD') == e.target )	resetChildMark();
-			} else {
-				//
-				//	NAVI
-				//
-/*
-				var nav = document.getElementById('NAVI');
-				if ( nav != null ){
-					nav.parentNode.removeChild( nav );
-					wb_touch_cnt_max = 0;
-					return;
+				if ( document.getElementById('WHITEBOARD') == e.target ){
+					resetChildMark();
+					closeChildFinder();
 				}
-
-				var m = document.createElement('DIV');
-				m.setAttribute('id', 'NAVI' );
-				m.style.position		= 'absolute';
-				m.style.top 			= ( event.pageY - 60 ) + 'px';
-				m.style.left			= ( event.pageX - 60 )+ 'px';
-				m.style.width			= '120px';
-				m.style.height			= '120px';
-				m.style.color			= 'snow';
-				m.style.backgroundColor	= 'transparent';
-				m.style.fontSize		= '14px';
-				m.style.zIndex			= 80000;
-				var r = '';
-				r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >1</div>';
-				r += '<div class="vh-center" style="float:left;width:40px;height:40px;background:red;" >2</div>';
-				r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >3</div>';
-				r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >4</div>';
-				r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >NAV</div>';
-				r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >6</div>';
-				r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:transparent;" >7</div>';
-				r += '<div class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >8</div>';
-				r += '<div target="close" class="vh-center" style="float:left;width:40px;height:40px;background-color:red;" >';
-					r += '<img width="40px" src="./images/close.png" />';
-				r += '</div>';
-				m.innerHTML				= r;
-				var nav = document.body.appendChild( m );
-				nav.addEventListener('mouseup',
-					function(e){
-						console.log('nav close');
-						var o = e.target;
-						while ( true ){
-							if ( o.parentNode == nav ) break;
-							else o = o.parentNode;
-						}
-						switch ( o.getAttribute('target')) {
-							case 'close':
-								var n = document.getElementById('NAVI');
-								if ( n != null ){
-									n.parentNode.removeChild( n );
-									wb_touch_cnt_max = 0;
-								}
-								break;
-						}
-					}
-				);
-				// nav.addEventListener( 'mouseleave',
-				// 	function(e){
-				// 		e.target.parentNode.removeChild( e.target );
-				// 	});
-*/
+			} else {
 			}
 
 			break;

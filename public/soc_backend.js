@@ -167,6 +167,17 @@ function reportWhiteboard(){
 }
 
 //
+//
+//
+function showTile(){
+
+    if ( oTile.opened())    oTile.close();
+        else                oTile.open();
+
+}
+
+
+//
 //レポーティングサマリー
 //
 function reportWhiteboardSummary(){

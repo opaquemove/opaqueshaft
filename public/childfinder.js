@@ -21,19 +21,13 @@ function childFinder( e ){
             r += '</div>';
             r += '<div id="FIND_CHILD_LST" ></div>';
             m.innerHTML = r;
-            new Button( 'BTN_CLOSE_FINDER_AREA',
-                function(e){
-                     document.getElementById('TXT_KEYWORD').value = '';
-                     var p = document.getElementById('CHILD_FINDER');
-                     var fa = document.getElementById('FINDER_AREA');
-                     p.removeChild( fa );                 
-                } ).play();
+            new Button( 'BTN_CLOSE_FINDER_AREA', closeChildFinder ).play();
             fitting();
         }
     } else {
         if ( fa != null )   //  表示エリアあれば削除
         {
-            p.removeChild( fa );
+            closeChildFinder();
             return;
         }
     }
@@ -100,6 +94,7 @@ function childFinder( e ){
                         //c.setAttribute("class",     "PALLETE_CHILD");
                         c.setAttribute("draggable", "true");
                         c.style.clear           = 'both';
+                        c.style.fontSize        = '12px';
                         c.style.width           = '100%';
                         c.style.height          = '24px';
                         c.style.backgroundColor = '';
@@ -107,7 +102,7 @@ function childFinder( e ){
                         //c.style.borderRight = arChildGrade[ oChild.child_grade ];
                         c.style.float           = 'left';
                         r = '';
-                        r += '<div style="height:20px;font-size:12px;padding-left:2px;">';
+                        r += '<div style="height:20px;padding-left:2px;">';
                             r += child_name;
                         r += '</div>';
                         c.innerHTML = r;
@@ -139,7 +134,7 @@ function childFinder( e ){
 }
 
 //
-//
+//  WHITEBOARD内のチャイルドの検索
 //
 function findWhiteboardChild( parent, keyword ){
     var children = document.getElementById('WHITEBOARD').childNodes;
@@ -153,7 +148,14 @@ function findWhiteboardChild( parent, keyword ){
         if ( child_name.toLowerCase().indexOf( keyword.toLowerCase(), 0, keyword.length ) == 0 ||
              kana.indexOf(keyword.toLowerCase(), 0, keyword.length ) == 0  ){
             var o = document.createElement('DIV');
-            o.innerText = child_name;
+            o.style.fontSize    = '12px';
+            o.style.height      = '20px';
+
+            var r = '';
+            r += '<div style="float:left;"  >' + child_name + '</div>';
+            r += '<div style="float:right;" >' + estimate   + '</div>';
+            o.innerHTML = r;
+
             var cc = parent.appendChild( o );
             cc.addEventListener( 'click', 
                 function (e){
@@ -166,6 +168,17 @@ function findWhiteboardChild( parent, keyword ){
     }
 }
 
+//
+//  チャイルドファインダーをクローズ
+//
+function closeChildFinder(){
+    document.getElementById('TXT_KEYWORD').value = '';
+    var p = document.getElementById('CHILD_FINDER');
+    var fa = document.getElementById('FINDER_AREA');
+    if ( fa != null )
+        p.removeChild( fa );                 
+
+}
 //
 //	チャイルドファインダー
 //
