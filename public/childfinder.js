@@ -40,7 +40,7 @@ function childFinder( e ){
     var fcl = document.getElementById( 'FIND_CHILD_LST' );
     fcl.innerHTML = '';
 
-    //  WHITEBOARD内を検索
+    //  WHITEBOARD / WHITEBOARD_ABSENT内を検索
     var o = document.createElement('DIV');
     o.style.color           = 'gray';
     o.style.backgroundColor = 'transparent';
@@ -138,8 +138,14 @@ function childFinder( e ){
 //
 function findWhiteboardChild( parent, keyword ){
     var children = document.getElementById('WHITEBOARD').childNodes;
+    findWhiteboardChildHelper( parent, keyword, children, false );
+
+    var absents = document.getElementById('WHITEBOARD_ABSENT').childNodes;
+    findWhiteboardChildHelper( parent, keyword, absents, true );
+/*
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
+        var child_id = c.getAttribute('child_id');
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
         var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText
         //child_name      = child_name.toLowerCase();
@@ -148,6 +154,7 @@ function findWhiteboardChild( parent, keyword ){
         if ( child_name.toLowerCase().indexOf( keyword.toLowerCase(), 0, keyword.length ) == 0 ||
              kana.indexOf(keyword.toLowerCase(), 0, keyword.length ) == 0  ){
             var o = document.createElement('DIV');
+            o.setAttribute( 'child_id', child_id );
             o.style.fontSize    = '12px';
             o.style.height      = '20px';
 
@@ -159,13 +166,82 @@ function findWhiteboardChild( parent, keyword ){
             var cc = parent.appendChild( o );
             cc.addEventListener( 'click', 
                 function (e){
-                    var child_name = e.target.innerText;
+                    var c = e.target;
+                    while ( true ){
+                        if ( c.hasAttribute('child_id') ) break;
+                        c = c.parentNode;
+                    }
+                    //alert( c.getAttribute('child_id'));
+                    var c = scanWhiteboardChild( child_id );
+                    if ( c == null ) { console.log( 'child_id:' + child_id + ':null');return;}
+
+                    var child_name = c.firstChild.innerText;
                     var h = estimate.substr(0, 2 );
                     var wbf = document.getElementById('WHITEBOARD_FRAME');
                     wbf.scrollTop = ( h - 8 ) * 400;
+                    // var range = document.createRange();
+                    // range.setStart( c, 0 );
+                    // range.setEnd( c, 1 );
+                    // var mark = document.createElement( 'mark' );
+                    // range.surroundContents( mark );
                 } );
         }
     }
+*/
+
+}
+
+function findWhiteboardChildHelper( parent, keyword, children, absent ){
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        var child_id = c.getAttribute('child_id');
+        var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+        var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText
+        //child_name      = child_name.toLowerCase();
+        var kana        = ( c.getAttribute('kana') != null )? c.getAttribute('kana') : '';
+    
+        if ( child_name.toLowerCase().indexOf( keyword.toLowerCase(), 0, keyword.length ) == 0 ||
+             kana.indexOf(keyword.toLowerCase(), 0, keyword.length ) == 0  ){
+            var o = document.createElement('DIV');
+            o.setAttribute( 'child_id', child_id );
+            o.style.fontSize    = '12px';
+            o.style.height      = '20px';
+
+            var r = '';
+            r += '<div style="float:left;"  >' + child_name + '</div>';
+            if ( absent )
+                r += '<div style="float:right;width:20px;background-image:url(./images/sleep-2.png);background-size:18px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                else
+                r += '<div style="float:right;width:20px;background-image:url(./images/godzilla.png);background-size:18px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+            r += '<div style="float:right;" >' + estimate   + '</div>';
+
+            o.innerHTML = r;
+
+            var cc = parent.appendChild( o );
+            cc.addEventListener( 'click', 
+                function (e){
+                    var c = e.target;
+                    while ( true ){
+                        if ( c.hasAttribute('child_id') ) break;
+                        c = c.parentNode;
+                    }
+                    //alert( c.getAttribute('child_id'));
+                    var c = scanWhiteboardChild( child_id );
+                    if ( c == null ) { console.log( 'child_id:' + child_id + ':null');return;}
+
+                    var child_name = c.firstChild.innerText;
+                    var h = estimate.substr(0, 2 );
+                    var wbf = document.getElementById('WHITEBOARD_FRAME');
+                    wbf.scrollTop = ( h - 8 ) * 400;
+                    // var range = document.createRange();
+                    // range.setStart( c, 0 );
+                    // range.setEnd( c, 1 );
+                    // var mark = document.createElement( 'mark' );
+                    // range.surroundContents( mark );
+                } );
+        }
+    }
+
 }
 
 //

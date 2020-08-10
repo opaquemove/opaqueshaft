@@ -290,7 +290,7 @@ function reportWhiteboardDetail(){
             r += '<div style="float:right;width:50px;" >' + child_type  + '</div>';
             r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
         r += '</div>';
-        cc.style.backgroundColor = 'orange';
+        // cc.style.backgroundColor = 'orange';
         cc.style.height = '16px';
         cc.innerHTML    = r;
         lst_area.appendChild( cc );
@@ -457,6 +457,7 @@ function scanAbsentChild( child_id ){
 function attendChildHelper( c ){
     var wb = document.getElementById('WHITEBOARD');
     c.style.backgroundColor  = '';
+    c.removeAttribute('disabled');
     wb.appendChild( c );
 
 }
@@ -688,6 +689,7 @@ function propertyWhiteboardChildHelper( child_id ){
                         var estimate    = result[i].estimate;
                         var checkout    = result[i].checkout;
                         var direction   = result[i].direction;
+                        if ( direction == '' || direction == null ) direction = '---';
                         var escort      = result[i].escort;
                         r += '<div style="clear:both;height:20px;border-bottom:1px solid lightgrey;" >';
                             r += '<div style="float:left;width:80px;text-align:center;" >' + hmd       + '</div>';
@@ -824,6 +826,32 @@ function isMarkedChild( c ){
     return c.hasAttribute( 'marked' );
 }
 
+//
+//  WHITEBOARDから指定したchild_idを持つチャイルドを検索する
+//
+function scanWhiteboardChild( child_id ){
+    var children = document.getElementById('WHITEBOARD').childNodes;
+    for ( var i=0; i<children.length; i++){
+        var c = children[i];
+        if ( c.hasAttribute('child_id') ){
+            if ( child_id == c.getAttribute('child_id') ){
+                return c;
+            }
+        }
+    }
+
+    var absents = document.getElementById('WHITEBOARD_ABSENT').childNodes;
+    for ( var i=0; i<absents.length; i++){
+        var c = absents[i];
+        if ( c.hasAttribute('child_id') ){
+            if ( child_id == c.getAttribute('child_id') ){
+                return c;
+            }
+        }
+    }
+
+    return null;
+}
 //
 //  ダブルクリックしたノードからChildノードを検索
 //
@@ -1281,7 +1309,8 @@ function absentChild(){
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         unmarkChild( c );
-        c.style.backgroundColor = 'orange';
+        c.style.backgroundColor = 'black';
+        // c.setAttribute( 'disabled', true );
         abs.appendChild( c );
     }
     showWhiteboardChildCount();

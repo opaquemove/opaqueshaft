@@ -199,12 +199,15 @@ router.post('/whiteboardload', function(req, res, next ){
 router.post('/whiteboardupdate', function(req, res, next ){
     var day  = req.body.day;
     var html = req.body.html;
-    console.log('day:' + day );
-    console.log('html:' + html );
+    var html_absent = req.body.html_absent;
+
+    console.log('day:'    + day );
+    console.log('alive:'  + html );
+    console.log('absent:' + html_absent );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
-        text: "UPDATE whiteboards SET whiteboard = $1 WHERE whiteboard_id = ( SELECT whiteboard_id FROM whiteboards WHERE day = $2)",
-        values: [ html, day ] } )
+        text: "UPDATE whiteboards SET whiteboard = $1, whiteboard_absent = $2 WHERE whiteboard_id = ( SELECT whiteboard_id FROM whiteboards WHERE day = $3)",
+        values: [ html, html_absent, day ] } )
       .then( function() {
         res.json( { status: 'SUCCESS', message:  'update whiteboard' });
       });
@@ -233,6 +236,8 @@ router.post('/resultadd', function(req, res, next ){
     var checkout    = req.body.checkout;
     var escort      = req.body.escort;
     var direction   = req.body.direction;
+    var absent      = req.body.absent;
+
     if ( checkout == null || checkout == 'null') checkout = null;
     console.log('acc_id:' + acc_id );      // number
     console.log('child_id:' + child_id );   // child_id
@@ -242,13 +247,14 @@ router.post('/resultadd', function(req, res, next ){
     console.log('checkout:' + checkout );    // HH:MM
     console.log('escort:' + escort );      // 0: no escort, 1: escort
     console.log('direction:' + direction );   // none,left,right
+    console.log('absent:' + absent );          // 0: alive, 1:absent
 
-    var sql = "insert into results( acc_id, day, child_id, child_name, child_grade,child_type, checkin, estimate, checkout, escort, direction, lastupdate ) select $1 acc_id, $2, child_id,child_name,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, now() lastupdate from children where child_id = $8";
+    var sql = "insert into results( acc_id, day, child_id, child_name, child_grade,child_type, checkin, estimate, checkout, escort, direction, absent, lastupdate ) select $1 acc_id, $2, child_id,child_name,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, $8 absent, now() lastupdate from children where child_id = $9";
     console.log( 'sql:' + sql );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
         text: sql,
-        values: [ acc_id, day, checkin, estimate, checkout, escort, direction, child_id ] } )
+        values: [ acc_id, day, checkin, estimate, checkout, escort, direction, absent, child_id ] } )
       .then( function() {
         res.json( { status: 'SUCCESS', message:  'add child result' });
       });

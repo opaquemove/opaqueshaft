@@ -21,7 +21,11 @@ BUTTON:focus{
 	outline:			none;
 }
 
+
 /*
+MARK{
+	background-color:	red;
+}
 BUTTON IMG {
 	display:			block;
 }
@@ -1323,69 +1327,3 @@ INPUT[type=password]:focus{
 http://kachibito.net/css/svg-circular-progress-css-animated-angle-gradient
 */
 
-@keyframes load {/*アニメーション*/
-	0% {
-	  stroke-dashoffset: 0;
-	}
-  }
-  .progress {/*親要素*/
-	position: 		relative;
-	display: 		inline-block;
-	padding: 		0;
-	text-align: 	center;
-  }
-  .progress > li {/*プログレスバーを包括する子要素*/
-	display: 		inline-block;
-	position: 		relative;
-	text-align: 	center;
-	color: 			white;
-	font-weight: 	100;
-/*	margin: 2rem;*/
-	margin-left: 	26px;
-  }
-  .progress > li:before {/*カスタムデータ属性に設定したデータ名のテキストを表示*/
-	content: 		attr(data-name);
-	position: 		absolute;
-	width: 			100%;
-	bottom: 		-2rem;
-	font-size:		12px;
-	font-weight: 	400;
-  }
-  .progress > li:after {/*パーセンテージを表示*/
-	content: 		attr(data-percent);
-	position: 		absolute;
-	width: 			100%;
-	top: 			26px;
-	left:			2px;
-/*
-	top: 3.7rem;
-	left: 3.7rem;
-*/
-/*	font-size: 2rem;*/
-	font-size: 12px;
-	text-align: center;
-  }
-  .progress svg {/*プログレスバー*/
-/*
-	width: 10rem;
-	height: 10rem;
-*/
-
-	width: 70px;
-	height: 70px;
-
-}
-  .progress svg:nth-child(2) {
-	position: absolute;
-	left: 0;
-	top: 0;
-	transform: rotate(-90deg);
-  }
-  .progress svg:nth-child(2) path {
-	fill: none;
-	stroke-width: 10;
-	stroke-dasharray: 629;
-	stroke: orange; 			/* 円の線の色 #fff */
-	opacity: .9;
-	animation: load 10s;
-  }

@@ -565,9 +565,12 @@ Tile.prototype = {
 			if ( c.hasAttribute('checkout')) c_checkout++;
 		}
 		//console.log(c_child + ',' + c_checkout );
-		var progress_ratio =  70;
+		if ( c_child != 0 ) var progress_ratio =  Math.floor( ( c_checkout / c_child ) * 100 );
+			else			var progress_ratio = 0;
+		console.log( c_checkout );
+		console.log( c_child );
 		console.log( progress_ratio );
-	//	this.progress( progress_ratio );
+		this.progress( progress_ratio );
 	},
 	close : function(){
 		this.frame.style.visibility = 'hidden';
@@ -579,25 +582,16 @@ Tile.prototype = {
 	},
 	progress : function( progress_ratio ){
 		var mt3 = document.getElementById('MODAL_TILE3');
-		var r = '';
-		r += '<ul class="progress" >';
-			r += '<li data-name="Checkout Ratio" data-percent="100%" >';
-				r += '<svg  viewBox="-10 -10 220 220">';
-					r += '<g fill="none" stroke-width="3" transform="translate(100,100)">';
-						r += '<path d="M 0,-100 A 100,100 0 0,1 86.6,-50" stroke="url(#cl1)"/>';
-						r += '<path d="M 86.6,-50 A 100,100 0 0,1 86.6,50" stroke="url(#cl2)"/>';
-						r += '<path d="M 86.6,50 A 100,100 0 0,1 0,100" stroke="url(#cl3)"/>';
-						r += '<path d="M 0,100 A 100,100 0 0,1 -86.6,50" stroke="url(#cl4)"/>';
-						r += '<path d="M -86.6,50 A 100,100 0 0,1 -86.6,-50" stroke="url(#cl5)"/>';
-						r += '<path d="M -86.6,-50 A 100,100 0 0,1 0,-100" stroke="url(#cl6)"/>';
-					r += '</g>';
-				r += '</svg>';
-				r += '<svg viewBox="-10 -10 220 220">';
-					r += '<path d="M200,100 C200,44.771525 155.228475,0 100,0 C44.771525,0 0,44.771525 0,100 C0,155.228475 44.771525,200 100,200 C155.228475,200 200,155.228475 200,100 Z" stroke-dashoffset="81" />';
-				r += '</svg>';
-			r += '</li>';
-		r += '</ul>';
-		mt3.innerHTML = r;
+		var d = document.createElement('DIV');
+		d.setAttribute( 'class', 'vh-center');
+		d.style.position		= 'relative';
+		d.style.width			= '128px';
+		d.style.height			= '128px';
+		d.style.backgroundColor	= 'red';
+		// d.style.border			= '1px solid lightgrey';
+		var ccl = mt3.appendChild( d );
+		var cp = new CircleProgress( ccl, 128, 128, progress_ratio, 'white', 14 );
+		cp.play();
 	}
 }
 
@@ -819,17 +813,15 @@ function createWhiteboardHelper( day ){
 function alreadyExistChildOnWhiteboard( id ){
 	var rc = false;
 	var wb = document.getElementById('WHITEBOARD');
-/*
-	for ( var i=0; i<wb.childNodes.length; i++ ){
-		if ( wb.childNodes[i].tagName.toLowerCase() == 'div' ){
-			if ( wb.childNodes[i].getAttribute('child_id') == id )
-				return true;
-		}
-	}
-*/
 	var children = wb.getElementsByClassName('CHILD');
 	for ( var i=0; i<children.length; i++ ){
 		if ( children[i].getAttribute('child_id') == id )
+			return true;
+	}
+	var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
+	var absents = wb_absent.getElementsByClassName('CHILD');
+	for ( var i=0; i<absents.length; i++ ){
+		if ( absents[i].getAttribute('child_id') == id )
 			return true;
 	}
 	return rc;
@@ -843,6 +835,8 @@ function loadWhiteboard(){
 
 	var day = dayWhiteboard;
 	var wb = document.getElementById('WHITEBOARD');
+	var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
+
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/whiteboardload", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
@@ -851,13 +845,18 @@ function loadWhiteboard(){
 		var result = JSON.parse( xmlhttp.responseText );
 		if ( result != null ){
 			//alert( result.whiteboard );
-			wb.innerHTML = result.whiteboard;
+			wb.innerHTML 		= result.whiteboard;
+			wb_absent.innerHTML	= result.whiteboard_absent;
 			//
 			//	チャイルドにイベントハンドラを割り当てる 
 			//
 			for ( var i=0; i<wb.childNodes.length; i++ ){
 				if ( touchdevice )	wb.childNodes[i].addEventListener( "touchstart", mDown, false );
 					else			wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
+			}
+			for ( var i=0; i<wb_absent.childNodes.length; i++ ){
+				if ( touchdevice )	wb_absent.childNodes[i].addEventListener( "touchstart", mDown, false );
+					else			wb_absent.childNodes[i].addEventListener( "mousedown",  mDown, false );
 			}
 			//	WHITEBOARD_FRAMEのスクロール情報を初期化する
 			document.getElementById('WHITEBOARD_FRAME').scrollTop = 0;
@@ -902,10 +901,13 @@ function saveWhiteboardHelper(){
 	var rc = '';
 
 	var wb = document.getElementById('WHITEBOARD');
+	var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
+
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/whiteboardupdate", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send( 'day=' + day + '&html=' + encodeURIComponent( wb.innerHTML ) );
+	xmlhttp.send( 'day=' + day + '&html=' + encodeURIComponent( wb.innerHTML ) +
+				'&html_absent=' + encodeURIComponent( wb_absent.innerHTML ) );
 
 	var progress = document.getElementById('SAVE_PROGRESS');
 	var r = '';
@@ -930,13 +932,36 @@ function saveWhiteboardHelper(){
 		var checkout	= c.getAttribute('checkout');
 		//	if ( checkout == null ) checkout = checkin;
 		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
-		var direction	= 'left';
-		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction );
+		var direction	= c.getAttribute('direction');
+		if ( direction == null ) direction = '';
+		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, false );
 		r += '<div>';
 		r += 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
 		r += ' rc:' + rc;
 		r += '</div>';
 	}
+
+	// 欠席チャイルドのセーブ
+	var absents = wb_absent.childNodes;
+	for ( var i=0; i<absents.length; i++ ){
+		var c = absents[i];
+		var day = dayWhiteboard;
+		var child_id	= c.getAttribute('child_id');
+		var checkin		= c.getAttribute('checkin');
+		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+		var checkout	= c.getAttribute('checkout');
+		//	if ( checkout == null ) checkout = checkin;
+		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
+		var direction	= c.getAttribute('direction');
+		if ( direction == null ) direction = '';
+		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, true );
+		r += '<div>';
+		r += 'save absent child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
+		r += ' rc:' + rc;
+		r += '</div>';
+	}
+	
+	
 	r += '<div>save completed.</div>';
 	progress.innerHTML = r;
 
@@ -946,13 +971,14 @@ function saveWhiteboardHelper(){
 //
 //  チャイルド履歴追加
 //
-function saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction ){
+function saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, absent ){
 
-    var acc_id = 'masa';
+	var acc_id = signid();
+	var absentValue = ( absent )?1:0;
     var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/resultadd", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send( 'acc_id=' + acc_id + '&day=' + day + '&child_id=' + child_id + '&checkin=' + checkin + '&estimate=' + estimate + '&checkout=' + checkout + '&escort=' + escort + '&direction=' + direction );
+	xmlhttp.send( 'acc_id=' + acc_id + '&day=' + day + '&child_id=' + child_id + '&checkin=' + checkin + '&estimate=' + estimate + '&checkout=' + checkout + '&escort=' + escort + '&direction=' + direction + '&absent=' + absentValue );
 	if ( xmlhttp.status == 200 ){
         var result = JSON.parse( xmlhttp.responseText );
         //alert( result.status + result.message );
@@ -1371,7 +1397,7 @@ function fitting(){
 		// console.log('fa:' + fa.style.height );
 		var fcl = document.getElementById('FIND_CHILD_LST');
 		if ( fcl != null )
-			fcl.style.height = ( parseInt( fa.style.height ) - 24 ) + 'px';
+			fcl.style.height = ( parseInt( fa.style.height ) - 24 - 10 ) + 'px';
 		// console.log('fcl:' + fcl.style.height );
 	}
 
