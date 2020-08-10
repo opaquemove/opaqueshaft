@@ -715,7 +715,7 @@ function showGuidanceWhiteboard(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'open whiteboard';
 	r += '</div>';
-	r += '<div style="margin:0 auto;font-size:14px;width:150px;">';
+	r += '<div style="margin:0 auto;font-size:14px;width:200px;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
 		r += '<div style="padding-bottom:10px;" >';
@@ -729,7 +729,7 @@ function showGuidanceWhiteboard(){
 				r += '<img id="BTN_MINUS_DATE" width="12px" src="./images/minus-2.png" />';
 			r += '</div>';
 		r += '</div>';
-		r += '<div id="WHITEBOARD_LIST" style="clear:both;height:70px;font-size:10px;padding:2px;overflow-y:scroll;border:1px solid lightgrey;" >';
+		r += '<div id="WHITEBOARD_LIST" style="clear:both;height:70px;font-size:12px;padding:4px;overflow-y:scroll;border:1px solid lightgrey;" >';
 		r += '</div>';
 		r += '<div style="padding-bottom:5px;text-align:center;" >';
 		r += '</div>';
@@ -784,14 +784,14 @@ function showGuidanceWhiteboard(){
 }
 
 //
-//	ホワイトボード作成・開く
+//	ホワイトボード開く（WHITEBOARDレコードはこのタイミングでは作成しないよ）
 //
 function createWhiteboard(){
 	var target_day = guidedance_whiteboard_form.day.value;
 	var cwd = document.getElementById('CUR_WHITEBOARD_DAY');
 	dayWhiteboard = target_day;
 	cwd.innerText = target_day;
-	createWhiteboardHelper( dayWhiteboard );
+	// createWhiteboardHelper( dayWhiteboard );
 	//alert( target_day );
 	neverCloseDialog = false;
 	closeModalDialog();
@@ -897,9 +897,13 @@ function saveWhiteboard(){
 //	ホワイトボードを保存するヘルパー
 //
 function saveWhiteboardHelper(){
-	var day = dayWhiteboard;
-	var rc = '';
 
+	var day = dayWhiteboard;
+	//	whiteboardレコードを追加（存在すれば何もしない）
+	createWhiteboardHelper( day );
+
+	//	whiteboardレコードを更新
+	var rc = '';
 	var wb = document.getElementById('WHITEBOARD');
 	var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
 
@@ -1393,11 +1397,11 @@ function fitting(){
 	// FIND_AREAリロケーション
 	var fa = document.getElementById('FINDER_AREA');
 	if ( fa != null ){
-		fa.style.height = wbf.style.height;
+		fa.style.height = ( parseInt( wbf.style.height ) - 8 ) + 'px';
 		// console.log('fa:' + fa.style.height );
 		var fcl = document.getElementById('FIND_CHILD_LST');
 		if ( fcl != null )
-			fcl.style.height = ( parseInt( fa.style.height ) - 24 - 10 ) + 'px';
+			fcl.style.height = ( parseInt( fa.style.height ) - 24 - 20 ) + 'px';
 		// console.log('fcl:' + fcl.style.height );
 	}
 
@@ -1614,9 +1618,9 @@ function whiteboardMenu( e ){
 	var o = document.createElement('DIV');
 	o.setAttribute( 'id', 'WHITEBOARD_SUBMENU');
 	o.style.position		= 'relative';
-	o.style.padding			= '2px';
+	o.style.padding			= '4px';
 	o.style.top             = '12px';
-	o.style.left            = '-84px';
+	o.style.left            = '-88px';
 	o.style.width           = '160px';
 	o.style.height          = '140px';
 	o.style.color			= ' gray';
@@ -1675,9 +1679,9 @@ function signMenu( e ){
 	var o = document.createElement('DIV');
 	o.setAttribute( 'id', 'SIGN_SUBMENU');
 	o.style.position		= 'relative';
-	o.style.padding			= '2px';
+	o.style.padding			= '4px';
 	o.style.top             = '8px';
-	o.style.left            = '-113px';
+	o.style.left            = '-117px';
 	o.style.width           = '150px';
 	o.style.height          = '150px';
 	o.style.backgroundColor = '#EEEEEE';
@@ -1688,9 +1692,9 @@ function signMenu( e ){
 	var m = p.appendChild( o );
 	var r = '';
 	var id = signid();
-	r += '<div id="ID_SIGN_OUT"         style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
-	r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
-	r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding:2px;border-top:1px solid gray;" >sign in ' + id + '</div>';
+	r += '<div id="ID_SIGN_OUT"         style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
+	r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
+	r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
 	m.innerHTML = r;
 
 	new Button( 'ID_SIGN_OUT', signout ).play();
@@ -1809,8 +1813,8 @@ function addWhiteboardManage( oParent, Result ){
 	var c = document.createElement("DIV");
     c.setAttribute("whiteboard_id",  Result.child_id );
 	c.style.backgroundColor	= 'white';
-	c.style.height			= '14px';
-	c.style.borderBottom	= '1px solid lightgrey';
+	c.style.height			= '18px';
+	// c.style.borderBottom	= '1px solid lightgrey';
 	c.style.marginBottom	= '1px';
 	c.style.clear			= 'both';
 
