@@ -349,10 +349,6 @@ INPUT[type=password]:focus{
 	height:					42px;
 	pointer-events: 		all;
 	background-color:		darkgrey;
-	background-image:		url(./images/searching.png);
-	background-size:		20px;
-	background-position:	left center;
-	background-repeat:		no-repeat;
 }
 #CHILDFINDER_MAIN{
 	pointer-events: 		all;
@@ -360,7 +356,7 @@ INPUT[type=password]:focus{
 	height:					0px;	/*	dummy -> fitting proc */
 	visibility:				hidden;
 	background-color:		rgb(241, 241, 241);
-	overflow:				scroll;
+	overflow-y:				scroll;
 }
 
 #CHILD_FINDER{

@@ -228,8 +228,8 @@ function init()
 	//
 	//	チャイルドファインダー初期化
 	//
-	var tk = document.getElementById('TXT_KEYWORD');
-	tk.addEventListener('keyup', childFinder, false );
+	// var tk = document.getElementById('TXT_KEYWORD');
+	// tk.addEventListener('keyup', childFinder, false );
 
 
 
@@ -1098,7 +1098,7 @@ function locateWhiteboard( e ){
 				if ( document.getElementById('WHITEBOARD') == e.target ){
 					resetChildMark();
 					closeChildFinder();
-					oSpotlight.close();
+					// oSpotlight.close();
 				}
 			} else {
 			}
