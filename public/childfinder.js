@@ -258,6 +258,67 @@ spotlight.prototype = {
     findChildrenTable : function ( parent, keyword ){
         var r = '';
         var xmlhttp = new XMLHttpRequest();
+        xmlhttp.addEventListener('readystatechange', 
+            ( function (e){
+                switch ( xmlhttp.readyState){
+                    case 1://opened
+                    case 2://header received
+                    case 3://loading
+                        //var fcl = document.getElementById( 'FIND_CHILD_LST' );
+                        //if ( fcl != null ) fcl.innerText = 'access...';
+                        this.folder2.innerText = 'access...'
+                        break;
+                    case 4://done
+                        if ( xmlhttp.status == 200 ){
+                            var result = JSON.parse( xmlhttp.responseText );
+                            
+                            //r += xmlhttp.responseText;
+                            //var fcl = document.getElementById('FIND_CHILD_LST');
+                            //if ( fcl == null ) return;
+                            //fcl.innerHTML = '';
+                            this.folder2.innerText = '';
+                            for ( var i=0; i<result.length; i++ ){
+                                var child_id = result[i].child_id;
+                                var child_name = result[i].child_name;
+                                var c = document.createElement('DIV');
+                                // c.setAttribute("child",     "yes");
+                                c.setAttribute("child_id",  child_id );
+                                c.setAttribute("id",        "c_1");
+                                //c.setAttribute("class",     "PALLETE_CHILD");
+                                c.setAttribute("draggable", "true");
+                                c.style.clear           = 'both';
+                                c.style.padding         = '4px';
+                                c.style.fontSize        = '12px';
+                                c.style.width           = '100%';
+                                c.style.height          = '24px';
+                                c.style.backgroundColor = '';
+                                // c.style.borderBottom    = '1px solid lightgray';
+                                //c.style.borderRight = arChildGrade[ oChild.child_grade ];
+                                c.style.float           = 'left';
+                                r = '';
+                                r += '<div style="height:20px;padding-left:2px;">';
+                                    r += child_name;
+                                r += '</div>';
+                                c.innerHTML = r;
+                                var cc = parent.appendChild( c );
+                                cc.addEventListener('dragstart',
+                                    ( function(e) {
+                                        dndOffsetX = e.offsetX;
+                                        dndOffsetY = e.offsetY;
+                                        console.log( e.dataTransfer );
+                                        console.log('offsetY:' + dndOffsetY + ' OffsetX:' + dndOffsetX );
+                                        e.dataTransfer.setData('text', e.target.getAttribute( 'child_id' ) );
+                                    }).bind(this), false );                                                                                
+                            }
+                            //o.innerHTML = r;
+                        } else{
+                            document.getElementById('HISTORY_LST').innerText = xmlhttp.status;
+                        }
+                        break;
+                }
+    
+            } ).bind( this ), false );
+/*
         xmlhttp.onreadystatechange = function() {
             switch ( xmlhttp.readyState){
                 case 1://opened
@@ -265,6 +326,7 @@ spotlight.prototype = {
                 case 3://loading
                     //var fcl = document.getElementById( 'FIND_CHILD_LST' );
                     //if ( fcl != null ) fcl.innerText = 'access...';
+                    //this.folder2.innerText = 'access...'
                     break;
                 case 4://done
                     if ( xmlhttp.status == 200 ){
@@ -274,11 +336,12 @@ spotlight.prototype = {
                         //var fcl = document.getElementById('FIND_CHILD_LST');
                         //if ( fcl == null ) return;
                         //fcl.innerHTML = '';
+                        //this.folder2.innerText = '';
                         for ( var i=0; i<result.length; i++ ){
                             var child_id = result[i].child_id;
                             var child_name = result[i].child_name;
                             var c = document.createElement('DIV');
-                            c.setAttribute("child",     "yes");
+                            // c.setAttribute("child",     "yes");
                             c.setAttribute("child_id",  child_id );
                             c.setAttribute("id",        "c_1");
                             //c.setAttribute("class",     "PALLETE_CHILD");
@@ -314,6 +377,7 @@ spotlight.prototype = {
                     break;
             }
         }
+*/
         try{
             xmlhttp.open("POST", "/accounts/childfind", true );
             xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );

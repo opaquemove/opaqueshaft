@@ -498,7 +498,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     var c = document.createElement("DIV");
 	c.setAttribute("id",          "c_1");
     c.setAttribute("class",       "CHILD drag-and-drop");
-    c.setAttribute("child",       "yes");
+    // c.setAttribute("child",       "yes");
     c.setAttribute('child_id',    child_id ) ;
     c.setAttribute('kana',        kana );
     c.setAttribute('checkin',     checkin_time );
@@ -561,7 +561,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
 function addChildManage( oParent, oChild ){
 
     var c = document.createElement("DIV");
-    c.setAttribute("child",     "yes");
+    // c.setAttribute("child",     "yes");
     c.setAttribute("child_id",  oChild.child_id );
 	c.setAttribute("id",        "c_1");
     c.setAttribute("class",     "PALLETE_CHILD");
@@ -569,7 +569,7 @@ function addChildManage( oParent, oChild ){
     // c.style.position    = 'relative';
 //    c.style.height      = '30px';
     c.style.clear       = 'both';
-    c.style.borderBottom= '1px solid lightgrey;'
+    // c.style.borderBottom= '1px solid lightgrey;'
     c.style.borderRight = arChildGrade[ oChild.child_grade ];
     c.style.float       ='left';
     var r = '';
@@ -857,13 +857,14 @@ function scanWhiteboardChild( child_id ){
     return null;
 }
 //
-//  ダブルクリックしたノードからChildノードを検索
+//  ダブルクリックしたノードからChildノードをバブルアップ検索('child_id'を持つかどうか)
 //
 function scanChild( o ) {
     while ( true ) {
         var tn = o.tagName;
         if ( tn.toLowerCase() == "body" ) return null;
-        if ( o.getAttribute("child") == "yes" ) return o;
+        // if ( o.getAttribute("child") == "yes" ) return o;
+        if ( o.hasAttribute("child_id") ) return o;
         o = o.parentNode;
     }
 }

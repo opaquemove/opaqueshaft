@@ -333,6 +333,7 @@ INPUT[type=password]:focus{
 	display:			flex;
 	justify-content: 	center;
 	align-items: 		center;
+	opacity:			0.8;
 }
 #CHILDFINDER_FRAME{
 	visibility:			hidden;
@@ -358,7 +359,7 @@ INPUT[type=password]:focus{
 	background-color:		rgb(241, 241, 241);
 	overflow-y:				scroll;
 }
-
+/*
 #CHILD_FINDER{
 	width:					140px;
 	height:					30px;
@@ -368,15 +369,13 @@ INPUT[type=password]:focus{
 	color:					gray;
 	padding-top:			12px;
 	border-left:			1px solid darkgray;
-/*
-	border-right:			1px solid lightgrey;
-*/
 	background-color: 		black;
 	background-image: 		url(./images/loupe.png);
 	background-size:		18px;
 	background-position: 	center right;
 	background-repeat:		no-repeat;
 }
+*/
 #TXT_KEYWORD{
 	width:					100px;
 	color:					lightgrey;
@@ -384,6 +383,7 @@ INPUT[type=password]:focus{
 	background-color:		transparent;
 	border:					none;
 }
+/*
 #FINDER_AREA{
 	position:				relative;
 	top:					12px;
@@ -406,6 +406,7 @@ INPUT[type=password]:focus{
 	border-bottom:			1px solid orange;
 	overflow:				scroll;
 }
+*/
 #WHITEBOARD_DAY_FRAME{
 	width:					80px;
 	height:					30px;
@@ -999,10 +1000,10 @@ INPUT[type=password]:focus{
 	color:				gray;
 	background-color:	white;
 	padding:			0px;
-	border-top:			1px solid lightgrey;
+	/* border-top:			1px solid lightgrey; */
 	border-left:		1px solid lightgrey;
 	border-right:		1px solid lightgrey;
-	border-bottom:		1px solid lightgrey;
+	/* border-bottom:		1px solid lightgrey; */
 	font-size:			15px;
 /*	overflow:			hidden;*/
 	-webkit-user-select: none;

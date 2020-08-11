@@ -1097,7 +1097,7 @@ function locateWhiteboard( e ){
 			if ( wb_touch_cnt_max < 2){
 				if ( document.getElementById('WHITEBOARD') == e.target ){
 					resetChildMark();
-					closeChildFinder();
+					//closeChildFinder();
 					// oSpotlight.close();
 				}
 			} else {
@@ -1400,15 +1400,15 @@ function fitting(){
 	}
 
 	// FIND_AREAリロケーション
-	var fa = document.getElementById('FINDER_AREA');
-	if ( fa != null ){
-		fa.style.height = ( parseInt( wbf.style.height ) - 8 ) + 'px';
-		// console.log('fa:' + fa.style.height );
-		var fcl = document.getElementById('FIND_CHILD_LST');
-		if ( fcl != null )
-			fcl.style.height = ( parseInt( fa.style.height ) - 24 - 20 ) + 'px';
-		// console.log('fcl:' + fcl.style.height );
-	}
+	// var fa = document.getElementById('FINDER_AREA');
+	// if ( fa != null ){
+	// 	fa.style.height = ( parseInt( wbf.style.height ) - 8 ) + 'px';
+	// 	// console.log('fa:' + fa.style.height );
+	// 	var fcl = document.getElementById('FIND_CHILD_LST');
+	// 	if ( fcl != null )
+	// 		fcl.style.height = ( parseInt( fa.style.height ) - 24 - 20 ) + 'px';
+	// 	// console.log('fcl:' + fcl.style.height );
+	// }
 
 	var cfm = document.getElementById('CHILDFINDER_MAIN');
 	if ( cfm != null ){
