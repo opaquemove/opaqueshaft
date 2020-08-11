@@ -74,6 +74,7 @@ spotlight.prototype = {
         this.frame.style.visibility     = 'hidden';
         this.header.style.visibility    = 'hidden';
         this.main.style.visibility      = 'hidden';
+        this.keyword.value              = '';           //キーワード削除
         this.main.innerHTML             = '';           // mainエリア内をクリア
 
     },
@@ -97,7 +98,7 @@ spotlight.prototype = {
             o.style.backgroundColor = 'transparent';
             o.style.fontSize        = '12px';
             o.style.borderBottom    = '1px solid lightgrey';
-            o.style.padding         = '4px 4px 0px 0px';
+            o.style.padding         = '4px 4px 4px 4px';
             o.style.marginBottom    = '0px';
             o.style.clear           = 'both';
             o.innerHTML             = '<div style="float:reft;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Whiteboard...</div>';
@@ -108,12 +109,11 @@ spotlight.prototype = {
             oo.style.color          = 'gray';
             oo.style.backgroundColor = 'transparent';
             oo.style.fontSize        = '12px';
-            oo.style.padding         = '4px 4px 0px 0px';
+            oo.style.padding         = '4px 4px 4px 4px';
             oo.style.marginBottom    = '0px';
             oo.style.clear           = 'both';
             oo.innerText ='dummy';
             var ooo = this.main.appendChild( oo );
-
             ffw.addEventListener('click',
                 ( function(e){
                     console.log('hohoho');
@@ -135,12 +135,36 @@ spotlight.prototype = {
             o.style.backgroundColor = 'transparent';
             o.style.fontSize        = '12px';
             o.style.borderBottom    = '1px solid lightgrey';
-            o.style.padding         = '4px 4px 0px 0px';
+            o.style.padding         = '4px 4px 4px 4px';
             o.style.marginBottom    = '0px';
             o.style.clear           = 'both';
             o.innerHTML             = '<div style="float:reft;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Children...</div>';
             var ffct = this.main.appendChild( o );
-                            
+
+            oo = document.createElement('DIV');
+            oo.setAttribute('id', 'FOLDER_FIND_CHILDREN_TABLE2');
+            oo.style.color           = 'gray';
+            oo.style.backgroundColor = 'transparent';
+            oo.style.fontSize        = '12px';
+            oo.style.padding         = '4px 4px 4px 4px';
+            oo.style.marginBottom    = '0px';
+            oo.style.clear           = 'both';
+            oo.innerText = 'Dummy';        
+            var ooo = this.main.appendChild( oo );
+            ffct.addEventListener('click',
+                ( function(e){
+                    var ffct2 = document.getElementById('FOLDER_FIND_CHILDREN_TABLE2');
+                    switch ( ffct2.style.display ){
+                        case 'none':
+                            ffct2.style.display = 'inline';
+                            break;
+                        case 'inline':
+                        default:
+                            ffct2.style.display = 'none';
+                            break;
+                    }
+                } ).bind(this), false);
+            
 
         }
         

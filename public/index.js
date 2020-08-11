@@ -1098,6 +1098,7 @@ function locateWhiteboard( e ){
 				if ( document.getElementById('WHITEBOARD') == e.target ){
 					resetChildMark();
 					closeChildFinder();
+					oSpotlight.close();
 				}
 			} else {
 			}
