@@ -15,7 +15,8 @@ var curChildMoved  = false;
 var wb_touch_cnt		= 0;
 var wb_touch_cnt_max	= 0;
 
-var oNav	= null;
+var oNav				= null;
+var oSpotlight			= null;
 
 var criteriaEscortPixel = 600;
 
@@ -162,12 +163,15 @@ function init()
 */
 
 	oNav = new Nav( null );
+	oSpotlight = new spotlight( fitting );
+	oSpotlight.play();
 
 	fitting();
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
 	new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
 //	new Button( 'CHILD_FINDER',				childFinder    ).play();
 //	new Button( 'ID_NAV',                   ctlNav         ).play();
+	new Button( 'ID_SEARCH',                ctlSpotlight   ).play();
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
@@ -791,7 +795,7 @@ function createWhiteboard(){
 	var cwd = document.getElementById('CUR_WHITEBOARD_DAY');
 	dayWhiteboard = target_day;
 	cwd.innerText = target_day;
-	// createWhiteboardHelper( dayWhiteboard );
+	createWhiteboardHelper( dayWhiteboard );
 	//alert( target_day );
 	neverCloseDialog = false;
 	closeModalDialog();
@@ -1403,6 +1407,15 @@ function fitting(){
 		if ( fcl != null )
 			fcl.style.height = ( parseInt( fa.style.height ) - 24 - 20 ) + 'px';
 		// console.log('fcl:' + fcl.style.height );
+	}
+
+	var cfm = document.getElementById('CHILDFINDER_MAIN');
+	if ( cfm != null ){
+		var cff 	= document.getElementById('CHILDFINDER_FRAME')
+		var cfh   	= document.getElementById('CHILDFINDER_HEADER');
+		var h 		= cff.offsetHeight - cfh.offsetHeight;
+		console.log( 'cfm height:' + h );
+		cfm.style.height = h + 'px';
 	}
 
 

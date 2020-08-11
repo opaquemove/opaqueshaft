@@ -45,11 +45,12 @@ INPUT[type=radio]{
 INPUT[type=radio]:checked + label{
 	border-bottom:		2px solid red;
 }
+/*
 INPUT[type=text]:focus{
 	outline:			none;
 	background-color:	transparent;
-/*	border-bottom:		1px solid red; */
 }
+*/
 INPUT[type=password]:focus{
 	outline:			none;
 	background-color:	transparent;
@@ -241,6 +242,17 @@ INPUT[type=password]:focus{
 	font-size:				14px;
 	z-index:				65001;
 }
+#ID_SEARCH{
+	float: 				left;
+	width:				41px;
+	height:				42px;
+	background-color: 		rgb(241, 241, 241);
+	background-image: 	url(./images/searching.png);
+	background-position: center center;
+	background-repeat: 	no-repeat;
+	background-size: 	16px;
+	border-right:		1px solid darkgrey;
+}
 #ID_NAV{
 	float: 				left;
 	width:				41px;
@@ -305,6 +317,49 @@ INPUT[type=password]:focus{
 	border-left:		10px solid red;
 	border-bottom:		1px solid gray;
 	padding-top:		13px;
+}
+
+
+#CHILDFINDER_OVERLAY{
+	z-index:			70000;
+	visibility:			hidden;
+	position:			absolute;
+	top:				0px;
+	left:				0px;
+	width:				100%;
+	height:				100%;
+	background-color: 	transparent;
+	pointer-events: 	none;
+	display:			flex;
+	justify-content: 	center;
+	align-items: 		center;
+}
+#CHILDFINDER_FRAME{
+	visibility:			hidden;
+	width:				50%;
+	height:				50%;
+/*	
+	background-color:	rgb(241, 241, 241);
+	border:				1px solid lightgrey;
+*/
+}
+#CHILDFINDER_HEADER{
+	visibility:				hidden;
+	width:					100%;
+	height:					42px;
+	pointer-events: 		all;
+	background-color:		darkgrey;
+	background-image:		url(./images/searching.png);
+	background-size:		20px;
+	background-position:	left center;
+	background-repeat:		no-repeat;
+}
+#CHILDFINDER_MAIN{
+	pointer-events: 		all;
+	width:					100%;
+	height:					0px;	/*	dummy -> fitting proc */
+	visibility:				hidden;
+	background-color:		rgb(241, 241, 241);
 }
 
 #CHILD_FINDER{

@@ -456,8 +456,12 @@ function scanAbsentChild( child_id ){
 //
 function attendChildHelper( c ){
     var wb = document.getElementById('WHITEBOARD');
-    c.style.backgroundColor  = '';
-    c.removeAttribute('disabled');
+    // c.style.backgroundColor  = '';
+    c.style.backgroundImage     = '';
+    c.style.backgroundSize      = '';
+    c.style.backgroundPosition  = '';
+    c.style.backgroundRepeat    = '';
+
     wb.appendChild( c );
 
 }
@@ -1309,8 +1313,11 @@ function absentChild(){
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         unmarkChild( c );
-        c.style.backgroundColor = 'black';
-        // c.setAttribute( 'disabled', true );
+        // c.style.backgroundColor = 'black';
+        c.style.backgroundImage     = 'url(./images/alarm.png)';
+        c.style.backgroundSize      = '30px';
+        c.style.backgroundPosition  = 'left center';
+        c.style.backgroundRepeat    = 'no-repeat';
         abs.appendChild( c );
     }
     showWhiteboardChildCount();

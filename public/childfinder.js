@@ -1,8 +1,178 @@
+//
+//  spotlight表示制御
+//
+function ctlSpotlight(){
+    if ( oSpotlight.opened() )      oSpotlight.close();
+        else                        oSpotlight.open();
+}
+
+function spotlight( resize ){
+    this.overlay    = null;
+    this.frame      = null;
+    this.header     = null;
+    this.main       = null;
+    this.keyword    = null;
+    this.resize     = resize;
+}
+spotlight.prototype = {
+    play : function(){
+        var r = '';
+        console.log('childfinder start');
+        
+        var o = document.createElement('DIV');
+        o.setAttribute( 'id', 'CHILDFINDER_OVERLAY' );
+        o.setAttribute( 'class', 'not_select' );
+        o.style.visibility  = 'hidden';
+        this.overlay = document.body.appendChild( o );
+    
+        var o2 = document.createElement('DIV');
+        o2.setAttribute( 'id',    'CHILDFINDER_FRAME' );
+        o2.setAttribute( 'class', 'not_select' );
+        o2.style.visibility  = 'hidden';
+        this.frame = this.overlay.appendChild( o2 );
+    
+        var o3 = document.createElement('DIV');
+        o3.setAttribute( 'id',    'CHILDFINDER_HEADER' );
+        o3.setAttribute( 'class', 'not_select' );
+        r = '';
+        r += '<div style="float:left;padding:10px 42px 10px 42px;" >';
+            r += '<form>';
+            r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" style="background-color:transparent;outline:none;" />';
+            r += '</form>';
+        r += '</div>';
+        o3.innerHTML = r;
+        this.header     = this.frame.appendChild( o3 );
+        this.keyword    = document.getElementById('TXT_KEYWORD2');
+        this.keyword.addEventListener( 'keyup',
+            (function(e) {
+                this.ctlMain();
+            }).bind(this) , false );
+    
+        var o4 = document.createElement('DIV');
+        o4.setAttribute( 'id',    'CHILDFINDER_MAIN' );
+        o4.setAttribute( 'class', 'not_select' );
+        this.main = this.frame.appendChild( o4 );
+        this.resize();
+        // fitting();
+    
+    
+    },
+    open : function(){
+        console.log('open');
+        this.overlay.style.visibility   = 'visible';
+        this.frame.style.visibility     = 'visible';
+        this.header.style.visibility    = 'visible';
+        this.ctlMain();
+
+
+        this.keyword.focus();
+
+    },
+    close : function(){
+        console.log('close');
+        this.overlay.style.visibility   = 'hidden';
+        this.frame.style.visibility     = 'hidden';
+        this.header.style.visibility    = 'hidden';
+        this.main.style.visibility      = 'hidden';
+        this.main.innerHTML             = '';           // mainエリア内をクリア
+
+    },
+    opened(){
+        console.log( this.overlay.style.visibility );
+        return ( this.overlay.style.visibility != 'hidden' );
+    },
+    ctlMain(){
+        var keyword = this.keyword.value;
+        if ( this.keyword.value == '' ){
+            this.main.style.visibility    = 'hidden';
+            return;
+        } else{
+            this.main.style.visibility    = 'visible';
+        }
+    
+        if ( this.main.childNodes.length == 0){
+            var o = document.createElement('DIV');
+            o.setAttribute('id', 'FOLDER_FIND_WHITEBOARD');
+            o.style.color           = 'gray';
+            o.style.backgroundColor = 'transparent';
+            o.style.fontSize        = '12px';
+            o.style.borderBottom    = '1px solid lightgrey';
+            o.style.padding         = '4px 4px 0px 0px';
+            o.style.marginBottom    = '0px';
+            o.style.clear           = 'both';
+            o.innerHTML             = '<div style="float:reft;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Whiteboard...</div>';
+            var ffw = this.main.appendChild( o );
+
+            var oo = document.createElement('DIV');
+            oo.setAttribute('id', 'FOLDER_FIND_WHITEBOARD2');
+            oo.style.color          = 'gray';
+            oo.style.backgroundColor = 'transparent';
+            oo.style.fontSize        = '12px';
+            oo.style.padding         = '4px 4px 0px 0px';
+            oo.style.marginBottom    = '0px';
+            oo.style.clear           = 'both';
+            oo.innerText ='dummy';
+            var ooo = this.main.appendChild( oo );
+
+            ffw.addEventListener('click',
+                ( function(e){
+                    console.log('hohoho');
+                    var ffw2 = document.getElementById('FOLDER_FIND_WHITEBOARD2');
+                    switch ( ffw2.style.display ){
+                        case 'none':
+                            ffw2.style.display = 'inline';
+                            break;
+                        case 'inline':
+                        default:
+                            ffw2.style.display = 'none';
+                            break;
+                    }
+                } ).bind(this), false );
+ 
+            o = document.createElement('DIV');
+            o.setAttribute( 'id', 'FOLDER_FIND_CHILDREN_TABLE' );
+            o.style.color           = 'gray';
+            o.style.backgroundColor = 'transparent';
+            o.style.fontSize        = '12px';
+            o.style.borderBottom    = '1px solid lightgrey';
+            o.style.padding         = '4px 4px 0px 0px';
+            o.style.marginBottom    = '0px';
+            o.style.clear           = 'both';
+            o.innerHTML             = '<div style="float:reft;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Children...</div>';
+            var ffct = this.main.appendChild( o );
+                            
+
+        }
+        
+        //  WHITEBOARD / WHITEBOARD_ABSENT内を検索
+    }
+};
+
+
+//
+//
+//
+function childFinder( e ){
+
+}
+
+function childFinder3(e){
+    
+    var cfm = document.getElementById('CHILDFINDER_MAIN');
+    var keyword = this.value;
+    if ( keyword == '' ){
+        cfm.style.visibility    = 'hidden';
+    } else{
+        cfm.style.visibility    = 'visible';
+
+    }
+
+}
 
 //
 //  チャイルドファインダー
 //
-function childFinder( e ){
+function childFinder0( e ){
     var tk = document.getElementById('TXT_KEYWORD');
     var keyword = tk.value;
     var p = document.getElementById('CHILD_FINDER');
@@ -272,7 +442,8 @@ function findWhiteboardChild( parent, keyword ){
 function findWhiteboardChildHelper( parent, keyword, children, absent ){
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
-        var child_id = c.getAttribute('child_id');
+        var child_id    = c.getAttribute('child_id');
+        var checkout    = c.hasAttribute('checkout');
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
         var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText
         //child_name      = child_name.toLowerCase();
@@ -290,9 +461,13 @@ function findWhiteboardChildHelper( parent, keyword, children, absent ){
             var r = '';
             r += '<div style="float:left;"  >' + child_name + '</div>';
             if ( absent )
-                r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/sleep-2.png);background-size:18px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/sleep-2.png);background-size:16px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                 else
-                r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/godzilla.png);background-size:18px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/godzilla.png);background-size:16px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+            if ( checkout )
+                r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/check.png);background-size:14px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                else
+                r += '<div style="float:right;padding-left:8px;width:20px;">&nbsp;</div>';
             r += '<div style="float:right;" >' + estimate   + '</div>';
 
             o.innerHTML = r;
