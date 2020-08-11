@@ -69,10 +69,32 @@ spotlight.prototype = {
                 this.ctlMain();
             }).bind(this) , false );
     
-        var o4 = document.createElement('DIV');
+        var o4 = document.createElement('DIV');         //  MAIN DIV
         o4.setAttribute( 'id',    'CHILDFINDER_MAIN' );
         o4.setAttribute( 'class', 'not_select' );
         this.main = this.frame.appendChild( o4 );
+        this.main.addEventListener( 'click',
+            (function(e){
+                var c = scanChild( e.target );
+                if ( c == null ){
+                    for ( var i=0; i<this.folder2.childNodes.length; i++ ){
+                        this.folder2.childNodes[i].style.backgroundColor = '';
+                        this.folder2.childNodes[i].removeAttribute('marked');
+                    }
+                    return;
+                }
+                switch ( c.hasAttribute('marked') ){
+                    case true:
+                        c.style.backgroundColor = ''
+                        c.removeAttribute( 'marked' );
+                        break;
+                    case false:
+                        c.style.backgroundColor = 'lightgrey';
+                        c.setAttribute( 'marked', 'yes' );
+                        break;
+
+                }
+            }).bind( this ), false );
         this.resize();
         // fitting();
     
@@ -114,51 +136,61 @@ spotlight.prototype = {
         if ( this.main.childNodes.length == 0){
             var o = document.createElement('DIV');
             o.setAttribute('id', 'FOLDER_FIND_WHITEBOARD');
-            o.style.color           = 'gray';
-            o.style.backgroundColor = 'transparent';
-            o.style.fontSize        = '12px';
-            o.style.borderBottom    = '1px solid lightgrey';
-            o.style.padding         = '4px 4px 4px 4px';
-            o.style.marginBottom    = '0px';
-            o.style.clear           = 'both';
-            o.innerHTML             = '<div style="float:reft;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Whiteboard...</div>';
+            o.style.height             = '18px';
+            o.style.color               = 'gray';
+            o.style.backgroundColor     = 'transparent';
+            o.style.fontSize            = '12px';
+            o.style.borderBottom        = '1px solid lightgrey';
+            o.style.padding             = '4px 4px 4px 4px';
+            o.style.marginBottom        = '0px';
+            o.style.clear               = 'both';
+            var r = '';
+            r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Whiteboard...</div>';
+            r += '<div id="BTN_FOLDER1" style="float:right;width:24px;background-image:url(./images/arrow-up.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            o.innerHTML = r;
             var ffw = this.main.appendChild( o );
 
             var oo = document.createElement('DIV');
             oo.setAttribute('id', 'FOLDER_FIND_WHITEBOARD2');
-            oo.style.color          = 'gray';
-            oo.style.backgroundColor = 'transparent';
-            oo.style.fontSize        = '12px';
-            oo.style.padding         = '4px 4px 4px 4px';
-            oo.style.marginBottom    = '0px';
-            oo.style.clear           = 'both';
-            oo.innerText ='dummy';
+            oo.style.color              = 'gray';
+            oo.style.backgroundColor    = 'transparent';
+            oo.style.fontSize           = '12px';
+            oo.style.padding            = '4px 4px 4px 4px';
+            oo.style.marginBottom       = '0px';
+            oo.style.clear              = 'both';
+            oo.innerText                = 'dummy';
             this.folder1 = this.main.appendChild( oo );
-            ffw.addEventListener('click',
+            document.getElementById('BTN_FOLDER1').addEventListener('click',
                 ( function(e){
                     console.log('hohoho');
                     var ffw2 = document.getElementById('FOLDER_FIND_WHITEBOARD2');
                     switch ( ffw2.style.display ){
                         case 'none':
                             ffw2.style.display = 'inline';
+                            e.target.style.backgroundImage = 'url(./images/arrow-up.png)';
                             break;
                         case 'inline':
                         default:
                             ffw2.style.display = 'none';
+                            e.target.style.backgroundImage = 'url(./images/arrow-down.png)';
                             break;
                     }
                 } ).bind(this), false );
  
             o = document.createElement('DIV');
             o.setAttribute( 'id', 'FOLDER_FIND_CHILDREN_TABLE' );
-            o.style.color           = 'gray';
-            o.style.backgroundColor = 'transparent';
-            o.style.fontSize        = '12px';
-            o.style.borderBottom    = '1px solid lightgrey';
-            o.style.padding         = '4px 4px 4px 4px';
-            o.style.marginBottom    = '0px';
-            o.style.clear           = 'both';
-            o.innerHTML             = '<div style="float:reft;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Children...</div>';
+            o.style.height              = '18px';
+            o.style.color               = 'gray';
+            o.style.backgroundColor     = 'transparent';
+            o.style.fontSize            = '12px';
+            o.style.borderBottom        = '1px solid lightgrey';
+            o.style.padding             = '4px 4px 4px 4px';
+            o.style.marginBottom        = '0px';
+            o.style.clear               = 'both';
+            r = '';
+            r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Children...</div>';
+            r += '<div id="BTN_FOLDER2" style="float:right;width:24px;background-image:url(./images/arrow-up.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            o.innerHTML = r;
             var ffct = this.main.appendChild( o );
 
             oo = document.createElement('DIV');
@@ -171,16 +203,18 @@ spotlight.prototype = {
             oo.style.clear           = 'both';
             oo.innerText = 'Dummy';        
             this.folder2 = this.main.appendChild( oo );
-            ffct.addEventListener('click',
+            document.getElementById('BTN_FOLDER2').addEventListener('click',
                 ( function(e){
                     var ffct2 = document.getElementById('FOLDER_FIND_CHILDREN_TABLE2');
                     switch ( ffct2.style.display ){
                         case 'none':
                             ffct2.style.display = 'inline';
+                            e.target.style.backgroundImage = 'url(./images/arrow-up.png)';
                             break;
                         case 'inline':
                         default:
                             ffct2.style.display = 'none';
+                            e.target.style.backgroundImage = 'url(./images/arrow-down.png)';
                             break;
                     }
                 } ).bind(this), false);
