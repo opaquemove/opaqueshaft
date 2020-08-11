@@ -40,12 +40,12 @@ spotlight.prototype = {
         r += '<div style="float:left;width:42px;height:42px;background-image:url(./images/searching.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
         r += '<div style="float:left;padding:10px 42px 10px 10px;" >';
             r += '<form onsubmit="return false;" >';
-            r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="font-size:16px;color:black;background-color:transparent;outline:none;" />';
+            r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:100px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
             r += '</form>';
         r += '</div>';
         r += '<div id="BTN_CLOSE_SPOTLIGHT" style="float:right;width:42px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div style="float:right;width:42px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div style="float:right;width:42px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_LISTALL"         style="float:right;width:42px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_REFRESH_LIST"    style="float:right;width:42px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
 
         o3.innerHTML = r;
         this.header     = this.frame.appendChild( o3 );
@@ -53,8 +53,17 @@ spotlight.prototype = {
             ( function(e) {
                 this.close();
             }).bind( this ), false );
+        document.getElementById('BTN_LISTALL').addEventListener( 'click',
+            ( function(e) {
+                this.keyword.value = '*';
+                this.ctlMain();
+            }).bind( this ), false );
+        document.getElementById('BTN_REFRESH_LIST').addEventListener( 'click',
+            ( function(e) {
+                this.ctlMain();
+            }).bind( this ), false );
 
-            this.keyword    = document.getElementById('TXT_KEYWORD2');
+        this.keyword    = document.getElementById('TXT_KEYWORD2');
         this.keyword.addEventListener( 'keyup',
             (function(e) {
                 this.ctlMain();
@@ -381,6 +390,7 @@ spotlight.prototype = {
         try{
             xmlhttp.open("POST", "/accounts/childfind", true );
             xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+            if ( keyword == '*' ) keyword = '%';
             xmlhttp.send( 'keyword=' + keyword );
     
         } catch ( e ) { alert( e );}

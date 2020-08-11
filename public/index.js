@@ -795,8 +795,7 @@ function createWhiteboard(){
 	var cwd = document.getElementById('CUR_WHITEBOARD_DAY');
 	dayWhiteboard = target_day;
 	cwd.innerText = target_day;
-	createWhiteboardHelper( dayWhiteboard );
-	//alert( target_day );
+	//createWhiteboardHelper( dayWhiteboard );
 	neverCloseDialog = false;
 	closeModalDialog();
 	visibleWhiteboard();
@@ -847,10 +846,11 @@ function loadWhiteboard(){
 	xmlhttp.send( 'day=' + day );
 	if ( xmlhttp.status == 200 ){
 		var result = JSON.parse( xmlhttp.responseText );
-		if ( result != null ){
+		// if ( result != null ){
+		if ( result.length > 0 ){		//	レコードが存在すれば
 			//alert( result.whiteboard );
-			wb.innerHTML 		= result.whiteboard;
-			wb_absent.innerHTML	= result.whiteboard_absent;
+			wb.innerHTML 		= result[0].whiteboard;
+			wb_absent.innerHTML	= result[0].whiteboard_absent;
 			//
 			//	チャイルドにイベントハンドラを割り当てる 
 			//
@@ -862,10 +862,13 @@ function loadWhiteboard(){
 				if ( touchdevice )	wb_absent.childNodes[i].addEventListener( "touchstart", mDown, false );
 					else			wb_absent.childNodes[i].addEventListener( "mousedown",  mDown, false );
 			}
-			//	WHITEBOARD_FRAMEのスクロール情報を初期化する
-			document.getElementById('WHITEBOARD_FRAME').scrollTop = 0;
-			showWhiteboardChildCount();
-		}	
+		} else{							// レコードが存在しなければ
+			wb.innerHTML 		= '';
+			wb_absent.innerHTML	= '';
+		}
+		//	WHITEBOARD_FRAMEのスクロール情報を初期化する
+		document.getElementById('WHITEBOARD_FRAME').scrollTop = 0;
+		showWhiteboardChildCount();
 	} else alert(http.status);
 
 }

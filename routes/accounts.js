@@ -180,15 +180,18 @@ router.post('/whiteboardadd', function(req, res, next ){
 //
 router.post('/whiteboardload', function(req, res, next ){
     var day  = req.body.day;
-    console.log('day:' + day );
+    console.log('load day:' + day );
     res.header('Content-Type', 'application/json;charset=utf-8');
 //    res.json( { status:'SUCCESS'});
     
-    db.one( {
+    db.any( {
         text: 'SELECT * FROM whiteboards WHERE day = $1',
         values: [ day ] } )
       .then( rows => {
-            res.json( rows );
+          res.json( rows );
+      })
+      .catch( err => {
+        next( err );
       });
     
 });
