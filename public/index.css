@@ -360,6 +360,7 @@ INPUT[type=password]:focus{
 	height:					0px;	/*	dummy -> fitting proc */
 	visibility:				hidden;
 	background-color:		rgb(241, 241, 241);
+	overflow:				scroll;
 }
 
 #CHILD_FINDER{

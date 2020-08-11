@@ -12,6 +12,8 @@ function spotlight( resize ){
     this.header     = null;
     this.main       = null;
     this.keyword    = null;
+    this.folder1    = null;
+    this.folder2    = null;
     this.resize     = resize;
 }
 spotlight.prototype = {
@@ -63,9 +65,8 @@ spotlight.prototype = {
         this.frame.style.visibility     = 'visible';
         this.header.style.visibility    = 'visible';
         this.ctlMain();
-
-
         this.keyword.focus();
+        this.resize();
 
     },
     close : function(){
@@ -113,7 +114,7 @@ spotlight.prototype = {
             oo.style.marginBottom    = '0px';
             oo.style.clear           = 'both';
             oo.innerText ='dummy';
-            var ooo = this.main.appendChild( oo );
+            this.folder1 = this.main.appendChild( oo );
             ffw.addEventListener('click',
                 ( function(e){
                     console.log('hohoho');
@@ -150,7 +151,7 @@ spotlight.prototype = {
             oo.style.marginBottom    = '0px';
             oo.style.clear           = 'both';
             oo.innerText = 'Dummy';        
-            var ooo = this.main.appendChild( oo );
+            this.folder2 = this.main.appendChild( oo );
             ffct.addEventListener('click',
                 ( function(e){
                     var ffct2 = document.getElementById('FOLDER_FIND_CHILDREN_TABLE2');
@@ -164,12 +165,154 @@ spotlight.prototype = {
                             break;
                     }
                 } ).bind(this), false);
-            
-
         }
         
-        //  WHITEBOARD / WHITEBOARD_ABSENT内を検索
+    //  WHITEBOARD / WHITEBOARD_ABSENT内を検索
+        this.folder1.innerText = '';
+        this.findWhiteboardChild( this.folder1, this.keyword.value );
+    //  childrenテーブル検索
+        this.folder2.innerHTML  = '';
+        this.findChildrenTable( this.folder2, this.keyword.value );
+
+    },
+
+    findWhiteboardChild : function ( parent, keyword ){
+        var children = document.getElementById('WHITEBOARD').childNodes;
+        findWhiteboardChildHelper( parent, keyword, children, false );
+    
+        var absents = document.getElementById('WHITEBOARD_ABSENT').childNodes;
+        findWhiteboardChildHelper( parent, keyword, absents, true );
+    
+    },
+    
+    findWhiteboardChildHelper : function ( parent, keyword, children, absent ){
+        for ( var i=0; i<children.length; i++ ){
+            var c = children[i];
+            var child_id    = c.getAttribute('child_id');
+            var checkout    = c.hasAttribute('checkout');
+            var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+            var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText
+            //child_name      = child_name.toLowerCase();
+            var kana        = ( c.getAttribute('kana') != null )? c.getAttribute('kana') : '';
+        
+            if ( child_name.toLowerCase().indexOf( keyword.toLowerCase(), 0, keyword.length ) == 0 ||
+                 kana.indexOf(keyword.toLowerCase(), 0, keyword.length ) == 0 ||
+                 keyword == '%' || keyword == '*' ){
+                var o = document.createElement('DIV');
+                o.setAttribute( 'child_id', child_id );
+                o.style.padding     = '4px';
+                o.style.fontSize    = '12px';
+                o.style.height      = '20px';
+    
+                var r = '';
+                r += '<div style="float:left;"  >' + child_name + '</div>';
+                if ( absent )
+                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/sleep-2.png);background-size:16px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    else
+                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/godzilla.png);background-size:16px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                if ( checkout )
+                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/check.png);background-size:14px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    else
+                    r += '<div style="float:right;padding-left:8px;width:20px;">&nbsp;</div>';
+                r += '<div style="float:right;" >' + estimate   + '</div>';
+    
+                o.innerHTML = r;
+    
+                var cc = parent.appendChild( o );
+                cc.addEventListener( 'click', 
+                    ( function (e){
+                        var c = e.target;
+                        while ( true ){
+                            if ( c.hasAttribute('child_id') ) break;
+                            c = c.parentNode;
+                        }
+                        //alert( c.getAttribute('child_id'));
+                        var c = scanWhiteboardChild( child_id );
+                        if ( c == null ) { console.log( 'child_id:' + child_id + ':null');return;}
+    
+                        var child_name = c.firstChild.innerText;
+                        var h = estimate.substr(0, 2 );
+                        var wbf = document.getElementById('WHITEBOARD_FRAME');
+                        wbf.scrollTop = ( h - 8 ) * 400;
+                        // var range = document.createRange();
+                        // range.setStart( c, 0 );
+                        // range.setEnd( c, 1 );
+                        // var mark = document.createElement( 'mark' );
+                        // range.surroundContents( mark );
+                    }).bind(this), false );
+            }
+        }
+    
+    },
+
+    findChildrenTable : function ( parent, keyword ){
+        var r = '';
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            switch ( xmlhttp.readyState){
+                case 1://opened
+                case 2://header received
+                case 3://loading
+                    //var fcl = document.getElementById( 'FIND_CHILD_LST' );
+                    //if ( fcl != null ) fcl.innerText = 'access...';
+                    break;
+                case 4://done
+                    if ( xmlhttp.status == 200 ){
+                        var result = JSON.parse( xmlhttp.responseText );
+                        
+                        //r += xmlhttp.responseText;
+                        //var fcl = document.getElementById('FIND_CHILD_LST');
+                        //if ( fcl == null ) return;
+                        //fcl.innerHTML = '';
+                        for ( var i=0; i<result.length; i++ ){
+                            var child_id = result[i].child_id;
+                            var child_name = result[i].child_name;
+                            var c = document.createElement('DIV');
+                            c.setAttribute("child",     "yes");
+                            c.setAttribute("child_id",  child_id );
+                            c.setAttribute("id",        "c_1");
+                            //c.setAttribute("class",     "PALLETE_CHILD");
+                            c.setAttribute("draggable", "true");
+                            c.style.clear           = 'both';
+                            c.style.padding         = '4px';
+                            c.style.fontSize        = '12px';
+                            c.style.width           = '100%';
+                            c.style.height          = '24px';
+                            c.style.backgroundColor = '';
+                            // c.style.borderBottom    = '1px solid lightgray';
+                            //c.style.borderRight = arChildGrade[ oChild.child_grade ];
+                            c.style.float           = 'left';
+                            r = '';
+                            r += '<div style="height:20px;padding-left:2px;">';
+                                r += child_name;
+                            r += '</div>';
+                            c.innerHTML = r;
+                            var cc = parent.appendChild( c );
+                            cc.addEventListener('dragstart',
+                                ( function(e) {
+                                    dndOffsetX = e.offsetX;
+                                    dndOffsetY = e.offsetY;
+                                    console.log( e.dataTransfer );
+                                    console.log('offsetY:' + dndOffsetY + ' OffsetX:' + dndOffsetX );
+                                    e.dataTransfer.setData('text', e.target.getAttribute( 'child_id' ) );
+                                }).bind(this), false );                                                                                
+                        }
+                        //o.innerHTML = r;
+                    } else{
+                        document.getElementById('HISTORY_LST').innerText = xmlhttp.status;
+                    }
+                    break;
+            }
+        }
+        try{
+            xmlhttp.open("POST", "/accounts/childfind", true );
+            xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+            xmlhttp.send( 'keyword=' + keyword );
+    
+        } catch ( e ) { alert( e );}
+    
     }
+        
 };
 
 
