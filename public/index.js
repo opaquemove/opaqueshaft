@@ -174,6 +174,7 @@ function init()
 	new Button( 'ID_SEARCH',                ctlSpotlight   ).play();
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
+	new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	// new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
@@ -1380,6 +1381,9 @@ function fitting(){
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.style.height = ( h - 42 - 30 ) + 'px';
 
+	var rptf = document.getElementById('REPORT_FRAME');
+	rptf.style.height = wbf.style.height;
+
 	var wb = document.getElementById('WHITEBOARD');
 //	wb.style.width   = ( w - 70 ) + 'px';
 
@@ -1402,16 +1406,6 @@ function fitting(){
 		oNav.frame.style.left	= '0px';
 	}
 
-	// FIND_AREAリロケーション
-	// var fa = document.getElementById('FINDER_AREA');
-	// if ( fa != null ){
-	// 	fa.style.height = ( parseInt( wbf.style.height ) - 8 ) + 'px';
-	// 	// console.log('fa:' + fa.style.height );
-	// 	var fcl = document.getElementById('FIND_CHILD_LST');
-	// 	if ( fcl != null )
-	// 		fcl.style.height = ( parseInt( fa.style.height ) - 24 - 20 ) + 'px';
-	// 	// console.log('fcl:' + fcl.style.height );
-	// }
 
 	var cfm = document.getElementById('CHILDFINDER_MAIN');
 	if ( cfm != null ){
