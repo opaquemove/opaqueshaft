@@ -15,6 +15,7 @@ var curChildMoved  = false;
 var wb_touch_cnt		= 0;
 var wb_touch_cnt_max	= 0;
 
+var pixelPerHour		= 600;
 var oNav				= null;
 var oSpotlight			= null;
 
@@ -237,78 +238,6 @@ function init()
 	//
 	//	タイムラインガイド初期化
 	//
-/*
-	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
-	wbt.addEventListener( 'mouseup',
-		function(e){
-			e.stopPropagation();
-			if ( alreadyTimelineContextMenu( e.target )){
-				console.log('already');
-				document.getElementById('TIMELINE_CONTEXTMENU').parentNode.removeChild( document.getElementById('TIMELINE_CONTEXTMENU') );
-				return;
-			}
-			if ( wbt != e.target.parentNode ) return;
-			resetTimelineContextMenu();
-			var m = document.createElement('DIV');
-			m.setAttribute( 'id',      'TIMELINE_CONTEXTMENU' );
-			m.setAttribute('cmenu', 'yes');
-			m.style.position 		= 'absolute';
-			m.style.top				= '-1px';
-			m.style.left			= '28px';
-			m.style.width			= '100px';
-			m.style.height			= '70px';
-			m.style.color			= 'white';
-			m.style.backgroundColor	= 'red';
-			m.style.textAlign		= 'left';
-			m.style.border			= '1px solid lightgrey';
-			m.style.writingMode		= 'horizontal-tb';
-			m.style.overflow		= 'hidden';
-			var r = '';
-			//r += '<div>' + e.target.innerText + '</div>';
-			r += '<div class="CM_MOVE"     >Move...</div>';
-			r += '<div class="CM_CHECKOUT" >Checkout...</div>';
-			r += '<div class="CM_DELETE"   >Delete...</div>';
-			m.innerHTML				= r;
-			var mm = e.target.appendChild(m);
-			mm.addEventListener('mouseover',
-			function(e) {
-				e.stopPropagation();
-				var c = e.target;
-				if ( c != mm ){
-					c.style.color			= 'gray';
-					c.style.backgroundColor = '#EEEEEE';
-				}
-			} );
-			mm.addEventListener('mouseout',
-			function(e) {
-				e.stopPropagation();
-				var c = e.target;
-				if ( c != mm ){
-					c.style.color			= '';
-					c.style.backgroundColor = '';
-				}
-			} );
-		
-
-			var contextFunc = [ moveTimelineWhiteboardChild, checkoutTimelineWhiteboardChild, null ];
-			var c = mm.firstChild;
-			c.addEventListener('mouseup',
-				function(e){
-					e.stopPropagation();
-					console.log('move');
-					contextFunc[0]( e.target.innerText );
-				});
-			c = c.nextSibling;
-			c.addEventListener('mouseup',
-				function(e){
-					e.stopPropagation();
-					console.log('checkout');
-					contextFunc[1]( e.target.innerText );
-				});
-		
-		}
-	);
-*/
 
 	//
 	//	タイムラインインジケータの生成
@@ -429,7 +358,7 @@ TimeSelector.prototype = {
 				 	this.current = o;
 					// 	o.style.backgroundColor	= 'gray';
 					// 	if ( o.getAttribute('target') == 'on' )
-					// 		document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
+					// 		document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * pixelPerHour;
 				}
 			}).bind(this), false );
 		this.selector.addEventListener( this.evtMove,		//	mousedown/touchstart
@@ -443,7 +372,7 @@ TimeSelector.prototype = {
 				 	this.current = o;
 				// 	o.style.backgroundColor	= 'lightgrey';
 				// 	if ( o.getAttribute('target') == 'on' )
-				// 		document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * 400;
+				// 		document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * pixelPerHour;
 				}
 			}).bind(this), false );
 		if ( !this.touchdevice ){
@@ -473,7 +402,7 @@ TimeSelector.prototype = {
 							var h = e.target.innerText;
 							if ( this.func != null ){
 								this.close();
-						 		document.getElementById('WHITEBOARD_FRAME').scrollTop = ( h - 8 ) * 400;
+						 		document.getElementById('WHITEBOARD_FRAME').scrollTop = ( h - 8 ) * pixelPerHour;
 
 								this.func( h + ':00' );		//チャイルド追加
 							}
@@ -592,10 +521,10 @@ Tile.prototype = {
 		d.style.position		= 'relative';
 		d.style.width			= '128px';
 		d.style.height			= '128px';
-		d.style.backgroundColor	= 'red';
+		d.style.backgroundColor	= 'rgb(241,241,241)';
 		// d.style.border			= '1px solid lightgrey';
 		var ccl = mt3.appendChild( d );
-		var cp = new CircleProgress( ccl, 128, 128, progress_ratio, 'white', 14 );
+		var cp = new CircleProgress( ccl, 128, 128, progress_ratio, 'gray', 14 );
 		cp.play();
 	}
 }
@@ -679,9 +608,9 @@ function moveMarkedChildByTimelinebar( hour ){
 	if ( children.length == 0 ) return;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
-		var top_delta = parseInt( c.style.top ) % 400;
+		var top_delta = parseInt( c.style.top ) % pixelPerHour;
 		// 座標変更
-		c.style.top = ( ( hour - 8 ) * 400 + top_delta ) + 'px';
+		c.style.top = ( ( hour - 8 ) * pixelPerHour + top_delta ) + 'px';
 		// チェックアウト予定時刻変更
 		var et = c.getElementsByClassName('ESTIMATE_TIME');
 		if ( et != null ){
@@ -700,9 +629,9 @@ function moveMarkedChildByTimelinebar( hour ){
 function scrollWhiteboard( hour ){
 	// var wbt = document.getElementById('WHITEBOARD_TIMELINE');
 	// var wb  = document.getElementById('WHITEBOARD');
-	// wbt.style.top = 0 - ( ( hour - 8 ) * 400  ) - 0 + 'px';
-	// wb.style.top  = 0 - ( ( hour - 8 ) * 400  ) - 4802 + 'px';
-	document.getElementById('WHITEBOARD_FRAME').scrollTop = ( hour - 8 ) * 400;
+	// wbt.style.top = 0 - ( ( hour - 8 ) * pixelPerHour  ) - 0 + 'px';
+	// wb.style.top  = 0 - ( ( hour - 8 ) * pixelPerHour  ) - 4802 + 'px';
+	document.getElementById('WHITEBOARD_FRAME').scrollTop = ( hour - 8 ) * pixelPerHour;
 }
 
 
@@ -1381,8 +1310,8 @@ function fitting(){
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.style.height = ( h - 42 - 30 ) + 'px';
 
-	var rptf = document.getElementById('REPORT_FRAME');
-	rptf.style.height = wbf.style.height;
+	// var rptf = document.getElementById('REPORT_FRAME');
+	// rptf.style.height = wbf.style.height;
 
 	var wb = document.getElementById('WHITEBOARD');
 //	wb.style.width   = ( w - 70 ) + 'px';
@@ -1962,7 +1891,7 @@ function dragPalleteChild( hm ){
 	var arHM = hm.split(':');
 	
 	var cursor	= 0;
-	var top		= ( parseInt( arHM[0] ) - 8 ) * 400;
+	var top		= ( parseInt( arHM[0] ) - 8 ) * pixelPerHour;
 	var left	= ( parseInt( arHM[1] ) );
 	console.log( 'hm:' + hm );
 	console.log( 'top:' + top + ' left:' + left );
@@ -2108,7 +2037,7 @@ function getChild( id ){
 function coordinateToTime( top, left ){
 	var escort = Math.floor( left / criteriaEscortPixel );
 	var left2  = left - ( escort * criteriaEscortPixel );
-	var h = 8 + Math.floor( top / 400 );		//200px:1hour
+	var h = 8 + Math.floor( top / pixelPerHour );		//200px:1hour
 	var m = Math.floor( 60 * left2 / criteriaEscortPixel );
 	m = Math.floor( m / 15 ) * 15;
 	if ( m <= 0  ) m = 0;

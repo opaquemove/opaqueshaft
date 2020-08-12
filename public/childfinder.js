@@ -43,9 +43,10 @@ spotlight.prototype = {
             r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:100px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
             r += '</form>';
         r += '</div>';
-        r += '<div id="BTN_CLOSE_SPOTLIGHT" style="float:right;width:42px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_LISTALL"         style="float:right;width:42px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_REFRESH_LIST"    style="float:right;width:42px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_CLOSE_SPOTLIGHT" style="float:right;width:32px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_LISTALL"         style="float:right;width:32px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_CLEAR_LIST"      style="float:right;width:32px;height:42px;background-image:url(./images/eraser.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_REFRESH_LIST"    style="float:right;width:32px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
 
         o3.innerHTML = r;
         this.header     = this.frame.appendChild( o3 );
@@ -60,6 +61,11 @@ spotlight.prototype = {
             }).bind( this ), false );
         document.getElementById('BTN_REFRESH_LIST').addEventListener( 'click',
             ( function(e) {
+                this.ctlMain();
+            }).bind( this ), false );
+        document.getElementById('BTN_CLEAR_LIST').addEventListener( 'click',
+            ( function(e) {
+                this.keyword.value = '';
                 this.ctlMain();
             }).bind( this ), false );
 
@@ -127,9 +133,11 @@ spotlight.prototype = {
     ctlMain(){
         var keyword = this.keyword.value;
         if ( this.keyword.value == '' ){
+            this.header.style.borderRadius  = '4px';
             this.main.style.visibility    = 'hidden';
             return;
         } else{
+            this.header.style.borderRadius  = '4px 4px 0px 0px';
             this.main.style.visibility    = 'visible';
         }
     
@@ -286,7 +294,7 @@ spotlight.prototype = {
                         var child_name = c.firstChild.innerText;
                         var h = estimate.substr(0, 2 );
                         var wbf = document.getElementById('WHITEBOARD_FRAME');
-                        wbf.scrollTop = ( h - 8 ) * 400;
+                        wbf.scrollTop = ( h - 8 ) * pixelPerHour;
                         // var range = document.createRange();
                         // range.setStart( c, 0 );
                         // range.setEnd( c, 1 );
@@ -699,7 +707,7 @@ spotlight.prototype = {
 //                     var child_name = c.firstChild.innerText;
 //                     var h = estimate.substr(0, 2 );
 //                     var wbf = document.getElementById('WHITEBOARD_FRAME');
-//                     wbf.scrollTop = ( h - 8 ) * 400;
+//                     wbf.scrollTop = ( h - 8 ) * pixelPerHour;
 //                     // var range = document.createRange();
 //                     // range.setStart( c, 0 );
 //                     // range.setEnd( c, 1 );
@@ -721,26 +729,5 @@ spotlight.prototype = {
 //     if ( fa != null )
 //         p.removeChild( fa );                 
 
-// }
-//
-//	チャイルドファインダー
-//
-// function childFinder(){
-
-// 	var r = '';
-// 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
-// 		r += 'child finder';
-// 	r += '</div>';
-// 	r += '<div id="CF_HDR"  style="margin:1px auto;font-size:12px;width:400px;height:20px;border:1px solid lightgrey;">';
-// 	r += '</div>';
-//     r += '<div id="CF_MAIN" style="clear:both;margin:1px auto;font-size:14px;width:400px;height:200px;border:1px solid lightgrey;">';
-//         r += '<div id="CF_MENU" style="float:left;width:80px;height:100%;border-right:1px solid lightgrey;" >';
-//             r += '<div style="width:42px;height:42px;background-image:url(./images/dry-clean.png);background-size:38px;background-position:center center;background-repeat:no-repeat;" >あ</div>'
-//         r += '</div>';
-//         r += '<div id="CF_LIST" style="float:left;width:317px;height:100%;padding-left:2px;" >list</div>';
-// 	r += '</div>';
-
-// 	openModalDialog( "child finder", r, 'NOBUTTON', null );
-	
 // }
 

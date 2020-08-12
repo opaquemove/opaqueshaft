@@ -162,12 +162,13 @@ INPUT[type=password]:focus{
 	float:				left;
 	pointer-events: 	auto;
 	width:				128px;
-	height:				128px;
+	height:				256px;
 	color:				snow;
 	background-color:	red;
 	opacity: 			0.8;
 	font-size:			18px;
 	margin:				2px;
+	border-radius: 		20px;
 }
 #MODAL_TILE2{
 	float:				left;
@@ -179,17 +180,34 @@ INPUT[type=password]:focus{
 	opacity: 			0.8;
 	font-size:			18px;
 	margin:				2px;
+	border-radius: 		20px;
+	/* clear:				both; */
 }
 #MODAL_TILE3{
-	float:				left;
+	/* float:				left; */
+	clear:				left;
 	pointer-events: 	auto;
 	width:				128px;
+	height:				236px;
+	color:				gray;
+	background-color:	rgb(241, 241, 241);
+	opacity: 			0.8;
+	font-size:			18px;
+	margin:				2px;
+	padding-top:		20px;
+	border-radius: 		20px;
+}
+#MODAL_TILE4{
+	float:				left;
+	pointer-events: 	auto;
+	width:				256px;
 	height:				128px;
 	color:				snow;
 	background-color:	red;
 	opacity: 			0.8;
 	font-size:			18px;
 	margin:				2px;
+	border-radius: 		20px;
 }
 
 .circle_button{
@@ -347,6 +365,8 @@ INPUT[type=password]:focus{
 	height:					42px;
 	pointer-events: 		all;
 	background-color:		darkgrey;
+	border-radius: 			4px;
+
 }
 #CHILDFINDER_MAIN{
 	pointer-events: 		all;
@@ -355,24 +375,9 @@ INPUT[type=password]:focus{
 	visibility:				hidden;
 	background-color:		rgb(241, 241, 241);
 	overflow-y:				scroll;
+	border-radius: 			0px 0px 4px 4px;
 }
-/*
-#CHILD_FINDER{
-	width:					140px;
-	height:					30px;
-	text-align:				center;
-	float:					right;
-	font-size:				14px;
-	color:					gray;
-	padding-top:			12px;
-	border-left:			1px solid darkgray;
-	background-color: 		black;
-	background-image: 		url(./images/loupe.png);
-	background-size:		18px;
-	background-position: 	center right;
-	background-repeat:		no-repeat;
-}
-*/
+
 #TXT_KEYWORD{
 	width:					100px;
 	color:					lightgrey;
@@ -380,30 +385,7 @@ INPUT[type=password]:focus{
 	background-color:		transparent;
 	border:					none;
 }
-/*
-#FINDER_AREA{
-	position:				relative;
-	top:					12px;
-	left:					-88px;
-	width:					220px;
-	height:					360px;
-	color:					gray;
-	background-color:		#FEFEFE;
-	text-align:				left;
-	font-size:				14px;
-	border:					1px solid lightgrey;
-	padding:				2px;
-	z-index:				50000;
 
-}
-#FIND_CHILD_LST{
-	clear:					both;
-	width:					100%;
-	height:					336px;
-	border-bottom:			1px solid orange;
-	overflow:				scroll;
-}
-*/
 #WHITEBOARD_DAY_FRAME{
 	width:					80px;
 	height:					30px;
@@ -434,25 +416,6 @@ INPUT[type=password]:focus{
 	background-repeat:		no-repeat;
 }
 
-/*
-#WHITEBOARD_BAY{
-	position:			absolute;
-	top:				18px;
-	left:				310px;
-	width:				100px;
-	height:				21px;
-	font-size:			12px;
-	color:				gray;
-	background-color:	white;
-	text-align:			center;
-	margin-top:			2px;
-	border-top:			none;
-	border-left:		1px solid lightgrey;
-	border-right:		1px solid lightgrey;
-	border-bottom:		none;
-
-}
-*/
 
 #ID_CHILD_DELETE{
 	position:			relative;
@@ -512,7 +475,7 @@ INPUT[type=password]:focus{
 	left:				0px;
 	width:				100%;	/* fitting */
 	height:				100%;	/* fitting */
-	background-color:	snow;
+	background-color:	white;
 	padding:			0px;
 	overflow-x:			hidden;
 	overflow-y:			scroll;
@@ -523,7 +486,7 @@ INPUT[type=password]:focus{
 	top:				0px;
 	left:				0;
 	width:				42px;
-	height:				4800px;
+	height:				7200px;			/* 600 * 12hours */
 	float:				left;
 	border-top:			0px solid red;
 	border-bottom:		1px solid lightgrey;
@@ -535,7 +498,7 @@ INPUT[type=password]:focus{
 	top:				0px;
 	left:				42px;
 	width:				100%;
-	height:				4800px;
+	height:				7200px;			/* 600 * 12hours */
 	float:				left;
 	border:				1px dotted snow;
 	padding:			0px 0px 0px 0px;
@@ -548,7 +511,7 @@ INPUT[type=password]:focus{
 	top:				0px;
 	left:				42px;
 	width:				100%;
-	height:				4800px;
+	height:				7200px;			/* 600 * 12hours */
 	float:				left;
 	border:				1px dotted snow;
 	padding:			0px 0px 0px 0px;
@@ -558,9 +521,9 @@ INPUT[type=password]:focus{
 
 .timeline_class{
 	width:				41px;
-	height:				398px;
+	height:				598px;		/* 600 pixel Per Hour */
 	color:				gray;
-	background-color:	snow;
+	background-color:	rgb(241, 241, 241);
 	font-size:			14px;
 	text-align:			center;
 	padding:			0px;
@@ -597,395 +560,6 @@ INPUT[type=password]:focus{
 	visibility: 		hidden;
 }
 
-/*
-#TIMELINE0800{
-	width:				29px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE0900{
-	width:				29px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1000{
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1100{
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1200{
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1300{
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1400{
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1500{
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1600{
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1700{
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1800{
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1900{
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-*/
-/*
-#TIMELINE0800{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				27px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid snow;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE0900{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1000{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1100{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1200{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1300{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1400{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1500{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1600{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1700{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1800{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-#TIMELINE1900{
-	position:			relative;
-	top:				000px;
-	left:				30px;
-	width:				28px;
-	height:				398px;
-	color:				gray;
-	background-color:	snow;
-	font-size:			14px;
-	text-align:			center;
-	padding:			0px;
-	border-top:			1px solid red;
-	border-bottom:		1px solid white;
-	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
-}
-*/
 
 #STATUS{
 	position:			absolute;
@@ -1006,12 +580,13 @@ INPUT[type=password]:focus{
 	width:				182px;
 	height:				40px;
 	color:				gray;
-	background-color:	white;
+	background-color:	rgb(247, 247, 247);
 	padding:			0px;
-	border-top:			1px solid lightgrey;
-	border-left:		1px solid lightgrey;
-	border-right:		1px solid lightgrey;
-	border-bottom:		1px solid lightgrey;
+	border-top:			1px solid white;
+	border-left:		1px solid white;
+	border-right:		1px solid white;
+	border-bottom:		1px solid white;
+	border-radius: 		8px;
 	font-size:			14px;
 	overflow:			visible;
 	-webkit-user-select: none;
@@ -1116,11 +691,15 @@ INPUT[type=password]:focus{
 .CHILD_NAME{}
 
 .ESTIMATE_TIME{
-	color:				red;
+	color:				rgb(44, 44, 44);
+	font-weight: 		bold;
 }
+/*
 .CO_TIME{
-	color:				red;
+	color:				rgb(24, 24, 24);
+	font-style: oblique;
 }
+*/
 
 #ACCOUNTS{
 	position:			absolute;
@@ -1278,7 +857,7 @@ INPUT[type=password]:focus{
 	font-size:			12px;
 	color:				white;
 	background-color:	red;
-	border-top:			1px solid snow;
+	border-top:			1px solid red;
 	padding-left:		12px;
 	text-align:			center;
 	writing-mode: 		vertical-lr;		

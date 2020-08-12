@@ -42,7 +42,7 @@ socket.on( 'opaqueshaft', function( data ){
     switch( pac.cmd ){
         case 'addchild':
             arHM = pac.data.estimate.split(':');
-            var top		= ( parseInt( arHM[0] ) - 8 ) * 400;
+            var top		= ( parseInt( arHM[0] ) - 8 ) * pixelPerHour;
             var left	= ( parseInt( arHM[1] ) );
             var child_id = pac.data.child_id;
             var oChild  = getChild( child_id );
@@ -475,8 +475,8 @@ function getChildrenByHour( h ){
     var children = document.getElementById('WHITEBOARD').childNodes;
     for ( var j=0; j<children.length; j++ ){
         var c = children[j];
-        var s = ( h - 8 ) * 400;
-        var e = s + 400 - 1;
+        var s = ( h - 8 ) * pixelPerHour;
+        var e = s + pixelPerHour - 1;
         if ( parseInt( c.style.top ) >= s &&
              parseInt( c.style.top ) <= e )
              h_children[i++] = c;  
