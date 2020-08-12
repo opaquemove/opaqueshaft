@@ -318,7 +318,7 @@ INPUT[type=password]:focus{
 
 
 #CHILDFINDER_OVERLAY{
-	z-index:			70000;
+	z-index:			40000;
 	visibility:			hidden;
 	position:			absolute;
 	top:				0px;
@@ -334,7 +334,7 @@ INPUT[type=password]:focus{
 }
 #CHILDFINDER_FRAME{
 	visibility:			hidden;
-	width:				30%;
+	width:				35%;
 	height:				50%;
 /*	
 	background-color:	rgb(241, 241, 241);

@@ -136,7 +136,7 @@ spotlight.prototype = {
         if ( this.main.childNodes.length == 0){
             var o = document.createElement('DIV');
             o.setAttribute('id', 'FOLDER_FIND_WHITEBOARD');
-            o.style.height             = '22px';
+            o.style.height             = '26px';
             o.style.color               = 'gray';
             o.style.backgroundColor     = 'transparent';
             o.style.fontSize            = '12px';
@@ -179,7 +179,7 @@ spotlight.prototype = {
  
             o = document.createElement('DIV');
             o.setAttribute( 'id', 'FOLDER_FIND_CHILDREN_TABLE' );
-            o.style.height              = '22px';
+            o.style.height              = '26px';
             o.style.color               = 'gray';
             o.style.backgroundColor     = 'transparent';
             o.style.fontSize            = '12px';
