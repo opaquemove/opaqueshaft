@@ -38,7 +38,7 @@ spotlight.prototype = {
         o3.setAttribute( 'class', 'not_select' );
         r = '';
         r += '<div style="float:left;width:42px;height:42px;background-image:url(./images/searching.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div style="float:left;padding:10px 42px 10px 10px;" >';
+        r += '<div style="float:left;padding:10px 10px 10px 10px;" >';
             r += '<form onsubmit="return false;" >';
             r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:100px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
             r += '</form>';
@@ -136,7 +136,7 @@ spotlight.prototype = {
         if ( this.main.childNodes.length == 0){
             var o = document.createElement('DIV');
             o.setAttribute('id', 'FOLDER_FIND_WHITEBOARD');
-            o.style.height             = '18px';
+            o.style.height             = '22px';
             o.style.color               = 'gray';
             o.style.backgroundColor     = 'transparent';
             o.style.fontSize            = '12px';
@@ -179,7 +179,7 @@ spotlight.prototype = {
  
             o = document.createElement('DIV');
             o.setAttribute( 'id', 'FOLDER_FIND_CHILDREN_TABLE' );
-            o.style.height              = '18px';
+            o.style.height              = '22px';
             o.style.color               = 'gray';
             o.style.backgroundColor     = 'transparent';
             o.style.fontSize            = '12px';
