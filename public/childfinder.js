@@ -15,8 +15,8 @@ function spotlight( resize ){
     this.folder1    = null;
     this.folder2    = null;
     this.resize     = resize;
-    this.stLeft     = 0;
-    this.edLeft     = 0;
+    // this.stLeft     = 0;
+    // this.edLeft     = 0;
 }
 spotlight.prototype = {
     play : function(){
@@ -362,21 +362,21 @@ spotlight.prototype = {
                                         console.log('offsetY:' + dndOffsetY + ' OffsetX:' + dndOffsetX );
                                         e.dataTransfer.setData('text', e.target.getAttribute( 'child_id' ) );
                                     }).bind(this), { passive : false } );  
-                                cc.addEventListener('touchstart',
-                                        ( function(e) {
-                                            e.preventDefault();
-                                            stLeft = e.touches[0].pageX;
-                                        }).bind(this), { passive : false } );
-                                cc.addEventListener('touchmove',
-                                    ( function(e) {
-                                        e.preventDefault();
-                                        this.edLeft = e.changedTouches[0].pageX;
-                                    }).bind(this), { passive : false } );
-                                cc.addEventListener('touchend',
-                                    ( function(e) {
-                                        if ( this.stLeft > this.edLeft + 30 )
-                                            console.log('Swiped');
-                                    }).bind(this), { passive : false } );
+                                // cc.addEventListener('touchstart',
+                                //         ( function(e) {
+                                //             e.preventDefault();
+                                //             stLeft = e.touches[0].pageX;
+                                //         }).bind(this), { passive : false } );
+                                // cc.addEventListener('touchmove',
+                                //     ( function(e) {
+                                //         e.preventDefault();
+                                //         this.edLeft = e.changedTouches[0].pageX;
+                                //     }).bind(this), { passive : false } );
+                                // cc.addEventListener('touchend',
+                                //     ( function(e) {
+                                //         if ( this.stLeft > this.edLeft + 30 )
+                                //             console.log('Swiped');
+                                //     }).bind(this), { passive : false } );
                             }
                             //o.innerHTML = r;
                         } else{
