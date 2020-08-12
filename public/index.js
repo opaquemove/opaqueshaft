@@ -504,17 +504,30 @@ Tile.prototype = {
 		console.log( c_checkout );
 		console.log( c_child );
 		console.log( progress_ratio );
-		this.progress( progress_ratio );
+		this.day( dayWhiteboard );
+		this.progress( c_checkout, c_child, progress_ratio );
 	},
 	close : function(){
 		this.frame.style.visibility = 'hidden';
+		var mt1 = document.getElementById('MODAL_TILE1');
+		mt1.innerHTML = '';
 		var mt3 = document.getElementById('MODAL_TILE3');
 		mt3.innerHTML = '';
 	},
 	opened : function(){
 		return ( this.frame.style.visibility == 'visible' );
 	},
-	progress : function( progress_ratio ){
+	day : function( day ){
+		var mt1 = document.getElementById('MODAL_TILE1');
+		var d = document.createElement('DIV');
+		d.setAttribute( 'class', 'vh-center');
+		d.style.fontSize	= '48px';
+		d.style.color		= 'gray';
+		d.innerText			= day;
+		mt1.appendChild( d );
+
+	},
+	progress : function( c_checkout, c_child, progress_ratio ){
 		var mt3 = document.getElementById('MODAL_TILE3');
 		var d = document.createElement('DIV');
 		d.setAttribute( 'class', 'vh-center');
@@ -526,6 +539,16 @@ Tile.prototype = {
 		var ccl = mt3.appendChild( d );
 		var cp = new CircleProgress( ccl, 128, 128, progress_ratio, 'gray', 14 );
 		cp.play();
+
+		var dd = document.createElement('DIV');
+		dd.style.fontSize	= '48px';
+		dd.style.color		= 'gray';
+		dd.style.textAlign	= 'center';
+
+		var r = '';
+		r += c_checkout + '/' + c_child;
+		dd.innerHTML = r;
+		mt3.appendChild( dd );
 	}
 }
 

@@ -161,10 +161,10 @@ INPUT[type=password]:focus{
 #MODAL_TILE1{
 	float:				left;
 	pointer-events: 	auto;
-	width:				128px;
-	height:				256px;
+	width:				298px;
+	height:				128px;
 	color:				snow;
-	background-color:	red;
+	background-color:	lightgrey;
 	opacity: 			0.8;
 	font-size:			18px;
 	margin:				2px;
@@ -184,14 +184,14 @@ INPUT[type=password]:focus{
 	/* clear:				both; */
 }
 #MODAL_TILE3{
-	/* float:				left; */
+	float:				left;
 	clear:				left;
 	pointer-events: 	auto;
 	width:				128px;
 	height:				236px;
 	color:				gray;
 	background-color:	rgb(241, 241, 241);
-	opacity: 			0.8;
+	opacity: 			0.9;
 	font-size:			18px;
 	margin:				2px;
 	padding-top:		20px;
@@ -200,7 +200,7 @@ INPUT[type=password]:focus{
 #MODAL_TILE4{
 	float:				left;
 	pointer-events: 	auto;
-	width:				256px;
+	width:				298px;
 	height:				128px;
 	color:				snow;
 	background-color:	red;
