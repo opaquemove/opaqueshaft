@@ -140,26 +140,26 @@ function reportWhiteboard(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
 		r += 'report  ' + dayWhiteboard;
     r += '</div>';
-    r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
+    r += '<div style="width:97%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Summary:'
     r += '</div>';
-    r += '<div id="REPORT_SUMMARY" style="width:90%;height:;;clear:both;margin:0 auto;" >';
+    r += '<div id="REPORT_SUMMARY" style="width:97%;height:;;clear:both;margin:0 auto;" >';
     r += '</div>';
 
-    r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
+    r += '<div style="width:97%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Detail:'
     r += '</div>';
-    r += '<div id="REPORT_HDR"  style="width:90%;height:20px;clear:both;color:red;background-color:lightgray;margin:0 auto;border:1px solid lightgrey;" >';
+    r += '<div id="REPORT_HDR"  style="width:97%;height:20px;font-size:12px;clear:both;color:red;background-color:lightgray;margin:0 auto;border:1px solid lightgrey;" >';
         r += '<div style="float:left;" >Name</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Direction</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckOut</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Estimate</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckIn</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Dir</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Out</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Est</div>';
+        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >In</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Escort</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Type</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Grade</div>';
     r += '</div>';
-    r += '<div id="REPORT_LIST" style="width:90%;height:180px;clear:both;margin:0 auto;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '<div id="REPORT_LIST" style="width:97%;height:180px;font-size:12px;clear:both;margin:0 auto;border:0px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
     openModalDialog( null, r, 'NORMAL', null );
     reportWhiteboardSummary();

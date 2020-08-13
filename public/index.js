@@ -178,7 +178,6 @@ function init()
 	new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
-	// new Button( 'CPC_DND_CHILD',            dragPalleteChild ).play();
 	// new Button( 'ID_SHEET_ESCORT',          turnWhiteboard ).play();
 	new Button( 'CPC_UPDATE_CHILD_TIME',	showTimelineSelector ).play();
 	new Button( 'ID_GRADE1',                null           ).play();

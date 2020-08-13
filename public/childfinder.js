@@ -39,7 +39,7 @@ spotlight.prototype = {
         o3.setAttribute( 'id',    'CHILDFINDER_HEADER' );
         o3.setAttribute( 'class', 'not_select' );
         r = '';
-        r += '<div style="float:left;width:42px;height:42px;background-image:url(./images/searching.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_ALIGN_SPOTLIGHT" style="float:left;width:42px;height:42px;background-image:url(./images/searching.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
         r += '<div style="float:left;padding:10px 10px 10px 10px;" >';
             r += '<form onsubmit="return false;" >';
             r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:100px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
@@ -47,11 +47,19 @@ spotlight.prototype = {
         r += '</div>';
         r += '<div id="BTN_CLOSE_SPOTLIGHT" style="float:right;width:32px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
         r += '<div id="BTN_LISTALL"         style="float:right;width:32px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_TIMESELECTOR"    style="float:right;width:32px;height:42px;background-image:url(./images/time.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
         r += '<div id="BTN_CLEAR_LIST"      style="float:right;width:32px;height:42px;background-image:url(./images/eraser.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
         r += '<div id="BTN_REFRESH_LIST"    style="float:right;width:32px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
 
         o3.innerHTML = r;
         this.header     = this.frame.appendChild( o3 );
+        document.getElementById('BTN_ALIGN_SPOTLIGHT').addEventListener( 'click',
+            ( function(e) {
+            }).bind( this ), false );
+        document.getElementById('BTN_TIMESELECTOR').addEventListener( 'click',
+            ( function(e) {
+                showTimelineSelector();
+            }).bind( this ), false );
         document.getElementById('BTN_CLOSE_SPOTLIGHT').addEventListener( 'click',
             ( function(e) {
                 this.close();
@@ -87,18 +95,18 @@ spotlight.prototype = {
                 if ( c == null ){
                     for ( var i=0; i<this.folder2.childNodes.length; i++ ){
                         this.folder2.childNodes[i].style.backgroundColor = '';
-                        this.folder2.childNodes[i].removeAttribute('marked');
+                        this.folder2.childNodes[i].removeAttribute('selected');
                     }
                     return;
                 }
-                switch ( c.hasAttribute('marked') ){
+                switch ( c.hasAttribute('selected') ){
                     case true:
                         c.style.backgroundColor = ''
-                        c.removeAttribute( 'marked' );
+                        c.removeAttribute( 'selected' );
                         break;
                     case false:
                         c.style.backgroundColor = 'lightgrey';
-                        c.setAttribute( 'marked', 'yes' );
+                        c.setAttribute( 'selected', 'yes' );
                         break;
 
                 }
@@ -128,11 +136,38 @@ spotlight.prototype = {
         this.main.innerHTML             = '';           // mainエリア内をクリア
 
     },
-    opened(){
+    opened : function(){
         console.log( this.overlay.style.visibility );
         return ( this.overlay.style.visibility != 'hidden' );
     },
-    ctlMain(){
+    checkin : function( hm ){
+        var cpc = this.folder2;
+        var arHM = hm.split(':');
+        
+        var cursor	= 0;
+        var top		= ( parseInt( arHM[0] ) - 8 ) * pixelPerHour;
+        var left	= ( parseInt( arHM[1] ) );
+        console.log( 'hm:' + hm );
+        console.log( 'top:' + top + ' left:' + left );
+    
+        for ( var i=0; i<cpc.childNodes.length; i++ ){
+            if ( cpc.childNodes[i].hasAttribute('selected') ){
+                var id = cpc.childNodes[i].getAttribute('child_id');
+                if ( alreadyExistChildOnWhiteboard( id ) ) continue;
+                var oChild = getChild( id );
+                if ( oChild != null ){
+                    addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade );
+                    cursor++;
+                }
+                cpc.childNodes[i].style.color = '';
+                cpc.childNodes[i].style.backgroundColor = '';
+                cpc.childNodes[i].removeAttribute('selected');
+            }
+        }
+        showWhiteboardChildCount();
+    
+    },
+    ctlMain : function(){
         var keyword = this.keyword.value;
         if ( this.keyword.value == '' ){
             this.header.style.borderRadius  = '4px';
