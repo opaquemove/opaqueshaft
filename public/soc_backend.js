@@ -143,7 +143,7 @@ function reportWhiteboard(){
     r += '<div style="width:97%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Summary:'
     r += '</div>';
-    r += '<div id="REPORT_SUMMARY" style="width:97%;height:;;clear:both;margin:0 auto;" >';
+    r += '<div id="REPORT_SUMMARY" style="width:97%;height:;background-color:white;clear:both;margin:0 auto;" >';
     r += '</div>';
 
     r += '<div style="width:97%;height:;font-size:16px;clear:both;margin:0 auto;" >';

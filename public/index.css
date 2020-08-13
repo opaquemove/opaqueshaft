@@ -98,7 +98,7 @@ INPUT[type=password]:focus{
 	width:				516px;
 	height:				327px;
 	color:				gray;
-	background-color:	snow;
+	background-color:	white;
 	border-bottom:		1px solid lightgrey;
 	padding:			2px;
 	overflow-y:			scroll;
@@ -108,7 +108,7 @@ INPUT[type=password]:focus{
 	width:				520px;
 	height:				26px;
 	color:				gray;
-	background-color:	snow;
+	background-color:	white;
 /*	border:				1px solid lightgrey; */
 	text-align:			right;
 	padding-top:		2px;
