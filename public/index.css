@@ -358,7 +358,7 @@ INPUT[type=password]:focus{
 	pointer-events: 	none;
 	display:			flex;
 	justify-content: 	center;
-	align-items: 		center;
+	align-items: 		end;
 	opacity:			0.8;
 }
 #CHILDFINDER_FRAME{

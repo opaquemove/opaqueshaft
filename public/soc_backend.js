@@ -203,8 +203,26 @@ function reportWhiteboardSummary(){
     r += '<div style="float:left;padding-left:10px;" >no escort:'  + ( c_children - c_escort ) + '</div>';
     r += '<div style="float:left;padding-left:10px;" >absent:'     + c_absent + '</div>';
 
+    r += '';
+
     var summary_area = document.getElementById('REPORT_SUMMARY');
     summary_area.innerHTML  = r;
+
+    if ( c_children != 0 ) var progress_ratio =  Math.floor( ( c_checkout / c_children ) * 100 );
+    else			var progress_ratio = 0;
+
+    var d = document.createElement('DIV');
+    d.setAttribute( 'class', 'vh-center');
+    d.style.position		= 'relative';
+    d.style.float           = 'right';
+    d.style.width			= '64px';
+    d.style.height			= '64px';
+    d.style.backgroundColor	= 'white';
+    // d.style.border			= '1px solid lightgrey';
+    var ccl = summary_area.appendChild( d );
+    var cp = new CircleProgress( ccl, 64, 64, progress_ratio, 'gray', 22 );
+    cp.play();
+
 
 }
 
