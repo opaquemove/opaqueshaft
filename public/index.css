@@ -68,6 +68,12 @@ INPUT[type=password]:focus{
 	background-color:	rgba(170, 170, 170, 0.75);
 }
 
+#MODAL_MESSAGE_FRAME{
+	width:				520px;
+	height:				400px;
+	background-color:	transparent;	
+}
+
 #MODAL_MESSAGE_HEADER{
 	width:				520px;
 	height:				29px;
@@ -95,6 +101,7 @@ INPUT[type=password]:focus{
 	background-color:	snow;
 	border-bottom:		1px solid lightgrey;
 	padding:			2px;
+	overflow-y:			scroll;
 }
 
 #MODAL_MESSAGE_FOOTER{

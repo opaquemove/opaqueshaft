@@ -120,7 +120,7 @@ function clearWhiteboard(){
 	r += '<div style="margin:0 auto;width:110px;">';
 		r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="clearWhiteboardHelper();closeModalDialog();" >Clear</button>';
 	r += '</div>';
-    openModalDialog( null, r, 'CANCEL', null );
+    openModalDialog( null, r, 'CANCEL', null, null );
     document.getElementById('BTN_CLEARWHITEBOARD').focus();
 
 }
@@ -159,9 +159,9 @@ function reportWhiteboard(){
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Type</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Grade</div>';
     r += '</div>';
-    r += '<div id="REPORT_LIST" style="width:97%;height:180px;font-size:12px;clear:both;margin:0 auto;border:0px solid lightgrey;overflow:scroll;" >';
+    r += '<div id="REPORT_LIST" style="width:97%;height:;font-size:12px;clear:both;margin:0 auto;border:0px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
-    openModalDialog( null, r, 'NORMAL', null );
+    openModalDialog( 'report ' + dayWhiteboard, r, 'NORMAL', null, 'MAX' );
     reportWhiteboardSummary();
     reportWhiteboardDetail();
 }
@@ -331,7 +331,7 @@ function absentWhiteboard(){
     r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += '<button onclick="attendChild();" style="width:180px;height:40px;border:none;background-color:transparent;font-size:24px;background-image:url(./images/entry.png);background-size:30px;background-repeat:no-repeat;background-position:left center;" >Attend</button>';
     r += '</div>';
-    openModalDialog( null, r, 'NORMAL', null );
+    openModalDialog( null, r, 'NORMAL', null, null );
     absentWhiteboardSummary();
     absentWhiteboardDetail();
 }
@@ -655,7 +655,7 @@ function propertyWhiteboardChild( c ){
         r += "</div>";
 */
         r += "</div>";
-    openModalDialog( null, r, 'NORMAL', null );
+    openModalDialog( null, r, 'NORMAL', null, null );
     propertyWhiteboardChildHelper( id );
 
 }
@@ -755,7 +755,7 @@ function deleteWhiteboardChild(){
         r += ' onclick="deleteWhiteboardChildHelper();"   >';
         r += 'Delete</button>';
 	r += '</div>';
-    openModalDialog( null, r, 'NOBUTTON', null );
+    openModalDialog( null, r, 'NOBUTTON', null, null );
     document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();
     makeDeleteChildList();
  
@@ -1129,7 +1129,7 @@ function checkoutWhiteboardChild(){
         r += 'onclick="checkoutWhiteboardChildHelper();closeModalDialog();" >';
         r += 'Checkout</button>'
 	r += '</div>';
-    openModalDialog( null, r, 'NOBUTTON', null );
+    openModalDialog( null, r, 'NOBUTTON', null, null );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
     var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
@@ -1231,7 +1231,7 @@ function checkoutClearWhiteboardChild(){
         r += 'onclick="checkoutClearWhiteboardChildHelper();closeModalDialog();" >';
         r += '<img width="24px" src="./images/close.png" />Checkout Clear</button>';
 	r += '</div>';
-    openModalDialog( null, r, 'NOBUTTON', null );
+    openModalDialog( null, r, 'NOBUTTON', null, null );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
     var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
@@ -1374,7 +1374,7 @@ function propertyAccount(){
     r += "</form>";
     r += "</div>";
 
-    openModalDialog( null, r, 'NORMAL', null );
+    openModalDialog( null, r, 'NORMAL', null, null );
 
 }
 

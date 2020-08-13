@@ -703,7 +703,7 @@ function showGuidanceWhiteboard(){
 	 var children = document.getElementById('WHITEBOARD').childNodes;
 	 neverCloseDialog = ( children.length == 0 ) ? true : false;
 	// neverCloseDialog = true;
-	openModalDialog( null, r, 'NOBUTTON', null );
+	openModalDialog( null, r, 'NOBUTTON', null, null );
 	makeWhiteboardList();
 	document.getElementById('BTN_OPENWHITEBOARD').focus();
 	document.getElementById('whiteboard_day').addEventListener('keydown',
@@ -849,7 +849,7 @@ function saveWhiteboard(){
 		r += '</div>';
 		r += '<button id="BTN_SAVEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="saveWhiteboardHelper();" >Save</button>';
 	r += '</div>';
-	openModalDialog( null, r, 'CANCEL', null );
+	openModalDialog( null, r, 'CANCEL', null, null );
 }
 
 //
@@ -1272,13 +1272,29 @@ Nav.prototype = {
 //
 //	モーダルダイアログをオープン
 //
-function openModalDialog( title, r , option, proc ){
+function openModalDialog( title, r , option, proc, dialog_size ){
 	// タイムセレクタを非表示
 	palleteTimeSelector.close();
-	var mo  = document.getElementById('MODAL_OVERLAY');
-	var mt	= document.getElementById('MODAL_TITLE');
-	var mm  = document.getElementById('MODAL_MESSAGE');
-	var mmf = document.getElementById('MODAL_MESSAGE_FOOTER');
+	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
+
+	var mo      = document.getElementById('MODAL_OVERLAY');
+	var mt	    = document.getElementById('MODAL_TITLE');
+	var mframe  = document.getElementById('MODAL_MESSAGE_FRAME');
+	var mmh     = document.getElementById('MODAL_MESSAGE_HEADER');
+	var mm      = document.getElementById('MODAL_MESSAGE');
+	var mmf     = document.getElementById('MODAL_MESSAGE_FOOTER');
+
+	switch ( dialog_size ){
+		case 'MAX':
+			var wfh = parseInt( document.getElementById('WHITEBOARD_FRAME').style.height );
+			mframe.style.height = ( wfh - 8 ) + 'px';
+			mm.style.height		= ( wfh - 8 - 73 ) +  'px';
+			break;
+		default:
+			mframe.style.height = '400px';
+			mm.style.height		= '327px';
+			break;
+	}
 	if ( title != null ) mt.innerText = title;
 	mm.innerHTML = r;
 
@@ -1299,6 +1315,7 @@ function openModalDialog( title, r , option, proc ){
 			f += '<button id="MDL_CLOSE"  type="button" onclick="closeModalDialog();" >Close</button>';
 			break;
 	}
+	f += '&nbsp;&nbsp;';
 	mmf.innerHTML = f;
 	mo.style.visibility = 'visible';
 	if ( proc != null ){
@@ -1322,6 +1339,14 @@ function closeModalDialog(){
 	neverCloseDialog = false;
 }
 
+//
+//	モーダルダイアログが開いているかをチェック
+//	true: open / false : close
+function isModalDialog(){
+	var mo  = document.getElementById('MODAL_OVERLAY');
+	return ( mo.style.visibility != 'hidden' );
+
+}
 
 //
 //	ホワイトボードエリアのフィッティング処理
@@ -1711,7 +1736,7 @@ function signForm()
 	// var children = document.getElementById('WHITEBOARD').childNodes;
 	// neverCloseDialog = ( children.length == 0 ) ? true : false;
 	neverCloseDialog = true;
-	openModalDialog( null, r, 'NOBUTTON', null );
+	openModalDialog( null, r, 'NOBUTTON', null, null );
 	o = document.getElementById( 'acc_id' );
 	o.focus();
 	
@@ -1959,7 +1984,7 @@ function newChildFormOld(){
 function newChildForm(){
 	var r = '';
 	r += makeChildForm( null );
-	openModalDialog( null, r, 'NOBUTTON', null );
+	openModalDialog( null, r, 'NOBUTTON', null, null );
 }
 
 //
@@ -1969,7 +1994,7 @@ function propertyChild2( id ){
 	var r = '';
 	var oChild = getChild( id );
 	r += makeChildForm( oChild );
-	openModalDialog( null, r, 'NORMAL', null );
+	openModalDialog( null, r, 'NORMAL', null, null );
 
 }
 
