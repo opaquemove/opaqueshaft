@@ -893,7 +893,7 @@ function scanChild( o ) {
 function markChild( c ) {
     if ( c == null ) return;
     c.setAttribute('marked', 'MARKED' );
-    c.style.backgroundColor = '#EEEEEE';
+    c.style.backgroundColor = '#DDDDDD';
     c.style.color           = 'gray';
     commonProc();
 }
@@ -1132,42 +1132,54 @@ function checkoutWhiteboardChild(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'checkout children';
     r += '</div>';
-    r += '<div style="clear:both;margin:0 auto;width:70%;height:16px;border:1px solid lightgrey;" >';
+    r += '<div style="clear:both;margin:0 auto;width:97%;height:18px;font-size:12px;color:red;background-color:lightgrey;border:1px solid lightgrey;" >';
         r += '<div style="float:left;" >Name</div>';
-        r += '<div style="float:right;width:26px;" >Right</div>';
-        r += '<div style="float:right;width:26px;" >Left</div>';
+        r += '<div style="float:right;width:26px;border-left:1px solid grey;" >Right</div>';
+        r += '<div style="float:right;width:26px;border-left:1px solid grey;" >Left</div>';
     r += '</div>';
     r += '<form name="directions" onsubmit="return false;" >';
-    r += '<div id="ID_MARKEDCHILDREN_LIST" style="clear:both;margin:0 auto;width:70%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '<div id="ID_MARKEDCHILDREN_LIST" style="clear:both;margin:0 auto;width:97%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
     r += '</form>';
-	r += '<div style="clear:both;margin:0 auto;width:110px;margin:0 auto;">';
+	r += '<div style="clear:both;margin:0 auto;width:97%;text-align:center;margin:0 auto;">';
         r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
-        r += 'style="font-size:20px;width:160px;height:40px;border:none;background-color:transparent;background-image:url(./images/check.png);background-position:left center;background-size:30px;background-repeat:no-repeat;" ';
+        r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-position:center center;background-size:60px;background-repeat:no-repeat;" ';
         r += 'onclick="checkoutWhiteboardChildHelper();closeModalDialog();" >';
-        r += 'Checkout</button>'
+        r += '</button>'
+        r += '<button id="" type="button" ';
+        r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:60px;background-repeat:no-repeat;" ';
+        r += 'onclick="closeModalDialog();" >';
+        r += '</button>'
 	r += '</div>';
-    openModalDialog( null, r, 'NOBUTTON', null, null );
+    openModalDialog( 'checkout children', r, 'NOBUTTON', null, 'MAX' );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
     var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
-        var id = children[i].getAttribute('child_id');
-        var oChild = getChild( id );
+        var c = children[i];
+        var id          = c.getAttribute('child_id');
+        var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+        var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+        var checkout    = c.hasAttribute('checkout');
+        // var oChild = getChild( id );
         var o = document.createElement('DIV');
         o.style.width = '100%';
         o.style.height = '30px';
         o.style.clear = "both";
         o.style.borderBottom = '1px solid lightgrey';
         r = '';
-        r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
-        r += '<div style="float:right;width:18px;padding:4px;" >';
+        r += '<div style="float:left;width:150px;font-size:14px;padding-left:4px;" >' + child_name + '</div>';
+        r += '<div style="float:right;width:26px;padding:4px;" >';
             r += '<input type="radio" id="child_' +  id + '_right" name="child_' + id + '" value="right" >';
-            r += '<label for="child_' + id + '_right"  ><img width="14px" src="./images/arrow-right.png" /></label>';
+            r += '<label for="child_' + id + '_right"  ><img width="14px" src="./images/next.png" /></label>';
         r += '</div>';
-        r += '<div style="float:right;width:18px;padding:4px;" >';
+        r += '<div style="float:right;width:26px;padding:4px;" >';
             r += '<input type="radio" id="child_' + id + '_left"   name="child_' + id + '" value="left" >';
-            r += '<label for="child_'+ id + '_left"  ><img width="14px" src="./images/arrow-left.png" /></label>';
+            r += '<label for="child_'+ id + '_left"  ><img width="14px" src="./images/prev.png" /></label>';
         r += '</div>';
+        r += '<div style="float:right;width:50px;padding:4px;" >';
+            r += estimate;
+        r += '</div>';
+
 
         o.innerHTML = r;
         imcl.appendChild( o );

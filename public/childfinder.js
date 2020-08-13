@@ -191,7 +191,7 @@ spotlight.prototype = {
             o.style.clear               = 'both';
             var r = '';
             r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Whiteboard...</div>';
-            r += '<div id="BTN_FOLDER1" style="float:right;width:24px;background-image:url(./images/arrow-up.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            r += '<div id="BTN_FOLDER1" style="float:right;width:24px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
             o.innerHTML = r;
             var ffw = this.main.appendChild( o );
 
@@ -212,12 +212,12 @@ spotlight.prototype = {
                     switch ( ffw2.style.display ){
                         case 'none':
                             ffw2.style.display = 'inline';
-                            e.target.style.backgroundImage = 'url(./images/arrow-up.png)';
+                            e.target.style.backgroundImage = 'url(./images/up-arrow.png)';
                             break;
                         case 'inline':
                         default:
                             ffw2.style.display = 'none';
-                            e.target.style.backgroundImage = 'url(./images/arrow-down.png)';
+                            e.target.style.backgroundImage = 'url(./images/down-arrow.png)';
                             break;
                     }
                 } ).bind(this), false );
@@ -234,7 +234,7 @@ spotlight.prototype = {
             o.style.clear               = 'both';
             r = '';
             r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Children...</div>';
-            r += '<div id="BTN_FOLDER2" style="float:right;width:24px;background-image:url(./images/arrow-up.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            r += '<div id="BTN_FOLDER2" style="float:right;width:24px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
             o.innerHTML = r;
             var ffct = this.main.appendChild( o );
 
@@ -254,12 +254,12 @@ spotlight.prototype = {
                     switch ( ffct2.style.display ){
                         case 'none':
                             ffct2.style.display = 'inline';
-                            e.target.style.backgroundImage = 'url(./images/arrow-up.png)';
+                            e.target.style.backgroundImage = 'url(./images/up-arrow.png)';
                             break;
                         case 'inline':
                         default:
                             ffct2.style.display = 'none';
-                            e.target.style.backgroundImage = 'url(./images/arrow-down.png)';
+                            e.target.style.backgroundImage = 'url(./images/down-arrow.png)';
                             break;
                     }
                 } ).bind(this), false);

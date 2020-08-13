@@ -1295,7 +1295,7 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 			mm.style.height		= '327px';
 			break;
 	}
-	if ( title != null ) mt.innerText = title;
+	mt.innerText = ( title != null )? title : '';
 	mm.innerHTML = r;
 
 	var f = '';
@@ -1354,8 +1354,12 @@ function isModalDialog(){
 function fitting(){
 	var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
+
+	var tb_height = document.getElementById('TOOLBAR').offsetHeight;
+	var sts_height = document.getElementById('STATUS').offsetHeight;
+	console.log('status height:' + sts_height );
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
-	wbf.style.height = ( h - 42 - 30 ) + 'px';
+	wbf.style.height = ( h - tb_height - sts_height ) + 'px';
 
 	// var rptf = document.getElementById('REPORT_FRAME');
 	// rptf.style.height = wbf.style.height;
@@ -1364,17 +1368,17 @@ function fitting(){
 //	wb.style.width   = ( w - 70 ) + 'px';
 
 	var cpf  = document.getElementById('CHILDREN_PALLETE_FRAME');
-	cpf.style.height  = ( h -42 - 30 ) + 'px';
-	cpf.style.left    = ( w - 42 ) + 'px';
+	cpf.style.height  = ( h -tb_height - sts_height ) + 'px';
+	cpf.style.left    = ( w - tb_height ) + 'px';
 
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
 	cpc.style.height	= ( parseInt( cpf.style.height ) - parseInt(cpc.style.marginTop ) - 1 ) + 'px'; 
 
 	var sts = document.getElementById('STATUS');
-	sts.style.top		= ( h - 30 ) + 'px';
+	sts.style.top		= ( h - sts_height ) + 'px';
 
 	var nsi = document.getElementById('NAV_START_ICON');
-	nsi.style.top = ( ( h / 2 ) - oNav.size + 42 ) + 'px'
+	nsi.style.top = ( ( h / 2 ) - oNav.size + tb_height ) + 'px'
 	//	NAVリロケーション
 	if ( oNav.opened() ){
 		oNav.frame.style.top	= ( ( h / 2 ) - ( oNav.frame.offsetHeight / 2 ) ) + 'px';
