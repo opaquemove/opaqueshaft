@@ -699,7 +699,9 @@ INPUT[type=password]:focus{
 
 .ESCORT_FLG{}
 
-.CHILD_NAME{}
+.CHILD_NAME{
+	font-weight: 		bold;
+}
 
 .ESTIMATE_TIME{
 	color:				rgb(44, 44, 44);
