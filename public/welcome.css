@@ -1,0 +1,61 @@
+HTML{
+	width:	100%;
+	height:	100%;
+}
+BODY{
+	position: 			fixed;
+	width:				100%;
+	height:				100%;
+	margin:				0px 0px;
+	padding:			0px 0px;
+	font-family: 		Segoe UI;
+	font-size:			10px;
+	background-color:	gainsboro;
+	overflow:			hidden;
+}
+
+BUTTON{
+	color:				darkgray;
+}
+BUTTON:focus{
+	outline:			none;
+}
+
+.vh-center{
+	display:			flex;
+	justify-content: 	center;
+	align-items: 		center;
+}
+
+#WELCOME{
+	position:			fixed;
+	top:				0px;
+	left:				0px;
+	width:				100%;	/* fitting */
+	height:				100%;	/* fitting */
+	/* background-color:	white; */
+	background-image:	url(./images/IMG_1739.JPG);
+	background-position: center center;
+	background-size: 	100%;
+	background-repeat: no-repeat;
+	padding:			0px;
+	overflow-x:			hidden;
+	overflow-y:			scroll;
+	z-index:			0;
+}
+
+#NAVI{
+    position:           absolute;
+    top:                -10000px;   /* dummy */
+    left:               -10000px;   /*  dummy */
+    width:              100%;
+    height:             198px;
+    background-color:   transparent;
+    display:            flex;
+}
+
+#NAVI_ITEM{
+    width:              198px;
+    height:             198px;
+    background-color:   red;
+}
