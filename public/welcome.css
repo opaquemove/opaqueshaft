@@ -8,7 +8,12 @@ BODY{
 	height:				100%;
 	margin:				0px 0px;
 	padding:			0px 0px;
-	font-family: 		Segoe UI;
+    font-family:        "Helvetica Neue",
+                        Arial,
+                        "Hiragino Kaku Gothic ProN",
+                        "Hiragino Sans",
+                        Meiryo,
+                        sans-serif;
 	font-size:			10px;
 	background-color:	gainsboro;
 	overflow:			hidden;
@@ -27,6 +32,13 @@ BUTTON:focus{
 	align-items: 		center;
 }
 
+.not_select {
+	-moz-user-select:		none;
+	-webkit-user-select:	none;
+	user-select: 			none;
+}
+
+
 #WELCOME{
 	position:			fixed;
 	top:				0px;
@@ -44,6 +56,12 @@ BUTTON:focus{
 	z-index:			0;
 }
 
+#OPAQUESHAFT{
+    font-size:          800%;
+    color:              white;
+    clear:              both;
+    padding-bottom:     20%;
+}
 #NAVI{
     position:           absolute;
     top:                -10000px;   /* dummy */
@@ -52,10 +70,13 @@ BUTTON:focus{
     height:             198px;
     background-color:   transparent;
     display:            flex;
+    justify-content:    center;
 }
 
-#NAVI_ITEM{
+.navi_item{
     width:              198px;
     height:             198px;
+    color:              white;
     background-color:   red;
+    font-size:          240%;
 }

@@ -22,7 +22,27 @@ function init(){
     var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
+    fitting();
 
+    var wb = document.getElementById('ID_WHITEBOARD');
+    wb.addEventListener( evtStart,
+        function ( e ){
+            switch( wb.style.marginTop ){
+                case '':
+                case '0px':
+                    wb.style.marginTop = '-40px';
+                    break;
+                default:
+                    wb.style.marginTop = '0px';
+                    break;
+            }
+        }, { passive : false } );
+        wb.addEventListener( evtEnd,
+            function ( e ){
+                wb.style.marginTop = '0px';
+                window.open( '/index.html', 'WHITEBOARD' );
+            }, { passive : false } );
+    
 }
 
 function fitting(){
@@ -32,5 +52,5 @@ function fitting(){
     var navi = document.getElementById('NAVI');
     navi.style.top  = ( h - navi.offsetHeight ) + 'px';
     navi.style.left = '0px';
-
+    
 }
