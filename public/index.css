@@ -273,6 +273,7 @@ INPUT[type=password]:focus{
 	background-repeat:		no-repeat;
 	background-position:	center center;
 	font-size:				14px;
+	/* border-radius: 			50%; */
 	z-index:				65001;
 }
 #ID_SEARCH{
@@ -281,17 +282,6 @@ INPUT[type=password]:focus{
 	height:					42px;
 	background-color: 		red;
 	background-image: 		url(./images/searching.png);
-	background-position: 	center center;
-	background-repeat: 		no-repeat;
-	background-size: 		16px;
-	/* border-right:			1px solid darkgrey; */
-}
-#ID_CHILDREN{
-	float: 					right;
-	width:					42px;
-	height:					42px;
-	background-color: 		red;
-	background-image: 		url(./images/godzilla.png);
 	background-position: 	center center;
 	background-repeat: 		no-repeat;
 	background-size: 		16px;
@@ -516,11 +506,11 @@ INPUT[type=password]:focus{
 	pointer-events: 	auto;
 	position: 			absolute;
 	top:				0px;
-	left:				42px;
+	left:				0px;
 	width:				100%;
 	height:				7200px;			/* 600 * 12hours */
 	float:				left;
-	border:				1px dotted snow;
+	border:				0px dotted snow;
 	padding:			0px 0px 0px 0px;
 	visibility: 		visible;
 	z-index:			3;
@@ -529,11 +519,11 @@ INPUT[type=password]:focus{
 #WHITEBOARD_ABSENT{
 	position: 			absolute;
 	top:				0px;
-	left:				42px;
+	left:				0px;
 	width:				100%;
 	height:				7200px;			/* 600 * 12hours */
 	float:				left;
-	border:				1px dotted snow;
+	border:				0px dotted snow;
 	padding:			0px 0px 0px 0px;
 	visibility: 		visible;
 	z-index:			1;
@@ -542,17 +532,18 @@ INPUT[type=password]:focus{
 .timeline_class{
 	width:				41px;
 	height:				598px;		/* 600 pixel Per Hour */
-	color:				gray;
+	color:				red;
 	background-color:	rgb(241, 241, 241);
-	font-size:			14px;
+	font-size:			18px;
+	font-weight:		bold;
 	text-align:			center;
 	padding:			0px;
 	border-top:			1px solid snow;
 	border-right:		1px solid lightgrey;
 	border-bottom:		1px dotted gray;
 	z-index:			3000;
-	opacity:			1;
-	writing-mode: 		vertical-lr;
+	opacity:			0.7;
+	/* writing-mode: 		vertical-lr; */
 }
 
 #REPORT_FRAME{
@@ -868,11 +859,24 @@ INPUT[type=password]:focus{
 	color:				lightseagreen;
 }
 
+#ID_CHILDREN{
+	position:				absolute;
+	margin-top:				0px;
+	top:					42px;
+	left:					0px;
+	width:					42px;
+	height:					42px;
+	background-color: 		red;
+	background-image: 		url(./images/godzilla.png);
+	background-position: 	center center;
+	background-repeat: 		no-repeat;
+	background-size: 		16px;
+}
 
 #ID_TIMELINE_BAR{
 	position:			absolute;
 	margin-top:			0px;
-	top:				42px;
+	top:				84px;
 	left:				0px;
 	width:				30px;
 	height:				41px;

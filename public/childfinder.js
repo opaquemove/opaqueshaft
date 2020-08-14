@@ -55,6 +55,7 @@ spotlight.prototype = {
         this.header     = this.frame.appendChild( o3 );
         document.getElementById('BTN_ALIGN_SPOTLIGHT').addEventListener( 'click',
             ( function(e) {
+                this.close();
             }).bind( this ), false );
         document.getElementById('BTN_TIMESELECTOR').addEventListener( 'click',
             ( function(e) {

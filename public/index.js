@@ -21,6 +21,14 @@ var oSpotlight			= null;
 
 var criteriaEscortPixel = 600;
 
+//
+//	タイムライン・バー操作
+//
+var tlx = null;
+var tlbOffset = null;
+var tl_drag = false;
+
+
 var dndOffsetX = 0;
 var dndOffsetY = 0;
 
@@ -54,6 +62,9 @@ function init()
 			var evtEnd		= 'mouseup';
 			break;
 	}
+
+	// TIMELINE_BARの初期座標を記憶する
+	tlbOffset = document.getElementById('ID_TIMELINE_BAR').offsetTop;
 
 	document.oncontextmenu = function(e) { return false; }
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
@@ -170,7 +181,7 @@ function init()
 	oSpotlight.play();
 
 	fitting();
-	new Button( 'SIGN_STATUS',              signMenu       ).play();
+	// new Button( 'SIGN_STATUS',              signMenu       ).play();
 	new Button( 'OPAQUESHAFT_TITLE',        whiteboardMenu ).play();
 	// new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
 //	new Button( 'CHILD_FINDER',				childFinder    ).play();
@@ -303,10 +314,10 @@ function makeTimelineIndicator(){
 	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
 	var wbt_width = wbt.offsetWidth;
 
-	arTL = [ '08:00', '09:00', '10:00', '11:00', '12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00' ];
+	arTL = [ '08', '09', '10', '11', '12','13','14','15','16','17','18','19' ];
 	for ( var i=0; i<arTL.length; i++ ){
 		var o = document.createElement('DIV');
-		o.setAttribute('class', 'timeline_class' );
+		o.setAttribute('class', 'timeline_class vh-center' );
 		o.innerText = arTL[i];
 		wbt.appendChild( o );
 
@@ -583,9 +594,6 @@ Tile.prototype = {
 //
 //	タイムライン・バー操作
 //
-var tlx = null;
-var tlbOffset = 42;
-var tl_drag = false;
 function locateTimelinebar( e ){
 	e.preventDefault();
 
@@ -661,7 +669,7 @@ function setTimelinebarByScroll(){
 	var delta = ( h - 8 ) * 5;
 
 	var itb = document.getElementById('ID_TIMELINE_BAR');
-	itb.style.top = ( 42 + ( h - 8 ) * ( 60 / 5 ) ) + 'px';
+	itb.style.top = ( tlbOffset + ( h - 8 ) * ( 60 / 5 ) ) + 'px';
 	itb.innerText = ( '00' + h ).slice(-2) + ':00';
 
 }
@@ -893,7 +901,7 @@ function saveWhiteboard(){
 		r += '</div>';
 		r += '<button id="BTN_SAVEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="saveWhiteboardHelper();" >Save</button>';
 	r += '</div>';
-	openModalDialog( null, r, 'CANCEL', null, null );
+	openModalDialog( null, r, 'NORMAL', null, null );
 }
 
 //
@@ -1401,7 +1409,7 @@ function fitting(){
 
 	var tb_height = document.getElementById('TOOLBAR').offsetHeight;
 	var sts_height = document.getElementById('STATUS').offsetHeight;
-	console.log('status height:' + sts_height );
+	// console.log('status height:' + sts_height );
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.style.height = ( h - tb_height - sts_height ) + 'px';
 
@@ -1436,7 +1444,7 @@ function fitting(){
 		var cff 	= document.getElementById('CHILDFINDER_FRAME')
 		var cfh   	= document.getElementById('CHILDFINDER_HEADER');
 		var h 		= cff.offsetHeight - cfh.offsetHeight;
-		console.log( 'cfm height:' + h );
+		// console.log( 'cfm height:' + h );
 		cfm.style.height = h + 'px';
 	}
 
@@ -1672,15 +1680,15 @@ function whiteboardMenu( e ){
 	var id = signid();
 
 	var r = '';
-	r += '<div id="ID_SAVE_WHITEBOARD"   style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
+	r += '<div id="ID_CURRENT_ACCOUNT"   style="height:20px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
 	r += '<div id="ID_LOAD_WHITEBOARD"   style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >open whiteboard</div>';
+	r += '<div id="ID_SAVE_WHITEBOARD"   style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
 	r += '<div id="ID_CLOSE_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cancel.png);background-size:10px;background-position:left center;background-repeat:no-repeat;" >close</div>';
 	r += '<div id="ID_CLEAR_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
 	r += '<div id="ID_REPORT_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/report.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >report...</div>';
 	r += '<div id="ID_ABSENT_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/sleep-2.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >absent...</div>';
 	r += '<div id="ID_SIGN_OUT"          style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
 	r += '<div id="ID_PROPERTY_ACCOUNT"  style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
-	r += '<div id="ID_CURRENT_ACCOUNT"   style="height:20px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
 	m.innerHTML = r;
 
 	new Button( 'ID_SAVE_WHITEBOARD',   saveWhiteboard         ).play();
@@ -1716,6 +1724,7 @@ function whiteboardMenu( e ){
 //
 //	サインインメニュー(右上メニュー)
 //
+/*
 function signMenu( e ){
 	e.stopPropagation();
 	if ( document.getElementById('SIGN_SUBMENU') != null ){
@@ -1763,7 +1772,7 @@ function signMenu( e ){
 		e.stopPropagation();
 	});
 }
-
+*/
 //
 //	サインインフォーム
 //
