@@ -479,6 +479,8 @@ function attendChildHelper( c ){
     c.style.backgroundSize      = '';
     c.style.backgroundPosition  = '';
     c.style.backgroundRepeat    = '';
+    c.style.transformOrigin     = ''
+    c.style.transform           = '';
 
     wb.appendChild( c );
 
@@ -1345,10 +1347,13 @@ function absentChild(){
         var c = children[i];
         unmarkChild( c );
         // c.style.backgroundColor = 'black';
-        c.style.backgroundImage     = 'url(./images/alarm.png)';
-        c.style.backgroundSize      = '30px';
-        c.style.backgroundPosition  = 'left center';
+        c.style.backgroundImage     = 'url(./images/remove.png)';
+        c.style.backgroundSize      = '20px';
+        c.style.backgroundPosition  = 'right center';
         c.style.backgroundRepeat    = 'no-repeat';
+        c.style.transformOrigin     = 'top left;'
+        c.style.transform           = 'rotate(-45deg)';
+    
         abs.appendChild( c );
     }
     showWhiteboardChildCount();

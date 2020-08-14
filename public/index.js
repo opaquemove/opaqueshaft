@@ -62,6 +62,8 @@ function init()
 			//  if ( curChildMoved )
 			// 	 e.preventDefault();
 			document.getElementById('ID_ON_SCROLL').innerText = 'scroll:' + e.target.scrollTop;
+			if ( !tl_drag )			//	TIMELINE_BAR移動中出なければ動作
+				setTimelinebarByScroll();
 		});
 
 	var wb = document.getElementById('WHITEBOARD');
@@ -169,7 +171,8 @@ function init()
 
 	fitting();
 	new Button( 'SIGN_STATUS',              signMenu       ).play();
-	new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
+	new Button( 'OPAQUESHAFT_TITLE',        whiteboardMenu ).play();
+	// new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
 //	new Button( 'CHILD_FINDER',				childFinder    ).play();
 //	new Button( 'ID_NAV',                   ctlNav         ).play();
 	new Button( 'ID_SEARCH',                ctlSpotlight   ).play();
@@ -295,16 +298,41 @@ function commonProc(){
 //	タイムラインインジケータの生成
 //
 function makeTimelineIndicator(){
+	var wbf = document.getElementById('WHITEBOARD_FRAME');
+	var tb_height = document.getElementById('TOOLBAR').offsetHeight;
 	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
+	var wbt_width = wbt.offsetWidth;
+
 	arTL = [ '08:00', '09:00', '10:00', '11:00', '12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00' ];
 	for ( var i=0; i<arTL.length; i++ ){
 		var o = document.createElement('DIV');
 		o.setAttribute('class', 'timeline_class' );
 		o.innerText = arTL[i];
 		wbt.appendChild( o );
+
+	}
+	
+	for ( var i=0; i<arTL.length - 1; i++ ){
+		var guide = document.createElement('DIV');
+		guide.style.position		= 'absolute';
+		guide.style.top				= ( ( i + 1 ) * pixelPerHour - 1 )+ 'px';
+		guide.style.left			= wbt_width + 'px';
+		guide.style.width			= '2000px';
+		guide.style.height			= '1px';
+		guide.style.backgroundColor	= 'transparent';
+		guide.style.border			= '1px dotted rgb(231,231,231)';
+		guide.style.pointerEvents	= 'auto';
+		// guide.style.zIndex			= 17000;
+		guide.innerHTML				= '&nbsp;';
+		wbf.appendChild( guide );
+
 	}
 
+
 }
+
+
+
 //
 //	タイムセレクタのプロトタイプ
 //
@@ -556,7 +584,7 @@ Tile.prototype = {
 //	タイムライン・バー操作
 //
 var tlx = null;
-var tlbOffset = null;
+var tlbOffset = 42;
 var tl_drag = false;
 function locateTimelinebar( e ){
 	e.preventDefault();
@@ -573,7 +601,7 @@ function locateTimelinebar( e ){
 				var event = e.changedTouches[0];
 			}
 			if ( itb != e.target ) return;
-			if ( tlbOffset == null ) tlbOffset = e.target.offsetTop;
+			// if ( tlbOffset == null ) tlbOffset = e.target.offsetTop;
 			//e.target.position = 'absolute';
 			itb.style.width 		= '24px';
 			itb.style.paddingLeft	= '60px'
@@ -592,20 +620,20 @@ function locateTimelinebar( e ){
 			} else {
 				var event = e.changedTouches[0];
 			}
-			//console.log( e.target.offsetTop + ':' + tlbOffset );
-			//console.log( event.pageY - tlx );
 			if ( ( event.pageY - tlx ) >= tlbOffset + 0 
-				&& ( event.pageY - tlx ) <= tlbOffset + 130 ){
+				&& ( event.pageY - tlx ) <= tlbOffset + 132 ){
 				itb.style.top = event.pageY - tlx + "px";
+				//console.log('bar top:' + ( parseInt(itb.style.top) - tlbOffset ) );
 				//	8:00からマウス増分
-				var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) -( 42 * 4 );
-				// var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2)
-				// 				+ ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
-				var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2) + ':00';
-								// + ':' + ( '00' + ( cur_time - Math.floor( cur_time / 60 ) * 60 )).slice(-2);
-				itb.innerText = cur_time2;
-				moveMarkedChildByTimelinebar( Math.floor( cur_time / 60 ) );
-				scrollWhiteboard( Math.floor( cur_time / 60 ) );
+				// var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) -( 42 * 4 );
+				// var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2) + ':00';
+				var ttl_min = ( parseInt(itb.style.top) - tlbOffset ) * 5;
+				var h = Math.floor( ttl_min / 60 ) + 8;
+				var m = ttl_min % 60;
+				console.log( 'hour:' + h + ':' + m );
+				itb.innerText = ( '00' + h ).slice(-2) + ':' + ( '00' + m ).slice(-2);
+				moveMarkedChildByTimelinebar( h );
+				scrollWhiteboard( h );
 			} else {
 				//console.log( 'other:' + e.target.offsetTop + ':' + tlbOffset );
 			}
@@ -620,6 +648,22 @@ function locateTimelinebar( e ){
 			tlx = null;
 			break;
 	}
+}
+
+//
+//	スクルール量からID_TIMELINE_BARを移動する
+//
+function setTimelinebarByScroll(){
+
+	var scroll_top = document.getElementById('WHITEBOARD_FRAME').scrollTop;
+	var h = Math.floor( scroll_top / pixelPerHour ) + 8;
+	var m = ( scroll_top % pixelPerHour )  / Math.floor( pixelPerHour / 5 );
+	var delta = ( h - 8 ) * 5;
+
+	var itb = document.getElementById('ID_TIMELINE_BAR');
+	itb.style.top = ( 42 + ( h - 8 ) * ( 60 / 5 ) ) + 'px';
+	itb.innerText = ( '00' + h ).slice(-2) + ':00';
+
 }
 
 //
@@ -1601,7 +1645,8 @@ function sign()
 function whiteboardMenu( e ){
 	e.stopPropagation();
 	if ( document.getElementById('WHITEBOARD_SUBMENU') != null ){
-		var p = document.getElementById('WHITEBOARD_DAY_FRAME');
+		// var p = document.getElementById('WHITEBOARD_DAY_FRAME');
+		var p = document.getElementById('OPAQUESHAFT_TITLE');
 		var c = document.getElementById('WHITEBOARD_SUBMENU');
 		p.removeChild( c );
 		return;
@@ -1611,17 +1656,21 @@ function whiteboardMenu( e ){
 	o.style.position		= 'relative';
 	o.style.padding			= '4px';
 	o.style.top             = '12px';
-	o.style.left            = '-88px';
+	o.style.left            = '0px';
 	o.style.width           = '160px';
-	o.style.height          = '140px';
+	o.style.height          = '230px';
 	o.style.color			= ' gray';
 	o.style.backgroundColor = '#EEEEEE';
 	o.style.textAlign		='left';
 	o.style.fontSize		= '14px';
 	o.style.zIndex			= 50000;
 	o.innerText = 'whiteboard menu...';
-	var p = document.getElementById('WHITEBOARD_DAY_FRAME');
+	// var p = document.getElementById('WHITEBOARD_DAY_FRAME');
+	var p = document.getElementById('OPAQUESHAFT_TITLE');
 	var m = p.appendChild( o );
+
+	var id = signid();
+
 	var r = '';
 	r += '<div id="ID_SAVE_WHITEBOARD"   style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
 	r += '<div id="ID_LOAD_WHITEBOARD"   style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >open whiteboard</div>';
@@ -1629,6 +1678,9 @@ function whiteboardMenu( e ){
 	r += '<div id="ID_CLEAR_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
 	r += '<div id="ID_REPORT_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/report.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >report...</div>';
 	r += '<div id="ID_ABSENT_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/sleep-2.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >absent...</div>';
+	r += '<div id="ID_SIGN_OUT"          style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
+	r += '<div id="ID_PROPERTY_ACCOUNT"  style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
+	r += '<div id="ID_CURRENT_ACCOUNT"   style="height:20px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
 	m.innerHTML = r;
 
 	new Button( 'ID_SAVE_WHITEBOARD',   saveWhiteboard         ).play();
@@ -1638,13 +1690,18 @@ function whiteboardMenu( e ){
 	new Button( 'ID_REPORT_WHITEBOARD', reportWhiteboard       ).play();
 	new Button( 'ID_ABSENT_WHITEBOARD', absentWhiteboard       ).play();
 
+	new Button( 'ID_SIGN_OUT', signout ).play();
+	new Button( 'ID_PROPERTY_ACCOUNT', propertyAccount ).play();
+
+
 	p.addEventListener('mouseleave', function(e) {
 		var c = document.getElementById('WHITEBOARD_SUBMENU');
 		if ( c!= null ) p.removeChild( c );
 
 	});
 	m.addEventListener('mouseleave', function(e) {
-		var p = document.getElementById('WHITEBOARD_DAY_FRAME');
+		var p = document.getElementById('OPAQUESHAFT_TITLE');
+		// var p = document.getElementById('WHITEBOARD_DAY_FRAME');
 		var c = document.getElementById('WHITEBOARD_SUBMENU');
 		p.removeChild( c );
 
@@ -1683,13 +1740,13 @@ function signMenu( e ){
 	var m = p.appendChild( o );
 	var r = '';
 	var id = signid();
-	r += '<div id="ID_SIGN_OUT"         style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
-	r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
-	r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
+	// r += '<div id="ID_SIGN_OUT"         style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
+	// r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
+	// r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
 	m.innerHTML = r;
 
-	new Button( 'ID_SIGN_OUT', signout ).play();
-	new Button( 'ID_PROPERTY_ACCOUNT', propertyAccount ).play();
+	// new Button( 'ID_SIGN_OUT', signout ).play();
+	// new Button( 'ID_PROPERTY_ACCOUNT', propertyAccount ).play();
 
 	p.addEventListener('mouseleave', function(e) {
 		var c = document.getElementById('SIGN_SUBMENU');

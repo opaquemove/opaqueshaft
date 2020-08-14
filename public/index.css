@@ -239,13 +239,18 @@ INPUT[type=password]:focus{
 	overflow:			visible;
 }
 #OPAQUESHAFT_NAV{
-	float:				left;
-	width:				42px;
-	height:				42px;
-	background-color:	red;
+	float:					left;
+	width:					42px;
+	height:					42px;
+	background-color:		red;
+	background-image: 		url(./images/more-v.png);
+	background-size:		16px;
+	background-position: 	center center;
+	background-repeat:		no-repeat;
 }
 #OPAQUESHAFT_TITLE{
 	float:				left;
+	width:				100px;
 	height:				32px;
 	color:				white;
 	background-color:	black;
@@ -358,13 +363,13 @@ INPUT[type=password]:focus{
 	pointer-events: 	none;
 	display:			flex;
 	justify-content: 	center;
-	align-items: 		end;
+	align-items: 		center;
 	opacity:			0.8;
 }
 #CHILDFINDER_FRAME{
 	visibility:			hidden;
-	width:				38%;
-	height:				50%;
+	width:				45%;
+	height:				70%;
 /*	
 	background-color:	rgb(241, 241, 241);
 	border:				1px solid lightgrey;
@@ -577,7 +582,7 @@ INPUT[type=password]:focus{
 	top:				-100px;
 	left:				0px;
 	width:				100%;
-	height:				22px;
+	height:				38px;
 	padding-top:		3px;
 	padding-bottom:		3px;
 	color:				gray;
@@ -973,7 +978,7 @@ INPUT[type=password]:focus{
 	float:				right;
 	font-size:			10px;
 	width:				55px;
-	height:				18px;
+	height:				32px;
 	color:				snow;
 	background-color:	red;
 	margin-right:		2px;

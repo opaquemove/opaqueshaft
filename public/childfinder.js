@@ -324,11 +324,15 @@ spotlight.prototype = {
                             if ( c.hasAttribute('child_id') ) break;
                             c = c.parentNode;
                         }
-                        //alert( c.getAttribute('child_id'));
-                        var c = scanWhiteboardChild( child_id );
-                        if ( c == null ) { console.log( 'child_id:' + child_id + ':null');return;}
+                        var cid = c.getAttribute('child_id');
+                        // alert( cid );
+                        var cc = scanWhiteboardChild( cid );
+                        if ( cc == null ) { console.log( 'child_id:' + cid + ':null');return;}
+                        // alert( cc.innerHTML );
     
-                        var child_name = c.firstChild.innerText;
+                        var child_name = cc.getElementsByClassName('CHILD_NAME')[0].innerText;
+                        // alert( child_name );
+                        var estimate   = cc.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
                         var h = estimate.substr(0, 2 );
                         var wbf = document.getElementById('WHITEBOARD_FRAME');
                         wbf.scrollTop = ( h - 8 ) * pixelPerHour;
