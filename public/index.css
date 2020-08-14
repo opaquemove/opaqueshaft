@@ -491,7 +491,11 @@ INPUT[type=password]:focus{
 	left:				0px;
 	width:				100%;	/* fitting */
 	height:				100%;	/* fitting */
-	background-color:	white;
+	/* background-color:	white; */
+	background-image:	url(./images/IMG_1739.JPG);
+	background-position: center center;
+	background-size: 	100%;
+	background-repeat: no-repeat;
 	padding:			0px;
 	overflow-x:			hidden;
 	overflow-y:			scroll;
