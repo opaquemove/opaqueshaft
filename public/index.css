@@ -11,6 +11,11 @@ BODY{
 	font-family: 		Segoe UI;
 	font-size:			10px;
 	background-color:	gainsboro;
+	background-image:	url(./images/IMG_1739.JPG);
+	background-position: center center;
+	background-size: 	100%;
+	background-repeat: no-repeat;
+
 	overflow:			hidden;
 }
 
@@ -353,10 +358,6 @@ INPUT[type=password]:focus{
 	width:				100%;	/* fitting */
 	height:				100%;	/* fitting */
 	/* background-color:	white; */
-	background-image:	url(./images/IMG_1739.JPG);
-	background-position: center center;
-	background-size: 	100%;
-	background-repeat: no-repeat;
 	padding:			0px;
 	overflow-x:			hidden;
 	overflow-y:			scroll;
@@ -411,7 +412,7 @@ INPUT[type=password]:focus{
 	padding:			0px;
 	border-top:			1px solid snow;
 	border-right:		1px solid lightgrey;
-	border-bottom:		1px dotted gray;
+	border-bottom:		1px dashed gray;
 	z-index:			3000;
 	opacity:			0.7;
 	/* writing-mode: 		vertical-lr; */

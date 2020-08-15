@@ -353,7 +353,7 @@ function makeTimelineIndicator(){
 		guide.style.width			= '2000px';
 		guide.style.height			= '1px';
 		guide.style.backgroundColor	= 'transparent';
-		guide.style.borderBottom	= '1px dotted rgb(231,231,231)';
+		guide.style.borderBottom	= '1px dashed rgb(231,231,231)';
 		guide.style.pointerEvents	= 'auto';
 		// guide.style.zIndex			= 17000;
 		guide.innerHTML				= '&nbsp;';
