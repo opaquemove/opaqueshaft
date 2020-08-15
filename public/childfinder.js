@@ -123,7 +123,7 @@ spotlight.prototype = {
         this.frame.style.visibility     = 'visible';
         this.header.style.visibility    = 'visible';
         this.ctlMain();
-        this.keyword.focus();
+        // this.keyword.focus();
         this.resize();
 
     },

@@ -264,6 +264,17 @@ INPUT[type=password]:focus{
 	padding-top:			10px;
 	/* border-left:			1px solid darkgrey; */
 }
+#ID_PROGRESS{
+	width:					80px;
+	height:					76px;
+	text-align:				center;
+	float:					right;
+	font-size:				14px;
+	color:					snow;
+	background-color: 		transparent;
+	padding-top:			8px;
+	padding-left:			4px;
+}
 
 #SIGN_STATUS{
 	width:					40px;
@@ -775,6 +786,7 @@ INPUT[type=password]:focus{
 	overflow-y:			auto;
 	overflow-x:			visible;
 	z-index:			40000;
+	opacity:			0.9;
 }
 
 #CHILDREN_PALLETE_TAB{

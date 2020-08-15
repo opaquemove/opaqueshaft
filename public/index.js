@@ -279,8 +279,29 @@ function init()
 	// tmb.addEventListener( 'mouseup',    locateTimelinebar );
 	// tmb.addEventListener( 'touchend',   locateTimelinebar );
 
+	makeToolbarCheckoutProgress( 0 );
 }
 
+//
+//	ツールバーにチェックアウトプログレスを表示
+//
+function makeToolbarCheckoutProgress( progress_ratio ){
+	var p = document.getElementById('ID_PROGRESS');
+	p.innerHTML = '';
+	var d = document.createElement('DIV');
+	d.setAttribute( 'class', 'vh-center');
+	d.style.position		= 'relative';
+	d.style.paddingTop		= '1px';
+	d.style.paddingLeft		= '1px';
+	d.style.width			= '80px';
+	d.style.height			= '80px';
+	// d.style.backgroundColor	= 'rgb(241,241,241)';
+	// d.style.border			= '1px solid lightgrey';
+	var ccl = p.appendChild( d );
+	var cp = new CircleProgress( ccl, 70, 70, progress_ratio, 'gray', 14 );
+	cp.play();
+
+}
 //
 //	共通処理をまとめる
 //
@@ -2010,7 +2031,7 @@ function dragPalleteChild( hm ){
 	
 	var cursor	= 0;
 	var top		= ( parseInt( arHM[0] ) - 8 ) * pixelPerHour;
-	var left	= ( parseInt( arHM[1] ) );
+	var left	= ( parseInt( arHM[1] ) ) + 42;				// 42px タイムライン分右にオフセット
 	console.log( 'hm:' + hm );
 	console.log( 'top:' + top + ' left:' + left );
 

@@ -591,14 +591,15 @@ function addChildManage( oParent, oChild ){
 //    c.style.height      = '30px';
     c.style.clear       = 'both';
     // c.style.borderBottom= '1px solid lightgrey;'
-    c.style.borderRight = arChildGrade[ oChild.child_grade ];
+    // c.style.borderRight = arChildGrade[ oChild.child_grade ];
     c.style.float       ='left';
     var r = '';
     r += '<div style="float:left;height:20px;font-size:12px;padding-left:2px;">';
         r += oChild.child_name;
     r += '</div>';
     r += '<div style="float:right;font-size:12px;text-align:right;padding-top:2px;" >';
-        r += oChild.child_type + oChild.child_grade;
+        r += oChild.child_type;
+        r += '<span style="color:' + arChildGradeColor[ oChild.child_grade ] + ';">●</span>';
     r += '</div>';
 
 	c.innerHTML = r;
@@ -944,8 +945,14 @@ function showWhiteboardChildCount(){
     var children = wb.getElementsByClassName('CHILD');
     var wcc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT');
     wcc.innerText = children.length;
-    showWhiteboardChildCountCheckout();
+    var c_checkout = showWhiteboardChildCountCheckout();
     showWhiteboardChildCountAbsent();
+
+    var ratio = 0;
+    if ( children.length != 0)
+        ratio =  Math.floor( c_checkout / children.length * 100 );
+
+    makeToolbarCheckoutProgress( ratio );
 }
 
 //
@@ -961,6 +968,7 @@ function showWhiteboardChildCountCheckout(){
         if ( o.hasAttribute('checkout')) c++;
     }
     wccc.innerText = c;
+    return c;
 }
 
 //
