@@ -532,7 +532,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     c.style.position    = 'absolute;'
 	c.style.top         = top + 'px';
     c.style.left        = left + 'px';
-    c.style.borderRight = arChildGrade[ child_grade ];
+    // c.style.borderRight = arChildGrade[ child_grade ];
 
     var hm    = coordinateToTime( top, left );
     var escort = coordinateToEscort( top, left );
@@ -557,7 +557,8 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
             r += '<div class="ESCORT_FLG"   style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
             r += '</div>';
             r += '<div class="TYPE_GRADE" style="float:right;font-size:10px;text-align:right;" >';
-            r += child_type + '' + child_grade;
+                r += child_type;
+                r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';" >●</span>'
             r += '</div>';
         r += '</div>';
     r += '</div>';
