@@ -78,9 +78,10 @@
 	width:				150px;
 	height:				200px;
 	color:				red;
-	background-color:	transparent;
+	background-color:	rgb(241, 241, 241);
 	opacity: 			0.8;
 	font-size:			18px;
+	border-radius: 		8px;
 }
 
 #MODAL_TIMESELECTOR2{
