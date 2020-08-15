@@ -949,9 +949,11 @@ function showWhiteboardChildCount(){
     showWhiteboardChildCountAbsent();
 
     var ratio = 0;
-    if ( children.length != 0)
+    if ( wb.childNodes.length != 0)
         ratio =  Math.floor( c_checkout / children.length * 100 );
 
+    console.log( 'c_checkout:' + c_checkout );
+    console.log( 'length:' + wb.childNodes.length );
     makeToolbarCheckoutProgress( ratio );
 }
 

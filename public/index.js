@@ -286,6 +286,7 @@ function init()
 //	ツールバーにチェックアウトプログレスを表示
 //
 function makeToolbarCheckoutProgress( progress_ratio ){
+	console.log( 'maketoolbarcheckoutprogress:' + progress_ratio );
 	var p = document.getElementById('ID_PROGRESS');
 	p.innerHTML = '';
 	var d = document.createElement('DIV');
