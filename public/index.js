@@ -194,12 +194,12 @@ function init()
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	// new Button( 'ID_SHEET_ESCORT',          turnWhiteboard ).play();
 	new Button( 'CPC_UPDATE_CHILD_TIME',	showTimelineSelector ).play();
-	new Button( 'ID_GRADE1',                null           ).play();
-	new Button( 'ID_GRADE2',                null           ).play();
-	new Button( 'ID_GRADE3',                null           ).play();
-	new Button( 'ID_GRADE4',                null           ).play();
-	new Button( 'ID_GRADE5',                null           ).play();
-	new Button( 'ID_GRADE6',                null           ).play();
+	// new Button( 'ID_GRADE1',                null           ).play();
+	// new Button( 'ID_GRADE2',                null           ).play();
+	// new Button( 'ID_GRADE3',                null           ).play();
+	// new Button( 'ID_GRADE4',                null           ).play();
+	// new Button( 'ID_GRADE5',                null           ).play();
+	// new Button( 'ID_GRADE6',                null           ).play();
 	new Button( 'ID_REPORT',				reportWhiteboard ).play();
 	new Button( 'ID_TILE',					showTile ).play();
 
@@ -331,7 +331,7 @@ function makeTimelineIndicator(){
 		guide.style.width			= '2000px';
 		guide.style.height			= '1px';
 		guide.style.backgroundColor	= 'transparent';
-		guide.style.border			= '1px dotted rgb(231,231,231)';
+		guide.style.borderBottom	= '1px dotted rgb(231,231,231)';
 		guide.style.pointerEvents	= 'auto';
 		// guide.style.zIndex			= 17000;
 		guide.innerHTML				= '&nbsp;';
@@ -1408,7 +1408,8 @@ function fitting(){
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
 	var tb_height = document.getElementById('TOOLBAR').offsetHeight;
-	var sts_height = document.getElementById('STATUS').offsetHeight;
+	// var sts_height = document.getElementById('STATUS').offsetHeight;
+	var sts_height = 0;
 	// console.log('status height:' + sts_height );
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.style.height = ( h - tb_height - sts_height ) + 'px';
@@ -1421,13 +1422,13 @@ function fitting(){
 
 	var cpf  = document.getElementById('CHILDREN_PALLETE_FRAME');
 	cpf.style.height  = ( h -tb_height - sts_height ) + 'px';
-	cpf.style.left    = ( w - tb_height ) + 'px';
+	cpf.style.left    = ( w - 42 ) + 'px';
 
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
 	cpc.style.height	= ( parseInt( cpf.style.height ) - parseInt(cpc.style.marginTop ) - 1 ) + 'px'; 
 
-	var sts = document.getElementById('STATUS');
-	sts.style.top		= ( h - sts_height ) + 'px';
+	// var sts = document.getElementById('STATUS');
+	// sts.style.top		= ( h - sts_height ) + 'px';
 
 	var nsi = document.getElementById('NAV_START_ICON');
 	nsi.style.top = ( ( h / 2 ) - oNav.size + tb_height ) + 'px'
@@ -1461,7 +1462,7 @@ function foldingChildrenPallete(){
 	var mleft = parseInt( cpf.style.marginLeft );
 	//alert( '[' + cpf.style.marginLeft + ']' );
 	if ( mleft == 0 || isNaN(mleft ) ){
-		cpf.style.marginLeft = '-170px';	// open pallete
+		cpf.style.marginLeft = '-168px';	// open pallete
 		flagChildrenPallete = true;
 	} else {
 		cpf.style.marginLeft = '0px';		// close pallete
@@ -1476,15 +1477,15 @@ function foldingChildrenPallete(){
 function ctlToolbar(){
 	var tb       = document.getElementById('TOOLBAR');
 	var wbf      = document.getElementById('WHITEBOARD_FRAME');
-	var status   = document.getElementById('STATUS');
+	// var status   = document.getElementById('STATUS');
 	if ( checkSign()) {
 		tb.style.visibility     = 'visible';
 		wbf.style.visibility    = 'visible';
-		status.style.visibility = 'visible';
+		// status.style.visibility = 'visible';
 	} else {
 		tb.style.visibility     = 'hidden';
 		wbf.style.visibility    = 'hidden';
-		status.style.visibility = 'hidden';
+		// status.style.visibility = 'hidden';
 	}
 }
 
@@ -1663,14 +1664,14 @@ function whiteboardMenu( e ){
 	o.setAttribute( 'id', 'WHITEBOARD_SUBMENU');
 	o.style.position		= 'relative';
 	o.style.padding			= '4px';
-	o.style.top             = '12px';
+	o.style.top             = '24px';
 	o.style.left            = '0px';
-	o.style.width           = '160px';
-	o.style.height          = '230px';
+	o.style.width           = '200px';
+	o.style.height          = '300px';
 	o.style.color			= ' gray';
 	o.style.backgroundColor = '#EEEEEE';
 	o.style.textAlign		='left';
-	o.style.fontSize		= '14px';
+	o.style.fontSize		= '18px';
 	o.style.zIndex			= 50000;
 	o.innerText = 'whiteboard menu...';
 	// var p = document.getElementById('WHITEBOARD_DAY_FRAME');
@@ -1680,15 +1681,15 @@ function whiteboardMenu( e ){
 	var id = signid();
 
 	var r = '';
-	r += '<div id="ID_CURRENT_ACCOUNT"   style="height:20px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
-	r += '<div id="ID_LOAD_WHITEBOARD"   style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >open whiteboard</div>';
-	r += '<div id="ID_SAVE_WHITEBOARD"   style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
-	r += '<div id="ID_CLOSE_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/cancel.png);background-size:10px;background-position:left center;background-repeat:no-repeat;" >close</div>';
-	r += '<div id="ID_CLEAR_WHITEBOARD"  style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
-	r += '<div id="ID_REPORT_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/report.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >report...</div>';
-	r += '<div id="ID_ABSENT_WHITEBOARD" style="height:20px;padding-top:2px;padding-left:16px;background-image:url(./images/sleep-2.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >absent...</div>';
-	r += '<div id="ID_SIGN_OUT"          style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
-	r += '<div id="ID_PROPERTY_ACCOUNT"  style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
+	r += '<div id="ID_CURRENT_ACCOUNT"   style="height:28px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
+	r += '<div id="ID_LOAD_WHITEBOARD"   style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >open whiteboard</div>';
+	r += '<div id="ID_SAVE_WHITEBOARD"   style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
+	r += '<div id="ID_CLOSE_WHITEBOARD"  style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/cancel.png);background-size:10px;background-position:left center;background-repeat:no-repeat;" >close</div>';
+	r += '<div id="ID_CLEAR_WHITEBOARD"  style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
+	r += '<div id="ID_REPORT_WHITEBOARD" style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/report.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >report...</div>';
+	r += '<div id="ID_ABSENT_WHITEBOARD" style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/sleep-2.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >absent...</div>';
+	r += '<div id="ID_SIGN_OUT"          style="height:28px;padding-top:4px;padding-left:18px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
+	r += '<div id="ID_PROPERTY_ACCOUNT"  style="height:28px;padding-top:4px;padding-left:18px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
 	m.innerHTML = r;
 
 	new Button( 'ID_SAVE_WHITEBOARD',   saveWhiteboard         ).play();
@@ -2260,7 +2261,7 @@ function mDown( e ) {
 function mMove( e ){
 	var touchdevice = ( 'ontouchend' in document );
 
-	console.log('mMove');
+	console.log('mMove:' + e.type );
 	//ドラッグしている要素を取得
 	//var drag = document.getElementsByClassName("drag")[0];
 //		var drag = e.target;

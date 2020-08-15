@@ -1,6 +1,7 @@
 window.onload = init;
 window.onresize = fitting;
 
+var w_whiteboard    = null;
 
 function init(){
 	var touchdevice = ( 'ontouchend' in document );
@@ -40,7 +41,10 @@ function init(){
         wb.addEventListener( evtEnd,
             function ( e ){
                 wb.style.marginTop = '0px';
-                window.open( '/index.html', 'WHITEBOARD' );
+                if ( w_whiteboard == null || w_whiteboard.closed )
+                    w_whiteboard = window.open( '/index.html', 'WHITEBOARD' );
+                    else
+                    w_whiteboard.focus();
             }, { passive : false } );
     
 }

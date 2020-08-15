@@ -13,11 +13,14 @@
 <script type="text/javascript" src="./childfinder.js" ></script>
 <script type="text/javascript" src="./circleprogress.js" ></script>
 <link rel="stylesheet" type="text/css" href="./index.css" />
+<link rel="stylesheet" type="text/css" href="./modal.css" />
 </head>
 <body>
 	<script type="text/javascript" src="./soc_backend.js"></script>
 	<div id="NAV_START_ICON" class="not_select vh-center">&nbsp;</div>
 	<div id="ESCORT_AREA_MARKER" class="not_select" >&nbsp;</div>
+
+
 	<div id="TOOLBAR" class="not_select">
 		<div id="OPAQUESHAFT_NAV" >&nbsp;</div>
 		<!--
@@ -26,17 +29,24 @@
 		<div id="OPAQUESHAFT_TITLE">
 			&nbsp;OpaqueShaft
 		</div> 
-		<div id="ID_SEARCH">&nbsp;</div> 
 		<div style="float:left;padding-top:10px;padding-left: 20px;">
-			<!--
+			<div id="ID_WHITEBOARD_CHILD_COUNT"          class="status_column" style="width:30px;" ></div>
+			<div id="ID_WHITEBOARD_CHILD_COUNT_CHECKOUT" class="status_column" style="width:30px;" ></div>
+			<div id="ID_WHITEBOARD_CHILD_COUNT_ABSENT"   class="status_column" style="width:30px;" ></div>
+			<div id="ID_CHILD_COORDINATE"                class="status_column" style="width:100px;" ></div>
+			<div id="ID_ON_SCROLL"                       class="status_column" style="width:70px;" ></div>
+				<!--
 				<button onclick="postWebBackend()"       >sign status(webbackend)</button>
 				<button onclick="getAccountList()"       >getAccountList(socket.io)...</button>
 				<button onclick="loadChildrenForm()"     >load Children(socket.io)</button>
 			-->	
 		</div>
 <!--
-	<div id="SIGN_STATUS" class="not_select">&nbsp;	</div>
+		<div id="SIGN_STATUS" class="not_select">&nbsp;	</div>
 -->
+		<div id="ID_REPORT"            class="not_select">Report</div>
+		<div id="ID_TILE"              class="not_select">Tile</div>
+
 		<div id="WHITEBOARD_DAY_FRAME" class="not_select">
 			<span id="CUR_WHITEBOARD_DAY" ></span>
 		</div>
@@ -50,27 +60,19 @@
 <!--
 	<div id="REPORT_FRAME" class="not_select">
 	</div>
--->
 	<div id="STATUS" class="not_select">
 		<div style="float:left;padding-top:4px;" >&nbsp;status&nbsp;</div>
-		<div id="ID_WHITEBOARD_CHILD_COUNT"          class="status_column" style="width:30px;" ></div>
-		<div id="ID_WHITEBOARD_CHILD_COUNT_CHECKOUT" class="status_column" style="width:30px;" ></div>
-		<div id="ID_WHITEBOARD_CHILD_COUNT_ABSENT"   class="status_column" style="width:30px;" ></div>
-		<div id="ID_CHILD_COORDINATE"                class="status_column" style="width:100px;" ></div>
-		<div id="ID_ON_SCROLL"                       class="status_column" style="width:70px;" ></div>
-		
-		<div id="ID_REPORT"                          class="sheet-button">Report</div>
-		<div id="ID_TILE"                            class="sheet-button">Tile</div>
 		<div id="ID_GRADE6"       >●</div>
 		<div id="ID_GRADE5"       >●</div>
 		<div id="ID_GRADE4"       >●</div>
 		<div id="ID_GRADE3"       >●</div>
 		<div id="ID_GRADE2"       >●</div>
-		<div id="ID_GRADE1"       >●</div>
-
+		<div id="ID_GRADE1"       >●</div>	
 	</div>
+-->
 
-	<div id="ID_CHILDREN"     class="not_select">&nbsp;</div>
+	<div id="ID_SEARCH"       class="not_select" >&nbsp;</div> 
+	<div id="ID_CHILDREN"     class="not_select" >&nbsp;</div>
 	<div id="ID_TIMELINE_BAR" class="not_select" >08:00</div>
 
 	<div id="CHILDREN_PALLETE_FRAME" class="not_select">

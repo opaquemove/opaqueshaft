@@ -57,168 +57,6 @@ INPUT[type=password]:focus{
 /*	border-bottom:		1px solid red; */
 }
 
-#MODAL_OVERLAY{
-	z-index:			70000;
-	visibility:			hidden;
-	position:			fixed;
-	top:				0px;
-	left:				0px;
-	width:				100%;
-	height:				100%;
-	background-color:	rgba(170, 170, 170, 0.75);
-}
-
-#MODAL_MESSAGE_FRAME{
-	width:				520px;
-	height:				400px;
-	background-color:	transparent;	
-}
-
-#MODAL_MESSAGE_HEADER{
-	width:				520px;
-	height:				29px;
-	background-color:	black;
-	border-bottom:		1px solid lightgray;
-	border-radius: 		8px 8px 0px 0px;
-	padding:			0px;
-}
-
-#MODAL_TITLE{
-	float:				left;
-	height:				25px;
-	color:				whitesmoke;
-	font-size:			12px;
-	padding-top:		4px;
-	padding-left:		4px;
-	padding-right:		8px;
-}
-
-
-#MODAL_MESSAGE{
-	width:				516px;
-	height:				327px;
-	color:				gray;
-	background-color:	white;
-	border-bottom:		1px solid lightgrey;
-	padding:			2px;
-	overflow-y:			scroll;
-}
-
-#MODAL_MESSAGE_FOOTER{
-	width:				520px;
-	height:				26px;
-	color:				gray;
-	background-color:	white;
-/*	border:				1px solid lightgrey; */
-	text-align:			right;
-	padding-top:		2px;
-	border-radius: 		0px 0px 8px 8px;
-
-}
-
-#MODAL_OVERLAY_TIMESELECTOR{
-	z-index:			70010;
-	visibility:			hidden;
-	position:			fixed;
-	top:				0px;
-	left:				0px;
-	width:				100%;
-	height:				100%;
-	background-color: 	transparent;
-	pointer-events: 	none;
-	display:			flex;
-	justify-content: 	center;
-	align-items: 		center;
-}
-
-#MODAL_TIMESELECTOR{
-	float:				left;
-	pointer-events: 	auto;
-	width:				150px;
-	height:				200px;
-	color:				red;
-	background-color:	transparent;
-	opacity: 			0.8;
-	font-size:			18px;
-}
-
-#MODAL_TIMESELECTOR2{
-	float:				left;
-	pointer-events: 	auto;
-	width:				150px;
-	height:				200px;
-	color:				whitesmoke;
-	background-color:	red;
-	margin-left:		10px;
-	opacity: 			0.8;
-	font-size:			18px;
-}
-
-#MODAL_OVERLAY_TILE{
-	z-index:			70000;
-	visibility:			hidden;
-	position:			fixed;
-	top:				0px;
-	left:				0px;
-	width:				100%;
-	height:				100%;
-	background-color: 	transparent;
-	pointer-events: 	none;
-	display:			flex;
-	justify-content: 	center;
-	align-items: 		center;
-}
-#MODAL_TILE1{
-	float:				left;
-	pointer-events: 	auto;
-	width:				298px;
-	height:				128px;
-	color:				snow;
-	background-color:	lightgrey;
-	opacity: 			0.8;
-	font-size:			18px;
-	margin:				2px;
-	border-radius: 		20px;
-}
-#MODAL_TILE2{
-	float:				left;
-	pointer-events: 	auto;
-	width:				128px;
-	height:				128px;
-	color:				snow;
-	background-color:	red;
-	opacity: 			0.8;
-	font-size:			18px;
-	margin:				2px;
-	border-radius: 		20px;
-	/* clear:				both; */
-}
-#MODAL_TILE3{
-	float:				left;
-	clear:				left;
-	pointer-events: 	auto;
-	width:				128px;
-	height:				236px;
-	color:				gray;
-	background-color:	rgb(241, 241, 241);
-	opacity: 			0.9;
-	font-size:			18px;
-	margin:				2px;
-	padding-top:		20px;
-	border-radius: 		20px;
-}
-#MODAL_TILE4{
-	float:				left;
-	pointer-events: 	auto;
-	width:				298px;
-	height:				128px;
-	color:				snow;
-	background-color:	red;
-	opacity: 			0.8;
-	font-size:			18px;
-	margin:				2px;
-	border-radius: 		20px;
-}
 
 .circle_button{
 	font-size:			16px;
@@ -228,37 +66,18 @@ INPUT[type=password]:focus{
 	background-repeat: 	no-repeat;
 }
 
-#TOOLBAR{
-	padding-top:		0px;
-	padding-bottom:		2px;
-	height:				40px;
-	color:				gray;
-	background-color:	black;
-/*	border-bottom:		1px solid lightgrey;*/
-	z-index:			0;
-	overflow:			visible;
-}
-#OPAQUESHAFT_NAV{
-	float:					left;
-	width:					42px;
-	height:					42px;
-	background-color:		red;
-	background-image: 		url(./images/more-v.png);
-	background-size:		16px;
-	background-position: 	center center;
-	background-repeat:		no-repeat;
-}
 #OPAQUESHAFT_TITLE{
-	float:				left;
-	width:				100px;
-	height:				32px;
-	color:				white;
-	background-color:	black;
-	font-size:			14px;
-/*	border-left:		42px solid red; */
+	float:					left;
+	width:					180px;
+	height:					64px;
+	color:					white;
+	background-color:		black;
+	font-size:				24px;
+/*	border-left:			42px solid red; */
 	/* border-right:		1px solid darkgrey; */
-	padding-top:		10px;
-	padding-right:		8px;
+	padding-top:			20px;
+	padding-left:			0px;
+	padding-right:			0px;
 }
 #NAV_START_ICON{
 	position:				absolute;
@@ -276,16 +95,26 @@ INPUT[type=password]:focus{
 	/* border-radius: 			50%; */
 	z-index:				65001;
 }
-#ID_SEARCH{
-	float: 					left;
+
+#TOOLBAR{
+	padding-top:		0px;
+	padding-bottom:		2px;
+	height:				82px;
+	color:				gray;
+	background-color:	black;
+/*	border-bottom:		1px solid lightgrey;*/
+	z-index:			0;
+	overflow:			visible;
+}
+#OPAQUESHAFT_NAV{
+	float:					left;
 	width:					42px;
-	height:					42px;
-	background-color: 		red;
-	background-image: 		url(./images/searching.png);
+	height:					84px;
+	background-color:		red;
+	background-image: 		url(./images/more-v.png);
+	background-size:		16px;
 	background-position: 	center center;
-	background-repeat: 		no-repeat;
-	background-size: 		16px;
-	/* border-right:			1px solid darkgrey; */
+	background-repeat:		no-repeat;
 }
 #ID_NAV{
 	float: 					left;
@@ -405,6 +234,37 @@ INPUT[type=password]:focus{
 
 }
 
+#ID_REPORT{
+	width:					84px;
+	height:					74px;
+	text-align:				center;
+	float:					right;
+	font-size:				14px;
+	color:					snow;
+	background-color: 		red;
+	background-image: 		url(./images/report.png);
+	background-position: 	center center;
+	background-size:		24px;
+	background-repeat: 		no-repeat;
+	padding-top:			10px;
+	/* border-left:			1px solid darkgrey; */
+}
+#ID_TILE{
+	width:					84px;
+	height:					74px;
+	text-align:				center;
+	float:					right;
+	font-size:				14px;
+	color:					snow;
+	background-color: 		red;
+	background-image: 		url(./images/shutter.png);
+	background-position: 	center center;
+	background-size:		24px;
+	background-repeat: 		no-repeat;
+	padding-top:			10px;
+	/* border-left:			1px solid darkgrey; */
+}
+
 #SIGN_STATUS{
 	width:					40px;
 	height:					30px;
@@ -477,7 +337,7 @@ INPUT[type=password]:focus{
 
 #WHITEBOARD_FRAME{
 	position:			fixed;
-	top:				42px;
+	top:				84px;
 	left:				0px;
 	width:				100%;	/* fitting */
 	height:				100%;	/* fitting */
@@ -494,7 +354,7 @@ INPUT[type=password]:focus{
 #WHITEBOARD_TIMELINE{
 	position: 			absolute;
 	top:				0px;
-	left:				0;
+	left:				0px;
 	width:				42px;
 	height:				7200px;			/* 600 * 12hours */
 	float:				left;
@@ -533,7 +393,7 @@ INPUT[type=password]:focus{
 	width:				41px;
 	height:				598px;		/* 600 pixel Per Hour */
 	color:				red;
-	background-color:	rgb(241, 241, 241);
+	background-color:	darkgray;
 	font-size:			18px;
 	font-weight:		bold;
 	text-align:			center;
@@ -604,13 +464,13 @@ INPUT[type=password]:focus{
 }
 
 .PALLETE_CHILD{
-	width:				165px;
+	width:				163px;
 	height:				30px;
 	color:				gray;
 	background-color:	white;
 	padding:			0px;
 	/* border-top:			1px solid lightgrey; */
-	border-left:		1px solid lightgrey;
+	border-left:		0px solid lightgrey;
 	border-right:		1px solid lightgrey;
 	/* border-bottom:		1px solid lightgrey; */
 	font-size:			15px;
@@ -689,7 +549,7 @@ INPUT[type=password]:focus{
 
 #ESCORT_AREA_MARKER{
 	position:			absolute;
-	top:				42px;
+	top:				84px;
 	left:				-10px;		/*	dummy */
 	width:				4px;
 	height:				4px;
@@ -859,10 +719,25 @@ INPUT[type=password]:focus{
 	color:				lightseagreen;
 }
 
+#ID_SEARCH{
+	position: 				absolute;
+	margin-top:				0px;
+	top:					84px;
+	left:					0px;
+	width:					42px;
+	height:					42px;
+	background-color: 		red;
+	background-image: 		url(./images/searching.png);
+	background-position: 	center center;
+	background-repeat: 		no-repeat;
+	background-size: 		16px;
+	/* border-right:			1px solid darkgrey; */
+}
+
 #ID_CHILDREN{
 	position:				absolute;
 	margin-top:				0px;
-	top:					42px;
+	top:					126px;
 	left:					0px;
 	width:					42px;
 	height:					42px;
@@ -876,7 +751,7 @@ INPUT[type=password]:focus{
 #ID_TIMELINE_BAR{
 	position:			absolute;
 	margin-top:			0px;
-	top:				84px;
+	top:				168px;
 	left:				0px;
 	width:				30px;
 	height:				41px;
@@ -891,7 +766,7 @@ INPUT[type=password]:focus{
 
 #CHILDREN_PALLETE_FRAME{
 	position:			absolute;
-	top:				42px;
+	top:				84px;
 	left:				-212px;		/*  dummy coordinate -> fix to fitting()*/
 	width:				212px;
 	height:				90%;		/*  dummy coordinate -> fix to fitting()*/
@@ -924,7 +799,7 @@ INPUT[type=password]:focus{
 	position:			relative;
 	top:				0px;
 	left:				0px;
-	width:				167px;
+	width:				166px;
 	height:				100%;
 	float: 				left;
 	font-size:			12px;
@@ -1003,7 +878,7 @@ INPUT[type=password]:focus{
 	text-align:			center;
 	padding-top:		4px;
 	margin-right:		2px;
-	border:				1px solid lightgrey;	
+	border-bottom:				1px solid lightgrey;	
 }
 
 /*
