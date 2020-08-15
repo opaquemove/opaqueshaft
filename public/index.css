@@ -464,16 +464,15 @@ INPUT[type=password]:focus{
 }
 
 .PALLETE_CHILD{
-	width:				163px;
+	width:				144px;
 	height:				30px;
 	color:				gray;
 	background-color:	white;
 	padding:			0px;
-	/* border-top:			1px solid lightgrey; */
-	border-left:		0px solid lightgrey;
-	border-right:		1px solid lightgrey;
-	/* border-bottom:		1px solid lightgrey; */
+	/* border-left:		0px solid lightgrey;
+	border-right:		1px solid lightgrey; */
 	font-size:			15px;
+	border-radius: 		4px;
 /*	overflow:			hidden;*/
 	-webkit-user-select: none;
 }
