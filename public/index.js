@@ -1452,7 +1452,7 @@ function fitting(){
 	// sts.style.top		= ( h - sts_height ) + 'px';
 
 	var nsi = document.getElementById('NAV_START_ICON');
-	nsi.style.top = ( ( h / 2 ) - oNav.size + tb_height ) + 'px'
+	nsi.style.top = ( ( h / 2 ) - oNav.size + tb_height -42 ) + 'px'
 	//	NAVリロケーション
 	if ( oNav.opened() ){
 		oNav.frame.style.top	= ( ( h / 2 ) - ( oNav.frame.offsetHeight / 2 ) ) + 'px';
