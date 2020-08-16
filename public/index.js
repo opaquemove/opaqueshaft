@@ -556,7 +556,7 @@ Tile.prototype = {
 
 		this.frame.addEventListener( this.evtEnd,
 			( function(e){
-				console.log('close');
+				e.stopPropagation();
 				if ( e.target == this.frame )
 				 this.close();
 			} ).bind( this ), false );
