@@ -190,6 +190,7 @@ function init()
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();
+	new Button( 'CHILDREN_PALLETE_CONTENT_FRAME', foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	// new Button( 'ID_SHEET_ESCORT',          turnWhiteboard ).play();
