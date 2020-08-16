@@ -563,6 +563,7 @@ Tile.prototype = {
 
 		new Button( 'MODAL_TILE4', saveWhiteboard ).play();
 		new Button( 'MODAL_TILE5', signout ).play();
+		new Button( 'MODAL_TILE6', clearWhiteboard ).play();
 
 	},
 	open : function(){

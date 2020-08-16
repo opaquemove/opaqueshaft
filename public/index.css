@@ -527,7 +527,7 @@ INPUT[type=password]:focus{
 	height:				30px;
 	color:				gray;
 	background-color:	white;
-	padding:			0px;
+	padding-top:		4px;
 	/* border-left:		0px solid lightgrey;
 	border-right:		1px solid lightgrey; */
 	font-size:			15px;
