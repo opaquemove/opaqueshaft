@@ -342,7 +342,7 @@ function makeTimelineIndicator(){
 	for ( var i=0; i<arTL.length; i++ ){
 		var o = document.createElement('DIV');
 		o.setAttribute('class', 'timeline_class vh-center' );
-		o.innerText = arTL[i];
+		o.innerHTML = '<div style="border-bottom:4px solid white;" >' + arTL[i] + '</div>';
 		wbt.appendChild( o );
 
 	}
@@ -2299,6 +2299,7 @@ function mDown( e ) {
 		var event = e;
 	} else {
 		var event = e.changedTouches[0];
+		console.log( 'touchstart identifier:' + event.identifier );
 	}
 	//e.stopPropagation();
 	//要素内の相対座標を取得
@@ -2352,6 +2353,8 @@ function mMove( e ){
 		var event = e;
 	} else {
 		var event = e.changedTouches[0];
+		console.log( 'touchmove identifier:' + event.identifier );
+
 	}
 
 	//フリックしたときに画面を動かさないようにデフォルト動作を抑制
