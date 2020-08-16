@@ -594,7 +594,7 @@ function addChildManage( oParent, oChild ){
     // c.style.borderRight = arChildGrade[ oChild.child_grade ];
     c.style.float       ='left';
     var r = '';
-    r += '<div style="float:left;height:20px;font-size:12px;padding-left:2px;">';
+    r += '<div class="CHILD_NAME" style="float:left;height:20px;font-size:12px;padding-left:2px;">';
         r += oChild.child_name;
     r += '</div>';
     r += '<div style="float:right;font-size:12px;text-align:right;padding-top:2px;" >';
