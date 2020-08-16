@@ -299,7 +299,7 @@ function makeToolbarCheckoutProgress( progress_ratio ){
 	// d.style.backgroundColor	= 'rgb(241,241,241)';
 	// d.style.border			= '1px solid lightgrey';
 	var ccl = p.appendChild( d );
-	var cp = new CircleProgress( ccl, 70, 70, progress_ratio, 'gray', 14 );
+	var cp = new CircleProgress( ccl, 70, 70, progress_ratio, 'gray', 12 );
 	cp.play();
 
 }
@@ -325,6 +325,8 @@ function commonProc(){
 
 	}
 
+	showWhiteboardChildCount();
+
 }
 
 //
@@ -349,11 +351,14 @@ function makeTimelineIndicator(){
 		var guide = document.createElement('DIV');
 		guide.style.position		= 'absolute';
 		guide.style.top				= ( ( i + 1 ) * pixelPerHour - 1 )+ 'px';
-		guide.style.left			= wbt_width + 'px';
-		guide.style.width			= '2000px';
+		guide.style.left			= '40%';
+		// guide.style.left			= wbt_width + 'px';
+		// guide.style.width			= '2000px';
+		guide.style.width			= '20%';
+		guide.style.margin			= '0 auto';
 		guide.style.height			= '1px';
 		guide.style.backgroundColor	= 'transparent';
-		guide.style.borderBottom	= '1px dashed rgb(231,231,231)';
+		guide.style.borderBottom	= '1px dashed lightgrey';
 		guide.style.pointerEvents	= 'auto';
 		// guide.style.zIndex			= 17000;
 		guide.innerHTML				= '&nbsp;';
@@ -548,6 +553,14 @@ Tile.prototype = {
 				break;
 		}
 
+		this.frame.addEventListener( this.evtEnd,
+			( function(e){
+				console.log('close');
+				// this.close();
+			} ).bind( this ), false );
+
+		new Button( 'MODAL_TILE5', signout ).play();
+
 	},
 	open : function(){
 		this.frame.style.visibility = 'visible';
@@ -566,6 +579,9 @@ Tile.prototype = {
 		console.log( progress_ratio );
 		this.day( dayWhiteboard );
 		this.progress( c_checkout, c_child, progress_ratio );
+
+		var tile2 = document.getElementById('MODAL_TILE2');
+		tile2.innerText = 'sign ' + isSignId();
 	},
 	close : function(){
 		this.frame.style.visibility = 'hidden';
@@ -1497,16 +1513,26 @@ function foldingChildrenPallete(){
 //	サインアウトデザイン
 //
 function ctlToolbar(){
-	var tb       = document.getElementById('TOOLBAR');
-	var wbf      = document.getElementById('WHITEBOARD_FRAME');
+	var tb      = document.getElementById('TOOLBAR');
+	var wbf     = document.getElementById('WHITEBOARD_FRAME');
+	var is		= document.getElementById('ID_SEARCH');
+	var ic		= document.getElementById('ID_CHILDREN');
+	var tlb		= document.getElementById('ID_TIMELINE_BAR');
+
 	// var status   = document.getElementById('STATUS');
 	if ( checkSign()) {
 		tb.style.visibility     = 'visible';
 		wbf.style.visibility    = 'visible';
+		is.style.visibility		= 'visible';
+		ic.style.visibility		= 'visible';
+		tlb.style.visibility	= 'visible';
 		// status.style.visibility = 'visible';
 	} else {
 		tb.style.visibility     = 'hidden';
 		wbf.style.visibility    = 'hidden';
+		is.style.visibility		= 'hidden';
+		ic.style.visibility		= 'hidden';
+		tlb.style.visibility	= 'hidden';
 		// status.style.visibility = 'hidden';
 	}
 }
@@ -1526,6 +1552,12 @@ function checkSign(){
 	return  ( c.indexOf( 'acc=') > -1 );
 }
 
+//
+//	サインインIDを取得する
+//
+function isSignId(){
+	return acc_id;
+}
 //
 //	バックエンド処理
 //
@@ -1557,13 +1589,20 @@ function postWebBackend( area_id ){
 //	サインアウト処理（同期処理）
 //
 function signout(){
+	// WHITEBOARD＿SUBMENUがあれば削除する
+	var p = document.getElementById('OPAQUESHAFT_TITLE');
+	var c = document.getElementById('WHITEBOARD_SUBMENU');
+	if ( c != null ) p.removeChild( c );
+
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/signout", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send();
+	acc_id = null;
 	ctlToolbar();
 	makeChildrenPalleteList();
 	hiddenWhiteboard();
+	oTile.close();
 	if ( flagChildrenPallete ) foldingChildrenPallete();
 	signForm();
 }
@@ -1590,6 +1629,7 @@ function signid(){
 //
 //	サイン処理
 //
+var acc_id = null;
 function sign()
 {
 	var r = "";
@@ -1648,6 +1688,8 @@ function sign()
 						ctlToolbar();
 						clearWhiteboard();
 						makeChildrenPalleteList();
+						oTile.close();
+						acc_id = result.acc_id;
 						if ( !openWhiteboard ){
 							hiddenWhiteboard();
 							showGuidanceWhiteboard();
@@ -1674,6 +1716,7 @@ function sign()
 //	ホワイトボードメニュー
 //
 function whiteboardMenu( e ){
+	console.log('whiteboardMenu:' + e.target.getAttribute('id'));
 	e.stopPropagation();
 	if ( document.getElementById('WHITEBOARD_SUBMENU') != null ){
 		// var p = document.getElementById('WHITEBOARD_DAY_FRAME');
@@ -1686,7 +1729,7 @@ function whiteboardMenu( e ){
 	o.setAttribute( 'id', 'WHITEBOARD_SUBMENU');
 	o.style.position		= 'relative';
 	o.style.padding			= '4px';
-	o.style.top             = '24px';
+	o.style.top             = '26px';
 	o.style.left            = '0px';
 	o.style.width           = '200px';
 	o.style.height          = '300px';
@@ -1703,7 +1746,7 @@ function whiteboardMenu( e ){
 	var id = signid();
 
 	var r = '';
-	r += '<div id="ID_CURRENT_ACCOUNT"   style="height:28px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
+	// r += '<div id="ID_CURRENT_ACCOUNT"   style="height:28px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
 	r += '<div id="ID_LOAD_WHITEBOARD"   style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >open whiteboard</div>';
 	r += '<div id="ID_SAVE_WHITEBOARD"   style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
 	r += '<div id="ID_CLOSE_WHITEBOARD"  style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/cancel.png);background-size:10px;background-position:left center;background-repeat:no-repeat;" >close</div>';
@@ -1728,6 +1771,7 @@ function whiteboardMenu( e ){
 	p.addEventListener('mouseleave', function(e) {
 		var c = document.getElementById('WHITEBOARD_SUBMENU');
 		if ( c!= null ) p.removeChild( c );
+		console.log('out;' + e.relatedTarget.getAttribute('id') );
 
 	});
 	m.addEventListener('mouseleave', function(e) {

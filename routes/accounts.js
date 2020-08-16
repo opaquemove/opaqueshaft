@@ -66,7 +66,7 @@ router.post('/signin', function(req, res, next ){
           if ( rows.length > 0 ) {
               //res.json( rows );
               res.cookie( 'acc', id );
-              res.json( {cmd:'signin',status:'SUCCESS'} );
+              res.json( {cmd:'signin',status:'SUCCESS', acc_id: id } );
             } else{
                 res.json( {cmd:'signin',status:'FAIL'} );
           }

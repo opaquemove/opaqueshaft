@@ -73,14 +73,14 @@ INPUT[type=password]:focus{
 
 #OPAQUESHAFT_TITLE{
 	float:					left;
-	width:					180px;
-	height:					64px;
+	width:					150px;
+	height:					59px;
 	color:					white;
 	background-color:		black;
-	font-size:				24px;
+	font-size:				20px;
 /*	border-left:			42px solid red; */
 	/* border-right:		1px solid darkgrey; */
-	padding-top:			20px;
+	padding-top:			25px;
 	padding-left:			0px;
 	padding-right:			0px;
 }
@@ -102,6 +102,7 @@ INPUT[type=password]:focus{
 }
 
 #TOOLBAR{
+	pointer-events: 	all;
 	padding-top:		0px;
 	padding-bottom:		2px;
 	height:				82px;
@@ -110,6 +111,7 @@ INPUT[type=password]:focus{
 /*	border-bottom:		1px solid lightgrey;*/
 	z-index:			0;
 	overflow:			visible;
+	opacity: 			1;
 }
 #OPAQUESHAFT_NAV{
 	float:					left;
@@ -269,6 +271,42 @@ INPUT[type=password]:focus{
 	padding-top:			10px;
 	/* border-left:			1px solid darkgrey; */
 }
+#ID_PROGRESS_COUNT{
+	position:				relative;
+	width:					80px;
+	height:					76px;
+	text-align:				center;
+	float:					right;
+	font-size:				14px;
+	color:					snow;
+	background-color: 		black;
+	padding-top:			8px;
+	padding-left:			4px;
+}
+#ID_WHITEBOARD_CHILD_COUNT_CHECKOUT{
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					58px;
+	font-size:				28px;
+	text-align:				right;
+}
+#ID_WHITEBOARD_CHILD_COUNT_PER{
+	position:				absolute;
+	top:					15px;
+	left:					32px;
+	width:					42px;
+	font-size:				28px;
+	text-align:				right;
+}
+#ID_WHITEBOARD_CHILD_COUNT{
+	position:				absolute;
+	top:					42px;
+	left:					42px;
+	width:					42px;
+	font-size:				30px;
+	text-align:				right;
+}
 #ID_PROGRESS{
 	width:					80px;
 	height:					76px;
@@ -276,7 +314,7 @@ INPUT[type=password]:focus{
 	float:					right;
 	font-size:				14px;
 	color:					snow;
-	background-color: 		transparent;
+	background-color: 		black;
 	padding-top:			8px;
 	padding-left:			4px;
 }

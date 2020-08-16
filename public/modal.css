@@ -6,7 +6,7 @@
 	left:				0px;
 	width:				100%;
 	height:				100%;
-	background-color:	rgba(170, 170, 170, 0.75);
+	background-color:	rgba(170, 170, 170, 0.2);
 }
 
 #MODAL_MESSAGE_FRAME{
@@ -105,10 +105,10 @@
 	width:				100%;
 	height:				100%;
 	background-color: 	transparent;
-	pointer-events: 	none;
+	pointer-events: 	auto;
 	display:			flex;
 	justify-content: 	center;
-	align-items: 		center;
+	align-items: 		flex-end;
 }
 #MODAL_TILE1{
 	float:				left;
@@ -124,11 +124,16 @@
 }
 #MODAL_TILE2{
 	float:				left;
-	pointer-events: 	auto;
+	pointer-events: 	none;
 	width:				128px;
 	height:				128px;
+	text-align: 		center;
 	color:				snow;
 	background-color:	red;
+	background-image:	url(./images/user.png);
+	background-position: center center;
+	background-size: 	40px;
+	background-repeat: 	no-repeat;
 	opacity: 			0.8;
 	font-size:			18px;
 	margin:				2px;
@@ -141,6 +146,7 @@
 	pointer-events: 	auto;
 	width:				128px;
 	height:				236px;
+	text-align:			center;
 	color:				gray;
 	background-color:	rgb(241, 241, 241);
 	opacity: 			0.9;
@@ -160,4 +166,24 @@
 	font-size:			18px;
 	margin:				2px;
 	border-radius: 		20px;
+}
+#MODAL_TILE5{
+	float:				left;
+	clear:				left;
+	pointer-events: 	none;
+	width:				128px;
+	height:				118px;
+	text-align:			center;
+	color:				snow;
+	background-color:	red;
+	background-image:	url(./images/exit.png);
+	background-position: center center;
+	background-size: 	40px;
+	background-repeat: 	no-repeat;
+	opacity: 			0.8;
+	font-size:			18px;
+	padding-top:		10px;
+	margin:				2px;
+	border-radius: 		20px;
+	/* clear:				both; */
 }

@@ -1227,6 +1227,8 @@ function checkoutWhiteboardChildHelper(){
         checkoutChild( children[i], direction );
     }
 
+    commonProc();
+
 }
 
 //
@@ -1312,7 +1314,7 @@ function checkoutClearWhiteboardChildHelper(){
     for ( var i=0; i<children.length; i++ ){
         checkoutClearChild( children[i] );
     }
-    showWhiteboardChildCountCheckout();
+    showWhiteboardChildCount();
 
 }
 
