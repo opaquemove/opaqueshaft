@@ -190,7 +190,6 @@ function init()
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();
-	new Button( 'CHILDREN_PALLETE_CONTENT_FRAME', foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	// new Button( 'ID_SHEET_ESCORT',          turnWhiteboard ).play();
@@ -562,9 +561,12 @@ Tile.prototype = {
 				 this.close();
 			} ).bind( this ), false );
 
+		new Button( 'MODAL_TILE2', propertyAccount ).play();
 		new Button( 'MODAL_TILE4', saveWhiteboard ).play();
 		new Button( 'MODAL_TILE5', signout ).play();
 		new Button( 'MODAL_TILE6', clearWhiteboard ).play();
+		new Button( 'MODAL_TILE7', absentWhiteboard ).play();
+		new Button( 'MODAL_TILE8', showGuidanceWhiteboard ).play();
 
 	},
 	open : function(){
