@@ -97,7 +97,7 @@
 }
 
 #MODAL_OVERLAY_TILE{
-	z-index:			70000;
+	z-index:			69999;
 	visibility:			hidden;
 	position:			fixed;
 	top:				0px;
@@ -115,10 +115,15 @@
 	pointer-events: 	auto;
 	width:				298px;
 	height:				128px;
-	color:				snow;
+	text-align:			center;
+	color:				red;
+	background-image:	url(./images/sun.png);
+	background-position: left center;
+	background-size: 	46px;
+	background-repeat: 	no-repeat;
 	background-color:	lightgrey;
 	opacity: 			0.8;
-	font-size:			18px;
+	font-size:			24px;
 	margin:				2px;
 	border-radius: 		20px;
 }
@@ -162,6 +167,10 @@
 	height:				128px;
 	color:				snow;
 	background-color:	red;
+	background-image:	url(./images/upload.png);
+	background-position: left center;
+	background-size: 	40px;
+	background-repeat: 	no-repeat;
 	opacity: 			0.8;
 	font-size:			18px;
 	margin:				2px;
@@ -170,7 +179,7 @@
 #MODAL_TILE5{
 	float:				left;
 	clear:				left;
-	pointer-events: 	none;
+	pointer-events: 	auto;
 	width:				128px;
 	height:				118px;
 	text-align:			center;

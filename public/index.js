@@ -528,6 +528,7 @@ function alreadyTimelineContextMenu( o ){
 //	タイルのプロトタイプ
 //
 function Tile( func ){
+	this.overlay		= null;
 	this.frame 			= null;
 	this.func			= func;
 	this.touchdevice	= null;
@@ -556,9 +557,11 @@ Tile.prototype = {
 		this.frame.addEventListener( this.evtEnd,
 			( function(e){
 				console.log('close');
-				// this.close();
+				if ( e.target == this.frame )
+				 this.close();
 			} ).bind( this ), false );
 
+		new Button( 'MODAL_TILE4', saveWhiteboard ).play();
 		new Button( 'MODAL_TILE5', signout ).play();
 
 	},
@@ -596,9 +599,9 @@ Tile.prototype = {
 	day : function( day ){
 		var mt1 = document.getElementById('MODAL_TILE1');
 		var d = document.createElement('DIV');
-		d.setAttribute( 'class', 'vh-center');
-		d.style.fontSize	= '48px';
-		d.style.color		= 'gray';
+		// d.setAttribute( 'class', 'vh-center');
+		// d.style.fontSize	= '48px';
+		// d.style.color		= 'gray';
 		d.innerText			= day;
 		mt1.appendChild( d );
 
