@@ -241,12 +241,12 @@ spotlight.prototype = {
 
             oo = document.createElement('DIV');
             oo.setAttribute('id', 'FOLDER_FIND_CHILDREN_TABLE2');
-            oo.style.color           = 'gray';
-            oo.style.backgroundColor = 'transparent';
-            oo.style.fontSize        = '12px';
-            oo.style.padding         = '4px 4px 4px 4px';
-            oo.style.marginBottom    = '0px';
-            oo.style.clear           = 'both';
+            // oo.style.color           = 'gray';
+            // oo.style.backgroundColor = 'transparent';
+            // oo.style.fontSize        = '12px';
+            // oo.style.padding         = '4px 4px 4px 4px';
+            // oo.style.marginBottom    = '0px';
+            // oo.style.clear           = 'both';
             oo.innerText = 'Dummy';        
             this.folder2 = this.main.appendChild( oo );
             document.getElementById('BTN_FOLDER2').addEventListener('click',

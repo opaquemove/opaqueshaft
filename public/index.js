@@ -1302,27 +1302,6 @@ function Nav( func ){
 		r += '<img width="12px" src="./images/exchange.png" />';
 	r += '</div>';
 
-	// r += '<div class="vh-center nav_icon_blank" >1</div>';
-	// r += '<div target="delete" class="vh-center nav_icon" >';	// Delete Mark Child
-	// 	r += '<img width="20px" src="./images/minus-2.png" />';
-	// r += '</div>';
-	// r += '<div class="vh-center nav_icon_blank" >3</div>';
-	// r += '<div target="checkout" class="vh-center nav_icon" >';	// Checkout Mark Child
-	// 	r += '<img width="20px" src="./images/check-3.png" />';
-	// r += '</div>';
-	// r += '<div class="vh-center nav_icon" >';
-	// 	r += '&nbsp;';
-	// r += '</div>';
-	// r += '<div target="checkoutclear" class="vh-center nav_icon" >';	// Checkout Clear Mark Child
-	// 	r += '<img width="20px" src="./images/dry-clean.png" />';
-	// r += '</div>';
-	// r += '<div class="vh-center nav_icon_blank" >7</div>';
-	// r += '<div target="timeselector"  class="vh-center nav_icon" >';
-	// 	r += '<img width="20px" src="./images/time.png" />';
-	// r += '</div>';
-	// r += '<div target="close" class="vh-center nav_icon" >';	//	Close NAV
-	// 	r += '<img width="16px" src="./images/cancel.png" />';
-	// r += '</div>';
 	m.innerHTML				= r;
 	this.frame = document.body.appendChild( m );
 	this.frame.addEventListener( this.evtStart,
@@ -1536,6 +1515,20 @@ function fitting(){
 		var h 		= cff.offsetHeight - cfh.offsetHeight;
 		// console.log( 'cfm height:' + h );
 		cfm.style.height = h + 'px';
+	}
+
+	if ( w < 400){
+		document.getElementById('OPAQUESHAFT_TITLE').style.display = 'none';
+		document.getElementById('ID_PROGRESS').style.display = 'none';
+		document.getElementById('ID_PROGRESS_COUNT').style.display = 'none';
+		document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT').style.display = 'none';
+		document.getElementById('WHITEBOARD_DAY_FRAME').style.display = 'none';
+	} else{
+		document.getElementById('OPAQUESHAFT_TITLE').style.display = 'inline';
+		document.getElementById('ID_PROGRESS').style.display = 'inline';
+		document.getElementById('ID_PROGRESS_COUNT').style.display = 'inline';
+		document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT').style.display = 'inline';
+		document.getElementById('WHITEBOARD_DAY_FRAME').style.display = 'inline';
 	}
 
 

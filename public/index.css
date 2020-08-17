@@ -15,7 +15,7 @@ BODY{
                         Meiryo,
                         sans-serif;
 	font-size:			10px;
-	background-color:	gainsboro;
+	background-color:	black;
 	background-image:	url(./images/IMG_1739.JPG);
 	background-position: center center;
 	background-size: 	100%;
@@ -96,13 +96,13 @@ INPUT[type=password]:focus{
 	width:					42px;
 	height:					42px;
 	color:					snow;
-	background-color:		transparent;
+	background-color:		red;
 	background-image:		url(./images/compass.png);
 	background-size:		24px;
 	background-repeat:		no-repeat;
 	background-position:	center center;
 	font-size:				14px;
-	/* border-radius: 			50%; */
+	border-radius: 			8px;
 	z-index:				65001;
 }
 
@@ -155,6 +155,8 @@ INPUT[type=password]:focus{
 	float:					left;
 	width:					42px;
 	height:					42px;
+	background-color:		red;
+	border-radius: 8px;
 }
 
 #OPAQUESHAFT_DIALOG_TITLE{
@@ -199,7 +201,7 @@ INPUT[type=password]:focus{
 }
 #CHILDFINDER_FRAME{
 	visibility:			hidden;
-	width:				45%;
+	width:				375px;
 	height:				70%;
 /*	
 	background-color:	rgb(241, 241, 241);
@@ -221,8 +223,21 @@ INPUT[type=password]:focus{
 	height:					0px;	/*	dummy -> fitting proc */
 	visibility:				hidden;
 	background-color:		rgb(241, 241, 241);
-	overflow-y:				scroll;
+	overflow:				scroll;
 	border-radius: 			0px 0px 4px 4px;
+}
+
+#FOLDER_FIND_CHILDREN_TABLE2{
+	color:					gray;
+	background-color:		transparent;
+	font-size:				12px;
+	display:				flex;
+	flex-wrap: 				wrap;
+	justify-content: 		center;
+	padding:        		4px 4px 4px 4px;
+	margin-bottom:   		0px;
+	clear:           		both;
+
 }
 
 #TXT_KEYWORD{
