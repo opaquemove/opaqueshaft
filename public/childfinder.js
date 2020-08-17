@@ -304,7 +304,9 @@ spotlight.prototype = {
                 o.style.height      = '20px';
     
                 var r = '';
-                r += '<div style="float:left;"  >' + child_name + '</div>';
+                r += '<div style="float:left;"  >' + child_name;
+                    r += '(' + c.style.top + ',' + c.style.left + ')';
+                r += '</div>';
                 if ( absent )
                     r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/sleep-2.png);background-size:16px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                     else

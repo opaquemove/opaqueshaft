@@ -98,6 +98,7 @@
 
 #MODAL_OVERLAY_TILE{
 	z-index:			69999;
+	pointer-events: 	none;
 	visibility:			hidden;
 	position:			fixed;
 	top:				0px;
@@ -105,7 +106,6 @@
 	width:				100%;
 	height:				100%;
 	background-color: 	transparent;
-	pointer-events: 	auto;
 	display:			flex;
 	justify-content: 	center;
 	align-items: 		flex-end;
@@ -113,49 +113,54 @@
 #MODAL_TILE1{
 	float:				left;
 	pointer-events: 	auto;
-	width:				298px;
-	height:				128px;
+	width:				172px;
+	height:				84px;
 	text-align:			center;
 	color:				red;
 	background-image:	url(./images/sun.png);
 	background-position: left center;
-	background-size: 	46px;
+	background-size: 	30px;
 	background-repeat: 	no-repeat;
 	background-color:	lightgrey;
 	opacity: 			0.8;
-	font-size:			24px;
+	font-size:			18px;
 	margin:				2px;
 	border-radius: 		20px;
 }
 #MODAL_TILE2{
 	float:				left;
-	pointer-events: 	all;
-	width:				128px;
-	height:				128px;
+	pointer-events: 	auto;
+	width:				84px;
+	height:				74px;
 	text-align: 		center;
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/user.png);
 	background-position: center center;
-	background-size: 	40px;
+	background-size: 	30px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
-	font-size:			18px;
+	font-size:			16px;
+	padding-top:		10px;
 	margin:				2px;
 	border-radius: 		20px;
 	/* clear:				both; */
 }
 #MODAL_TILE3{
 	float:				left;
-	clear:				left;
+	/* clear:				left; */
 	pointer-events: 	auto;
-	width:				128px;
-	height:				236px;
+	width:				84px;
+	height:				64px;
 	text-align:			center;
-	color:				gray;
-	background-color:	rgb(241, 241, 241);
+	color:				snow;
+	background-color:	red;
+	background-image:	url(./images/shutter.png);
+	background-position: center center;
+	background-size: 	30px;
+	background-repeat: 	no-repeat;
 	opacity: 			0.9;
-	font-size:			18px;
+	font-size:			14px;
 	margin:				2px;
 	padding-top:		20px;
 	border-radius: 		20px;
@@ -163,16 +168,18 @@
 #MODAL_TILE4{
 	float:				left;
 	pointer-events: 	auto;
-	width:				298px;
-	height:				128px;
+	width:				84px;
+	height:				74px;
+	text-align:			center;
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/upload.png);
-	background-position: left center;
-	background-size: 	40px;
+	background-position: center center;
+	background-size: 	30px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
-	font-size:			18px;
+	font-size:			16px;
+	padding-top:		10px;
 	margin:				2px;
 	border-radius: 		20px;
 }
@@ -180,17 +187,17 @@
 	float:				left;
 	clear:				left;
 	pointer-events: 	auto;
-	width:				128px;
-	height:				118px;
+	width:				84px;
+	height:				74px;
 	text-align:			center;
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/exit.png);
 	background-position: center center;
-	background-size: 	40px;
+	background-size: 	30px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
-	font-size:			18px;
+	font-size:			16px;
 	padding-top:		10px;
 	margin:				2px;
 	border-radius: 		20px;
@@ -200,17 +207,17 @@
 	float:				left;
 	/* clear:				left; */
 	pointer-events: 	auto;
-	width:				128px;
-	height:				118px;
+	width:				84px;
+	height:				74px;
 	text-align:			center;
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/eraser.png);
 	background-position: center center;
-	background-size: 	40px;
+	background-size: 	30px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
-	font-size:			18px;
+	font-size:			16px;
 	padding-top:		10px;
 	margin:				2px;
 	border-radius: 		20px;
@@ -220,17 +227,17 @@
 	float:				left;
 	/* clear:				left; */
 	pointer-events: 	auto;
-	width:				128px;
-	height:				118px;
+	width:				84px;
+	height:				74px;
 	text-align:			center;
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/sleep-2.png);
 	background-position: center center;
-	background-size: 	40px;
+	background-size: 	30px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
-	font-size:			18px;
+	font-size:			16px;
 	padding-top:		10px;
 	margin:				2px;
 	border-radius: 		20px;
@@ -240,17 +247,17 @@
 	float:				left;
 	/* clear:				left; */
 	pointer-events: 	auto;
-	width:				128px;
-	height:				118px;
+	width:				84px;
+	height:				74px;
 	text-align:			center;
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/cloud-computing.png);
 	background-position: center center;
-	background-size: 	40px;
+	background-size: 	30px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
-	font-size:			18px;
+	font-size:			16px;
 	padding-top:		10px;
 	margin:				2px;
 	border-radius: 		20px;
@@ -260,17 +267,17 @@
 	float:				left;
 	/* clear:				left; */
 	pointer-events: 	auto;
-	width:				128px;
-	height:				118px;
+	width:				84px;
+	height:				74px;
 	text-align:			center;
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/cancel.png);
 	background-position: center center;
-	background-size: 	40px;
+	background-size: 	30px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
-	font-size:			18px;
+	font-size:			16px;
 	padding-top:		10px;
 	margin:				2px;
 	border-radius: 		20px;
@@ -280,17 +287,17 @@
 	float:				left;
 	/* clear:				left; */
 	pointer-events: 	auto;
-	width:				128px;
-	height:				118px;
+	width:				84px;
+	height:				74px;
 	text-align:			center;
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/report.png);
 	background-position: center center;
-	background-size: 	40px;
+	background-size: 	30px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
-	font-size:			18px;
+	font-size:			16px;
 	padding-top:		10px;
 	margin:				2px;
 	border-radius: 		20px;

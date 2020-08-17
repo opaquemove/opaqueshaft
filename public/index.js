@@ -32,8 +32,9 @@ var tl_drag = false;
 var dndOffsetX = 0;
 var dndOffsetY = 0;
 
-var openWhiteboard = false;
-var dayWhiteboard  = '';
+// ホワイトボードが開いているかフラグ
+var openWhiteboardFlg = false;
+var dayWhiteboard  = null;
 
 var neverCloseDialog = false;
 
@@ -164,6 +165,8 @@ function init()
 	//	
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
 	// cpc.addEventListener('dblclick',  selectChild );
+
+	//	パレット上のチャイルドリストをクリックした時の動作
 	cpc.addEventListener('mouseup',   markPalleteChild );
 /*
 	cpc.addEventListener('mouseover', function(e){
@@ -176,6 +179,7 @@ function init()
 		});
 */
 
+	//	チャイルドファインダー（スポットライト）初期化
 	oNav = new Nav( null );
 	oSpotlight = new spotlight( fitting );
 	oSpotlight.play();
@@ -210,7 +214,7 @@ function init()
 	// new Checkbox('CPC_GRADE5', 'OFF', null ).play();
 	// new Checkbox('CPC_GRADE6', 'OFF', null ).play();
 
-
+	//	モーダルダイアログの外側をクリックしたらクローズ
 	var mo = document.getElementById('MODAL_OVERLAY');
 	mo.addEventListener('click', function(e){
 		if ( e.target == this ) closeModalDialog();
@@ -228,15 +232,19 @@ function init()
 	oTile = new Tile( null );
 	oTile.play();
 
-
-	ctlToolbar();
+	// チャイルドパレットのチャイルドリスト作成
 	makeChildrenPalleteList();
 	if ( !checkSign() ){			//サインアウトしている
-		signForm();
+		// ツールバーの表示制御(サインイン、サインアウトによる制御)
+		// ctlToolbar();
+		// hiddenWhiteboard();
+		signForm();					// サインインUIを表示
 	} else {						//サインインしている
-		if ( !openWhiteboard ){
-			hiddenWhiteboard();
-			showGuidanceWhiteboard();
+		if ( !openWhiteboardFlg ){		// ホワイトボードが開いてなければの対応
+			// ツールバーの表示制御(サインイン、サインアウトによる制御)
+			ctlToolbar();
+			// hiddenWhiteboard();
+			openWhiteboard();
 		}
 	}
 	
@@ -245,8 +253,6 @@ function init()
 	//
 	// var tk = document.getElementById('TXT_KEYWORD');
 	// tk.addEventListener('keyup', childFinder, false );
-
-
 
 	//
 	//	タイムラインガイド初期化
@@ -562,30 +568,18 @@ Tile.prototype = {
 			} ).bind( this ), false );
 
 		new Button( 'MODAL_TILE2', propertyAccount ).play();
+		new Button( 'MODAL_TILE3', showTile     ).play();
 		new Button( 'MODAL_TILE4', saveWhiteboard ).play();
 		new Button( 'MODAL_TILE5', signout ).play();
 		new Button( 'MODAL_TILE6', clearWhiteboard ).play();
 		new Button( 'MODAL_TILE7', absentWhiteboard ).play();
-		new Button( 'MODAL_TILE8', showGuidanceWhiteboard ).play();
+		new Button( 'MODAL_TILE8', openWhiteboard ).play();
+		new Button( 'MODAL_TILE9', closeWhiteboard ).play();
 
 	},
 	open : function(){
 		this.frame.style.visibility = 'visible';
-		var children 	= document.getElementById('WHITEBOARD').childNodes;
-		var c_child 	= children.length;
-		var c_checkout 	= 0;
-		for ( var i=0; i<children.length; i++ ){
-			var c = children[i];
-			if ( c.hasAttribute('checkout')) c_checkout++;
-		}
-		//console.log(c_child + ',' + c_checkout );
-		if ( c_child != 0 ) var progress_ratio =  Math.floor( ( c_checkout / c_child ) * 100 );
-			else			var progress_ratio = 0;
-		console.log( c_checkout );
-		console.log( c_child );
-		console.log( progress_ratio );
 		this.day( dayWhiteboard );
-		this.progress( c_checkout, c_child, progress_ratio );
 
 		var tile2 = document.getElementById('MODAL_TILE2');
 		tile2.innerText = 'sign ' + isSignId();
@@ -603,35 +597,9 @@ Tile.prototype = {
 	day : function( day ){
 		var mt1 = document.getElementById('MODAL_TILE1');
 		var d = document.createElement('DIV');
-		// d.setAttribute( 'class', 'vh-center');
-		// d.style.fontSize	= '48px';
-		// d.style.color		= 'gray';
 		d.innerText			= day;
 		mt1.appendChild( d );
 
-	},
-	progress : function( c_checkout, c_child, progress_ratio ){
-		var mt3 = document.getElementById('MODAL_TILE3');
-		var d = document.createElement('DIV');
-		d.setAttribute( 'class', 'vh-center');
-		d.style.position		= 'relative';
-		d.style.width			= '128px';
-		d.style.height			= '128px';
-		d.style.backgroundColor	= 'rgb(241,241,241)';
-		// d.style.border			= '1px solid lightgrey';
-		var ccl = mt3.appendChild( d );
-		var cp = new CircleProgress( ccl, 128, 128, progress_ratio, 'gray', 14 );
-		cp.play();
-
-		var dd = document.createElement('DIV');
-		dd.style.fontSize	= '48px';
-		dd.style.color		= 'gray';
-		dd.style.textAlign	= 'center';
-
-		var r = '';
-		r += c_checkout + '/' + c_child;
-		dd.innerHTML = r;
-		mt3.appendChild( dd );
 	}
 }
 
@@ -755,9 +723,9 @@ function scrollWhiteboard( hour ){
 
 
 //
-//	ホワイトボードガイダンス表示
+//	ホワイトボードを開く(レコードは作成しない)
 //
-function showGuidanceWhiteboard(){
+function openWhiteboard(){
 	var today = new Date();
 	var y = today.getFullYear();
 	var m = ('00' + (today.getMonth() + 1 ) ).slice(-2);
@@ -765,34 +733,34 @@ function showGuidanceWhiteboard(){
 	var ymd = y + '/' + m + '/' + d;
 
 	var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
-		r += 'open whiteboard';
+	r += '<div style="height:;font-size:24px;text-align:center;padding-top:10px;padding-bottom:10px;" >';
+		// r += 'open whiteboard';
 	r += '</div>';
-	r += '<div style="margin:0 auto;font-size:14px;width:200px;">';
+	r += '<div style="margin:0 auto;font-size:18px;width:70%;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
-		r += '<div style="padding-bottom:10px;" >';
+		r += '<div style="height:40px;padding-bottom:10px;" >';
 			r += '<div style="width:50%;float:left;" >';
-				r += '<input type="text" id="whiteboard_day" name="day" style="width:100%;font-size:14px;" value="' + ymd + '" />';
+				r += '<input type="text" id="whiteboard_day" name="day" style="width:100%;font-size:24px;" value="' + ymd + '" />';
 			r += '</div>';
 			r += '<div style="float:right;width:48%;" >';
 				// r += '<button id="BTN_ADD_DATE"   style="background-color:transparent;border:none;" ><img width="12px" src="./images/add.png" /></button>';
 				// r += '<button id="BTN_MINUS_DATE" style="background-color:transparent;border:none;" ><img width="12px" src="./images/minus-2.png" /></button>';
-				r += '<img id="BTN_ADD_DATE"   width="12px" style="padding-right:3px;" src="./images/add.png" />';
-				r += '<img id="BTN_MINUS_DATE" width="12px" src="./images/minus-2.png" />';
+				r += '<img id="BTN_ADD_DATE"   width="22px" style="padding-right:3px;" src="./images/arrow-up.png" />';
+				r += '<img id="BTN_MINUS_DATE" width="22px" src="./images/arrow-down.png" />';
 			r += '</div>';
 		r += '</div>';
-		r += '<div id="WHITEBOARD_LIST" style="clear:both;height:70px;font-size:12px;padding:4px;overflow-y:scroll;border:1px solid lightgrey;" >';
+		r += '<div id="WHITEBOARD_LIST" style="clear:both;margin-top:10px;height:120px;display:flex;font-size:12px;padding:4px;overflow-y:scroll;border:0px solid lightgrey;" >';
 		r += '</div>';
 		r += '<div style="padding-bottom:5px;text-align:center;" >';
 		r += '</div>';
 		r += '</form>';
 		r += '<div style="text-align:center;padding-top:5px;" >';
 		r += '<button id="BTN_OPENWHITEBOARD" ';
-		r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/next.png);background-size:50px;background-repeat:no-repeat;background-position:left center;" ';
+		r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/arrow-right.png);background-size:50px;background-repeat:no-repeat;background-position:center center;" ';
 		r += ' onclick="createWhiteboard()" >';
 		// r += '<img width="50px;" src="./images/next.png" >';
-			r += 'Next...';
+			r += '';
 		r += '</button>';
 		r += '</div>';
 	r += '</div>';
@@ -800,7 +768,7 @@ function showGuidanceWhiteboard(){
 	 var children = document.getElementById('WHITEBOARD').childNodes;
 	 neverCloseDialog = ( children.length == 0 ) ? true : false;
 	// neverCloseDialog = true;
-	openModalDialog( null, r, 'NOBUTTON', null, null );
+	openModalDialog( 'open Whiteboard', r, 'NOBUTTON', null, null );
 	makeWhiteboardList();
 	document.getElementById('BTN_OPENWHITEBOARD').focus();
 	document.getElementById('whiteboard_day').addEventListener('keydown',
@@ -849,6 +817,10 @@ function createWhiteboard(){
 	closeModalDialog();
 	visibleWhiteboard();
 	loadWhiteboard();
+
+	ctlToolbar();
+	// clearWhiteboard();
+	makeChildrenPalleteList();
 
 }
 
@@ -1048,6 +1020,40 @@ function saveChildResult( day, child_id, checkin, estimate, checkout, escort, di
 }
 
 //
+//	JSON形式のデータをnode.jsサーバに送信する
+//
+function saveChildResultJSON( jsondata ){
+	var jsonText = JSON.stringify( jsondata );
+
+    var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/resultadd", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/json" );
+	xmlhttp.send( jsonText );
+
+}
+
+//
+//
+//	JSON形式のデータをnode.jsから受信する
+//
+function loadChildResultJON(){
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function(){
+		if ( this.readyState == 4 ){
+			if ( this.status == 200 ){
+				var jsondata = this.response;	// JSONデータ受け取り
+			}
+		}
+	};
+
+	xmlhttp.open("POST", "/accounts/resultget", true );
+	xmlhttp.responseType = 'json';
+	xmlhttp.send();
+
+}
+
+
 //  チャイルド履歴削除
 //
 function deleteChildResult( day ){
@@ -1064,12 +1070,45 @@ function deleteChildResult( day ){
 
 }
 
+//
+//	ホワイトボードをクローズ
+//
+function closeWhiteboard(){
+	//	マーク状態をクリア
+	resetChildMark();
+	var r = '';
+	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+		r += 'close whiteboard';
+	r += '</div>';
+//	r += "<div id='SAVE_STATUS' style='height:20px;text-align:center;' >status</div>";
+	r += '<div style="margin:0 auto;width:70%;">';
+		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
+		r += '<div>Date:</div>';
+		r += '<div style="padding-bottom:20px;" >';
+		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" readonly value="' + dayWhiteboard + '" />';
+		r += '</div>';
+		r += '</form>';
+		r += '<div>Progress:</div>';
+		r += '<div id="CLOSE_PROGRESS" style="clear:both;width:100%;height:100px;border:1px solid gray;overflow:auto;" >';
+		r += '</div>';
+		r += '<button id="BTN_CLOSEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="closeWhiteboardHelper();" >Close</button>';
+	r += '</div>';
+	openModalDialog( 'close whiteboard', r, 'NORMAL', null, null );
+
+}
+
+function closeWhiteboardHelper(){
+	dayWhiteboard 		= null;
+	openWhiteboardFlg	= false;
+	ctlToolbar();
+	openWhiteboard();
+}
 
 //
 //	ホワイトボード表示切換
 //
 function turnWhiteboard(){
-	switch ( openWhiteboard ){
+	switch ( openWhiteboardFlg ){
 		case true:
 			hiddenWhiteboard();
 			break;
@@ -1083,18 +1122,23 @@ function turnWhiteboard(){
 //	ホワイトボードを非表示（操作不可）
 //
 function hiddenWhiteboard(){
-	openWhiteboard = false;
-	var wb = document.getElementById('WHITEBOARD');
+	openWhiteboardFlg = false;
+	var wb  = document.getElementById('WHITEBOARD');
+	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	wb.style.visibility = 'hidden';
+	wba.style.visibility = 'hidden';
+
 }
 
 //
 //	ホワイトボードを表示（操作可能）
 //
 function visibleWhiteboard(){
-	openWhiteboard = true;
-	var wb = document.getElementById('WHITEBOARD');
+	openWhiteboardFlg = true;
+	var wb  = document.getElementById('WHITEBOARD');
+	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	wb.style.visibility = 'visible';
+	wba.style.visibility = 'visible';
 }
 
 //
@@ -1517,33 +1561,49 @@ function foldingChildrenPallete(){
 
 
 //
-//	サインアウトデザイン
+//	サインイン・アウト時のUIデザイン
 //
 function ctlToolbar(){
+	if ( checkSign() && openWhiteboardFlg ) {
+		showToolbar();
+	} else {
+		hideToolbar();
+	}
+	oTile.close();
+	oSpotlight.close();
+	if ( flagChildrenPallete ) foldingChildrenPallete();
+
+}
+
+function showToolbar(){
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var is		= document.getElementById('ID_SEARCH');
 	var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
+	tb.style.visibility     = 'visible';
+	wbf.style.visibility    = 'visible';
+	is.style.visibility		= 'visible';
+	ic.style.visibility		= 'visible';
+	tlb.style.visibility	= 'visible';
+	visibleWhiteboard();
 
-	// var status   = document.getElementById('STATUS');
-	if ( checkSign()) {
-		tb.style.visibility     = 'visible';
-		wbf.style.visibility    = 'visible';
-		is.style.visibility		= 'visible';
-		ic.style.visibility		= 'visible';
-		tlb.style.visibility	= 'visible';
-		// status.style.visibility = 'visible';
-	} else {
-		tb.style.visibility     = 'hidden';
-		wbf.style.visibility    = 'hidden';
-		is.style.visibility		= 'hidden';
-		ic.style.visibility		= 'hidden';
-		tlb.style.visibility	= 'hidden';
-		// status.style.visibility = 'hidden';
-	}
 }
 
+function hideToolbar(){
+	var tb      = document.getElementById('TOOLBAR');
+	var wbf     = document.getElementById('WHITEBOARD_FRAME');
+	var is		= document.getElementById('ID_SEARCH');
+	var ic		= document.getElementById('ID_CHILDREN');
+	var tlb		= document.getElementById('ID_TIMELINE_BAR');
+	tb.style.visibility     = 'hidden';
+	wbf.style.visibility    = 'hidden';
+	is.style.visibility		= 'hidden';
+	ic.style.visibility		= 'hidden';
+	tlb.style.visibility	= 'hidden';
+	hiddenWhiteboard();
+
+}
 
 function getCookie(){
 	var c = document.cookie;
@@ -1606,11 +1666,12 @@ function signout(){
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send();
 	acc_id = null;
-	ctlToolbar();
-	makeChildrenPalleteList();
-	hiddenWhiteboard();
-	oTile.close();
-	if ( flagChildrenPallete ) foldingChildrenPallete();
+
+	// ctlToolbar();
+	// makeChildrenPalleteList();
+	// hiddenWhiteboard();
+	// oTile.close();
+	// if ( flagChildrenPallete ) foldingChildrenPallete();
 	signForm();
 }
 
@@ -1692,14 +1753,14 @@ function sign()
 				case 'signin':
 					var o = document.getElementById('SIGNIN_STATUS');
 					if ( result.status == 'SUCCESS' ){
-						ctlToolbar();
-						clearWhiteboard();
-						makeChildrenPalleteList();
-						oTile.close();
+						// ctlToolbar();
+						// clearWhiteboard();
+						// makeChildrenPalleteList();
+						// oTile.close();
 						acc_id = result.acc_id;
-						if ( !openWhiteboard ){
-							hiddenWhiteboard();
-							showGuidanceWhiteboard();
+						if ( !openWhiteboardFlg ){
+							// hiddenWhiteboard();
+							openWhiteboard();
 						}
 				
 					} else {
@@ -1765,8 +1826,8 @@ function whiteboardMenu( e ){
 	m.innerHTML = r;
 
 	new Button( 'ID_SAVE_WHITEBOARD',   saveWhiteboard         ).play();
-	new Button( 'ID_LOAD_WHITEBOARD',   showGuidanceWhiteboard ).play();
-	new Button( 'ID_CLOSE_WHITEBOARD',  null                   ).play();
+	new Button( 'ID_LOAD_WHITEBOARD',   openWhiteboard         ).play();
+	new Button( 'ID_CLOSE_WHITEBOARD',  closeWhiteboard        ).play();
 	new Button( 'ID_CLEAR_WHITEBOARD',  clearWhiteboard        ).play();
 	new Button( 'ID_REPORT_WHITEBOARD', reportWhiteboard       ).play();
 	new Button( 'ID_ABSENT_WHITEBOARD', absentWhiteboard       ).play();
@@ -1856,6 +1917,15 @@ function signForm()
 		alert('already signin.');
 		return;
 	}
+
+	// ツールバーの表示制御(サインイン、サインアウトによる制御)
+	ctlToolbar();
+	// hiddenWhiteboard();
+	oTile.close();
+	oSpotlight.close();
+	if ( flagChildrenPallete ) foldingChildrenPallete();
+
+	
 	var r = "";
 	
 	r += "<div style='width:400px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
@@ -1942,22 +2012,24 @@ function makeWhiteboardList()
 function addWhiteboardManage( oParent, Result ){
 
 	var c = document.createElement("DIV");
-    c.setAttribute("whiteboard_id",  Result.child_id );
-	c.style.backgroundColor	= 'white';
-	c.style.height			= '18px';
-	// c.style.borderBottom	= '1px solid lightgrey';
-	c.style.marginBottom	= '1px';
-	c.style.clear			= 'both';
+	c.setAttribute("whiteboard_id",  Result.child_id );
+	c.style.width			= '100px';
+	c.style.height			= '50px';
+	c.style.backgroundColor	= 'rgb(241,241,241)';
+	c.style.border			= '1px solid lightgrey';
+	c.style.margin			= '1px';
+	c.style.fontSize		= '18px';
+	// c.style.clear			= 'both';
 
 	var day = new Date( Result.day );
 	var c_children	= Result.c_children;
 	var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDate() ).slice(-2);
 
 	var r = '';
-    r += '<div style="float:left;"  >';
+    r += '<div style="text-align:center;"  >';
     	r += ymd;
     r += '</div>';
-    r += '<div style="float:right;" >';
+    r += '<div style="text-align:center;" >';
     	r += c_children;
     r += '</div>';
 	c.innerHTML = r;
