@@ -18,7 +18,7 @@ BODY{
 	background-color:	black;
 	background-image:	url(./images/IMG_1739.JPG);
 	background-position: center center;
-	background-size: 	100%;
+	background-size: 	contain;
 	background-repeat: no-repeat;
 
 	overflow:			hidden;
@@ -78,14 +78,14 @@ INPUT[type=password]:focus{
 
 #OPAQUESHAFT_TITLE{
 	float:					left;
-	width:					150px;
-	height:					59px;
+	width:					140px;
+	height:					54px;
 	color:					white;
 	background-color:		black;
 	font-size:				20px;
 /*	border-left:			42px solid red; */
 	/* border-right:		1px solid darkgrey; */
-	padding-top:			25px;
+	padding-top:			30px;
 	padding-left:			0px;
 	padding-right:			0px;
 }

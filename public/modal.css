@@ -16,7 +16,7 @@
 }
 
 #MODAL_MESSAGE_HEADER{
-	width:				520px;
+	width:				100%;
 	height:				29px;
 	background-color:	black;
 	border-bottom:		1px solid lightgray;
@@ -36,17 +36,17 @@
 
 
 #MODAL_MESSAGE{
-	width:				516px;
+	width:				100%;
 	height:				327px;
 	color:				gray;
 	background-color:	white;
 	border-bottom:		1px solid lightgrey;
-	padding:			2px;
+	/* padding:			2px; */
 	overflow-y:			scroll;
 }
 
 #MODAL_MESSAGE_FOOTER{
-	width:				520px;
+	width:				100%;
 	height:				26px;
 	color:				gray;
 	background-color:	white;
@@ -303,3 +303,4 @@
 	border-radius: 		20px;
 	/* clear:				both; */
 }
+

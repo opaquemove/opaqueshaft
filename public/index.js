@@ -1410,6 +1410,9 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 			mframe.style.height = ( wfh - 8 ) + 'px';
 			mm.style.height		= ( wfh - 8 - 73 ) +  'px';
 			break;
+		case 'SIGNIN':
+			mframe.style.width	= '350px';
+			break;
 		default:
 			mframe.style.height = '400px';
 			mm.style.height		= '327px';
@@ -1517,8 +1520,8 @@ function fitting(){
 		cfm.style.height = h + 'px';
 	}
 
-	if ( w < 400){
-		document.getElementById('OPAQUESHAFT_TITLE').style.display = 'none';
+	if ( w <= 414){
+		//document.getElementById('OPAQUESHAFT_TITLE').style.display = 'none';
 		document.getElementById('ID_PROGRESS').style.display = 'none';
 		document.getElementById('ID_PROGRESS_COUNT').style.display = 'none';
 		document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT').style.display = 'none';
@@ -1569,31 +1572,40 @@ function ctlToolbar(){
 }
 
 function showToolbar(){
+	var nsi 	= document.getElementById('NAV_START_ICON');
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var is		= document.getElementById('ID_SEARCH');
 	var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
+	var eam		= document.getElementById('ESCORT_AREA_MARKER');
+	nsi.style.visibility	= 'visible';
 	tb.style.visibility     = 'visible';
 	wbf.style.visibility    = 'visible';
 	is.style.visibility		= 'visible';
 	ic.style.visibility		= 'visible';
 	tlb.style.visibility	= 'visible';
+	eam.style.visibility	= 'visible';
 	visibleWhiteboard();
 
 }
 
 function hideToolbar(){
+	console.log('hideToolbar');
+	var nsi 	= document.getElementById('NAV_START_ICON');
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var is		= document.getElementById('ID_SEARCH');
 	var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
+	var eam		= document.getElementById('ESCORT_AREA_MARKER');
+	nsi.style.visibility	= 'hidden';
 	tb.style.visibility     = 'hidden';
 	wbf.style.visibility    = 'hidden';
 	is.style.visibility		= 'hidden';
 	ic.style.visibility		= 'hidden';
 	tlb.style.visibility	= 'hidden';
+	eam.style.visibility	= 'hidden';
 	hiddenWhiteboard();
 
 }
@@ -1914,6 +1926,7 @@ function signForm()
 	// ツールバーの表示制御(サインイン、サインアウトによる制御)
 	ctlToolbar();
 	// hiddenWhiteboard();
+	oNav.close();
 	oTile.close();
 	oSpotlight.close();
 	if ( flagChildrenPallete ) foldingChildrenPallete();
@@ -1921,7 +1934,7 @@ function signForm()
 	
 	var r = "";
 	
-	r += "<div style='width:400px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
+	r += "<div style='width:350px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
 		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign in to your account</div>";
 		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
 		r += "<div style='margin:10px auto;width:210px;' >";
@@ -1943,7 +1956,7 @@ function signForm()
 	// var children = document.getElementById('WHITEBOARD').childNodes;
 	// neverCloseDialog = ( children.length == 0 ) ? true : false;
 	neverCloseDialog = true;
-	openModalDialog( null, r, 'NOBUTTON', null, null );
+	openModalDialog( null, r, 'NOBUTTON', null, 'SIGNIN' );
 	o = document.getElementById( 'acc_id' );
 	o.focus();
 	
