@@ -73,7 +73,7 @@ function init()
 		function(e){
 			//  if ( curChildMoved )
 			// 	 e.preventDefault();
-			document.getElementById('ID_ON_SCROLL').innerText = 'scroll:' + e.target.scrollTop;
+			// document.getElementById('ID_ON_SCROLL').innerText = 'scroll:' + e.target.scrollTop;
 			if ( !tl_drag )			//	TIMELINE_BAR移動中出なければ動作
 				setTimelinebarByScroll();
 		});
