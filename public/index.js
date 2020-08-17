@@ -768,7 +768,7 @@ function openWhiteboard(){
 	 var children = document.getElementById('WHITEBOARD').childNodes;
 	 neverCloseDialog = ( children.length == 0 ) ? true : false;
 	// neverCloseDialog = true;
-	openModalDialog( 'open Whiteboard', r, 'NOBUTTON', null, null );
+	openModalDialog( 'open Whiteboard', r, 'NOBUTTON', null, 'OPENWHITEBOARD' );
 	makeWhiteboardList();
 	document.getElementById('BTN_OPENWHITEBOARD').focus();
 	document.getElementById('whiteboard_day').addEventListener('keydown',
@@ -1411,6 +1411,7 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 			mm.style.height		= ( wfh - 8 - 73 ) +  'px';
 			break;
 		case 'SIGNIN':
+		case 'OPENWHITEBOARD':
 			mframe.style.width	= '350px';
 			break;
 		default:
