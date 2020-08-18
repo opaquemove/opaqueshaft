@@ -153,10 +153,11 @@ INPUT[type=password]:focus{
 }
 .nav_icon2{
 	float:					left;
-	width:					42px;
-	height:					42px;
+	width:					40px;
+	height:					40px;
 	background-color:		red;
 	border-radius: 8px;
+	margin:					1px;
 }
 
 #OPAQUESHAFT_DIALOG_TITLE{
@@ -263,6 +264,32 @@ INPUT[type=password]:focus{
 	/* border-left:			1px solid darkgrey; */
 	background-color: 		transparent;
 
+}
+
+#WHITEBOARD_LIST{
+	clear:					both;
+	margin-top:				10px;
+	height:					120px;
+	display:				flex;
+	flex-wrap:				wrap;
+	justify-content: space-between;
+	font-size:				14px;
+	padding:				4px;
+	overflow:				scroll;
+	border:					0px solid gray;	
+}
+.whiteboard_box{
+	float:					left;
+	width:					80px;
+	height:					80px;
+	background-color: 		rgb(241, 241, 241);
+	background-image:		url(./images/sun.png);
+	background-position: 	center center;
+	background-size:		20px;
+	background-repeat: 		no-repeat;
+	border:					1px solid lightgray;
+	margin:					1px;
+	/* font-size:				18px; */
 }
 
 #ID_REPORT{
@@ -472,9 +499,9 @@ INPUT[type=password]:focus{
 	font-weight:		bold;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid snow;
+	border-top:			1px solid white;
 	/* border-right:		1px solid lightgrey; */
-	border-bottom:		1px dashed gray;
+	border-bottom:		1px solid white;
 	z-index:			3000;
 	opacity:			0.7;
 	/* writing-mode: 		vertical-lr; */
@@ -638,7 +665,7 @@ INPUT[type=password]:focus{
 }
 
 .ESTIMATE_TIME{
-	color:				rgb(44, 44, 44);
+	/* color:				rgb(44, 44, 44); */
 	font-weight: 		bold;
 }
 /*
@@ -927,6 +954,18 @@ INPUT[type=password]:focus{
 
 .drag {
 	z-index:	1001;
+}
+
+.toolbar_hidden{
+	visibility:			hidden;
+}
+.toolbar_visible{
+	visibility: 		visible;
+}
+
+.marked{
+	color:				white;
+	background-color:	rgb(32, 116, 243);
 }
 
 .vh-center{

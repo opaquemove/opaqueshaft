@@ -736,7 +736,7 @@ function openWhiteboard(){
 	r += '<div style="height:;font-size:24px;text-align:center;padding-top:10px;padding-bottom:10px;" >';
 		// r += 'open whiteboard';
 	r += '</div>';
-	r += '<div style="margin:0 auto;font-size:18px;width:70%;">';
+	r += '<div style="margin:0 auto;font-size:18px;width:80%;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
 		r += '<div style="height:40px;padding-bottom:10px;" >';
@@ -746,13 +746,14 @@ function openWhiteboard(){
 			r += '<div style="float:right;width:48%;" >';
 				// r += '<button id="BTN_ADD_DATE"   style="background-color:transparent;border:none;" ><img width="12px" src="./images/add.png" /></button>';
 				// r += '<button id="BTN_MINUS_DATE" style="background-color:transparent;border:none;" ><img width="12px" src="./images/minus-2.png" /></button>';
-				r += '<img id="BTN_ADD_DATE"   width="22px" style="padding-right:3px;" src="./images/arrow-up.png" />';
-				r += '<img id="BTN_MINUS_DATE" width="22px" src="./images/arrow-down.png" />';
+				r += '<img id="BTN_ADD_DATE"   width="22px" style="padding-right:3px;" src="./images/up-arrow.png" />';
+				r += '<img id="BTN_MINUS_DATE" width="22px" src="./images/down-arrow.png" />';
 			r += '</div>';
 		r += '</div>';
-		r += '<div id="WHITEBOARD_LIST" style="clear:both;margin-top:10px;height:120px;display:flex;font-size:12px;padding:4px;overflow-y:scroll;border:0px solid lightgrey;" >';
+		// r += '<div id="WHITEBOARD_LIST" style="clear:both;margin-top:10px;height:120px;display:flex;font-size:12px;padding:4px;overflow-y:scroll;border:0px solid lightgrey;" >';
+		r += '<div id="WHITEBOARD_LIST" >';
 		r += '</div>';
-		r += '<div style="padding-bottom:5px;text-align:center;" >';
+		r += '<div style="clear:both;padding-bottom:5px;text-align:center;" >';
 		r += '</div>';
 		r += '</form>';
 		r += '<div style="text-align:center;padding-top:5px;" >';
@@ -2020,13 +2021,14 @@ function addWhiteboardManage( oParent, Result ){
 
 	var c = document.createElement("DIV");
 	c.setAttribute("whiteboard_id",  Result.child_id );
-	c.style.width			= '100px';
-	c.style.height			= '50px';
-	c.style.backgroundColor	= 'rgb(241,241,241)';
-	c.style.border			= '1px solid lightgrey';
-	c.style.margin			= '1px';
-	c.style.fontSize		= '18px';
-	// c.style.clear			= 'both';
+	c.setAttribute('class', 'whiteboard_box');
+	// c.style.float			= 'left';
+	// c.style.width			= '100px';
+	// c.style.height			= '50px';
+	// c.style.backgroundColor	= 'rgb(241,241,241)';
+	// c.style.border			= '1px solid lightgrey';
+	// c.style.margin			= '1px';
+	// c.style.fontSize		= '18px';
 
 	var day = new Date( Result.day );
 	var c_children	= Result.c_children;
@@ -2037,7 +2039,7 @@ function addWhiteboardManage( oParent, Result ){
     	r += ymd;
     r += '</div>';
     r += '<div style="text-align:center;" >';
-    	r += c_children;
+    	r += c_children + ' child';
     r += '</div>';
 	c.innerHTML = r;
     var cc = oParent.appendChild( c );

@@ -897,8 +897,10 @@ function scanChild( o ) {
 function markChild( c ) {
     if ( c == null ) return;
     c.setAttribute('marked', 'MARKED' );
-    c.style.backgroundColor = '#DDDDDD';
-    c.style.color           = 'gray';
+    // c.style.backgroundColor = '#DDDDDD';
+    // c.style.color           = 'gray';
+    c.classList.add("marked");
+
     commonProc();
 }
 
@@ -908,8 +910,10 @@ function markChild( c ) {
 function unmarkChild( c ) {
     if ( c == null ) return;
     c.removeAttribute('marked');
-    c.style.backgroundColor = '';
-    c.style.color           = '';
+    // c.style.backgroundColor = '';
+    // c.style.color           = '';
+    c.classList.remove("marked");
+
     // コンテキストメニューの削除
     var cMenu = c.lastChild;
     if ( cMenu.hasAttribute('cmenu'))
