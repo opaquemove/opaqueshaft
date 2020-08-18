@@ -105,6 +105,62 @@ INPUT[type=password]:focus{
 	border-radius: 			8px;
 	z-index:				65001;
 }
+#NAV_START_ICON2{
+	position:				absolute;
+	top:					-42px;		/* dummy */ 
+	left:					42px;
+	width:					42px;
+	height:					126px;
+	color:					white;
+	background-color:		transparent;
+	font-size:				14px;
+	z-index:				65001;
+}
+#ID_NAV_TILE{
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					42px;
+	height:					42px;
+	color:					snow;
+	background-color:		rgb(0, 132, 255);
+	background-image:		url(./images/shutter.png);
+	background-size:		24px;
+	background-repeat:		no-repeat;
+	background-position:	center center;
+	font-size:				14px;
+	border-radius: 			8px;
+}
+#ID_NAV_REPORT{
+	position:				absolute;
+	top:					42px;
+	left:					0px;
+	width:					42px;
+	height:					42px;
+	color:					snow;
+	background-color:		rgb(83, 128, 0);
+	background-image:		url(./images/report.png);
+	background-size:		24px;
+	background-repeat:		no-repeat;
+	background-position:	center center;
+	font-size:				14px;
+	border-radius: 			8px;
+}
+#ID_NAV_CHILD{
+	position:				absolute;
+	top:					84px;
+	left:					0px;
+	width:					42px;
+	height:					42px;
+	color:					snow;
+	background-color:		rgb(255, 196, 0);
+	background-image:		url(./images/godzilla.png);
+	background-size:		24px;
+	background-repeat:		no-repeat;
+	background-position:	center center;
+	font-size:				14px;
+	border-radius: 			8px;
+}
 
 #TOOLBAR{
 	pointer-events: 	all;

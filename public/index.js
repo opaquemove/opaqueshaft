@@ -204,8 +204,11 @@ function init()
 	// new Button( 'ID_GRADE4',                null           ).play();
 	// new Button( 'ID_GRADE5',                null           ).play();
 	// new Button( 'ID_GRADE6',                null           ).play();
-	new Button( 'ID_REPORT',				reportWhiteboard ).play();
-	new Button( 'ID_TILE',					showTile ).play();
+	// new Button( 'ID_REPORT',				reportWhiteboard ).play();
+	// new Button( 'ID_TILE',					showTile ).play();
+	new Button( 'ID_NAV_TILE',  			showTile ).play();
+	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
+	new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
 
 	// new Checkbox('CPC_GRADE1', 'OFF', null ).play();
 	// new Checkbox('CPC_GRADE2', 'OFF', null ).play();
@@ -1504,7 +1507,7 @@ function fitting(){
 	// sts.style.top		= ( h - sts_height ) + 'px';
 
 	var nsi = document.getElementById('NAV_START_ICON');
-	nsi.style.top = ( ( h / 2 ) - oNav.size + tb_height -42 ) + 'px'
+	nsi.style.top = ( ( h / 2 ) - oNav.size + tb_height -42 ) + 'px';
 	//	NAVリロケーション
 	if ( oNav.opened() ){
 		oNav.frame.style.top	= ( ( h / 2 ) - ( oNav.frame.offsetHeight / 2 ) ) + 'px';
@@ -1512,6 +1515,9 @@ function fitting(){
 		oNav.frame.style.left	= '0px';
 	}
 
+	var nsi2 = document.getElementById('NAV_START_ICON2');
+	nsi2.style.top = ( ( h / 2 ) - oNav.size + tb_height -42 ) + 'px';
+	nsi2.style.left	= ( w - 42 ) + 'px';
 
 	var cfm = document.getElementById('CHILDFINDER_MAIN');
 	if ( cfm != null ){
@@ -1524,8 +1530,8 @@ function fitting(){
 
 	if ( w <= 414){
 		//document.getElementById('OPAQUESHAFT_TITLE').style.display = 'none';
-		document.getElementById('ID_PROGRESS').style.display = 'none';
-		document.getElementById('ID_PROGRESS_COUNT').style.display = 'none';
+		// document.getElementById('ID_PROGRESS').style.display = 'none';
+		// document.getElementById('ID_PROGRESS_COUNT').style.display = 'none';
 		document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT').style.display = 'none';
 		document.getElementById('WHITEBOARD_DAY_FRAME').style.display = 'none';
 	} else{
@@ -1579,6 +1585,7 @@ function ctlToolbar(){
 
 function showToolbar(){
 	var nsi 	= document.getElementById('NAV_START_ICON');
+	var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var is		= document.getElementById('ID_SEARCH');
@@ -1586,6 +1593,7 @@ function showToolbar(){
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'visible';
+	nsi2.style.visibility	= 'visible';
 	tb.style.visibility     = 'visible';
 	wbf.style.visibility    = 'visible';
 	is.style.visibility		= 'visible';
@@ -1599,6 +1607,7 @@ function showToolbar(){
 function hideToolbar(){
 	console.log('hideToolbar');
 	var nsi 	= document.getElementById('NAV_START_ICON');
+	var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var is		= document.getElementById('ID_SEARCH');
@@ -1606,6 +1615,7 @@ function hideToolbar(){
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'hidden';
+	nsi2.style.visibility	= 'hidden';
 	tb.style.visibility     = 'hidden';
 	wbf.style.visibility    = 'hidden';
 	is.style.visibility		= 'hidden';
