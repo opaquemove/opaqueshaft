@@ -110,7 +110,7 @@ INPUT[type=password]:focus{
 	top:					-42px;		/* dummy */ 
 	left:					42px;
 	width:					42px;
-	height:					126px;
+	height:					168px;
 	color:					white;
 	background-color:		transparent;
 	font-size:				14px;
@@ -161,18 +161,33 @@ INPUT[type=password]:focus{
 	font-size:				14px;
 	border-radius: 			8px;
 }
+#ID_NAV_SEARCH{
+	position:				absolute;
+	top:					126px;
+	left:					0px;
+	width:					42px;
+	height:					42px;
+	color:					snow;
+	background-color:		rgb(255, 123, 0);
+	background-image:		url(./images/searching.png);
+	background-size:		24px;
+	background-repeat:		no-repeat;
+	background-position:	center center;
+	font-size:				14px;
+	border-radius: 			8px;
+}
 
 #TOOLBAR{
-	pointer-events: 	all;
-	padding-top:		0px;
-	padding-bottom:		2px;
-	height:				82px;
-	color:				gray;
-	background-color:	black;
-/*	border-bottom:		1px solid lightgrey;*/
-	z-index:			0;
-	overflow:			visible;
-	opacity: 			1;
+	pointer-events: 		all;
+	padding-top:			0px;
+	padding-bottom:			2px;
+	height:					82px;
+	color:					gray;
+	background-color:		black;
+/*	border-bottom:			1px solid lightgrey;*/
+	z-index:				0;
+	overflow:				visible;
+	opacity: 				1;
 }
 #OPAQUESHAFT_NAV{
 	float:					left;
@@ -394,16 +409,17 @@ INPUT[type=password]:focus{
 }
 #ID_WHITEBOARD_CHILD_COUNT_CHECKOUT{
 	position:				absolute;
-	top:					0px;
+	top:					24px;
 	left:					0px;
 	width:					58px;
-	font-size:				28px;
+	font-size:				26px;
 	text-align:				right;
+	transform: 				rotate(-45deg);
 }
 #ID_WHITEBOARD_CHILD_COUNT_PER{
 	position:				absolute;
-	top:					15px;
-	left:					32px;
+	top:					20px;
+	left:					29px;
 	width:					42px;
 	font-size:				28px;
 	text-align:				right;
@@ -413,8 +429,9 @@ INPUT[type=password]:focus{
 	top:					42px;
 	left:					42px;
 	width:					42px;
-	font-size:				30px;
+	font-size:				26px;
 	text-align:				right;
+	transform: 				rotate(-45deg);
 }
 #ID_PROGRESS{
 	width:					80px;
@@ -711,8 +728,8 @@ INPUT[type=password]:focus{
 	top:				84px;
 	left:				-10px;		/*	dummy */
 	width:				4px;
-	height:				4px;
-	background-color:	red;
+	height:				42px;
+	background-color:	rgb(0, 132, 255);
 	z-index:			4000;
 }
 

@@ -209,6 +209,7 @@ function init()
 	new Button( 'ID_NAV_TILE',  			showTile ).play();
 	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
 	new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
+	new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
 
 	// new Checkbox('CPC_GRADE1', 'OFF', null ).play();
 	// new Checkbox('CPC_GRADE2', 'OFF', null ).play();
