@@ -233,7 +233,7 @@ function init()
 	oTile.play();
 
 	// チャイルドパレットのチャイルドリスト作成
-	makeChildrenPalleteList();
+	// makeChildrenPalleteList();
 	if ( !checkSign() ){			//サインアウトしている
 		// ツールバーの表示制御(サインイン、サインアウトによる制御)
 		// ctlToolbar();
@@ -821,7 +821,7 @@ function createWhiteboard(){
 
 	ctlToolbar();
 	// clearWhiteboard();
-	makeChildrenPalleteList();
+	// makeChildrenPalleteList();
 
 }
 
@@ -1544,6 +1544,7 @@ function fitting(){
 //	チルドレンパレットのフォールディング
 //
 var flagChildrenPallete = false;
+var countOpenChildrenPallete = 0;
 function foldingChildrenPallete(){
 	var cpf = document.getElementById('CHILDREN_PALLETE_FRAME');
 	var mleft = parseInt( cpf.style.marginLeft );
@@ -1551,6 +1552,9 @@ function foldingChildrenPallete(){
 	if ( mleft == 0 || isNaN(mleft ) ){
 		cpf.style.marginLeft = '-168px';	// open pallete
 		flagChildrenPallete = true;
+		countOpenChildrenPallete++;
+		if ( countOpenChildrenPallete == 1 )
+			makeChildrenPalleteList();
 	} else {
 		cpf.style.marginLeft = '0px';		// close pallete
 		flagChildrenPallete = false;

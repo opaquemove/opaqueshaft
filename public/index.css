@@ -272,7 +272,8 @@ INPUT[type=password]:focus{
 	height:					120px;
 	display:				flex;
 	flex-wrap:				wrap;
-	justify-content: space-between;
+	flex-direction: 		row-reverse;
+	justify-content: 		space-between;
 	font-size:				14px;
 	padding:				4px;
 	overflow:				scroll;
