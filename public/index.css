@@ -196,7 +196,8 @@ INPUT[type=password]:focus{
 	background-color: 	transparent;
 	pointer-events: 	none;
 	display:			flex;
-	justify-content: 	center;
+	/* flex-direction: row-reverse; */
+	justify-content: 	flex-end;	/*  flex-start,center,flex-end*/
 	align-items: 		center;
 	opacity:			0.8;
 }

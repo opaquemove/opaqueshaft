@@ -375,25 +375,27 @@ spotlight.prototype = {
                             for ( var i=0; i<result.length; i++ ){
                                 var child_id = result[i].child_id;
                                 var child_name = result[i].child_name;
+                                var child_type = result[i].child_type;
+                                var child_grade = result[i].child_grade;
                                 var c = document.createElement('DIV');
                                 // c.setAttribute("child",     "yes");
                                 c.setAttribute("child_id",  child_id );
                                 c.setAttribute("id",        "c_1");
                                 c.setAttribute("class",     "PALLETE_CHILD");
                                 c.setAttribute("draggable", "true");
-                                // c.style.clear           = 'both';
-                                // c.style.padding         = '4px';
-                                // c.style.fontSize        = '12px';
-                                // c.style.width           = '100%';
-                                // c.style.height          = '24px';
-                                // c.style.backgroundColor = '';
                                 c.style.marginTop       = '1px';
                                 c.style.marginLeft      = '1px';
                                 c.style.float           = 'left';
                                 r = '';
-                                r += '<div style="height:20px;padding-left:2px;">';
+                                r += '<div class="CHILD_NAME" style="font-size:12px;height:20px;padding-left:2px;">';
                                     r += child_name;
                                 r += '</div>';
+                                r += '<div style="float:right;font-size:12px;text-align:right;padding-top:2px;" >';
+                                    r += child_type;
+                                    r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
+                                r += '</div>';
+                        
+
                                 c.innerHTML = r;
                                 var cc = parent.appendChild( c );
                                 cc.addEventListener('dragstart',

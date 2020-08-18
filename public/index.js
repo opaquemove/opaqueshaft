@@ -186,7 +186,7 @@ function init()
 
 	fitting();
 	// new Button( 'SIGN_STATUS',              signMenu       ).play();
-	new Button( 'OPAQUESHAFT_TITLE',        whiteboardMenu ).play();
+	// new Button( 'OPAQUESHAFT_TITLE',        whiteboardMenu ).play();
 	// new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
 //	new Button( 'CHILD_FINDER',				childFinder    ).play();
 //	new Button( 'ID_NAV',                   ctlNav         ).play();
@@ -1794,6 +1794,7 @@ function sign()
 //
 //	ホワイトボードメニュー
 //
+/*
 function whiteboardMenu( e ){
 	console.log('whiteboardMenu:' + e.target.getAttribute('id'));
 	e.stopPropagation();
@@ -1825,7 +1826,6 @@ function whiteboardMenu( e ){
 	var id = signid();
 
 	var r = '';
-	// r += '<div id="ID_CURRENT_ACCOUNT"   style="height:28px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
 	r += '<div id="ID_LOAD_WHITEBOARD"   style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >open whiteboard</div>';
 	r += '<div id="ID_SAVE_WHITEBOARD"   style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
 	r += '<div id="ID_CLOSE_WHITEBOARD"  style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/cancel.png);background-size:10px;background-position:left center;background-repeat:no-repeat;" >close</div>';
@@ -1865,7 +1865,7 @@ function whiteboardMenu( e ){
 	});
 
 }
-
+*/
 
 //
 //	サインインメニュー(右上メニュー)
