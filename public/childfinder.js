@@ -387,7 +387,7 @@ spotlight.prototype = {
                                 c.style.marginLeft      = '1px';
                                 c.style.float           = 'left';
                                 r = '';
-                                r += '<div class="CHILD_NAME" style="font-size:12px;height:20px;padding-left:2px;">';
+                                r += '<div class="CHILD_NAME" style="float:left;font-size:12px;height:20px;padding-left:2px;">';
                                     r += child_name;
                                 r += '</div>';
                                 r += '<div style="float:right;font-size:12px;text-align:right;padding-top:2px;" >';

@@ -409,29 +409,38 @@ INPUT[type=password]:focus{
 }
 #ID_WHITEBOARD_CHILD_COUNT_CHECKOUT{
 	position:				absolute;
-	top:					24px;
-	left:					0px;
-	width:					58px;
-	font-size:				26px;
-	text-align:				right;
-	transform: 				rotate(-45deg);
+	top:					16px;
+	left:					21px;
+	width:					40px;
+	font-size:				22px;
+	text-align:				center;
+	transform: 				rotate(-49deg);
 }
 #ID_WHITEBOARD_CHILD_COUNT_PER{
 	position:				absolute;
-	top:					20px;
-	left:					29px;
+	top:					17px;
+	left:					24px;
 	width:					42px;
 	font-size:				28px;
 	text-align:				right;
 }
 #ID_WHITEBOARD_CHILD_COUNT{
 	position:				absolute;
-	top:					42px;
+	top:					34px;
 	left:					42px;
-	width:					42px;
-	font-size:				26px;
-	text-align:				right;
-	transform: 				rotate(-45deg);
+	width:					40px;
+	font-size:				22px;
+	text-align:				center;
+	transform: 				rotate(-49deg);
+}
+#ID_WHITEBOARD_CHILD_COUNT_ABSENT{
+	position:				absolute;
+	top:					53px;
+	left:					22px;
+	width:					20px;
+	font-size:				16px;
+	text-align:				center;
+	transform: 				rotate(-49deg);
 }
 #ID_PROGRESS{
 	width:					80px;

@@ -190,10 +190,10 @@ function init()
 	// new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
 //	new Button( 'CHILD_FINDER',				childFinder    ).play();
 //	new Button( 'ID_NAV',                   ctlNav         ).play();
-	new Button( 'ID_SEARCH',                ctlSpotlight   ).play();
+	// new Button( 'ID_SEARCH',                ctlSpotlight   ).play();
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
-	new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();
+	// new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	// new Button( 'ID_SHEET_ESCORT',          turnWhiteboard ).play();
@@ -1414,14 +1414,17 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 			var wfh = parseInt( document.getElementById('WHITEBOARD_FRAME').style.height );
 			mframe.style.height = ( wfh - 8 ) + 'px';
 			mm.style.height		= ( wfh - 8 - 73 ) +  'px';
+			mo.style.opacity	= 1;
 			break;
 		case 'SIGNIN':
 		case 'OPENWHITEBOARD':
 			mframe.style.width	= '350px';
+			mo.style.opacity	= 0.7;
 			break;
 		default:
 			mframe.style.height = '400px';
 			mm.style.height		= '327px';
+			mo.style.opacity	= 1;
 			break;
 	}
 	mt.innerText = ( title != null )? title : '';
@@ -1589,16 +1592,16 @@ function showToolbar(){
 	var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
-	var is		= document.getElementById('ID_SEARCH');
-	var ic		= document.getElementById('ID_CHILDREN');
+	// var is		= document.getElementById('ID_SEARCH');
+	// var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'visible';
 	nsi2.style.visibility	= 'visible';
 	tb.style.visibility     = 'visible';
 	wbf.style.visibility    = 'visible';
-	is.style.visibility		= 'visible';
-	ic.style.visibility		= 'visible';
+	// is.style.visibility		= 'visible';
+	// ic.style.visibility		= 'visible';
 	tlb.style.visibility	= 'visible';
 	eam.style.visibility	= 'visible';
 	visibleWhiteboard();
@@ -1611,16 +1614,16 @@ function hideToolbar(){
 	var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
-	var is		= document.getElementById('ID_SEARCH');
-	var ic		= document.getElementById('ID_CHILDREN');
+	// var is		= document.getElementById('ID_SEARCH');
+	// var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'hidden';
 	nsi2.style.visibility	= 'hidden';
 	tb.style.visibility     = 'hidden';
 	wbf.style.visibility    = 'hidden';
-	is.style.visibility		= 'hidden';
-	ic.style.visibility		= 'hidden';
+	// is.style.visibility		= 'hidden';
+	// ic.style.visibility		= 'hidden';
 	tlb.style.visibility	= 'hidden';
 	eam.style.visibility	= 'hidden';
 	hiddenWhiteboard();
