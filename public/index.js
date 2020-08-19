@@ -1536,13 +1536,13 @@ function fitting(){
 		//document.getElementById('OPAQUESHAFT_TITLE').style.display = 'none';
 		// document.getElementById('ID_PROGRESS').style.display = 'none';
 		// document.getElementById('ID_PROGRESS_COUNT').style.display = 'none';
-		document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT').style.display = 'none';
+		// document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT').style.display = 'none';
 		document.getElementById('WHITEBOARD_DAY_FRAME').style.display = 'none';
 	} else{
-		document.getElementById('OPAQUESHAFT_TITLE').style.display = 'inline';
-		document.getElementById('ID_PROGRESS').style.display = 'inline';
-		document.getElementById('ID_PROGRESS_COUNT').style.display = 'inline';
-		document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT').style.display = 'inline';
+		// document.getElementById('OPAQUESHAFT_TITLE').style.display = 'inline';
+		// document.getElementById('ID_PROGRESS').style.display = 'inline';
+		// document.getElementById('ID_PROGRESS_COUNT').style.display = 'inline';
+		// document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT').style.display = 'inline';
 		document.getElementById('WHITEBOARD_DAY_FRAME').style.display = 'inline';
 	}
 

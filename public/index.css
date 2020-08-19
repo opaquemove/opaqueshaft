@@ -183,7 +183,7 @@ INPUT[type=password]:focus{
 	padding-bottom:			2px;
 	height:					82px;
 	color:					gray;
-	background-color:		black;
+	background-color:		transparent;
 /*	border-bottom:			1px solid lightgrey;*/
 	z-index:				0;
 	overflow:				visible;
@@ -539,7 +539,7 @@ INPUT[type=password]:focus{
 #WHITEBOARD_TIMELINE{
 	position: 			absolute;
 	top:				0px;
-	left:				0px;
+	left:				42px;
 	width:				42px;
 	height:				7200px;			/* 600 * 12hours */
 	float:				left;
@@ -737,7 +737,7 @@ INPUT[type=password]:focus{
 	top:				84px;
 	left:				-10px;		/*	dummy */
 	width:				4px;
-	height:				42px;
+	height:				21px;
 	background-color:	rgb(0, 132, 255);
 	z-index:			4000;
 }
