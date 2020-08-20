@@ -110,7 +110,7 @@ INPUT[type=password]:focus{
 	top:					-42px;		/* dummy */ 
 	left:					42px;
 	width:					42px;
-	height:					168px;
+	height:					210px;
 	color:					white;
 	background-color:		transparent;
 	font-size:				14px;
@@ -170,6 +170,21 @@ INPUT[type=password]:focus{
 	color:					snow;
 	background-color:		rgb(255, 123, 0);
 	background-image:		url(./images/searching.png);
+	background-size:		24px;
+	background-repeat:		no-repeat;
+	background-position:	center center;
+	font-size:				14px;
+	border-radius: 			8px;
+}
+#ID_NAV_LOG{
+	position:				absolute;
+	top:					168px;
+	left:					0px;
+	width:					42px;
+	height:					42px;
+	color:					snow;
+	background-color:		lightgrey;
+	background-image:		url(./images/list.png);
 	background-size:		24px;
 	background-repeat:		no-repeat;
 	background-position:	center center;

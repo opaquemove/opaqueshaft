@@ -43,6 +43,7 @@ var neverCloseDialog = false;
 var palleteTimeSelector = null;
 
 var oTile				= null;
+var oLog				= null;
 
 window.onload = init;
 window.onresize = fitting;
@@ -65,6 +66,9 @@ function init()
 			var evtEnd		= 'mouseup';
 			break;
 	}
+
+	//	ログエリアの初期化
+	oLog = new messageLog();
 
 	// TIMELINE_BARの初期座標を記憶する
 	tlbOffset = document.getElementById('ID_TIMELINE_BAR').offsetTop;
@@ -141,8 +145,12 @@ function init()
 			var id = e.dataTransfer.getData('text');
 			var wb = document.getElementById('WHITEBOARD');
 			console.log( e.target.getAttribute('id'), e.pageY, e.pageX, id );
+			var oChild = getChild(id);
 			if ( alreadyExistChildOnWhiteboard( id )){
-				alert('すでにホワイトボードに配置されています．');
+				// alert('すでにホワイトボードに配置されています．');
+				var child_name = e.target.getElementsByClassName('CHILD_NAME')[0].innerText;
+				oLog.log( null, oChild.child_name + ' : すでにホワイトボードに配置されています.');
+				oLog.open( 5 );
 				return;
 			}
 			// var itb = document.getElementById('ID_TIMELINE_BAR');
@@ -151,7 +159,6 @@ function init()
 
 			var p = e.target.parentNode;
 		
-			var oChild = getChild(id);
 			//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
 //			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
 			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
@@ -213,6 +220,7 @@ function init()
 	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
 	new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
 	new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
+	new Button( 'ID_NAV_LOG',               ctlMessageLog ).play();
 
 	// new Checkbox('CPC_GRADE1', 'OFF', null ).play();
 	// new Checkbox('CPC_GRADE2', 'OFF', null ).play();
@@ -1665,6 +1673,15 @@ function getCookie(){
 //
 function checkSign(){
 	var c = document.cookie;
+	if ( c.indexOf( 'acc=') > -1 ){
+		var token = c.split('&');
+		for ( var i=0; i<token.length; i++ ){
+			var kv = token[i].split('=');
+			for ( var j=0; j<kv.length; j+=2){
+				if ( kv[j] == 'acc' ) acc_id = kv[j+1];
+			}
+		}
+	}
 	return  ( c.indexOf( 'acc=') > -1 );
 }
 

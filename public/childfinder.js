@@ -296,6 +296,7 @@ spotlight.prototype = {
         
             if ( child_name.toLowerCase().indexOf( keyword.toLowerCase(), 0, keyword.length ) == 0 ||
                  kana.indexOf(keyword.toLowerCase(), 0, keyword.length ) == 0 ||
+                 estimate.indexOf( keyword, 0, keyword ) == 0 ||
                  keyword == '%' || keyword == '*' ){
                 var o = document.createElement('DIV');
                 o.setAttribute( 'child_id', child_id );
