@@ -230,7 +230,7 @@ function init()
 	//
 	//	タイムセレクタ初期化
 	//
-	palleteTimeSelector = new TimeSelector( dragPalleteChild );
+	palleteTimeSelector = new TimeSelector( checkinSelectedChild );
 	palleteTimeSelector.play();
 
 	//
@@ -810,14 +810,25 @@ function openWhiteboard(){
 			guidedance_whiteboard_form.day.value =
 				dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
 		}, false );
-	document.getElementById('WHITEBOARD_LIST').addEventListener('click',
+	document.getElementById('WHITEBOARD_LIST').addEventListener('mousedown',
 		function(e) {
 			var o = e.target;
 			if ( o == document.getElementById('WHITEBOARD_LIST')) return;
 			while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
 				o = o.parentNode;
 			}
+			o.style.backgroundColor = 'red';
+		}, false );
+		document.getElementById('WHITEBOARD_LIST').addEventListener('mouseup',
+		function(e) {
+			var o = e.target;
+			if ( o == document.getElementById('WHITEBOARD_LIST')) return;
+			while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
+				o = o.parentNode;
+			}
+			o.style.backgroundColor = '';
 			guidedance_whiteboard_form.day.value = o.firstChild.innerText;
+			createWhiteboard();
 		}, false );
 	
 }
@@ -2187,9 +2198,9 @@ function markPalleteChild( e ){
 
 
 //
-//	パレット内のマークしたチャイルドをホワイトボードにドラッグ2
+//	セレクトしたチャイルドをホワイトボードにチェックイン
 //
-function dragPalleteChild( hm ){
+function checkinSelectedChild( hm ){
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT').childNodes;
 	var ffct2 = null;
 	if ( document.getElementById('FOLDER_FIND_CHILDREN_TABLE2') != null )
@@ -2211,15 +2222,29 @@ function dragPalleteChild( hm ){
 			var child_type	= c.getAttribute('child_type');
 			var child_grade	= c.getAttribute('child_grade');
 			if ( alreadyExistChildOnWhiteboard( id ) ) continue;
-			// var oChild = getChild( id );
-			// if ( oChild != null ){
-				// addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade );
-				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
-				cursor++;
-			// }
+			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
+			cursor++;
 			c.style.color = '';
 			c.style.backgroundColor = '';
 			c.removeAttribute('selected');
+		}
+	}
+	if ( ffct2 != null ){
+		for ( var i=0; i<ffct2.length; i++ ){
+			var c = ffct2[i];
+			if ( c.hasAttribute('selected') ){
+				var id = c.getAttribute('child_id');
+				var child_name	= c.getElementsByClassName('CHILD_NAME')[0].innerText;
+				var kana		= c.getAttribute('kana');
+				var child_type	= c.getAttribute('child_type');
+				var child_grade	= c.getAttribute('child_grade');
+				if ( alreadyExistChildOnWhiteboard( id ) ) continue;
+				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
+				cursor++;
+				c.style.color = '';
+				c.style.backgroundColor = '';
+				c.removeAttribute('selected');
+			}
 		}
 	}
 
