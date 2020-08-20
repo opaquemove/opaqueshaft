@@ -4,6 +4,8 @@
  *	Reference: https://q-az.net/elements-drag-and-drop/
  */
 
+// const { json } = require("body-parser");
+
 var x, y;
 var wbx, wby;
 var delta_x, delta_y;
@@ -185,6 +187,7 @@ function init()
 	oSpotlight.play();
 
 	fitting();
+	new Button( 'OPAQUESHAFT_NAV', test ).play();
 	// new Button( 'SIGN_STATUS',              signMenu       ).play();
 	// new Button( 'OPAQUESHAFT_TITLE',        whiteboardMenu ).play();
 	// new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
@@ -292,6 +295,16 @@ function init()
 	makeToolbarCheckoutProgress( 0 );
 }
 
+function test(){
+
+	var jsonText = JSON.stringify( [ { data:'hogehoge'}, {data:'hoehoe'} ] );
+
+    var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/jsonsend", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/json" );
+	xmlhttp.send( jsonText );
+
+}
 //
 //	ツールバーにチェックアウトプログレスを表示
 //
@@ -2177,29 +2190,39 @@ function markPalleteChild( e ){
 //	パレット内のマークしたチャイルドをホワイトボードにドラッグ2
 //
 function dragPalleteChild( hm ){
-	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
+	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT').childNodes;
+	var ffct2 = null;
+	if ( document.getElementById('FOLDER_FIND_CHILDREN_TABLE2') != null )
+		ffct2 = document.getElementById('FOLDER_FIND_CHILDREN_TABLE2').childNodes;
 	var arHM = hm.split(':');
 	
-	var cursor	= 0;
 	var top		= ( parseInt( arHM[0] ) - 8 ) * pixelPerHour;
 	var left	= ( parseInt( arHM[1] ) ) + 42;				// 42px タイムライン分右にオフセット
 	console.log( 'hm:' + hm );
 	console.log( 'top:' + top + ' left:' + left );
+	var cursor	= 0;
 
-	for ( var i=0; i<cpc.childNodes.length; i++ ){
-		if ( cpc.childNodes[i].getAttribute('selected') != null ){
-			var id = cpc.childNodes[i].getAttribute('child_id');
+	for ( var i=0; i<cpc.length; i++ ){
+		var c = cpc[i];
+		if ( c.hasAttribute('selected') ){
+			var id = c.getAttribute('child_id');
+			var child_name	= c.getElementsByClassName('CHILD_NAME')[0].innerText;
+			var kana		= c.getAttribute('kana');
+			var child_type	= c.getAttribute('child_type');
+			var child_grade	= c.getAttribute('child_grade');
 			if ( alreadyExistChildOnWhiteboard( id ) ) continue;
-			var oChild = getChild( id );
-			if ( oChild != null ){
-				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade );
+			// var oChild = getChild( id );
+			// if ( oChild != null ){
+				// addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade );
+				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
 				cursor++;
-			}
-			cpc.childNodes[i].style.color = '';
-			cpc.childNodes[i].style.backgroundColor = '';
-			cpc.childNodes[i].removeAttribute('selected');
+			// }
+			c.style.color = '';
+			c.style.backgroundColor = '';
+			c.removeAttribute('selected');
 		}
 	}
+
 	showWhiteboardChildCount();
 
 }

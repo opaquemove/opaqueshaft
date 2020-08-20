@@ -373,16 +373,20 @@ spotlight.prototype = {
                             //fcl.innerHTML = '';
                             this.folder2.innerText = '';
                             for ( var i=0; i<result.length; i++ ){
-                                var child_id = result[i].child_id;
-                                var child_name = result[i].child_name;
-                                var child_type = result[i].child_type;
+                                var child_id    = result[i].child_id;
+                                var child_name  = result[i].child_name;
+                                var kana        = result[i].kana;
+                                var child_type  = result[i].child_type;
                                 var child_grade = result[i].child_grade;
                                 var c = document.createElement('DIV');
                                 // c.setAttribute("child",     "yes");
-                                c.setAttribute("child_id",  child_id );
-                                c.setAttribute("id",        "c_1");
-                                c.setAttribute("class",     "PALLETE_CHILD");
-                                c.setAttribute("draggable", "true");
+                                c.setAttribute("child_id",    child_id );
+                                c.setAttribute("id",          "c_1");
+                                c.setAttribute("class",       "PALLETE_CHILD");
+                                c.setAttribute('kana',        kana );
+                                c.setAttribute('child_type',  child_type );
+                                c.setAttribute('child_grade', child_grade );
+                                c.setAttribute("draggable",   "true");
                                 c.style.marginTop       = '1px';
                                 c.style.marginLeft      = '1px';
                                 c.style.float           = 'left';

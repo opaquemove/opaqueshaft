@@ -583,10 +583,13 @@ function addChildManage( oParent, oChild ){
 
     var c = document.createElement("DIV");
     // c.setAttribute("child",     "yes");
-    c.setAttribute("child_id",  oChild.child_id );
-	c.setAttribute("id",        "c_1");
-    c.setAttribute("class",     "PALLETE_CHILD");
-    c.setAttribute("draggable", "true");
+	c.setAttribute("id",          "c_1");
+    c.setAttribute("child_id",    oChild.child_id );
+    c.setAttribute("class",       "PALLETE_CHILD");
+    c.setAttribute('kana',        oChild.kana );
+    c.setAttribute('child_type',  oChild.child_type );
+    c.setAttribute('child_grade', oChild.child_grade );
+    c.setAttribute("draggable",   "true");
     // c.style.position    = 'relative';
 //    c.style.height      = '30px';
     c.style.clear       = 'both';
