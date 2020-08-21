@@ -825,6 +825,7 @@ function openWhiteboard(){
 			while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
 				o = o.parentNode;
 			}
+			o.style.color			= 'white';
 			o.style.backgroundColor = 'red';
 		}, false );
 		document.getElementById('WHITEBOARD_LIST').addEventListener('mouseup',
@@ -834,6 +835,7 @@ function openWhiteboard(){
 			while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
 				o = o.parentNode;
 			}
+			o.style.color			= '';
 			o.style.backgroundColor = '';
 			guidedance_whiteboard_form.day.value = o.firstChild.innerText;
 			createWhiteboard();
@@ -2238,7 +2240,13 @@ function checkinSelectedChild( hm ){
 			var kana		= c.getAttribute('kana');
 			var child_type	= c.getAttribute('child_type');
 			var child_grade	= c.getAttribute('child_grade');
-			if ( alreadyExistChildOnWhiteboard( id ) ) continue;
+			if ( alreadyExistChildOnWhiteboard( id ) ){
+				c.style.color = '';
+				c.style.backgroundColor = '';	
+				oLog.log( null, child_name + ' : すでにホワイトボードに配置されています.');
+				oLog.open( 2 );
+				continue;
+			} 
 			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
 			cursor++;
 			c.style.color = '';
@@ -2255,7 +2263,13 @@ function checkinSelectedChild( hm ){
 				var kana		= c.getAttribute('kana');
 				var child_type	= c.getAttribute('child_type');
 				var child_grade	= c.getAttribute('child_grade');
-				if ( alreadyExistChildOnWhiteboard( id ) ) continue;
+				if ( alreadyExistChildOnWhiteboard( id ) ){
+					c.style.color = '';
+					c.style.backgroundColor = '';		
+					oLog.log( null, child_name + ' : すでにホワイトボードに配置されています.');
+					oLog.open( 2 );
+					continue;
+				} 
 				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
 				cursor++;
 				c.style.color = '';
