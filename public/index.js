@@ -945,19 +945,26 @@ function saveWhiteboard(){
 		r += 'save whiteboard';
 	r += '</div>';
 //	r += "<div id='SAVE_STATUS' style='height:20px;text-align:center;' >status</div>";
-	r += '<div style="margin:0 auto;width:70%;">';
+	r += '<div style="margin:0 auto;width:70%;font-size:18px;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
 		r += '<div style="padding-bottom:20px;" >';
-		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" readonly value="' + dayWhiteboard + '" />';
+		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;font-size:16px;" readonly value="' + dayWhiteboard + '" />';
 		r += '</div>';
 		r += '</form>';
 		r += '<div>Progress:</div>';
-		r += '<div id="SAVE_PROGRESS" style="clear:both;width:100%;height:100px;border:1px solid gray;overflow:auto;" >';
+		r += '<div id="SAVE_PROGRESS" style="clear:both;font-size:12px;width:100%;height:100px;border:1px solid gray;overflow:auto;" >';
 		r += '</div>';
-		r += '<button id="BTN_SAVEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="saveWhiteboardHelper();" >Save</button>';
+		r += '<button id="BTN_SAVEWHITEBOARD" type="button" ';
+			r += ' style="width:100px;height:50px;font-size:12px;background-image:url(./images/upload.png);background-size:42px;background-position:center center;background-repeat:no-repeat;outline:none;background-color:transparent;border:none;" ';
+			r += ' onclick="saveWhiteboardHelper();" >';
+		r += '</button>';
+		r += '<button id="BTN_SAVEWHITEBOARD" type="button" ';
+			r += ' style="width:100px;height:50px;font-size:12px;background-image:url(./images/cancel.png);background-size:42px;background-position:center center;background-repeat:no-repeat;outline:none;background-color:transparent;border:none;" ';
+			r += ' onclick="closeModalDialog();" >';
+		r += '</button>';
 	r += '</div>';
-	openModalDialog( null, r, 'NORMAL', null, null );
+	openModalDialog( 'save whiteboard', r, 'NORMAL', null, null );
 }
 
 //

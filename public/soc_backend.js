@@ -120,7 +120,7 @@ function clearWhiteboard(){
 	r += '<div style="margin:0 auto;width:110px;">';
 		r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="clearWhiteboardHelper();closeModalDialog();" >Clear</button>';
 	r += '</div>';
-    openModalDialog( null, r, 'CANCEL', null, null );
+    openModalDialog( 'clear whiteboard', r, 'CANCEL', null, null );
     document.getElementById('BTN_CLEARWHITEBOARD').focus();
 
 }
@@ -322,7 +322,7 @@ function reportWhiteboardDetail(){
 function absentWhiteboard(){
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
-		r += 'absent  ' + dayWhiteboard;
+		// r += 'absent  ' + dayWhiteboard;
     r += '</div>';
     r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Summary:'
@@ -349,7 +349,7 @@ function absentWhiteboard(){
     r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += '<button onclick="attendChild();" style="width:180px;height:40px;border:none;background-color:transparent;font-size:24px;background-image:url(./images/entry.png);background-size:30px;background-repeat:no-repeat;background-position:left center;" >Attend</button>';
     r += '</div>';
-    openModalDialog( null, r, 'NORMAL', null, null );
+    openModalDialog( 'absent ' + dayWhiteboard, r, 'NORMAL', null, null );
     absentWhiteboardSummary();
     absentWhiteboardDetail();
 }
