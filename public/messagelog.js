@@ -38,6 +38,8 @@ messageLog.prototype = {
         this.content.innerText = '';
     },
     log : function( log_level, message ){
-        this.content.innerHTML += '<div>' + message + '</div>';
+        var today = new Date();
+        hm = ( '00' + today.getHours() ).slice( -2 ) + ':' + ( '00' + today.getMinutes() ).slice(-2);
+        this.content.innerHTML += '<div>' + hm + ':' + message + '</div>';
     }
 };

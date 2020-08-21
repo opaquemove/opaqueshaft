@@ -122,12 +122,12 @@ function clearWhiteboard(){
 	r += '</div>';
     openModalDialog( 'clear whiteboard', r, 'CANCEL', null, null );
     document.getElementById('BTN_CLEARWHITEBOARD').focus();
-
 }
 function clearWhiteboardHelper(){
     var wb = document.getElementById('WHITEBOARD');
     while ( wb.firstChild){
-            wb.removeChild( wb.firstChild );
+        wb.removeChild( wb.firstChild );
+        updateFlg   = true;
     }
     showWhiteboardChildCount();
 }
@@ -483,6 +483,7 @@ function attendChildHelper( c ){
     c.style.transform           = '';
 
     wb.appendChild( c );
+    updateFlg   = true;
 
 }
 
@@ -572,7 +573,9 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     setEscortHelper( cc, (escort)?'ON':'OFF' );
     var touchdevice = ( 'ontouchend' in document );
     if ( touchdevice )  cc.addEventListener( "touchstart", mDown, false );
-	    else            cc.addEventListener( "mousedown",  mDown, false );
+        else            cc.addEventListener( "mousedown",  mDown, false );
+        
+    updateFlg   = true;
 
 }
 
@@ -830,6 +833,7 @@ function deleteWhiteboardChildHelper(){
     }
     showWhiteboardChildCount();
     console.log('delete child:' + i );
+    updateFlg   = true;
 }
 
 //
@@ -1082,6 +1086,7 @@ function setEscortHelper( c, flag ){
             escort.style.backgroundSize   = '';
             break;
     }
+    updateFlg   = true;
 }
 //
 //  Childをチェックアウト（帰宅）
@@ -1124,6 +1129,8 @@ function checkoutChild( c, direction ){
 
     c.style.transformOrigin     = 'top left;'
     c.style.transform           = 'rotate(-45deg)';
+
+    updateFlg   = true;
 
     //WHITEBOARD_CHECKOUTへ移動
     // var wbc = document.getElementById('WHITEBOARD_CHECKOUT');
@@ -1347,6 +1354,8 @@ function checkoutClearChild( c ){
     c.style.transformOrigin     = 'top left;'
     c.style.transform           = 'rotate(0deg)';
 
+    updateFlg   = true;
+
 
 }
 
@@ -1375,6 +1384,7 @@ function absentChild(){
         c.style.transform           = 'rotate(-45deg)';
     
         abs.appendChild( c );
+        updateFlg   = true;
     }
     showWhiteboardChildCount();
 }

@@ -23,6 +23,7 @@ var oSpotlight			= null;
 
 var criteriaEscortPixel = 600;
 
+var updateFlg			= false;
 //
 //	タイムライン・バー操作
 //
@@ -150,7 +151,7 @@ function init()
 				// alert('すでにホワイトボードに配置されています．');
 				var child_name = e.target.getElementsByClassName('CHILD_NAME')[0].innerText;
 				oLog.log( null, oChild.child_name + ' : すでにホワイトボードに配置されています.');
-				oLog.open( 5 );
+				oLog.open( 3 );
 				return;
 			}
 			// var itb = document.getElementById('ID_TIMELINE_BAR');
@@ -849,8 +850,9 @@ function openWhiteboard(){
 function createWhiteboard(){
 	var target_day = guidedance_whiteboard_form.day.value;
 	var cwd = document.getElementById('CUR_WHITEBOARD_DAY');
-	dayWhiteboard = target_day;
-	cwd.innerText = target_day;
+	dayWhiteboard 	= target_day;
+	cwd.innerText 	= target_day;
+	updateFlg		= false;
 	//createWhiteboardHelper( dayWhiteboard );
 	neverCloseDialog = false;
 	closeModalDialog();
@@ -929,7 +931,11 @@ function loadWhiteboard(){
 		//	WHITEBOARD_FRAMEのスクロール情報を初期化する
 		document.getElementById('WHITEBOARD_FRAME').scrollTop = 0;
 		showWhiteboardChildCount();
-	} else alert(http.status);
+	} else{
+		oLog.log( null, 'loadWhiteboard:' + xmlhttp.status );
+		oLog.open( 3 );
+		// alert( xmlhttp.status );
+	} 
 
 }
 
@@ -1043,6 +1049,8 @@ function saveWhiteboardHelper(){
 	r += '<div>save completed.</div>';
 	progress.innerHTML = r;
 
+	updateFlg = false;
+
 	// closeModalDialog();
 }
 
@@ -1146,6 +1154,7 @@ function closeWhiteboard(){
 function closeWhiteboardHelper(){
 	dayWhiteboard 		= null;
 	openWhiteboardFlg	= false;
+	updateFlg			= false;
 	ctlToolbar();
 	openWhiteboard();
 }
@@ -1282,7 +1291,7 @@ function Nav( func ){
 	this.evtMove		= null;
 	this.evtEnd			= null;
 	this.current		= null;
-	this.size 			= 60;
+	// this.size 			= 60 ;
 
 	this.touchdevice	= ( 'ontouchend' in document );
 	switch ( this.touchdevice ){
@@ -1309,7 +1318,7 @@ function Nav( func ){
 	m.setAttribute('id',    'NAVI2' );
 	m.setAttribute('class', 'not_select' );
 	m.style.position		= 'absolute';
-	m.style.top 			= ( ( h / 2 ) - this.size ) + 'px';
+	m.style.top 			= ( ( h / 2 ) - ( 126 / 2 ) ) + 'px';
 	// m.style.left			= ( ( w / 2 ) - this.size )+ 'px';
 	m.style.left			= '0px';
 	m.style.width			= '126px';
@@ -1386,7 +1395,7 @@ Nav.prototype = {
 		// var h = document.body.clientHeight;
 		var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
-		this.frame.style.top 		= ( ( h / 2 ) - this.size ) + 'px';
+		this.frame.style.top 		= ( ( h / 2 ) - ( this.frame.offsetHeight / 2 ) ) + 'px';
 		// this.frame.style.left		= ( ( w / 2 ) - this.size )+ 'px';
 		this.frame.style.left		= '0px';
 		this.frame.style.visibility	= 'visible';
@@ -1441,6 +1450,7 @@ Nav.prototype = {
 function openModalDialog( title, r , option, proc, dialog_size ){
 	// タイムセレクタを非表示
 	palleteTimeSelector.close();
+	var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
 	var mo      = document.getElementById('MODAL_OVERLAY');
@@ -1455,15 +1465,18 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 			var wfh = parseInt( document.getElementById('WHITEBOARD_FRAME').style.height );
 			mframe.style.height = ( wfh - 8 ) + 'px';
 			mm.style.height		= ( wfh - 8 - 73 ) +  'px';
+			mframe.style.width	= '100%';
 			mo.style.opacity	= 1;
 			break;
 		case 'SIGNIN':
 		case 'OPENWHITEBOARD':
 			mframe.style.width	= '350px';
+			mframe.style.height	= '';
 			mo.style.opacity	= 0.7;
 			break;
 		default:
 			mframe.style.height = '400px';
+			mframe.style.width	= '';
 			mm.style.height		= '327px';
 			mo.style.opacity	= 1;
 			break;
@@ -1529,6 +1542,7 @@ function fitting(){
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
 	var tb_height = document.getElementById('TOOLBAR').offsetHeight;
+	var tb_height = 0;
 	// var sts_height = document.getElementById('STATUS').offsetHeight;
 	var sts_height = 0;
 	// console.log('status height:' + sts_height );
@@ -1552,7 +1566,7 @@ function fitting(){
 	// sts.style.top		= ( h - sts_height ) + 'px';
 
 	var nsi = document.getElementById('NAV_START_ICON');
-	nsi.style.top = ( ( h / 2 ) - oNav.size + tb_height -42 ) + 'px';
+	nsi.style.top = ( ( h / 2 ) - ( nsi.offsetHeight / 2) ) + 'px';
 	//	NAVリロケーション
 	if ( oNav.opened() ){
 		oNav.frame.style.top	= ( ( h / 2 ) - ( oNav.frame.offsetHeight / 2 ) ) + 'px';
@@ -1561,7 +1575,7 @@ function fitting(){
 	}
 
 	var nsi2 = document.getElementById('NAV_START_ICON2');
-	nsi2.style.top = ( ( h / 2 ) - oNav.size + tb_height -42 ) + 'px';
+	nsi2.style.top = ( ( h / 2 ) - ( tb_height + ( nsi2.offsetHeight / 2 ) ) ) + 'px';
 	nsi2.style.left	= ( w - 42 ) + 'px';
 
 	var cfm = document.getElementById('CHILDFINDER_MAIN');
@@ -1673,8 +1687,10 @@ function hideToolbar(){
 
 function getCookie(){
 	var c = document.cookie;
-	alert("[" + c + "]");
-	alert( checkSign() );
+	oLog.log( null, c );
+	oLog.log( null, 'checkSign:' + checkSign() );
+	// alert("[" + c + "]");
+	// alert( checkSign() );
 }
 
 //
@@ -1723,7 +1739,11 @@ function postWebBackend( area_id ){
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( "cmd=signstatus" );
 
-	} catch ( e ) { alert( e );}
+	} catch ( e ) {
+		oLog.log( null, 'postWebBackend:' + e );
+		oLog.open( 3 );
+		// alert( e );
+	}
 
 }
 
@@ -1752,7 +1772,9 @@ function signout(){
 
 function showSignid(){
 	var id = signid();
-	alert( id );
+	oLog.log( null, 'signid:' + id );
+	oLog.open( 3 );
+	// alert( id );
 }
 //
 //	サインインしているIDを取得
@@ -1844,14 +1866,22 @@ function sign()
 					o.innerText = r;
 					break;
 				default:
-					alert( 'cmd:' + result );
+					oLog.log( null, 'sign:cmd:' + result );
+					oLog.open( 3 );
+					// alert( 'cmd:' + result );
 					break;
 			}
 		} else{
-			alert( xmlhttp.status );
+			oLog.log( null, 'sign:status:' + xmlhttp.status );
+			oLog.open( 3 );
+			// alert( xmlhttp.status );
 		}
 
-	} catch ( e ) { alert( e );}
+	} catch ( e ) {
+		oLog.log( null, 'sign:e:' + e );
+		oLog.open( 3 );
+		// alert( e );
+	}
 }
 
 
@@ -1989,7 +2019,8 @@ function signMenu( e ){
 function signForm()
 {
 	if ( checkSign()) {
-		alert('already signin.');
+		oLog.log( null, 'already signin.');
+		oLog.open( 3 );
 		return;
 	}
 
@@ -2078,7 +2109,11 @@ function makeWhiteboardList()
 		xmlhttp.open("POST", "/accounts/whiteboardlist", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send();
-	} catch ( e ) { alert( e );}
+	} catch ( e ) {
+		oLog.log( null, 'makeWhiteboardList : ' + e );
+		oLog.open( 3 );
+		// alert( e );
+	}
 
 }
 
@@ -2160,7 +2195,10 @@ function makeChildrenPalleteList()
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send();
 
-	} catch ( e ) { alert( e );}
+	} catch ( e ) {
+		oLog.log( null, 'makeChildrenPalleteList : ' + e );
+		// alert( e );
+	}
 }
 
 
@@ -2251,7 +2289,7 @@ function checkinSelectedChild( hm ){
 				c.style.color = '';
 				c.style.backgroundColor = '';	
 				oLog.log( null, child_name + ' : すでにホワイトボードに配置されています.');
-				oLog.open( 2 );
+				oLog.open( 3 );
 				continue;
 			} 
 			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
@@ -2274,7 +2312,7 @@ function checkinSelectedChild( hm ){
 					c.style.color = '';
 					c.style.backgroundColor = '';		
 					oLog.log( null, child_name + ' : すでにホワイトボードに配置されています.');
-					oLog.open( 2 );
+					oLog.open( 3 );
 					continue;
 				} 
 				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
@@ -2370,7 +2408,8 @@ function makeChildForm( oChild ){
 //
 function newChildSend(){
 	var result = newChildSendHelper();
-	alert( result );
+	oLog.log( null, 'newChildSend : ' + result );
+	// alert( result );
 }
 
 //
@@ -2566,6 +2605,7 @@ function mMove( e ){
 		if ( !checkOtherChildCoordinate( drag, event.pageX - x - old_left, event.pageY - y - old_top ) ) return;
 		drag.style.top  = event.pageY - y + "px";
 		drag.style.left = event.pageX - x + "px";
+		updateFlg		= true;
 		// delta_x = parseInt( drag.style.left ) - old_left;
 		// delta_y = parseInt( drag.style.top  ) - old_top;
 			delta_x = ( event.pageX - x ) - old_left;
