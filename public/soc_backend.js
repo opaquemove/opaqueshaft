@@ -155,7 +155,7 @@ function reportWhiteboard(){
         r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >Out</div>';
         r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >Est</div>';
         r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >In</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Escort</div>';
+        r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >Escort</div>';
         r += '<div style="float:right;width:30px;height:100%;border-left:1px solid grey;" >Type</div>';
         r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >Grade</div>';
     r += '</div>';
@@ -263,7 +263,7 @@ function reportWhiteboardDetail(){
                 r += '<div style="float:right;width:40px;" >' + checkout    + '</div>';
                 r += '<div style="float:right;width:40px;" >' + estimate    + '</div>';
                 r += '<div style="float:right;width:40px;" >' + checkin     + '</div>';
-                r += '<div style="float:right;width:50px;" >' + escort      + '</div>';
+                r += '<div style="float:right;width:40px;" >' + escort      + '</div>';
                 r += '<div style="float:right;width:30px;" >' + child_type  + '</div>';
                 r += '<div style="float:right;width:40px;" >' + child_grade + '</div>';
             r += '</div>';
@@ -304,7 +304,7 @@ function reportWhiteboardDetail(){
             r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';
             r += '<div style="float:right;width:50px;" >' + estimate    + '</div>';
             r += '<div style="float:right;width:50px;" >' + checkin     + '</div>';
-            r += '<div style="float:right;width:50px;" >' + escort      + '</div>';
+            r += '<div style="float:right;width:40px;" >' + escort      + '</div>';
             r += '<div style="float:right;width:30px;" >' + child_type  + '</div>';
             r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
         r += '</div>';
@@ -339,7 +339,7 @@ function absentWhiteboard(){
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckOut</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Estimate</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckIn</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Escort</div>';
+        r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >Escort</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Type</div>';
         r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Grade</div>';
     r += '</div>';
