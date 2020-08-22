@@ -1593,6 +1593,9 @@ function fitting(){
 		cfm.style.height = h + 'px';
 	}
 
+	// レポートダイアログのサイズ調整
+	oReportDlg.init();
+
 	if ( w <= 414){
 		//document.getElementById('OPAQUESHAFT_TITLE').style.display = 'none';
 		// document.getElementById('ID_PROGRESS').style.display = 'none';

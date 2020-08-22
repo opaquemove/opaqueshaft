@@ -12,15 +12,18 @@ function report_dlg(){
     this.counter    = -1;
 
     this.frame      = document.getElementById('REPORT_FRAME');
-    this.height     = this.frame.offsetHeight;
     this.hidden();
-
-	var w = document.body.clientWidth;
-	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
-    this.frame.style.height = h + 'px';
+    
+    this.init();
 }
 
 report_dlg.prototype = {
+    init : function(){
+        var w = document.body.clientWidth;
+        var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
+        this.frame.style.height = ( h - this.top ) + 'px';
+        this.height     = h - this.top;
+        },
     open : function( ){
         var w = document.body.clientWidth;
         var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
