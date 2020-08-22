@@ -39,7 +39,7 @@ spotlight.prototype = {
         o3.setAttribute( 'id',    'CHILDFINDER_HEADER' );
         o3.setAttribute( 'class', 'not_select' );
         r = '';
-        r += '<div id="BTN_ALIGN_SPOTLIGHT" style="float:left;width:42px;height:42px;background-image:url(./images/searching.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_ALIGN_SPOTLIGHT" style="float:left;width:42px;height:42px;background-color:rgb(255, 123, 0);background-image:url(./images/searching.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
         r += '<div style="float:left;padding:10px 10px 10px 10px;" >';
             r += '<form onsubmit="return false;" >';
             r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:100px;font-size:16px;color:black;background-color:transparent;outline:none;" />';

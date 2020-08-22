@@ -143,21 +143,21 @@ function reportWhiteboard(){
     r += '<div style="width:97%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Summary:'
     r += '</div>';
-    r += '<div id="REPORT_SUMMARY" style="width:97%;height:;background-color:white;clear:both;margin:0 auto;" >';
+    r += '<div id="REPORT_SUMMARY" style="width:97%;height:;font-size:16px;background-color:white;clear:both;margin:0 auto;" >';
     r += '</div>';
 
     r += '<div style="width:97%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Detail:'
     r += '</div>';
-    r += '<div id="REPORT_HDR"  style="width:97%;height:20px;font-size:12px;clear:both;color:red;background-color:lightgray;margin:0 auto;border:1px solid lightgrey;" >';
+    r += '<div id="REPORT_HDR"  style="width:97%;height:20px;padding:1px;font-size:12px;clear:both;color:red;background-color:lightgray;margin:0 auto;border:1px solid lightgrey;" >';
         r += '<div style="float:left;" >Name</div>';
-        r += '<div style="float:right;width:25px;height:100%;border-left:1px solid grey;" >Dir</div>';
-        r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >Out</div>';
-        r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >Est</div>';
-        r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >In</div>';
-        r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >Escort</div>';
-        r += '<div style="float:right;width:30px;height:100%;border-left:1px solid grey;" >Type</div>';
-        r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >Grade</div>';
+        r += '<div style="float:right;width:25px;height:100%;padding:1px;border-left:1px solid white;" >Dir</div>';
+        r += '<div style="float:right;width:40px;height:100%;padding:1px;border-left:1px solid white;" >Out</div>';
+        r += '<div style="float:right;width:40px;height:100%;padding:1px;border-left:1px solid white;" >Est</div>';
+        r += '<div style="float:right;width:40px;height:100%;padding:1px;border-left:1px solid white;" >In</div>';
+        r += '<div style="float:right;width:40px;height:100%;padding:1px;border-left:1px solid white;" >Escort</div>';
+        r += '<div style="float:right;width:30px;height:100%;padding:1px;border-left:1px solid white;" >Type</div>';
+        r += '<div style="float:right;width:40px;height:100%;padding:1px;border-left:1px solid white;" >Grade</div>';
     r += '</div>';
     r += '<div id="REPORT_LIST" style="width:97%;height:;font-size:12px;clear:both;margin:0 auto;border:0px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
@@ -235,13 +235,16 @@ function reportWhiteboardDetail(){
     for ( var i=0; i<12; i++ ){
         var c = wb.childNodes[i];
         var o = document.createElement('DIV');
-        o.style.color           = 'gray';
-        o.style.backgroundColor = 'transparent';
-        o.style.borderBottom    = '1px solid lightgrey';
-        o.style.padding         = '2px 2px 0px 0px';
-        o.style.marginBottom    = '0px';
-        o.style.clear           = 'both';
-        o.innerHTML             = '<div style="float:reft;width:36px;color:snow;background-color:red;" >' + ( '00' + ( i + 8 ) ).slice(-2) + ':00' + '</div>';
+        o.setAttribute('class', 'hour_frame');
+        // o.style.width           = '';
+        // o.style.height          = '14px';
+        // o.style.color           = 'gray';
+        // o.style.backgroundColor = 'transparent';
+        // o.style.borderBottom    = '1px solid red';
+        // o.style.padding         = '2px 2px 0px 0px';
+        // o.style.marginBottom    = '2px';
+        // o.style.clear           = 'both';
+        o.innerHTML             = '<div class="hour_tab" >' + ( '00' + ( i + 8 ) ).slice(-2) + ':00' + '</div>';
         lst_area.appendChild( o );
         var children = getChildrenByHour( i + 8 );
         for ( var j=0; j<children.length; j++ ){
@@ -257,7 +260,7 @@ function reportWhiteboardDetail(){
                 direction   = ( direction != null )? direction : '---';
             var escort      = ( children[j].hasAttribute('escort') )?'yes':'no';
             var r = '';
-            r += '<div style="clear:both;" >';
+            r += '<div style="clear:both;font-size:12px;padding:2px;" >';
                 r += '<div style="float:left;"  >' + child_name + '</div>';
                 r += '<div style="float:right;width:25px;" >' + direction   + '</div>';
                 r += '<div style="float:right;width:40px;" >' + checkout    + '</div>';
@@ -275,13 +278,14 @@ function reportWhiteboardDetail(){
 
     // アブセント（欠席者）リスト
     var o = document.createElement('DIV');
-    o.style.color           = 'gray';
-    o.style.backgroundColor = 'transparent';
-    o.style.borderBottom    = '1px solid lightgrey';
-    o.style.padding         = '2px 2px 0px 0px';
-    o.style.marginBottom    = '0px';
-    o.style.clear           = 'both';
-    o.innerHTML             = '<div style="float:reft;width:36px;color:snow;background-color:red;" >Absent</div>';
+    o.setAttribute('class', 'hour_frame');
+    // o.style.color           = 'gray';
+    // o.style.backgroundColor = 'transparent';
+    // o.style.borderBottom    = '1px solid lightgrey';
+    // o.style.padding         = '2px 2px 0px 0px';
+    // o.style.marginBottom    = '0px';
+    // o.style.clear           = 'both';
+    o.innerHTML             = '<div class="hour_tab" >Absent</div>';
     lst_area.appendChild( o );
     var wba = document.getElementById('WHITEBOARD_ABSENT');
     for ( var i=0; i<wba.childNodes.length; i++ ){
@@ -298,7 +302,7 @@ function reportWhiteboardDetail(){
             direction   = ( direction != null )? direction : '---';
         var escort      = ( c.hasAttribute('escort') )?'yes':'no';
         var r = '';
-        r += '<div style="clear:both;" >';
+        r += '<div style="clear:both;font-size:12px;padding:2px;" >';
             r += '<div style="float:left;"  >' + child_name + '</div>';
             r += '<div style="float:right;width:25px;" >' + direction   + '</div>';
             r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';

@@ -45,6 +45,7 @@ var palleteTimeSelector = null;
 
 var oTile				= null;
 var oLog				= null;
+var oReportDlg			= null;
 
 window.onload = init;
 window.onresize = fitting;
@@ -70,6 +71,9 @@ function init()
 
 	//	ログエリアの初期化
 	oLog = new messageLog();
+
+	//	レポートダイアログの初期化
+	oReportDlg = new report_dlg();
 
 	// TIMELINE_BARの初期座標を記憶する
 	tlbOffset = document.getElementById('ID_TIMELINE_BAR').offsetTop;
@@ -306,12 +310,14 @@ function init()
 
 function test(){
 
-	var jsonText = JSON.stringify( [ { data:'hogehoge'}, {data:'hoehoe'} ] );
+	// var jsonText = JSON.stringify( [ { data:'hogehoge'}, {data:'hoehoe'} ] );
 
-    var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "/accounts/jsonsend", false );
-	xmlhttp.setRequestHeader( "Content-Type", "application/json" );
-	xmlhttp.send( jsonText );
+    // var xmlhttp = new XMLHttpRequest();
+	// xmlhttp.open("POST", "/accounts/jsonsend", false );
+	// xmlhttp.setRequestHeader( "Content-Type", "application/json" );
+	// xmlhttp.send( jsonText );
+
+	ctlReportDlg();
 
 }
 //
