@@ -1003,19 +1003,19 @@ function saveWhiteboard(){
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;font-size:16px;" readonly value="' + dayWhiteboard + '" />';
 		r += '</div>';
 		r += '</form>';
-		r += '<div>Progress:</div>';
-		r += '<div id="SAVE_PROGRESS" style="clear:both;font-size:12px;width:100%;height:100px;border:1px solid gray;overflow:auto;" >';
-		r += '</div>';
-		r += '<button id="BTN_SAVEWHITEBOARD" type="button" ';
-			r += ' style="width:100px;height:50px;font-size:12px;background-image:url(./images/upload.png);background-size:42px;background-position:center center;background-repeat:no-repeat;outline:none;background-color:transparent;border:none;" ';
-			r += ' onclick="saveWhiteboardHelper();" >';
-		r += '</button>';
-		r += '<button id="BTN_SAVEWHITEBOARD" type="button" ';
-			r += ' style="width:100px;height:50px;font-size:12px;background-image:url(./images/cancel.png);background-size:42px;background-position:center center;background-repeat:no-repeat;outline:none;background-color:transparent;border:none;" ';
-			r += ' onclick="closeModalDialog();" >';
-		r += '</button>';
+		// r += '<div>Progress:</div>';
+		// r += '<div id="SAVE_PROGRESS" style="clear:both;font-size:12px;width:100%;height:100px;border:1px solid gray;overflow:auto;" >';
+		// r += '</div>';
+		// r += '<button id="BTN_SAVEWHITEBOARD" type="button" ';
+		// 	r += ' style="width:100px;height:50px;font-size:12px;background-image:url(./images/upload.png);background-size:42px;background-position:center center;background-repeat:no-repeat;outline:none;background-color:transparent;border:none;" ';
+		// 	r += ' onclick="saveWhiteboardHelper();" >';
+		// r += '</button>';
+		// r += '<button id="BTN_SAVEWHITEBOARD" type="button" ';
+		// 	r += ' style="width:100px;height:50px;font-size:12px;background-image:url(./images/cancel.png);background-size:42px;background-position:center center;background-repeat:no-repeat;outline:none;background-color:transparent;border:none;" ';
+		// 	r += ' onclick="closeModalDialog();" >';
+		// r += '</button>';
 	r += '</div>';
-	openModalDialog( 'save whiteboard', r, 'NORMAL', null, null );
+	openModalDialog( 'save whiteboard', r, 'OK_CANCEL', saveWhiteboardHelper, null );
 }
 
 //
@@ -1038,18 +1038,21 @@ function saveWhiteboardHelper(){
 	xmlhttp.send( 'day=' + day + '&html=' + encodeURIComponent( wb.innerHTML ) +
 				'&html_absent=' + encodeURIComponent( wb_absent.innerHTML ) );
 
-	var progress = document.getElementById('SAVE_PROGRESS');
-	var r = '';
+	// var progress = document.getElementById('SAVE_PROGRESS');
+	// var r = '';
 	if ( xmlhttp.status == 200){
-		r += '<div>save whiteboard html data.</div>';
+		oLog.log( null, 'save whiteboard html data.' );
+		// r += '<div>save whiteboard html data.</div>';
 	} else{
-		r += '<div>save whiteboard html data. FAILED</div>';
+		oLog.log( null, 'save whiteboard html data. FAILED' );
+		// r += '<div>save whiteboard html data. FAILED</div>';
 	}
 	
 	rc = deleteChildResult( dayWhiteboard );
-	r += '<div>';
-		r += 'delete child result...' + rc;
-	r += '</div>';
+	oLog.log( null, 'delete child results...' );
+	// r += '<div>';
+	// 	r += 'delete child result...' + rc;
+	// r += '</div>';
 
 	var children = wb.childNodes;
 	for ( var i=0; i<children.length; i++ ){
@@ -1064,10 +1067,11 @@ function saveWhiteboardHelper(){
 		var direction	= c.getAttribute('direction');
 		if ( direction == null ) direction = '';
 		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, false );
-		r += '<div>';
-		r += 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
-		r += ' rc:' + rc;
-		r += '</div>';
+		oLog.log( null, 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText + '(' + rc + ')' );
+		// r += '<div>';
+		// r += 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
+		// r += ' rc:' + rc;
+		// r += '</div>';
 	}
 
 	// 欠席チャイルドのセーブ
@@ -1084,15 +1088,17 @@ function saveWhiteboardHelper(){
 		var direction	= c.getAttribute('direction');
 		if ( direction == null ) direction = '';
 		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, true );
-		r += '<div>';
-		r += 'save absent child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
-		r += ' rc:' + rc;
-		r += '</div>';
+		oLog.log( null, 'save absent child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText + '(' + rc + ')' );
+		// r += '<div>';
+		// r += 'save absent child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
+		// r += ' rc:' + rc;
+		// r += '</div>';
 	}
 	
-	
-	r += '<div>save completed.</div>';
-	progress.innerHTML = r;
+	oLog.log( null, 'save process completed.' );
+	oLog.open( 5 );
+	// r += '<div>save completed.</div>';
+	// progress.innerHTML = r;
 
 	updateFlg = false;
 
@@ -1799,23 +1805,42 @@ function postWebBackend( area_id ){
 //	サインアウト処理（同期処理）
 //
 function signout(){
-	// WHITEBOARD＿SUBMENUがあれば削除する
-	var p = document.getElementById('OPAQUESHAFT_TITLE');
-	var c = document.getElementById('WHITEBOARD_SUBMENU');
-	if ( c != null ) p.removeChild( c );
 
 	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "/accounts/signout", false );
+
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				oLog.log( null, 'signout...' );
+				oLog.open( 3 );
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					if ( result != null ){
+						switch( result.cmd ){
+							case 'signout':
+								oLog.log( null, 'signout...ok.' );
+								oLog.open( 1 );
+								acc_id = null;
+								signForm();
+								break;
+							default:
+								break;
+						}
+					}
+				}
+				break;
+		}
+	}
+
+	xmlhttp.open("POST", "/accounts/signout", true );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send();
-	acc_id = null;
-
-	// ctlToolbar();
-	// makeChildrenPalleteList();
-	// hiddenWhiteboard();
-	// oTile.close();
-	// if ( flagChildrenPallete ) foldingChildrenPallete();
-	signForm();
+	// acc_id = null;
+	// signForm();
 }
 
 function showSignid(){

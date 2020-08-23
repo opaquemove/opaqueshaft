@@ -137,7 +137,7 @@
 	background-color:	red;
 	background-image:	url(./images/user.png);
 	background-position: center center;
-	background-size: 	30px;
+	background-size: 	18px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
 	font-size:			16px;
@@ -157,7 +157,7 @@
 	background-color:	red;
 	background-image:	url(./images/shutter.png);
 	background-position: center center;
-	background-size: 	30px;
+	background-size: 	20px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
 	font-size:			14px;
@@ -175,7 +175,7 @@
 	background-color:	red;
 	background-image:	url(./images/upload.png);
 	background-position: center center;
-	background-size: 	30px;
+	background-size: 	18px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
 	font-size:			16px;
@@ -193,7 +193,7 @@
 	background-color:	red;
 	background-image:	url(./images/exit.png);
 	background-position: center center;
-	background-size: 	30px;
+	background-size: 	18px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
 	font-size:			16px;
@@ -213,7 +213,7 @@
 	background-color:	red;
 	background-image:	url(./images/eraser.png);
 	background-position: center center;
-	background-size: 	30px;
+	background-size: 	18px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
 	font-size:			16px;
@@ -233,7 +233,7 @@
 	background-color:	red;
 	background-image:	url(./images/sleep-2.png);
 	background-position: center center;
-	background-size: 	30px;
+	background-size: 	18px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
 	font-size:			16px;
@@ -253,7 +253,7 @@
 	background-color:	red;
 	background-image:	url(./images/cloud-computing.png);
 	background-position: center center;
-	background-size: 	30px;
+	background-size: 	18px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
 	font-size:			16px;
@@ -273,10 +273,10 @@
 	background-color:	red;
 	background-image:	url(./images/cancel.png);
 	background-position: center center;
-	background-size: 	30px;
+	background-size: 	16px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
-	font-size:			16px;
+	font-size:			14px;
 	padding-top:		10px;
 	margin:				2px;
 	border-radius: 		20px;
@@ -293,10 +293,10 @@
 	background-color:	red;
 	background-image:	url(./images/report.png);
 	background-position: center center;
-	background-size: 	30px;
+	background-size: 	20px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.8;
-	font-size:			16px;
+	font-size:			14px;
 	padding-top:		10px;
 	margin:				2px;
 	border-radius: 		20px;

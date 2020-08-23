@@ -276,9 +276,14 @@ spotlight.prototype = {
     },
 
     findWhiteboardChild : function ( parent, keyword ){
-        var children = document.getElementById('WHITEBOARD').childNodes;
-        this.findWhiteboardChildHelper( parent, keyword, children, false );
-    
+        // var children = document.getElementById('WHITEBOARD').childNodes;
+        // this.findWhiteboardChildHelper( parent, keyword, children, false );
+        for ( var i=0; i<12; i++ ){
+            var children = getChildrenByHour( i + 8 );
+            this.findWhiteboardChildHelper( parent, keyword, children, false );
+        }
+        
+
         var absents = document.getElementById('WHITEBOARD_ABSENT').childNodes;
         this.findWhiteboardChildHelper( parent, keyword, absents, true );
     

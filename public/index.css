@@ -80,7 +80,7 @@ INPUT[type=password]:focus{
 	float:					left;
 	width:					140px;
 	height:					54px;
-	color:					white;
+	color:					red;
 	background-color:		transparent;
 	font-size:				20px;
 /*	border-left:			42px solid red; */
@@ -606,9 +606,9 @@ INPUT[type=password]:focus{
 	font-weight:		bold;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px solid white;
+	border-top:			1px dashed white;
 	/* border-right:		1px solid lightgrey; */
-	border-bottom:		1px solid white;
+	border-bottom:		1px dashed white;
 	z-index:			3000;
 	opacity:			0.7;
 	/* writing-mode: 		vertical-lr; */
@@ -655,7 +655,7 @@ INPUT[type=password]:focus{
 	height:					42px;
 	background-color:		red;
 	background-image:		url(./images/report.png);
-	background-size:		36px;
+	background-size:		24px;
 	background-position:	center center;
 	background-repeat: 		no-repeat;
 }

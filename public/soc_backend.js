@@ -238,14 +238,6 @@ function reportWhiteboardDetail(){
         var c = wb.childNodes[i];
         var o = document.createElement('DIV');
         o.setAttribute('class', 'hour_frame');
-        // o.style.width           = '';
-        // o.style.height          = '14px';
-        // o.style.color           = 'gray';
-        // o.style.backgroundColor = 'transparent';
-        // o.style.borderBottom    = '1px solid red';
-        // o.style.padding         = '2px 2px 0px 0px';
-        // o.style.marginBottom    = '2px';
-        // o.style.clear           = 'both';
         o.innerHTML             = '<div class="hour_tab" >' + ( '00' + ( i + 8 ) ).slice(-2) + ':00' + '</div>';
         lst_area.appendChild( o );
         var children = getChildrenByHour( i + 8 );
