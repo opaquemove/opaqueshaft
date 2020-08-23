@@ -1282,13 +1282,13 @@ function checkoutClearWhiteboardChild(){
     r += '</div>';
     r += '<div id="ID_MARKEDCHILDREN_LIST" style="margin:0 auto;width:70%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
-	r += '<div style="margin:0 auto;width:110px;margin:0 auto;">';
-        r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
-        r += 'style="width:140px;height:30px;font-size:12px;" ';
-        r += 'onclick="checkoutClearWhiteboardChildHelper();closeModalDialog();" >';
-        r += '<img width="24px" src="./images/close.png" />Checkout Clear</button>';
-	r += '</div>';
-    openModalDialog( null, r, 'NOBUTTON', null, null );
+	// r += '<div style="margin:0 auto;width:110px;margin:0 auto;">';
+    //     r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
+    //     r += 'style="width:140px;height:30px;font-size:12px;" ';
+    //     r += 'onclick="checkoutClearWhiteboardChildHelper();closeModalDialog();" >';
+    //     r += '<img width="24px" src="./images/close.png" />Checkout Clear</button>';
+	// r += '</div>';
+    openModalDialog( 'checkout clear children', r, 'OK_CANCEL', checkoutClearWhiteboardChildHelper, null );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
     var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
@@ -1325,7 +1325,10 @@ function checkoutClearWhiteboardChildHelper(){
     var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
         checkoutClearChild( children[i] );
+        var child_name = children[i].getElementsByClassName('CHILD_NAME')[0].innerText;
+        oLog.log( null, child_name + ' : チェックアウトクリア.' );
     }
+    oLog.open( 3 );
     showWhiteboardChildCount();
 
 }
