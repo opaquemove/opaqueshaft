@@ -85,9 +85,9 @@ function init()
 			//  if ( curChildMoved )
 			// 	 e.preventDefault();
 			// document.getElementById('ID_ON_SCROLL').innerText = 'scroll:' + e.target.scrollTop;
-			if ( !tl_drag )			//	TIMELINE_BAR移動中出なければ動作
+			if ( !tl_drag )			//	TIMELINE_BAR移動中でなければ動作
 				setTimelinebarByScroll();
-		});
+		}, { passive : false });
 
 	var wb = document.getElementById('WHITEBOARD');
 //  touchmoveを抑制すると返って使いづらいので抑制はしないよ！ 
@@ -297,6 +297,7 @@ function init()
 	tmb.addEventListener( evtStart,    		locateTimelinebar, { passive : false } );
 	tmb.addEventListener( evtMove,     		locateTimelinebar, { passive : false } );
 	tmb.addEventListener( evtEnd,      		locateTimelinebar, { passive : false } );
+	tmb.addEventListener( 'mouseleave', 	locateTimelinebar, { passive : false } );
 
 	// tmb.addEventListener( 'mousedown',  locateTimelinebar );
 	// tmb.addEventListener( 'touchstart', locateTimelinebar );
@@ -683,7 +684,7 @@ function locateTimelinebar( e ){
 				var ttl_min = ( parseInt(itb.style.top) - tlbOffset ) * 5;
 				var h = Math.floor( ttl_min / 60 ) + 8;
 				var m = ttl_min % 60;
-				console.log( 'hour:' + h + ':' + m );
+				// console.log( 'hour:' + h + ':' + m );
 				itb.innerText = ( '00' + h ).slice(-2) + ':' + ( '00' + m ).slice(-2);
 				moveMarkedChildByTimelinebar( h );
 				scrollWhiteboard( h );
@@ -691,6 +692,7 @@ function locateTimelinebar( e ){
 				//console.log( 'other:' + e.target.offsetTop + ':' + tlbOffset );
 			}
 			break;
+		case 'mouseleave':
 		case 'mouseup':
 		case 'touchend':
 			itb.style.width 		= '';
@@ -912,7 +914,9 @@ function loadWhiteboard(){
 	xmlhttp.onreadystatechange = function() {
 		switch ( xmlhttp.readyState){
 			case 1://opened
+				break;
 			case 2://header received
+				break;
 			case 3://loading
 				oLog.log( null, 'load Whiteboard...' );
 				oLog.open( 3 );
@@ -1830,7 +1834,9 @@ function signout(){
 	xmlhttp.onreadystatechange = function() {
 		switch ( xmlhttp.readyState){
 			case 1://opened
+				break;
 			case 2://header received
+				break;
 			case 3://loading
 				oLog.log( null, 'signout...' );
 				oLog.open( 3 );
@@ -1895,7 +1901,9 @@ function sign()
 	xmlhttp.onreadystatechange = function() {
 		switch ( xmlhttp.readyState){
 			case 1://opened
+				break;
 			case 2://header received
+				break;
 			case 3://loading
 				oLog.log( null, 'signin...' );
 				oLog.open( 3 );

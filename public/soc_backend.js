@@ -682,7 +682,7 @@ function propertyWhiteboardChild( c ){
         r += "</div>";
 */
         r += "</div>";
-    openModalDialog( null, r, 'NORMAL', null, null );
+    openModalDialog( 'Property of child', r, 'NORMAL', null, null );
     propertyWhiteboardChildHelper( id );
 
 }

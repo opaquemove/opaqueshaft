@@ -321,13 +321,27 @@ INPUT[type=password]:focus{
 	border-radius: 			0px 0px 4px 4px;
 }
 
+#FOLDER_FIND_WHITEBOARD2{
+	color:              	gray;
+	background-color:    	transparent;
+	font-size:           	12px;
+	display:				flex;
+	flex-wrap: 				wrap;
+	justify-content: 		flex-start;
+	padding:            	4px 4px 4px 4px;
+	margin-bottom:       	0px;
+	clear:              	both;
+
+}
+
+
 #FOLDER_FIND_CHILDREN_TABLE2{
 	color:					gray;
 	background-color:		transparent;
 	font-size:				12px;
 	display:				flex;
 	flex-wrap: 				wrap;
-	justify-content: 		center;
+	justify-content: 		flex-start;
 	padding:        		4px 4px 4px 4px;
 	margin-bottom:   		0px;
 	clear:           		both;
@@ -708,15 +722,15 @@ INPUT[type=password]:focus{
 }
 
 .PALLETE_CHILD{
-	width:				144px;
-	height:				30px;
+	width:				142px;
+	height:				40px;
 	color:				gray;
 	background-color:	white;
 	padding-top:		4px;
 	margin-bottom:		1px;
 	/* border-left:		0px solid lightgrey;
 	border-right:		1px solid lightgrey; */
-	font-size:			15px;
+	font-size:			12px;
 	border-radius: 		4px;
 /*	overflow:			hidden;*/
 	-webkit-user-select: none;
@@ -1060,7 +1074,7 @@ INPUT[type=password]:focus{
 	top:				0px;
 	left:				0px;
 	width:				169px;
-	height:				52px;
+	height:				27px;
 	background-color:	red;
 	border-bottom:		1px solid lightgrey;
 	overflow:			hidden;
@@ -1078,7 +1092,7 @@ INPUT[type=password]:focus{
 	background-color:	transparent;
 	/* background-color:	white; */
 	border-bottom:		1px solid red;
-	margin-top:			54px;
+	margin-top:			27px;
 	padding:			0px;
 	overflow-y:			scroll;
 }
@@ -1107,6 +1121,11 @@ INPUT[type=password]:focus{
 }
 
 .marked{
+	color:				white;
+	background-color:	rgb(32, 116, 243);
+}
+
+.selected{
 	color:				white;
 	background-color:	rgb(32, 116, 243);
 }

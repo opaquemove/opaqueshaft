@@ -45,17 +45,21 @@ spotlight.prototype = {
             r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:100px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
             r += '</form>';
         r += '</div>';
-        r += '<div id="BTN_CLOSE_SPOTLIGHT" style="float:right;width:32px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_LISTALL"         style="float:right;width:32px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_TIMESELECTOR"    style="float:right;width:32px;height:42px;background-image:url(./images/time.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_CLEAR_LIST"      style="float:right;width:32px;height:42px;background-image:url(./images/eraser.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_REFRESH_LIST"    style="float:right;width:32px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_CLOSE_SPOTLIGHT" style="float:right;width:30px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_LISTALL"         style="float:right;width:30px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_TIMESELECTOR"    style="float:right;width:30px;height:42px;background-image:url(./images/time.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_CLEAR_LIST"      style="float:right;width:30px;height:42px;background-image:url(./images/eraser.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_REFRESH_LIST"    style="float:right;width:30px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
 
         o3.innerHTML = r;
         this.header     = this.frame.appendChild( o3 );
         document.getElementById('BTN_ALIGN_SPOTLIGHT').addEventListener( 'click',
             ( function(e) {
-                this.close();
+                // this.close();
+                if ( this.frame.style.width == '90%' )
+                    this.frame.style.width = '';
+                    else
+                    this.frame.style.width = '90%';
             }).bind( this ), false );
         document.getElementById('BTN_TIMESELECTOR').addEventListener( 'click',
             ( function(e) {
@@ -95,18 +99,21 @@ spotlight.prototype = {
                 var c = scanChild( e.target );
                 if ( c == null ){
                     for ( var i=0; i<this.folder2.childNodes.length; i++ ){
-                        this.folder2.childNodes[i].style.backgroundColor = '';
+                        // this.folder2.childNodes[i].style.backgroundColor = '';
+                        this.folder2.childNodes[i].classList.remove( 'selected' );
                         this.folder2.childNodes[i].removeAttribute('selected');
                     }
                     return;
                 }
                 switch ( c.hasAttribute('selected') ){
                     case true:
-                        c.style.backgroundColor = ''
+                        // c.style.backgroundColor = '';
+                        c.classList.remove( 'selected' );
                         c.removeAttribute( 'selected' );
                         break;
                     case false:
-                        c.style.backgroundColor = 'lightgrey';
+                        // c.style.backgroundColor = 'lightgrey';
+                        c.classList.add( 'selected' );
                         c.setAttribute( 'selected', 'yes' );
                         break;
 
@@ -198,12 +205,12 @@ spotlight.prototype = {
 
             var oo = document.createElement('DIV');
             oo.setAttribute('id', 'FOLDER_FIND_WHITEBOARD2');
-            oo.style.color              = 'gray';
-            oo.style.backgroundColor    = 'transparent';
-            oo.style.fontSize           = '12px';
-            oo.style.padding            = '4px 4px 4px 4px';
-            oo.style.marginBottom       = '0px';
-            oo.style.clear              = 'both';
+            // oo.style.color              = 'gray';
+            // oo.style.backgroundColor    = 'transparent';
+            // oo.style.fontSize           = '12px';
+            // oo.style.padding            = '4px 4px 4px 4px';
+            // oo.style.marginBottom       = '0px';
+            // oo.style.clear              = 'both';
             oo.innerText                = 'dummy';
             this.folder1 = this.main.appendChild( oo );
             document.getElementById('BTN_FOLDER1').addEventListener('click',
@@ -241,12 +248,6 @@ spotlight.prototype = {
 
             oo = document.createElement('DIV');
             oo.setAttribute('id', 'FOLDER_FIND_CHILDREN_TABLE2');
-            // oo.style.color           = 'gray';
-            // oo.style.backgroundColor = 'transparent';
-            // oo.style.fontSize        = '12px';
-            // oo.style.padding         = '4px 4px 4px 4px';
-            // oo.style.marginBottom    = '0px';
-            // oo.style.clear           = 'both';
             oo.innerText = 'Dummy';        
             this.folder2 = this.main.appendChild( oo );
             document.getElementById('BTN_FOLDER2').addEventListener('click',
@@ -305,13 +306,18 @@ spotlight.prototype = {
                  keyword == '%' || keyword == '*' ){
                 var o = document.createElement('DIV');
                 o.setAttribute( 'child_id', child_id );
-                o.style.padding     = '4px';
-                o.style.fontSize    = '12px';
-                o.style.height      = '20px';
+                o.setAttribute( 'class', 'PALLETE_CHILD' );
+                o.style.marginTop       = '1px';
+                o.style.marginLeft      = '1px';
+                o.style.float           = 'left';
+
+                // o.style.padding     = '4px';
+                // o.style.fontSize    = '12px';
+                // o.style.height      = '20px';
     
                 var r = '';
-                r += '<div style="float:left;"  >' + child_name;
-                    r += '(' + c.style.top + ',' + c.style.left + ')';
+                r += '<div class="CHILD_NAME" style="float:;"  >' + child_name;
+                    // r += '(' + c.style.top + ',' + c.style.left + ')';
                 r += '</div>';
                 if ( absent )
                     r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/sleep-2.png);background-size:16px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
