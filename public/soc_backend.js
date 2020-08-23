@@ -117,11 +117,10 @@ function clearWhiteboard(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'clear whiteboard';
 	r += '</div>';
-	r += '<div style="margin:0 auto;width:110px;">';
-		r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="clearWhiteboardHelper();closeModalDialog();" >Clear</button>';
-	r += '</div>';
-    openModalDialog( 'clear whiteboard', r, 'CANCEL', null, null );
-    document.getElementById('BTN_CLEARWHITEBOARD').focus();
+	// r += '<div style="margin:0 auto;width:110px;">';
+	// 	r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="clearWhiteboardHelper();closeModalDialog();" >Clear</button>';
+	// r += '</div>';
+    openModalDialog( 'clear whiteboard', r, 'OK_CANCEL', clearWhiteboardHelper, null );
 }
 function clearWhiteboardHelper(){
     var wb = document.getElementById('WHITEBOARD');
@@ -129,6 +128,8 @@ function clearWhiteboardHelper(){
         wb.removeChild( wb.firstChild );
         updateFlg   = true;
     }
+    oLog.log( null, 'all child on whiteboard was cleared.' );
+    oLog.open( 3 );
     showWhiteboardChildCount();
 }
 
@@ -781,7 +782,7 @@ function deleteWhiteboardChild(){
         r += ' onclick="deleteWhiteboardChildHelper();"   >';
         r += 'Delete</button>';
 	r += '</div>';
-    openModalDialog( null, r, 'NOBUTTON', null, null );
+    openModalDialog( 'delete child', r, 'OK_CANCEL', deleteWhiteboardChildHelper, null );
     document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();
     makeDeleteChildList();
  
@@ -815,7 +816,7 @@ function makeDeleteChildList(){
 //  マークしているチャイルドを削除（非表示処理）
 //
 function deleteWhiteboardChildHelper(){
-    console.log('deleteWhiteboardChildHelper' );
+    // console.log('deleteWhiteboardChildHelper' );
     closeModalDialog();
     var p = document.getElementById( 'WHITEBOARD');
     var c = p.firstChild;
@@ -830,7 +831,9 @@ function deleteWhiteboardChildHelper(){
         }
     }
     showWhiteboardChildCount();
-    console.log('delete child:' + i );
+    oLog.log( null, 'delete child : ' + i + ' children.' );
+    oLog.open( 3 );
+    // console.log('delete child:' + i );
     updateFlg   = true;
 }
 

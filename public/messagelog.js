@@ -1,4 +1,5 @@
 function ctlMessageLog(){
+    console.log( oLog.opened() );
     if ( oLog.opened() )    oLog.close();
         else                oLog.open( 10 );
 }
@@ -18,6 +19,7 @@ function messageLog(){
 
 messageLog.prototype = {
     open : function( ttl ){
+        console.log('open');
         this.overlay.style.visibility   = 'visible';
         this.frame.style.visibility     = 'visible';
         if ( ttl != 0 || ttl != null){
@@ -39,7 +41,11 @@ messageLog.prototype = {
     },
     log : function( log_level, message ){
         var today = new Date();
+        var o = document.createElement('DIV');
         hm = ( '00' + today.getHours() ).slice( -2 ) + ':' + ( '00' + today.getMinutes() ).slice(-2);
-        this.content.innerHTML += '<div>' + hm + ':' + message + '</div>';
+        hm += ':' + ( '00' + today.getSeconds()).slice(-2);
+        o.innerHTML = hm + '&nbsp;:&nbsp;' + message;
+        this.content.insertBefore( o, this.content.firstChild );
+        // this.content.innerHTML += '<div>' + hm + ':' + message + '</div>';
     }
 };

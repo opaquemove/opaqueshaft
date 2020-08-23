@@ -602,7 +602,7 @@ Tile.prototype = {
 		new Button( 'MODAL_TILE2', propertyAccount ).play();
 		new Button( 'MODAL_TILE3', showTile     ).play();
 		new Button( 'MODAL_TILE4', saveWhiteboard ).play();
-		new Button( 'MODAL_TILE5', signout ).play();
+		new Button( 'MODAL_TILE5', signoutForm ).play();
 		new Button( 'MODAL_TILE6', clearWhiteboard ).play();
 		new Button( 'MODAL_TILE7', absentWhiteboard ).play();
 		new Button( 'MODAL_TILE8', openWhiteboard ).play();
@@ -1520,6 +1520,7 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 			mo.style.opacity	= 1;
 			break;
 		case 'SIGNIN':
+		case 'SIGNOUT':
 		case 'OPENWHITEBOARD':
 			mframe.style.width	= '350px';
 			mframe.style.height	= '';
@@ -1800,6 +1801,24 @@ function postWebBackend( area_id ){
 	}
 
 }
+
+//
+//	サインアウトフォーム
+//
+function signoutForm(){
+
+	var r = "";	
+	r += "<div style='width:350px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
+		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign out</div>";
+		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
+		r += "<div style='margin:10px auto;width:210px;' >";
+		r += "</div>";
+	r += "</div>";
+
+	openModalDialog( 'sign out', r, 'OK_CANCEL', signout, 'SIGNOUT' );
+
+}
+
 
 //
 //	サインアウト処理（同期処理）
@@ -2102,8 +2121,7 @@ function signForm()
 	if ( flagChildrenPallete ) foldingChildrenPallete();
 
 	
-	var r = "";
-	
+	var r = "";	
 	r += "<div style='width:350px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
 		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign in to your account</div>";
 		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
