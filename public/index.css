@@ -218,7 +218,7 @@ INPUT[type=password]:focus{
 	background-size:		16px;
 	background-position: 	center center;
 	background-repeat:		no-repeat;
-	display:				inline;
+	display:				none;
 }
 #ID_NAV{
 	float: 					left;
@@ -364,7 +364,7 @@ INPUT[type=password]:focus{
 	margin-top:				10px;
 	height:					120px;
 	display:				flex;
-	flex-wrap:				wrap;
+	flex-wrap:				nowrap;
 	flex-direction: 		row-reverse;
 	justify-content: 		space-between;
 	font-size:				14px;
@@ -383,6 +383,7 @@ INPUT[type=password]:focus{
 	background-repeat: 		no-repeat;
 	border:					1px solid lightgray;
 	margin:					1px;
+	border-radius: 			4px;
 	/* font-size:				18px; */
 }
 
@@ -619,12 +620,46 @@ INPUT[type=password]:focus{
 	left:				0px;
 	width:				100%;
 	height:				100%;	/* dummy fitting */
+	color:				darkgray;
 	background-color:	snow;
 	padding:			0px;
-	overflow:			hidden;
 	visibility:			hidden;
 	z-index:			69999;
 }
+#REPORT_CONTENT{
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					100%;
+	height:					calc(100% - 42px);
+	padding-top:				42px;
+	overflow:				scroll;
+}
+#REPORT_CONTENT_HANDLE{
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					100%;
+	height:					42px;
+	background-image:		url(./images/arrow-down.png);
+	background-size:		36px;
+	background-position:	center center;
+	background-repeat: 		no-repeat;
+	margin:					0px auto;
+}
+#REPORT_CONTENT_ICON{
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					42px;
+	height:					42px;
+	background-color:		red;
+	background-image:		url(./images/report.png);
+	background-size:		36px;
+	background-position:	center center;
+	background-repeat: 		no-repeat;
+}
+
 #REPORT{
 	pointer-events: 	auto;
 	position: 			absolute;

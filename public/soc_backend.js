@@ -161,7 +161,9 @@ function reportWhiteboard(){
     r += '</div>';
     r += '<div id="REPORT_LIST" style="width:97%;height:;font-size:12px;clear:both;margin:0 auto;border:0px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
-    openModalDialog( 'report ' + dayWhiteboard, r, 'NORMAL', null, 'MAX' );
+    // openModalDialog( 'report ' + dayWhiteboard, r, 'NORMAL', null, 'MAX' );
+    oReportDlg.set( r );
+    oReportDlg.open();
     reportWhiteboardSummary();
     reportWhiteboardDetail();
 }

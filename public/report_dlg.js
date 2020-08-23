@@ -6,12 +6,19 @@ function ctlReportDlg(){
 
 function report_dlg(){
     this.frame      = null;
+    this.content    = null;
     this.tid        = null;
     this.top        = 84;
     this.height     = null;
     this.counter    = -1;
 
     this.frame      = document.getElementById('REPORT_FRAME');
+    this.content    = document.getElementById('REPORT_CONTENT');
+    this.handle     = document.getElementById('REPORT_CONTENT_HANDLE');
+    this.handle.addEventListener( 'click',
+        ( function(e){
+            this.close();
+        } ).bind( this ), false );
     this.hidden();
     
     this.init();
@@ -64,12 +71,15 @@ report_dlg.prototype = {
                     this.frame.style.visibility     = 'hidden';
                     console.log('close');
                 }
-                this.counter = this.counter * 1.2;
+                this.counter = this.counter * 1.3;
             }).bind( this ) , 30 );
         
     },
     opened : function(){
         return ( this.frame.style.visibility != 'hidden' );
+    },
+    set : function( r ){
+        this.content.innerHTML = r;
     }
 
 

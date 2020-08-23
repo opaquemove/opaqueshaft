@@ -199,7 +199,7 @@ function init()
 	oSpotlight.play();
 
 	fitting();
-	new Button( 'OPAQUESHAFT_NAV', test ).play();
+	//new Button( 'OPAQUESHAFT_NAV', test ).play();
 	// new Button( 'SIGN_STATUS',              signMenu       ).play();
 	// new Button( 'OPAQUESHAFT_TITLE',        whiteboardMenu ).play();
 	// new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
@@ -909,19 +909,58 @@ function loadWhiteboard(){
 	var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
 
 	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "/accounts/whiteboardload", false );
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				oLog.log( null, 'load Whiteboard...' );
+				oLog.open( 3 );
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					if ( result.length > 0 ){		//	レコードが存在すれば
+						wb.innerHTML 		= result[0].whiteboard;
+						wb_absent.innerHTML	= result[0].whiteboard_absent;
+			
+						//	チャイルドにイベントハンドラを割り当てる 
+						for ( var i=0; i<wb.childNodes.length; i++ ){
+							if ( touchdevice )	wb.childNodes[i].addEventListener( "touchstart", mDown, false );
+								else			wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
+						}
+						for ( var i=0; i<wb_absent.childNodes.length; i++ ){
+							if ( touchdevice )	wb_absent.childNodes[i].addEventListener( "touchstart", mDown, false );
+								else			wb_absent.childNodes[i].addEventListener( "mousedown",  mDown, false );
+						}
+					} else{							// レコードが存在しなければ
+						wb.innerHTML 		= '';
+						wb_absent.innerHTML	= '';
+					}
+					//	WHITEBOARD_FRAMEのスクロール情報を初期化する
+					document.getElementById('WHITEBOARD_FRAME').scrollTop = 0;
+					showWhiteboardChildCount();
+					oLog.log( null, 'load Whiteboard ok.' );
+					oLog.open( 3 );
+				} else{
+					oLog.log( null, 'loadWhiteboard:' + xmlhttp.status );
+					oLog.open( 3 );
+				} 
+				break;
+		}
+	};
+
+	xmlhttp.open("POST", "/accounts/whiteboardload", true );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send( 'day=' + day );
+/*
 	if ( xmlhttp.status == 200 ){
 		var result = JSON.parse( xmlhttp.responseText );
-		// if ( result != null ){
 		if ( result.length > 0 ){		//	レコードが存在すれば
-			//alert( result.whiteboard );
 			wb.innerHTML 		= result[0].whiteboard;
 			wb_absent.innerHTML	= result[0].whiteboard_absent;
-			//
+
 			//	チャイルドにイベントハンドラを割り当てる 
-			//
 			for ( var i=0; i<wb.childNodes.length; i++ ){
 				if ( touchdevice )	wb.childNodes[i].addEventListener( "touchstart", mDown, false );
 					else			wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
@@ -940,8 +979,8 @@ function loadWhiteboard(){
 	} else{
 		oLog.log( null, 'loadWhiteboard:' + xmlhttp.status );
 		oLog.open( 3 );
-		// alert( xmlhttp.status );
 	} 
+*/
 
 }
 
@@ -1808,34 +1847,36 @@ function sign()
 {
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
-/*
+
 	xmlhttp.onreadystatechange = function() {
 		switch ( xmlhttp.readyState){
 			case 1://opened
 			case 2://header received
 			case 3://loading
-				var o = document.getElementById( 'SIGN_STATUS' );
-				o.innerText = 'access...';
+				oLog.log( null, 'signin...' );
+				oLog.open( 3 );
 				break;
 			case 4://done
-				r = "";
+				r = '';
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
-					//r += xmlhttp.responseText;
 					switch( result.cmd ){
 						case 'signin':
-							var o = document.getElementById('SIGNIN_STATUS');
 							if ( result.status == 'SUCCESS' ){
-								ctlToolbar();
-								clearWhiteboard();
-								makeChildrenPalleteList();
+								oLog.log( null, 'signin ok.' );
+								oLog.open( 3 );
+								acc_id = result.acc_id;
+								if ( !openWhiteboardFlg ){
+									openWhiteboard();
+								}
 							} else {
-								r += 'sign in error'
+								oLog.log( null, 'signin error.' );
+								oLog.open( 3 );
 							}
-							o.innerText = r;
 							break;
 						default:
-							alert( 'cmd:' + result );
+							oLog.log( null, 'sign:cmd:' + result );
+							oLog.open( 3 );
 							break;
 					}
 				} else{
@@ -1844,28 +1885,23 @@ function sign()
 				break;
 		}
 	}
-*/
+
 	try{
 		var sign_id = sign_form.id.value;
 		var sign_pwd = sign_form.pwd.value;
-		xmlhttp.open("POST", "/accounts/signin", false );
+		xmlhttp.open("POST", "/accounts/signin", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( "acc=" + sign_id + "&pwd=" + sign_pwd );
+/*
 		r = "";
 		if ( xmlhttp.status == 200 ){
 			var result = JSON.parse( xmlhttp.responseText );
-			//r += xmlhttp.responseText;
 			switch( result.cmd ){
 				case 'signin':
 					var o = document.getElementById('SIGNIN_STATUS');
 					if ( result.status == 'SUCCESS' ){
-						// ctlToolbar();
-						// clearWhiteboard();
-						// makeChildrenPalleteList();
-						// oTile.close();
 						acc_id = result.acc_id;
 						if ( !openWhiteboardFlg ){
-							// hiddenWhiteboard();
 							openWhiteboard();
 						}
 				
@@ -1885,11 +1921,10 @@ function sign()
 			oLog.open( 3 );
 			// alert( xmlhttp.status );
 		}
-
+*/
 	} catch ( e ) {
 		oLog.log( null, 'sign:e:' + e );
 		oLog.open( 3 );
-		// alert( e );
 	}
 }
 
@@ -2057,9 +2092,6 @@ function signForm()
 				r += "<button style='background-color:transparent;border:none;' onclick='sign()' ><img width='50px;' src='/images/arrow-right.png' ></button>";
 			r += "</div>";
 			r += "</form>";
-		r += "</div>";
-		r += "<div style='padding-top:20px;text-align:center;' >";
-			r += "created by MASATO.NAKANISHI. 2020"
 		r += "</div>";
 	r += "</div>";
 
