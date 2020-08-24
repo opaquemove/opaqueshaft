@@ -2628,8 +2628,8 @@ function mDown( e ) {
 	icc.innerText = curChild.style.top + ' x ' + curChild.style.left + '(' + t_id + ')';
 
 	//ムーブイベントにコールバック
-	document.body.addEventListener("mousemove", mMove, { passive : false } );
-	document.body.addEventListener("touchmove", mMove, { passive : false } ) ;	
+	// document.body.addEventListener("mousemove", mMove, { passive : false } );
+	// document.body.addEventListener("touchmove", mMove, { passive : false } ) ;	
 	
 	if ( touchdevice ){
 		//ムーブイベントにコールバック
@@ -2818,6 +2818,7 @@ function mUp( e ) {
 	} else{
 		document.body.removeEventListener("mousemove", mMove, false);
 		if ( drag != null) drag.removeEventListener("mouseup", mUp, false);
+		document.body.removeEventListener("mouseleave", mUp, false);
 	}
 
 	e.stopPropagation();
@@ -2828,20 +2829,9 @@ function mUp( e ) {
 		if ( !curChildMoved ){
 			if ( curChild != null ){
 				if ( isMarkedChild( curChild ) ) {
-						// if ( existContextMenu( curChild ) ){
-					// console.log('existContextMenu');
 						unmarkChild( curChild );
-					// } else {
-							// if ( !existContextMenu( curChild)){
-								// clearOtherContextMenu( curChild );
-								// makeContextMenu();
-							// }
-					// }
 				}else {
 					markChild( curChild );
-					// clearOtherContextMenu( curChild );
-					// コンテキストメニュー
-					// makeContextMenu();
 				}
 			}
 		} 
