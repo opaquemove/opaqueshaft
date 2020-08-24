@@ -1420,6 +1420,7 @@ function checkoutTimelineWhiteboardChild( timeline ){
 //
 function propertyAccount(){
 
+    var oAcc = getAccount( acc_id );
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'Account property';
@@ -1431,19 +1432,39 @@ function propertyAccount(){
         r += "<td>Account ID:</td>";
         r += "</tr>";
         r += "<tr>";
-        r += "<td><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 /></td>";
+        r += "<td><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 readonly value='" + acc_id + "'/></td>";
         r += "</tr>";
         r += "<tr>";
         r += "<td>Account Name:</td>";
+        r += "</tr>";
         r += "<tr>";
+        r += "<td><input style='width:200px;height:18px;' type='text' name='acc_name' tabindex=2 value='" + oAcc.acc_name + "' /></td>";
+        r += "</tr>";
         r += "<tr>";
-        r += "<td><input style='width:200px;height:18px;' type='text' name='pwd' tabindex=2 /></td>";
-        r += "<tr>";
+        r += "<td><div style='width:128px;height:128px;border-radius:45%;background-image:url(./images/accounts/" + acc_id + ".jpeg);background-size:128px;background-position:center center;background-repeat:no_repeat;' ></div></td>";
+        r += "</tr>";
         r += "</table>";
     r += "</form>";
     r += "</div>";
 
-    openModalDialog( null, r, 'NORMAL', null, null );
+    openModalDialog( 'Account property', r, 'NORMAL', null, null );
+
+}
+
+
+//
+//	アカウント情報を取得
+//
+function getAccount( id ){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/property", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'acc=' + id );
+	if ( xmlhttp.status == 200 ){
+		//alert( xmlhttp.responseText );
+		var result = JSON.parse( xmlhttp.responseText );
+		return ( result != null )? result:null;	
+	} else return null;
 
 }
 

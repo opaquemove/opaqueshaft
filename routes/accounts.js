@@ -42,8 +42,8 @@ router.post('/property', function(req, res, next ){
     if ( id == null ){
         res.json( null );
     }else {
-        db.any( {
-            text: 'SELECT acc_id FROM accounts WHERE acc_id = $1 ',
+        db.one( {
+            text: 'SELECT acc_id, acc_name FROM accounts WHERE acc_id = $1 ',
             values: [id] } )
           .then( rows => {
                 res.json( rows );
