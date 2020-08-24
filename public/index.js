@@ -14,6 +14,8 @@ var propChild = null;
 var curChildZIndex = null;
 var curChildMoved  = false;
 
+var ongoingTouches = [];
+
 var wb_touch_cnt		= 0;
 var wb_touch_cnt_max	= 0;
 
@@ -2605,7 +2607,6 @@ function mDown( e ) {
 	var t_id = null;
 	console.log('mDown');
 	curChild = this;
-	//console.log( this.style.top + ',' + this.style.left );
 	//クラス名に .drag を追加
 	curChild.classList.add("drag");
 	curChildZIndex = curChild.style.zIndex;

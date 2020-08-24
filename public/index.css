@@ -18,8 +18,8 @@ BODY{
 	background-color:	black;
 	background-image:	url(./images/IMG_1739.JPG);
 	background-position: center center;
-	background-size: 	contain;
-	background-repeat: no-repeat;
+	background-size: 	cover;
+	background-repeat: 	no-repeat;
 
 	overflow:			hidden;
 }
@@ -309,6 +309,7 @@ INPUT[type=password]:focus{
 	pointer-events: 		all;
 	background-color:		darkgrey;
 	border-radius: 			4px;
+	overflow:				hidden;
 
 }
 #CHILDFINDER_MAIN{
@@ -457,7 +458,7 @@ INPUT[type=password]:focus{
 	top:					36px;
 	left:					32px;
 	width:					38px;
-	height:					4px;
+	height:					2px;
 	font-size:				28px;
 	background-color:		snow;
 	border-radius: 			2px;

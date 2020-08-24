@@ -34,6 +34,13 @@ spotlight.prototype = {
         o2.setAttribute( 'class', 'not_select' );
         o2.style.visibility  = 'hidden';
         this.frame = this.overlay.appendChild( o2 );
+
+        this.frame.addEventListener('gesturestart', function(e){
+            console.log('gesturestart');
+            var icc = document.getElementById('ID_CHILD_COORDINATE');
+            icc.innerText = 'gesturestart';
+        
+        }, { passive : false });
     
         var o3 = document.createElement('DIV');
         o3.setAttribute( 'id',    'CHILDFINDER_HEADER' );
