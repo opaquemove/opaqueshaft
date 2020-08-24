@@ -2602,7 +2602,7 @@ function makeTimelineContextMenu( id ){
 //
 function mDown( e ) {
 	var touchdevice = ( 'ontouchend' in document );
-
+	var t_id = null;
 	console.log('mDown');
 	curChild = this;
 	//console.log( this.style.top + ',' + this.style.left );
@@ -2616,6 +2616,7 @@ function mDown( e ) {
 	} else {
 		var event = e.changedTouches[0];
 		console.log( 'touchstart identifier:' + event.identifier );
+		t_id = event.identifier;
 	}
 	//e.stopPropagation();
 	//要素内の相対座標を取得
@@ -2623,7 +2624,7 @@ function mDown( e ) {
 	y = event.pageY - curChild.offsetTop;
 	
 	var icc = document.getElementById('ID_CHILD_COORDINATE');
-	icc.innerText = curChild.style.top + ' x ' + curChild.style.left;
+	icc.innerText = curChild.style.top + ' x ' + curChild.style.left + '(' + t_id + ')';
 
 	//ムーブイベントにコールバック
 	document.body.addEventListener("mousemove", mMove, { passive : false } );
