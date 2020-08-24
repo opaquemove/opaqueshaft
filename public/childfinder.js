@@ -70,6 +70,7 @@ spotlight.prototype = {
         r += '<div id="BTN_CLOSE_SPOTLIGHT" style="float:right;width:30px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
         r += '<div id="BTN_LISTALL"         style="float:right;width:30px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
         r += '<div id="BTN_TIMESELECTOR"    style="float:right;width:30px;height:42px;background-image:url(./images/time.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_CHILD_PROPERTY"  style="float:right;width:30px;height:42px;background-image:url(./images/hexagon.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
         r += '<div id="BTN_CLEAR_LIST"      style="float:right;width:30px;height:42px;background-image:url(./images/eraser.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
         r += '<div id="BTN_REFRESH_LIST"    style="float:right;width:30px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
 
@@ -147,7 +148,6 @@ spotlight.prototype = {
     
     },
     open : function(){
-        console.log('open');
         this.overlay.style.visibility   = 'visible';
         this.frame.style.visibility     = 'visible';
         this.header.style.visibility    = 'visible';
@@ -157,13 +157,14 @@ spotlight.prototype = {
 
     },
     close : function(){
-        console.log('close');
         this.overlay.style.visibility   = 'hidden';
         this.frame.style.visibility     = 'hidden';
         this.header.style.visibility    = 'hidden';
         this.main.style.visibility      = 'hidden';
         this.keyword.value              = '';           //キーワード削除
         this.main.innerHTML             = '';           // mainエリア内をクリア
+        this.folder1                    = null;
+        this.folder2                    = null;
 
     },
     opened : function(){
@@ -183,14 +184,19 @@ spotlight.prototype = {
         for ( var i=0; i<cpc.childNodes.length; i++ ){
             if ( cpc.childNodes[i].hasAttribute('selected') ){
                 var id = cpc.childNodes[i].getAttribute('child_id');
-                if ( alreadyExistChildOnWhiteboard( id ) ) continue;
+                if ( alreadyExistChildOnWhiteboard( id ) ){
+                    cpc.childNodes[i].classList.remove('selected');
+                    cpc.childNodes[i].removeAttribute('selected');
+                    continue;
+                }
                 var oChild = getChild( id );
                 if ( oChild != null ){
                     addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade );
                     cursor++;
                 }
-                cpc.childNodes[i].style.color = '';
-                cpc.childNodes[i].style.backgroundColor = '';
+                cpc.childNodes[i].classList.remove('selected');
+                // cpc.childNodes[i].style.color = '';
+                // cpc.childNodes[i].style.backgroundColor = '';
                 cpc.childNodes[i].removeAttribute('selected');
             }
         }
@@ -220,8 +226,8 @@ spotlight.prototype = {
             o.style.marginBottom        = '0px';
             o.style.clear               = 'both';
             var r = '';
-            r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Whiteboard...</div>';
-            r += '<div id="BTN_FOLDER1" style="float:right;width:24px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            r += '<div id="BTN_FOLDER1" style="float:left;width:24px;height:34px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;padding-top:8px;border-left:10px solid red;" >Whiteboard...</div>';
             o.innerHTML = r;
             var ffw = this.main.appendChild( o );
 
@@ -263,8 +269,8 @@ spotlight.prototype = {
             o.style.marginBottom        = '0px';
             o.style.clear               = 'both';
             r = '';
-            r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;border-left:10px solid red;" >Children...</div>';
-            r += '<div id="BTN_FOLDER2" style="float:right;width:24px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            r += '<div id="BTN_FOLDER2" style="float:left;width:24px;height:34px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;padding-top:8px;border-left:10px solid red;" >Cloud...</div>';
             o.innerHTML = r;
             var ffct = this.main.appendChild( o );
 

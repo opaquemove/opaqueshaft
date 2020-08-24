@@ -212,7 +212,7 @@ function init()
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	// new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
-	new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
+	// new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
 	// new Button( 'ID_SHEET_ESCORT',          turnWhiteboard ).play();
 	new Button( 'CPC_UPDATE_CHILD_TIME',	showTimelineSelector ).play();
 	// new Button( 'ID_GRADE1',                null           ).play();
@@ -602,14 +602,15 @@ Tile.prototype = {
 				 this.close();
 			} ).bind( this ), false );
 
-		new Button( 'MODAL_TILE2', propertyAccount ).play();
+		new Button( 'MODAL_TILE2', function(){ propertyAccount(); oTile.close();} ).play();
 		new Button( 'MODAL_TILE3', showTile     ).play();
-		new Button( 'MODAL_TILE4', saveWhiteboard ).play();
-		new Button( 'MODAL_TILE5', signoutForm ).play();
-		new Button( 'MODAL_TILE6', clearWhiteboard ).play();
-		new Button( 'MODAL_TILE7', absentWhiteboard ).play();
-		new Button( 'MODAL_TILE8', openWhiteboard ).play();
-		new Button( 'MODAL_TILE9', closeWhiteboard ).play();
+		new Button( 'MODAL_TILE4', function(){ saveWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE5', function(){ signoutForm(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE6', function(){ clearWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE7', function(){ absentWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE8', function(){ openWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE9', function(){ closeWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE10', function(){ reportWhiteboard(); oTile.close(); } ).play();
 
 	},
 	open : function(){
@@ -2306,14 +2307,14 @@ function makeChildrenPalleteList()
 //
 //	チャイルド選択し、プロパティ表示
 //
-function selectChild( e ){
-	var c = scanChild( e.target );
-	if ( c != null ){
-		var id = c.getAttribute('child_id');
-		console.log( c.getAttribute( id ));
-		propertyChild2( id );
-	}
-}
+// function selectChild( e ){
+// 	var c = scanChild( e.target );
+// 	if ( c != null ){
+// 		var id = c.getAttribute('child_id');
+// 		console.log( c.getAttribute( id ));
+// 		propertyChild2( id );
+// 	}
+// }
 
 //
 //	パレット内のチャイルド選択
@@ -2378,6 +2379,7 @@ function checkinSelectedChild( hm ){
 	console.log( 'top:' + top + ' left:' + left );
 	var cursor	= 0;
 
+	// CHILDREN_PALLETE
 	for ( var i=0; i<cpc.length; i++ ){
 		var c = cpc[i];
 		if ( c.hasAttribute('selected') ){
@@ -2387,19 +2389,24 @@ function checkinSelectedChild( hm ){
 			var child_type	= c.getAttribute('child_type');
 			var child_grade	= c.getAttribute('child_grade');
 			if ( alreadyExistChildOnWhiteboard( id ) ){
-				c.style.color = '';
-				c.style.backgroundColor = '';	
+				c.classList.remove('selected');
+				c.removeAttribute('selected');
+				// c.style.color = '';
+				// c.style.backgroundColor = '';	
 				oLog.log( null, child_name + ' : すでにホワイトボードに配置されています.');
 				oLog.open( 3 );
 				continue;
 			} 
 			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
 			cursor++;
-			c.style.color = '';
-			c.style.backgroundColor = '';
+			c.classList.remove('selected');
+			// c.style.color = '';
+			// c.style.backgroundColor = '';
 			c.removeAttribute('selected');
 		}
 	}
+	
+	// FOLDER_FIND_CHILDREN_TABLE2
 	if ( ffct2 != null ){
 		for ( var i=0; i<ffct2.length; i++ ){
 			var c = ffct2[i];
@@ -2410,16 +2417,19 @@ function checkinSelectedChild( hm ){
 				var child_type	= c.getAttribute('child_type');
 				var child_grade	= c.getAttribute('child_grade');
 				if ( alreadyExistChildOnWhiteboard( id ) ){
-					c.style.color = '';
-					c.style.backgroundColor = '';		
+					c.classList.remove('selected');
+					c.removeAttribute('selected');
+					// c.style.color = '';
+					// c.style.backgroundColor = '';		
 					oLog.log( null, child_name + ' : すでにホワイトボードに配置されています.');
 					oLog.open( 3 );
 					continue;
 				} 
 				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
 				cursor++;
-				c.style.color = '';
-				c.style.backgroundColor = '';
+				c.classList.remove('selected');
+				// c.style.color = '';
+				// c.style.backgroundColor = '';
 				c.removeAttribute('selected');
 			}
 		}
@@ -2446,90 +2456,18 @@ function newChildFormOld(){
 }
 */
 
-//
-//	チャイルド作成フォーム
-//
-function newChildForm(){
-	var r = '';
-	r += makeChildForm( null );
-	openModalDialog( null, r, 'NOBUTTON', null, null );
-}
 
 //
 //	チャイルドプロパティフォーム
 //
-function propertyChild2( id ){
-	var r = '';
-	var oChild = getChild( id );
-	r += makeChildForm( oChild );
-	openModalDialog( null, r, 'NORMAL', null, null );
+// function propertyChild2( id ){
+// 	var r = '';
+// 	var oChild = getChild( id );
+// 	r += makeChildForm( oChild );
+// 	openModalDialog( null, r, 'NORMAL', null, null );
 
-}
+// }
 
-//
-//	チャイルドフォームの生成
-//
-function makeChildForm( oChild ){
-	var id    = null;
-	var name  = '';
-	var type  = '';
-	var grade = '';
-	if ( oChild != null ) {
-		id = oChild.child_id;
-		name = oChild.child_name;
-		type = oChild.child_type;
-		grade = oChild.child_grade;
-	}
-	var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >Child</div>';
-	r += '<div style="margin:0 auto;width:110px;">';
-		r += '<form name="child_form" onsubmit="return false;" >';
-		if ( id != null ){
-			r += '<input type="hidden" name="child_id" value="' + id + '"  />';
-		}
-//		r += '<div>id:</div>';
-//		r += '<div><input type="text" name="child_id"    value="' + id    + '" readonly /></div>';
-		r += '<div>name:</div>';
-		r += '<div><input type="text" name="child_name"  value="' + name  + '" /></div>';
-		r += '<div>type:</div>';
-		r += '<div><input type="text" name="child_type"  value="' + type  + '" /></div>';
-		r += '<div>grade:</div>';
-		r += '<div><input type="text" name="child_grade" value="' + grade + '" /></div>';
-		r += '</form>';
-		r += '<div style="padding-top:10px;" >';
-			r += "<button type='button' onclick='newChildSend()' >next...</button>";
-		r += '</div>';	
-	r += '</div>';
-	return r;
-
-}
-
-//
-//	チャイルド情報を送信
-//
-function newChildSend(){
-	var result = newChildSendHelper();
-	oLog.log( null, 'newChildSend : ' + result );
-	// alert( result );
-}
-
-//
-//	チャイルドの登録（REST)
-//
-function newChildSendHelper(){
-	var name  = child_form.child_name.value;
-	var grade = child_form.child_grade.value;
-	var type  = child_form.child_type.value;
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "/accounts/childadd", false );
-	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send( 'child_name=' + name + '&child_grade=' + grade + '&child_type=' + type );
-	if ( xmlhttp.status == 200 ){
-		var result = JSON.parse( xmlhttp.responseText );
-		return ( result != null )? result:null;	
-	} else return null;
-
-}
 
 //
 //	チャイルド情報を取得
