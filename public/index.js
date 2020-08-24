@@ -1060,6 +1060,7 @@ function saveWhiteboardHelper(){
 	// 	r += 'delete child result...' + rc;
 	// r += '</div>';
 
+	var jsonChildren = [];
 	var children = wb.childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
@@ -1074,6 +1075,11 @@ function saveWhiteboardHelper(){
 		if ( direction == null ) direction = '';
 		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, false );
 		oLog.log( null, 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText + '(' + rc + ')' );
+		jsonChildren.push( {
+			 'child_id' : child_id,
+			 'checkin': checkin,
+			 'estimate' : estimate
+			 } );
 		// r += '<div>';
 		// r += 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
 		// r += ' rc:' + rc;
@@ -1101,6 +1107,7 @@ function saveWhiteboardHelper(){
 		// r += '</div>';
 	}
 	
+	//alert( JSON.stringify( jsonChildren ) );
 	oLog.log( null, 'save process completed.' );
 	oLog.open( 5 );
 	// r += '<div>save completed.</div>';
