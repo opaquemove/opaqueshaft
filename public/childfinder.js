@@ -37,8 +37,23 @@ spotlight.prototype = {
 
         this.frame.addEventListener('gesturestart', function(e){
             console.log('gesturestart');
+            e.preventDefault();
             var icc = document.getElementById('ID_CHILD_COORDINATE');
             icc.innerText = 'gesturestart';
+        
+        }, { passive : false });
+        this.frame.addEventListener('gesturechange', function(e){
+            console.log('gesturechange');
+            e.preventDefault();
+            var icc = document.getElementById('ID_CHILD_COORDINATE');
+            icc.innerText = 'gesturechange';
+        
+        }, { passive : false });
+        this.frame.addEventListener('gestureend', function(e){
+            console.log('gestureend');
+            e.preventDefault();
+            var icc = document.getElementById('ID_CHILD_COORDINATE');
+            icc.innerText = 'gestureend';
         
         }, { passive : false });
     
