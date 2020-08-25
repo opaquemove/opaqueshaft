@@ -887,6 +887,45 @@ function createWhiteboard(){
 //	ホワイトボードIDをデータベースに登録する
 //
 function createWhiteboardHelper( day ){
+
+	// チルドレンのJSONデータ生成
+	var jsonChildren = [];
+	var children = document.getElementById('WHITEBOARD').childNodes;
+	for ( var i=0; i<children.length; i++ ){
+		var c = children[i];
+		var child_id	= c.getAttribute('child_id');
+		var checkin		= c.getAttribute('checkin');
+		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+		var checkout	= c.getAttribute('checkout');
+		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
+		var direction	= c.getAttribute('direction');
+		if ( direction == null ) direction = '';
+		jsonChildren.push( {
+			 'child_id' : child_id,
+			 'checkin': checkin,
+			 'estimate' : estimate
+			 } );
+	}
+	var children = document.getElementById('WHITEBOARD_ABSENT').childNodes;
+	for ( var i=0; i<children.length; i++ ){
+		var c = children[i];
+		var child_id	= c.getAttribute('child_id');
+		var checkin		= c.getAttribute('checkin');
+		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+		var checkout	= c.getAttribute('checkout');
+		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
+		var direction	= c.getAttribute('direction');
+		if ( direction == null ) direction = '';
+		jsonChildren.push( {
+			 'child_id' : child_id,
+			 'checkin': checkin,
+			 'estimate' : estimate
+			 } );
+	}
+
+	//alert( JSON.stringify( jsonChildren ) );
+
+
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/whiteboardadd", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );

@@ -1173,12 +1173,19 @@ INPUT[type=password]:focus{
 
 }
 .hour_tab{
-	float:				left;
-	width:				80px;
-	height:				16px;
-	color:				gray;
-	padding:		4px 0px 0px 4px;
-	border-left:		8px solid red;
+	float:					left;
+	width:					80px;
+	height:					16px;
+	color:					gray;
+	padding:				4px 0px 0px 4px;
+	border-left:			8px solid red;
+}
+
+.already_checkin{
+	background-image: 		url(./images/remove.png);
+	background-size: 		10px;
+	background-position: 	right center;
+	background-repeat: 		no-repeat;
 }
 /*
 http://kachibito.net/css/svg-circular-progress-css-animated-angle-gradient

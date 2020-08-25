@@ -206,11 +206,11 @@ spotlight.prototype = {
                 var child_grade = c.getAttribute('child_grade');
                 // var oChild = getChild( child_id );
                 // if ( oChild != null ){
-                    // addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade );
-                    // addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), child_id, child_name, kana, child_type, child_grade );
-                    oLog.log( null, 'addChild');
-                    oLog.open(3);
-                    cursor++;
+                    // addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, true );
+                addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), child_id, child_name, kana, child_type, child_grade, true );
+                oLog.log( null, 'addChild');
+                oLog.open(3);
+                cursor++;
                 // }
                 c.classList.remove('selected');
                 c.removeAttribute('selected');
@@ -233,16 +233,16 @@ spotlight.prototype = {
         if ( this.main.childNodes.length == 0){
             var o = document.createElement('DIV');
             o.setAttribute('id', 'FOLDER_FIND_WHITEBOARD');
-            o.style.height             = '26px';
+            o.style.height              = '29px';
             o.style.color               = 'gray';
             o.style.backgroundColor     = 'transparent';
             o.style.fontSize            = '12px';
             o.style.borderBottom        = '1px solid lightgrey';
-            o.style.padding             = '4px 4px 4px 4px';
+            o.style.padding             = '2px';
             o.style.marginBottom        = '0px';
             o.style.clear               = 'both';
             var r = '';
-            r += '<div id="BTN_FOLDER1" style="float:left;width:24px;height:34px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            r += '<div id="BTN_FOLDER1" style="float:left;width:24px;height:32px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
             r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;padding-top:8px;border-left:10px solid red;" >Whiteboard...</div>';
             o.innerHTML = r;
             var ffw = this.main.appendChild( o );
@@ -270,16 +270,16 @@ spotlight.prototype = {
  
             o = document.createElement('DIV');
             o.setAttribute( 'id', 'FOLDER_FIND_CHILDREN_TABLE' );
-            o.style.height              = '26px';
+            o.style.height              = '29px';
             o.style.color               = 'gray';
             o.style.backgroundColor     = 'transparent';
             o.style.fontSize            = '12px';
             o.style.borderBottom        = '1px solid lightgrey';
-            o.style.padding             = '4px 4px 4px 4px';
+            o.style.padding             = '2px';
             o.style.marginBottom        = '0px';
             o.style.clear               = 'both';
             r = '';
-            r += '<div id="BTN_FOLDER2" style="float:left;width:24px;height:34px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            r += '<div id="BTN_FOLDER2" style="float:left;width:24px;height:32px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
             r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;padding-top:8px;border-left:10px solid red;" >Cloud...</div>';
             o.innerHTML = r;
             var ffct = this.main.appendChild( o );
@@ -312,6 +312,19 @@ spotlight.prototype = {
         this.folder2.innerHTML  = '';
         this.findChildrenTable( this.folder2, this.keyword.value );
 
+
+    },
+
+    existWhiteboardChildByChildID : function ( id ){
+        var children = document.getElementById('WHITEBOARD').childNodes;
+        for ( var i=0; i<children.length; i++ ){
+            if ( id == children[i].getAttribute('child_id')) return true;
+        }
+        var children = document.getElementById('WHITEBOARD_ABSENT').childNodes;
+        for ( var i=0; i<children.length; i++ ){
+            if ( id == children[i].getAttribute('child_id')) return true;
+        }
+        return false;
     },
 
     findWhiteboardChild : function ( parent, keyword ){
@@ -436,7 +449,7 @@ spotlight.prototype = {
                                 c.setAttribute('kana',        kana );
                                 c.setAttribute('child_type',  child_type );
                                 c.setAttribute('child_grade', child_grade );
-                                c.setAttribute("draggable",   "true");
+                                // c.setAttribute("draggable",   "true");
                                 c.style.marginTop       = '1px';
                                 c.style.marginLeft      = '1px';
                                 c.style.float           = 'left';
@@ -452,33 +465,25 @@ spotlight.prototype = {
 
                                 c.innerHTML = r;
                                 var cc = parent.appendChild( c );
-                                cc.addEventListener('dragstart',
-                                    ( function(e) {
-                                        dndOffsetX = e.offsetX;
-                                        dndOffsetY = e.offsetY;
-                                        console.log( e.dataTransfer );
-                                        console.log('offsetY:' + dndOffsetY + ' OffsetX:' + dndOffsetX );
-                                        e.dataTransfer.setData('text', e.target.getAttribute( 'child_id' ) );
-                                    }).bind(this), { passive : false } );  
-                                // cc.addEventListener('touchstart',
-                                //         ( function(e) {
-                                //             e.preventDefault();
-                                //             stLeft = e.touches[0].pageX;
-                                //         }).bind(this), { passive : false } );
-                                // cc.addEventListener('touchmove',
-                                //     ( function(e) {
-                                //         e.preventDefault();
-                                //         this.edLeft = e.changedTouches[0].pageX;
-                                //     }).bind(this), { passive : false } );
-                                // cc.addEventListener('touchend',
-                                //     ( function(e) {
-                                //         if ( this.stLeft > this.edLeft + 30 )
-                                //             console.log('Swiped');
-                                //     }).bind(this), { passive : false } );
+                                //  childテーブルで配置済のチャイルドに印をつける
+                                if ( this.existWhiteboardChildByChildID( child_id )){
+                                    cc.classList.add('already_checkin');
+                                } else {
+                                    //  ドラッグ設定
+                                    cc.setAttribute("draggable",   "true");
+                                    cc.addEventListener('dragstart',
+                                        ( function(e) {
+                                            dndOffsetX = e.offsetX;
+                                            dndOffsetY = e.offsetY;
+                                            // console.log( e.dataTransfer );
+                                            // console.log('offsetY:' + dndOffsetY + ' OffsetX:' + dndOffsetX );
+                                            e.dataTransfer.setData('text', e.target.getAttribute( 'child_id' ) );
+                                        }).bind(this), { passive : false } );  
+                                }
+
                             }
-                            //o.innerHTML = r;
                         } else{
-                            document.getElementById('HISTORY_LST').innerText = xmlhttp.status;
+                            oLog.log( null, 'findChildrenTable:' + xmlhttp.status );
                         }
                         break;
                 }

@@ -570,6 +570,8 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     //
     var cc = wb.appendChild( c );
     setEscortHelper( cc, (escort)?'ON':'OFF' );
+    if ( mark )
+        markChild( cc );
     var touchdevice = ( 'ontouchend' in document );
     if ( touchdevice )  cc.addEventListener( "touchstart", mDown, false );
         else            cc.addEventListener( "mousedown",  mDown, false );
