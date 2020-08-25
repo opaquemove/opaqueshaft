@@ -167,10 +167,10 @@ function init()
 			var p = e.target.parentNode;
 		
 			//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
-//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade );
+//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, false );
 			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
 				 e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
-				 oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade );
+				 oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, false );
 			dndOffsetX = 0;
 			dndOffsetY = 0;
 			showWhiteboardChildCount();
@@ -666,6 +666,13 @@ function locateTimelinebar( e ){
 			itb.style.fontSize 		= '20px';
 			tlx = event.pageY - e.target.offsetTop;
 			tl_drag = true;
+
+			//	Spotlight UIにセレクトしたチャイルドがあればチェックイン
+			if ( oSpotlight.existSelectedChild() ){
+				resetChildMark();	// すでにマークしているチャイルドを外す
+				oSpotlight.checkin( itb.innerText );	// マーク状態でチェックインする
+			}
+
 			break;
 		case 'touchmove':
 		case 'mousemove':
@@ -2397,7 +2404,7 @@ function checkinSelectedChild( hm ){
 				oLog.open( 3 );
 				continue;
 			} 
-			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
+			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, false );
 			cursor++;
 			c.classList.remove('selected');
 			// c.style.color = '';
@@ -2425,7 +2432,7 @@ function checkinSelectedChild( hm ){
 					oLog.open( 3 );
 					continue;
 				} 
-				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade );
+				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, false );
 				cursor++;
 				c.classList.remove('selected');
 				// c.style.color = '';

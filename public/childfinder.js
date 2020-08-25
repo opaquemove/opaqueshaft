@@ -171,8 +171,18 @@ spotlight.prototype = {
         console.log( this.overlay.style.visibility );
         return ( this.overlay.style.visibility != 'hidden' );
     },
+    existSelectedChild : function(){
+        if ( this.folder2 == null ) return false;
+        var children = this.folder2.childNodes;
+        for ( var i=0; i<children.length; i++ ){
+            var c = children[i];
+            if ( c.hasAttribute('selected')) return true;
+        }
+        return false;
+    },
     checkin : function( hm ){
         var cpc = this.folder2;
+        if ( cpc == null ) return;
         var arHM = hm.split(':');
         
         var cursor	= 0;
@@ -182,22 +192,28 @@ spotlight.prototype = {
         console.log( 'top:' + top + ' left:' + left );
     
         for ( var i=0; i<cpc.childNodes.length; i++ ){
-            if ( cpc.childNodes[i].hasAttribute('selected') ){
-                var id = cpc.childNodes[i].getAttribute('child_id');
-                if ( alreadyExistChildOnWhiteboard( id ) ){
-                    cpc.childNodes[i].classList.remove('selected');
-                    cpc.childNodes[i].removeAttribute('selected');
+            var c = cpc.childNodes[i];
+            if ( c.hasAttribute('selected') ){
+                var child_id = c.getAttribute('child_id');
+                if ( alreadyExistChildOnWhiteboard( child_id ) ){
+                    c.classList.remove('selected');
+                    c.removeAttribute('selected');
                     continue;
                 }
-                var oChild = getChild( id );
-                if ( oChild != null ){
-                    addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade );
+                var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+                var kana        = c.getAttribute('kana');
+                var child_type  = c.getAttribute('child_type');
+                var child_grade = c.getAttribute('child_grade');
+                // var oChild = getChild( child_id );
+                // if ( oChild != null ){
+                    // addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade );
+                    // addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), child_id, child_name, kana, child_type, child_grade );
+                    oLog.log( null, 'addChild');
+                    oLog.open(3);
                     cursor++;
-                }
-                cpc.childNodes[i].classList.remove('selected');
-                // cpc.childNodes[i].style.color = '';
-                // cpc.childNodes[i].style.backgroundColor = '';
-                cpc.childNodes[i].removeAttribute('selected');
+                // }
+                c.classList.remove('selected');
+                c.removeAttribute('selected');
             }
         }
         showWhiteboardChildCount();
@@ -233,12 +249,6 @@ spotlight.prototype = {
 
             var oo = document.createElement('DIV');
             oo.setAttribute('id', 'FOLDER_FIND_WHITEBOARD2');
-            // oo.style.color              = 'gray';
-            // oo.style.backgroundColor    = 'transparent';
-            // oo.style.fontSize           = '12px';
-            // oo.style.padding            = '4px 4px 4px 4px';
-            // oo.style.marginBottom       = '0px';
-            // oo.style.clear              = 'both';
             oo.innerText                = 'dummy';
             this.folder1 = this.main.appendChild( oo );
             document.getElementById('BTN_FOLDER1').addEventListener('click',

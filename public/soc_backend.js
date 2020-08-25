@@ -46,7 +46,7 @@ socket.on( 'opaqueshaft', function( data ){
             var left	= ( parseInt( arHM[1] ) );
             var child_id = pac.data.child_id;
             var oChild  = getChild( child_id );
-            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade );
+            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, false );
             break;
     }
 })
@@ -69,7 +69,7 @@ socket.on( 'getchildrenlist', function ( msg ) {
     for (var i=0; i<children.length; i++) {
         r += children[i].child_name + '<br/>'; 
         addChild( i * 20, i * 20, children[i].child_id,
-             children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade );
+             children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, false );
     }
     r += '<br/>length:' + children.length;
 
@@ -508,7 +508,7 @@ function getChildrenByHour( h ){
 //
 //  WhiteBoardにチャイルド(240x60)を実体化
 //
-function addChild( top, left, child_id, child_name, kana, child_type, child_grade ){
+function addChild( top, left, child_id, child_name, kana, child_type, child_grade, mark ){
     var now = new Date();
     var h = ( '00' + now.getHours() ).slice(-2);
     var m = ( '00' + now.getMinutes() ).slice(-2);
