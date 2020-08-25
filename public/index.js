@@ -888,44 +888,6 @@ function createWhiteboard(){
 //
 function createWhiteboardHelper( day ){
 
-	// チルドレンのJSONデータ生成
-	var jsonChildren = [];
-	var children = document.getElementById('WHITEBOARD').childNodes;
-	for ( var i=0; i<children.length; i++ ){
-		var c = children[i];
-		var child_id	= c.getAttribute('child_id');
-		var checkin		= c.getAttribute('checkin');
-		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
-		var checkout	= c.getAttribute('checkout');
-		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
-		var direction	= c.getAttribute('direction');
-		if ( direction == null ) direction = '';
-		jsonChildren.push( {
-			 'child_id' : child_id,
-			 'checkin': checkin,
-			 'estimate' : estimate
-			 } );
-	}
-	var children = document.getElementById('WHITEBOARD_ABSENT').childNodes;
-	for ( var i=0; i<children.length; i++ ){
-		var c = children[i];
-		var child_id	= c.getAttribute('child_id');
-		var checkin		= c.getAttribute('checkin');
-		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
-		var checkout	= c.getAttribute('checkout');
-		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
-		var direction	= c.getAttribute('direction');
-		if ( direction == null ) direction = '';
-		jsonChildren.push( {
-			 'child_id' : child_id,
-			 'checkin': checkin,
-			 'estimate' : estimate
-			 } );
-	}
-
-	//alert( JSON.stringify( jsonChildren ) );
-
-
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/whiteboardadd", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
@@ -1080,6 +1042,9 @@ function saveWhiteboardHelper(){
 	//	whiteboardレコードを追加（存在すれば何もしない）
 	createWhiteboardHelper( day );
 
+	//	チルドレンのJSONデータを準備
+	var json_children = getJSONChildren();
+
 	//	whiteboardレコードを更新
 	var rc = '';
 	var wb = document.getElementById('WHITEBOARD');
@@ -1089,7 +1054,8 @@ function saveWhiteboardHelper(){
 	xmlhttp.open("POST", "/accounts/whiteboardupdate", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send( 'day=' + day + '&html=' + encodeURIComponent( wb.innerHTML ) +
-				'&html_absent=' + encodeURIComponent( wb_absent.innerHTML ) );
+				'&html_absent=' + encodeURIComponent( wb_absent.innerHTML ) +
+				'&json_children=' + encodeURIComponent( JSON.stringify(json_children ) ) );
 
 	// var progress = document.getElementById('SAVE_PROGRESS');
 	// var r = '';
@@ -1101,13 +1067,9 @@ function saveWhiteboardHelper(){
 		// r += '<div>save whiteboard html data. FAILED</div>';
 	}
 	
-	rc = deleteChildResult( dayWhiteboard );
-	oLog.log( null, 'delete child results...' );
-	// r += '<div>';
-	// 	r += 'delete child result...' + rc;
-	// r += '</div>';
+	// rc = deleteChildResult( dayWhiteboard );
+	// oLog.log( null, 'delete child results...' );
 
-	var jsonChildren = [];
 	var children = wb.childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
@@ -1122,11 +1084,6 @@ function saveWhiteboardHelper(){
 		if ( direction == null ) direction = '';
 		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, false );
 		oLog.log( null, 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText + '(' + rc + ')' );
-		jsonChildren.push( {
-			 'child_id' : child_id,
-			 'checkin': checkin,
-			 'estimate' : estimate
-			 } );
 		// r += '<div>';
 		// r += 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
 		// r += ' rc:' + rc;
@@ -1154,7 +1111,6 @@ function saveWhiteboardHelper(){
 		// r += '</div>';
 	}
 	
-	//alert( JSON.stringify( jsonChildren ) );
 	oLog.log( null, 'save process completed.' );
 	oLog.open( 5 );
 	// r += '<div>save completed.</div>';
@@ -1163,6 +1119,62 @@ function saveWhiteboardHelper(){
 	updateFlg = false;
 
 	// closeModalDialog();
+}
+
+//
+// チルドレンのJSONデータ生成
+//
+function getJSONChildren(){
+	var jsonChildren = [];
+	var children = document.getElementById('WHITEBOARD').childNodes;
+	for ( var i=0; i<children.length; i++ ){
+		var c = children[i];
+		var child_id	= c.getAttribute('child_id');
+		var coord_top	= c.offsetTop;
+		var coord_left	= c.offsetLeft;
+		var checkin		= c.getAttribute('checkin');
+		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+		var checkout	= c.getAttribute('checkout');
+		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
+		var direction	= c.getAttribute('direction');
+		if ( direction == null ) direction = '';
+		jsonChildren.push( {
+			 'child_id' 	: child_id,
+			 'checkin'		: checkin,
+			 'estimate'		: estimate,
+			 'checkout'		: checkout,
+			 'direction'	: direction,
+			 'coord_top'	: coord_top,
+			 'coord_left'	: coord_left,
+			 'absent' 		: 0
+			 } );
+	}
+	var children = document.getElementById('WHITEBOARD_ABSENT').childNodes;
+	for ( var i=0; i<children.length; i++ ){
+		var c = children[i];
+		var child_id	= c.getAttribute('child_id');
+		var coord_top	= c.offsetTop;
+		var coord_left	= c.offsetLeft;
+		var checkin		= c.getAttribute('checkin');
+		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+		var checkout	= c.getAttribute('checkout');
+		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
+		var direction	= c.getAttribute('direction');
+		if ( direction == null ) direction = '';
+		jsonChildren.push( {
+			 'child_id' 	: child_id,
+			 'checkin'		: checkin,
+			 'estimate' 	: estimate,
+			 'checkout'		: checkout,
+			 'direction'	: direction,
+			 'coord_top'	: coord_top,
+			 'coord_left'	: coord_left,
+			 'absent' 		: 1
+			 } );
+	}
+
+	return jsonChildren;
+
 }
 
 //
