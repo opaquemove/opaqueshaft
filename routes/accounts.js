@@ -206,10 +206,14 @@ router.post('/whiteboardupdate', function(req, res, next ){
     var json_children = req.body.json_children;
 
     var children      = JSON.parse( json_children );
+    if ( children != null )
+      console.log( 'whiteboardupdate children.length:' + children.length );
+      else
+      console.log( 'whiteboardupdate children.length:' + null );
 
     console.log('day:'    + day );
-    console.log('alive:'  + html );
-    console.log('absent:' + html_absent );
+    // console.log('alive:'  + html );
+    // console.log('absent:' + html_absent );
     console.log('json_children:' + json_children );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
@@ -227,9 +231,24 @@ router.post('/whiteboardupdate', function(req, res, next ){
         values: [ day ] } )
       .then( function() {
         // res.json( { status: 'SUCCESS', message:  'delete child result' });
-        res.json( { status: 'SUCCESS', message:  'update whiteboard' });
       });
+      
+    if ( children == null ){
+        res.json( { status: 'SUCCESS', message:  'update whiteboard' });
+    } else{
+/*      
+      for ( var i=0; i<children.length; i++ ){
+        var inssql = "insert into results( acc_id, day, child_id, child_name, child_grade,child_type, checkin, estimate, checkout, escort, direction, absent, lastupdate ) select $1 acc_id, $2, child_id,child_name,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, $8 absent, now() lastupdate from children where child_id = $9";
+        db.none( {
+          text: inssql,
+          values: [ acc_id, day, checkin, estimate, checkout, escort, direction, absent, child_id ] } )
+        .then( function() {
+        });
   
+      }
+*/
+      res.json( { status: 'SUCCESS', message:  'update whiteboard' });
+    }
 });
 
 //
