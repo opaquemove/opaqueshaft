@@ -236,17 +236,27 @@ router.post('/whiteboardupdate', function(req, res, next ){
     if ( children == null ){
         res.json( { status: 'SUCCESS', message:  'update whiteboard' });
     } else{
-/*      
+      
       for ( var i=0; i<children.length; i++ ){
+        var rslt = children[i];
+        var acc_id      = rslt.operator;
+        var checkin     = rslt.checkin;
+        var estimate    = rslt.estimate;
+        var checkout    = rslt.checkout;
+        var escort      = rslt.escort;
+        var direction   = rslt.direction;
+        var absent      = rslt.absent;
+        var child_id    = rslt.child_id;
+        var coordi_top  = rslt.coordi_top;
+        var coordi_left = rslt.coordi_left;
         var inssql = "insert into results( acc_id, day, child_id, child_name, child_grade,child_type, checkin, estimate, checkout, escort, direction, absent, lastupdate ) select $1 acc_id, $2, child_id,child_name,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, $8 absent, now() lastupdate from children where child_id = $9";
         db.none( {
           text: inssql,
           values: [ acc_id, day, checkin, estimate, checkout, escort, direction, absent, child_id ] } )
         .then( function() {
         });
-  
       }
-*/
+
       res.json( { status: 'SUCCESS', message:  'update whiteboard' });
     }
 });

@@ -1067,9 +1067,11 @@ function saveWhiteboardHelper(){
 		// r += '<div>save whiteboard html data. FAILED</div>';
 	}
 	
+	//	Results削除
 	// rc = deleteChildResult( dayWhiteboard );
 	// oLog.log( null, 'delete child results...' );
-
+/*
+	// チャイルドのセーブ
 	var children = wb.childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
@@ -1084,10 +1086,6 @@ function saveWhiteboardHelper(){
 		if ( direction == null ) direction = '';
 		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, false );
 		oLog.log( null, 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText + '(' + rc + ')' );
-		// r += '<div>';
-		// r += 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
-		// r += ' rc:' + rc;
-		// r += '</div>';
 	}
 
 	// 欠席チャイルドのセーブ
@@ -1105,16 +1103,10 @@ function saveWhiteboardHelper(){
 		if ( direction == null ) direction = '';
 		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, true );
 		oLog.log( null, 'save absent child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText + '(' + rc + ')' );
-		// r += '<div>';
-		// r += 'save absent child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText;
-		// r += ' rc:' + rc;
-		// r += '</div>';
 	}
-	
+*/	
 	oLog.log( null, 'save process completed.' );
 	oLog.open( 5 );
-	// r += '<div>save completed.</div>';
-	// progress.innerHTML = r;
 
 	updateFlg = false;
 
@@ -1130,11 +1122,13 @@ function getJSONChildren(){
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
 		var child_id	= c.getAttribute('child_id');
-		var coord_top	= c.offsetTop;
-		var coord_left	= c.offsetLeft;
+		var coordi_top	= c.offsetTop;
+		var coordi_left	= c.offsetLeft;
 		var checkin		= c.getAttribute('checkin');
 		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
 		var checkout	= c.getAttribute('checkout');
+		var operator	= c.getAttribute('operator');
+		if ( operator == null ) operator = acc_id;
 		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
 		var direction	= c.getAttribute('direction');
 		if ( direction == null ) direction = '';
@@ -1143,9 +1137,10 @@ function getJSONChildren(){
 			 'checkin'		: checkin,
 			 'estimate'		: estimate,
 			 'checkout'		: checkout,
+			 'operator'		: operator,
 			 'direction'	: direction,
-			 'coord_top'	: coord_top,
-			 'coord_left'	: coord_left,
+			 'coordi_top'	: coordi_top,
+			 'coordi_left'	: coordi_left,
 			 'absent' 		: 0
 			 } );
 	}
@@ -1153,11 +1148,13 @@ function getJSONChildren(){
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
 		var child_id	= c.getAttribute('child_id');
-		var coord_top	= c.offsetTop;
-		var coord_left	= c.offsetLeft;
+		var coordi_top	= c.offsetTop;
+		var coordi_left	= c.offsetLeft;
 		var checkin		= c.getAttribute('checkin');
 		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
 		var checkout	= c.getAttribute('checkout');
+		var operator	= c.getAttribute('operator');
+		if ( operator == null ) operator = acc_id;
 		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
 		var direction	= c.getAttribute('direction');
 		if ( direction == null ) direction = '';
@@ -1166,9 +1163,10 @@ function getJSONChildren(){
 			 'checkin'		: checkin,
 			 'estimate' 	: estimate,
 			 'checkout'		: checkout,
+			 'operator'		: operator,
 			 'direction'	: direction,
-			 'coord_top'	: coord_top,
-			 'coord_left'	: coord_left,
+			 'coordi_top'	: coordi_top,
+			 'coordi_left'	: coordi_left,
 			 'absent' 		: 1
 			 } );
 	}
