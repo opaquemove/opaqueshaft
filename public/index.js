@@ -167,10 +167,10 @@ function init()
 			var p = e.target.parentNode;
 		
 			//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
-//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, false );
+//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, false, false );
 			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
 				 e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
-				 oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, false );
+				 oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, false, false );
 			dndOffsetX = 0;
 			dndOffsetY = 0;
 			showWhiteboardChildCount();
@@ -911,10 +911,70 @@ function alreadyExistChildOnWhiteboard( id ){
 	return rc;
 }
 
+function whiteboard(){
+	this.day				= null;
+	this.description		= null;
+	this.reportMessage		= null;
+}
 //
 //	ホワイトボードをロードする
 //
 function loadWhiteboard(){
+
+	//ホワイトボード概要をロードする
+	loadWhiteboardHelper();
+
+	// チルドレンをロードする
+	loadWhiteboardChildren();
+
+}
+
+//
+//	ホワイトボード概要をロードする
+//
+function loadWhiteboardHelper(){
+	var day = dayWhiteboard;
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+				break;
+			case 2://header received
+				break;
+			case 3://loading
+				oLog.log( null, 'load Whiteboard summary...' );
+				oLog.open( 3 );
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					if ( result.length > 0 ){		//	レコードが存在すれば
+						// wb.innerHTML 		= result[0].whiteboard;
+						// wb_absent.innerHTML	= result[0].whiteboard_absent;
+
+					}
+
+					oLog.log( null, 'load Whiteboard summary ok.' );
+					oLog.open( 3 );
+				} else{
+					oLog.log( null, 'loadWhiteboardHelper:' + xmlhttp.status );
+					oLog.open( 3 );
+				} 
+				break;
+		}
+	};
+
+	xmlhttp.open("POST", "/accounts/whiteboardload", true );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'day=' + day );
+
+}
+
+//
+//	ホワイトボード:チルドレンをロードする
+//
+function loadWhiteboardChildren(){
 	var touchdevice = ( 'ontouchend' in document );
 
 	var day = dayWhiteboard;
@@ -929,43 +989,53 @@ function loadWhiteboard(){
 			case 2://header received
 				break;
 			case 3://loading
-				oLog.log( null, 'load Whiteboard...' );
+				oLog.log( null, 'load Whiteboard children...' );
 				oLog.open( 3 );
 				break;
 			case 4://done
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
 					if ( result.length > 0 ){		//	レコードが存在すれば
-						wb.innerHTML 		= result[0].whiteboard;
-						wb_absent.innerHTML	= result[0].whiteboard_absent;
 			
-						//	チャイルドにイベントハンドラを割り当てる 
-						for ( var i=0; i<wb.childNodes.length; i++ ){
-							if ( touchdevice )	wb.childNodes[i].addEventListener( "touchstart", mDown, false );
-								else			wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
+						// //	チャイルドにイベントハンドラを割り当てる 
+						// for ( var i=0; i<wb.childNodes.length; i++ ){
+						// 	if ( touchdevice )	wb.childNodes[i].addEventListener( "touchstart", mDown, false );
+						// 		else			wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
+						// }
+						// for ( var i=0; i<wb_absent.childNodes.length; i++ ){
+						// 	if ( touchdevice )	wb_absent.childNodes[i].addEventListener( "touchstart", mDown, false );
+						// 		else			wb_absent.childNodes[i].addEventListener( "mousedown",  mDown, false );
+						// }
+
+						for ( var i=0; i<result.length; i++ ){
+							var c = result[i];
+							var cc = addChild( c.coordi_top, c.coordi_left,
+								c.child_id, c.child_name, c.kana,
+								c.child_type, c.child_grade, ( c.absent == 1 )?true : false, false );
+							if ( c.checkout != '' && c.checkout != null )
+								checkoutChild( cc, c.acc_id, c.checkout, c.direction );
 						}
-						for ( var i=0; i<wb_absent.childNodes.length; i++ ){
-							if ( touchdevice )	wb_absent.childNodes[i].addEventListener( "touchstart", mDown, false );
-								else			wb_absent.childNodes[i].addEventListener( "mousedown",  mDown, false );
-						}
+
 					} else{							// レコードが存在しなければ
 						wb.innerHTML 		= '';
 						wb_absent.innerHTML	= '';
 					}
+
 					//	WHITEBOARD_FRAMEのスクロール情報を初期化する
 					document.getElementById('WHITEBOARD_FRAME').scrollTop = 0;
 					showWhiteboardChildCount();
-					oLog.log( null, 'load Whiteboard ok.' );
+					oLog.log( null, 'load Whiteboard children ok.' );
 					oLog.open( 3 );
 				} else{
-					oLog.log( null, 'loadWhiteboard:' + xmlhttp.status );
+					oLog.log( null, 'loadWhiteboardChildren:' + xmlhttp.status );
 					oLog.open( 3 );
 				} 
 				break;
 		}
 	};
 
-	xmlhttp.open("POST", "/accounts/whiteboardload", true );
+	// xmlhttp.open("POST", "/accounts/whiteboardload", true );
+	xmlhttp.open("POST", "/accounts/resultwhiteboard", true );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send( 'day=' + day );
 /*
@@ -2453,7 +2523,7 @@ function checkinSelectedChild( hm ){
 				oLog.open( 3 );
 				continue;
 			} 
-			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, false );
+			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, false, false );
 			cursor++;
 			c.classList.remove('selected');
 			// c.style.color = '';
@@ -2481,7 +2551,7 @@ function checkinSelectedChild( hm ){
 					oLog.open( 3 );
 					continue;
 				} 
-				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, false );
+				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, false, false );
 				cursor++;
 				c.classList.remove('selected');
 				// c.style.color = '';

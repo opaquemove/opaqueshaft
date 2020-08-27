@@ -46,7 +46,7 @@ socket.on( 'opaqueshaft', function( data ){
             var left	= ( parseInt( arHM[1] ) );
             var child_id = pac.data.child_id;
             var oChild  = getChild( child_id );
-            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, false );
+            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, false, false );
             break;
     }
 })
@@ -69,7 +69,7 @@ socket.on( 'getchildrenlist', function ( msg ) {
     for (var i=0; i<children.length; i++) {
         r += children[i].child_name + '<br/>'; 
         addChild( i * 20, i * 20, children[i].child_id,
-             children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, false );
+             children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, false, false );
     }
     r += '<br/>length:' + children.length;
 
@@ -508,13 +508,15 @@ function getChildrenByHour( h ){
 //
 //  WhiteBoardにチャイルド(240x60)を実体化
 //
-function addChild( top, left, child_id, child_name, kana, child_type, child_grade, mark ){
+function addChild( top, left, child_id, child_name, kana, child_type, child_grade, absent, mark ){
     var now = new Date();
     var h = ( '00' + now.getHours() ).slice(-2);
     var m = ( '00' + now.getMinutes() ).slice(-2);
     var checkin_time = h + ':' + m;
     
-	var wb = document.getElementById('WHITEBOARD');
+    var wb = null;
+    if ( absent )   wb = document.getElementById('WHITEBOARD_ABSENT');
+        else        wb = document.getElementById('WHITEBOARD');
     var c = document.createElement("DIV");
 	c.setAttribute("id",          "c_1");
     c.setAttribute("class",       "CHILD drag-and-drop");
@@ -577,6 +579,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
         else            cc.addEventListener( "mousedown",  mDown, false );
         
     updateFlg   = true;
+    return cc;
 
 }
 
@@ -678,7 +681,7 @@ function propertyWhiteboardChild( c ){
             r += "</button>";
             r += "&nbsp;";
             r += "<button type='button' style='width:260px;font-size:24px;' ";
-            r += " onclick='checkoutChild(propChild, null );closeModalDialog();'   >";
+            r += " onclick='checkoutChild(propChild, null, null, null );closeModalDialog();'   >";
                 r += "<img width='32px' src='./images/check.png' />checkout";
             r += "</button>";
         r += "</div>";
@@ -1094,15 +1097,22 @@ function setEscortHelper( c, flag ){
 //
 //  Childをチェックアウト（帰宅）
 //
-function checkoutChild( c, direction ){
+function checkoutChild( c, operator, co_time, direction ){
     if ( c == null ) return;
-    var now = new Date();
-    var h = ( '00' + now.getHours() ).slice(-2);
-    var m = ( '00' + now.getMinutes() ).slice(-2);
-    var checkout_time = h + ':' + m;
+    var checkout_time = null;
+    if ( co_time == '' || co_time == null ){
+        var now = new Date();
+        var h = ( '00' + now.getHours() ).slice(-2);
+        var m = ( '00' + now.getMinutes() ).slice(-2);
+        checkout_time = h + ':' + m;
+    } else {
+        checkout_time = co_time.substr( 0, 5 );
+    }
     if ( direction == '' || direction == null ) direction = '---';
+    if ( operator  == '' || operator == null  ) operator  = acc_id; 
     c.setAttribute('checkout', checkout_time );
     c.setAttribute('direction', direction );
+    c.setAttribute('operator',  operator );
     // console.log( c.getAttribute('child_id') );
     // document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText =
     //     'checkout:' + checkout_time;
@@ -1241,7 +1251,7 @@ function checkoutWhiteboardChildHelper(){
         var id = c.getAttribute('child_id')
         //alert( '[' + document.forms['directions'].elements['child_' + id].value + ']' );
         var direction = document.forms['directions'].elements['child_' + id].value;
-        checkoutChild( children[i], direction );
+        checkoutChild( children[i], null, null, direction );
     }
 
     commonProc();
