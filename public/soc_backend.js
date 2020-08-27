@@ -128,6 +128,11 @@ function clearWhiteboardHelper(){
         wb.removeChild( wb.firstChild );
         updateFlg   = true;
     }
+    wb = document.getElementById('WHITEBOARD_ABSENT');
+    while ( wb.firstChild){
+        wb.removeChild( wb.firstChild );
+        updateFlg   = true;
+    }
     oLog.log( null, 'all child on whiteboard was cleared.' );
     oLog.open( 3 );
     showWhiteboardChildCount();
@@ -532,6 +537,8 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     // if ( escort == 'ON')
     //     c.setAttribute('escort', 'yes' );
     c.style.position    = 'absolute;'
+    if ( top == '' || top == null ) top = pixelPerHour * ( 12 - 8 );
+    if ( left == '' || left == null ) left = 42; 
 	c.style.top         = top + 'px';
     c.style.left        = left + 'px';
     // c.style.borderRight = arChildGrade[ child_grade ];

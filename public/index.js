@@ -980,6 +980,8 @@ function loadWhiteboardChildren(){
 	var day = dayWhiteboard;
 	var wb = document.getElementById('WHITEBOARD');
 	var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
+	wb.innerHTML 		= '';
+	wb_absent.innerHTML	= '';
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -1017,8 +1019,8 @@ function loadWhiteboardChildren(){
 						}
 
 					} else{							// レコードが存在しなければ
-						wb.innerHTML 		= '';
-						wb_absent.innerHTML	= '';
+						// wb.innerHTML 		= '';
+						// wb_absent.innerHTML	= '';
 					}
 
 					//	WHITEBOARD_FRAMEのスクロール情報を初期化する

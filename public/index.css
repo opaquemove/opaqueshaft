@@ -16,10 +16,11 @@ BODY{
                         sans-serif;
 	font-size:			10px;
 	background-color:	black;
-	background-image:	url(./images/IMG_1739.JPG);
+
+	/* background-image:	url(./images/IMG_1739.JPG);
 	background-position: center center;
 	background-size: 	cover;
-	background-repeat: 	no-repeat;
+	background-repeat: 	no-repeat; */
 
 	overflow:			hidden;
 }
@@ -74,6 +75,21 @@ INPUT[type=password]:focus{
 	background-position: center center;
 	background-size:	40px;
 	background-repeat: 	no-repeat;
+}
+
+#BOTTOM_FRAME{
+	position:			absolute;
+	top:				0px;
+	left:				0px;
+	width:				100%;
+	height:				100%;
+	background-color:	black;
+	background-image:	url(./images/IMG_1739.JPG);
+	background-position: center center;
+	background-size: 	cover;
+	background-repeat: 	no-repeat;
+
+	overflow:			hidden;
 }
 
 #OPAQUESHAFT_TITLE{
