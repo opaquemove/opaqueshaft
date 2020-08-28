@@ -19,6 +19,7 @@ var ongoingTouches = [];
 var wb_touch_cnt		= 0;
 var wb_touch_cnt_max	= 0;
 var wb_description		= '';
+var wb_report			= '';
 
 var pixelPerHour		= 600;
 var oNav				= null;
@@ -952,6 +953,7 @@ function loadWhiteboardHelper(){
 					var result = JSON.parse( xmlhttp.responseText );
 					if ( result.length > 0 ){		//	レコードが存在すれば
 						wb_description			= result[0].description;
+						// wb_report				= result[0].report;
 						// wb.innerHTML 		= result[0].whiteboard;
 						// wb_absent.innerHTML	= result[0].whiteboard_absent;
 
@@ -1090,11 +1092,15 @@ function saveWhiteboard(){
 		r += '<div style="padding-bottom:20px;" >';
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;font-size:16px;" readonly value="' + dayWhiteboard + '" />';
 		r += '</div>';
-		r += '</form>';
 		r += '<div>Description:</div>';
-		r += '<div style="clear:both;font-size:12px;width:100%;height:100px;border:0px solid gray;" >';
+		r += '<div style="clear:both;font-size:12px;width:100%;height:60px;border:0px solid gray;" >';
 		r += '<textarea id="WB_DESC" name="desc" style="width:100%;" >' + wb_description + '</textarea>';
 		r += '</div>';
+		r += '<div>Report:</div>';
+		r += '<div style="clear:both;font-size:12px;width:100%;height:60px;border:0px solid gray;" >';
+		r += '<textarea id="WB_REPORT" name="report" style="width:100%;" >' + wb_report + '</textarea>';
+		r += '</div>';
+		r += '</form>';
 	r += '</div>';
 	openModalDialog( 'save whiteboard', r, 'OK_CANCEL', saveWhiteboardHelper, null );
 }
@@ -1118,7 +1124,7 @@ function saveWhiteboardHelper(){
 
 	var desc =  document.getElementById('WB_DESC').value;
 	wb_description = desc;
-	
+
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/whiteboardupdate", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
