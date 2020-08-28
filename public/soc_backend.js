@@ -8,6 +8,7 @@ var socket = io();
 const arChildGrade = ['','4px solid lightcoral', '4px solid lightgreen', '4px solid lightblue','4px solid lightcyan','4px solid lightyellow','4px solid lightseagreen'];
 const arChildGradeColor = ['','lightcoral', 'lightgreen', 'lightblue', 'lightcyan', 'lightyellow','lightseagreen'];
 
+/*
 socket.on( 'getaccountlist', function ( msg ) {
     var r = "";
     var accs = eval( msg );
@@ -26,6 +27,7 @@ socket.on( 'getaccountlist', function ( msg ) {
     o.innerHTML = r;
 
 })
+*/
 
 //
 //  アカウントリストを取得するsocket.io
@@ -61,24 +63,24 @@ function exchange(){
 //
 //  サーバからチャイルドリストを取得し、実体化
 //
-socket.on( 'getchildrenlist', function ( msg ) {
-    var r = "";
-    var children = eval( msg );
-    var o = document.getElementById('AREA');
-    o.style.visibility = 'visible';
-    for (var i=0; i<children.length; i++) {
-        r += children[i].child_name + '<br/>'; 
-        addChild( i * 20, i * 20, children[i].child_id,
-             children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, false, false );
-    }
-    r += '<br/>length:' + children.length;
+// socket.on( 'getchildrenlist', function ( msg ) {
+//     var r = "";
+//     var children = eval( msg );
+//     var o = document.getElementById('AREA');
+//     o.style.visibility = 'visible';
+//     for (var i=0; i<children.length; i++) {
+//         r += children[i].child_name + '<br/>'; 
+//         addChild( i * 20, i * 20, children[i].child_id,
+//              children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, false, false );
+//     }
+//     r += '<br/>length:' + children.length;
 
-    r += "<div>";
-    r += "<button onclick='clearArea();' >OK</button>";
-    r += "</div>";
-    o.innerHTML = r;
+//     r += "<div>";
+//     r += "<button onclick='clearArea();' >OK</button>";
+//     r += "</div>";
+//     o.innerHTML = r;
 
-})
+// })
 
 /*
 function loadChildrenForm(){
@@ -105,9 +107,9 @@ function loadChildrenForm(){
 //
 //  チャイルドローディング(socket.ioベース)
 //
-function loadChildren(){
-	socket.emit( 'cmd', 'getchildrenlist' );
-}
+// function loadChildren(){
+// 	socket.emit( 'cmd', 'getchildrenlist' );
+// }
 
 //
 //  ホワイトボードの全チャイルドを削除

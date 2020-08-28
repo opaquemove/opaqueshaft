@@ -201,6 +201,7 @@ router.post('/whiteboardload', function(req, res, next ){
 //
 router.post('/whiteboardupdate', function(req, res, next ){
     var day           = req.body.day;
+    var desc          = req.body.desc;
     var html          = req.body.html;
     var html_absent   = req.body.html_absent;
     var json_children = req.body.json_children;
@@ -214,11 +215,11 @@ router.post('/whiteboardupdate', function(req, res, next ){
     console.log('day:'    + day );
     // console.log('alive:'  + html );
     // console.log('absent:' + html_absent );
-    console.log('json_children:' + json_children );
+    // console.log('json_children:' + json_children );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
-        text: "UPDATE whiteboards SET whiteboard = $1, whiteboard_absent = $2 WHERE whiteboard_id = ( SELECT whiteboard_id FROM whiteboards WHERE day = $3)",
-        values: [ html, html_absent, day ] } )
+        text: "UPDATE whiteboards SET description = $1, whiteboard = $2, whiteboard_absent = $3, lastupdate = now() WHERE whiteboard_id = ( SELECT whiteboard_id FROM whiteboards WHERE day = $4)",
+        values: [ desc, html, html_absent, day ] } )
       .then( function() {
         // res.json( { status: 'SUCCESS', message:  'update whiteboard' });
       });

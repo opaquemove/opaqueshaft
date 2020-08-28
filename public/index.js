@@ -18,6 +18,7 @@ var ongoingTouches = [];
 
 var wb_touch_cnt		= 0;
 var wb_touch_cnt_max	= 0;
+var wb_description		= '';
 
 var pixelPerHour		= 600;
 var oNav				= null;
@@ -950,6 +951,7 @@ function loadWhiteboardHelper(){
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
 					if ( result.length > 0 ){		//	レコードが存在すれば
+						wb_description			= result[0].description;
 						// wb.innerHTML 		= result[0].whiteboard;
 						// wb_absent.innerHTML	= result[0].whiteboard_absent;
 
@@ -1080,9 +1082,8 @@ function saveWhiteboard(){
 	resetChildMark();
 	var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
-		r += 'save whiteboard';
+	// 	r += 'save whiteboard';
 	r += '</div>';
-//	r += "<div id='SAVE_STATUS' style='height:20px;text-align:center;' >status</div>";
 	r += '<div style="margin:0 auto;width:70%;font-size:18px;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
@@ -1090,17 +1091,10 @@ function saveWhiteboard(){
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;font-size:16px;" readonly value="' + dayWhiteboard + '" />';
 		r += '</div>';
 		r += '</form>';
-		// r += '<div>Progress:</div>';
-		// r += '<div id="SAVE_PROGRESS" style="clear:both;font-size:12px;width:100%;height:100px;border:1px solid gray;overflow:auto;" >';
-		// r += '</div>';
-		// r += '<button id="BTN_SAVEWHITEBOARD" type="button" ';
-		// 	r += ' style="width:100px;height:50px;font-size:12px;background-image:url(./images/upload.png);background-size:42px;background-position:center center;background-repeat:no-repeat;outline:none;background-color:transparent;border:none;" ';
-		// 	r += ' onclick="saveWhiteboardHelper();" >';
-		// r += '</button>';
-		// r += '<button id="BTN_SAVEWHITEBOARD" type="button" ';
-		// 	r += ' style="width:100px;height:50px;font-size:12px;background-image:url(./images/cancel.png);background-size:42px;background-position:center center;background-repeat:no-repeat;outline:none;background-color:transparent;border:none;" ';
-		// 	r += ' onclick="closeModalDialog();" >';
-		// r += '</button>';
+		r += '<div>Description:</div>';
+		r += '<div style="clear:both;font-size:12px;width:100%;height:100px;border:0px solid gray;" >';
+		r += '<textarea id="WB_DESC" name="desc" style="width:100%;" >' + wb_description + '</textarea>';
+		r += '</div>';
 	r += '</div>';
 	openModalDialog( 'save whiteboard', r, 'OK_CANCEL', saveWhiteboardHelper, null );
 }
@@ -1122,10 +1116,14 @@ function saveWhiteboardHelper(){
 	var wb = document.getElementById('WHITEBOARD');
 	var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
 
+	var desc =  document.getElementById('WB_DESC').value;
+	wb_description = desc;
+	
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/whiteboardupdate", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send( 'day=' + day + '&html=' + encodeURIComponent( wb.innerHTML ) +
+	xmlhttp.send( 'day=' + day + '&desc=' + encodeURIComponent( desc ) +
+				'&html=' + encodeURIComponent( wb.innerHTML ) +
 				'&html_absent=' + encodeURIComponent( wb_absent.innerHTML ) +
 				'&json_children=' + encodeURIComponent( JSON.stringify(json_children ) ) );
 
