@@ -98,7 +98,7 @@ INPUT[type=password]:focus{
 	background-color:	black;
 	background-image:	url(./images/IMG_1739.JPG);
 	background-position: center center;
-	background-size: 	cover;
+	background-size: 	contain;
 	background-repeat: 	no-repeat;
 	overflow:			hidden;
 }
