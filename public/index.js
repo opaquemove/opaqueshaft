@@ -704,6 +704,7 @@ function locateTimelinebar( e ){
 					itb.style.left	= new_left + 'px';
 					var wbf = document.getElementById('WHITEBOARD_FRAME');
 					var wb = document.getElementById('WHITEBOARD');
+					var wba= document.getElementById('WHITEBOARD_ABSENT');
 					var bo = document.getElementById('BOTTOM_OVERLAY');
 					var bf = document.getElementById('BOTTOM_FRAME');
 					if ( parseInt( itb.style.left ) == tlbOffsetLeft + 0 ){
@@ -715,11 +716,13 @@ function locateTimelinebar( e ){
 						bf.style.border 		= '';
 						// console.log('0');
 					} else {
-						wbf.style.perspective	= '50px';
-						wb.style.transform 		= 'translate3d( 0, 0, -10px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						wbf.style.perspective	= '100px';
+						wb.style.transform 		= 'translate3d( 0, 0, -300px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
 						wb.style.border 		= '1px solid white';
-						bo.style.perspective 	= '50px';
-						bf.style.transform 		= 'translate3d( 0, 0, -20px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						wba.style.transform 	= 'translate3d( 0, 0, -350px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						wba.style.border 		= '1px solid red';
+						bo.style.perspective 	= '100px';
+						bf.style.transform 		= 'translate3d( 0, 0, -400px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
 						bf.style.border 		= '1px solid white';
 						// console.log('42');
 					}

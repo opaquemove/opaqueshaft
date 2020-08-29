@@ -104,7 +104,7 @@ INPUT[type=password]:focus{
 }
 
 #OPAQUESHAFT_TITLE{
-	pointer-events: 		all;
+	pointer-events: 		auto;
 	float:					left;
 	width:					140px;
 	height:					54px;
@@ -224,7 +224,7 @@ INPUT[type=password]:focus{
 	position:				absolute;
 	top:					0px;
 	left:					0px;
-	pointer-events: 		all;
+	pointer-events: 		auto;
 	padding-top:			0px;
 	padding-bottom:			2px;
 	width:					100%;
@@ -334,14 +334,14 @@ INPUT[type=password]:focus{
 	visibility:				hidden;
 	width:					100%;
 	height:					42px;
-	pointer-events: 		all;
+	pointer-events: 		auto;
 	background-color:		darkgrey;
 	border-radius: 			4px;
 	overflow:				hidden;
 
 }
 #CHILDFINDER_MAIN{
-	pointer-events: 		all;
+	pointer-events: 		auto;
 	width:					100%;
 	height:					0px;	/*	dummy -> fitting proc */
 	visibility:				hidden;
@@ -631,6 +631,7 @@ INPUT[type=password]:focus{
 }
 
 #WHITEBOARD_ABSENT{
+	pointer-events: 	auto;
 	position: 			absolute;
 	top:				0px;
 	left:				0px;
