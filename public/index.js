@@ -32,7 +32,9 @@ var updateFlg			= false;
 //	タイムライン・バー操作
 //
 var tlx = null;
-var tlbOffset = null;
+var tly = null;
+var tlbOffset 		= null;
+var tlbOffsetLeft	= null;
 var tl_drag = false;
 
 
@@ -80,7 +82,8 @@ function init()
 	oReportDlg = new report_dlg();
 
 	// TIMELINE_BARの初期座標を記憶する
-	tlbOffset = document.getElementById('ID_TIMELINE_BAR').offsetTop;
+	tlbOffset 		= document.getElementById('ID_TIMELINE_BAR').offsetTop;
+	tlbOffsetLeft	= document.getElementById('ID_TIMELINE_BAR').offsetLeft;
 
 	document.oncontextmenu = function(e) { return false; }
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
@@ -666,7 +669,8 @@ function locateTimelinebar( e ){
 			itb.style.paddingLeft	= '60px'
 			itb.style.height		= '84px';
 			itb.style.fontSize 		= '20px';
-			tlx = event.pageY - e.target.offsetTop;
+			tly = event.pageY - event.target.offsetTop;
+			tlx = event.pageX - event.target.offsetLeft;
 			tl_drag = true;
 
 			//	Spotlight UIにセレクトしたチャイルドがあればチェックイン
@@ -678,26 +682,54 @@ function locateTimelinebar( e ){
 			break;
 		case 'touchmove':
 		case 'mousemove':
-			if ( tlx == null ) return;
-			if ( e.target != itb ) return;
-			if ( !tl_drag ) return;
 			if(e.type == "mousemove" ) {
 				var event = e;
 			} else {
 				var event = e.changedTouches[0];
 			}
-			if ( ( event.pageY - tlx ) >= tlbOffset + 0 
-				&& ( event.pageY - tlx ) <= tlbOffset + 132 ){
-				itb.style.top = event.pageY - tlx + "px";
+			if ( tly == null ) 		return;
+			if ( event.target != itb ) 	return;
+			if ( !tl_drag ) 		return;
+			var new_top  = event.pageY - tly;
+			var new_left = event.pageX - tlx
+			if ( ( event.pageY - tly ) >= tlbOffset + 0 
+				&& ( event.pageY - tly ) <= tlbOffset + 132 ){
+				itb.style.top 	= event.pageY - tly + 'px';
+				if ( ( event.pageX - tlx ) >= tlbOffsetLeft + 0
+				&& ( event.pageX - tlx ) <= tlbOffsetLeft + 84 ){
+					itb.style.left	= event.pageX - tlx + 'px';
+					var wbf = document.getElementById('WHITEBOARD_FRAME');
+					var wb = document.getElementById('WHITEBOARD');
+					var bo = document.getElementById('BOTTOM_OVERLAY');
+					var bf = document.getElementById('BOTTOM_FRAME');
+					if ( parseInt( itb.style.left ) == tlbOffsetLeft + 0 ){
+						wbf.style.perspective	= '';
+						wb.style.transform = '';
+						wb.style.border = '';
+						bo.style.perspective = '';
+						bf.style.transform = '';
+						bf.style.border = '';
+						// console.log('0');
+					} else {
+						wbf.style.perspective	= '50px';
+						wb.style.transform = 'translate3d( 0, 0, -10px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						wb.style.border = '1px solid white';
+						bo.style.perspective = '50px';
+						bf.style.transform = 'translate3d( 0, 0, -20px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						bf.style.border = '1px solid white';
+						// console.log('42');
+					}
+				}
+
 				//console.log('bar top:' + ( parseInt(itb.style.top) - tlbOffset ) );
 				//	8:00からマウス増分
-				// var cur_time = ( 60 * 8 ) + ((event.pageY - tlx) * 5) -( 42 * 4 );
+				// var cur_time = ( 60 * 8 ) + ((event.pageY - tly) * 5) -( 42 * 4 );
 				// var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2) + ':00';
-				var ttl_min = ( parseInt(itb.style.top) - tlbOffset ) * 5;
+				var ttl_min = ( parseInt(itb.style.top ) - tlbOffset ) * 5;
 				var h = Math.floor( ttl_min / 60 ) + 8;
 				var m = ttl_min % 60;
 				// console.log( 'hour:' + h + ':' + m );
-				itb.innerText = ( '00' + h ).slice(-2) + ':' + ( '00' + m ).slice(-2);
+				itb.innerHTML = ( '00' + h ).slice(-2) + ':' + ( '00' + m ).slice(-2) + '<br>' + itb.style.left;
 				moveMarkedChildByTimelinebar( h );
 				scrollWhiteboard( h );
 			} else {
@@ -712,7 +744,7 @@ function locateTimelinebar( e ){
 			itb.style.height		= '';
 			itb.style.fontSize 		= '';
 			tl_drag = false;
-			tlx = null;
+			tly = null;
 			break;
 	}
 }
