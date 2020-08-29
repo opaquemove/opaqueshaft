@@ -313,6 +313,11 @@ function init()
 	// tmb.addEventListener( 'mouseup',    locateTimelinebar );
 	// tmb.addEventListener( 'touchend',   locateTimelinebar );
 
+	//
+	//	パースペクティブバー初期化
+	//
+	initPerspectivebar( evtStart, evtMove, evtEnd );
+
 	makeToolbarCheckoutProgress( 0 );
 }
 
@@ -395,16 +400,15 @@ function makeTimelineIndicator(){
 	
 	for ( var i=0; i<arTL.length - 1; i++ ){
 		var guide = document.createElement('DIV');
-		guide.style.position		= 'absolute';
+		guide.setAttribute('class', 'timeline2_class' );
+		// guide.style.position		= 'absolute';
 		guide.style.top				= ( ( i + 1 ) * pixelPerHour - 1 )+ 'px';
-		guide.style.left			= '40%';
-		// guide.style.left			= wbt_width + 'px';
-		// guide.style.width			= '2000px';
-		guide.style.width			= '20%';
-		guide.style.margin			= '0 auto';
-		guide.style.height			= '1px';
-		guide.style.backgroundColor	= 'transparent';
-		guide.style.borderBottom	= '1px dashed lightgrey';
+		// guide.style.left			= '40%';
+		// guide.style.width			= '20%';
+		// guide.style.margin			= '0 auto';
+		// guide.style.height			= '1px';
+		// guide.style.backgroundColor	= 'transparent';
+		// guide.style.borderBottom	= '1px dashed lightgrey';
 		guide.style.pointerEvents	= 'auto';
 		// guide.style.zIndex			= 17000;
 		guide.innerHTML				= '&nbsp;';
@@ -692,31 +696,31 @@ function locateTimelinebar( e ){
 			if ( !tl_drag ) 		return;
 			var new_top  = event.pageY - tly;
 			var new_left = event.pageX - tlx
-			if ( ( event.pageY - tly ) >= tlbOffset + 0 
-				&& ( event.pageY - tly ) <= tlbOffset + 132 ){
-				itb.style.top 	= event.pageY - tly + 'px';
-				if ( ( event.pageX - tlx ) >= tlbOffsetLeft + 0
-				&& ( event.pageX - tlx ) <= tlbOffsetLeft + 84 ){
-					itb.style.left	= event.pageX - tlx + 'px';
+			if ( ( new_top ) >= tlbOffset + 0 
+				&& ( new_top ) <= tlbOffset + 132 ){
+				itb.style.top 	= new_top + 'px';
+				if ( ( new_left ) >= tlbOffsetLeft + 0
+				&& ( new_left ) <= tlbOffsetLeft + 84 ){
+					itb.style.left	= new_left + 'px';
 					var wbf = document.getElementById('WHITEBOARD_FRAME');
 					var wb = document.getElementById('WHITEBOARD');
 					var bo = document.getElementById('BOTTOM_OVERLAY');
 					var bf = document.getElementById('BOTTOM_FRAME');
 					if ( parseInt( itb.style.left ) == tlbOffsetLeft + 0 ){
 						wbf.style.perspective	= '';
-						wb.style.transform = '';
-						wb.style.border = '';
-						bo.style.perspective = '';
-						bf.style.transform = '';
-						bf.style.border = '';
+						wb.style.transform 		= '';
+						wb.style.border 		= '';
+						bo.style.perspective 	= '';
+						bf.style.transform 		= '';
+						bf.style.border 		= '';
 						// console.log('0');
 					} else {
 						wbf.style.perspective	= '50px';
-						wb.style.transform = 'translate3d( 0, 0, -10px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
-						wb.style.border = '1px solid white';
-						bo.style.perspective = '50px';
-						bf.style.transform = 'translate3d( 0, 0, -20px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
-						bf.style.border = '1px solid white';
+						wb.style.transform 		= 'translate3d( 0, 0, -10px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						wb.style.border 		= '1px solid white';
+						bo.style.perspective 	= '50px';
+						bf.style.transform 		= 'translate3d( 0, 0, -20px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						bf.style.border 		= '1px solid white';
 						// console.log('42');
 					}
 				}
@@ -1883,6 +1887,7 @@ function showToolbar(){
 	// var is		= document.getElementById('ID_SEARCH');
 	// var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
+	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'visible';
 	nsi2.style.visibility	= 'visible';
@@ -1891,6 +1896,7 @@ function showToolbar(){
 	// is.style.visibility		= 'visible';
 	// ic.style.visibility		= 'visible';
 	tlb.style.visibility	= 'visible';
+	psb.style.visibility	= 'visible';
 	eam.style.visibility	= 'visible';
 	visibleWhiteboard();
 
@@ -1905,6 +1911,7 @@ function hideToolbar(){
 	// var is		= document.getElementById('ID_SEARCH');
 	// var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
+	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'hidden';
 	nsi2.style.visibility	= 'hidden';
@@ -1913,6 +1920,7 @@ function hideToolbar(){
 	// is.style.visibility		= 'hidden';
 	// ic.style.visibility		= 'hidden';
 	tlb.style.visibility	= 'hidden';
+	psb.style.visibility	= 'hidden';
 	eam.style.visibility	= 'hidden';
 	hiddenWhiteboard();
 
