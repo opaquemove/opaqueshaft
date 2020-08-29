@@ -84,9 +84,9 @@ function locatePerspectivebar( e ){
                         wbt.style.opacity           = 0.5;
                         wbf.style.perspective   = '270px';
                         wb.style.border         = '1px solid white';
-                        wb.style.transform      = 'translateZ(-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
-                        wbt.style.transform     = 'translateZ(-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
-                        wba.style.transform     = 'translateZ(-' + ( new_top - psbOffsetTop + 60 ) * 2 + 'px)' + rotate;
+                        wb.style.transform      = 'translate3d(0,0,-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
+                        wbt.style.transform     = 'translate3d(0,0,-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
+                        wba.style.transform     = 'translate3d(0,0,-' + ( new_top - psbOffsetTop + 60 ) * 2 + 'px)' + rotate;
                         var timelines = document.getElementsByClassName('timeline2_class');
                         for ( var i=0; i<timelines.length; i++ ){
                             var tlb = timelines[i];
