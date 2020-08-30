@@ -74,7 +74,17 @@ function locatePerspectivebar( e ){
                     var wb  = document.getElementById('WHITEBOARD');
                     var wbt = document.getElementById('WHITEBOARD_TIMELINE');
                     var wba = document.getElementById('WHITEBOARD_ABSENT');
-                
+                    var bo = document.getElementById('BOTTOM_OVERLAY');
+					var bf = document.getElementById('BOTTOM_FRAME');
+
+                    if ( new_top == psbOffsetTop && new_left == psbOffsetLeft ){
+                        bo.style.perspective 	= '';
+						bf.style.transform 		= '';
+                    } else{
+                        bo.style.perspective 	= '270px';
+						bf.style.transform 		= 'translate3d( 0px, 0px, -400px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
+                    }
+/*                
                     if ( new_top == psbOffsetTop && new_left == psbOffsetLeft ){
                         wbf.style.perspective           = '270px';
                         wba.style.border                = '';
@@ -92,6 +102,7 @@ function locatePerspectivebar( e ){
                             tlb.style.transform = 'translate3d(0px,0px,-300px)' + rotate;
                         }                    
                     } 
+*/
                 } else{
                     if ( new_top < psbOffsetTop ) new_top = psbOffsetTop;
                         else                        new_top = psbOffsetTop + 270;
