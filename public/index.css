@@ -608,12 +608,12 @@ INPUT[type=password]:focus{
 #WHITEBOARD_TIMELINE{
 	position: 			absolute;
 	top:				0px;
-	left:				42px;
-	width:				42px;
+	left:				0px;
+	width:				84px;
 	height:				7200px;			/* 600 * 12hours */
 	float:				left;
 	border-top:			0px solid red;
-	border-bottom:		1px solid lightgrey;
+	border-bottom:		0px solid lightgrey;
 	padding:			0px;
 }
 #WHITEBOARD{
@@ -645,11 +645,11 @@ INPUT[type=password]:focus{
 }
 
 .timeline_class{
-	width:				42px;
+	width:				84px;
 	height:				598px;		/* 600 pixel Per Hour */
 	color:				white;
 	/* background-color:	darkgray; */
-	font-size:			24px;
+	font-size:			48px;
 	font-weight:		bold;
 	text-align:			center;
 	padding:			0px;

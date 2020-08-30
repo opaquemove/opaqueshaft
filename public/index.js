@@ -213,6 +213,7 @@ function init()
 //	new Button( 'CHILD_FINDER',				childFinder    ).play();
 //	new Button( 'ID_NAV',                   ctlNav         ).play();
 	// new Button( 'ID_SEARCH',                ctlSpotlight   ).play();
+	new Button( 'WHITEBOARD_DAY_FRAME',     saveWhiteboard ).play();
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	// new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();

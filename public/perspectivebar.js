@@ -90,12 +90,14 @@ function locatePerspectivebar( e ){
                         wbf.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
                         // bo.style.perspective 	= '770px';
                         // wbf.style.perspective 	= '770px';
-                        wb.style.transformStyle    = 'preserve-3d';
-                        wba.style.transformStyle    = 'preserve-3d';
-						bf.style.transform 		= 'translate3d( 0px, 0px, -2800px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
-						wba.style.transform 	= 'translate3d( 0px, 0px, -2700px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
-						wb.style.transform 		= 'translate3d( 0px, 0px, -2600px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
-                        wba.style.border                = '1px solid red';
+                        wb.style.transformStyle         = 'preserve-3d';
+                        wba.style.transformStyle        = 'preserve-3d';
+                        wbt.style.transformStyle        = 'preserve-3d';
+						bf.style.transform 		        = 'translate3d( 0px, 0px, -2710px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
+						wba.style.transform 	        = 'translate3d( 0px, 0px, -2700px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
+						wb.style.transform 		        = 'translate3d( 0px, 0px, -2600px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
+						wbt.style.transform 		    = 'translate3d( 0px, 0px, -2600px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
+                        wba.style.border                = '1px dashed white';
                         wb.style.border                 = '1px solid white';
                     }
 /*                

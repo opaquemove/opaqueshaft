@@ -352,10 +352,11 @@ function absentWhiteboard(){
 
     r += '<div id="ABSENT_LIST" style="width:90%;height:140px;clear:both;margin:0 auto;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
-    r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
-        r += '<button onclick="attendChild();" style="width:180px;height:40px;border:none;background-color:transparent;font-size:24px;background-image:url(./images/entry.png);background-size:30px;background-repeat:no-repeat;background-position:left center;" >Attend</button>';
-    r += '</div>';
-    openModalDialog( 'absent ' + dayWhiteboard, r, 'NORMAL', null, null );
+    // r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
+    //     r += '<button onclick="attendChild();" style="width:180px;height:40px;border:none;background-color:transparent;font-size:24px;background-image:url(./images/entry.png);background-size:30px;background-repeat:no-repeat;background-position:left center;" >Attend</button>';
+    // r += '</div>';
+
+    openModalDialog( 'absent ' + dayWhiteboard, r, 'OK_CANCEL', attendChild, null );
     absentWhiteboardSummary();
     absentWhiteboardDetail();
 }
