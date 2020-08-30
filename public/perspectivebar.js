@@ -86,11 +86,13 @@ function locatePerspectivebar( e ){
                         wba.style.border                = '';
                         wb.style.border                 = '';
                     } else{
-                        bo.style.perspective 	= 770 + ( new_top - psbOffsetTop ) + 'px';
-                        wbf.style.perspective 	= 770 + ( new_top - psbOffsetTop ) + 'px';
+                        // bo.style.perspective 	= 770 + ( new_top - psbOffsetTop ) + 'px';
+                        // wbf.style.perspective 	= 770 + ( new_top - psbOffsetTop ) + 'px';
+                        bo.style.perspective 	= '770px';
+                        wbf.style.perspective 	= '770px';
 						bf.style.transform 		= 'translate3d( 0px, 0px, -800px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
-						wba.style.transform 	= 'translate3d( 0px, 0px, -800px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
-						wb.style.transform 		= 'translate3d( 0px, 0px, -400px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
+						wba.style.transform 	= 'translate3d( 0px, 0px, -' + ( new_top - psbOffsetTop ) *2       + 'px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
+						wb.style.transform 		= 'translate3d( 0px, 0px, -' + ( new_top - psbOffsetTop ) *2       + 'px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
                         wba.style.border                = '1px solid red';
                         wb.style.border                 = '1px solid white';
                     }
