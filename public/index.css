@@ -594,7 +594,7 @@ INPUT[type=password]:focus{
 
 #WHITEBOARD_FRAME{
 	position:			fixed;
-	perspective:		270px;
+	/* perspective:		270px; */
 	/* top:				84px; */
 	top:				0px;
 	left:				0px;
