@@ -71,27 +71,13 @@ function locatePerspectivebar( e ){
                     var rotate = ' rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
                     
                     if ( new_top == psbOffsetTop && new_left == psbOffsetLeft ){
-                        // wbf.style.perspective           = 'none';
+                        wbf.style.perspective           = '270px';
                         wba.style.border                = '';
-                        // wba.style.backgroundColor   = '';
-                        // wbt.style.backgroundColor       = '';
-                        // wbt.style.opacity               = 1;
                         wb.style.border                 = '';
                     } else{
-                        wbf.style.perspective           = 270 + ( new_top - psbOffsetTop ) + 'px';
+                        wbf.style.perspective           = 70 - ( new_top - psbOffsetTop )  + 'px';
                         wba.style.border                = '1px solid red';
-                        // wba.style.backgroundColor   = 'red';
-                        // wbt.style.backgroundColor       = 'red';
-                        // wbt.style.opacity               = 0.5;
                         wb.style.border                 = '1px solid white';
-                        // wb.style.transform              = 'translate3d(0px, 0px,-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
-                        // wbt.style.transform             = 'translate3d(0px, 0px,-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
-                        // wba.style.transform             = 'translate3d(0,0,-' + ( new_top - psbOffsetTop + 60 ) * 2 + 'px)' + rotate;
-                        // var timelines = document.getElementsByClassName('timeline2_class');
-                        // for ( var i=0; i<timelines.length; i++ ){
-                        //     var tlb = timelines[i];
-                        //     tlb.style.transform = 'translate3d(0px,0px,-' + ( new_top - psbOffsetTop ) * 2 + 'px)' + rotate;
-                        // }                    
                         wb.style.transform              = 'translate3d(0px, 0px,-300px)' + rotate;
                         wbt.style.transform             = 'translate3d(0px, 0px,-300px)' + rotate;
                         wba.style.transform             = 'translate3d(0px, 0px,-350px)' + rotate;
@@ -116,3 +102,13 @@ function locatePerspectivebar( e ){
 			break;
 	}
 }
+
+//stock
+                        // wb.style.transform              = 'translate3d(0px, 0px,-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
+                        // wbt.style.transform             = 'translate3d(0px, 0px,-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
+                        // wba.style.transform             = 'translate3d(0,0,-' + ( new_top - psbOffsetTop + 60 ) * 2 + 'px)' + rotate;
+                        // var timelines = document.getElementsByClassName('timeline2_class');
+                        // for ( var i=0; i<timelines.length; i++ ){
+                        //     var tlb = timelines[i];
+                        //     tlb.style.transform = 'translate3d(0px,0px,-' + ( new_top - psbOffsetTop ) * 2 + 'px)' + rotate;
+                        // }                    
