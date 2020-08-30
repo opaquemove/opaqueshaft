@@ -87,8 +87,8 @@ function locatePerspectivebar( e ){
                         wb.style.border                 = '';
                     } else{
                         bo.style.perspective 	= 770 + ( new_top - psbOffsetTop ) + 'px';
-						bf.style.transform 		= 'translate3d( 0px, 0px, -800px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
                         wbf.style.perspective 	= 770 + ( new_top - psbOffsetTop ) + 'px';
+						bf.style.transform 		= 'translate3d( 0px, 0px, -800px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
 						wba.style.transform 	= 'translate3d( 0px, 0px, -800px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
 						wb.style.transform 		= 'translate3d( 0px, 0px, -400px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
                         wba.style.border                = '1px solid red';
