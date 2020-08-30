@@ -86,8 +86,8 @@ function locatePerspectivebar( e ){
                         wba.style.border                = '';
                         wb.style.border                 = '';
                     } else{
-                        bo.style.perspective 	= 1770 + ( new_top - psbOffsetTop ) + 'px';
-                        wbf.style.perspective 	= 1770 + ( new_top - psbOffsetTop ) + 'px';
+                        bo.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
+                        wbf.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
                         // bo.style.perspective 	= '770px';
                         // wbf.style.perspective 	= '770px';
                         wb.style.transformStyle    = 'preserve-3d';
