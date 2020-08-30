@@ -81,7 +81,7 @@ function locatePerspectivebar( e ){
                         bo.style.perspective 	= '';
 						bf.style.transform 		= '';
                     } else{
-                        bo.style.perspective 	= '270px';
+                        bo.style.perspective 	= 270 + ( new_top - psbOffsetTop ) + 'px';
 						bf.style.transform 		= 'translate3d( 0px, 0px, -400px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
                     }
 /*                
