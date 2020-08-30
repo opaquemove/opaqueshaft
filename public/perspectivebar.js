@@ -74,15 +74,15 @@ function locatePerspectivebar( e ){
                         // wbf.style.perspective           = 'none';
                         wba.style.border                = '';
                         // wba.style.backgroundColor   = '';
-                        wbt.style.backgroundColor       = '';
-                        wbt.style.opacity               = 1;
+                        // wbt.style.backgroundColor       = '';
+                        // wbt.style.opacity               = 1;
                         wb.style.border                 = '';
                     } else{
                         // wbf.style.perspective           = '270px';
                         wba.style.border                = '1px solid red';
                         // wba.style.backgroundColor   = 'red';
-                        wbt.style.backgroundColor       = 'red';
-                        wbt.style.opacity               = 0.5;
+                        // wbt.style.backgroundColor       = 'red';
+                        // wbt.style.opacity               = 0.5;
                         wb.style.border                 = '1px solid white';
                         wb.style.transform              = 'translate3d(0,0,-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
                         wbt.style.transform             = 'translate3d(0,0,-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
