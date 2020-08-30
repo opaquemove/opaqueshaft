@@ -593,7 +593,7 @@ INPUT[type=password]:focus{
 
 
 #WHITEBOARD_FRAME{
-	position:			fixed;
+	position:			absolute;
 	/* perspective:		270px; */
 	/* top:				84px; */
 	top:				0px;
@@ -602,8 +602,7 @@ INPUT[type=password]:focus{
 	height:				100%;	/* fitting */
 	/* background-color:	white; */
 	padding:			0px;
-	overflow-x:			hidden;
-	overflow-y:			scroll;
+	overflow:			scroll;
 	z-index:			0;
 }
 #WHITEBOARD_TIMELINE{
