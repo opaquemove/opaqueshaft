@@ -78,13 +78,13 @@ function locatePerspectivebar( e ){
 					var bf = document.getElementById('BOTTOM_FRAME');
 
                     if ( new_top == psbOffsetTop && new_left == psbOffsetLeft ){
-                        // bo.style.perspective 	= '';
-						// bf.style.transform 		= '';
+                        bo.style.perspective 	= '';
+						bf.style.transform 		= '';
                         wbf.style.perspective 	= '';
 						wb.style.transform 		= '';
                     } else{
-                        // bo.style.perspective 	= 270 + ( new_top - psbOffsetTop ) + 'px';
-						// bf.style.transform 		= 'translate3d( 0px, 0px, -400px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
+                        bo.style.perspective 	= 270 + ( new_top - psbOffsetTop ) + 'px';
+						bf.style.transform 		= 'translate3d( 0px, 0px, -400px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
                         wbf.style.perspective 	= 270 + ( new_top - psbOffsetTop ) + 'px';
 						wb.style.transform 		= 'translate3d( 0px, 0px, -300px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
                     }
