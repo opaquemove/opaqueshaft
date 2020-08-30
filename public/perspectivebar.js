@@ -69,7 +69,12 @@ function locatePerspectivebar( e ){
                     }
                     // console.log('left:' +  ( new_left - psbOffsetLeft ) );
                     var rotate = ' rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
-                    
+
+                    var wbf = document.getElementById('WHITEBOARD_FRAME');
+                    var wb  = document.getElementById('WHITEBOARD');
+                    var wbt = document.getElementById('WHITEBOARD_TIMELINE');
+                    var wba = document.getElementById('WHITEBOARD_ABSENT');
+                
                     if ( new_top == psbOffsetTop && new_left == psbOffsetLeft ){
                         wbf.style.perspective           = '270px';
                         wba.style.border                = '';
