@@ -48,7 +48,7 @@ socket.on( 'opaqueshaft', function( data ){
             var left	= ( parseInt( arHM[1] ) );
             var child_id = pac.data.child_id;
             var oChild  = getChild( child_id );
-            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, false, false );
+            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, null, false, false );
             break;
     }
 })
@@ -71,7 +71,7 @@ function exchange(){
 //     for (var i=0; i<children.length; i++) {
 //         r += children[i].child_name + '<br/>'; 
 //         addChild( i * 20, i * 20, children[i].child_id,
-//              children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, false, false );
+//              children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, null, false, false );
 //     }
 //     r += '<br/>length:' + children.length;
 
@@ -166,6 +166,7 @@ function reportWhiteboard(){
         r += '<div style="float:right;width:40px;height:100%;padding:1px;border-left:1px solid white;" >Escort</div>';
         r += '<div style="float:right;width:30px;height:100%;padding:1px;border-left:1px solid white;" >Type</div>';
         r += '<div style="float:right;width:40px;height:100%;padding:1px;border-left:1px solid white;" >Grade</div>';
+        r += '<div style="float:right;width:120px;height:100%;padding:1px;border-left:1px solid white;" >Remark</div>';
     r += '</div>';
     r += '<div id="REPORT_LIST" style="width:97%;height:;font-size:12px;clear:both;margin:0 auto;border:0px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
@@ -261,6 +262,8 @@ function reportWhiteboardDetail(){
             var direction   = children[j].getAttribute('direction');
                 direction   = ( direction != null )? direction : '---';
             var escort      = ( children[j].hasAttribute('escort') )?'yes':'no';
+            var remark      = ( children[j].hasAttribute('remark') )?
+                                decodeURIComponent( children[j].getAttribute('remark') ) : '';
             var r = '';
             r += '<div style="clear:both;font-size:12px;padding:2px;" >';
                 r += '<div style="float:left;"  >' + child_name + '</div>';
@@ -271,6 +274,7 @@ function reportWhiteboardDetail(){
                 r += '<div style="float:right;width:40px;" >' + escort      + '</div>';
                 r += '<div style="float:right;width:30px;" >' + child_type  + '</div>';
                 r += '<div style="float:right;width:40px;" >' + child_grade + '</div>';
+                r += '<div style="float:right;width:120px;" >' + remark      + '</div>';
             r += '</div>';
             cc.style.height = '16px';
             cc.innerHTML    = r;
@@ -303,6 +307,8 @@ function reportWhiteboardDetail(){
         var direction   = c.getAttribute('direction');
             direction   = ( direction != null )? direction : '---';
         var escort      = ( c.hasAttribute('escort') )?'yes':'no';
+        var remark      = ( c.hasAttribute('remark') )?
+                            decodeURIComponent( c.getAttribute('remark') ) : '';
         var r = '';
         r += '<div style="clear:both;font-size:12px;padding:2px;" >';
             r += '<div style="float:left;"  >' + child_name + '</div>';
@@ -313,6 +319,7 @@ function reportWhiteboardDetail(){
             r += '<div style="float:right;width:40px;" >' + escort      + '</div>';
             r += '<div style="float:right;width:30px;" >' + child_type  + '</div>';
             r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
+            r += '<div style="float:right;width:120px;" >' + remark     + '</div>';
         r += '</div>';
         // cc.style.backgroundColor = 'orange';
         cc.style.height = '16px';
@@ -516,7 +523,7 @@ function getChildrenByHour( h ){
 //
 //  WhiteBoardにチャイルド(240x60)を実体化
 //
-function addChild( top, left, child_id, child_name, kana, child_type, child_grade, absent, mark ){
+function addChild( top, left, child_id, child_name, kana, child_type, child_grade, remark, absent, mark ){
     var now = new Date();
     var h = ( '00' + now.getHours() ).slice(-2);
     var m = ( '00' + now.getMinutes() ).slice(-2);
@@ -534,6 +541,8 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     c.setAttribute('checkin',     checkin_time );
     c.setAttribute('child_type',  child_type );
     c.setAttribute('child_grade', child_grade );
+    if ( remark == null ) remark = '';
+    c.setAttribute('remark', encodeURIComponent( remark ) );
 
     //c.setAttribute("draggable", "true");
 
@@ -654,6 +663,8 @@ function propertyWhiteboardChild( c ){
     var direction   = ( c.hasAttribute('direction') )? c.getAttribute('direction') : '---';
     var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
     var escort      = ( c.hasAttribute('escort') )? 'yes':'no';
+    var remark      = ( c.hasAttribute('remark') )? decodeURIComponent( c.getAttribute('remark') ) : '';
+
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
 		r += 'Property of whiteboard child';
@@ -663,13 +674,24 @@ function propertyWhiteboardChild( c ){
         r += '<div style="font-size:16px;border-bottom:1px solid lightgrey;" >';
         r += child_name + '&nbsp;' + child_grade + child_type;
         r += '</div>';
-        r += '<div style="padding-top:2px;" >checkin time:'  + checkin   + '</div>';
-        r += '<div style="padding-top:2px;" >estimate time:' + estimate  + '</div>';
-        r += '<div style="padding-top:2px;" >checkout time:' + checkout  + '</div>';
-        r += '<div style="padding-top:2px;" >direction:'     + direction + '</div>';
-        r += '<div style="padding-top:2px;" >escort:'        + escort    + '</div>';
+        r += '<div style="display:flex;" >';
+            r += '<div style="padding:4px;" >checkin time:'  + checkin   + '</div>';
+            r += '<div style="padding:4px;" >estimate time:' + estimate  + '</div>';
+            r += '<div style="padding:4px;" >checkout time:' + checkout  + '</div>';
+            r += '<div style="padding:4px;" >direction:'     + direction + '</div>';
+            r += '<div style="padding:4px;" >escort:'        + escort    + '</div>';
+        r += '</div>';
 
-        r += '<div style="font-size:16px;" >';
+        r += '<div style="clear:both;font-size:16px;" >';
+            r += 'Remark:'
+        r += '</div>';
+        r += '<div style="width:100%;height:60px;" >';
+            r += '<form name="childProp" onsubmit="return false;" >';
+                r += '<textarea name="remark" style="width:100%;height:100%;" >' + remark + '</textarea>';
+            r += '</form>';
+        r += '</div>';
+
+        r += '<div style="clear:both;font-size:16px;" >';
             r += 'Histories:'
         r += '</div>';
         r += '<div id="HISTORY_HDR" style="clear:both;color:red;height:16px;background-color:lightgrey;border:1px solid lightgrey;" >';
@@ -697,8 +719,21 @@ function propertyWhiteboardChild( c ){
         r += "</div>";
 */
         r += "</div>";
-    openModalDialog( 'Property of child', r, 'NORMAL', null, null );
+    openModalDialog( 'Property of child', r, 'OK_CANCEL', updateChildRemark, null );
+
     propertyWhiteboardChildHelper( id );
+
+}
+
+//
+//
+//
+function updateChildRemark(){
+    var children = getMarkedChild();
+    if ( children.length != 1 ) return;
+    var c = children[0];
+    var remark = childProp.remark.value;
+    c.setAttribute( 'remark', encodeURIComponent( remark ) );
 
 }
 

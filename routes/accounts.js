@@ -250,10 +250,11 @@ router.post('/whiteboardupdate', function(req, res, next ){
         var child_id    = rslt.child_id;
         var coordi_top  = rslt.coordi_top;
         var coordi_left = rslt.coordi_left;
-        var inssql = "insert into results( acc_id, day, child_id, child_name, child_grade,child_type, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_left, lastupdate ) select $1 acc_id, $2, child_id,child_name,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, $8 absent, $9 coordi_top, $10 coordi_left, now() lastupdate from children where child_id = $11";
+        var remark      = rslt.remark;
+        var inssql = "insert into results( acc_id, day, child_id, child_name, child_grade, child_type, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_left, remark, lastupdate ) select $1 acc_id, $2, child_id,child_name,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, $8 absent, $9 coordi_top, $10 coordi_left, $11 remark, now() lastupdate from children where child_id = $12";
         db.none( {
           text: inssql,
-          values: [ acc_id, day, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_left, child_id ] } )
+          values: [ acc_id, day, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_left, remark, child_id ] } )
         .then( function() {
         });
       }

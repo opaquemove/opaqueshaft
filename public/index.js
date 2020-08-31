@@ -172,10 +172,10 @@ function init()
 			var p = e.target.parentNode;
 		
 			//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
-//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, false, false );
+//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, null, false, false );
 			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
 				 e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
-				 oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, false, false );
+				 oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, null, false, false );
 			dndOffsetX = 0;
 			dndOffsetY = 0;
 			showWhiteboardChildCount();
@@ -1057,7 +1057,7 @@ function loadWhiteboardChildren(){
 							var c = result[i];
 							var cc = addChild( c.coordi_top, c.coordi_left,
 								c.child_id, c.child_name, c.kana,
-								c.child_type, c.child_grade, ( c.absent == 1 )?true : false, false );
+								c.child_type, c.child_grade, c.remark, ( c.absent == 1 )?true : false, false );
 							if ( c.checkout != '' && c.checkout != null )
 								checkoutChild( cc, c.acc_id, c.checkout, c.direction );
 						}
@@ -1248,6 +1248,7 @@ function getJSONChildren(){
 		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
 		var direction	= c.getAttribute('direction');
 		if ( direction == null ) direction = '';
+		var remark 		= ( c.hasAttribute('remark') )? decodeURIComponent( c.getAttribute('remark') ) : '';
 		jsonChildren.push( {
 			 'child_id' 	: child_id,
 			 'checkin'		: checkin,
@@ -1257,6 +1258,7 @@ function getJSONChildren(){
 			 'direction'	: direction,
 			 'coordi_top'	: coordi_top,
 			 'coordi_left'	: coordi_left,
+			 'remark'		: remark,
 			 'absent' 		: 0
 			 } );
 	}
@@ -1274,6 +1276,7 @@ function getJSONChildren(){
 		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
 		var direction	= c.getAttribute('direction');
 		if ( direction == null ) direction = '';
+		var remark 		= ( c.hasAttribute('remark') )? decodeURIComponent( c.getAttribute('remark') ) : '';
 		jsonChildren.push( {
 			 'child_id' 	: child_id,
 			 'checkin'		: checkin,
@@ -1283,6 +1286,7 @@ function getJSONChildren(){
 			 'direction'	: direction,
 			 'coordi_top'	: coordi_top,
 			 'coordi_left'	: coordi_left,
+			 'remark'		: remark,
 			 'absent' 		: 1
 			 } );
 	}
@@ -2573,7 +2577,7 @@ function checkinSelectedChild( hm ){
 				oLog.open( 3 );
 				continue;
 			} 
-			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, false, false );
+			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, false, false );
 			cursor++;
 			c.classList.remove('selected');
 			// c.style.color = '';
@@ -2601,7 +2605,7 @@ function checkinSelectedChild( hm ){
 					oLog.open( 3 );
 					continue;
 				} 
-				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, false, false );
+				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, false, false );
 				cursor++;
 				c.classList.remove('selected');
 				// c.style.color = '';
