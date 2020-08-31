@@ -2739,6 +2739,11 @@ function mDown( e ) {
 		var event = e.changedTouches[0];
 		console.log( 'touchstart identifier:' + event.identifier );
 		t_id = event.identifier;
+		// マルチタップ
+		if ( e.changedTouches.length > 1 ){
+			if ( e.changedTouches[0].identifier == e.changedTouches[1].identifier )
+				propertyWhiteboardChild( this );
+		}
 	}
 	//e.stopPropagation();
 	//要素内の相対座標を取得
