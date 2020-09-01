@@ -218,17 +218,7 @@ function init()
 	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	// new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();
 	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
-	// new Button( 'CPC_ADD_CHILD',            newChildForm ).play();
-	// new Button( 'ID_SHEET_ESCORT',          turnWhiteboard ).play();
-	new Button( 'CPC_UPDATE_CHILD_TIME',	showTimelineSelector ).play();
-	// new Button( 'ID_GRADE1',                null           ).play();
-	// new Button( 'ID_GRADE2',                null           ).play();
-	// new Button( 'ID_GRADE3',                null           ).play();
-	// new Button( 'ID_GRADE4',                null           ).play();
-	// new Button( 'ID_GRADE5',                null           ).play();
-	// new Button( 'ID_GRADE6',                null           ).play();
-	// new Button( 'ID_REPORT',				reportWhiteboard ).play();
-	// new Button( 'ID_TILE',					showTile ).play();
+	// new Button( 'CPC_UPDATE_CHILD_TIME',	showTimelineSelector ).play();
 	new Button( 'ID_NAV_TILE',  			showTile ).play();
 	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
 	new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
@@ -1079,9 +1069,12 @@ function loadWhiteboardChildren(){
 						// 		else			wb_absent.childNodes[i].addEventListener( "mousedown",  mDown, false );
 						// }
 
+						var w = document.body.clientWidth;
+
 						for ( var i=0; i<result.length; i++ ){
 							var c = result[i];
-							var cc = addChild( c.coordi_top, c.coordi_left,
+							var cc = addChild( c.coordi_top, ( w * ( c.coordi_left / 100 ) ),
+							// var cc = addChild( c.coordi_top, c.coordi_left,
 								c.child_id, c.child_name, c.kana,
 								c.child_type, c.child_grade, c.remark, ( c.absent == 1 )?true : false, false );
 							if ( c.checkout != '' && c.checkout != null )
@@ -1259,13 +1252,16 @@ function saveWhiteboardHelper(){
 // チルドレンのJSONデータ生成
 //
 function getJSONChildren(){
+	var w = document.body.clientWidth;
+
 	var jsonChildren = [];
 	var children = document.getElementById('WHITEBOARD').childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
 		var child_id	= c.getAttribute('child_id');
 		var coordi_top	= c.offsetTop;
-		var coordi_left	= c.offsetLeft;
+		// var coordi_left	= c.offsetLeft;
+		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
 		var checkin		= c.getAttribute('checkin');
 		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
 		var checkout	= c.getAttribute('checkout');
@@ -1596,6 +1592,7 @@ function Nav( func ){
 	m.style.color			= 'snow';
 	m.style.backgroundColor	= 'transparent';
 	m.style.fontSize		= '14px';
+	m.style.pointerEvents	= 'none';
 	m.style.zIndex			= 65000;
 	m.style.visibility		= 'hidden';
 	var r = '';
@@ -2759,8 +2756,12 @@ function makeTimelineContextMenu( id ){
 function mDown( e ) {
 	var touchdevice = ( 'ontouchend' in document );
 	var t_id = null;
-	console.log('mDown');
 	curChild = this;
+
+	var w = document.body.clientWidth;
+	var ratioLeft = Math.floor( curChild.offsetLeft / w * 10000 ) / 100;
+
+	console.log('mDown:' + '(' + curChild.offsetLeft + '/' + w + ')' + ratioLeft );
 	//クラス名に .drag を追加
 	curChild.classList.add("drag");
 	curChildZIndex = curChild.style.zIndex;
