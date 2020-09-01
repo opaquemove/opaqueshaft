@@ -306,6 +306,7 @@ function init()
 	tmb.addEventListener( evtMove,     		locateTimelinebar, { passive : false } );
 	tmb.addEventListener( evtEnd,      		locateTimelinebar, { passive : false } );
 	tmb.addEventListener( 'mouseleave', 	locateTimelinebar, { passive : false } );
+	tmb.addEventListener( 'dblclick',	 	locateTimelinebar, { passive : false } );
 
 	// tmb.addEventListener( 'mousedown',  locateTimelinebar );
 	// tmb.addEventListener( 'touchstart', locateTimelinebar );
@@ -658,6 +659,7 @@ function locateTimelinebar( e ){
 
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	var wb = document.getElementById('WHITEBOARD');
+	var wba= document.getElementById('WHITEBOARD_ABSENT');
 	var itb = document.getElementById('ID_TIMELINE_BAR');
 	switch ( e.type ){
 		case 'touchstart':
@@ -704,27 +706,35 @@ function locateTimelinebar( e ){
 				&& ( new_left ) <= tlbOffsetLeft + 84 ){
 					itb.style.left	= new_left + 'px';
 					var wbf = document.getElementById('WHITEBOARD_FRAME');
-					var wb = document.getElementById('WHITEBOARD');
-					var wba= document.getElementById('WHITEBOARD_ABSENT');
-					var bo = document.getElementById('BOTTOM_OVERLAY');
-					var bf = document.getElementById('BOTTOM_FRAME');
+					var wb  = document.getElementById('WHITEBOARD');
+					var wbt = document.getElementById('WHITEBOARD_TIMELINE');
+					var wba = document.getElementById('WHITEBOARD_ABSENT');
+					var bo  = document.getElementById('BOTTOM_OVERLAY');
+					var bf  = document.getElementById('BOTTOM_FRAME');
 					if ( parseInt( itb.style.left ) == tlbOffsetLeft + 0 ){
 						wbf.style.perspective	= '';
 						wb.style.transform 		= '';
 						wb.style.border 		= '';
+						wbt.style.border 		= '';
+						wba.style.border 		= '';
 						bo.style.perspective 	= '';
 						bf.style.transform 		= '';
-						bf.style.border 		= '';
+						// bf.style.border 		= '';
 						// console.log('0');
 					} else {
 						wbf.style.perspective	= '270px';
+						wb.style.transformStyle	= 'preserve-3d';
 						wb.style.transform 		= 'translate3d( 0px, 0px, -300px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
 						wb.style.border 		= '1px solid white';
+						wbt.style.transformStyle	= 'preserve-3d';
+						wbt.style.transform 	= 'translate3d( 0px, 0px, -300px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						wbt.style.border 		= '1px solid white';
+						wba.style.transformStyle	= 'preserve-3d';
 						wba.style.transform 	= 'translate3d( 0px, 0px, -350px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
 						wba.style.border 		= '1px solid red';
 						bo.style.perspective 	= '270px';
 						bf.style.transform 		= 'translate3d( 0px, 0px, -400px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
-						bf.style.border 		= '1px solid white';
+						// bf.style.border 		= '1px solid white';
 						// console.log('42');
 					}
 				}
@@ -753,6 +763,22 @@ function locateTimelinebar( e ){
 			itb.style.fontSize 		= '';
 			tl_drag = false;
 			tly = null;
+			break;
+		case 'dblclick':
+			console.log( 'zIndex:' + wb.style.zIndex );
+			switch ( wb.style.zIndex ){
+				case '':
+				case '3':
+					wb.style.zIndex		= 1;
+					wba.style.zIndex	= 3;
+					console.log( 'whiteboard zIndex:3->1');
+					break;
+				default:
+					wb.style.zIndex		= 3;
+					wba.style.zIndex	= 1;
+					console.log( 'whiteboard zIndex:1->3');
+					break;
+			}
 			break;
 	}
 }
@@ -1435,6 +1461,7 @@ function visibleWhiteboard(){
 	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	wb.style.visibility = 'visible';
 	wba.style.visibility = 'visible';
+	oNav.open();
 }
 
 //

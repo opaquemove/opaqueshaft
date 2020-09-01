@@ -68,7 +68,8 @@ function locatePerspectivebar( e ){
                         else                        new_left = psbOffsetLeft + 180;
                     }
                     // console.log('left:' +  ( new_left - psbOffsetLeft ) );
-                    var rotate = ' rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
+                    var rotate  = ' rotateX(' + ( new_left - psbOffsetLeft ) + 'deg)';
+                    var rotate2 = ' rotateX(' + ( new_left - psbOffsetLeft ) + 'deg)';
 
                     var wbf = document.getElementById('WHITEBOARD_FRAME');
                     var wb  = document.getElementById('WHITEBOARD');
@@ -78,27 +79,33 @@ function locatePerspectivebar( e ){
 					var bf = document.getElementById('BOTTOM_FRAME');
 
                     if ( new_top == psbOffsetTop && new_left == psbOffsetLeft ){
-                        bo.style.perspective 	= '';
-						bf.style.transform 		= '';
-                        wbf.style.perspective 	= '';
-						wb.style.transform 		= '';
-						wba.style.transform 	= '';
+                        bo.style.perspective 	        = '';
+						bf.style.transform 		        = '';
+                        wbf.style.perspective 	        = '';
+						wb.style.transform 		        = '';
+						wba.style.transform 	        = '';
                         wba.style.border                = '';
                         wb.style.border                 = '';
                     } else{
                         // bo.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
                         // wbf.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
-                        bo.style.perspective 	= '270px';
-                        wbf.style.perspective 	= '270px';
+                        bo.style.perspective 	        = '270px';
+                        wbf.style.perspective 	        = '270px';
                         wb.style.transformStyle         = 'preserve-3d';
                         wba.style.transformStyle        = 'preserve-3d';
                         wbt.style.transformStyle        = 'preserve-3d';
-						bf.style.transform 		        = 'translate3d( 0px, 0px, -710px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
-						wba.style.transform 	        = 'translate3d( 0px, 0px, -700px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
-						wb.style.transform 		        = 'translate3d( 0px, 0px, -600px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
-						wbt.style.transform 		    = 'translate3d( 0px, 0px, -600px) rotateY(' + ( new_left - psbOffsetLeft ) + 'deg)';
+						bf.style.transform 		        = 'translate3d( 0px, 0px, -410px)' + rotate;
+						wba.style.transform 	        = 'translate3d( 0px, 0px, -400px)' + rotate2;
+						wb.style.transform 		        = 'translate3d( 0px, 0px, -300px)' + rotate;
+						wbt.style.transform 		    = 'translate3d( 0px, 0px, -300px)' + rotate;
                         wba.style.border                = '1px dashed white';
                         wb.style.border                 = '1px solid white';
+                        var timelines = document.getElementsByClassName('timeline2_class');
+                        for ( var i=0; i<timelines.length; i++ ){
+                            var tlb = timelines[i];
+                            tlb.style.transformStyle    = 'preserve-3d';
+                            tlb.style.transform         = 'translate3d(0px,0px,-300px)' + rotate;
+                        }                    
                     }
 /*                
                     if ( new_top == psbOffsetTop && new_left == psbOffsetLeft ){
