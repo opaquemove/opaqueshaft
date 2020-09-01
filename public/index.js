@@ -1458,8 +1458,10 @@ function hiddenWhiteboard(){
 function visibleWhiteboard(){
 	openWhiteboardFlg = true;
 	var wb  = document.getElementById('WHITEBOARD');
+	var wbe = document.getElementById('WHITEBOARD_ESCORT');
 	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	wb.style.visibility = 'visible';
+	wbe.style.visibility = 'visible';
 	wba.style.visibility = 'visible';
 	oNav.open();
 }

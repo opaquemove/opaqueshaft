@@ -74,6 +74,7 @@ function locatePerspectivebar( e ){
                     var wbf = document.getElementById('WHITEBOARD_FRAME');
                     var wb  = document.getElementById('WHITEBOARD');
                     var wbt = document.getElementById('WHITEBOARD_TIMELINE');
+                    var wbe = document.getElementById('WHITEBOARD_ESCORT');
                     var wba = document.getElementById('WHITEBOARD_ABSENT');
                     var bo = document.getElementById('BOTTOM_OVERLAY');
                     var bf = document.getElementById('BOTTOM_FRAME');
@@ -84,8 +85,10 @@ function locatePerspectivebar( e ){
 						bf.style.transform 		        = '';
                         wbf.style.perspective 	        = '';
 						wb.style.transform 		        = '';
+						wbe.style.transform 		        = '';
 						wba.style.transform 	        = '';
                         wba.style.border                = '';
+                        wbe.style.border                = '';
                         wb.style.border                 = '';
                     } else{
                         // bo.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
@@ -93,13 +96,16 @@ function locatePerspectivebar( e ){
                         bo.style.perspective 	        = '370px';
                         wbf.style.perspective 	        = '370px';
                         wb.style.transformStyle         = 'preserve-3d';
+                        wbe.style.transformStyle        = 'preserve-3d';
                         wba.style.transformStyle        = 'preserve-3d';
                         wbt.style.transformStyle        = 'preserve-3d';
 						bf.style.transform 		        = 'translate3d( 0px, 0px, -410px)' + rotate;
+						wbe.style.transform 	        = 'translate3d( ' + ( - wb_width ) + 'px, 0px, -300px)' + rotate;
 						wba.style.transform 	        = 'translate3d( ' + wb_width + 'px, 0px, -300px)' + rotate;
 						wb.style.transform 		        = 'translate3d( 0px, 0px, -300px)' + rotate;
 						wbt.style.transform 		    = 'translate3d( 0px, 0px, -300px)' + rotate;
                         wba.style.border                = '1px dashed white';
+                        wbe.style.border                = '1px dashed white';
                         wb.style.border                 = '1px solid white';
                         var timelines = document.getElementsByClassName('timeline2_class');
                         for ( var i=0; i<timelines.length; i++ ){
