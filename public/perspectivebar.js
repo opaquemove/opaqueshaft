@@ -76,7 +76,8 @@ function locatePerspectivebar( e ){
                     var wbt = document.getElementById('WHITEBOARD_TIMELINE');
                     var wba = document.getElementById('WHITEBOARD_ABSENT');
                     var bo = document.getElementById('BOTTOM_OVERLAY');
-					var bf = document.getElementById('BOTTOM_FRAME');
+                    var bf = document.getElementById('BOTTOM_FRAME');
+                    var wb_width = wb.offsetWidth;
 
                     if ( new_top == psbOffsetTop && new_left == psbOffsetLeft ){
                         bo.style.perspective 	        = '';
@@ -89,13 +90,13 @@ function locatePerspectivebar( e ){
                     } else{
                         // bo.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
                         // wbf.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
-                        bo.style.perspective 	        = '270px';
-                        wbf.style.perspective 	        = '270px';
+                        bo.style.perspective 	        = '370px';
+                        wbf.style.perspective 	        = '370px';
                         wb.style.transformStyle         = 'preserve-3d';
                         wba.style.transformStyle        = 'preserve-3d';
                         wbt.style.transformStyle        = 'preserve-3d';
 						bf.style.transform 		        = 'translate3d( 0px, 0px, -410px)' + rotate;
-						wba.style.transform 	        = 'translate3d( 0px, 0px, -400px)' + rotate2;
+						wba.style.transform 	        = 'translate3d( ' + wb_width + 'px, 0px, -300px)' + rotate;
 						wb.style.transform 		        = 'translate3d( 0px, 0px, -300px)' + rotate;
 						wbt.style.transform 		    = 'translate3d( 0px, 0px, -300px)' + rotate;
                         wba.style.border                = '1px dashed white';
