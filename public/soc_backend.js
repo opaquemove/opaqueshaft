@@ -551,7 +551,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     if ( top == '' || top == null ) top = pixelPerHour * ( 12 - 8 );
     if ( left == '' || left == null ) left = 42; 
     c.style.top         = top + 'px';
-    if ( left.indexOf( '%', 0 ) > -1 )
+    if ( ( left + '' ).indexOf( '%', 0 ) > -1 )
         c.style.left    = left;
         else
         c.style.left    = left + 'px';
