@@ -512,8 +512,7 @@ function getChildrenByHour( h ){
         var c = children[j];
         var s = ( h - 8 ) * pixelPerHour;
         var e = s + pixelPerHour - 1;
-        if ( parseInt( c.style.top ) >= s &&
-             parseInt( c.style.top ) <= e )
+        if ( c.offsetTop >= s && c.offsetTop <= e )
              h_children[i++] = c;  
     }
     return h_children;
@@ -551,8 +550,11 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     c.style.position    = 'absolute;'
     if ( top == '' || top == null ) top = pixelPerHour * ( 12 - 8 );
     if ( left == '' || left == null ) left = 42; 
-	c.style.top         = top + 'px';
-    c.style.left        = left + 'px';
+    c.style.top         = top + 'px';
+    if ( left.indexOf( '%', 0 ) > -1 )
+        c.style.left    = left;
+        else
+        c.style.left    = left + 'px';
     // c.style.borderRight = arChildGrade[ child_grade ];
 
     var hm    = coordinateToTime( top, left );
@@ -900,6 +902,7 @@ function getMarkedChild(){
             children[index++] = c;
         c = c.nextSibling;
     }
+    console.log( 'mark child:' + index );
     return children;
 }
 
@@ -1065,18 +1068,18 @@ function escortWhiteboardChild(){
     if ( children.length == 0 ) return;
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
-        var top = parseInt( c.style.top );
-        var left = parseInt( c.style.left );
+        var top    = c.offsetTop;
+        var left   = c.offsetLeft;
         var escort = coordinateToEscort( top, left );
         // escort反転処理
         switch ( escort ){
             case true:          // escort -> alone
-                c.style.left = ( parseInt( c.style.left ) - criteriaEscortPixel ) + 'px';
+                c.style.left = ( c.offsetLeft - criteriaEscortPixel ) + 'px';
                 c.removeAttribute('escort');
                 setEscortHelper( c, 'OFF' );
                 break;
             case false:         // alone -> escort
-                c.style.left = ( parseInt( c.style.left ) + criteriaEscortPixel ) + 'px';
+                c.style.left = ( c.offsetLeft + criteriaEscortPixel ) + 'px';
                 c.setAttribute('escort', 'yes');
                 setEscortHelper( c, 'ON' );
                 break;

@@ -463,9 +463,6 @@ TimeSelector.prototype = {
 				}
 				if ( o.hasAttribute('target')){
 				 	this.current = o;
-					// 	o.style.backgroundColor	= 'gray';
-					// 	if ( o.getAttribute('target') == 'on' )
-					// 		document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * pixelPerHour;
 				}
 			}).bind(this), false );
 		this.selector.addEventListener( this.evtMove,		//	mousedown/touchstart
@@ -477,9 +474,6 @@ TimeSelector.prototype = {
 				}
 				if ( o.hasAttribute('target')){
 				 	this.current = o;
-				// 	o.style.backgroundColor	= 'lightgrey';
-				// 	if ( o.getAttribute('target') == 'on' )
-				// 		document.getElementById('WHITEBOARD_FRAME').scrollTop = (parseInt( o.innerText ) - 8 ) * pixelPerHour;
 				}
 			}).bind(this), false );
 		if ( !this.touchdevice ){
@@ -701,7 +695,7 @@ function locateTimelinebar( e ){
 					var wba = document.getElementById('WHITEBOARD_ABSENT');
 					var bo  = document.getElementById('BOTTOM_OVERLAY');
 					var bf  = document.getElementById('BOTTOM_FRAME');
-					if ( parseInt( itb.style.left ) == tlbOffsetLeft + 0 ){
+					if ( itb.offsetLeft == tlbOffsetLeft + 0 ){
 						wbf.style.perspective	= '';
 						wb.style.transform 		= '';
 						wb.style.border 		= '';
@@ -729,11 +723,10 @@ function locateTimelinebar( e ){
 					}
 				}
 
-				//console.log('bar top:' + ( parseInt(itb.style.top) - tlbOffset ) );
 				//	8:00からマウス増分
 				// var cur_time = ( 60 * 8 ) + ((event.pageY - tly) * 5) -( 42 * 4 );
 				// var cur_time2 = ('00' + Math.floor( cur_time / 60 ) ).slice(-2) + ':00';
-				var ttl_min = ( parseInt(itb.style.top ) - tlbOffset ) * 5;
+				var ttl_min = ( itb.offsetTop - tlbOffset ) * 5;
 				var h = Math.floor( ttl_min / 60 ) + 8;
 				var m = ttl_min % 60;
 				// console.log( 'hour:' + h + ':' + m );
@@ -797,13 +790,13 @@ function moveMarkedChildByTimelinebar( hour ){
 	if ( children.length == 0 ) return;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
-		var top_delta = parseInt( c.style.top ) % pixelPerHour;
+		var top_delta = c.offsetTop % pixelPerHour;
 		// 座標変更
 		c.style.top = ( ( hour - 8 ) * pixelPerHour + top_delta ) + 'px';
 		// チェックアウト予定時刻変更
 		var et = c.getElementsByClassName('ESTIMATE_TIME');
 		if ( et != null ){
-			var hm = coordinateToTime( parseInt( c.style.top ),parseInt( c.style.left ));
+			var hm = coordinateToTime( c.offsetTop, c.offsetLeft );
 			et[0].innerText = hm;
 			if ( c.hasAttribute('checkout') )  c.setAttribute('checkout', hm );
 
@@ -1073,8 +1066,9 @@ function loadWhiteboardChildren(){
 
 						for ( var i=0; i<result.length; i++ ){
 							var c = result[i];
-							var cc = addChild( c.coordi_top, ( w * ( c.coordi_left / 100 ) ),
+							// var cc = addChild( c.coordi_top, ( w * ( c.coordi_left / 100 ) ),
 							// var cc = addChild( c.coordi_top, c.coordi_left,
+							var cc = addChild( c.coordi_top, c.coordi_left + '%',
 								c.child_id, c.child_name, c.kana,
 								c.child_type, c.child_grade, c.remark, ( c.absent == 1 )?true : false, false );
 							if ( c.checkout != '' && c.checkout != null )
@@ -1592,7 +1586,7 @@ function Nav( func ){
 	m.style.color			= 'snow';
 	m.style.backgroundColor	= 'transparent';
 	m.style.fontSize		= '14px';
-	m.style.pointerEvents	= 'none';
+	// m.style.pointerEvents	= 'none';
 	m.style.zIndex			= 65000;
 	m.style.visibility		= 'hidden';
 	var r = '';
@@ -1729,7 +1723,7 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 
 	switch ( dialog_size ){
 		case 'MAX':
-			var wfh = parseInt( document.getElementById('WHITEBOARD_FRAME').style.height );
+			var wfh = document.getElementById('WHITEBOARD_FRAME').offsetHeight;
 			mframe.style.height = ( wfh - 8 ) + 'px';
 			mm.style.height		= ( wfh - 8 - 73 ) +  'px';
 			mframe.style.width	= '100%';
@@ -1828,7 +1822,7 @@ function fitting(){
 	cpf.style.left    = ( w - 42 ) + 'px';
 
 	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
-	cpc.style.height	= ( parseInt( cpf.style.height ) - parseInt(cpc.style.marginTop ) - 1 ) + 'px'; 
+	cpc.style.height	= ( cpf.offsetHeight - parseInt(cpc.style.marginTop ) - 1 ) + 'px'; 
 
 	// var sts = document.getElementById('STATUS');
 	// sts.style.top		= ( h - sts_height ) + 'px';
@@ -2695,6 +2689,10 @@ function getChild( id ){
 //	ホワイトボードの座標から時間軸への変換
 //
 function coordinateToTime( top, left ){
+	if ( left.indexOf('%', 0) > -1 ){
+		w = document.body.clientWidth;
+		left = w * ( left / 100 );
+	}
 	var escort = Math.floor( left / criteriaEscortPixel );
 	var left2  = left - ( escort * criteriaEscortPixel );
 	var h = 8 + Math.floor( top / pixelPerHour );		//200px:1hour
@@ -2781,8 +2779,8 @@ function mDown( e ) {
 	}
 	//e.stopPropagation();
 	//要素内の相対座標を取得
-	x = event.pageX - curChild.offsetLeft;
 	y = event.pageY - curChild.offsetTop;
+	x = event.pageX - curChild.offsetLeft;
 	
 	var icc = document.getElementById('ID_CHILD_COORDINATE');
 	icc.innerText = curChild.style.top + ' x ' + curChild.style.left + '(' + t_id + ')';
@@ -2812,6 +2810,7 @@ function mDown( e ) {
 //
 function mMove( e ){
 	var touchdevice = ( 'ontouchend' in document );
+	var w = document.body.clientWidth;
 
 	console.log('mMove:' + e.type );
 	//ドラッグしている要素を取得
@@ -2845,14 +2844,14 @@ function mMove( e ){
 
 		//
 	var wb_height = document.getElementById('WHITEBOARD').offsetHeight;
-	var wb_width  = parseInt( document.getElementById('WHITEBOARD').style.width );
-	wb_height -= parseInt( drag.offsetHeight / 2 );
-	wb_width  -= parseInt( drag.offsetWidth  / 2 );
+	var wb_width  = document.getElementById('WHITEBOARD').offsetWidth;
+	wb_height -= drag.offsetHeight / 2;
+	wb_width  -= drag.offsetWidth  / 2;
 	//マウスが動いた場所に要素を動かす
 	if ( e.type == 'touchmove' 
 		|| (( e.buttons & 1 ) && e.type == 'mousemove' ) ){
-		var old_top  = parseInt( drag.style.top  );
-		var old_left = parseInt( drag.style.left );
+		var old_top  = drag.offsetTop;
+		var old_left = drag.offsetLeft;
 		if ( ( event.pageY - y ) < 0 || ( event.pageX - x ) < 0 ) return;
 		if ( ( event.pageY - y ) >= wb_height || ( event.pageX - x  ) >= wb_width  ) return;
 		//if ( !checkOtherChildCoordinate( drag, event.pageX - x, event.pageY - y ) ) return;
@@ -2860,21 +2859,19 @@ function mMove( e ){
 		drag.style.top  = event.pageY - y + "px";
 		drag.style.left = event.pageX - x + "px";
 		updateFlg		= true;
-		// delta_x = parseInt( drag.style.left ) - old_left;
-		// delta_y = parseInt( drag.style.top  ) - old_top;
-			delta_x = ( event.pageX - x ) - old_left;
-			delta_y = ( event.pageY - y ) - old_top;
+		delta_x = ( event.pageX - x ) - old_left;
+		delta_y = ( event.pageY - y ) - old_top;
 		if ( isMarkedChild( drag ) )
 			moveOtherChild( drag, delta_x, delta_y );
 
 		var et = drag.getElementsByClassName('ESTIMATE_TIME');
 		if ( et != null ){
-			var hm = coordinateToTime( parseInt( drag.style.top ),parseInt( drag.style.left ));
+			var hm = coordinateToTime( drag.offsetTop, drag.offsetLeft );
 			et[0].innerText = hm;
 			if ( drag.hasAttribute('checkout') ) drag.setAttribute('checkout', hm );
 
 		}
-		var escort = coordinateToEscort( parseInt( drag.style.top ), parseInt( drag.style.left ) );
+		var escort = coordinateToEscort( drag.offsetTop, drag.offsetLeft );
 		switch ( escort ){
 			case true:
 				drag.setAttribute('escort', 'yes');
@@ -2889,7 +2886,7 @@ function mMove( e ){
 	}
 
 	var icc = document.getElementById('ID_CHILD_COORDINATE');
-	icc.innerText = curChild.style.top + ' x ' + curChild.style.left;
+	icc.innerText = curChild.offsetTop + ' x ' + curChild.offsetLeft;
 
 	//マウスボタンが離されたとき、またはカーソルが外れたとき発火
 /*
@@ -2905,19 +2902,19 @@ function mMove( e ){
 //
 function checkOtherChildCoordinate( base_child, x, y ){
 	var wb_height = document.getElementById('WHITEBOARD').offsetHeight;
-	var wb_width  = parseInt( document.getElementById('WHITEBOARD').style.width );
-	wb_height -= parseInt( base_child.offsetHeight / 2 );
-	wb_width  -= parseInt( base_child.offsetWidth  / 2 );
+	var wb_width  = document.getElementById('WHITEBOARD').offsetWidth;
+	wb_height -= base_child.offsetHeight / 2;
+	wb_width  -= base_child.offsetWidth  / 2;
 	
 	var children = getMarkedChild();
 	if ( children.length == 0 ) return true;
 	for ( var i=0; i<children.length; i++ ){
 		if ( base_child != children[i]){
-			console.log( 'checkOtherChildCoordi:' + children[i].style.top );
-			if ( parseInt( children[i].style.top )  + y < 0
-			 || parseInt( children[i].style.left ) + x < 0 ) return false;
-			if ( parseInt( children[i].style.top  ) + y >= wb_height ) return false;
-			if ( parseInt( children[i].style.left ) + x >= wb_width ) return false;
+			console.log( 'checkOtherChildCoordi:' + children[i].offsetTop );
+			if ( children[i].offsetTop + y < 0
+			 ||  children[i].offsetLeft + x < 0 ) return false;
+			if ( children[i].offsetTop  + y >= wb_height ) return false;
+			if ( children[i].offsetLeft + x >= wb_width ) return false;
 		}
 	}
 	return true;
@@ -2932,18 +2929,17 @@ function moveOtherChild( base_child, x, y ){
 	for ( var i=0; i<children.length; i++ ){
 		if ( base_child != children[i]){
 			// if ( ! children[i].hasAttribute('checkout')){
-				children[i].style.top  = parseInt( children[i].style.top )  + y + 'px';
-				children[i].style.left = parseInt( children[i].style.left ) + x + 'px';
+				children[i].style.top  = children[i].offsetTop + y + 'px';
+				children[i].style.left = children[i].offsetLeft + x + 'px';
 				var et = children[i].getElementsByClassName('ESTIMATE_TIME');
 				if ( et != null ){
-					var hm = coordinateToTime( parseInt( children[i].style.top ),
-												parseInt( children[i].style.left ));
+					var hm = coordinateToTime( children[i].offsetTop, children[i].offsetLeft );
 					et[0].innerText = hm;
 					if ( children[i].hasAttribute('checkout') ) children[i].setAttribute('checkout', hm );
 
 				}
 
-				var escort = coordinateToEscort( parseInt( children[i].style.top ), parseInt( children[i].style.left ) );
+				var escort = coordinateToEscort( children[i].offsetTop , children[i].offsetLeft );
 				switch ( escort ){
 					case true:
 						children[i].setAttribute('escort', 'yes');
