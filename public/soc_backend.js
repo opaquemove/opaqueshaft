@@ -557,11 +557,6 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
         c.style.left    = left + 'px';
     // c.style.borderRight = arChildGrade[ child_grade ];
 
-    var hm    = coordinateToTime( top, left );
-    var escort = coordinateToEscort( top, left );
-    if ( escort ){
-        c.setAttribute('escort', 'yes' );
-    }
 
     var r = '';
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
@@ -569,7 +564,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
         r += '<div style="width:100%;height:20px;font-size:14px;" >';
             r += '<div class="CHILD_NAME"    style="height:20px;float:left;text-overflow:ellipsis;" >' + child_name + '</div>';
             r += '<div class="ESTIMATE_TIME" style="height:20px;padding-left:2px;float:right;text-align:right;" >';
-            r += hm;
+            // r += hm;
             r += '</div>';
         r += '</div>';
         r += '<div>';
@@ -592,6 +587,12 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     //  WHITEBOARD_ESCORTに追加
     //
     var cc = wb.appendChild( c );
+    var et = cc.getElementsByClassName('ESTIMATE_TIME')[0];
+    var hm    = coordinateToTime( cc.offsetTop, cc.offsetLeft );
+    et.innerText    = hm;
+
+    var escort = coordinateToEscort( cc.offsetTop, cc.offsetLeft );
+    if ( escort )        c.setAttribute('escort', 'yes' );
     setEscortHelper( cc, (escort)?'ON':'OFF' );
     if ( mark )
         markChild( cc );

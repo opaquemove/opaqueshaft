@@ -2689,10 +2689,6 @@ function getChild( id ){
 //	ホワイトボードの座標から時間軸への変換
 //
 function coordinateToTime( top, left ){
-	if ( left.indexOf('%', 0) > -1 ){
-		w = document.body.clientWidth;
-		left = w * ( left / 100 );
-	}
 	var escort = Math.floor( left / criteriaEscortPixel );
 	var left2  = left - ( escort * criteriaEscortPixel );
 	var h = 8 + Math.floor( top / pixelPerHour );		//200px:1hour
@@ -2857,7 +2853,9 @@ function mMove( e ){
 		//if ( !checkOtherChildCoordinate( drag, event.pageX - x, event.pageY - y ) ) return;
 		if ( !checkOtherChildCoordinate( drag, event.pageX - x - old_left, event.pageY - y - old_top ) ) return;
 		drag.style.top  = event.pageY - y + "px";
-		drag.style.left = event.pageX - x + "px";
+		// drag.style.left = event.pageX - x + "px";
+		drag.style.left = ( Math.floor( ( event.pageX - x ) / w * 10000 ) / 100 ) + '%';
+
 		updateFlg		= true;
 		delta_x = ( event.pageX - x ) - old_left;
 		delta_y = ( event.pageY - y ) - old_top;
