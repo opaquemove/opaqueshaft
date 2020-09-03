@@ -68,8 +68,9 @@ function locatePerspectivebar( e ){
                         else                        new_left = psbOffsetLeft + 180;
                     }
                     // console.log('left:' +  ( new_left - psbOffsetLeft ) );
-                    var rotate  = ' rotateX(' + ( new_left - psbOffsetLeft ) + 'deg)';
-                    var rotate2 = ' rotateX(' + ( new_left - psbOffsetLeft ) + 'deg)';
+                    // var rotate  = ' rotateX(' + ( new_left - psbOffsetLeft ) + 'deg)';
+                    // var rotate2 = ' rotateX(' + ( new_left - psbOffsetLeft ) + 'deg)';
+                    var rotate = ' rotateX(-10deg)';
 
                     var wbf = document.getElementById('WHITEBOARD_FRAME');
                     var wb  = document.getElementById('WHITEBOARD');
@@ -93,17 +94,17 @@ function locatePerspectivebar( e ){
                     } else{
                         // bo.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
                         // wbf.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
-                        bo.style.perspective 	        = '370px';
-                        wbf.style.perspective 	        = '370px';
+                        bo.style.perspective 	        = '570px';
+                        wbf.style.perspective 	        = '570px';
                         wb.style.transformStyle         = 'preserve-3d';
                         wbe.style.transformStyle        = 'preserve-3d';
                         wba.style.transformStyle        = 'preserve-3d';
                         wbt.style.transformStyle        = 'preserve-3d';
-						bf.style.transform 		        = 'translate3d( 0px, 0px, -410px)' + rotate;
-						wbe.style.transform 	        = 'translate3d( ' + ( - wb_width ) + 'px, 0px, -300px)' + rotate;
-						wba.style.transform 	        = 'translate3d( ' + wb_width + 'px, 0px, -300px)' + rotate;
-						wb.style.transform 		        = 'translate3d( 0px, 0px, -300px)' + rotate;
-						wbt.style.transform 		    = 'translate3d( 0px, 0px, -300px)' + rotate;
+						bf.style.transform 		        = 'translate3d( 0px, 0px, -1110px)' + rotate;
+						wbe.style.transform 	        = 'translate3d( ' + ( - wb_width ) + 'px, 0px, -1100px)' + rotate;
+						wba.style.transform 	        = 'translate3d( ' + wb_width + 'px, 0px, -1100px)' + rotate;
+						wb.style.transform 		        = 'translate3d( 0px, 0px, -1100px)' + rotate;
+						wbt.style.transform 		    = 'translate3d( 0px, 0px, -1100px)' + rotate;
                         wba.style.border                = '1px dashed white';
                         wbe.style.border                = '1px dashed white';
                         wb.style.border                 = '1px solid white';

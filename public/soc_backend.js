@@ -495,8 +495,9 @@ function attendChildHelper( c ){
     c.style.backgroundRepeat    = '';
     c.style.transformOrigin     = ''
     c.style.transform           = '';
-
-    wb.appendChild( c );
+    console.log( 'attend before left:' + c.style.left );
+    var cc = wb.appendChild( c );
+    console.log( 'attend before after:' + cc.style.left );
     updateFlg   = true;
 
 }
@@ -594,6 +595,10 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     var escort = coordinateToEscort( cc.offsetTop, cc.offsetLeft );
     if ( escort )        c.setAttribute('escort', 'yes' );
     setEscortHelper( cc, (escort)?'ON':'OFF' );
+
+    //  アブセント表現
+    if ( absent ) absentChildHelper( cc );
+
     if ( mark )
         markChild( cc );
     var touchdevice = ( 'ontouchend' in document );
@@ -1440,19 +1445,29 @@ function absentChild(){
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         unmarkChild( c );
-        // c.style.backgroundColor = 'black';
-        c.style.backgroundImage     = 'url(./images/remove.png)';
-        c.style.backgroundSize      = '20px';
-        c.style.backgroundPosition  = 'right center';
-        c.style.backgroundRepeat    = 'no-repeat';
-        c.style.transformOrigin     = 'top left;'
-        c.style.transform           = 'rotate(-45deg)';
+        absentChildHelper( c );
+        // c.style.backgroundImage     = 'url(./images/remove.png)';
+        // c.style.backgroundSize      = '20px';
+        // c.style.backgroundPosition  = 'right center';
+        // c.style.backgroundRepeat    = 'no-repeat';
+        // c.style.transformOrigin     = 'top left;'
+        // c.style.transform           = 'rotate(-45deg)';
     
         abs.appendChild( c );
         updateFlg   = true;
     }
     showWhiteboardChildCount();
 }
+function absentChildHelper( c ){
+    c.style.backgroundImage     = 'url(./images/remove.png)';
+    c.style.backgroundSize      = '20px';
+    c.style.backgroundPosition  = 'right center';
+    c.style.backgroundRepeat    = 'no-repeat';
+    c.style.transformOrigin     = 'top left;'
+    c.style.transform           = 'rotate(-45deg)';
+
+}
+
 //
 //  パレットタイムセレクタを表示
 //

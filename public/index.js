@@ -188,17 +188,7 @@ function init()
 	// cpc.addEventListener('dblclick',  selectChild );
 
 	//	パレット上のチャイルドリストをクリックした時の動作
-	cpc.addEventListener('mouseup',   markPalleteChild );
-/*
-	cpc.addEventListener('mouseover', function(e){
-			var c = scanChild( e.target );
-			if ( c != null ) c.style.backgroundColor = 'lightgrey';
-		});
-	cpc.addEventListener('mouseout', function(e){
-			var c = scanChild( e.target );
-			if ( c!= null ) c.style.backgroundColor = '';
-		});
-*/
+	// cpc.addEventListener('mouseup',   markPalleteChild );
 
 	//	チャイルドファインダー（スポットライト）初期化
 	oNav = new Nav( null );
@@ -215,13 +205,13 @@ function init()
 	// new Button( 'ID_SEARCH',                ctlSpotlight   ).play();
 	new Button( 'WHITEBOARD_DAY_FRAME',     saveWhiteboard ).play();
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
-	new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
+	// new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
 	// new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();
-	new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
+	// new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
 	// new Button( 'CPC_UPDATE_CHILD_TIME',	showTimelineSelector ).play();
 	new Button( 'ID_NAV_TILE',  			showTile ).play();
 	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
-	new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
+	// new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
 	new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
 	new Button( 'ID_NAV_LOG',               ctlMessageLog ).play();
 
@@ -251,7 +241,6 @@ function init()
 	oTile.play();
 
 	// チャイルドパレットのチャイルドリスト作成
-	// makeChildrenPalleteList();
 	if ( !checkSign() ){			//サインアウトしている
 		// ツールバーの表示制御(サインイン、サインアウトによる制御)
 		// ctlToolbar();
@@ -930,7 +919,6 @@ function createWhiteboard(){
 
 	ctlToolbar();
 	// clearWhiteboard();
-	// makeChildrenPalleteList();
 
 }
 
@@ -1283,7 +1271,8 @@ function getJSONChildren(){
 		var c = children[i];
 		var child_id	= c.getAttribute('child_id');
 		var coordi_top	= c.offsetTop;
-		var coordi_left	= c.offsetLeft;
+		// var coordi_left	= c.offsetLeft;
+		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
 		var checkin		= c.getAttribute('checkin');
 		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
 		var checkout	= c.getAttribute('checkout');
@@ -1817,12 +1806,12 @@ function fitting(){
 	var wb = document.getElementById('WHITEBOARD');
 //	wb.style.width   = ( w - 70 ) + 'px';
 
-	var cpf  = document.getElementById('CHILDREN_PALLETE_FRAME');
-	cpf.style.height  = ( h -tb_height - sts_height ) + 'px';
-	cpf.style.left    = ( w - 42 ) + 'px';
+	// var cpf  = document.getElementById('CHILDREN_PALLETE_FRAME');
+	// cpf.style.height  = ( h -tb_height - sts_height ) + 'px';
+	// cpf.style.left    = ( w - 42 ) + 'px';
 
-	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
-	cpc.style.height	= ( cpf.offsetHeight - parseInt(cpc.style.marginTop ) - 1 ) + 'px'; 
+	// var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
+	// cpc.style.height	= ( cpf.offsetHeight - parseInt(cpc.style.marginTop ) - 1 ) + 'px'; 
 
 	// var sts = document.getElementById('STATUS');
 	// sts.style.top		= ( h - sts_height ) + 'px';
@@ -1873,6 +1862,7 @@ function fitting(){
 //
 //	チルドレンパレットのフォールディング
 //
+/*
 var flagChildrenPallete = false;
 var countOpenChildrenPallete = 0;
 function foldingChildrenPallete(){
@@ -1890,7 +1880,7 @@ function foldingChildrenPallete(){
 		flagChildrenPallete = false;
 	}
 }
-
+*/
 
 //
 //	サインイン・アウト時のUIデザイン
@@ -1903,7 +1893,7 @@ function ctlToolbar(){
 	}
 	oTile.close();
 	oSpotlight.close();
-	if ( flagChildrenPallete ) foldingChildrenPallete();
+	// if ( flagChildrenPallete ) foldingChildrenPallete();
 
 }
 
@@ -2336,7 +2326,7 @@ function signForm()
 	oNav.close();
 	oTile.close();
 	oSpotlight.close();
-	if ( flagChildrenPallete ) foldingChildrenPallete();
+	// if ( flagChildrenPallete ) foldingChildrenPallete();
 
 	
 	var r = "";	
@@ -2457,6 +2447,7 @@ function addWhiteboardManage( oParent, Result ){
 //
 //	チルドレンパレットリスト生成処理
 //
+/*
 function makeChildrenPalleteList()
 {
 	document.getElementById( 'CHILDREN_PALLETE_CONTENT' ).innerHTML = '';
@@ -2502,7 +2493,7 @@ function makeChildrenPalleteList()
 		// alert( e );
 	}
 }
-
+*/
 
 //
 //	チャイルド選択し、プロパティ表示
@@ -2519,6 +2510,7 @@ function makeChildrenPalleteList()
 //
 //	パレット内のチャイルド選択
 //
+/*
 function markPalleteChild( e ){
 	var c = scanChild( e.target );
 	if ( c != null ){
@@ -2561,7 +2553,7 @@ function markPalleteChild( e ){
 
 	}
 }
-
+*/
 
 //
 //	セレクトしたチャイルドをホワイトボードにチェックイン
