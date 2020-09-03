@@ -913,6 +913,23 @@ function getMarkedChild(){
 }
 
 //
+//  エスコートエリアでマークしたチャイルドのコレクション取得
+//
+function getMarkedEscortChild(){
+    var children = [];
+    var index = 0;
+    var p = document.getElementById( 'WHITEBOARD_ESCORT');
+    var c = p.firstChild;
+    while( c ){
+        if ( isMarkedChild( c ) )
+            children[index++] = c;
+        c = c.nextSibling;
+    }
+    console.log( 'mark child:' + index );
+    return children;
+}
+
+//
 //  指定したチャイルドがマークされているかをチェック
 //
 function isMarkedChild( c ){
@@ -1066,64 +1083,71 @@ function latestWhiteboardChild(){
 }
 
 //
-//  マークしているチャイルドのエスコートを反転
-//  alone -> escort, escort -> alone
+//  マークしているチャイルドのエスコート処理
+//  alone -> escort
 //
 function escortWhiteboardChild(){
     var children = getMarkedChild();
     if ( children.length == 0 ) return;
+    
+    var wbe = document.getElementById('WHITEBOARD_ESCORT');
+    
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
-        var top    = c.offsetTop;
-        var left   = c.offsetLeft;
-        var escort = coordinateToEscort( top, left );
-        // escort反転処理
-        switch ( escort ){
-            case true:          // escort -> alone
-                c.style.left = ( c.offsetLeft - criteriaEscortPixel ) + 'px';
-                c.removeAttribute('escort');
-                setEscortHelper( c, 'OFF' );
-                break;
-            case false:         // alone -> escort
-                c.style.left = ( c.offsetLeft + criteriaEscortPixel ) + 'px';
-                c.setAttribute('escort', 'yes');
-                setEscortHelper( c, 'ON' );
-                break;
-        }
-
-
+        var cc = wbe.appendChild( c );
+        unmarkChild( cc );
+        cc.setAttribute('escort', 'yes');
+        setEscortHelper( cc, 'ON' );
+    }
+}
+//
+//  マークしているチャイルドのエスコート解除処理
+//  alone -> escort
+//
+function unEscortWhiteboardChild(){
+    var children = getMarkedEscortChild();
+    if ( children.length == 0 ) return;
+    
+    var wb = document.getElementById('WHITEBOARD');
+    
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        var cc = wbe.appendChild( c );
+        unmarkChild( cc );
+        cc.removeAttribute('escort');
+        setEscortHelper( cc, 'OFF' );
     }
 }
 
+
 //
-//  マークしているチャイルドをエスコート設定（お迎え）
+//  マークしているチャイルドのエスコートを反転
+//  alone -> escort, escort -> alone
 //
-// function escortChild(){
+// function escortWhiteboardChild(){
 //     var children = getMarkedChild();
 //     if ( children.length == 0 ) return;
-//     for ( var i=0; i<children.length; i++){
+//     for ( var i=0; i<children.length; i++ ){
 //         var c = children[i];
-//         if ( ! c.hasAttribute('escort') ){
-//             c.setAttribute('escort', 'yes');
-//             setEscortHelper( c, 'ON' );
+//         var top    = c.offsetTop;
+//         var left   = c.offsetLeft;
+//         var escort = coordinateToEscort( top, left );
+//         // escort反転処理
+//         switch ( escort ){
+//             case true:          // escort -> alone
+//                 c.style.left = ( c.offsetLeft - criteriaEscortPixel ) + 'px';
+//                 c.removeAttribute('escort');
+//                 setEscortHelper( c, 'OFF' );
+//                 break;
+//             case false:         // alone -> escort
+//                 c.style.left = ( c.offsetLeft + criteriaEscortPixel ) + 'px';
+//                 c.setAttribute('escort', 'yes');
+//                 setEscortHelper( c, 'ON' );
+//                 break;
 //         }
 //     }
 // }
 
-//
-//  マークしているチャイルドをエスコート設定（お迎え）
-//
-// function unescortChild(){
-//     var children = getMarkedChild();
-//     if ( children.length == 0 ) return;
-//     for ( var i=0; i<children.length; i++){
-//         var c = children[i];
-//         if ( c.hasAttribute('escort') ){
-//             c.removeAttribute('escort');
-//             setEscortHelper( c, 'OFF' );
-//         }
-//     }
-// }
 
 //
 //  エスコート表示処理
