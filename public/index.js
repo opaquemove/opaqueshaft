@@ -1838,6 +1838,8 @@ function fitting(){
 	var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
+	criteriaEscortPixel = w;
+
 	var tb_height = document.getElementById('TOOLBAR').offsetHeight;
 	var tb_height = 0;
 	// var sts_height = document.getElementById('STATUS').offsetHeight;
@@ -2729,12 +2731,15 @@ function getChild( id ){
 //	ホワイトボードの座標から時間軸への変換
 //
 function coordinateToTime( top, left ){
-	var escort = Math.floor( left / criteriaEscortPixel );
-	var left2  = left - ( escort * criteriaEscortPixel );
+	// var escort = Math.floor( left / criteriaEscortPixel );
+	// var left2  = left - ( escort * criteriaEscortPixel );
+	var m15 = Math.floor( criteriaEscortPixel * 0.25 );
+
 	var h = 8 + Math.floor( top / pixelPerHour );		//200px:1hour
-	var m = Math.floor( 60 * left2 / criteriaEscortPixel );
-	m = Math.floor( m / 15 ) * 15;
-	console.log( 'm:' + m + ', left2:' + left2 );
+	var m = Math.floor( left / m15 ) * 15;
+	// var m = Math.floor( 60 * left2 / criteriaEscortPixel );
+	// m = Math.floor( m / 15 ) * 15;
+	console.log( 'm:' + m + ', left:' + left );
 	if ( m <= 0  ) m = 0;
 //	if ( m >= 15 ) m = 15;
 
