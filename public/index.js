@@ -2733,7 +2733,7 @@ function getChild( id ){
 function coordinateToTime( top, left ){
 	// var escort = Math.floor( left / criteriaEscortPixel );
 	// var left2  = left - ( escort * criteriaEscortPixel );
-	var m15 = Math.floor( criteriaEscortPixel * 0.25 );
+	var m15 = Math.floor( ( criteriaEscortPixel - 144 ) * 0.25 );	//  144 is child width
 
 	var h = 8 + Math.floor( top / pixelPerHour );		//200px:1hour
 	var m = Math.floor( left / m15 ) * 15;
@@ -2741,6 +2741,7 @@ function coordinateToTime( top, left ){
 	// m = Math.floor( m / 15 ) * 15;
 	console.log( 'm:' + m + ', left:' + left );
 	if ( m <= 0  ) m = 0;
+	if ( m >= 45 ) m = 45;
 //	if ( m >= 15 ) m = 15;
 
 	return ( '00' + h ).slice(-2) + ('00' + m ).slice(-2);

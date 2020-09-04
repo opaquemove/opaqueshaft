@@ -579,7 +579,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     r += '<div style="padding:2px;" >';
         r += '<div style="width:100%;height:20px;font-size:14px;" >';
             r += '<div class="CHILD_NAME"    style="height:20px;float:left;text-overflow:ellipsis;" >' + child_name + '</div>';
-            r += '<div class="ESTIMATE_TIME" style="height:20px;padding-left:2px;float:right;text-align:right;" >';
+            r += '<div class="ESTIMATE_TIME" style="height:20px;padding-left:1px;float:right;text-align:right;" >';
             // r += hm;
             r += '</div>';
         r += '</div>';
