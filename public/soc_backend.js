@@ -269,9 +269,27 @@ function reportWhiteboardDetail(){
             var estimate    = children[j].getElementsByClassName('ESTIMATE_TIME')[0].innerText;
             var checkout    = children[j].getAttribute('checkout');
                 checkout    = ( checkout != null )? checkout : '---';
-            var direction   = children[j].getAttribute('direction');
-                direction   = ( direction != null )? direction : '---';
-            var escort      = ( children[j].hasAttribute('escort') )?'yes':'no';
+            var direction   = '';
+            switch ( children[j].getAttribute('direction') ){
+                case 'left':
+                    direction += '<img width="10px" src="./images/prev.png" />';
+                    break;
+                case 'right':
+                    direction += '<img width="10px" src="./images/next.png" />';
+                    break;
+                default:
+                    direction += '&nbsp;'
+                    break;
+            }
+            var escort      = '';
+            switch ( children[j].hasAttribute('escort') ){
+                case true:
+                    escort += '<img width="16px" src="./images/family.png" />';
+                    break;
+                case false:
+                    escort += '&nbsp;';
+                    break;
+            }
             var remark      = ( children[j].hasAttribute('remark') )?
                                 decodeURIComponent( children[j].getAttribute('remark') ) : '';
             var r = '';
@@ -281,7 +299,7 @@ function reportWhiteboardDetail(){
                 r += '<div style="float:right;width:41px;" >' + checkout    + '</div>';
                 r += '<div style="float:right;width:41px;" >' + estimate    + '</div>';
                 r += '<div style="float:right;width:41px;" >' + checkin     + '</div>';
-                r += '<div style="float:right;width:41px;" >' + escort      + '</div>';
+                r += '<div style="float:right;width:41px;" class="vh-center">' + escort      + '</div>';
                 r += '<div style="float:right;width:31px;" >' + child_type  + '</div>';
                 r += '<div style="float:right;width:41px;" >' + child_grade + '</div>';
                 r += '<div style="float:right;width:121px;overflow:hidden;" >' + remark + '</div>';

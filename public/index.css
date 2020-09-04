@@ -694,16 +694,16 @@ INPUT[type=password]:focus{
 }
 
 #REPORT_FRAME{
-	position:			absolute;
-	top:				10000px;
-	left:				0px;
-	width:				100%;
-	height:				100%;	/* dummy fitting */
-	color:				darkgray;
-	background-color:	snow;
-	padding:			0px;
-	visibility:			hidden;
-	z-index:			69999;
+	position:				absolute;
+	top:					10000px;
+	left:					0px;
+	width:					100%;
+	height:					100%;	/* dummy fitting */
+	color:					darkgray;
+	background-color:		snow;
+	padding:				0px;
+	visibility:				hidden;
+	z-index:				69999;
 }
 #REPORT_CONTENT{
 	position:				absolute;
@@ -711,7 +711,7 @@ INPUT[type=password]:focus{
 	left:					0px;
 	width:					100%;
 	height:					calc(100% - 42px);
-	padding-top:				42px;
+	padding-top:			42px;
 	overflow:				scroll;
 }
 #REPORT_CONTENT_HANDLE{
@@ -720,9 +720,9 @@ INPUT[type=password]:focus{
 	left:					0px;
 	width:					100%;
 	height:					42px;
-	background-image:		url(./images/arrow-down.png);
-	background-size:		36px;
-	background-position:	center center;
+	background-image:		url(./images/down-arrow.png);
+	background-size:		20px;
+	background-position:	right center;
 	background-repeat: 		no-repeat;
 	margin:					0px auto;
 }
