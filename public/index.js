@@ -701,17 +701,17 @@ function locateTimelinebar( e ){
 					} else {
 						// wbf.style.perspective	= '470px';
 						wb.style.transformStyle	= 'preserve-3d';
-						wb.style.transform 		= 'perspective(470px) translate3d( 0px, 0px, -700px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						wb.style.transform 		= 'perspective(470px) translate3d( 0px, 0px, -700px) rotateX(' + ( new_left - tlbOffsetLeft ) + 'deg)';
 						wb.style.border 		= '1px solid white';
 						wbt.style.transformStyle	= 'preserve-3d';
-						wbt.style.transform 	= 'perspective(470px) translate3d( 0px, 0px, -700px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						wbt.style.transform 	= 'perspective(470px) translate3d( 0px, 0px, -700px) rotateX(' + ( new_left - tlbOffsetLeft ) + 'deg)';
 						wbt.style.border 		= '1px solid white';
 						// wba.style.transformStyle	= 'preserve-3d';
 						// wba.style.transform 	= 'translate3d( 0px, 0px, -350px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
 						// wba.style.border 		= '1px solid red';
 						// bo.style.perspective 	= '470px';
 						bo.style.transformStyle	= 'preserve-3d';
-						bf.style.transform 		= 'perspective(470px) translate3d( 0px, 0px, -710px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						bf.style.transform 		= 'perspective(470px) translate3d( 0px, 0px, -710px) rotateX(' + ( new_left - tlbOffsetLeft ) + 'deg)';
 						// bf.style.border 		= '1px solid white';
 						// console.log('42');
 					}
