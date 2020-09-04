@@ -25,7 +25,7 @@ var pixelPerHour		= 600;
 var oNav				= null;
 var oSpotlight			= null;
 
-var criteriaEscortPixel = 600;
+var criteriaEscortPixel = -1;
 var curWhiteboard		= 'WHITEBOARD';
 
 var updateFlg			= false;
@@ -85,6 +85,9 @@ function init()
 	// TIMELINE_BARの初期座標を記憶する
 	tlbOffset 		= document.getElementById('ID_TIMELINE_BAR').offsetTop;
 	tlbOffsetLeft	= document.getElementById('ID_TIMELINE_BAR').offsetLeft;
+
+	// 横軸でエスコート判断はしないように基準値を最大幅にしておく
+	criteriaEscortPixel = document.body.clientWidth;
 
 	document.oncontextmenu = function(e) { return false; }
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
@@ -272,10 +275,10 @@ function init()
 	makeTimelineIndicator();
 
 	//
-	//	エスコートエリアの位置マーカーの生成
+	//	エスコートエリアの位置マーカーの生成（もう使わないのよ）
 	//
-	var eam = document.getElementById('ESCORT_AREA_MARKER');
-	eam.style.left   = ( criteriaEscortPixel + 42 ) + 'px';
+	// var eam = document.getElementById('ESCORT_AREA_MARKER');
+	// eam.style.left   = ( criteriaEscortPixel + 42 ) + 'px';
 
 
 	//
@@ -1949,7 +1952,7 @@ function showToolbar(){
 	// var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
-	var eam		= document.getElementById('ESCORT_AREA_MARKER');
+	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'visible';
 	nsi2.style.visibility	= 'visible';
 	tb.style.visibility     = 'visible';
@@ -1958,7 +1961,7 @@ function showToolbar(){
 	// ic.style.visibility		= 'visible';
 	tlb.style.visibility	= 'visible';
 	psb.style.visibility	= 'visible';
-	eam.style.visibility	= 'visible';
+	// eam.style.visibility	= 'visible';
 	visibleWhiteboard();
 
 }
@@ -1973,7 +1976,7 @@ function hideToolbar(){
 	// var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
-	var eam		= document.getElementById('ESCORT_AREA_MARKER');
+	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'hidden';
 	nsi2.style.visibility	= 'hidden';
 	tb.style.visibility     = 'hidden';
@@ -1982,7 +1985,7 @@ function hideToolbar(){
 	// ic.style.visibility		= 'hidden';
 	tlb.style.visibility	= 'hidden';
 	psb.style.visibility	= 'hidden';
-	eam.style.visibility	= 'hidden';
+	// eam.style.visibility	= 'hidden';
 	hiddenWhiteboard();
 
 }
@@ -2731,6 +2734,7 @@ function coordinateToTime( top, left ){
 	var h = 8 + Math.floor( top / pixelPerHour );		//200px:1hour
 	var m = Math.floor( 60 * left2 / criteriaEscortPixel );
 	m = Math.floor( m / 15 ) * 15;
+	console.log( 'm:' + m + ', left2:' + left2 );
 	if ( m <= 0  ) m = 0;
 //	if ( m >= 15 ) m = 15;
 
@@ -2740,10 +2744,10 @@ function coordinateToTime( top, left ){
 //
 //	ホワイトボードの座標からエスコート（お迎え）判断
 //
-function coordinateToEscort( top, left ){
-	var escort = Math.floor( left / criteriaEscortPixel );
-	return ( escort > 0 )?true:false;
-}
+// function coordinateToEscort( top, left ){
+// 	var escort = Math.floor( left / criteriaEscortPixel );
+// 	return ( escort > 0 )?true:false;
+// }
 
 //
 //	タイムラインガイド操作
@@ -2973,18 +2977,17 @@ function moveOtherChild( base_child, x, y ){
 
 				}
 
-				var escort = coordinateToEscort( children[i].offsetTop , children[i].offsetLeft );
-				switch ( escort ){
-					case true:
-						children[i].setAttribute('escort', 'yes');
-						setEscortHelper( children[i], 'ON' );
-						break;
-					case false:
-						children[i].removeAttribute('escort');
-						setEscortHelper( children[i], 'OFF' );
-			
-						break;
-				}
+				// var escort = coordinateToEscort( children[i].offsetTop , children[i].offsetLeft );
+				// switch ( escort ){
+				// 	case true:
+				// 		children[i].setAttribute('escort', 'yes');
+				// 		setEscortHelper( children[i], 'ON' );
+				// 		break;
+				// 	case false:
+				// 		children[i].removeAttribute('escort');
+				// 		setEscortHelper( children[i], 'OFF' );			
+				// 		break;
+				// }
 	
 			// }
 
