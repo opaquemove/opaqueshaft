@@ -840,11 +840,10 @@ function propertyWhiteboardChildHelper( child_id ){
 //  
 function deleteWhiteboardChild(){
 
-    var p = document.getElementById( 'WHITEBOARD');
+    var children = document.getElementById( curWhiteboard).childNodes;
     
-    var children = p.getElementsByClassName('CHILD');
-    if ( children.length == 0){
-        console.log('deleteWhiteboardChild:' + children.length);
+    if ( ( children.length ) == 0){
+        console.log('deleteWhiteboardChild:none' );
         return;
     }
 
@@ -1049,19 +1048,17 @@ function unmarkChild( c ) {
 //  ホワイトボードのチャイルド数をステータス表示
 //
 function showWhiteboardChildCount(){
-    var wb  = document.getElementById('WHITEBOARD');
-    var children = wb.getElementsByClassName('CHILD');
+    var wb  = document.getElementById('WHITEBOARD').childNodes;
+    var wbe = document.getElementById('WHITEBOARD_ESCORT').childNodes;
     var wcc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT');
-    wcc.innerText = children.length;
+    wcc.innerText = wb.length + wbe.length;
     var c_checkout = showWhiteboardChildCountCheckout();
     showWhiteboardChildCountAbsent();
 
     var ratio = 0;
-    if ( wb.childNodes.length != 0)
-        ratio =  Math.floor( c_checkout / children.length * 100 );
+    if ( ( wb.length + wbe.length )  != 0)
+        ratio =  Math.floor( c_checkout / ( wb.length + wbe.length ) * 100 );
 
-    console.log( 'c_checkout:' + c_checkout );
-    console.log( 'length:' + wb.childNodes.length );
     makeToolbarCheckoutProgress( ratio );
 }
 
@@ -1069,16 +1066,22 @@ function showWhiteboardChildCount(){
 //  ホワイトボードのチェックアウトしたチャイルド数をステータス表示
 //
 function showWhiteboardChildCountCheckout(){
-    var wb  = document.getElementById('WHITEBOARD');
     var wccc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT_CHECKOUT');
-    var children = wb.childNodes.length;
-    var c = 0;
-    for ( var i=0; i<wb.childNodes.length; i++ ){
-        var o = wb.childNodes[i];
-        if ( o.hasAttribute('checkout')) c++;
+
+    var cnt = 0;
+    var children  = document.getElementById('WHITEBOARD').childNodes;
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        if ( c.hasAttribute('checkout')) cnt++;
     }
-    wccc.innerText = c;
-    return c;
+    children  = document.getElementById('WHITEBOARD_ESCORT').childNodes;
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        if ( c.hasAttribute('checkout')) cnt++;
+    }
+
+    wccc.innerText = cnt;
+    return cnt;
 }
 
 //
@@ -1095,10 +1098,9 @@ function showWhiteboardChildCountAbsent(){
 //  ホワイトボード内の最後尾のチャイルド取得
 //
 function latestWhiteboardChild(){
-    var wb = document.getElementById('WHITEBOARD');
-    var children = wb.getElementsByClassName('CHILD');
-    if ( children == null ) return null;
-
+    var children = document.getElementById('WHITEBOARD').childNodes;
+    if ( children        == null ) return null;
+    if ( children.length == 0 ) return null;
     return children[children.length-1];
 }
 

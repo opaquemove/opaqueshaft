@@ -112,9 +112,9 @@ function init()
 	//  function( e ) { e.preventDefault(); }, { passive:false } );
  
 
-	wb.addEventListener( evtStart,    		locateWhiteboard, { passive : false } );
-	wb.addEventListener( evtMove,     		locateWhiteboard, { passive : false } );
-	wb.addEventListener( evtEnd,      		locateWhiteboard, { passive : false } );
+	wbf.addEventListener( evtStart,    		locateWhiteboard, { passive : false } );
+	wbf.addEventListener( evtMove,     		locateWhiteboard, { passive : false } );
+	wbf.addEventListener( evtEnd,      		locateWhiteboard, { passive : false } );
 	document.addEventListener('keydown',	keyWhiteboard );
 
 
@@ -142,48 +142,7 @@ function init()
 	//
 	//	チャイルドをドロップした時の処理	
 	//
-	wb.addEventListener('drop', 
-		function(e) {
-			e.preventDefault();
-			var child_top = 0;
-			var child_left = 0;
-			if ( e.target.getAttribute('id') != 'WHITEBOARD' ){	// ドロップ先がチャイルド
-				var o = e.target;
-				while ( true ){
-					if ( o.parentNode.getAttribute('id') == 'WHITEBOARD') break;
-					o = o.parentNode;
-				}
-				child_top = parseInt( o.style.top );
-				child_left = parseInt( o.style.left );
-				console.log( 'child_top,left:' + child_top + ',' + child_left);
-			}
-			//alert( e.dataTransfer.getData('text') );
-			var id = e.dataTransfer.getData('text');
-			var wb = document.getElementById('WHITEBOARD');
-			console.log( e.target.getAttribute('id'), e.pageY, e.pageX, id );
-			var oChild = getChild(id);
-			if ( alreadyExistChildOnWhiteboard( id )){
-				// alert('すでにホワイトボードに配置されています．');
-				var child_name = e.target.getElementsByClassName('CHILD_NAME')[0].innerText;
-				oLog.log( null, oChild.child_name + ' : すでにホワイトボードに配置されています.');
-				oLog.open( 3 );
-				return;
-			}
-			// var itb = document.getElementById('ID_TIMELINE_BAR');
-			// var hm  = itb.innerText;
-			// var arHM = hm.split(':');
-
-			var p = e.target.parentNode;
-		
-			//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
-//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, null, false, false, false );
-			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
-				 e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
-				 oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, null, false, false, false );
-			dndOffsetX = 0;
-			dndOffsetY = 0;
-			showWhiteboardChildCount();
-		});
+	wb.addEventListener('drop', dropHandler, false );
 
 	//
 	//	チルドレンパレットのイベント登録
@@ -219,12 +178,6 @@ function init()
 	new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
 	new Button( 'ID_NAV_LOG',               ctlMessageLog ).play();
 
-	// new Checkbox('CPC_GRADE1', 'OFF', null ).play();
-	// new Checkbox('CPC_GRADE2', 'OFF', null ).play();
-	// new Checkbox('CPC_GRADE3', 'OFF', null ).play();
-	// new Checkbox('CPC_GRADE4', 'OFF', null ).play();
-	// new Checkbox('CPC_GRADE5', 'OFF', null ).play();
-	// new Checkbox('CPC_GRADE6', 'OFF', null ).play();
 
 	//	モーダルダイアログの外側をクリックしたらクローズ
 	var mo = document.getElementById('MODAL_OVERLAY');
@@ -304,6 +257,52 @@ function init()
 	initPerspectivebar( evtStart, evtMove, evtEnd );
 
 	makeToolbarCheckoutProgress( 0 );
+}
+
+//
+//	drop処理
+//
+function dropHandler( e ){
+	e.preventDefault();
+	var child_top = 0;
+	var child_left = 0;
+	if ( e.target.getAttribute('id') != 'WHITEBOARD' ){	// ドロップ先がチャイルド
+		var o = e.target;
+		while ( true ){
+			if ( o.parentNode.getAttribute('id') == 'WHITEBOARD') break;
+			o = o.parentNode;
+		}
+		child_top = parseInt( o.style.top );
+		child_left = parseInt( o.style.left );
+		console.log( 'child_top,left:' + child_top + ',' + child_left);
+	}
+	//alert( e.dataTransfer.getData('text') );
+	var id = e.dataTransfer.getData('text');
+	var wb = document.getElementById('WHITEBOARD');
+	console.log( e.target.getAttribute('id'), e.pageY, e.pageX, id );
+	var oChild = getChild(id);
+	if ( alreadyExistChildOnWhiteboard( id )){
+		// alert('すでにホワイトボードに配置されています．');
+		var child_name = e.target.getElementsByClassName('CHILD_NAME')[0].innerText;
+		oLog.log( null, oChild.child_name + ' : すでにホワイトボードに配置されています.');
+		oLog.open( 3 );
+		return;
+	}
+	// var itb = document.getElementById('ID_TIMELINE_BAR');
+	// var hm  = itb.innerText;
+	// var arHM = hm.split(':');
+
+	var p = e.target.parentNode;
+
+	//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
+//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, null, false, false, false );
+	addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
+			e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
+			oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, null, false, false, false );
+	dndOffsetX = 0;
+	dndOffsetY = 0;
+	showWhiteboardChildCount();
+
 }
 
 function test(){
@@ -946,20 +945,23 @@ function createWhiteboardHelper( day ){
 }
 
 function alreadyExistChildOnWhiteboard( id ){
-	var rc = false;
-	var wb = document.getElementById('WHITEBOARD');
-	var children = wb.getElementsByClassName('CHILD');
+	var children = document.getElementById('WHITEBOARD').childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		if ( children[i].getAttribute('child_id') == id )
 			return true;
 	}
-	var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
-	var absents = wb_absent.getElementsByClassName('CHILD');
+	children = document.getElementById('WHITEBOARD_ESCORT').childNodes;
+	for ( var i=0; i<children.length; i++ ){
+		if ( children[i].getAttribute('child_id') == id )
+			return true;
+	}
+
+	var absents = document.getElementById('WHITEBOARD_ABSENT');
 	for ( var i=0; i<absents.length; i++ ){
 		if ( absents[i].getAttribute('child_id') == id )
 			return true;
 	}
-	return rc;
+	return false;
 }
 
 function whiteboard(){
@@ -1496,10 +1498,11 @@ function visibleWhiteboard(){
 function locateWhiteboard( e ){
 	//e.preventDefault();
 	var wb = document.getElementById('WHITEBOARD');
+	var wbe = document.getElementById('WHITEBOARD_ESCORT');
 	switch ( e.type ){
 		case 'touchstart':
 		case 'mousedown':
-			if ( document.getElementById('WHITEBOARD') != e.target ) return;
+			if ( wb != e.target && wbe != e.target ) return;
 			if(e.type === "mousedown") {
 					var event = e;
 				} else {
@@ -1507,29 +1510,12 @@ function locateWhiteboard( e ){
 					wb_touch_cnt += e.changedTouches.length;
 					if ( wb_touch_cnt_max < wb_touch_cnt ) wb_touch_cnt_max = wb_touch_cnt;
 				}
-
-			// document.getElementById('WHITEBOARD').style.pointerEvents = 'none';
-/*				
-			var nav = document.getElementById('NAVI');
-			if ( nav != null ){
-				nav.parentNode.removeChild( nav );
-				wb_touch_cnt_max = 0;
-			}
-*/
 			break;
 		case 'mousemove':
 		case 'touchmove':
-/*
-			var nav = document.getElementById('NAVI');
-			if ( nav != null ){
-				nav.parentNode.removeChild( nav );
-				wb_touch_cnt_max = 0;
-			}
-*/
 			break;
 		case 'touchend':
 		case 'mouseup':
-			// document.getElementById('WHITEBOARD').style.pointerEvents = 'auto';
 			if(e.type === "mouseup") {
 				var event = e;
 			} else {
@@ -1540,10 +1526,8 @@ function locateWhiteboard( e ){
 			}
 
 			if ( wb_touch_cnt_max < 2){
-				if ( document.getElementById('WHITEBOARD') == e.target ){
+				if ( wb == e.target || wbe == e.target ){
 					resetChildMark();
-					//closeChildFinder();
-					// oSpotlight.close();
 				}
 			} else {
 			}
@@ -3122,11 +3106,13 @@ function makeContextMenu(){
 //	チャイルドのマークをリセット
 //
 function resetChildMark(){
-	var wb = document.getElementById('WHITEBOARD');
-	var children = wb.getElementsByClassName('CHILD');
-	if ( children == null ) return;
+	var children = document.getElementById( 'WHITEBOARD' ).childNodes;
 	for ( var i=0; i<children.length; i++ ){
-		unmarkChild( children[i]);
+		unmarkChild( children[i] );
+	}
+	children = document.getElementById( 'WHITEBOARD_ESCORT' ).childNodes;
+	for ( var i=0; i<children.length; i++ ){
+		unmarkChild( children[i] );
 	}
 
 }
