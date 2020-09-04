@@ -26,6 +26,7 @@ var oNav				= null;
 var oSpotlight			= null;
 
 var criteriaEscortPixel = 600;
+var curWhiteboard		= 'WHITEBOARD';
 
 var updateFlg			= false;
 //
@@ -172,10 +173,10 @@ function init()
 			var p = e.target.parentNode;
 		
 			//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
-//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, null, false, false );
+//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, null, false, false, false );
 			addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
 				 e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
-				 oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, null, false, false );
+				 oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, null, false, false, false );
 			dndOffsetX = 0;
 			dndOffsetY = 0;
 			showWhiteboardChildCount();
@@ -184,7 +185,7 @@ function init()
 	//
 	//	チルドレンパレットのイベント登録
 	//	
-	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
+	// var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
 	// cpc.addEventListener('dblclick',  selectChild );
 
 	//	パレット上のチャイルドリストをクリックした時の動作
@@ -631,8 +632,9 @@ function locateTimelinebar( e ){
 	e.preventDefault();
 
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
-	var wb = document.getElementById('WHITEBOARD');
-	var wba= document.getElementById('WHITEBOARD_ABSENT');
+	var wb  = document.getElementById('WHITEBOARD');
+	var wbe = document.getElementById('WHITEBOARD_ESCORT');
+	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	var itb = document.getElementById('ID_TIMELINE_BAR');
 	switch ( e.type ){
 		case 'touchstart':
@@ -741,16 +743,23 @@ function locateTimelinebar( e ){
 			switch ( wb.style.zIndex ){
 				case '':
 				case '3':
-					wb.style.zIndex		= 1;
-					wba.style.zIndex	= 3;
-					console.log( 'whiteboard zIndex:3->1');
-					break;
-				default:
-					wb.style.zIndex		= 3;
+					wbe.style.zIndex	= 3;
+					wb.style.zIndex		= 2;
 					wba.style.zIndex	= 1;
-					console.log( 'whiteboard zIndex:1->3');
+					curWhiteboard		= 'WHITEBOARD_ESCORT';
 					break;
-			}
+				case '2':
+					wb.style.zIndex		= 3;
+					wbe.style.zIndex	= 2;
+					wba.style.zIndex	= 1;
+					curWhiteboard		= 'WHITEBOARD';
+					break;
+					default:
+						break;
+					}
+			console.log( 'current whiteboard:' + curWhiteboard );
+			oLog.log( null, 'current whiteboard:' + curWhiteboard );
+			oLog.open( 2 );
 			break;
 	}
 }
@@ -1058,7 +1067,7 @@ function loadWhiteboardChildren(){
 							// var cc = addChild( c.coordi_top, c.coordi_left,
 							var cc = addChild( c.coordi_top, c.coordi_left + '%',
 								c.child_id, c.child_name, c.kana,
-								c.child_type, c.child_grade, c.remark, ( c.absent == 1 )?true : false, false );
+								c.child_type, c.child_grade, c.remark, c.escort, ( c.absent == 1 )?true : false, false );
 							if ( c.checkout != '' && c.checkout != null )
 								checkoutChild( cc, c.acc_id, c.checkout, c.direction );
 						}
@@ -1260,12 +1269,44 @@ function getJSONChildren(){
 			 'checkout'		: checkout,
 			 'operator'		: operator,
 			 'direction'	: direction,
+			 'escort'		: escort,
 			 'coordi_top'	: coordi_top,
 			 'coordi_left'	: coordi_left,
 			 'remark'		: remark,
 			 'absent' 		: 0
 			 } );
 	}
+	var children = document.getElementById('WHITEBOARD_ESCORT').childNodes;
+	for ( var i=0; i<children.length; i++ ){
+		var c = children[i];
+		var child_id	= c.getAttribute('child_id');
+		var coordi_top	= c.offsetTop;
+		// var coordi_left	= c.offsetLeft;
+		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
+		var checkin		= c.getAttribute('checkin');
+		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+		var checkout	= c.getAttribute('checkout');
+		var operator	= c.getAttribute('operator');
+		if ( operator == null ) operator = acc_id;
+		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
+		var direction	= c.getAttribute('direction');
+		if ( direction == null ) direction = '';
+		var remark 		= ( c.hasAttribute('remark') )? decodeURIComponent( c.getAttribute('remark') ) : '';
+		jsonChildren.push( {
+			 'child_id' 	: child_id,
+			 'checkin'		: checkin,
+			 'estimate'		: estimate,
+			 'checkout'		: checkout,
+			 'operator'		: operator,
+			 'direction'	: direction,
+			 'escort'		: escort,
+			 'coordi_top'	: coordi_top,
+			 'coordi_left'	: coordi_left,
+			 'remark'		: remark,
+			 'absent' 		: 0
+			 } );
+	}
+
 	var children = document.getElementById('WHITEBOARD_ABSENT').childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
@@ -1289,6 +1330,7 @@ function getJSONChildren(){
 			 'checkout'		: checkout,
 			 'operator'		: operator,
 			 'direction'	: direction,
+			 'escort'		: escort,
 			 'coordi_top'	: coordi_top,
 			 'coordi_left'	: coordi_left,
 			 'remark'		: remark,
@@ -1674,7 +1716,8 @@ Nav.prototype = {
 				break;
 			case 'escort':
 				this.close();
-				escortWhiteboardChild();
+				escortChild();
+				// escortWhiteboardChild();
 				break;
 			case 'property':
 				this.close();
@@ -2559,7 +2602,7 @@ function markPalleteChild( e ){
 //	セレクトしたチャイルドをホワイトボードにチェックイン
 //
 function checkinSelectedChild( hm ){
-	var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT').childNodes;
+	// var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT').childNodes;
 	var ffct2 = null;
 	if ( document.getElementById('FOLDER_FIND_CHILDREN_TABLE2') != null )
 		ffct2 = document.getElementById('FOLDER_FIND_CHILDREN_TABLE2').childNodes;
@@ -2572,6 +2615,7 @@ function checkinSelectedChild( hm ){
 	var cursor	= 0;
 
 	// CHILDREN_PALLETE
+/*	
 	for ( var i=0; i<cpc.length; i++ ){
 		var c = cpc[i];
 		if ( c.hasAttribute('selected') ){
@@ -2589,7 +2633,7 @@ function checkinSelectedChild( hm ){
 				oLog.open( 3 );
 				continue;
 			} 
-			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, false, false );
+			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, false, false, false );
 			cursor++;
 			c.classList.remove('selected');
 			// c.style.color = '';
@@ -2597,7 +2641,8 @@ function checkinSelectedChild( hm ){
 			c.removeAttribute('selected');
 		}
 	}
-	
+*/
+
 	// FOLDER_FIND_CHILDREN_TABLE2
 	if ( ffct2 != null ){
 		for ( var i=0; i<ffct2.length; i++ ){
@@ -2617,7 +2662,7 @@ function checkinSelectedChild( hm ){
 					oLog.open( 3 );
 					continue;
 				} 
-				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, false, false );
+				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, false, false, false );
 				cursor++;
 				c.classList.remove('selected');
 				// c.style.color = '';
@@ -2861,18 +2906,17 @@ function mMove( e ){
 			if ( drag.hasAttribute('checkout') ) drag.setAttribute('checkout', hm );
 
 		}
-		var escort = coordinateToEscort( drag.offsetTop, drag.offsetLeft );
-		switch ( escort ){
-			case true:
-				drag.setAttribute('escort', 'yes');
-				setEscortHelper( drag, 'ON' );
-				break;
-			case false:
-				drag.removeAttribute('escort');
-				setEscortHelper( drag, 'OFF' );
-	
-				break;
-		}
+		// var escort = coordinateToEscort( drag.offsetTop, drag.offsetLeft );
+		// switch ( escort ){
+		// 	case true:
+		// 		drag.setAttribute('escort', 'yes');
+		// 		setEscortHelper( drag, 'ON' );
+		// 		break;
+		// 	case false:
+		// 		drag.removeAttribute('escort');
+		// 		setEscortHelper( drag, 'OFF' );	
+		// 		break;
+		// }
 	}
 
 	var icc = document.getElementById('ID_CHILD_COORDINATE');

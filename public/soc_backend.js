@@ -48,7 +48,7 @@ socket.on( 'opaqueshaft', function( data ){
             var left	= ( parseInt( arHM[1] ) );
             var child_id = pac.data.child_id;
             var oChild  = getChild( child_id );
-            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, null, false, false );
+            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, null, false, false, false );
             break;
     }
 })
@@ -71,7 +71,7 @@ function exchange(){
 //     for (var i=0; i<children.length; i++) {
 //         r += children[i].child_name + '<br/>'; 
 //         addChild( i * 20, i * 20, children[i].child_id,
-//              children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, null, false, false );
+//              children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, null, false, false, false );
 //     }
 //     r += '<br/>length:' + children.length;
 
@@ -193,25 +193,35 @@ function showTile(){
 //
 function reportWhiteboardSummary(){
     var r = '';
-    var c_checkout  = 0;
-    var c_escort    = 0;
-    var c_children  = 0;
-    var wb = document.getElementById('WHITEBOARD');
+    var c_all_children  = 0;
+    var c_checkout      = 0;
+    var c_escort        = 0;
+    var c_children      = 0;
+    var wb  = document.getElementById('WHITEBOARD');
+    var wbe = document.getElementById('WHITEBOARD_ESCORT');
     
     c_children = wb.childNodes.length;
     for ( var i=0; i<wb.childNodes.length; i++ ){
+        c_all_children++;
         var c = wb.childNodes[i];
+        if ( c.hasAttribute('checkout'))    c_checkout++;
+        // if ( c.hasAttribute('escort'))      c_escort++;
+    }
+    c_children = wbe.childNodes.length;
+    for ( var i=0; i<wbe.childNodes.length; i++ ){
+        c_all_children++;
+        var c = wbe.childNodes[i];
         if ( c.hasAttribute('checkout'))    c_checkout++;
         if ( c.hasAttribute('escort'))      c_escort++;
     }
     
     var c_absent = document.getElementById('WHITEBOARD_ABSENT').childNodes.length;
 
-    r += '<div style="float:left;padding-left:10px;" >children:'   + c_children + '</div>';
+    r += '<div style="float:left;padding-left:10px;" >children:'   + c_all_children + '</div>';
     r += '<div style="float:left;padding-left:10px;" >checkout:'   + c_checkout + '</div>';
-    r += '<div style="float:left;padding-left:10px;" >no checkout:'   + ( c_children - c_checkout ) + '</div>';
+    r += '<div style="float:left;padding-left:10px;" >no checkout:'   + ( c_all_children - c_checkout ) + '</div>';
     r += '<div style="float:left;padding-left:10px;" >escort:'     + c_escort   + '</div>';
-    r += '<div style="float:left;padding-left:10px;" >no escort:'  + ( c_children - c_escort ) + '</div>';
+    r += '<div style="float:left;padding-left:10px;" >no escort:'  + ( c_all_children - c_escort ) + '</div>';
     r += '<div style="float:left;padding-left:10px;" >absent:'     + c_absent + '</div>';
 
     r += '';
@@ -219,7 +229,7 @@ function reportWhiteboardSummary(){
     var summary_area = document.getElementById('REPORT_SUMMARY');
     summary_area.innerHTML  = r;
 
-    if ( c_children != 0 ) var progress_ratio =  Math.floor( ( c_checkout / c_children ) * 100 );
+    if ( c_children != 0 ) var progress_ratio =  Math.floor( ( c_checkout / c_all_children ) * 100 );
     else			var progress_ratio = 0;
 
     var d = document.createElement('DIV');
@@ -242,9 +252,9 @@ function reportWhiteboardSummary(){
 //
 function reportWhiteboardDetail(){
     var lst_area = document.getElementById('REPORT_LIST');
-    var wb = document.getElementById('WHITEBOARD');
+    // var wb = document.getElementById('WHITEBOARD');
     for ( var i=0; i<12; i++ ){
-        var c = wb.childNodes[i];
+        // var c = wb.childNodes[i];
         var o = document.createElement('DIV');
         o.setAttribute('class', 'hour_frame');
         o.innerHTML             = '<div class="hour_tab" >' + ( '00' + ( i + 8 ) ).slice(-2) + ':00' + '</div>';
@@ -516,6 +526,14 @@ function getChildrenByHour( h ){
         if ( c.offsetTop >= s && c.offsetTop <= e )
              h_children[i++] = c;  
     }
+    children = document.getElementById('WHITEBOARD_ESCORT').childNodes;
+    for ( var j=0; j<children.length; j++ ){
+        var c = children[j];
+        var s = ( h - 8 ) * pixelPerHour;
+        var e = s + pixelPerHour - 1;
+        if ( c.offsetTop >= s && c.offsetTop <= e )
+             h_children[i++] = c;  
+    }
     return h_children;
 
 }
@@ -523,7 +541,7 @@ function getChildrenByHour( h ){
 //
 //  WhiteBoardにチャイルド(240x60)を実体化
 //
-function addChild( top, left, child_id, child_name, kana, child_type, child_grade, remark, absent, mark ){
+function addChild( top, left, child_id, child_name, kana, child_type, child_grade, remark, escort, absent, mark ){
     var now = new Date();
     var h = ( '00' + now.getHours() ).slice(-2);
     var m = ( '00' + now.getMinutes() ).slice(-2);
@@ -532,6 +550,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     var wb = null;
     if ( absent )   wb = document.getElementById('WHITEBOARD_ABSENT');
         else        wb = document.getElementById('WHITEBOARD');
+
     var c = document.createElement("DIV");
 	c.setAttribute("id",          "c_1");
     c.setAttribute("class",       "CHILD drag-and-drop");
@@ -544,10 +563,6 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     if ( remark == null ) remark = '';
     c.setAttribute('remark', encodeURIComponent( remark ) );
 
-    //c.setAttribute("draggable", "true");
-
-    // if ( escort == 'ON')
-    //     c.setAttribute('escort', 'yes' );
     c.style.position    = 'absolute;'
     if ( top == '' || top == null ) top = pixelPerHour * ( 12 - 8 );
     if ( left == '' || left == null ) left = 42; 
@@ -584,17 +599,22 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
 
     c.innerHTML = r;
     //
-    //  WHITEBOARDに追加
-    //  WHITEBOARD_ESCORTに追加
+    //  WHITEBOARD/WHITEBOARD_ABSENTに追加
+    //  escort:trueならWHITEBOARD_ESCORTに移動
     //
     var cc = wb.appendChild( c );
     var et = cc.getElementsByClassName('ESTIMATE_TIME')[0];
     var hm    = coordinateToTime( cc.offsetTop, cc.offsetLeft );
     et.innerText    = hm;
 
-    var escort = coordinateToEscort( cc.offsetTop, cc.offsetLeft );
-    if ( escort )        c.setAttribute('escort', 'yes' );
-    setEscortHelper( cc, (escort)?'ON':'OFF' );
+    // var escort = coordinateToEscort( cc.offsetTop, cc.offsetLeft );
+    // エスコート処理
+    if ( escort ){
+        var wbe = document.getElementById('WHITEBOARD_ESCORT');
+        cc = wbe.appendChild( cc );
+        cc.setAttribute('escort', 'yes' );
+        setEscortHelper( cc, 'ON' );
+    }
 
     //  アブセント表現
     if ( absent ) absentChildHelper( cc );
@@ -901,7 +921,7 @@ function deleteWhiteboardChildHelper(){
 function getMarkedChild(){
     var children = [];
     var index = 0;
-    var p = document.getElementById( 'WHITEBOARD');
+    var p = document.getElementById( curWhiteboard );
     var c = p.firstChild;
     while( c ){
         if ( isMarkedChild( c ) )
@@ -1083,6 +1103,36 @@ function latestWhiteboardChild(){
 }
 
 //
+//  マークしているチャイルドのエスコートを反転
+//  alone -> escort, escort -> alone
+//
+function escortChild(){
+    var children = getMarkedChild();
+    if ( children.length == 0 ) return;
+
+    var wb  = document.getElementById('WHITEBOARD');
+    var wbe = document.getElementById('WHITEBOARD_ESCORT');
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        switch ( curWhiteboard ){
+            case 'WHITEBOARD':      //  WHITEBOARD -> WHITEBOARD_ESCORT
+                var cc = wbe.appendChild( c );
+                cc.setAttribute('escort', 'yes');
+                setEscortHelper( cc, 'ON' );
+                break;
+            case 'WHITEBOARD_ESCORT':   // WHITEBOARD_ESCORT -> WHITEBOARD
+                var cc = wb.appendChild( c );
+                cc.removeAttribute('escort');
+                setEscortHelper( cc, 'OFF' );
+                break;
+        }
+        unmarkChild( cc );
+    }
+
+
+}
+
+//
 //  マークしているチャイルドのエスコート処理
 //  alone -> escort
 //
@@ -1118,35 +1168,6 @@ function unEscortWhiteboardChild(){
         setEscortHelper( cc, 'OFF' );
     }
 }
-
-
-//
-//  マークしているチャイルドのエスコートを反転
-//  alone -> escort, escort -> alone
-//
-// function escortWhiteboardChild(){
-//     var children = getMarkedChild();
-//     if ( children.length == 0 ) return;
-//     for ( var i=0; i<children.length; i++ ){
-//         var c = children[i];
-//         var top    = c.offsetTop;
-//         var left   = c.offsetLeft;
-//         var escort = coordinateToEscort( top, left );
-//         // escort反転処理
-//         switch ( escort ){
-//             case true:          // escort -> alone
-//                 c.style.left = ( c.offsetLeft - criteriaEscortPixel ) + 'px';
-//                 c.removeAttribute('escort');
-//                 setEscortHelper( c, 'OFF' );
-//                 break;
-//             case false:         // alone -> escort
-//                 c.style.left = ( c.offsetLeft + criteriaEscortPixel ) + 'px';
-//                 c.setAttribute('escort', 'yes');
-//                 setEscortHelper( c, 'ON' );
-//                 break;
-//         }
-//     }
-// }
 
 
 //

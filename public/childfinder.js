@@ -214,8 +214,8 @@ spotlight.prototype = {
                 var child_grade = c.getAttribute('child_grade');
                 // var oChild = getChild( child_id );
                 // if ( oChild != null ){
-                    // addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, null, false, true );
-                addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), child_id, child_name, kana, child_type, child_grade, null, false, true );
+                    // addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, null, false, false, true );
+                addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), child_id, child_name, kana, child_type, child_grade, null, false, false, true );
                 oLog.log( null, 'addChild');
                 oLog.open(3);
                 cursor++;
