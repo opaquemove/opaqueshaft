@@ -94,17 +94,17 @@ function locatePerspectivebar( e ){
                     } else{
                         // bo.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
                         // wbf.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
-                        bo.style.perspective 	        = '570px';
-                        wbf.style.perspective 	        = '570px';
+                        // bo.style.perspective 	        = '570px';
+                        // wbf.style.perspective 	        = '570px';
                         wb.style.transformStyle         = 'preserve-3d';
                         wbe.style.transformStyle        = 'preserve-3d';
                         wba.style.transformStyle        = 'preserve-3d';
                         wbt.style.transformStyle        = 'preserve-3d';
-						bf.style.transform 		        = 'translate3d( 0px, 0px, -1110px)' + rotate;
-						wbe.style.transform 	        = 'translate3d( ' + ( - wb_width ) + 'px, 0px, -1100px)' + rotate;
-						wba.style.transform 	        = 'translate3d( ' + wb_width + 'px, 0px, -1100px)' + rotate;
-						wb.style.transform 		        = 'translate3d( 0px, 0px, -1100px)' + rotate;
-						wbt.style.transform 		    = 'translate3d( 0px, 0px, -1100px)' + rotate;
+						bf.style.transform 		        = 'perspective(570px) translate3d( 0px, 0px, -1110px)' + rotate;
+						wbe.style.transform 	        = 'perspective(570px) translate3d( ' + ( - wb_width ) + 'px, 0px, -1100px)' + rotate;
+						wba.style.transform 	        = 'perspective(570px) translate3d( ' + wb_width + 'px, 0px, -1100px)' + rotate;
+						wb.style.transform 		        = 'perspective(570px) translate3d( 0px, 0px, -1100px)' + rotate;
+						wbt.style.transform 		    = 'perspective(570px) translate3d( 0px, 0px, -1100px)' + rotate;
                         wba.style.border                = '1px dashed white';
                         wbe.style.border                = '1px dashed white';
                         wb.style.border                 = '1px solid white';
@@ -112,7 +112,7 @@ function locatePerspectivebar( e ){
                         for ( var i=0; i<timelines.length; i++ ){
                             var tlb = timelines[i];
                             tlb.style.transformStyle    = 'preserve-3d';
-                            tlb.style.transform         = 'translate3d(0px,0px,-300px)' + rotate;
+                            tlb.style.transform         = 'perspective(570px) translate3d(0px,0px,-300px)' + rotate;
                         }                    
                     }
 /*                
