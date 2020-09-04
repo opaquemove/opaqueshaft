@@ -704,7 +704,7 @@ function locateTimelinebar( e ){
 						// wb.style.transform 		= 'translate3d( 0px, 0px, -300px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
 						// wb.style.border 		= '1px solid white';
 						wbt.style.transformStyle	= 'preserve-3d';
-						wbt.style.transform 	= 'translate3d( 0px, 0px, -300px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+						wbt.style.transform 	= 'perspective(470px) translate3d( 0px, 0px, -300px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
 						wbt.style.border 		= '1px solid white';
 						// wba.style.transformStyle	= 'preserve-3d';
 						// wba.style.transform 	= 'translate3d( 0px, 0px, -350px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
