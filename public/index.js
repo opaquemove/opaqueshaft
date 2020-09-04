@@ -233,6 +233,10 @@ function init()
 	// var eam = document.getElementById('ESCORT_AREA_MARKER');
 	// eam.style.left   = ( criteriaEscortPixel + 42 ) + 'px';
 
+	//
+	//	ホワイトボード表示制御機能の初期化
+	//
+	initWhiteboardMode();
 
 	//
 	//	タイムラインバー初期化
@@ -257,6 +261,31 @@ function init()
 	initPerspectivebar( evtStart, evtMove, evtEnd );
 
 	makeToolbarCheckoutProgress( 0 );
+}
+
+//
+	//	ホワイトボード表示制御機能の初期化
+//
+function initWhiteboardMode(){
+	var imne = document.getElementById('ID_MODE_NO_ESCORT');
+	var ime  = document.getElementById('ID_MODE_ESCORT');
+	imne.addEventListener( 'click', modeWhiteboard, false );
+	ime.addEventListener( 'click', modeWhiteboard, false );
+
+}
+function modeWhiteboard( e ){
+	var imne = document.getElementById('ID_MODE_NO_ESCORT');
+	var ime  = document.getElementById('ID_MODE_ESCORT');
+	switch ( this.getAttribute('id')){
+		case 'ID_MODE_NO_ESCORT':
+			this.classList.add( 'mode_on' );
+			ime.classList.remove( 'mode_on' );
+			break;
+		case 'ID_MODE_ESCORT':
+			this.classList.add( 'mode_on' );
+			imne.classList.remove( 'mode_on' );
+			break;
+		}
 }
 
 //
@@ -1876,6 +1905,14 @@ function fitting(){
 		cfm.style.height = h + 'px';
 	}
 
+	var imne = document.getElementById('ID_MODE_NO_ESCORT');
+	var ime  = document.getElementById('ID_MODE_ESCORT');
+	imne.style.top	= '84px';
+	imne.style.left	= ( w - imne.offsetWidth ) + 'px'
+	ime.style.top	= '84px';
+	ime.style.left	= ( w - ime.offsetWidth * 2 ) + 'px'
+
+
 	// レポートダイアログのサイズ調整
 	oReportDlg.init();
 
@@ -1944,6 +1981,8 @@ function showToolbar(){
 	// var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
+	var imne 	= document.getElementById('ID_MODE_NO_ESCORT');
+	var ime  	= document.getElementById('ID_MODE_ESCORT');
 	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'visible';
 	nsi2.style.visibility	= 'visible';
@@ -1953,6 +1992,8 @@ function showToolbar(){
 	// ic.style.visibility		= 'visible';
 	tlb.style.visibility	= 'visible';
 	psb.style.visibility	= 'visible';
+	imne.style.visibility	= 'visible';
+	ime.style.visibility	= 'visible';
 	// eam.style.visibility	= 'visible';
 	visibleWhiteboard();
 
@@ -1968,6 +2009,8 @@ function hideToolbar(){
 	// var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
+	var imne 	= document.getElementById('ID_MODE_NO_ESCORT');
+	var ime  	= document.getElementById('ID_MODE_ESCORT');
 	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'hidden';
 	nsi2.style.visibility	= 'hidden';
@@ -1977,6 +2020,8 @@ function hideToolbar(){
 	// ic.style.visibility		= 'hidden';
 	tlb.style.visibility	= 'hidden';
 	psb.style.visibility	= 'hidden';
+	imne.style.visibility	= 'hidden';
+	ime.style.visibility	= 'hidden';
 	// eam.style.visibility	= 'hidden';
 	hiddenWhiteboard();
 

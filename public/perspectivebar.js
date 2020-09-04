@@ -111,8 +111,8 @@ function locatePerspectivebar( e ){
                         var timelines = document.getElementsByClassName('timeline2_class');
                         for ( var i=0; i<timelines.length; i++ ){
                             var tlb = timelines[i];
-                            tlb.style.transformStyle    = 'preserve-3d';
-                            tlb.style.transform         = 'perspective(570px) translate3d(0px,0px,-300px)' + rotate;
+                            // tlb.style.transformStyle    = 'preserve-3d';
+                            tlb.style.transform         = 'perspective(570px) translate3d(0px,0px,-1100px)' + rotate;
                         }                    
                     }
 /*                
