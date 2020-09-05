@@ -130,6 +130,11 @@ function clearWhiteboardHelper(){
         wb.removeChild( wb.firstChild );
         updateFlg   = true;
     }
+    var wb = document.getElementById('WHITEBOARD_ESCORT');
+    while ( wb.firstChild){
+        wb.removeChild( wb.firstChild );
+        updateFlg   = true;
+    }
     wb = document.getElementById('WHITEBOARD_ABSENT');
     while ( wb.firstChild){
         wb.removeChild( wb.firstChild );
@@ -978,6 +983,15 @@ function isMarkedChild( c ){
 //
 function scanWhiteboardChild( child_id ){
     var children = document.getElementById('WHITEBOARD').childNodes;
+    for ( var i=0; i<children.length; i++){
+        var c = children[i];
+        if ( c.hasAttribute('child_id') ){
+            if ( child_id == c.getAttribute('child_id') ){
+                return c;
+            }
+        }
+    }
+    children = document.getElementById('WHITEBOARD_ESCORT').childNodes;
     for ( var i=0; i<children.length; i++){
         var c = children[i];
         if ( c.hasAttribute('child_id') ){

@@ -194,40 +194,24 @@ INPUT[type=password]:focus{
 */
 
 #ID_MODE_NO_ESCORT{
-	position:				absolute;
-	top:					-42px;		/* dummy */
-	left:					-42px;		/* dummy */
 	width:					40px;
 	height:					40px;
 	color:					snow;
 	background-color:		rgb(255, 123, 0);
 	border:					1px solid rgb(255, 123, 0);
-	/*background-image:		url(./images/user-2.png);
-	background-size:		16px;
-	background-repeat:		no-repeat;
-	background-position:	center center; */
-	z-index:				65001;
 }
 #ID_MODE_ESCORT{
-	position:				absolute;
-	top:					-42px;		/* dummy */
-	left:					-42px;		/* dummy */
 	width:					40px;
 	height:					40px;
 	color:					snow;
 	background-color:		rgb(255, 123, 0);
 	border:					1px solid rgb(255, 123, 0);
-	/* background-image:		url(./images/family.png);
-	background-size:		20px;
-	background-repeat:		no-repeat;
-	background-position:	center center; */
-	z-index:				65001;
 }
 .mode_on{
 	background-image:		url(./images/checked-symbol.png);
 	background-size:		10px;
 	background-repeat:		no-repeat;
-	background-position:	center bottom;
+	background-position:	right center;
 }
 #ID_NAV_SEARCH{
 	position:				absolute;
@@ -556,6 +540,7 @@ INPUT[type=password]:focus{
 	text-shadow: 			2px 2px 2px black;
 	transform: 				rotate(-49deg);
 }
+
 #ID_PROGRESS{
 	width:					80px;
 	height:					76px;
@@ -567,6 +552,15 @@ INPUT[type=password]:focus{
 	padding-top:			8px;
 	padding-left:			4px;
 }
+#ID_MODE_FRAME{
+	pointer-events: 		auto;
+	width:					42px;
+	height:					84px;
+	float:					right;
+	background-color: 		transparent;
+	padding:				0px;
+}
+
 
 #SIGN_STATUS{
 	width:					40px;
@@ -1292,6 +1286,10 @@ INPUT[type=password]:focus{
 	border-left:			8px solid red;
 }
 
+.wink_on{
+	color:					white;
+	background-color:		red;
+}
 .already_checkin{
 	background-image: 		url(./images/remove.png);
 	background-size: 		10px;

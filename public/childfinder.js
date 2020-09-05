@@ -410,6 +410,8 @@ spotlight.prototype = {
                         var h = estimate.substr(0, 2 );
                         var wbf = document.getElementById('WHITEBOARD_FRAME');
                         wbf.scrollTop = ( h - 8 ) * pixelPerHour;
+                        if ( !c.hasAttribute('selected'))
+                            new winker( cc, 5 ).play();
                         // var range = document.createRange();
                         // range.setStart( c, 0 );
                         // range.setEnd( c, 1 );

@@ -276,16 +276,29 @@ function initWhiteboardMode(){
 function modeWhiteboard( e ){
 	var imne = document.getElementById('ID_MODE_NO_ESCORT');
 	var ime  = document.getElementById('ID_MODE_ESCORT');
+
+	var wb	= document.getElementById('WHITEBOARD');
+	var wbe	= document.getElementById('WHITEBOARD_ESCORT');
+	var wba	= document.getElementById('WHITEBOARD_ABSENT');
 	switch ( this.getAttribute('id')){
 		case 'ID_MODE_NO_ESCORT':
 			this.classList.add( 'mode_on' );
 			ime.classList.remove( 'mode_on' );
-			break;
+			wb.style.zIndex		= 3;
+			wbe.style.zIndex	= 2;
+			wba.style.zIndex	= 1;
+			curWhiteboard		= 'WHITEBOARD';
+		break;
 		case 'ID_MODE_ESCORT':
 			this.classList.add( 'mode_on' );
 			imne.classList.remove( 'mode_on' );
-			break;
+			wbe.style.zIndex	= 3;
+			wb.style.zIndex		= 2;
+			wba.style.zIndex	= 1;
+			curWhiteboard		= 'WHITEBOARD_ESCORT';
+		break;
 		}
+
 }
 
 //
@@ -722,6 +735,7 @@ function locateTimelinebar( e ){
 						wb.style.transform 		= '';
 						wb.style.border 		= '';
 						wbt.style.border 		= '';
+						wbt.style.transform		= '';
 						wba.style.border 		= '';
 						bo.style.perspective 	= '';
 						bf.style.transform 		= '';
