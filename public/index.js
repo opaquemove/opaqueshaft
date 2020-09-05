@@ -246,7 +246,6 @@ function init()
 	tmb.addEventListener( evtMove,     		locateTimelinebar, { passive : false } );
 	tmb.addEventListener( evtEnd,      		locateTimelinebar, { passive : false } );
 	tmb.addEventListener( 'mouseleave', 	locateTimelinebar, { passive : false } );
-	tmb.addEventListener( 'dblclick',	 	locateTimelinebar, { passive : false } );
 
 	// tmb.addEventListener( 'mousedown',  locateTimelinebar );
 	// tmb.addEventListener( 'touchstart', locateTimelinebar );
@@ -271,6 +270,28 @@ function initWhiteboardMode(){
 	var ime  = document.getElementById('ID_MODE_ESCORT');
 	imne.addEventListener( 'click', modeWhiteboard, false );
 	ime.addEventListener( 'click', modeWhiteboard, false );
+	document.getElementById('ID_MODE_FRAME').addEventListener( 'dblclick',
+		function(e){
+			var wb  = document.getElementById('WHITEBOARD');
+			var wbe = document.getElementById('WHITEBOARD_ESCORT');
+			var wba = document.getElementById('WHITEBOARD_ABSENT');
+			switch ( wb.style.width ){
+				case '50%':
+					wb.style.width 	= '';
+					wbe.style.left 	= '';
+					wbe.style.width	= '';	
+					wba.style.width	= '';		
+					criteriaEscortPixel = document.body.clientWidth;	
+					break;
+				default:
+					wb.style.width 	= '50%';
+					wbe.style.left 	= '50%';
+					wbe.style.width	= '50%';	
+					wba.style.width	= '50%';	
+					criteriaEscortPixel = document.body.clientWidth / 2;	
+					break;
+			}
+		}, false );
 
 }
 function modeWhiteboard( e ){
@@ -783,29 +804,6 @@ function locateTimelinebar( e ){
 			itb.style.fontSize 		= '';
 			tl_drag = false;
 			tly = null;
-			break;
-		case 'dblclick':
-			console.log( 'zIndex:' + wb.style.zIndex );
-			switch ( wb.style.zIndex ){
-				case '':
-				case '3':
-					wbe.style.zIndex	= 3;
-					wb.style.zIndex		= 2;
-					wba.style.zIndex	= 1;
-					curWhiteboard		= 'WHITEBOARD_ESCORT';
-					break;
-				case '2':
-					wb.style.zIndex		= 3;
-					wbe.style.zIndex	= 2;
-					wba.style.zIndex	= 1;
-					curWhiteboard		= 'WHITEBOARD';
-					break;
-					default:
-						break;
-					}
-			console.log( 'current whiteboard:' + curWhiteboard );
-			oLog.log( null, 'current whiteboard:' + curWhiteboard );
-			oLog.open( 2 );
 			break;
 	}
 }
