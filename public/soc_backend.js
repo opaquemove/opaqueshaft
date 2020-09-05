@@ -292,14 +292,17 @@ function reportWhiteboardDetail(){
                     escort += '<img width="16px" src="./images/family.png" />';
                     break;
                 case false:
-                    escort += '&nbsp;';
+                    escort += '<img width="12px" src="./images/user-2.png" />';
                     break;
             }
             var remark      = ( children[j].hasAttribute('remark') )?
                                 decodeURIComponent( children[j].getAttribute('remark') ) : '';
             var r = '';
             r += '<div style="clear:both;font-size:12px;padding:0px;" >';
-                r += '<div style="float:left;"  >' + child_name + '</div>';
+                r += '<div style="float:left;"  >';
+                    if ( checkout != '---' ) r += '<img width="10px" src="./images/checked-symbol.png" />';
+                    r += child_name;
+                r += '</div>';
                 r += '<div style="float:right;width:26px;" >' + direction   + '</div>';
                 r += '<div style="float:right;width:41px;" >' + checkout    + '</div>';
                 r += '<div style="float:right;width:41px;" >' + estimate    + '</div>';
