@@ -32,7 +32,10 @@ BUTTON:focus{
 	outline:			none;
 }
 
-
+TEXTAREA{
+	color:				darkgray;
+	font-size:			12px;
+}
 /*
 MARK{
 	background-color:	red;

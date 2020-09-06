@@ -805,8 +805,8 @@ function propertyWhiteboardChild( c ){
 function updateChildRemark( child_id ){
     var c = scanWhiteboardChild( child_id );
     if ( c == null ) return;
-    // var remark = document.forms[ 'childProp_' + child_id ].remark.value;
-    var remark = document.getElementById('child_remark_' + child_id ).value;
+    var remark = document.forms[ 'childProp_' + child_id ].remark.value;
+    // var remark = document.getElementById('child_remark_' + child_id ).value;
     c.setAttribute( 'remark', encodeURIComponent( remark ) );
     console.log( 'childProp_' + child_id + '.remark:' + remark );
 
@@ -923,13 +923,13 @@ function propertyChildren(){
         o.style.padding         = '4px';
         o.style.borderRadius    = '8px';
         o.style.backgroundColor = 'white';
-        o.style.borderColor     = 'lightgrey';
+        o.style.border          = '1px solid black';
         o.style.color           = 'dimgray';
         o.style.fontSize        = '12px';
 
         var r = '';
         r += '<div style="width:100%;height:;" >';
-            r += '<div style="font-size:16px;border-bottom:1px solid lightgrey;" >';
+            r += '<div style="font-size:16px;font-weight:bold;border-bottom:1px solid lightgrey;" >';
             r += child_name + '&nbsp;' + child_grade + child_type;
             r += '</div>';
             r += '<div style="width:100%;overflow:hidden;display:inline;" >';
