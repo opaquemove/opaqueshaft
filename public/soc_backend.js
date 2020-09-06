@@ -839,9 +839,9 @@ function propertyWhiteboardChildHelper( child_id ){
                         if ( direction == '' || direction == null ) direction = '---';
                         var escort      = result[i].escort;
                         r += '<div style="clear:both;height:20px;border-bottom:1px solid lightgrey;" >';
-                            r += '<div style="float:left;width:80px;text-align:center;" >' + hmd       + '</div>';
+                            r += '<div style="float:left;width:60px;text-align:center;" >' + hmd       + '</div>';
                             // r += '<div style="float:left;width:60px;text-align:center;" >' + checkin   + '</div>';
-                            r += '<div style="float:left;width:60px;text-align:center;" >' + estimate  + '</div>';
+                            r += '<div style="float:left;width:50px;text-align:center;" >' + estimate  + '</div>';
                             // r += '<div style="float:left;width:60px;text-align:center;" >' + checkout  + '</div>';
                             // r += '<div style="float:left;width:60px;text-align:center;" >' + direction + '</div>';
                             r += '<div style="float:left;width:30px;text-align:center;" >' + escort    + '</div>';
@@ -908,8 +908,8 @@ function propertyChildren(){
     
 
         var o = document.createElement('DIV');
-        o.style.width           = '202px';
-        o.style.height          = '382px';
+        o.style.width           = '172px';
+        o.style.height          = '352px';
         o.style.margin          = '1px';
         o.style.padding         = '4px';
         o.style.borderRadius    = '8px';
@@ -944,9 +944,9 @@ function propertyChildren(){
                 r += 'Histories:'
             r += '</div>';
             r += '<div id="HISTORY_HDR" style="clear:both;color:red;height:16px;background-color:lightgrey;border:1px solid lightgrey;" >';
-                r += '<div style="float:left;width:80px;text-align:center;border-right:1px solid gray;" >Day</div>';
+                r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >Day</div>';
                 // r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >checkin</div>';
-                r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >estimate</div>';
+                r += '<div style="float:left;width:50px;text-align:center;border-right:1px solid gray;" >estimate</div>';
                 // r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >checkout</div>';
                 // r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >direction</div>';
                 r += '<div style="float:left;width:30px;text-align:center;" >escort</div>';
@@ -954,6 +954,10 @@ function propertyChildren(){
 
             r += '<div id="HISTORY_LST_' + id + '" style="height:100px;font-size:10px;border:1px solid lightgrey;" >';
             r += '</div>';
+
+			r += '<div style="width:100%;padding-top:10px;text-align:center;" >';
+				r += '<button style="background-color:transparent;border:none;" onclick="" ><img width="30px;" src="/images/check-3.png" ></button>';
+			r += "</div>";
 
         r += '</div>';
 
