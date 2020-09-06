@@ -794,12 +794,21 @@ function propertyWhiteboardChild( c ){
 //
 //
 //
-function updateChildRemark(){
-    var children = getMarkedChild();
-    if ( children.length != 1 ) return;
-    var c = children[0];
-    var remark = childProp.remark.value;
+// function updateChildRemark(){
+//     var children = getMarkedChild();
+//     if ( children.length != 1 ) return;
+//     var c = children[0];
+//     var remark = childProp.remark.value;
+//     c.setAttribute( 'remark', encodeURIComponent( remark ) );
+
+// }
+function updateChildRemark( child_id ){
+    var c = scanWhiteboardChild( child_id );
+    if ( c == null ) return;
+    // var remark = document.forms[ 'childProp_' + child_id ].remark.value;
+    var remark = document.getElementById('child_remark_' + child_id ).value;
     c.setAttribute( 'remark', encodeURIComponent( remark ) );
+    console.log( 'childProp_' + child_id + '.remark:' + remark );
 
 }
 
@@ -936,7 +945,7 @@ function propertyChildren(){
             r += '</div>';
             r += '<div style="width:90%;height:60px;" >';
                 r += '<form name="childProp_' + id + '" onsubmit="return false;" >';
-                    r += '<textarea name="remark" style="width:100%;height:100%;" >' + remark + '</textarea>';
+                    r += '<textarea id="child_remark_' + id + '" name="remark" style="width:100%;height:100%;" >' + remark + '</textarea>';
                 r += '</form>';
             r += '</div>';
 
@@ -955,14 +964,18 @@ function propertyChildren(){
             r += '<div id="HISTORY_LST_' + id + '" style="height:100px;font-size:10px;border:1px solid lightgrey;" >';
             r += '</div>';
 
-			r += '<div style="width:100%;padding-top:10px;text-align:center;" >';
-				r += '<button style="background-color:transparent;border:none;" onclick="" ><img width="30px;" src="/images/check-3.png" ></button>';
+			r += '<div style="width:100%;padding-top:4px;text-align:center;" >';
+				r += '<button id="BTN_UPDATE_CHILD_REMARK_' + id + '" style="background-color:transparent;border:none;"  ><img width="30px;" src="/images/check-3.png" ></button>';
 			r += "</div>";
 
         r += '</div>';
 
         o.innerHTML             = r;
         oFrame.appendChild( o );
+        document.getElementById('BTN_UPDATE_CHILD_REMARK_' + id ).addEventListener(
+            'click', function(e){
+                updateChildRemark( id );
+            }, false );
         propertyWhiteboardChildHelper( id );
 
     }
