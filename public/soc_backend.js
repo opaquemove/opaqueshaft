@@ -1080,14 +1080,24 @@ function deleteWhiteboardChildHelper(){
 function getMarkedChild(){
     var children = [];
     var index = 0;
-    var p = document.getElementById( curWhiteboard );
+    var p = document.getElementById( 'WHITEBOARD' );
     var c = p.firstChild;
     while( c ){
         if ( isMarkedChild( c ) )
-            children[index++] = c;
+            // children[index++] = c;
+            children.push( c );
         c = c.nextSibling;
     }
-    console.log( 'mark child:' + index );
+    p = document.getElementById( 'WHITEBOARD_ESCORT' );
+    c = p.firstChild;
+    while( c ){
+        if ( isMarkedChild( c ) )
+            // children[index++] = c;
+            children.push( c );
+        c = c.nextSibling;
+    }
+
+    console.log( 'mark child:' + children.length );
     return children;
 }
 

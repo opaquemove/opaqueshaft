@@ -35,6 +35,7 @@ BUTTON:focus{
 TEXTAREA{
 	color:				darkgray;
 	font-size:			12px;
+	resize:				none
 }
 /*
 MARK{
