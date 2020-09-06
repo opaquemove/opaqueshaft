@@ -1111,7 +1111,8 @@ function loadWhiteboardChildren(){
 						// 		else			wb_absent.childNodes[i].addEventListener( "mousedown",  mDown, false );
 						// }
 
-						var w = document.body.clientWidth;
+						// var w = document.body.clientWidth;
+						var w = document.getElementById('WHITEBOARD').offsetWidth;
 
 						for ( var i=0; i<result.length; i++ ){
 							var c = result[i];
@@ -1204,7 +1205,11 @@ function saveWhiteboard(){
 		r += '</div>';
 		r += '</form>';
 	r += '</div>';
-	openModalDialog( 'save whiteboard', r, 'OK_CANCEL', saveWhiteboardHelper, null );
+	openModalDialog( 'save whiteboard', r, 'OK_CANCEL',
+			function(){
+				saveWhiteboardHelper();
+				closeModalDialog();
+			}, null );
 }
 
 //
@@ -1295,7 +1300,8 @@ function saveWhiteboardHelper(){
 // チルドレンのJSONデータ生成
 //
 function getJSONChildren(){
-	var w = document.body.clientWidth;
+	// var w = document.body.clientWidth;
+	var w = document.getElementById('WHITEBOARD').offsetWidth;
 
 	var jsonChildren = [];
 	var children = document.getElementById('WHITEBOARD').childNodes;
@@ -1482,20 +1488,26 @@ function closeWhiteboard(){
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" readonly value="' + dayWhiteboard + '" />';
 		r += '</div>';
 		r += '</form>';
-		r += '<div>Progress:</div>';
-		r += '<div id="CLOSE_PROGRESS" style="clear:both;width:100%;height:100px;border:1px solid gray;overflow:auto;" >';
-		r += '</div>';
-		r += '<button id="BTN_CLOSEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="closeWhiteboardHelper();" >Close</button>';
+		// r += '<div>Progress:</div>';
+		// r += '<div id="CLOSE_PROGRESS" style="clear:both;width:100%;height:100px;border:1px solid gray;overflow:auto;" >';
+		// r += '</div>';
+		// r += '<button id="BTN_CLOSEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="closeWhiteboardHelper();" >Close</button>';
 	r += '</div>';
-	openModalDialog( 'close whiteboard', r, 'NORMAL', null, null );
+	openModalDialog( 'close whiteboard', r, 'OK_CANCEL',
+		function(){
+			closeModalDialog();
+			closeWhiteboardHelper();
+		}, null );
 
 }
-
+//	ホワイトボードクローズ処理
 function closeWhiteboardHelper(){
 	dayWhiteboard 		= null;
 	openWhiteboardFlg	= false;
 	updateFlg			= false;
 	ctlToolbar();
+	oNav.close();
+	oTile.close();
 	openWhiteboard();
 }
 
@@ -1519,8 +1531,10 @@ function turnWhiteboard(){
 function hiddenWhiteboard(){
 	openWhiteboardFlg = false;
 	var wb  = document.getElementById('WHITEBOARD');
+	var wbe = document.getElementById('WHITEBOARD_ESCORT');
 	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	wb.style.visibility = 'hidden';
+	wbe.style.visibility = 'hidden';
 	wba.style.visibility = 'hidden';
 
 }
@@ -1836,8 +1850,15 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 		document.getElementById('MDL_OK').addEventListener( 'click',
 			function(e){
 				proc();
-				closeModalDialog();
+				// closeModalDialog();
 			}, false );
+	} else{
+		if ( document.getElementById('MDL_OK') != null ){
+			document.getElementById('MDL_OK').addEventListener( 'click',
+				function(e){
+					closeModalDialog();
+				}, false );
+		}
 	}
 }
 
@@ -2114,7 +2135,11 @@ function signoutForm(){
 		r += "</div>";
 	r += "</div>";
 
-	openModalDialog( 'sign out', r, 'OK_CANCEL', signout, 'SIGNOUT' );
+	openModalDialog( 'sign out', r, 'OK_CANCEL',
+		function(){
+			closeModalDialog();
+			signout();
+		}, 'SIGNOUT' );
 
 }
 
@@ -2465,6 +2490,7 @@ function ctlNav(){
 function makeWhiteboardList()
 {
 	document.getElementById( 'WHITEBOARD_LIST' ).innerHTML = '';
+
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -2846,7 +2872,8 @@ function mDown( e ) {
 	var t_id = null;
 	curChild = this;
 
-	var w = document.body.clientWidth;
+	// var w = document.body.clientWidth;
+	var w = document.getElementById('WHITEBOARD').offsetWidth;
 	var ratioLeft = Math.floor( curChild.offsetLeft / w * 10000 ) / 100;
 
 	console.log('mDown:' + '(' + curChild.offsetLeft + '/' + w + ')' + ratioLeft );
@@ -2900,7 +2927,8 @@ function mDown( e ) {
 //
 function mMove( e ){
 	var touchdevice = ( 'ontouchend' in document );
-	var w = document.body.clientWidth;
+	// var w = document.body.clientWidth;
+	var w = document.getElementById('WHITEBOARD').offsetWidth;
 
 	console.log('mMove:' + e.type );
 	//ドラッグしている要素を取得

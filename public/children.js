@@ -26,49 +26,6 @@ function init(){
 
     fitting();
 
-    var wb = document.getElementById('ID_WHITEBOARD');
-    wb.addEventListener( evtStart,
-        function ( e ){
-            switch( wb.style.marginTop ){
-                case '':
-                case '0px':
-                    wb.style.marginTop = '-40px';
-                    break;
-                default:
-                    wb.style.marginTop = '0px';
-                    break;
-            }
-        }, { passive : false } );
-	wb.addEventListener( evtEnd,
-		function ( e ){
-			wb.style.marginTop = '0px';
-			if ( w_whiteboard == null || w_whiteboard.closed )
-				w_whiteboard = window.open( '/index.html', 'WHITEBOARD' );
-				else
-				w_whiteboard.focus();
-		}, { passive : false } );
-
-	var child = document.getElementById('ID_CHILD');
-	child.addEventListener( evtStart,
-		function ( e ){
-			switch( child.style.marginTop ){
-				case '':
-				case '0px':
-					child.style.marginTop = '-40px';
-					break;
-				default:
-					child.style.marginTop = '0px';
-					break;
-			}
-		}, { passive : false } );
-	child.addEventListener( evtEnd,
-		function ( e ){
-			child.style.marginTop = '0px';
-			if ( w_child == null || w_child.closed )
-				w_child = window.open( '/children.html', 'CHILDREN' );
-				else
-				w_child.focus();
-		}, { passive : false } );
 			
 }
 

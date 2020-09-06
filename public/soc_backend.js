@@ -122,7 +122,11 @@ function clearWhiteboard(){
 	// r += '<div style="margin:0 auto;width:110px;">';
 	// 	r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="clearWhiteboardHelper();closeModalDialog();" >Clear</button>';
 	// r += '</div>';
-    openModalDialog( 'clear whiteboard', r, 'OK_CANCEL', clearWhiteboardHelper, null );
+    openModalDialog( 'clear whiteboard', r, 'OK_CANCEL',
+        function(){
+            clearWhiteboardHelper();
+            closeModalDialog();
+        } , null );
 }
 function clearWhiteboardHelper(){
     var wb = document.getElementById('WHITEBOARD');
@@ -399,7 +403,11 @@ function absentWhiteboard(){
     //     r += '<button onclick="attendChild();" style="width:180px;height:40px;border:none;background-color:transparent;font-size:24px;background-image:url(./images/entry.png);background-size:30px;background-repeat:no-repeat;background-position:left center;" >Attend</button>';
     // r += '</div>';
 
-    openModalDialog( 'absent ' + dayWhiteboard, r, 'OK_CANCEL', attendChild, null );
+    openModalDialog( 'absent ' + dayWhiteboard, r, 'OK_CANCEL',
+        function(){
+            attendChild();
+            closeModalDialog();
+        }, null );
     absentWhiteboardSummary();
     absentWhiteboardDetail();
 }
@@ -773,7 +781,11 @@ function propertyWhiteboardChild( c ){
         r += "</div>";
 */
         r += "</div>";
-    openModalDialog( 'Property of child', r, 'OK_CANCEL', updateChildRemark, null );
+        openModalDialog( 'Property of child', r, 'OK_CANCEL',
+            function(){
+                updateChildRemark();
+                closeModalDialog();
+            } , null );
 
     propertyWhiteboardChildHelper( id );
 
@@ -885,7 +897,11 @@ function deleteWhiteboardChild(){
         r += ' onclick="deleteWhiteboardChildHelper();"   >';
         r += 'Delete</button>';
 	r += '</div>';
-    openModalDialog( 'delete child', r, 'OK_CANCEL', deleteWhiteboardChildHelper, null );
+    openModalDialog( 'delete child', r, 'OK_CANCEL',
+        function(){
+            deleteWhiteboardChildHelper();
+            closeModalDialog();
+        }, null );
     document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();
     makeDeleteChildList();
  
@@ -1439,7 +1455,11 @@ function checkoutClearWhiteboardChild(){
     //     r += 'onclick="checkoutClearWhiteboardChildHelper();closeModalDialog();" >';
     //     r += '<img width="24px" src="./images/close.png" />Checkout Clear</button>';
 	// r += '</div>';
-    openModalDialog( 'checkout clear children', r, 'OK_CANCEL', checkoutClearWhiteboardChildHelper, null );
+    openModalDialog( 'checkout clear children', r, 'OK_CANCEL',
+        function(){
+            checkoutClearWhiteboardChildHelper();
+            closeModalDialog();
+        }, null );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
     var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
