@@ -815,7 +815,7 @@ function propertyWhiteboardChildHelper( child_id ){
 			case 1://opened
 			case 2://header received
 			case 3://loading
-				var o = document.getElementById( 'HISTORY_LST' );
+				var o = document.getElementById( 'HISTORY_LST_' + child_id );
 				o.innerText = 'access...';
 				break;
 			case 4://done
@@ -824,7 +824,7 @@ function propertyWhiteboardChildHelper( child_id ){
                     var result = JSON.parse( xmlhttp.responseText );
                     
 					//r += xmlhttp.responseText;
-					var o = document.getElementById('HISTORY_LST');
+					var o = document.getElementById('HISTORY_LST_' + child_id );
 					o.innerText = '';
 					for ( var i=0; i<result.length; i++ ){
                         // addChildManage( o, result[i] );
@@ -840,17 +840,17 @@ function propertyWhiteboardChildHelper( child_id ){
                         var escort      = result[i].escort;
                         r += '<div style="clear:both;height:20px;border-bottom:1px solid lightgrey;" >';
                             r += '<div style="float:left;width:80px;text-align:center;" >' + hmd       + '</div>';
-                            r += '<div style="float:left;width:60px;text-align:center;" >' + checkin   + '</div>';
+                            // r += '<div style="float:left;width:60px;text-align:center;" >' + checkin   + '</div>';
                             r += '<div style="float:left;width:60px;text-align:center;" >' + estimate  + '</div>';
-                            r += '<div style="float:left;width:60px;text-align:center;" >' + checkout  + '</div>';
-                            r += '<div style="float:left;width:60px;text-align:center;" >' + direction + '</div>';
+                            // r += '<div style="float:left;width:60px;text-align:center;" >' + checkout  + '</div>';
+                            // r += '<div style="float:left;width:60px;text-align:center;" >' + direction + '</div>';
                             r += '<div style="float:left;width:30px;text-align:center;" >' + escort    + '</div>';
 
                         r += '</div>';
 					}
 					o.innerHTML = r;
 				} else{
-					document.getElementById('HISTORY_LST').innerText = xmlhttp.status;
+					document.getElementById('HISTORY_LST_' + child_id ).innerText = xmlhttp.status;
 				}
 				break;
 		}
@@ -861,6 +861,107 @@ function propertyWhiteboardChildHelper( child_id ){
 		xmlhttp.send( 'child_id=' + child_id );
 
 	} catch ( e ) { alert( e );}
+
+}
+
+//
+//  チャイルドプロパティ（マルチフレックス版）
+//
+function propertyChildren(){
+    var children = getMarkedChild();
+    if ( children == null || children.length == 0 ) return;
+
+    var frame = document.createElement('DIV');
+    frame.style.position        = 'absolute';
+    frame.style.top             = '0px';
+    frame.style.left            = '0px';
+    frame.style.width           = '100%';
+    frame.style.height          = 'calc(100% - 84px)';
+    frame.style.paddingTop      = '84px';
+    frame.style.overflow        = 'scroll';
+    frame.style.display         = 'flex';
+    frame.style.flexWrap        = 'wrap';
+    frame.style.justifyContent  = 'center';
+    frame.style.alignItems      = 'center';
+    frame.style.backgroundColor = 'transparent';
+    frame.style.opacity         = 0.9;
+    frame.style.zIndex          = 70000;
+    var oFrame = document.body.appendChild( frame );
+    oFrame.addEventListener( 'click',
+        function(e){
+            if ( this == e.target ) document.body.removeChild( this );
+        }, false );
+
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+
+        var id = c.getAttribute('child_id');    
+        var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+        var child_grade = c.getAttribute('child_grade');
+        var child_type  = c.getAttribute('child_type');
+        var checkin     = c.getAttribute('checkin');
+        var checkout    = ( c.hasAttribute('checkout') )? c.getAttribute('checkout') : '---';
+        var direction   = ( c.hasAttribute('direction') )? c.getAttribute('direction') : '---';
+        var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+        var escort      = ( c.hasAttribute('escort') )? 'yes':'no';
+        var remark      = ( c.hasAttribute('remark') )? decodeURIComponent( c.getAttribute('remark') ) : '';
+    
+
+        var o = document.createElement('DIV');
+        o.style.width           = '202px';
+        o.style.height          = '382px';
+        o.style.margin          = '1px';
+        o.style.padding         = '4px';
+        o.style.borderRadius    = '8px';
+        o.style.backgroundColor = 'white';
+        o.style.borderColor     = 'lightgrey';
+        o.style.color           = 'dimgray';
+        o.style.fontSize        = '12px';
+
+        var r = '';
+        r += '<div style="width:100%;height:;" >';
+            r += '<div style="font-size:16px;border-bottom:1px solid lightgrey;" >';
+            r += child_name + '&nbsp;' + child_grade + child_type;
+            r += '</div>';
+            r += '<div style="width:100%;overflow:hidden;display:inline;" >';
+                r += '<div style="float:left;padding:4px;" >checkin:'  + checkin   + '</div>';
+                r += '<div style="float:left;padding:4px;" >estimate:' + estimate  + '</div>';
+                r += '<div style="float:left;padding:4px;" >checkout:' + checkout  + '</div>';
+                r += '<div style="float:left;padding:4px;" >direction:'     + direction + '</div>';
+                r += '<div style="float:left;padding:4px;" >escort:'        + escort    + '</div>';
+            r += '</div>';
+
+            r += '<div style="clear:both;font-size:16px;" >';
+                r += 'Remark:'
+            r += '</div>';
+            r += '<div style="width:90%;height:60px;" >';
+                r += '<form name="childProp_' + id + '" onsubmit="return false;" >';
+                    r += '<textarea name="remark" style="width:100%;height:100%;" >' + remark + '</textarea>';
+                r += '</form>';
+            r += '</div>';
+
+            r += '<div style="clear:both;font-size:16px;" >';
+                r += 'Histories:'
+            r += '</div>';
+            r += '<div id="HISTORY_HDR" style="clear:both;color:red;height:16px;background-color:lightgrey;border:1px solid lightgrey;" >';
+                r += '<div style="float:left;width:80px;text-align:center;border-right:1px solid gray;" >Day</div>';
+                // r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >checkin</div>';
+                r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >estimate</div>';
+                // r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >checkout</div>';
+                // r += '<div style="float:left;width:60px;text-align:center;border-right:1px solid gray;" >direction</div>';
+                r += '<div style="float:left;width:30px;text-align:center;" >escort</div>';
+            r += '</div>';
+
+            r += '<div id="HISTORY_LST_' + id + '" style="height:100px;font-size:10px;border:1px solid lightgrey;" >';
+            r += '</div>';
+
+        r += '</div>';
+
+        o.innerHTML             = r;
+        oFrame.appendChild( o );
+        propertyWhiteboardChildHelper( id );
+
+    }
 
 }
 

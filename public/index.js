@@ -1769,7 +1769,8 @@ Nav.prototype = {
 				break;
 			case 'property':
 				this.close();
-				propertyWhiteboardChild();
+				// propertyWhiteboardChild();
+				propertyChildren();
 				break;
 			case 'absent':
 				this.close();
