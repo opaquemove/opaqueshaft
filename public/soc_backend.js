@@ -942,11 +942,11 @@ function propertyChildren(){
                     r += '</div>';
                 }
                 r += '<div style="float:right;" >';
-                    r += '<div style="padding:2px;" >checkin:'  + checkin   + '</div>';
-                    r += '<div style="padding:2px;" >estimate:' + estimate  + '</div>';
-                    r += '<div style="padding:2px;" >checkout:' + checkout  + '</div>';
-                    r += '<div style="padding:2px;" >direction:'     + direction + '</div>';
-                    r += '<div style="padding:2px;" >escort:'        + escort    + '</div>';
+                    r += '<div style="padding:1px;" >checkin:'  + checkin   + '</div>';
+                    r += '<div style="padding:1px;" >estimate:' + estimate  + '</div>';
+                    r += '<div style="padding:1px;" >checkout:' + checkout  + '</div>';
+                    r += '<div style="padding:1px;" >direction:'     + direction + '</div>';
+                    r += '<div style="padding:1px;" >escort:'        + escort    + '</div>';
                 r += '</div>';
             r += '</div>';
 
@@ -955,7 +955,7 @@ function propertyChildren(){
             r += '</div>';
             r += '<div style="width:97%;height:60px;" >';
                 r += '<form name="childProp_' + id + '" onsubmit="return false;" >';
-                    r += '<textarea id="child_remark_' + id + '" name="remark" style="width:100%;height:100%;" >' + remark + '</textarea>';
+                    r += '<textarea id="child_remark_' + id + '" name="remark" style="width:97%;height:100%;" >' + remark + '</textarea>';
                 r += '</form>';
             r += '</div>';
 
