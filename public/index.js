@@ -387,7 +387,9 @@ function test(){
 function makeToolbarCheckoutProgress( progress_ratio ){
 	console.log( 'maketoolbarcheckoutprogress:' + progress_ratio );
 	var p = document.getElementById('ID_PROGRESS');
-	p.innerHTML = '';
+	if ( p.firstChild != null )
+		p.removeChild( p.firstChild );
+	// p.innerHTML = '';
 	var d = document.createElement('DIV');
 	d.setAttribute( 'class', 'vh-center');
 	d.style.position		= 'relative';
@@ -2816,7 +2818,7 @@ function coordinateToTime( top, left ){
 	var m = Math.floor( left / m15 ) * 15;
 	// var m = Math.floor( 60 * left2 / criteriaEscortPixel );
 	// m = Math.floor( m / 15 ) * 15;
-	console.log( 'm:' + m + ', left:' + left );
+	// console.log( 'm:' + m + ', left:' + left );
 	if ( m <= 0  ) m = 0;
 	if ( m >= 45 ) m = 45;
 //	if ( m >= 15 ) m = 15;

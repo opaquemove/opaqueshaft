@@ -595,7 +595,6 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     c.setAttribute('child_type',  child_type );
     c.setAttribute('child_grade', child_grade );
     c.setAttribute('imagefile',     ( imagefile == null )? '' : imagefile );
-    console.log('imagefile:' + c.getAttribute('imagefile'));
     if ( remark == null ) remark = '';
     c.setAttribute('remark', encodeURIComponent( remark ) );
 

@@ -19,7 +19,6 @@ function messageLog(){
 
 messageLog.prototype = {
     open : function( ttl ){
-        console.log('open');
         this.overlay.style.visibility   = 'visible';
         this.frame.style.visibility     = 'visible';
         if ( ttl != 0 || ttl != null){

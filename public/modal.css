@@ -12,7 +12,7 @@
 #MODAL_MESSAGE_FRAME{
 	width:				520px;
 	height:				400px;
-	background-color:	transparent;	
+	background-color:	transparent;
 }
 
 #MODAL_MESSAGE_HEADER{
@@ -326,6 +326,7 @@
 	background-color:	transparent;
 	/* border:				1px solid gray; */
 	visibility: 		hidden;
+	/* border-radius: 		4px; */
 }
 #MESSAGELOG_TAB{
 	position:			absolute;
