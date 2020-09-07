@@ -968,6 +968,14 @@ function propertyChildren(){
             r += '<div style="width:100%;padding-top:1px;text-align:center;" >';
                 if ( checkout != '---' )
 				    r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/check-3.png" ></button>';
+                switch ( direction ){
+                    case 'left':
+                        r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/arrow-left.png" ></button>';
+                        break;
+                    case 'right':
+                        r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/arrow-right.png" ></button>';
+                        break;
+                }
                 if ( escort == 'yes' )
 				    r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/family.png" ></button>';
                     else
