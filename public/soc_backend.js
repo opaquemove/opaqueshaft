@@ -48,7 +48,7 @@ socket.on( 'opaqueshaft', function( data ){
             var left	= ( parseInt( arHM[1] ) );
             var child_id = pac.data.child_id;
             var oChild  = getChild( child_id );
-            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, null, false, false, false );
+            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, null, null, false, false, false );
             break;
     }
 })
@@ -71,7 +71,7 @@ function exchange(){
 //     for (var i=0; i<children.length; i++) {
 //         r += children[i].child_name + '<br/>'; 
 //         addChild( i * 20, i * 20, children[i].child_id,
-//              children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, null, false, false, false );
+//              children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, null, null, false, false, false );
 //     }
 //     r += '<br/>length:' + children.length;
 
@@ -575,7 +575,7 @@ function getChildrenByHour( h ){
 //
 //  WhiteBoardにチャイルド(240x60)を実体化
 //
-function addChild( top, left, child_id, child_name, kana, child_type, child_grade, remark, escort, absent, mark ){
+function addChild( top, left, child_id, child_name, kana, child_type, child_grade, imagefile, remark, escort, absent, mark ){
     var now = new Date();
     var h = ( '00' + now.getHours() ).slice(-2);
     var m = ( '00' + now.getMinutes() ).slice(-2);
@@ -594,6 +594,8 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     c.setAttribute('checkin',     checkin_time );
     c.setAttribute('child_type',  child_type );
     c.setAttribute('child_grade', child_grade );
+    c.setAttribute('imagefile',     ( imagefile == null )? '' : imagefile );
+    console.log('imagefile:' + c.getAttribute('imagefile'));
     if ( remark == null ) remark = '';
     c.setAttribute('remark', encodeURIComponent( remark ) );
 
@@ -914,6 +916,7 @@ function propertyChildren(){
         var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
         var escort      = ( c.hasAttribute('escort') )? 'yes':'no';
         var remark      = ( c.hasAttribute('remark') )? decodeURIComponent( c.getAttribute('remark') ) : '';
+        var imagefile   = c.getAttribute('imagefile');
     
 
         var o = document.createElement('DIV');
@@ -932,18 +935,25 @@ function propertyChildren(){
             r += '<div style="font-size:16px;font-weight:bold;border-bottom:1px solid lightgrey;" >';
             r += child_name + '&nbsp;' + child_grade + child_type;
             r += '</div>';
-            r += '<div style="width:100%;overflow:hidden;display:inline;" >';
-                r += '<div style="float:left;padding:4px;" >checkin:'  + checkin   + '</div>';
-                r += '<div style="float:left;padding:4px;" >estimate:' + estimate  + '</div>';
-                r += '<div style="float:left;padding:4px;" >checkout:' + checkout  + '</div>';
-                r += '<div style="float:left;padding:4px;" >direction:'     + direction + '</div>';
-                r += '<div style="float:left;padding:4px;" >escort:'        + escort    + '</div>';
+            r += '<div style="clear:both;width:100%;overflow:hidden;display:inline;" >';
+                if ( imagefile != '' ){
+                    r += '<div style="float:left;width:60px;height:60px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+                        // r += '<img width="100%" src="./images/children/' + imagefile + '" />';
+                    r += '</div>';
+                }
+                r += '<div style="float:right;" >';
+                    r += '<div style="padding:2px;" >checkin:'  + checkin   + '</div>';
+                    r += '<div style="padding:2px;" >estimate:' + estimate  + '</div>';
+                    r += '<div style="padding:2px;" >checkout:' + checkout  + '</div>';
+                    r += '<div style="padding:2px;" >direction:'     + direction + '</div>';
+                    r += '<div style="padding:2px;" >escort:'        + escort    + '</div>';
+                r += '</div>';
             r += '</div>';
 
             r += '<div style="clear:both;font-size:16px;" >';
                 r += 'Remark:'
             r += '</div>';
-            r += '<div style="width:90%;height:60px;" >';
+            r += '<div style="width:97%;height:60px;" >';
                 r += '<form name="childProp_' + id + '" onsubmit="return false;" >';
                     r += '<textarea id="child_remark_' + id + '" name="remark" style="width:100%;height:100%;" >' + remark + '</textarea>';
                 r += '</form>';

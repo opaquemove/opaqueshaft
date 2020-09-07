@@ -361,7 +361,7 @@ function dropHandler( e ){
 //			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, null, false, false, false );
 	addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
 			e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
-			oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, null, false, false, false );
+			oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, oChild.imagefile, null, false, false, false );
 	dndOffsetX = 0;
 	dndOffsetY = 0;
 	showWhiteboardChildCount();
@@ -1120,7 +1120,7 @@ function loadWhiteboardChildren(){
 							// var cc = addChild( c.coordi_top, c.coordi_left,
 							var cc = addChild( c.coordi_top, c.coordi_left + '%',
 								c.child_id, c.child_name, c.kana,
-								c.child_type, c.child_grade, c.remark, c.escort, ( c.absent == 1 )?true : false, false );
+								c.child_type, c.child_grade, c.imagefile, c.remark, c.escort, ( c.absent == 1 )?true : false, false );
 							if ( c.checkout != '' && c.checkout != null )
 								checkoutChild( cc, c.acc_id, c.checkout, c.direction );
 						}
@@ -2712,7 +2712,7 @@ function checkinSelectedChild( hm ){
 				oLog.open( 3 );
 				continue;
 			} 
-			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, false, false, false );
+			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, null, false, false, false );
 			cursor++;
 			c.classList.remove('selected');
 			// c.style.color = '';
@@ -2741,7 +2741,7 @@ function checkinSelectedChild( hm ){
 					oLog.open( 3 );
 					continue;
 				} 
-				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, false, false, false );
+				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, null, false, false, false );
 				cursor++;
 				c.classList.remove('selected');
 				// c.style.color = '';
