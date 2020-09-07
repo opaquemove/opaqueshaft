@@ -17,6 +17,7 @@ var curChildMoved  = false;
 var ongoingTouches = [];
 
 var wb_touch_cnt		= 0;
+var wb_touch_move		= false;
 var wb_touch_cnt_max	= 0;
 var wb_description		= '';
 var wb_report			= '';
@@ -1571,9 +1572,11 @@ function locateWhiteboard( e ){
 					wb_touch_cnt += e.changedTouches.length;
 					if ( wb_touch_cnt_max < wb_touch_cnt ) wb_touch_cnt_max = wb_touch_cnt;
 				}
+			wb_touch_move = false;
 			break;
 		case 'mousemove':
 		case 'touchmove':
+			wb_touch_move = true;
 			break;
 		case 'touchend':
 		case 'mouseup':
@@ -1588,11 +1591,11 @@ function locateWhiteboard( e ){
 
 			if ( wb_touch_cnt_max < 2){
 				if ( wb == e.target || wbe == e.target ){
-					resetChildMark();
+					if ( ! wb_touch_move ) resetChildMark();
 				}
 			} else {
 			}
-
+			wb_touch_move = false;
 			break;
 	}
 }
