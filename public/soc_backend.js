@@ -883,18 +883,24 @@ function propertyChildren(){
     if ( children == null || children.length == 0 ) return;
 
     var frame = document.createElement('DIV');
-    frame.style.position        = 'absolute';
-    frame.style.top             = '0px';
-    frame.style.left            = '0px';
-    frame.style.width           = '100%';
-    frame.style.height          = 'calc(100% - 84px)';
-    frame.style.paddingTop      = '84px';
-    frame.style.overflow        = 'scroll';
-    frame.style.display         = 'flex';
-    frame.style.flexWrap        = 'wrap';
-    frame.style.justifyContent  = 'center';
-    frame.style.alignItems      = 'center';
-    frame.style.backgroundColor = 'transparent';
+    frame.style.position            = 'absolute';
+    frame.style.top                 = '0px';
+    frame.style.left                = '0px';
+    frame.style.width               = '100%';
+    frame.style.height              = 'calc(100% - 84px)';
+    frame.style.paddingTop          = '84px';
+    frame.style.overflow            = 'scroll';
+    frame.style.display             = 'flex';
+    frame.style.flexWrap            = 'wrap';
+    frame.style.justifyContent      = 'center';
+    frame.style.alignItems          = 'center';
+    frame.style.backgroundColor     = 'white';
+    frame.style.backgroundImage     = 'url(./images/cancel-2.png)';
+    frame.style.backgroundSize      = '42px';
+    frame.style.backgroundPosition  = 'top right';
+    frame.style.backgroundRepeat    = 'no-repeat';
+
+    // frame.style.filter          = 'blur(4px)';
     frame.style.opacity         = 0.9;
     frame.style.zIndex          = 70000;
     var oFrame = document.body.appendChild( frame );
@@ -950,16 +956,25 @@ function propertyChildren(){
                 r += '</div>';
             r += '</div>';
 
-            r += '<div style="clear:both;font-size:16px;" >';
+            r += '<div style="clear:both;font-size:14px;width:100%;border-bottom:1px solid lightgrey;" >';
                 r += 'Remark:'
             r += '</div>';
-            r += '<div style="width:97%;height:60px;" >';
+            r += '<div style="width:97%;height:40px;" >';
                 r += '<form name="childProp_' + id + '" onsubmit="return false;" >';
                     r += '<textarea id="child_remark_' + id + '" name="remark" style="width:97%;height:100%;" >' + remark + '</textarea>';
                 r += '</form>';
             r += '</div>';
 
-            r += '<div style="clear:both;font-size:16px;" >';
+            r += '<div style="width:100%;padding-top:1px;text-align:center;" >';
+                if ( checkout != '---' )
+				    r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/check-3.png" ></button>';
+                if ( escort == 'yes' )
+				    r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/family.png" ></button>';
+                    else
+                    r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/user-2.png" ></button>';
+			r += "</div>";
+
+            r += '<div style="clear:both;font-size:14px;" >';
                 r += 'Histories:'
             r += '</div>';
             r += '<div id="HISTORY_HDR" style="clear:both;color:red;height:16px;background-color:lightgrey;border:1px solid lightgrey;" >';
@@ -975,7 +990,7 @@ function propertyChildren(){
             r += '</div>';
 
 			r += '<div style="width:100%;padding-top:4px;text-align:center;" >';
-				r += '<button id="BTN_UPDATE_CHILD_REMARK_' + id + '" style="background-color:transparent;border:none;"  ><img width="30px;" src="/images/check-3.png" ></button>';
+				r += '<button id="BTN_UPDATE_CHILD_REMARK_' + id + '" style="background-color:transparent;border:none;"  ><img width="24px;" src="/images/check-3.png" ></button>';
 			r += "</div>";
 
         r += '</div>';

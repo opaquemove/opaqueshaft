@@ -34,9 +34,17 @@ BUTTON:focus{
 
 TEXTAREA{
 	color:				darkgray;
-	font-size:			12px;
+	font-size:			10px;
+	border-top:			none;
+	border-left:		none;
+	border-right:		none;
+	border-bottom:		1px solid lightgrey;
 	resize:				none
 }
+TEXTAREA:focus{
+	outline:			none;
+}
+
 /*
 MARK{
 	background-color:	red;
