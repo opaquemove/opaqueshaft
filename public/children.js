@@ -4,6 +4,9 @@ window.onresize = fitting;
 var w_whiteboard    = null;
 var w_child			= null;
 
+const arChildGrade = ['','4px solid lightcoral', '4px solid lightgreen', '4px solid lightblue','4px solid lightcyan','4px solid lightyellow','4px solid lightseagreen'];
+const arChildGradeColor = ['','lightcoral', 'lightgreen', 'lightblue', 'lightcyan', 'lightyellow','lightseagreen'];
+
 function init(){
 	var touchdevice = ( 'ontouchend' in document );
 	switch ( touchdevice ){
@@ -24,19 +27,111 @@ function init(){
     var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
-    fitting();
+	fitting();
+	
+	child_form.keyword.focus();
+	document.getElementById('ID_KEYWORD').addEventListener( 'keyup', finder, false );
 
-			
 }
 
 function fitting(){
 	var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
-
-    var navi = document.getElementById('NAVI');
-    navi.style.top  = ( h - navi.offsetHeight ) + 'px';
-    navi.style.left = '0px';
     
+}
+
+function finder( e ){
+	var keyword = child_form.keyword.value;
+	
+	if ( e.keyCode == 13 ) finderHelper( keyword );
+}
+function finderHelper( keyword ){
+	var fa = document.getElementById('FINDER_AREA');
+	fa.innerText = keyword;
+
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+				case 2://header received
+				case 3://loading
+					//var fcl = document.getElementById( 'FIND_CHILD_LST' );
+					//if ( fcl != null ) fcl.innerText = 'access...';
+					fa.innerText = 'access...'
+					break;
+				case 4://done
+					if ( xmlhttp.status == 200 ){
+						var result = JSON.parse( xmlhttp.responseText );
+						
+						fa.innerText = '';
+						for ( var i=0; i<result.length; i++ ){
+							var child_id    = result[i].child_id;
+							var child_name  = result[i].child_name;
+							var kana        = result[i].kana;
+							var child_type  = result[i].child_type;
+							var child_grade = result[i].child_grade;
+							var imagefile	= result[i].imagefile;
+							if ( imagefile == null ) imagefile = '';
+							var c = document.createElement('DIV');
+							c.setAttribute("child_id",    child_id );
+							c.setAttribute("id",          "c_1");
+							c.setAttribute("class",       "PALLETE_CHILD");
+							c.setAttribute('kana',        kana );
+							c.setAttribute('child_type',  child_type );
+							c.setAttribute('child_grade', child_grade );
+							// c.setAttribute("draggable",   "true");
+							c.style.marginTop       = '1px';
+							c.style.marginLeft      = '1px';
+							c.style.float           = 'left';
+							r = '';
+							r += '<form onsubmit="return false;" >';
+							r += '<div class="CHILD_NAME" style="float:left;font-size:16px;width:100%;height:24px;padding-left:2px;border-bottom:1px solid lightgrey;">';
+								r += child_name;
+							r += '</div>';
+							r += '<div style="float:right;font-size:12px;text-align:right;padding-top:2px;" >';
+								r += child_type;
+								r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
+							r += '</div>';
+							if ( imagefile != ''){
+								r += '<div style="float:left;width:70px;height:70px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+								r += '</div>';
+		
+							}
+							r += '<div style="clear:both;" >';
+								r += '<div style="padding:1px;" >ID</div>';
+								r += '<div style="padding:1px;" >' + child_id + '</div>';
+								r += '<div style="padding:1px;" >Child name</div>';
+								r += '<div style="padding:1px;" >' + child_name + '</div>';
+								r += '<div style="padding:1px;" >Kana</div>';
+								r += '<div style="padding:1px;" >' + kana + '</div>';
+								r += '<div style="padding:1px;" >Type</div>';
+								r += '<div style="padding:1px;" >' + child_type + '</div>';
+								r += '<div style="padding:1px;" >Grade</div>';
+								r += '<div style="padding:1px;" >' + child_grade + '</div>';
+							r += '</div>';
+							r += '</form>';
+					
+
+							c.innerHTML = r;
+							var cc = fa.appendChild( c );
+
+						}
+					} else{
+						// oLog.log( null, 'findChildrenTable:' + xmlhttp.status );
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/childfind", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		if ( keyword == '*' ) keyword = '%';
+		xmlhttp.send( 'keyword=' + keyword );
+
+
 }
 
 //
