@@ -32,6 +32,59 @@ function init(){
 	child_form.keyword.focus();
 	document.getElementById('ID_KEYWORD').addEventListener( 'keyup', finder, false );
 
+	document.getElementById('FINDER_AREA').addEventListener( evtStart, locateFinder, false );
+	document.getElementById('FINDER_AREA').addEventListener( evtMove, locateFinder, false );
+	document.getElementById('FINDER_AREA').addEventListener( evtEnd, locateFinder, false );
+
+}
+
+function locateFinder( e ){
+	switch ( e.type ){
+		case 'touchstart':
+		case 'mousedown':
+
+			break;
+		case 'mousemove':
+		case 'touchmove':
+				break;
+		case 'touchend':
+		case 'mouseup':
+			if ( this == e.target ){
+				// reset selection
+				var children = this.childNodes;
+				for ( var i=0; i<children.length; i++ ){
+					var c = children[i];
+					if ( c.hasAttribute('selected')){
+						c.classList.remove('selected');
+						c.removeAttribute('selected');
+					}
+				}
+				return;
+			}
+			var c = scanChild( e.target );
+			if ( c != null ){
+				console.log( c.getAttribute('child_id'));
+				if ( c.hasAttribute('selected')){
+					c.classList.remove('selected');
+					c.removeAttribute('selected');
+				} else{
+					c.classList.add( 'selected' );
+					c.addAttribute( 'selected' );
+				}
+			}
+
+			break;
+	}
+}
+
+function scanChild( o ) {
+    while ( true ) {
+        var tn = o.tagName;
+        if ( tn.toLowerCase() == "body" ) return null;
+        // if ( o.getAttribute("child") == "yes" ) return o;
+        if ( o.hasAttribute("child_id") ) return o;
+        o = o.parentNode;
+    }
 }
 
 function fitting(){
@@ -108,8 +161,8 @@ function finderHelper( keyword ){
 								r += '</div>';
 							r += '</div>';
 							r += '<div style="clear:both;" >';
-								r += '<div style="padding:1px;border-bottom:1px solid lightgrey;" >Name</div>';
-								r += '<div style="padding:1px;" >' + child_name + '</div>';
+								// r += '<div style="padding:1px;border-bottom:1px solid lightgrey;" >Name</div>';
+								// r += '<div style="padding:1px;" >' + child_name + '</div>';
 								r += '<div style="padding:1px;" >Type:' + child_type + '</div>';
 								r += '<div style="padding:1px;" >Grade:' + child_grade + '</div>';
 							r += '</div>';
