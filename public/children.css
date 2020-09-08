@@ -130,8 +130,8 @@ BUTTON:focus{
 }
 
 .PALLETE_CHILD{
-	width:				184px;
-	height:				284px;
+	width:				256px;
+	height:				184px;
 	color:				gray;
 	background-color:	white;
 	padding-top:		4px;
@@ -141,4 +141,8 @@ BUTTON:focus{
 	-webkit-user-select: none;
 }
 
+.selected{
+	color:				white;
+	background-color:	rgb(32, 116, 243);
+}
 

@@ -82,34 +82,36 @@ function finderHelper( keyword ){
 							c.setAttribute('child_type',  child_type );
 							c.setAttribute('child_grade', child_grade );
 							// c.setAttribute("draggable",   "true");
-							c.style.marginTop       = '1px';
-							c.style.marginLeft      = '1px';
+							c.style.margin	        = '1px';
+							c.style.padding			= '2px';
 							c.style.float           = 'left';
 							r = '';
 							r += '<form onsubmit="return false;" >';
-							r += '<div class="CHILD_NAME" style="float:left;font-size:16px;width:100%;height:24px;padding-left:2px;border-bottom:1px solid lightgrey;">';
-								r += child_name;
-							r += '</div>';
-							r += '<div style="float:right;font-size:12px;text-align:right;padding-top:2px;" >';
-								r += child_type;
-								r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
-							r += '</div>';
-							if ( imagefile != ''){
-								r += '<div style="float:left;width:70px;height:70px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+							r += '<div style="clear:both;width:100%;height:86px;" >';
+								if ( imagefile != ''){
+									r += '<div style="float:left;width:70px;height:70px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+									r += '</div>';
+								} else{
+									r += '<div style="float:left;width:70px;height:70px;opacity:0.3;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
+									r += '</div>';
+								}
+								r += '<div style="float:left;" >';
+									r += '<div class="CHILD_NAME" style="font-size:16px;padding-left:2px;">';
+										r += child_name;
+									r += '</div>';
+									r += '<div style="padding:1px;text-align:right;" >ID:' + child_id + '</div>';
+									r += '<div style="font-size:12px;text-align:right;padding-top:2px;" >';
+										r += child_type;
+										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
+									r += '</div>';
+									r += '<div style="padding:1px;" >' + kana + '</div>';
 								r += '</div>';
-		
-							}
+							r += '</div>';
 							r += '<div style="clear:both;" >';
-								r += '<div style="padding:1px;" >ID</div>';
-								r += '<div style="padding:1px;" >' + child_id + '</div>';
-								r += '<div style="padding:1px;" >Child name</div>';
+								r += '<div style="padding:1px;border-bottom:1px solid lightgrey;" >Name</div>';
 								r += '<div style="padding:1px;" >' + child_name + '</div>';
-								r += '<div style="padding:1px;" >Kana</div>';
-								r += '<div style="padding:1px;" >' + kana + '</div>';
-								r += '<div style="padding:1px;" >Type</div>';
-								r += '<div style="padding:1px;" >' + child_type + '</div>';
-								r += '<div style="padding:1px;" >Grade</div>';
-								r += '<div style="padding:1px;" >' + child_grade + '</div>';
+								r += '<div style="padding:1px;" >Type:' + child_type + '</div>';
+								r += '<div style="padding:1px;" >Grade:' + child_grade + '</div>';
 							r += '</div>';
 							r += '</form>';
 					
