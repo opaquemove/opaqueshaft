@@ -10,6 +10,18 @@ function messageLog(){
     this.content    = null;
     this.hTimeout   = null;
 
+    var r = '';
+    r += '<div id="MODAL_OVERLAY_MESSAGELOG" class="not_select">';
+        r += '<div id="MESSAGELOG_FRAME"       class="not_select" >';
+            r += '<div id="MESSAGELOG_TAB"     class="not_select">&nbsp;</div>';
+            r += '<div id="MESSAGELOG_CONTENT" class="not_select"></div>';
+        r += '</div>';
+    r += '</div>';
+
+    var o = document.createElement('DIV');
+    o.innerHTML = r;
+    document.body.appendChild( o );
+
     this.overlay    = document.getElementById('MODAL_OVERLAY_MESSAGELOG');
     this.frame      = document.getElementById('MESSAGELOG_FRAME');
     this.content    = document.getElementById('MESSAGELOG_CONTENT');

@@ -63,13 +63,14 @@ function locateFinder( e ){
 			}
 			var c = scanChild( e.target );
 			if ( c != null ){
-				console.log( c.getAttribute('child_id'));
 				if ( c.hasAttribute('selected')){
 					c.classList.remove('selected');
 					c.removeAttribute('selected');
+					c.style.height = '';
 				} else{
 					c.classList.add( 'selected' );
-					c.addAttribute( 'selected' );
+					c.setAttribute( 'selected', 'yes' );
+					c.style.height = '254px';
 				}
 			}
 
