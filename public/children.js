@@ -72,7 +72,7 @@ function locateFinder( e ){
 					if ( ! lf_moved ){
 						c.classList.add( 'selected' );
 						c.setAttribute( 'selected', 'yes' );
-						c.style.height = '460px';
+						c.style.height = '550px';
 						c.getElementsByClassName('appendix')[0].style.display = 'inline';
 						var result_lst = c.getElementsByClassName('RESULT_LST')[0];
 						var child_id = c.getAttribute('child_id');
