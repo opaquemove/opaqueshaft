@@ -36,6 +36,11 @@ function init(){
 	document.getElementById('FINDER_AREA').addEventListener( evtMove, locateFinder, false );
 	document.getElementById('FINDER_AREA').addEventListener( evtEnd, locateFinder, false );
 
+	document.getElementById('BTN_PREV_CHILDREN').addEventListener( 'click',
+		function(e){
+			var p = document.getElementById('FINDER_AREA');
+			prevChildren( p );
+		}, false );
 }
 
 function locateFinder( e ){
@@ -45,23 +50,14 @@ function locateFinder( e ){
 			break;
 		case 'mousemove':
 		case 'touchmove':
-				break;
+			break;
 		case 'touchend':
 		case 'mouseup':
-			if ( this == e.target ){
-				// reset selection
-				var children = this.childNodes;
-				for ( var i=0; i<children.length; i++ ){
-					var c = children[i];
-					if ( c.hasAttribute('selected')){
-						c.classList.remove('selected');
-						c.removeAttribute('selected');
-						c.style.height = '';
-					}
-					children[i].style.display = 'inline'
-				}
-				return;
-			}
+			// if ( this == e.target ){
+			// 	// reset selection
+			// 	prevChildren( this );
+			// 	return;
+			// }
 			var c = scanChild( e.target );
 			if ( c != null ){
 				if ( c.hasAttribute('selected')){
@@ -77,8 +73,12 @@ function locateFinder( e ){
 				} else{
 					c.classList.add( 'selected' );
 					c.setAttribute( 'selected', 'yes' );
-					c.style.height = '380px';
+					c.style.height = '460px';
 					c.getElementsByClassName('appendix')[0].style.display = 'inline';
+					var result_lst = c.getElementsByClassName('RESULT_LST')[0];
+					var child_id = c.getAttribute('child_id');
+					makeResultList( child_id, result_lst );
+
 					var children = this.childNodes;
 					for ( var i=0; i<children.length; i++ ){
 						if ( c!= children[i] )
@@ -89,6 +89,23 @@ function locateFinder( e ){
 
 			break;
 	}
+}
+
+function prevChildren( p ){
+	if ( !p.hasChildNodes ) return;
+	var children = p.childNodes;
+
+	for ( var i=0; i<children.length; i++ ){
+		var c = children[i];
+		if ( c.hasAttribute('selected')){
+			c.classList.remove('selected');
+			c.removeAttribute('selected');
+			c.style.height = '';
+		}
+		c.getElementsByClassName('appendix')[0].style.display = 'none';
+		c.style.display = 'inline'
+	}
+
 }
 
 function scanChild( o ) {
@@ -113,6 +130,7 @@ function finder( e ){
 	if ( e.keyCode == 13 ) finderHelper( keyword );
 }
 function finderHelper( keyword ){
+	console.log( 'keyword:' + keyword );
 	var fa = document.getElementById('FINDER_AREA');
 	fa.innerText = keyword;
 
@@ -122,13 +140,16 @@ function finderHelper( keyword ){
 		function (e){
 			switch ( xmlhttp.readyState){
 				case 1://opened
+					break;
 				case 2://header received
+					break;
 				case 3://loading
 					//var fcl = document.getElementById( 'FIND_CHILD_LST' );
 					//if ( fcl != null ) fcl.innerText = 'access...';
 					fa.innerText = 'access...'
 					break;
 				case 4://done
+					console.log('status:' + xmlhttp.status );
 					if ( xmlhttp.status == 200 ){
 						var result = JSON.parse( xmlhttp.responseText );
 						
@@ -184,22 +205,31 @@ function finderHelper( keyword ){
 							r += '<div class="appendix" style="clear:both;display:none;" >';
 								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Property:</div>';
 								r += '<div style="padding:1px;height:77px;" >';
-									r += '<input type="text" name="child_name"  value="' + child_name  + '" />';
-									r += '<input type="text" name="kana"        value="' + kana        + '" />';
-									r += '<input type="text" name="child_type"  value="' + child_type  + '" />';
-									r += '<input type="text" name="child_grade" value="' + child_grade + '" />';
-									r += 'Range:' + range_id;
+									r += '<div>';
+										r += '<input type="text" name="child_name"  value="' + child_name  + '" />';
+									r += '</div>';
+									r += '<div>';
+										r += '<input type="text" name="kana"        value="' + kana        + '" />';
+									r += '</div>';
+									r += '<div>';
+										r += '<input type="text" name="child_type"  value="' + child_type  + '" />';
+									r += '</div>';
+									r += '<div>';
+										r += '<input type="text" name="child_grade" value="' + child_grade + '" />';
+									r += '<div>';
+										r += 'Range:' + range_id;
+									r += '</div>';
 								r += '</div>';
-								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Result:</div>';
-								r += '<div style="padding:1px;height:42px;border:1px solid lightgrey;" ></div>';
-								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
-								r += '<div style="padding:1px;height:42px;border:1px solid lightgrey;" ></div>';
+								r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Result:</div>';
+								r += '<div class="RESULT_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
+								r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
+								r += '<div class="RESERV_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
 								r += '<div style="padding:10px 1px 1px 1px;width:100%;text-align:center;" >';
-									r += '<button  style="border:none;background-color:transparent;" >';
+									r += '<button class="BTN_COMMIT_CHILD" style="border:none;background-color:transparent;" >';
 										r += '<img width="24px" src="./images/check-3.png" />';
 									r += '</button>';
-									r += '<button  style="border:none;background-color:transparent;" >';
-										r += '<img width="24px" src="./images/cancel-2.png" />';
+									r += '<button class="BTN_CANCEL_CHILD" style="border:none;background-color:transparent;" >';
+										r += '<img   width="24px" src="./images/cancel-2.png" />';
 									r += '</button>';
 								r += '</div>';
 							r += '</div>';
@@ -208,10 +238,15 @@ function finderHelper( keyword ){
 
 							c.innerHTML = r;
 							var cc = fa.appendChild( c );
+							var bcc = cc.getElementsByClassName('BTN_CANCEL_CHILD')[0];
+							bcc.addEventListener( 'click', function(e){
+									var p = document.getElementById('FINDER_AREA');
+									prevChildren( p );
+								}, false );
 
 						}
 					} else{
-						// oLog.log( null, 'findChildrenTable:' + xmlhttp.status );
+						console.log( null, 'findChildrenTable:' + xmlhttp.status );
 					}
 					break;
 			}
@@ -223,6 +258,44 @@ function finderHelper( keyword ){
 		if ( keyword == '*' ) keyword = '%';
 		xmlhttp.send( 'keyword=' + keyword );
 
+
+}
+
+function makeResultList( child_id, p ){
+
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					p.innerText = 'access...'
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+					if ( xmlhttp.status == 200 ){
+						var result = JSON.parse( xmlhttp.responseText );
+						
+						p.innerText = '';
+						for ( var i=0; i<result.length; i++ ){
+							var res = result[i];
+							var day = res.day;
+							var o = document.createElement('DIV');
+							o.innerText = day;
+							p.appendChild( o );
+						}
+					}
+				break;
+			}
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/resultlist", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'child_id=' + child_id );
 
 }
 

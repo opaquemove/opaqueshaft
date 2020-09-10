@@ -71,11 +71,11 @@ BUTTON:focus{
 	z-index:			0;
 }
 
-#TOOLBAR{
+#HEADER{
 	position:				absolute;
 	top:					0px;
 	left:					0px;
-	pointer-events: 		none;
+	/* pointer-events: 		none; */
 	padding-top:			0px;
 	padding-bottom:			2px;
 	width:					100%;
@@ -83,7 +83,6 @@ BUTTON:focus{
 	color:					gray;
 	background-color:		transparent;
 	overflow:				visible;
-	opacity: 				1;
 }
 #OPAQUESHAFT_TITLE{
 	pointer-events:			none;
@@ -113,12 +112,34 @@ BUTTON:focus{
 
 }
 
-#FINDER_AREA{
+#TOOLBAR{
 	position:				absolute;
 	top:					84px;
 	left:					0px;
 	width:					100%;
-	height:					calc( 100% - 88px);
+	height:					32px;
+	color:					dimgray;
+	background-color:		white;
+	overflow:				visible;
+	opacity:				0.9;
+}
+#TOOLBAR2{
+	width:					262px;
+	height:					100%;
+	float:					left;
+	color:					dimgray;
+	background-color:		white;
+	border-right:			1px solid lightgrey;
+	overflow:				visible;
+}
+
+
+#FINDER_AREA{
+	position:				absolute;
+	top:					116px;
+	left:					0px;
+	width:					100%;
+	height:					calc( 100% - 120px);
 	color:					gray;
 	font-size:				12px;
 	opacity:				0.9;
@@ -141,6 +162,15 @@ BUTTON:focus{
 	-webkit-user-select: none;
 }
 
+.prev_class{
+	float:					left;
+	width:					32px;
+	height:					100%;
+	background-image:		url(./images/prev.png);
+	background-position: 	center center;
+	background-repeat: 		no-repeat;
+	background-size: 		14px;
+}
 .selected{
 	/* color:				white;
 	background-color:	rgb(32, 116, 243); */
