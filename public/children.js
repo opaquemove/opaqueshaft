@@ -31,6 +31,11 @@ function init(){
 	
 	child_form.keyword.focus();
 	document.getElementById('ID_KEYWORD').addEventListener( 'keyup', finder, false );
+	document.getElementById('BTN_FIND_CHILDREN' ).addEventListener('click',
+		function(e){
+			var keyword = child_form.keyword.value;	
+			finderHelper( keyword );
+		}, false );
 
 	document.getElementById('FINDER_AREA').addEventListener( evtStart, locateFinder, false );
 	document.getElementById('FINDER_AREA').addEventListener( evtMove, locateFinder, false );
