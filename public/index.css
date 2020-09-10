@@ -56,6 +56,7 @@ BUTTON IMG {
 
 INPUT{
 	color:				gray;
+	border-radius: 		0px;
 	border-top:			none;
 	border-left:		none;
 	border-right:		none;

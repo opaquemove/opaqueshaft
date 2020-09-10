@@ -43,7 +43,7 @@ router.post('/property', function(req, res, next ){
         res.json( null );
     }else {
         db.one( {
-            text: 'SELECT acc_id, acc_name FROM accounts WHERE acc_id = $1 ',
+            text: 'SELECT acc_id, acc_name, range_id FROM accounts WHERE acc_id = $1 ',
             values: [id] } )
           .then( rows => {
                 res.json( rows );
@@ -105,9 +105,10 @@ router.post('/sign', function(req, res, next ){
 //
 router.post('/childfind', function(req, res, next ){
     var keyword = req.body.keyword;
+    var id  = req.cookies.acc;
     console.log('childfind:' + keyword );
     res.header('Content-Type', 'application/json;charset=utf-8');
-    db.any( "SELECT * FROM children WHERE kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ORDER BY child_grade ASC" )
+    db.any( "SELECT * FROM children WHERE ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) AND range_id = ( SELECT range_id FROM accounts WHERE acc_id = '" + id + "') ORDER BY child_grade ASC" )
       .then( rows => {
             res.json( rows );
       });

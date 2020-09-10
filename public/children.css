@@ -118,7 +118,7 @@ BUTTON:focus{
 	top:					84px;
 	left:					0px;
 	width:					100%;
-	height:					calc( 100% - 84px);
+	height:					calc( 100% - 88px);
 	color:					gray;
 	font-size:				12px;
 	opacity:				0.9;
@@ -131,7 +131,7 @@ BUTTON:focus{
 
 .PALLETE_CHILD{
 	width:				256px;
-	height:				124px;
+	height:				80px;
 	color:				gray;
 	background-color:	white;
 	padding-top:		4px;

@@ -1760,9 +1760,9 @@ function propertyAccount(){
 
     var oAcc = getAccount( acc_id );
     var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
-		r += 'Account property';
-    r += '</div>';
+	// r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+	// 	r += 'Account property';
+    // r += '</div>';
     r += "<div>";
     r += "<form name='sign_form' onsubmit='return false;' >";
         r += "<table align='center' >";
@@ -1777,6 +1777,12 @@ function propertyAccount(){
         r += "</tr>";
         r += "<tr>";
         r += "<td><input style='width:200px;height:18px;' type='text' name='acc_name' tabindex=2 value='" + oAcc.acc_name + "' /></td>";
+        r += "</tr>";
+        r += "<tr>";
+        r += "<td>Range:</td>";
+        r += "</tr>";
+        r += "<tr>";
+        r += "<td><input style='width:200px;height:18px;' type='text' name='range_id' tabindex=2 value='" + oAcc.range_id + "' /></td>";
         r += "</tr>";
         r += "<tr>";
         r += "<td><div style='width:128px;height:128px;border-radius:45%;background-image:url(./images/accounts/" + acc_id + ".jpeg);background-size:128px;background-position:center center;background-repeat:no_repeat;' ></div></td>";

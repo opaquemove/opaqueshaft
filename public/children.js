@@ -66,11 +66,23 @@ function locateFinder( e ){
 				if ( c.hasAttribute('selected')){
 					c.classList.remove('selected');
 					c.removeAttribute('selected');
+					c.getElementsByClassName('appendix')[0].style.display = 'none';
 					c.style.height = '';
+					var children = this.childNodes;
+					for ( var i=0; i<children.length; i++ ){
+						if ( c!= children[i] )
+							children[i].style.display = 'inline'
+					}
 				} else{
 					c.classList.add( 'selected' );
 					c.setAttribute( 'selected', 'yes' );
-					c.style.height = '254px';
+					c.style.height = '338px';
+					c.getElementsByClassName('appendix')[0].style.display = 'inline';
+					var children = this.childNodes;
+					for ( var i=0; i<children.length; i++ ){
+						if ( c!= children[i] )
+							children[i].style.display = 'none'
+					}
 				}
 			}
 
@@ -143,17 +155,19 @@ function finderHelper( keyword ){
 							r += '<form onsubmit="return false;" >';
 							r += '<div style="clear:both;width:100%;height:86px;" >';
 								if ( imagefile != ''){
-									r += '<div style="float:left;width:70px;height:70px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="float:left;width:70px;height:70px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+										r += child_id;
 									r += '</div>';
 								} else{
-									r += '<div style="float:left;width:70px;height:70px;opacity:0.3;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="float:left;width:70px;height:70px;color:black;font-size:8px;opacity:0.3;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
+										r += child_id;
 									r += '</div>';
 								}
 								r += '<div style="float:left;" >';
 									r += '<div class="CHILD_NAME" style="font-size:16px;padding-left:2px;">';
 										r += child_name;
 									r += '</div>';
-									r += '<div style="padding:1px;text-align:right;" >ID:' + child_id + '</div>';
+									// r += '<div style="padding:1px;text-align:right;" >ID:' + child_id + '</div>';
 									r += '<div style="font-size:12px;text-align:right;padding-top:2px;" >';
 										r += child_type;
 										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
@@ -161,11 +175,17 @@ function finderHelper( keyword ){
 									r += '<div style="padding:1px;" >' + kana + '</div>';
 								r += '</div>';
 							r += '</div>';
-							r += '<div style="clear:both;" >';
-								// r += '<div style="padding:1px;border-bottom:1px solid lightgrey;" >Name</div>';
-								// r += '<div style="padding:1px;" >' + child_name + '</div>';
-								r += '<div style="padding:1px;" >Type:' + child_type + '</div>';
-								r += '<div style="padding:1px;" >Grade:' + child_grade + '</div>';
+							// r += '<div style="clear:both;" >';
+							// 	r += '<div style="padding:1px;" >Type:' + child_type + '</div>';
+							// 	r += '<div style="padding:1px;" >Grade:' + child_grade + '</div>';
+							// r += '</div>';
+							r += '<div class="appendix" style="clear:both;display:none;" >';
+								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Property:</div>';
+								r += '<div style="padding:1px;height:42px;" ></div>';
+								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Result:</div>';
+								r += '<div style="padding:1px;height:42px;" ></div>';
+								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
+								r += '<div style="padding:1px;height:42px;" ></div>';
 							r += '</div>';
 							r += '</form>';
 					
