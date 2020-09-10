@@ -42,7 +42,6 @@ function locateFinder( e ){
 	switch ( e.type ){
 		case 'touchstart':
 		case 'mousedown':
-
 			break;
 		case 'mousemove':
 		case 'touchmove':
@@ -57,26 +56,28 @@ function locateFinder( e ){
 					if ( c.hasAttribute('selected')){
 						c.classList.remove('selected');
 						c.removeAttribute('selected');
+						c.style.height = '';
 					}
+					children[i].style.display = 'inline'
 				}
 				return;
 			}
 			var c = scanChild( e.target );
 			if ( c != null ){
 				if ( c.hasAttribute('selected')){
-					c.classList.remove('selected');
-					c.removeAttribute('selected');
-					c.getElementsByClassName('appendix')[0].style.display = 'none';
-					c.style.height = '';
-					var children = this.childNodes;
-					for ( var i=0; i<children.length; i++ ){
-						if ( c!= children[i] )
-							children[i].style.display = 'inline'
-					}
+					// c.classList.remove('selected');
+					// c.removeAttribute('selected');
+					// c.getElementsByClassName('appendix')[0].style.display = 'none';
+					// c.style.height = '';
+					// var children = this.childNodes;
+					// for ( var i=0; i<children.length; i++ ){
+					// 	if ( c!= children[i] )
+					// 		children[i].style.display = 'inline'
+					// }
 				} else{
 					c.classList.add( 'selected' );
 					c.setAttribute( 'selected', 'yes' );
-					c.style.height = '338px';
+					c.style.height = '380px';
 					c.getElementsByClassName('appendix')[0].style.display = 'inline';
 					var children = this.childNodes;
 					for ( var i=0; i<children.length; i++ ){
@@ -138,6 +139,7 @@ function finderHelper( keyword ){
 							var kana        = result[i].kana;
 							var child_type  = result[i].child_type;
 							var child_grade = result[i].child_grade;
+							var range_id	= result[i].range_id;
 							var imagefile	= result[i].imagefile;
 							if ( imagefile == null ) imagefile = '';
 							var c = document.createElement('DIV');
@@ -181,11 +183,25 @@ function finderHelper( keyword ){
 							// r += '</div>';
 							r += '<div class="appendix" style="clear:both;display:none;" >';
 								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Property:</div>';
-								r += '<div style="padding:1px;height:42px;" ></div>';
+								r += '<div style="padding:1px;height:77px;" >';
+									r += '<input type="text" name="child_name"  value="' + child_name  + '" />';
+									r += '<input type="text" name="kana"        value="' + kana        + '" />';
+									r += '<input type="text" name="child_type"  value="' + child_type  + '" />';
+									r += '<input type="text" name="child_grade" value="' + child_grade + '" />';
+									r += 'Range:' + range_id;
+								r += '</div>';
 								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Result:</div>';
-								r += '<div style="padding:1px;height:42px;" ></div>';
+								r += '<div style="padding:1px;height:42px;border:1px solid lightgrey;" ></div>';
 								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
-								r += '<div style="padding:1px;height:42px;" ></div>';
+								r += '<div style="padding:1px;height:42px;border:1px solid lightgrey;" ></div>';
+								r += '<div style="padding:10px 1px 1px 1px;width:100%;text-align:center;" >';
+									r += '<button  style="border:none;background-color:transparent;" >';
+										r += '<img width="24px" src="./images/check-3.png" />';
+									r += '</button>';
+									r += '<button  style="border:none;background-color:transparent;" >';
+										r += '<img width="24px" src="./images/cancel-2.png" />';
+									r += '</button>';
+								r += '</div>';
 							r += '</div>';
 							r += '</form>';
 					
