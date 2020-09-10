@@ -43,21 +43,19 @@ function init(){
 		}, false );
 }
 
+var lf_moved	= false;
 function locateFinder( e ){
 	switch ( e.type ){
 		case 'touchstart':
 		case 'mousedown':
+			lf_moved = false;
 			break;
 		case 'mousemove':
 		case 'touchmove':
+			lf_moved = true;
 			break;
 		case 'touchend':
 		case 'mouseup':
-			// if ( this == e.target ){
-			// 	// reset selection
-			// 	prevChildren( this );
-			// 	return;
-			// }
 			var c = scanChild( e.target );
 			if ( c != null ){
 				if ( c.hasAttribute('selected')){
@@ -71,18 +69,20 @@ function locateFinder( e ){
 					// 		children[i].style.display = 'inline'
 					// }
 				} else{
-					c.classList.add( 'selected' );
-					c.setAttribute( 'selected', 'yes' );
-					c.style.height = '460px';
-					c.getElementsByClassName('appendix')[0].style.display = 'inline';
-					var result_lst = c.getElementsByClassName('RESULT_LST')[0];
-					var child_id = c.getAttribute('child_id');
-					makeResultList( child_id, result_lst );
-
-					var children = this.childNodes;
-					for ( var i=0; i<children.length; i++ ){
-						if ( c!= children[i] )
-							children[i].style.display = 'none'
+					if ( ! lf_moved ){
+						c.classList.add( 'selected' );
+						c.setAttribute( 'selected', 'yes' );
+						c.style.height = '460px';
+						c.getElementsByClassName('appendix')[0].style.display = 'inline';
+						var result_lst = c.getElementsByClassName('RESULT_LST')[0];
+						var child_id = c.getAttribute('child_id');
+						makeResultList( child_id, result_lst );
+	
+						var children = this.childNodes;
+						for ( var i=0; i<children.length; i++ ){
+							if ( c!= children[i] )
+								children[i].style.display = 'none'
+						}
 					}
 				}
 			}
