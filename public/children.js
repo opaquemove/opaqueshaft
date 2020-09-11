@@ -163,6 +163,8 @@ function finderHelper( keyword ){
 							var child_id    = result[i].child_id;
 							var child_name  = result[i].child_name;
 							var kana        = result[i].kana;
+							var remark		= result[i].remark;
+							if ( remark == null ) remark = '';
 							var child_type  = result[i].child_type;
 							var child_grade = result[i].child_grade;
 							var range_id	= result[i].range_id;
@@ -180,7 +182,6 @@ function finderHelper( keyword ){
 							c.style.padding			= '2px';
 							c.style.float           = 'left';
 							r = '';
-							r += '<form onsubmit="return false;" >';
 							r += '<div style="clear:both;width:100%;height:86px;" >';
 								if ( imagefile != ''){
 									r += '<div style="float:left;width:70px;height:70px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
@@ -208,8 +209,9 @@ function finderHelper( keyword ){
 							// 	r += '<div style="padding:1px;" >Grade:' + child_grade + '</div>';
 							// r += '</div>';
 							r += '<div class="appendix" style="clear:both;display:none;" >';
+								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
 								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Property:</div>';
-								r += '<div style="padding:1px;height:77px;" >';
+								r += '<div style="padding:1px;height:100px;" >';
 									r += '<div>';
 										r += '<input type="text" name="child_name"  value="' + child_name  + '" />';
 									r += '</div>';
@@ -221,8 +223,13 @@ function finderHelper( keyword ){
 									r += '</div>';
 									r += '<div>';
 										r += '<input type="text" name="child_grade" value="' + child_grade + '" />';
+									r += '</div>';
+									r += '<div>';
+										r += '<input type="text" name="remark" value="' + remark + '" />';
+									r += '</div>';
 									r += '<div>';
 										r += 'Range:' + range_id;
+										r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
 									r += '</div>';
 								r += '</div>';
 								r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Result:</div>';
@@ -237,14 +244,20 @@ function finderHelper( keyword ){
 										r += '<img   width="24px" src="./images/cancel-2.png" />';
 									r += '</button>';
 								r += '</div>';
+								r += '</form>';
 							r += '</div>';
-							r += '</form>';
 					
 
 							c.innerHTML = r;
 							var cc = fa.appendChild( c );
-							var bcc = cc.getElementsByClassName('BTN_CANCEL_CHILD')[0];
-							bcc.addEventListener( 'click', function(e){
+							var bcomc = cc.getElementsByClassName('BTN_COMMIT_CHILD')[0];
+							bcomc.addEventListener( 'click', function(e){
+									var cid = scanChild( e.target ).getAttribute('child_id');
+									var f = document.forms['child_prop_' + cid ];
+									updateChild( f );
+								}, false );
+							var bcanc = cc.getElementsByClassName('BTN_CANCEL_CHILD')[0];
+							bcanc.addEventListener( 'click', function(e){
 									var p = document.getElementById('FINDER_AREA');
 									prevChildren( p );
 								}, false );
@@ -266,6 +279,9 @@ function finderHelper( keyword ){
 
 }
 
+//
+//	リザルト（履歴）リスト取得
+//
 function makeResultList( child_id, p ){
 
 	var r = '';
@@ -301,6 +317,48 @@ function makeResultList( child_id, p ){
 		xmlhttp.open("POST", "/accounts/resultlist", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( 'child_id=' + child_id );
+
+}
+
+//
+//	チャイルド更新
+//
+function updateChild( f ){
+
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					// p.innerText = 'access...'
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+					if ( xmlhttp.status == 200 ){
+						var result = JSON.parse( xmlhttp.responseText );
+						console.log( xmlhttp.responseText );
+					}
+				break;
+			}
+		}, false );
+
+		var child_id 	= f.child_id.value;
+		var child_name 	= f.child_name.value;
+		var kana		= f.kana.value;
+		var remark		= encodeURIComponent( f.remark.value );
+		var child_grade = f.child_grade.value;
+		var child_type	= f.child_type.value;
+
+		console.log( 'child update: ' + child_id +',' + child_name);
+
+		xmlhttp.open("POST", "/accounts/childupdate", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'child_id=' + child_id + '&child_name=' + child_name + '&kana=' + kana + '&remark=' + remark + '&child_grade=' + child_grade + '&child_type=' + child_type );
 
 }
 
