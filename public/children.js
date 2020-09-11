@@ -211,7 +211,7 @@ function finderHelper( keyword ){
 							r += '<div class="appendix" style="clear:both;display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
 								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Property:</div>';
-								r += '<div style="padding:1px;height:100px;" >';
+								r += '<div style="padding:1px;height:140px;" >';
 									r += '<div>';
 										r += '<input type="text" name="child_name"  value="' + child_name  + '" />';
 									r += '</div>';
