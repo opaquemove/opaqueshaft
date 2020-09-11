@@ -4,6 +4,8 @@ window.onresize = fitting;
 var w_whiteboard    = null;
 var w_child			= null;
 
+var oLog			= null;
+
 const arChildGrade = ['','4px solid lightcoral', '4px solid lightgreen', '4px solid lightblue','4px solid lightcyan','4px solid lightyellow','4px solid lightseagreen'];
 const arChildGradeColor = ['','lightcoral', 'lightgreen', 'lightblue', 'lightcyan', 'lightyellow','lightseagreen'];
 
@@ -27,6 +29,10 @@ function init(){
     var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
+	//	ログエリアの初期化
+	oLog = new messageLog();
+
+
 	fitting();
 	
 	child_form.keyword.focus();
@@ -46,6 +52,9 @@ function init(){
 			var p = document.getElementById('FINDER_AREA');
 			prevChildren( p );
 		}, false );
+	
+	oLog.log( null, 'initialized.');
+	oLog.open( 2 );
 }
 
 var lf_moved	= false;
@@ -342,6 +351,8 @@ function updateChild( f ){
 					if ( xmlhttp.status == 200 ){
 						var result = JSON.parse( xmlhttp.responseText );
 						console.log( xmlhttp.responseText );
+						oLog.log( null, 'update child:' + result.message)
+						oLog.open(2);
 					}
 				break;
 			}

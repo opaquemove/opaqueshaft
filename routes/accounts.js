@@ -175,7 +175,7 @@ router.post('/childupdate', function(req, res, next ){
       text: 'UPDATE children SET child_name = $1, kana = $2, child_grade = $3, child_type = $4, remark = $5 WHERE child_id = $6',
       values: [ child_name, kana, child_grade, child_type, remark, child_id ] } )
     .then( function() {
-      res.json( {status: 'SUCCESS', message:  'update child'});
+      res.json( {status: 'SUCCESS', message:  'update child:' + child_name });
     });
 });
 
