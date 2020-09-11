@@ -234,7 +234,7 @@ function finderHelper( keyword ){
 										r += '<input type="text" name="child_grade" value="' + child_grade + '" />';
 									r += '</div>';
 									r += '<div>';
-										r += '<input type="text" name="remark" value="' + remark + '" />';
+										r += '<input type="text" name="remark" value="' + remark + '" autocomplete="off" />';
 									r += '</div>';
 									r += '<div>';
 										r += 'Range:' + range_id;
