@@ -364,8 +364,13 @@ function makeResultList( child_id, p ){
 							var remark		= res.remark;
 							var ymd = day.getFullYear() + '/' + (day.getMonth()+1) + '/' + day.getDate();
 							var o = document.createElement('DIV');
-							o.innerText = ymd + ' ' + estimate.substr(0, 5); + ' ' + remark;
+							r = '';
+							r += '<div style="float:left;" >' + ymd + '</div>';
+							r += '<div style="float:left;" >' + estimate.substr(0,5) + '</div>';
+							r += '<div style="float:left;" >' + remark + '</div>';
+							o.innerHTML = r;
 							p.appendChild( o );
+							console.log( 'remark:' + remark );
 						}
 					}
 				break;
