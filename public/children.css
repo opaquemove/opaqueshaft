@@ -156,6 +156,11 @@ BUTTON:focus{
 .PALLETE_CHILD{
 	width:				256px;
 	height:				80px;
+	display:			flex;
+	flex-direction: 	row;
+	justify-content: 	center;
+	align-items: 		center;
+
 	color:				gray;
 	background-color:	white;
 	padding-top:		4px;

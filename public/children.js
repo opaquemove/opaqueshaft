@@ -192,26 +192,28 @@ function finderHelper( keyword ){
 							c.style.padding			= '2px';
 							c.style.float           = 'left';
 							r = '';
-							r += '<div style="clear:both;width:100%;height:86px;" >';
+							r += '<div style="width:100%;height:86px;overflow:hidden;" >';
 								if ( imagefile != ''){
 									r += '<div style="float:left;width:70px;height:70px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
-										r += child_id;
+										r += '&nbsp;';
 									r += '</div>';
 								} else{
 									r += '<div style="float:left;width:70px;height:70px;color:black;font-size:8px;opacity:0.3;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
-										r += child_id;
+										r += '&nbsp';
 									r += '</div>';
 								}
-								r += '<div style="float:left;" >';
+								r += '<div style="float:right;width:168px;height:168px;" >';
 									r += '<div class="CHILD_NAME" style="font-size:16px;padding-left:2px;">';
 										r += child_name;
 									r += '</div>';
 									// r += '<div style="padding:1px;text-align:right;" >ID:' + child_id + '</div>';
-									r += '<div style="font-size:12px;text-align:right;padding-top:2px;" >';
-										r += child_type;
+									r += '<div style="font-size:14px;text-align:right;padding-top:2px;" >';
+										r += child_grade + child_type;
 										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
 									r += '</div>';
 									r += '<div style="padding:1px;" >' + kana + '</div>';
+									r += '<div style="padding:1px;" >Range:' + range_id + '</div>';
+									r += '<div style="padding:1px;" >id:' + child_id + '</div>';
 								r += '</div>';
 							r += '</div>';
 							// r += '<div style="clear:both;" >';
@@ -263,7 +265,6 @@ function finderHelper( keyword ){
 									// r += '<div style="clear:both;width:100%;" >';
 									// r += '</div>';
 									r += '<div style="clear:both;width:100%;" >';
-										r += 'Range:' + range_id;
 										r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
 									r += '</div>';
 								r += '</div>';
