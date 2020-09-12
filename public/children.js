@@ -231,7 +231,7 @@ function finderHelper( keyword ){
 									r += '<div style="clear:both;width:100%;" >';
 										r += '<textarea name="remark" style="width:98%;" autocomplete="off" >' + remark + '</textarea>';
 									r += '</div>';
-									r += '<div class="vh-center" style="width:100%;padding:2px 0px 2px 0px;text-align:center;" >';
+									r += '<div class="vh-center" style="clear:both;width:100%;text-align:center;" >';
 										// r += '<input type="text" name="child_type"  value="' + child_type  + '" /><br/>';
 										switch ( child_type){
 											case 'A':
@@ -244,20 +244,24 @@ function finderHelper( keyword ){
 												break;
 										}
 										r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
-										r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:15px;height:20px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 2px 5px;" >A</label>'
+										r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:15px;height:21px;font-size:10px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 1px 5px;" >A</label>';
 										r += '&nbsp;'
 										r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
-										r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:15px;height:20px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 2px 5px;" >B</label>'
+										r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:15px;height:21px;font-size:10px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 1px 5px;" >B</label>';
+
+										r += '<img width="14px" src="./images/minus-3.png" />';
+
+										var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
+										grades[ child_grade - 1 ] = ' checked ';
+										for ( var g=0; g<grades.length; g++ ){
+											r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
+											r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:12px;height:21px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:7px 4px 2px 8px;" >' + ( g+1 ) + '</label>';
+										}
+										// r += '<input type="text" name="child_grade0" value="' + child_grade + '" />';
+	
 									r += '</div>';
-									r += '<div style="clear:both;width:100%;" >';
-									var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
-									grades[ child_grade - 1 ] = ' checked ';
-									for ( var g=0; g<grades.length; g++ ){
-										r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
-										r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:12px;height:21px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:7px 4px 2px 8px;" >' + ( g+1 ) + '</label>';
-									}
-									// r += '<input type="text" name="child_grade0" value="' + child_grade + '" />';
-									r += '</div>';
+									// r += '<div style="clear:both;width:100%;" >';
+									// r += '</div>';
 									r += '<div style="clear:both;width:100%;" >';
 										r += 'Range:' + range_id;
 										r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
