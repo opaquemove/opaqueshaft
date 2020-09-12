@@ -191,8 +191,11 @@ function finderHelper( keyword ){
 							c.style.margin	        = '1px';
 							c.style.padding			= '2px';
 							c.style.float           = 'left';
+							var cc = fa.appendChild( c );
+							var cc_width = cc.offsetWidth;
+
 							r = '';
-							r += '<div style="width:100%;height:86px;overflow:hidden;" >';
+							r += '<div style="width:' + cc_width + 'px;height:86px;overflow:hidden;" >';
 								if ( imagefile != ''){
 									r += '<div style="float:left;width:70px;height:70px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp;';
@@ -220,9 +223,9 @@ function finderHelper( keyword ){
 							// 	r += '<div style="padding:1px;" >Type:' + child_type + '</div>';
 							// 	r += '<div style="padding:1px;" >Grade:' + child_grade + '</div>';
 							// r += '</div>';
-							r += '<div class="appendix" style="clear:both;display:none;" >';
+							r += '<div class="appendix" style="clear:both;width:' + cc_width + 'px;display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
-								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:17px;font-weight:bold;border-bottom:1px solid lightgrey;" >Property:</div>';
+								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;border-bottom:1px solid lightgrey;" >Property:</div>';
 								r += '<div style="width:97%;height:180px;padding:1px;" >';
 									r += '<div style="width:100%;height:24px;padding:4px 0px 2px 0px;" >';
 										r += '<input type="text" name="kana"  style="width:100%;"  value="' + kana        + '" />';
@@ -268,7 +271,7 @@ function finderHelper( keyword ){
 										r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
 									r += '</div>';
 								r += '</div>';
-								r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Result:</div>';
+								r += '<div                    style="padding:1px;font-size:14px;font-weight:bold;" >Result:</div>';
 								r += '<div class="RESULT_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
 								// r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
 								// r += '<div class="RESERV_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
@@ -284,8 +287,7 @@ function finderHelper( keyword ){
 							r += '</div>';
 					
 
-							c.innerHTML = r;
-							var cc = fa.appendChild( c );
+							cc.innerHTML = r;
 							var bcomc = cc.getElementsByClassName('BTN_COMMIT_CHILD')[0];
 							bcomc.addEventListener( 'click', function(e){
 									var cid = scanChild( e.target ).getAttribute('child_id');
