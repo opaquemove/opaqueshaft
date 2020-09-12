@@ -20,7 +20,7 @@ BODY{
 }
 INPUT{
 	color:				gray;
-	background-color: transparent;
+	background-color: 	transparent;
 	border-top:			none;
 	border-left:		none;
 	border-right:		none;
@@ -35,6 +35,10 @@ INPUT[type=radio]:checked + label{
 	border-bottom:		2px solid red;
 }
 
+TEXTAREA{
+	color:				gray;
+	border:				1px solid lightgrey;
+}
 BUTTON{
 	color:				darkgray;
 }

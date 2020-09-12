@@ -135,7 +135,8 @@ function scanChild( o ) {
 function fitting(){
 	var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
-    
+	var screen_ratio = Math.floor( w / h * 100 ) / 100;
+	console.log( 'screen ratio:' + screen_ratio );
 }
 
 function finder( e ){
@@ -219,32 +220,53 @@ function finderHelper( keyword ){
 							// r += '</div>';
 							r += '<div class="appendix" style="clear:both;display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
-								r += '<div style="padding:1px;font-size:17px;font-weight:bold;" >Property:</div>';
-								r += '<div style="padding:1px;height:140px;" >';
-									r += '<div>';
-										r += '<input type="text" name="child_name"  value="' + child_name  + '" />';
+								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:17px;font-weight:bold;border-bottom:1px solid lightgrey;" >Property:</div>';
+								r += '<div style="width:97%;height:180px;padding:1px;" >';
+									r += '<div style="width:100%;height:24px;padding:4px 0px 2px 0px;" >';
+										r += '<input type="text" name="kana"  style="width:100%;"  value="' + kana        + '" />';
 									r += '</div>';
-									r += '<div>';
-										r += '<input type="text" name="kana"        value="' + kana        + '" />';
+									r += '<div style="width:100%;height:24px;padding:2px 0px 2px 0px;" >';
+										r += '<input type="text" name="child_name" style="width:100%;" value="' + child_name  + '" />';
 									r += '</div>';
-									r += '<div>';
-										r += '<input type="text" name="child_type"  value="' + child_type  + '" />';
+									r += '<div style="clear:both;width:100%;" >';
+										r += '<textarea name="remark" style="width:98%;" autocomplete="off" >' + remark + '</textarea>';
 									r += '</div>';
-									r += '<div>';
-										r += '<input type="text" name="child_grade" value="' + child_grade + '" />';
+									r += '<div class="vh-center" style="width:100%;padding:2px 0px 2px 0px;text-align:center;" >';
+										// r += '<input type="text" name="child_type"  value="' + child_type  + '" /><br/>';
+										switch ( child_type){
+											case 'A':
+												var a = ' checked ';
+												var b = ' ';
+												break;
+											default:
+												var a = '  ';
+												var b = ' checked ';
+												break;
+										}
+										r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
+										r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:15px;height:20px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 2px 5px;" >A</label>'
+										r += '&nbsp;'
+										r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
+										r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:15px;height:20px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 2px 5px;" >B</label>'
 									r += '</div>';
-									r += '<div>';
-										r += '<input type="text" name="remark" value="' + remark + '" autocomplete="off" />';
+									r += '<div style="clear:both;width:100%;" >';
+									var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
+									grades[ child_grade - 1 ] = ' checked ';
+									for ( var g=0; g<grades.length; g++ ){
+										r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
+										r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:12px;height:21px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:7px 4px 2px 8px;" >' + ( g+1 ) + '</label>';
+									}
+									// r += '<input type="text" name="child_grade0" value="' + child_grade + '" />';
 									r += '</div>';
-									r += '<div>';
+									r += '<div style="clear:both;width:100%;" >';
 										r += 'Range:' + range_id;
 										r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
 									r += '</div>';
 								r += '</div>';
 								r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Result:</div>';
 								r += '<div class="RESULT_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
-								r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
-								r += '<div class="RESERV_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
+								// r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
+								// r += '<div class="RESERV_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
 								r += '<div style="padding:10px 1px 1px 1px;width:100%;text-align:center;" >';
 									r += '<button class="BTN_COMMIT_CHILD" style="border:none;background-color:transparent;" >';
 										r += '<img width="24px" src="./images/check-3.png" />';
@@ -364,8 +386,10 @@ function updateChild( f ){
 		var remark		= encodeURIComponent( f.remark.value );
 		var child_grade = f.child_grade.value;
 		var child_type	= f.child_type.value;
+		// var child_type2	= f.child_type2.value;
 
 		console.log( 'child update: ' + child_id +',' + child_name);
+		// console.log('child_type2:' + child_type2 );
 
 		xmlhttp.open("POST", "/accounts/childupdate", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
