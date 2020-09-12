@@ -87,7 +87,10 @@ function locateFinder( e ){
 						c.classList.add( 'selected' );
 						c.setAttribute( 'selected', 'yes' );
 						c.style.height = '550px';
-						c.getElementsByClassName('appendix')[0].style.display = 'inline';
+						var appx = c.getElementsByClassName('appendix');
+						for ( var i=0; i<appx.length; i++ ){
+							appx[i].style.display = 'inline';
+						}
 						var result_lst = c.getElementsByClassName('RESULT_LST')[0];
 						var child_id = c.getAttribute('child_id');
 						makeResultList( child_id, result_lst );
@@ -116,7 +119,10 @@ function prevChildren( p ){
 			c.removeAttribute('selected');
 			c.style.height = '';
 		}
-		c.getElementsByClassName('appendix')[0].style.display = 'none';
+		var appx = c.getElementsByClassName('appendix');
+		for ( var j=0; j<appx.length; j++){
+			appx[j].style.display = 'none';
+		}
 		c.style.display = 'inline'
 	}
 
@@ -195,7 +201,7 @@ function finderHelper( keyword ){
 							var cc_width = cc.offsetWidth;
 
 							r = '';
-							r += '<div style="width:' + cc_width + 'px;height:86px;overflow:hidden;" >';
+							r += '<div style="float:left;width:' + cc_width + 'px;height:86px;overflow:hidden;" >';
 								if ( imagefile != ''){
 									r += '<div style="float:left;width:70px;height:70px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp;';
@@ -223,7 +229,7 @@ function finderHelper( keyword ){
 							// 	r += '<div style="padding:1px;" >Type:' + child_type + '</div>';
 							// 	r += '<div style="padding:1px;" >Grade:' + child_grade + '</div>';
 							// r += '</div>';
-							r += '<div class="appendix" style="clear:both;width:' + cc_width + 'px;display:none;" >';
+							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
 								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;border-bottom:1px solid lightgrey;" >Property:</div>';
 								r += '<div style="width:97%;height:180px;padding:1px;" >';
@@ -271,8 +277,10 @@ function finderHelper( keyword ){
 										r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
 									r += '</div>';
 								r += '</div>';
+							r += '</div>';
+							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
 								r += '<div                    style="padding:1px;font-size:14px;font-weight:bold;" >Result:</div>';
-								r += '<div class="RESULT_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
+								r += '<div class="RESULT_LST" style="padding:1px;width:calc(100%-8px);height:84px;border:1px solid lightgrey;" ></div>';
 								// r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
 								// r += '<div class="RESERV_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
 								r += '<div style="padding:10px 1px 1px 1px;width:100%;text-align:center;" >';
@@ -281,6 +289,9 @@ function finderHelper( keyword ){
 									r += '</button>';
 									r += '<button class="BTN_CANCEL_CHILD" style="border:none;background-color:transparent;" >';
 										r += '<img   width="24px" src="./images/cancel-2.png" />';
+									r += '</button>';
+									r += '<button class="BTN_EXPAND_CHILD" style="border:none;background-color:transparent;" >';
+										r += '<img   width="24px" src="./images/arrow-right.png" />';
 									r += '</button>';
 								r += '</div>';
 								r += '</form>';
@@ -299,7 +310,13 @@ function finderHelper( keyword ){
 									var p = document.getElementById('FINDER_AREA');
 									prevChildren( p );
 								}, false );
-
+							var bcanc = cc.getElementsByClassName('BTN_EXPAND_CHILD')[0];
+							bcanc.addEventListener( 'click', function(e){
+									var sc = scanChild( e.target );
+									sc.style.width = sc.offsetWidth * 3 + 'px';
+									sc.style.height = '170px';
+								}, false );
+	
 						}
 					} else{
 						console.log( null, 'findChildrenTable:' + xmlhttp.status );
@@ -342,9 +359,12 @@ function makeResultList( child_id, p ){
 						p.innerText = '';
 						for ( var i=0; i<result.length; i++ ){
 							var res = result[i];
-							var day = res.day;
+							var day = new Date(res.day);
+							var estimate = res.estimate;
+							var remark		= res.remark;
+							var ymd = day.getFullYear() + '/' + (day.getMonth()+1) + '/' + day.getDate();
 							var o = document.createElement('DIV');
-							o.innerText = day;
+							o.innerText = ymd + ' ' + estimate.substr(0, 5); + ' ' + remark;
 							p.appendChild( o );
 						}
 					}
