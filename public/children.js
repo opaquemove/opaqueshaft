@@ -86,7 +86,7 @@ function locateFinder( e ){
 					if ( ! lf_moved ){
 						c.classList.add( 'selected' );
 						c.setAttribute( 'selected', 'yes' );
-						c.style.height = '550px';
+						c.style.height = '600px';
 						var appx = c.getElementsByClassName('appendix');
 						for ( var i=0; i<appx.length; i++ ){
 							appx[i].style.display = 'inline';
@@ -421,12 +421,34 @@ function makeReserveList( child_id, p ){
 
 	var r = '';
 	while ( curMon == curDay.getMonth() ){
-		r += '<div>';
-		r += curDay.getFullYear() + '/' + ( curDay.getMonth() + 1 ) + '/' + curDay.getDate();
+		var d = curDay.getFullYear() + '/' + ( curDay.getMonth() + 1 ) + '/' + curDay.getDate();
+		r += '<div day="' + d + '" >';
+		r += d;
 		r += '</div>';
 		curDay.setDate( curDay.getDate() + 1 );
 	}
 	p.innerHTML = r;
+	p.addEventListener('click',
+		function(e){
+			if ( e.target.hasAttribute('day')){
+				if ( e.target.hasAttribute('selected')){
+					e.target.removeAttribute('selected');
+					e.target.classList.remove('selected2');
+				} else{
+					var daylst = this.childNodes;
+					for ( var i=0; i<daylst.length; i++ ){
+						if ( daylst[i].hasAttribute('selected')){
+							daylst[i].removeAttribute('selected');
+							daylst[i].classList.remove('selected2');
+						}
+					}
+					e.target.setAttribute('selected', 'yes' );
+					e.target.classList.add('selected2');
+				}
+			}
+		}, false );
+
+
 }
 
 //
