@@ -1,55 +1,56 @@
 HTML{
-	width:	100%;
-	height:	100%;
+	width:					100%;
+	height:					100%;
 }
 BODY{
-	position: 			fixed;
-	width:				100%;
-	height:				100%;
-	margin:				0px 0px;
-	padding:			0px 0px;
-    font-family:        "Helvetica Neue",
-                        Arial,
-                        "Hiragino Kaku Gothic ProN",
-                        "Hiragino Sans",
-                        Meiryo,
-                        sans-serif;
-	font-size:			10px;
-	background-color:	black;
-	overflow:			hidden;
+	position: 				fixed;
+	width:					100%;
+	height:					100%;
+	margin:					0px 0px;
+	padding: 				constant(safe-area-inset-top) constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);
+	/* padding:				0px 0px; */
+    font-family:        	"Helvetica Neue",
+                        	Arial,
+                        	"Hiragino Kaku Gothic ProN",
+                        	"Hiragino Sans",
+                        	Meiryo,
+                        	sans-serif;
+	font-size:				10px;
+	background-color:		black;
+	overflow:				hidden;
 }
 INPUT{
-	color:				gray;
-	background-color: 	transparent;
-	border-top:			none;
-	border-left:		none;
-	border-right:		none;
-	border-bottom:		1px solid lightgrey;
-	outline:			none;
+	color:					gray;
+	background-color: 		transparent;
+	border-top:				none;
+	border-left:			none;
+	border-right:			none;
+	border-bottom:			1px solid lightgrey;
+	outline:				none;
 }
 
 INPUT[type=radio]{
 	display:	none;
 }
 INPUT[type=radio]:checked + label{
-	border-bottom:		2px solid red;
+	border-bottom:			2px solid red;
 }
 
 TEXTAREA{
-	color:				gray;
-	border:				1px solid lightgrey;
+	color:					gray;
+	border:					1px solid lightgrey;
 }
 BUTTON{
-	color:				darkgray;
+	color:					darkgray;
 }
 BUTTON:focus{
-	outline:			none;
+	outline:				none;
 }
 
 .vh-center{
-	display:			flex;
-	justify-content: 	center;
-	align-items: 		center;
+	display:				flex;
+	justify-content: 		center;
+	align-items: 			center;
 }
 
 .not_select {
@@ -60,19 +61,19 @@ BUTTON:focus{
 
 
 #CHILD_FRAME{
-	position:			absolute;
-	top:				0px;
-	left:				0px;
-	width:				100%;	/* fitting */
-	height:				100%;	/* fitting */
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					100%;	/* fitting */
+	height:					100%;	/* fitting */
 	/* background-color:	white; */
-	background-image:	url(./images/IMG_1739.JPG);
-	background-position: center center;
-	background-size:	contain;
-	background-repeat: 	no-repeat;
-	padding:			0px;
-	overflow:			hidden;
-	z-index:			0;
+	background-image:		url(./images/IMG_1739.JPG);
+	background-position: 	center center;
+	background-size:		contain;
+	background-repeat: 		no-repeat;
+	padding:				0px;
+	overflow:				hidden;
+	z-index:				0;
 }
 
 #HEADER{
@@ -150,24 +151,24 @@ BUTTON:focus{
 }
 
 .CHILD_NAME{
-	font-weight: 		bold;
+	font-weight: 			bold;
 }
 
 .PALLETE_CHILD{
-	width:				256px;
-	height:				80px;
-	/* display:			flex;
-	flex-direction: 	row;
-	justify-content: 	center;
-	align-items: 		center; */
+	width:					256px;
+	height:					80px;
+	/* display:				flex;
+	flex-direction: 		row;
+	justify-content: 		center;
+	align-items: 			center; */
 
-	color:				gray;
-	background-color:	white;
-	padding-top:		4px;
-	margin-bottom:		1px;
-	font-size:			12px;
-	border-radius: 		4px;
-	-webkit-user-select: none;
+	color:					gray;
+	background-color:		white;
+	padding-top:			4px;
+	margin-bottom:			1px;
+	font-size:				12px;
+	border-radius: 			4px;
+	-webkit-user-select: 	none;
 }
 
 .prev_class{
@@ -178,6 +179,25 @@ BUTTON:focus{
 	background-position: 	center center;
 	background-repeat: 		no-repeat;
 	background-size: 		14px;
+}
+
+.day_data{
+	float:					left;
+	width:					70px;
+	color:					gray;
+	font-size:				12px;
+}
+.estimate_data{
+	float:					left;
+	width:					50px;
+	color:					gray;
+	font-size:				12px;
+}
+.remark_data{
+	float:					left;
+	width:					120px;
+	color:					gray;
+	font-size:				12px;
 }
 .selected{
 	/* color:				white;
