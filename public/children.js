@@ -91,9 +91,11 @@ function locateFinder( e ){
 						for ( var i=0; i<appx.length; i++ ){
 							appx[i].style.display = 'inline';
 						}
-						var result_lst = c.getElementsByClassName('RESULT_LST')[0];
+						var result_lst  = c.getElementsByClassName('RESULT_LST')[0];
+						var reserve_lst = c.getElementsByClassName('RESERVE_LST')[0];
 						var child_id = c.getAttribute('child_id');
 						makeResultList( child_id, result_lst );
+						makeReserveList( child_id, reserve_lst );
 	
 						var children = this.childNodes;
 						for ( var i=0; i<children.length; i++ ){
@@ -277,6 +279,7 @@ function finderHelper( keyword ){
 									r += '</div>';
 								r += '</div>';
 							r += '</div>';
+							
 							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
 								r += '<div                    style="padding:1px;font-size:14px;font-weight:bold;" >Result:</div>';
 								r += '<div class="RESULT_HDR" style="padding:1px;width:250px;height:14px;background-color:#EDEDED;border:1px solid lightgrey;" >';
@@ -285,21 +288,31 @@ function finderHelper( keyword ){
 										r += '<div class="remark_data" >Remark</div>';
 								r += '</div>';
 								r += '<div class="RESULT_LST" style="padding:1px;width:250px;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
+							r += '</div>';
+
+							r += '<div class="appendix" style="float:left;width:97%;display:none;" >';
+								r += '<div                     style="padding:1px;font-size:14px;font-weight:bold;" >Reserve:</div>';
+								r += '<div class="RESERVE_HDR" style="padding:1px;width:97%;height:14px;background-color:#EDEDED;border:1px solid lightgrey;" >';
+								r += '</div>';
+								r += '<div class="RESERVE_LST" style="padding:1px;width:97%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
+							r += '</div>';
+
 								// r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
 								// r += '<div class="RESERV_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
-								r += '<div style="padding:10px 1px 1px 1px;width:100%;text-align:center;" >';
-									r += '<button class="BTN_COMMIT_CHILD" style="border:none;background-color:transparent;" >';
-										r += '<img width="24px" src="./images/check-3.png" />';
-									r += '</button>';
-									r += '<button class="BTN_CANCEL_CHILD" style="border:none;background-color:transparent;" >';
-										r += '<img   width="24px" src="./images/cancel-2.png" />';
-									r += '</button>';
-									r += '<button class="BTN_EXPAND_CHILD" style="border:none;background-color:transparent;" >';
-										r += '<img   width="24px" src="./images/arrow-right.png" />';
-									r += '</button>';
-								r += '</div>';
-								r += '</form>';
+							r += '<div style="padding:10px 1px 1px 1px;width:100%;text-align:center;" >';
+								r += '<button class="BTN_COMMIT_CHILD" style="border:none;background-color:transparent;" >';
+									r += '<img width="24px" src="./images/check-3.png" />';
+								r += '</button>';
+								r += '<button class="BTN_CANCEL_CHILD" style="border:none;background-color:transparent;" >';
+									r += '<img   width="24px" src="./images/cancel-2.png" />';
+								r += '</button>';
+								r += '<button class="BTN_EXPAND_CHILD" style="border:none;background-color:transparent;" >';
+									r += '<img   width="24px" src="./images/arrow-right.png" />';
+								r += '</button>';
 							r += '</div>';
+							r += '</form>';
+							// r += '</div>';
+
 					
 
 							cc.innerHTML = r;
@@ -322,7 +335,7 @@ function finderHelper( keyword ){
 										// sc.style.height	= '';
 									} else {
 										sc.style.width	= sc.offsetWidth * 3 + 'px';
-										sc.style.height	= '170px';
+										// sc.style.height	= '170px';
 									}
 								}, false );
 	
@@ -395,6 +408,25 @@ function makeResultList( child_id, p ){
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( 'child_id=' + child_id );
 
+}
+
+//
+//	リザルト（履歴）リスト取得
+//
+function makeReserveList( child_id, p ){
+	var today = new Date();
+	var sotd   = new Date( today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/' + 1 );
+	var curDay = new Date( today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/' + 1 );
+	var curMon = sotd.getMonth();
+
+	var r = '';
+	while ( curMon == curDay.getMonth() ){
+		r += '<div>';
+		r += curDay.getFullYear() + '/' + ( curDay.getMonth() + 1 ) + '/' + curDay.getDate();
+		r += '</div>';
+		curDay.setDate( curDay.getDate() + 1 );
+	}
+	p.innerHTML = r;
 }
 
 //
