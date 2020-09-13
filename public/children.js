@@ -221,8 +221,7 @@ function finderHelper( keyword ){
 										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
 									r += '</div>';
 									r += '<div style="padding:1px;" >' + kana + '</div>';
-									r += '<div style="padding:1px;" >Range:' + range_id + '</div>';
-									r += '<div style="padding:1px;" >id:' + child_id + '</div>';
+									r += '<div style="padding:1px;" >id/Range:' + child_id + '/' + range_id + '</div>';
 								r += '</div>';
 							r += '</div>';
 							// r += '<div style="clear:both;" >';
@@ -280,6 +279,11 @@ function finderHelper( keyword ){
 							r += '</div>';
 							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
 								r += '<div                    style="padding:1px;font-size:14px;font-weight:bold;" >Result:</div>';
+								r += '<div class="RESULT_HDR" style="padding:1px;width:250px;height:14px;background-color:#EDEDED;border:1px solid lightgrey;" >';
+										r += '<div class="day_data" >Day</div>';
+										r += '<div class="estimate_data" >Est</div>';
+										r += '<div class="remark_data" >Remark</div>';
+								r += '</div>';
 								r += '<div class="RESULT_LST" style="padding:1px;width:250px;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 								// r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
 								// r += '<div class="RESERV_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
@@ -364,13 +368,18 @@ function makeResultList( child_id, p ){
 						p.innerText = '';
 						for ( var i=0; i<result.length; i++ ){
 							var res = result[i];
-							var day = new Date(res.day);
-							var estimate = res.estimate;
+							var day 		= new Date(res.day);
+							var checkout	= new Date(res.checkout);
+							var estimate 	= res.estimate;
 							var remark		= res.remark;
 							var ymd = day.getFullYear() + '/' + (day.getMonth()+1) + '/' + day.getDate();
 							var o = document.createElement('DIV');
 							r = '';
-							r += '<div class="day_data" >'      + ymd + '</div>';
+							r += '<div class="day_data" >';
+								if ( checkout != null )
+									r += '<img width="10px" src="./images/checked-symbol.png" />';
+								r += ymd;
+							r += '</div>';
 							r += '<div class="estimate_data" >' + estimate.substr(0,5) + '</div>';
 							r += '<div class="remark_data" >'   + remark + '</div>';
 							o.innerHTML = r;
