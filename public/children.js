@@ -590,8 +590,9 @@ function reserveSelector(){
 	this.frame1					= null;		//	sott用エリア
 	this.frame2					= null;		//	eott用エリア
 	this.resv_lst				= null;		//	予約リストオブジェクト
-	this.sott					= null;		//	開始時刻
-	this.eott					= null;		//	終了時刻
+	this.sott					= 0;		//	開始時刻
+	this.eott					= 0;		//	終了時刻
+	this.tool					= null;
 
 	var ol = document.createElement('DIV');
 	ol.classList.add('vh-center');
@@ -634,17 +635,26 @@ function reserveSelector(){
 
 	var tool = document.createElement('DIV');
 	tool.classList.add( 'not_select' );
+	tool.style.pointerEvents		= 'all';
 	tool.style.width				= '32px';
 	tool.style.height				= '286px';
 	tool.style.marginLeft			= '1px';
 	tool.style.backgroundColor		= 'transparent';
-	tool.innerHTML = '<div style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/cancel-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
-	this.overlay.appendChild( tool );
-	// var selection = function(e){
-	// };
+	tool.innerHTML = this.makeToolbar();
+	this.tool = this.overlay.appendChild( tool );
 
-	// var setTime = function(e){
-	// };
+	this.tool.getElementsByClassName('cancel_reservation')[0].addEventListener('click',
+		( function(e){
+			this.close();
+		} ).bind( this ), false );
+	this.tool.getElementsByClassName('commit_reservation')[0].addEventListener('click',
+		( function(e){
+			this.commit();
+		} ).bind( this ), false );
+	this.tool.getElementsByClassName('reset_reservation')[0].addEventListener('click',
+		( function(e){
+			this.reset();
+		} ).bind( this ), false );
 
 	this.overlay.addEventListener( 'click',
 		( function(e){
@@ -654,14 +664,22 @@ function reserveSelector(){
 	this.frame1.addEventListener( 'click', ( this.selection ).bind( this ), false );
 	this.frame2.addEventListener( 'click', ( this.selection ).bind( this ), false );
 
-	this.frame1.getElementsByClassName('settime')[0].addEventListener( 'click', ( this.setTime ).bind( this ), false );
-	this.frame2.getElementsByClassName('settime')[0].addEventListener( 'click', ( this.setTime ).bind( this ), false );
+	// this.frame1.getElementsByClassName('settime')[0].addEventListener( 'click', ( this.setTime ).bind( this ), false );
+	// this.frame2.getElementsByClassName('settime')[0].addEventListener( 'click', ( this.setTime ).bind( this ), false );
 
 	this.close();
 
 }
 
 reserveSelector.prototype = {
+	makeToolbar : function(){
+		var r = '';
+		r += '<div class="cancel_reservation" style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/cancel-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
+		r += '<div class="commit_reservation" style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/check-3.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
+		r += '<div class="reset_reservation"  style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/eraser.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
+		r += '<div class="clear_reservation"  style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/minus-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
+		return r;
+	},
 	makeButton : function( hdr, p ){
 		var r = '';
 		r += '<div style="width:100%;height:30px;padding-top:12px;text-align:center;font-size:18px;font-weight:boldl;border-bottom:1px solid lightgrey;" >';
@@ -676,11 +694,11 @@ reserveSelector.prototype = {
 		for ( var m=0; m<=55; m+=5 ){
 			r += '<div m="' + m + '" class="vh-center" style="float:left;width:32px;height:32px;background-image:url(./images/dry-clean.png);background-size:20px;background-position:center center;background-repeat:no-repeat;border-radius:45%;" >' + ( '00' + m ).slice(-2) + '</div>';
 		}
-		r += '<div class="vh-center" style="clear:both;width:100%;height:30px;padding-top:2px;text-align:center;font-size:18px;font-weight:boldl;border-top:1px solid lightgrey;" >';
-			r += '<button class="settime" vh-center" style="width:32px;height:32px;background-color:transparent;border:none;" >';
-				r += '<img width="20px" src="./images/check-3.png" />';
-			r += '</button>';
-		r += '</div>';
+		// r += '<div class="vh-center" style="clear:both;width:100%;height:30px;padding-top:2px;text-align:center;font-size:18px;font-weight:boldl;border-top:1px solid lightgrey;" >';
+		// 	r += '<button class="settime" vh-center" style="width:32px;height:32px;background-color:transparent;border:none;" >';
+		// 		r += '<img width="20px" src="./images/check-3.png" />';
+		// 	r += '</button>';
+		// r += '</div>';
 		p.innerHTML = r;
 	},
 	selection : function( e ){
@@ -749,7 +767,7 @@ reserveSelector.prototype = {
 		if ( c == null ) return;
 		console.log( 'child_id:' + c.getAttribute('child_id') );
 
-		// リザベーションを取得
+		// 選択しているリザベーションを取得
 		var days = this.resv_lst.childNodes;
 		var lst = [];
 		for ( var i=0; i<days.length; i++ ){
@@ -770,7 +788,7 @@ reserveSelector.prototype = {
 			case 'eott':
 				lst[0].setAttribute('eott', hm );
 				lst[0].getElementsByClassName('eott_data')[0].innerText = hm;
-				if ( this.sott != null ){
+				if ( this.sott >= 800 && this.eott >= 800 ){
 					lst[0].setAttribute('sott', this.sott );
 					lst[0].getElementsByClassName('sott_data')[0].innerText = this.sott;
 					this.close();
@@ -793,6 +811,50 @@ reserveSelector.prototype = {
 		}
 		return hm;
 
+	},
+	reset : function(){
+		var btns = this.frame1.childNodes;
+		for ( var i=0; i<btns.length; i++ ){
+			var o = btns[i];
+			if ( o.hasAttribute('selected' ) ){
+				o.removeAttribute('selected');
+				o.style.backgroundColor	= '';
+			}
+		}
+		btns = this.frame2.childNodes;
+		for ( var i=0; i<btns.length; i++ ){
+			var o = btns[i];
+			if ( o.hasAttribute('selected' ) ){
+				o.removeAttribute('selected');
+				o.style.backgroundColor	= '';
+			}
+		}
+		this.sott	= 0;
+		this.eott	= 0;
+		this.frame1.getElementsByClassName('specific_time')[0].innerText = '';
+		this.frame2.getElementsByClassName('specific_time')[0].innerText = '';
+
+	},
+	commit : function(){
+		// リザベーションを取得
+		var days = this.resv_lst.childNodes;
+		var lst = [];
+		for ( var i=0; i<days.length; i++ ){
+			var d = days[i];
+			if ( d.hasAttribute( 'day' ) && d.hasAttribute( 'selected' )) lst.push( d );
+		}
+
+		// タイムをリザベーションに設定
+		if ( this.sott >= 800 && this.eott >= 800 ){
+			lst[0].setAttribute('sott', this.sott );
+			lst[0].getElementsByClassName('sott_data')[0].innerText = this.sott;
+			lst[0].setAttribute('eott', this.eott );
+			lst[0].getElementsByClassName('eott_data')[0].innerText = this.eott;
+			this.close();
+		}else{
+			oLog.log( null, '時間設定が不十分です.' );
+			oLog.open( 3 );
+		}
 	},
 	open : function( resv_lst ){
 		this.resv_lst = resv_lst;

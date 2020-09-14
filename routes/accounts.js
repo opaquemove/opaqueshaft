@@ -381,6 +381,55 @@ router.post('/resultwhiteboard', function(req, res, next ){
     });
 });
 
+//
+//  リザーブ関連
+//
+
+//  リザーブ追加
+router.post('/reserveadd', function(req, res, next ){
+  var day         = req.body.day;
+  var sott        = req.bidy.sott;
+  var eott        = req.body.eott;
+  var child_id    = req.body.child_id;
+
+  console.log('day:' + day );         // YYYY/MM/DD
+  res.header('Content-Type', 'application/json;charset=utf-8');
+
+  var sql = null;
+  sql = 'delete from reserves where day = $1 and child_id = $2';
+  console.log( 'sql:' + sql );
+  db.none( {
+      text: sql,
+      values: [ day, child_id ] } );
+
+  sql = 'insert into reserves ( day, sott, eott, child_id ) values ( $1, $2, $3, $4 )';
+  console.log( 'sql:' + sql );
+  db.none( {
+      text: sql,
+      values: [ day, sott, eott, child_id ] } )
+    .then( function() {
+      res.json( { status: 'SUCCESS', message:  'insert reserve' });
+    });
+});
+
+//  リザーブ削除（日付け、チャイルドID）
+router.post('/reservedelete', function(req, res, next ){
+  var day         = req.body.day;
+  var child_id    = req.body.child_id;
+
+  console.log('day:' + day );         // YYYY/MM/DD
+  res.header('Content-Type', 'application/json;charset=utf-8');
+
+  var sql = null;
+  sql = 'delete from reserves where day = $1 and child_id = $2';
+  console.log( 'sql:' + sql );
+  db.none( {
+      text: sql,
+      values: [ day, child_id ] } )
+    .then( function() {
+      res.json( { status: 'SUCCESS', message:  'delete reserve' });
+    });
+});
 
 router.post('/jsonsend', function( req, res, next, ){
   var jsondata = req.body;
