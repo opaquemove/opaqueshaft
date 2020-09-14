@@ -632,6 +632,14 @@ function reserveSelector(){
 	this.makeButton( 'end time', fm );
 	this.frame2 = this.overlay.appendChild( fm );
 
+	var tool = document.createElement('DIV');
+	tool.classList.add( 'not_select' );
+	tool.style.width				= '32px';
+	tool.style.height				= '286px';
+	tool.style.marginLeft			= '1px';
+	tool.style.backgroundColor		= 'transparent';
+	tool.innerHTML = '<div style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/cancel-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
+	this.overlay.appendChild( tool );
 	// var selection = function(e){
 	// };
 
