@@ -656,7 +656,9 @@ function reserveSelector(){
 reserveSelector.prototype = {
 	makeButton : function( hdr, p ){
 		var r = '';
-		r += '<div style="width:100%;height:30px;padding-top:12px;text-align:center;font-size:18px;font-weight:boldl;border-bottom:1px solid lightgrey;" >' + hdr + '</div>';
+		r += '<div style="width:100%;height:30px;padding-top:12px;text-align:center;font-size:18px;font-weight:boldl;border-bottom:1px solid lightgrey;" >';
+			r += hdr + '&nbsp;' +'<span class="specific_time" ></span>';
+		r += '</div>';
 		for ( var h=8; h<=19; h++ ){
 			r += '<div h="' + h + '" class="vh-center" style="float:left;width:32px;height:32px;background-image:url(./images/dry-clean.png);background-size:20px;background-position:center center;background-repeat:no-repeat;border-radius:45%;" >' + h + '</div>';
 		}
@@ -714,6 +716,7 @@ reserveSelector.prototype = {
 			}
 		}
 		var hm = this.getTime( selector );
+		selector.getElementsByClassName('specific_time')[0].innerText = hm;
 		switch ( selector.getAttribute( 'selector' )){
 			case 'sott':
 				this.sott = hm;
@@ -728,6 +731,7 @@ reserveSelector.prototype = {
 		while ( !selector.hasAttribute('selector')) {
 			selector = selector.parentNode;
 		}
+		// child_id 取得
 		var children = document.getElementById('FINDER_AREA').childNodes;
 		var c = null;
 		for ( var i=0; i<children.length; i++ ){
@@ -737,6 +741,7 @@ reserveSelector.prototype = {
 		if ( c == null ) return;
 		console.log( 'child_id:' + c.getAttribute('child_id') );
 
+		// リザベーションを取得
 		var days = this.resv_lst.childNodes;
 		var lst = [];
 		for ( var i=0; i<days.length; i++ ){
@@ -744,16 +749,24 @@ reserveSelector.prototype = {
 			if ( d.hasAttribute( 'day' ) && d.hasAttribute( 'selected' )) lst.push( d );
 		}
 		
+		// タイムをリザベーションに設定
 		var hm = 0;
 		hm = this.getTime( selector );
 		console.log( 'hm:' + hm );
 		console.log( 'days:' + lst[0].getAttribute( 'day' ) );
 		switch ( selector.getAttribute('selector')){
 			case 'sott':
+				lst[0].setAttribute('sott', hm );
 				lst[0].getElementsByClassName('sott_data')[0].innerText = hm;
 				break;
 			case 'eott':
+				lst[0].setAttribute('eott', hm );
 				lst[0].getElementsByClassName('eott_data')[0].innerText = hm;
+				if ( this.sott != null ){
+					lst[0].setAttribute('sott', this.sott );
+					lst[0].getElementsByClassName('sott_data')[0].innerText = this.sott;
+					this.close();
+				}
 				break;
 		}
 
