@@ -393,6 +393,9 @@ function makeResultList( child_id, p ){
 							var remark		= res.remark;
 							var ymd = day.getFullYear() + '/' + (day.getMonth()+1) + '/' + day.getDate();
 							var o = document.createElement('DIV');
+							o.style.clear	= 'both';
+							o.style.width	= '100%';
+							o.style.height	= '16px';
 							r = '';
 							r += '<div class="day_data" >';
 								if ( checkout != null )
