@@ -4,6 +4,7 @@ window.onresize = fitting;
 var w_whiteboard    = null;
 var w_child			= null;
 
+var oReserve		= null;
 var oLog			= null;
 
 const arChildGrade = ['','4px solid lightcoral', '4px solid lightgreen', '4px solid lightblue','4px solid lightcyan','4px solid lightyellow','4px solid lightseagreen'];
@@ -32,6 +33,8 @@ function init(){
 	//	ログエリアの初期化
 	oLog = new messageLog();
 
+	//	リザーブセレクタ初期化
+	oReserve = new reserveSelector();
 
 	fitting();
 	
@@ -293,6 +296,9 @@ function finderHelper( keyword ){
 							r += '<div class="appendix" style="float:left;width:97%;display:none;" >';
 								r += '<div                     style="padding:1px;font-size:14px;font-weight:bold;" >Reserve:</div>';
 								r += '<div class="RESERVE_HDR" style="padding:1px;width:97%;height:14px;background-color:#EDEDED;border:1px solid lightgrey;" >';
+									r += '<div class="day_data"  >Day</div>';
+									r += '<div class="sott_data" >Sott</div>';
+									r += '<div class="eott_data" >Eott</div>';
 								r += '</div>';
 								r += '<div class="RESERVE_LST" style="padding:1px;width:97%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
@@ -422,18 +428,25 @@ function makeReserveList( child_id, p ){
 	var r = '';
 	while ( curMon == curDay.getMonth() ){
 		var d = curDay.getFullYear() + '/' + ( curDay.getMonth() + 1 ) + '/' + curDay.getDate();
-		r += '<div day="' + d + '" >';
-		r += d;
+		r += '<div day="' + d + '" style="clear:both;width:100%;height:16px;border-bottom:1px solid lightgrey;" >';
+			r += '<div class="day_data"   >' + d + '</div>';
+			r += '<div class="sott_data"  ></div>';
+			r += '<div class="eott_data"  ></div>';
 		r += '</div>';
 		curDay.setDate( curDay.getDate() + 1 );
 	}
 	p.innerHTML = r;
 	p.addEventListener('click',
 		function(e){
-			if ( e.target.hasAttribute('day')){
-				if ( e.target.hasAttribute('selected')){
-					e.target.removeAttribute('selected');
-					e.target.classList.remove('selected2');
+			var o = e.target;
+			while ( ! o.hasAttribute('day')){
+				o = o.parentNode;
+			}
+			if ( o.hasAttribute('day')){
+				console.log('day:' + o.getAttribute('day') );
+				if ( o.hasAttribute('selected')){
+					o.removeAttribute('selected');
+					o.classList.remove('selected2');
 				} else{
 					var daylst = this.childNodes;
 					for ( var i=0; i<daylst.length; i++ ){
@@ -442,8 +455,9 @@ function makeReserveList( child_id, p ){
 							daylst[i].classList.remove('selected2');
 						}
 					}
-					e.target.setAttribute('selected', 'yes' );
-					e.target.classList.add('selected2');
+					o.setAttribute('selected', 'yes' );
+					o.classList.add('selected2');
+					oReserve.open( o.parentNode );
 				}
 			}
 		}, false );
@@ -570,4 +584,205 @@ function newChildSendHelper(){
 	} else return null;
 
 }
+
+function reserveSelector(){
+	this.overlay				= null;
+	this.frame1					= null;		//	sott用エリア
+	this.frame2					= null;		//	eott用エリア
+	this.resv_lst				= null;		//	予約リストオブジェクト
+	this.sott					= null;		//	開始時刻
+	this.eott					= null;		//	終了時刻
+
+	var ol = document.createElement('DIV');
+	ol.classList.add('vh-center');
+	ol.style.position			= 'absolute';
+	ol.style.pointerEvents		= 'none';
+	ol.style.top				= '0px';
+	ol.style.left				= '0px';
+	ol.style.width				= '100%';
+	ol.style.height				= '100%';
+	ol.style.margin				= '0px';
+	ol.style.padding			= '0px';
+	ol.style.color				= 'gray';
+	ol.backgroundColor			= 'transparent';
+	ol.style.visibility			= 'hidden';
+	ol.style.zIndex				= 100;
+	this.overlay				= document.body.appendChild( ol );
+
+	var fm = document.createElement('DIV');
+	fm.classList.add( 'not_select' );
+	fm.setAttribute( 'selector', 'sott' );
+	fm.style.pointerEvents		= 'all';
+	fm.style.width				= '128px';
+	fm.style.height				= '286px';
+	fm.style.backgroundColor	= 'white';
+	fm.style.marginRight		= '1px';
+	fm.style.borderRadius		= '4px';
+	this.makeButton( 'start time', fm );
+	this.frame1 = this.overlay.appendChild( fm );
+
+	fm = document.createElement('DIV');
+	fm.classList.add( 'not_select' );
+	fm.setAttribute( 'selector', 'eott' );
+	fm.style.pointerEvents		= 'all';
+	fm.style.width				= '128px';
+	fm.style.height				= '286px';
+	fm.style.backgroundColor	= 'white';
+	fm.style.borderRadius		= '4px';
+	this.makeButton( 'end time', fm );
+	this.frame2 = this.overlay.appendChild( fm );
+
+	// var selection = function(e){
+	// };
+
+	// var setTime = function(e){
+	// };
+
+	this.overlay.addEventListener( 'click',
+		( function(e){
+			if ( e.target == this.overlay) this.close();
+		} ).bind( this ), false );
+
+	this.frame1.addEventListener( 'click', ( this.selection ).bind( this ), false );
+	this.frame2.addEventListener( 'click', ( this.selection ).bind( this ), false );
+
+	this.frame1.getElementsByClassName('settime')[0].addEventListener( 'click', ( this.setTime ).bind( this ), false );
+	this.frame2.getElementsByClassName('settime')[0].addEventListener( 'click', ( this.setTime ).bind( this ), false );
+
+	this.close();
+
+}
+
+reserveSelector.prototype = {
+	makeButton : function( hdr, p ){
+		var r = '';
+		r += '<div style="width:100%;height:30px;padding-top:12px;text-align:center;font-size:18px;font-weight:boldl;border-bottom:1px solid lightgrey;" >' + hdr + '</div>';
+		for ( var h=8; h<=19; h++ ){
+			r += '<div h="' + h + '" class="vh-center" style="float:left;width:32px;height:32px;background-image:url(./images/dry-clean.png);background-size:20px;background-position:center center;background-repeat:no-repeat;border-radius:45%;" >' + h + '</div>';
+		}
+		r += '<div style="clear:both;text-align:center;" >';
+			r += '…'
+		r += '</div>';
+		for ( var m=0; m<=55; m+=5 ){
+			r += '<div m="' + m + '" class="vh-center" style="float:left;width:32px;height:32px;background-image:url(./images/dry-clean.png);background-size:20px;background-position:center center;background-repeat:no-repeat;border-radius:45%;" >' + ( '00' + m ).slice(-2) + '</div>';
+		}
+		r += '<div class="vh-center" style="clear:both;width:100%;height:30px;padding-top:2px;text-align:center;font-size:18px;font-weight:boldl;border-top:1px solid lightgrey;" >';
+			r += '<button class="settime" vh-center" style="width:32px;height:32px;background-color:transparent;border:none;" >';
+				r += '<img width="20px" src="./images/check-3.png" />';
+			r += '</button>';
+		r += '</div>';
+		p.innerHTML = r;
+	},
+	selection : function( e ){
+		var selector = e.target;
+		while ( !selector.hasAttribute('selector')) {
+			selector = selector.parentNode;
+		}
+
+		if ( e.target.hasAttribute( 'h' )) {
+			var lst = selector.childNodes;
+			for ( var i=0; i<lst.length; i++ ){
+				var o = lst[i];
+				if ( o.hasAttribute('h')){
+					o.style.backgroundColor	= '';
+					o.removeAttribute('selected');
+				}
+			}
+			if ( e.target.hasAttribute('selected')) {
+				e.target.style.backgroundColor	= '';
+				e.target.removeAttribute('selected');
+			} else{
+				e.target.style.backgroundColor	= 'lightgrey';
+				e.target.setAttribute( 'selected', 'yes' );
+			}
+		}
+		if ( e.target.hasAttribute( 'm' )){
+			var lst = selector.childNodes;
+			for ( var i=0; i<lst.length; i++ ){
+				var o = lst[i];
+				if ( o.hasAttribute('m')){
+					o.style.backgroundColor	= '';
+					o.removeAttribute('selected');
+				}
+			}
+			if ( e.target.hasAttribute('selected')) {
+				e.target.style.backgroundColor	= '';
+				e.target.removeAttribute('selected');
+			} else{
+				e.target.style.backgroundColor	= 'lightgrey';
+				e.target.setAttribute( 'selected', 'yes' );
+			}
+		}
+		var hm = this.getTime( selector );
+		switch ( selector.getAttribute( 'selector' )){
+			case 'sott':
+				this.sott = hm;
+				break;
+			case 'eott':
+				this.eott = hm;
+				break;
+			}
+	},
+	setTime : function( e ){
+		var selector = e.target;
+		while ( !selector.hasAttribute('selector')) {
+			selector = selector.parentNode;
+		}
+		var children = document.getElementById('FINDER_AREA').childNodes;
+		var c = null;
+		for ( var i=0; i<children.length; i++ ){
+			c = children[i];
+			if ( c.hasAttribute('selected') ) break;
+		}
+		if ( c == null ) return;
+		console.log( 'child_id:' + c.getAttribute('child_id') );
+
+		var days = this.resv_lst.childNodes;
+		var lst = [];
+		for ( var i=0; i<days.length; i++ ){
+			var d = days[i];
+			if ( d.hasAttribute( 'day' ) && d.hasAttribute( 'selected' )) lst.push( d );
+		}
+		
+		var hm = 0;
+		hm = this.getTime( selector );
+		console.log( 'hm:' + hm );
+		console.log( 'days:' + lst[0].getAttribute( 'day' ) );
+		switch ( selector.getAttribute('selector')){
+			case 'sott':
+				lst[0].getElementsByClassName('sott_data')[0].innerText = hm;
+				break;
+			case 'eott':
+				lst[0].getElementsByClassName('eott_data')[0].innerText = hm;
+				break;
+		}
+
+	},
+	getTime : function( selector ){
+		var hm = 0;
+		var btns = selector.childNodes;
+		for ( var i=0; i<btns.length; i++ ){
+			var o = btns[i];
+			if ( o.hasAttribute('selected' ) ){
+				if ( o.hasAttribute( 'h' ) )
+					hm += parseInt( o.getAttribute('h') ) * 100;
+				if ( o.hasAttribute( 'm' ) )
+					hm += parseInt( o.getAttribute('m') );
+			}
+		}
+		return hm;
+
+	},
+	open : function( resv_lst ){
+		this.resv_lst = resv_lst;
+		this.overlay.style.visibility 	= 'visible'; 
+		this.frame1.style.visibility 	= 'visible'; 
+		this.frame2.style.visibility 	= 'visible'; 
+	},
+	close : function(){
+		this.overlay.style.visibility 	= 'hidden'; 
+		this.frame1.style.visibility 	= 'hidden'; 
+		this.frame2.style.visibility 	= 'hidden'; 
+	}
+};
 

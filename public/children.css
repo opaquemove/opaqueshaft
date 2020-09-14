@@ -184,7 +184,16 @@ BUTTON:focus{
 .day_data{
 	float:					left;
 	width:					70px;
-	color:					gray;
+	font-size:				12px;
+}
+.sott_data{
+	float:					left;
+	width:					60px;
+	font-size:				12px;
+}
+.eott_data{
+	float:					left;
+	width:					60px;
 	font-size:				12px;
 }
 .estimate_data{
