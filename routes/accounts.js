@@ -388,11 +388,15 @@ router.post('/resultwhiteboard', function(req, res, next ){
 //  リザーブ追加
 router.post('/reserveadd', function(req, res, next ){
   var day         = req.body.day;
-  var sott        = req.bidy.sott;
+  var sott        = req.body.sott;
   var eott        = req.body.eott;
   var child_id    = req.body.child_id;
 
-  console.log('day:' + day );         // YYYY/MM/DD
+  console.log('day:'      + day );         // YYYY/MM/DD
+  console.log('sott:'     + sott );         // 
+  console.log('eott:'     + eott );         // 
+  console.log('child_id:' + child_id );     // 
+
   res.header('Content-Type', 'application/json;charset=utf-8');
 
   var sql = null;

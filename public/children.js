@@ -755,51 +755,6 @@ reserveSelector.prototype = {
 				break;
 			}
 	},
-	setTime : function( e ){
-		var selector = e.target;
-		while ( !selector.hasAttribute('selector')) {
-			selector = selector.parentNode;
-		}
-		// child_id 取得
-		var children = document.getElementById('FINDER_AREA').childNodes;
-		var c = null;
-		for ( var i=0; i<children.length; i++ ){
-			c = children[i];
-			if ( c.hasAttribute('selected') ) break;
-		}
-		if ( c == null ) return;
-		console.log( 'child_id:' + c.getAttribute('child_id') );
-
-		// 選択しているリザベーションを取得
-		var days = this.resv_lst.childNodes;
-		var lst = [];
-		for ( var i=0; i<days.length; i++ ){
-			var d = days[i];
-			if ( d.hasAttribute( 'day' ) && d.hasAttribute( 'selected' )) lst.push( d );
-		}
-		
-		// タイムをリザベーションに設定
-		var hm = 0;
-		hm = this.getTime( selector );
-		console.log( 'hm:' + hm );
-		console.log( 'days:' + lst[0].getAttribute( 'day' ) );
-		switch ( selector.getAttribute('selector')){
-			case 'sott':
-				lst[0].setAttribute('sott', hm );
-				lst[0].getElementsByClassName('sott_data')[0].innerText = hm;
-				break;
-			case 'eott':
-				lst[0].setAttribute('eott', hm );
-				lst[0].getElementsByClassName('eott_data')[0].innerText = hm;
-				if ( this.sott >= 800 && this.eott >= 800 ){
-					lst[0].setAttribute('sott', this.sott );
-					lst[0].getElementsByClassName('sott_data')[0].innerText = this.sott;
-					this.close();
-				}
-				break;
-		}
-
-	},
 	getTime : function( selector ){
 		var hm = 0;
 		var btns = selector.childNodes;
@@ -839,6 +794,17 @@ reserveSelector.prototype = {
 
 	},
 	commit : function(){
+		// child_id 取得
+		var children = document.getElementById('FINDER_AREA').childNodes;
+		var c = null;
+		for ( var i=0; i<children.length; i++ ){
+			c = children[i];
+			if ( c.hasAttribute('selected') ) break;
+		}
+		if ( c == null ) return;
+		var child_id = c.getAttribute('child_id');
+		console.log( 'child_id:' + child_id );
+
 		// リザベーションを取得
 		var days = this.resv_lst.childNodes;
 		var lst = [];
@@ -854,10 +820,34 @@ reserveSelector.prototype = {
 			lst[0].setAttribute('eott', this.eott );
 			lst[0].getElementsByClassName('eott_data')[0].innerText = this.eott;
 			this.close();
+			this.commitHelper( lst[0].getAttribute( 'day' ), this.sott, this.eott, child_id );
 		}else{
 			oLog.log( null, '時間設定が不十分です.' );
 			oLog.open( 3 );
 		}
+	},
+	commitHelper : function( day, sott, eott, child_id ){
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.addEventListener('readystatechange', 
+			function (e){
+				switch ( xmlhttp.readyState){
+					case 1://opened
+						break;
+					case 2://header received
+						break;
+					case 3://loading
+						break;
+					case 4://done
+						if ( xmlhttp.status == 200 ){
+							var result = JSON.parse( xmlhttp.responseText );
+						}
+						break;
+				}
+			}, false );
+		xmlhttp.open("POST", "/accounts/reserveadd", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'day=' + day + '&sott=' + sott + '&eott=' + eott + '&child_id=' + child_id );
+	
 	},
 	open : function( resv_lst ){
 		this.resv_lst = resv_lst;
