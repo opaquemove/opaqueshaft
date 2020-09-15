@@ -1099,16 +1099,6 @@ function loadWhiteboardChildren(){
 					var result = JSON.parse( xmlhttp.responseText );
 					if ( result.length > 0 ){		//	レコードが存在すれば
 			
-						// //	チャイルドにイベントハンドラを割り当てる 
-						// for ( var i=0; i<wb.childNodes.length; i++ ){
-						// 	if ( touchdevice )	wb.childNodes[i].addEventListener( "touchstart", mDown, false );
-						// 		else			wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
-						// }
-						// for ( var i=0; i<wb_absent.childNodes.length; i++ ){
-						// 	if ( touchdevice )	wb_absent.childNodes[i].addEventListener( "touchstart", mDown, false );
-						// 		else			wb_absent.childNodes[i].addEventListener( "mousedown",  mDown, false );
-						// }
-
 						// var w = document.body.clientWidth;
 						var w = document.getElementById('WHITEBOARD').offsetWidth;
 
@@ -1133,6 +1123,9 @@ function loadWhiteboardChildren(){
 					showWhiteboardChildCount();
 					oLog.log( null, 'load Whiteboard children ok.' );
 					oLog.open( 3 );
+
+					// リザーブテーブルからロード
+					loadWhiteboardReserveChildren( day );
 				} else{
 					oLog.log( null, 'loadWhiteboardChildren:' + xmlhttp.status );
 					oLog.open( 3 );
@@ -1141,38 +1134,43 @@ function loadWhiteboardChildren(){
 		}
 	};
 
-	// xmlhttp.open("POST", "/accounts/whiteboardload", true );
 	xmlhttp.open("POST", "/accounts/resultwhiteboard", true );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send( 'day=' + day );
-/*
-	if ( xmlhttp.status == 200 ){
-		var result = JSON.parse( xmlhttp.responseText );
-		if ( result.length > 0 ){		//	レコードが存在すれば
-			wb.innerHTML 		= result[0].whiteboard;
-			wb_absent.innerHTML	= result[0].whiteboard_absent;
 
-			//	チャイルドにイベントハンドラを割り当てる 
-			for ( var i=0; i<wb.childNodes.length; i++ ){
-				if ( touchdevice )	wb.childNodes[i].addEventListener( "touchstart", mDown, false );
-					else			wb.childNodes[i].addEventListener( "mousedown",  mDown, false );
-			}
-			for ( var i=0; i<wb_absent.childNodes.length; i++ ){
-				if ( touchdevice )	wb_absent.childNodes[i].addEventListener( "touchstart", mDown, false );
-					else			wb_absent.childNodes[i].addEventListener( "mousedown",  mDown, false );
-			}
-		} else{							// レコードが存在しなければ
-			wb.innerHTML 		= '';
-			wb_absent.innerHTML	= '';
+}
+
+//
+//	リザーブテーブルからチャイルドをロードする。すでにホワイトボードに存在するチャイルドはパス
+//
+function loadWhiteboardReserveChildren( day ){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+				break;
+			case 2://header received
+				break;
+			case 3://loading
+				oLog.log( null, 'load Whiteboard reserve children...' );
+				oLog.open( 3 );
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					for ( var i=0; i<result.length; i++ ){
+						var c = result[i];
+						// alreadyExistChildOnWhiteboard( c.child_id )
+						console.log( 'child_id:' + c.child_id + ',' + c.sott + ',' + c.eott );
+					}
+				}
+				break;
 		}
-		//	WHITEBOARD_FRAMEのスクロール情報を初期化する
-		document.getElementById('WHITEBOARD_FRAME').scrollTop = 0;
-		showWhiteboardChildCount();
-	} else{
-		oLog.log( null, 'loadWhiteboard:' + xmlhttp.status );
-		oLog.open( 3 );
-	} 
-*/
+	};
+
+	xmlhttp.open("POST", "/accounts/reserveday", true );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'day=' + day );
 
 }
 

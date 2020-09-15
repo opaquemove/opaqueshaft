@@ -372,6 +372,7 @@ function finderHelper( keyword ){
 									console.log('day:' + o.getAttribute('day') );
 									if ( o.hasAttribute('selected')){
 										deselectLine( o );
+										oReserve.close();
 										// o.removeAttribute('selected');
 										// o.classList.remove('selected2');
 									} else{
@@ -379,6 +380,7 @@ function finderHelper( keyword ){
 										o.setAttribute('selected', 'yes' );
 										o.classList.add('selected2');
 										if ( o.hasAttribute('selected' ) ) oReserve.open( o.parentNode );
+											else							oReserve.close();
 									}
 								}					
 							}, false );

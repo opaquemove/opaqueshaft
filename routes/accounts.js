@@ -457,6 +457,23 @@ router.post('/reserveget', function(req, res, next ){
   });
 });
 
+//  リザーブ削除（日付け、チャイルドID）
+router.post('/reserveday', function(req, res, next ){
+  var day    = req.body.day;
+
+  console.log('day:' + day );         // YYYY/MM/DD
+  res.header('Content-Type', 'application/json;charset=utf-8');
+
+  var sql = null;
+  sql =  'select * from reserves where day = $1';
+  console.log( 'sql:' + sql );
+  db.any( {
+      text: sql,
+      values: [ day ] } )
+      .then( rows => {
+        res.json( rows );
+  });
+});
 
 
 router.post('/jsonsend', function( req, res, next, ){
