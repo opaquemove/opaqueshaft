@@ -303,7 +303,7 @@ function finderHelper( keyword ){
 									r += '<div class="day_data"  >Day</div>';
 									r += '<div class="sott_data" >Sott</div>';
 									r += '<div class="eott_data" >Eott</div>';
-									r += '<div style="float:right;width:12px;height:12px;background-image:url(./images/recycle.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" ></div>';
+									r += '<div class="B_RELOAD_RESERVE" style="pointer-events:auto;float:right;width:12px;height:12px;background-image:url(./images/recycle.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
 								r += '</div>';
 								r += '<div class="RESERVE_LST" style="padding:1px;width:99%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
@@ -327,6 +327,16 @@ function finderHelper( keyword ){
 					
 
 							cc.innerHTML = r;
+
+							var brs = cc.getElementsByClassName('B_RELOAD_RESERVE' )[0];
+							brs.addEventListener('click', 
+								function(e){
+									console.log('reload reserve');
+									var sc = scanChild( e.target );
+									var cid = sc.getAttribute('child_id');
+									var reserve_lst = sc.getElementsByClassName('RESERVE_LST')[0];
+									makeReserveList( cid, reserve_lst );
+								}, false );
 							var bcomc = cc.getElementsByClassName('BTN_COMMIT_CHILD')[0];
 							bcomc.addEventListener( 'click', function(e){
 									var cid = scanChild( e.target ).getAttribute('child_id');
@@ -349,6 +359,30 @@ function finderHelper( keyword ){
 										// sc.style.height	= '170px';
 									}
 								}, false );
+							//	reserve list 選択処理
+							var reserve_lst = cc.getElementsByClassName('RESERVE_LST')[0];
+							reserve_lst.addEventListener('click', function(e){
+								var o = e.target;
+								while ( ! o.hasAttribute('day')){
+									console.log('tagName:' + o.tagName);
+									if ( o.tagName == 'BODY') return;
+									o = o.parentNode;
+								}
+								if ( o.hasAttribute('day')){
+									console.log('day:' + o.getAttribute('day') );
+									if ( o.hasAttribute('selected')){
+										deselectLine( o );
+										// o.removeAttribute('selected');
+										// o.classList.remove('selected2');
+									} else{
+										deselectAllLine( this );
+										o.setAttribute('selected', 'yes' );
+										o.classList.add('selected2');
+										if ( o.hasAttribute('selected' ) ) oReserve.open( o.parentNode );
+									}
+								}					
+							}, false );
+
 	
 						}
 					} else{
@@ -430,6 +464,7 @@ function makeResultList( child_id, p ){
 function makeReserveList( child_id, p ){
 
 	var range_id = 2020;
+	oReserve.close();
 
 	var r = '';
 	var xmlhttp = new XMLHttpRequest();
@@ -492,35 +527,28 @@ function makeReserveListHelper( child_id, p, am_resv ){
 		curDay.setDate( curDay.getDate() + 1 );
 	}
 	p.innerHTML = r;
-	p.addEventListener('click',
-		function(e){
-			var o = e.target;
-			while ( ! o.hasAttribute('day')){
-				console.log('tagName:' + o.tagName);
-				if ( o.tagName == 'BODY') return;
-				o = o.parentNode;
-			}
-			if ( o.hasAttribute('day')){
-				console.log('day:' + o.getAttribute('day') );
-				if ( o.hasAttribute('selected')){
-					deselectLine( o );
-					// o.removeAttribute('selected');
-					// o.classList.remove('selected2');
-				} else{
-					deselectAllLine( this );
-					// var daylst = this.childNodes;
-					// for ( var i=0; i<daylst.length; i++ ){
-					// 	if ( daylst[i].hasAttribute('selected')){
-					// 		daylst[i].removeAttribute('selected');
-					// 		daylst[i].classList.remove('selected2');
-					// 	}
-					// }
-					o.setAttribute('selected', 'yes' );
-					o.classList.add('selected2');
-					if ( o.hasAttribute('selected' ) ) oReserve.open( o.parentNode );
-				}
-			}
-		}, false );
+	// p.addEventListener('click',
+	// 	function(e){
+	// 		var o = e.target;
+	// 		while ( ! o.hasAttribute('day')){
+	// 			console.log('tagName:' + o.tagName);
+	// 			if ( o.tagName == 'BODY') return;
+	// 			o = o.parentNode;
+	// 		}
+	// 		if ( o.hasAttribute('day')){
+	// 			console.log('day:' + o.getAttribute('day') );
+	// 			if ( o.hasAttribute('selected')){
+	// 				deselectLine( o );
+	// 				// o.removeAttribute('selected');
+	// 				// o.classList.remove('selected2');
+	// 			} else{
+	// 				deselectAllLine( this );
+	// 				o.setAttribute('selected', 'yes' );
+	// 				o.classList.add('selected2');
+	// 				if ( o.hasAttribute('selected' ) ) oReserve.open( o.parentNode );
+	// 			}
+	// 		}
+	// 	}, false );
 
 
 }
