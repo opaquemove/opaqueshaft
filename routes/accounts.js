@@ -435,6 +435,30 @@ router.post('/reservedelete', function(req, res, next ){
     });
 });
 
+//  リザーブ削除（日付け、チャイルドID）
+router.post('/reserveget', function(req, res, next ){
+  var range_id    = req.body.range_id;
+  var child_id    = req.body.child_id;
+
+  console.log('range_id:' + range_id );         // YYYY/MM/DD
+  res.header('Content-Type', 'application/json;charset=utf-8');
+
+  var sql = null;
+  sql =  'select * from reserves where child_id = $1 and ';
+  sql += '( day >= (select sotd from ranges where range_id = $2 ) and ';
+  sql += '  day <= (select eotd from ranges where range_id = $2 ) )';
+  sql += ' order by day';
+  console.log( 'sql:' + sql );
+  db.any( {
+      text: sql,
+      values: [ child_id, range_id ] } )
+      .then( rows => {
+        res.json( rows );
+  });
+});
+
+
+
 router.post('/jsonsend', function( req, res, next, ){
   var jsondata = req.body;
   console.log( 'jsondata:' + JSON.stringify(jsondata) );

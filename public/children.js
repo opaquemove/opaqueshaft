@@ -7,6 +7,7 @@ var w_child			= null;
 var oReserve		= null;
 var oLog			= null;
 
+
 const arChildGrade = ['','4px solid lightcoral', '4px solid lightgreen', '4px solid lightblue','4px solid lightcyan','4px solid lightyellow','4px solid lightseagreen'];
 const arChildGradeColor = ['','lightcoral', 'lightgreen', 'lightblue', 'lightcyan', 'lightyellow','lightseagreen'];
 
@@ -114,6 +115,7 @@ function locateFinder( e ){
 }
 
 function prevChildren( p ){
+	oReserve.close();
 	if ( !p.hasChildNodes ) return;
 	var children = p.childNodes;
 
@@ -294,13 +296,16 @@ function finderHelper( keyword ){
 							r += '</div>';
 
 							r += '<div class="appendix" style="float:left;width:97%;display:none;" >';
-								r += '<div                     style="padding:1px;font-size:14px;font-weight:bold;" >Reserve:</div>';
-								r += '<div class="RESERVE_HDR" style="padding:1px;width:97%;height:14px;background-color:#EDEDED;border:1px solid lightgrey;" >';
+								r += '<div                     style="padding:1px;font-size:14px;font-weight:bold;" >';
+									r += 'Reserve:';
+								r += '</div>';
+								r += '<div class="RESERVE_HDR" style="padding:1px;width:99%;height:14px;background-color:#EDEDED;border:1px solid lightgrey;" >';
 									r += '<div class="day_data"  >Day</div>';
 									r += '<div class="sott_data" >Sott</div>';
 									r += '<div class="eott_data" >Eott</div>';
+									r += '<div style="float:right;width:12px;height:12px;background-image:url(./images/recycle.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" ></div>';
 								r += '</div>';
-								r += '<div class="RESERVE_LST" style="padding:1px;width:97%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
+								r += '<div class="RESERVE_LST" style="padding:1px;width:99%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
 
 								// r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
@@ -423,6 +428,47 @@ function makeResultList( child_id, p ){
 //	リザルト（履歴）リスト取得
 //
 function makeReserveList( child_id, p ){
+
+	var range_id = 2020;
+
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					p.innerText = 'access...'
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+					if ( xmlhttp.status == 200 ){
+						var result = JSON.parse( xmlhttp.responseText );
+						var am_resv = new Map();
+						for ( var i=0; i<result.length; i++ ){
+							var rs = result[i];
+							var d = new Date( rs.day );
+							var ymd = d.getFullYear() + '/' + ( d.getMonth()+1 ) + '/' + d.getDate();
+							am_resv.set( ymd, { 'sott' : rs.sott.substr(0,5), 'eott' : rs.eott.substr(0,5) } );
+						}
+						makeReserveListHelper( child_id, p, am_resv );
+					}
+				break;
+			}
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/reserveget", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'child_id=' + child_id + '&range_id=' + range_id );
+
+}
+
+function makeReserveListHelper( child_id, p, am_resv ){
+
+	console.log( am_resv );
 	var today = new Date();
 	var sotd   = new Date( today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/' + 1 );
 	var curDay = new Date( today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/' + 1 );
@@ -431,10 +477,17 @@ function makeReserveList( child_id, p ){
 	var r = '';
 	while ( curMon == curDay.getMonth() ){
 		var d = curDay.getFullYear() + '/' + ( curDay.getMonth() + 1 ) + '/' + curDay.getDate();
+		var sott = '';
+		var eott = '';
+		if ( am_resv.has( d ) ){
+			var resv = am_resv.get( d );
+			sott = resv.sott;
+			eott = resv.eott;
+		}
 		r += '<div day="' + d + '" style="clear:both;width:100%;height:16px;border-bottom:1px solid lightgrey;" >';
-			r += '<div class="day_data"   >' + d + '</div>';
-			r += '<div class="sott_data"  ></div>';
-			r += '<div class="eott_data"  ></div>';
+			r += '<div class="day_data"   >' + d    + '</div>';
+			r += '<div class="sott_data"  >' + sott + '</div>';
+			r += '<div class="eott_data"  >' + eott + '</div>';
 		r += '</div>';
 		curDay.setDate( curDay.getDate() + 1 );
 	}
@@ -443,29 +496,49 @@ function makeReserveList( child_id, p ){
 		function(e){
 			var o = e.target;
 			while ( ! o.hasAttribute('day')){
+				console.log('tagName:' + o.tagName);
+				if ( o.tagName == 'BODY') return;
 				o = o.parentNode;
 			}
 			if ( o.hasAttribute('day')){
 				console.log('day:' + o.getAttribute('day') );
 				if ( o.hasAttribute('selected')){
-					o.removeAttribute('selected');
-					o.classList.remove('selected2');
+					deselectLine( o );
+					// o.removeAttribute('selected');
+					// o.classList.remove('selected2');
 				} else{
-					var daylst = this.childNodes;
-					for ( var i=0; i<daylst.length; i++ ){
-						if ( daylst[i].hasAttribute('selected')){
-							daylst[i].removeAttribute('selected');
-							daylst[i].classList.remove('selected2');
-						}
-					}
+					deselectAllLine( this );
+					// var daylst = this.childNodes;
+					// for ( var i=0; i<daylst.length; i++ ){
+					// 	if ( daylst[i].hasAttribute('selected')){
+					// 		daylst[i].removeAttribute('selected');
+					// 		daylst[i].classList.remove('selected2');
+					// 	}
+					// }
 					o.setAttribute('selected', 'yes' );
 					o.classList.add('selected2');
-					oReserve.open( o.parentNode );
+					if ( o.hasAttribute('selected' ) ) oReserve.open( o.parentNode );
 				}
 			}
 		}, false );
 
 
+}
+//	行選択
+function selectLine( o ){
+	o.setAttribute('selected', 'yes' );
+	o.classList.add('selected2');
+}
+//	行選択解除
+function deselectLine( o ){
+	o.removeAttribute('selected');
+	o.classList.remove('selected2');
+}
+//	全行選択解除
+function deselectAllLine( f ){
+	var rows = f.childNodes;
+	for ( var i=0; i<rows.length; i++ )
+		if ( rows[i].hasAttribute('selected') )deselectLine( rows[i] );
 }
 
 //
@@ -658,6 +731,10 @@ function reserveSelector(){
 		( function(e){
 			this.reset();
 		} ).bind( this ), false );
+	this.tool.getElementsByClassName('delete_reservation')[0].addEventListener('click',
+		( function(e){
+			this.delete();
+		} ).bind( this ), false );
 
 	this.overlay.addEventListener( 'click',
 		( function(e){
@@ -680,7 +757,7 @@ reserveSelector.prototype = {
 		r += '<div class="cancel_reservation" style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/cancel-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
 		r += '<div class="commit_reservation" style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/check-3.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
 		r += '<div class="reset_reservation"  style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/eraser.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
-		r += '<div class="clear_reservation"  style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/minus-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
+		r += '<div class="delete_reservation" style="width:32px;height:32px;border-radius:4px;background-color:white;background-image:url(./images/minus-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" ></div>';
 		return r;
 	},
 	makeButton : function( hdr, p ){
@@ -793,6 +870,59 @@ reserveSelector.prototype = {
 		this.frame2.getElementsByClassName('specific_time')[0].innerText = '';
 
 	},
+	delete : function(){
+		// child_id 取得
+		var children = document.getElementById('FINDER_AREA').childNodes;
+		var c = null;
+		for ( var i=0; i<children.length; i++ ){
+			c = children[i];
+			if ( c.hasAttribute('selected') ) break;
+		}
+		if ( c == null ) return;
+		var child_id = c.getAttribute('child_id');
+		console.log( 'child_id:' + child_id );
+
+		// リザベーションを取得
+		var days = this.resv_lst.childNodes;
+		var lst = [];
+		for ( var i=0; i<days.length; i++ ){
+			var d = days[i];
+			if ( d.hasAttribute( 'day' ) && d.hasAttribute( 'selected' )) lst.push( d );
+		}
+
+		lst[0].removeAttribute('sott' );
+		lst[0].getElementsByClassName('sott_data')[0].innerText = '';
+		lst[0].removeAttribute('eott' );
+		lst[0].getElementsByClassName('eott_data')[0].innerText = '';
+		this.close();
+		this.reset();
+		this.deleteHelper( lst[0].getAttribute( 'day' ), child_id );
+
+	},
+	deleteHelper : function( day, child_id ){
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.addEventListener('readystatechange', 
+			function (e){
+				switch ( xmlhttp.readyState){
+					case 1://opened
+						break;
+					case 2://header received
+						break;
+					case 3://loading
+						break;
+					case 4://done
+						if ( xmlhttp.status == 200 ){
+							var result = JSON.parse( xmlhttp.responseText );
+							oLog.log( null, result.message );
+							oLog.open( 2 );
+						}
+						break;
+				}
+			}, false );
+		xmlhttp.open("POST", "/accounts/reservedelete", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'day=' + day + '&child_id=' + child_id );
+	},
 	commit : function(){
 		// child_id 取得
 		var children = document.getElementById('FINDER_AREA').childNodes;
@@ -811,6 +941,10 @@ reserveSelector.prototype = {
 		for ( var i=0; i<days.length; i++ ){
 			var d = days[i];
 			if ( d.hasAttribute( 'day' ) && d.hasAttribute( 'selected' )) lst.push( d );
+		}
+		if ( lst.length == 0 ){
+			console.log( 'not select reserve' );
+			return;
 		}
 
 		// タイムをリザベーションに設定
