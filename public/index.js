@@ -1161,14 +1161,20 @@ function loadWhiteboardReserveChildren( day ){
 					for ( var i=0; i<result.length; i++ ){
 						var c = result[i];
 						if ( ! alreadyExistChildOnWhiteboard( c.child_id ) ){
-							var top 		= ( ( 15 - 8 ) * pixelPerHour ) + 'px';
-							var left 		= '50%';
+							var ar_hm		= c.eott.split(':');
+							var top 		= ( ( parseInt( ar_hm[0] ) - 8 ) * pixelPerHour );
+							// var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
+							// var m15 = Math.floor( ( criteriaEscortPixel - 144 ) * 0.25 );	//  144 is child width
+							// var m = Math.floor( left / m15 ) * 15;
+						
+							var left 		= Math.floor( parseInt( ar_hm[1] ) / 60 * 100 ) + '%';
 							var child_id 	= c.child_id;
 							var child_name 	= c.child_name;
 							var kana 		= c.kana;
 							var child_type 	= c.child_type;
 							var child_grade = c.child_grade;
-							console.log( 'child_id:' + c.child_id + ',' + c.sott + ',' + c.eott );
+							console.log( 'top:' + top );
+							console.log( 'child_id:' + c.child_id + ',' + c.sott + ',' + ar_hm[0] + ':' + ar_hm[1] );
 							addChild( top, left, child_id, child_name, kana, child_type,
 								child_grade, null, null, false, false, false );
 						} else {
@@ -2429,16 +2435,10 @@ function addWhiteboardManage( oParent, Result ){
 	var c = document.createElement("DIV");
 	c.setAttribute("whiteboard_id",  Result.child_id );
 	c.setAttribute('class', 'whiteboard_box');
-	// c.style.float			= 'left';
-	// c.style.width			= '100px';
-	// c.style.height			= '50px';
-	// c.style.backgroundColor	= 'rgb(241,241,241)';
-	// c.style.border			= '1px solid lightgrey';
-	// c.style.margin			= '1px';
-	// c.style.fontSize		= '18px';
 
 	var day = new Date( Result.day );
-	var c_children	= Result.c_children;
+	var c_children		= Result.c_children;
+	var c_resv_children	= Result.c_resv_children;
 	var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDate() ).slice(-2);
 
 	var r = '';
@@ -2446,7 +2446,7 @@ function addWhiteboardManage( oParent, Result ){
     	r += ymd;
     r += '</div>';
     r += '<div style="text-align:center;" >';
-    	r += c_children + ' child';
+    	r += c_children + '(' + c_resv_children + ')' + ' child';
     r += '</div>';
 	c.innerHTML = r;
     var cc = oParent.appendChild( c );
