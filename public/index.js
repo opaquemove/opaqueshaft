@@ -2363,8 +2363,6 @@ function signForm()
 		r += "</div>";
 	r += "</div>";
 
-	// var children = document.getElementById('WHITEBOARD').childNodes;
-	// neverCloseDialog = ( children.length == 0 ) ? true : false;
 	neverCloseDialog = true;
 	openModalDialog( null, r, 'NOBUTTON', null, 'SIGNIN' );
 	o = document.getElementById( 'acc_id' );

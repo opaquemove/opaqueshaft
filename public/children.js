@@ -7,6 +7,8 @@ var w_child			= null;
 var oReserve		= null;
 var oLog			= null;
 
+var edit_day		= null;
+
 
 const arChildGrade = ['','4px solid lightcoral', '4px solid lightgreen', '4px solid lightblue','4px solid lightcyan','4px solid lightyellow','4px solid lightseagreen'];
 const arChildGradeColor = ['','lightcoral', 'lightgreen', 'lightblue', 'lightcyan', 'lightyellow','lightseagreen'];
@@ -30,6 +32,10 @@ function init(){
 
     var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
+
+	//	編集月を初期化
+	edit_day = new Date();
+	edit_day = new Date( edit_day.getFullYear() + '/' + ( edit_day.getMonth() + 1 ) + '/1' );
 
 	//	ログエリアの初期化
 	oLog = new messageLog();
@@ -65,6 +71,12 @@ function init(){
 	oLog.open( 2 );
 
 	// signin
+	if ( ! checkSign() ){
+
+	}else{
+
+	}
+
 }
 
 var lf_moved	= false;
@@ -92,11 +104,23 @@ function locateFinder( e ){
 					// 	if ( c!= children[i] )
 					// 		children[i].style.display = 'inline'
 					// }
+
+					//	プロフィールエリア内なら
+					if ( isProfeel( e.target )){
+						c.classList.remove('selected');
+						c.removeAttribute('selected');
+						c.style.height = '';
+						var appx = c.getElementsByClassName('appendix');
+						for ( var i=0; i<appx.length; i++ ){
+							appx[i].style.display = 'none';
+						}
+
+					}
 				} else{
 					if ( ! lf_moved ){
 						c.classList.add( 'selected' );
 						c.setAttribute( 'selected', 'yes' );
-						c.style.height = '600px';
+						c.style.height = '596px';
 						var appx = c.getElementsByClassName('appendix');
 						for ( var i=0; i<appx.length; i++ ){
 							appx[i].style.display = 'inline';
@@ -107,11 +131,12 @@ function locateFinder( e ){
 						makeResultList( child_id, result_lst );
 						makeReserveList( child_id, reserve_lst );
 	
-						var children = this.childNodes;
-						for ( var i=0; i<children.length; i++ ){
-							if ( c!= children[i] )
-								children[i].style.display = 'none';
-						}
+						// 他のチャイルドを非表示
+						// var children = this.childNodes;
+						// for ( var i=0; i<children.length; i++ ){
+						// 	if ( c!= children[i] )
+						// 		children[i].style.display = 'none';
+						// }
 					}
 				}
 			}
@@ -147,6 +172,15 @@ function scanChild( o ) {
         if ( tn.toLowerCase() == "body" ) return null;
         // if ( o.getAttribute("child") == "yes" ) return o;
         if ( o.hasAttribute("child_id") ) return o;
+        o = o.parentNode;
+    }
+}
+
+function isProfeel( o ) {
+    while ( true ) {
+        var tn = o.tagName;
+        if ( tn.toLowerCase() == "body" ) return false;
+		if ( o.hasAttribute("profeel") ) return true;
         o = o.parentNode;
     }
 }
@@ -212,7 +246,7 @@ function finderHelper( keyword ){
 							var cc_width = cc.offsetWidth;
 
 							r = '';
-							r += '<div style="float:left;width:' + cc_width + 'px;height:86px;overflow:hidden;" >';
+							r += '<div profeel="yes" style="float:left;width:' + cc_width + 'px;height:86px;overflow:hidden;" >';
 								if ( imagefile != ''){
 									r += '<div style="float:left;width:70px;height:70px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp;';
@@ -310,6 +344,7 @@ function finderHelper( keyword ){
 									r += '<div class="B_RELOAD_RESERVE" style="pointer-events:auto;float:right;width:12px;height:12px;background-image:url(./images/recycle.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
 									r += '<div class="" style="float:right;width:12px;height:12px;background-image:url(./images/next.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
 									r += '<div class="" style="float:right;width:12px;height:12px;background-image:url(./images/prev.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+									r += '<div class="" style="float:right;" >2020/9</div>';
 								r += '</div>';
 								r += '<div class="RESERVE_LST" style="padding:1px;width:99%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
@@ -359,8 +394,17 @@ function finderHelper( keyword ){
 								}, false );
 							var bcanc = cc.getElementsByClassName('BTN_CANCEL_CHILD')[0];
 							bcanc.addEventListener( 'click', function(e){
-									var p = document.getElementById('FINDER_AREA');
-									prevChildren( p );
+									// var p = document.getElementById('FINDER_AREA');
+									// prevChildren( p );
+									var sc = scanChild( e.target );
+									var appx = sc.getElementsByClassName('appendix');
+									for ( var j=0; j<appx.length; j++){
+										appx[j].style.display = 'none';
+									}
+									sc.classList.remove('selected');
+									sc.removeAttribute('selected');						
+									sc.style.height = '';
+							
 								}, false );
 							var bcanc = cc.getElementsByClassName('BTN_EXPAND_CHILD')[0];
 							bcanc.addEventListener( 'click', function(e){
@@ -369,7 +413,7 @@ function finderHelper( keyword ){
 										sc.style.height	= '';
 										// sc.style.height	= '';
 									} else {
-										sc.style.width	= sc.offsetWidth * 3 + 'px';
+										sc.style.width	= ( sc.offsetWidth * 3 ) + 'px';
 										// sc.style.height	= '170px';
 									}
 								}, false );
@@ -543,29 +587,6 @@ function makeReserveListHelper( child_id, p, am_resv ){
 		curDay.setDate( curDay.getDate() + 1 );
 	}
 	p.innerHTML = r;
-	// p.addEventListener('click',
-	// 	function(e){
-	// 		var o = e.target;
-	// 		while ( ! o.hasAttribute('day')){
-	// 			console.log('tagName:' + o.tagName);
-	// 			if ( o.tagName == 'BODY') return;
-	// 			o = o.parentNode;
-	// 		}
-	// 		if ( o.hasAttribute('day')){
-	// 			console.log('day:' + o.getAttribute('day') );
-	// 			if ( o.hasAttribute('selected')){
-	// 				deselectLine( o );
-	// 				// o.removeAttribute('selected');
-	// 				// o.classList.remove('selected2');
-	// 			} else{
-	// 				deselectAllLine( this );
-	// 				o.setAttribute('selected', 'yes' );
-	// 				o.classList.add('selected2');
-	// 				if ( o.hasAttribute('selected' ) ) oReserve.open( o.parentNode );
-	// 			}
-	// 		}
-	// 	}, false );
-
 
 }
 //	行選択
