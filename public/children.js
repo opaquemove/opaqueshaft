@@ -37,6 +37,10 @@ function init(){
 	//	リザーブセレクタ初期化
 	oReserve = new reserveSelector();
 
+	//モーダルダイアログ初期化
+	initModalDialog();
+
+
 	fitting();
 	
 	child_form.keyword.focus();
@@ -59,6 +63,8 @@ function init(){
 	
 	oLog.log( null, 'initialized.');
 	oLog.open( 2 );
+
+	// signin
 }
 
 var lf_moved	= false;
@@ -104,7 +110,7 @@ function locateFinder( e ){
 						var children = this.childNodes;
 						for ( var i=0; i<children.length; i++ ){
 							if ( c!= children[i] )
-								children[i].style.display = 'none'
+								children[i].style.display = 'none';
 						}
 					}
 				}
@@ -172,8 +178,6 @@ function finderHelper( keyword ){
 				case 2://header received
 					break;
 				case 3://loading
-					//var fcl = document.getElementById( 'FIND_CHILD_LST' );
-					//if ( fcl != null ) fcl.innerText = 'access...';
 					fa.innerText = 'access...'
 					break;
 				case 4://done
@@ -304,13 +308,15 @@ function finderHelper( keyword ){
 									r += '<div class="sott_data" >Sott</div>';
 									r += '<div class="eott_data" >Eott</div>';
 									r += '<div class="B_RELOAD_RESERVE" style="pointer-events:auto;float:right;width:12px;height:12px;background-image:url(./images/recycle.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+									r += '<div class="" style="float:right;width:12px;height:12px;background-image:url(./images/next.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+									r += '<div class="" style="float:right;width:12px;height:12px;background-image:url(./images/prev.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
 								r += '</div>';
 								r += '<div class="RESERVE_LST" style="padding:1px;width:99%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
 
 								// r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
 								// r += '<div class="RESERV_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
-							r += '<div style="padding:10px 1px 1px 1px;width:100%;text-align:center;" >';
+							r += '<div class="appendix vh-center" style="padding:10px 1px 1px 1px;width:100%;display:none;" >';
 								r += '<button class="BTN_COMMIT_CHILD" style="border:none;background-color:transparent;" >';
 									r += '<img width="24px" src="./images/check-3.png" />';
 								r += '</button>';
@@ -341,7 +347,15 @@ function finderHelper( keyword ){
 							bcomc.addEventListener( 'click', function(e){
 									var cid = scanChild( e.target ).getAttribute('child_id');
 									var f = document.forms['child_prop_' + cid ];
-									updateChild( f );
+									var child_id 	= f.child_id.value;
+									var child_name 	= f.child_name.value;
+									var kana		= f.kana.value;
+									var remark		= encodeURIComponent( f.remark.value );
+									var child_grade = f.child_grade.value;
+									var child_type	= f.child_type.value;
+									updateChild( child_id, child_name, kana, remark, child_grade, child_type );
+									var p = document.getElementById('FINDER_AREA');
+									prevChildren( p );
 								}, false );
 							var bcanc = cc.getElementsByClassName('BTN_CANCEL_CHILD')[0];
 							bcanc.addEventListener( 'click', function(e){
@@ -574,7 +588,7 @@ function deselectAllLine( f ){
 //
 //	チャイルド更新
 //
-function updateChild( f ){
+function updateChild( child_id, child_name, kana, remark, child_grade, child_type ){
 
 	var r = '';
 	var xmlhttp = new XMLHttpRequest();
@@ -600,20 +614,18 @@ function updateChild( f ){
 			}
 		}, false );
 
-		var child_id 	= f.child_id.value;
-		var child_name 	= f.child_name.value;
-		var kana		= f.kana.value;
-		var remark		= encodeURIComponent( f.remark.value );
-		var child_grade = f.child_grade.value;
-		var child_type	= f.child_type.value;
-		// var child_type2	= f.child_type2.value;
+	// var child_id 	= f.child_id.value;
+	// var child_name 	= f.child_name.value;
+	// var kana		= f.kana.value;
+	// var remark		= encodeURIComponent( f.remark.value );
+	// var child_grade = f.child_grade.value;
+	// var child_type	= f.child_type.value;
 
-		console.log( 'child update: ' + child_id +',' + child_name);
-		// console.log('child_type2:' + child_type2 );
+	console.log( 'child update: ' + child_id +',' + child_name);
 
-		xmlhttp.open("POST", "/accounts/childupdate", true );
-		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send( 'child_id=' + child_id + '&child_name=' + child_name + '&kana=' + kana + '&remark=' + remark + '&child_grade=' + child_grade + '&child_type=' + child_type );
+	xmlhttp.open("POST", "/accounts/childupdate", true );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'child_id=' + child_id + '&child_name=' + child_name + '&kana=' + kana + '&remark=' + remark + '&child_grade=' + child_grade + '&child_type=' + child_type );
 
 }
 

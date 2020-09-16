@@ -39,6 +39,7 @@ INPUT[type=radio]:checked + label{
 TEXTAREA{
 	color:					gray;
 	border:					1px solid lightgrey;
+	resize:					none;
 }
 BUTTON{
 	color:					darkgray;
@@ -118,18 +119,18 @@ BUTTON:focus{
 
 #TOOLBAR{
 	position:				absolute;
-	top:					42px;
+	top:					44px;
 	left:					0px;
 	width:					100%;
 	height:					32px;
 	color:					dimgray;
 	background-color:		white;
-	overflow:				visible;
+	overflow:				hidden;
 	opacity:				0.9;
 }
 #TOOLBAR2{
 	width:					262px;
-	height:					100%;
+	height:					31px;
 	float:					left;
 	color:					dimgray;
 	background-color:		white;
@@ -140,10 +141,10 @@ BUTTON:focus{
 
 #FINDER_AREA{
 	position:				absolute;
-	top:					74px;
+	top:					76px;
 	left:					0px;
 	width:					100%;
-	height:					calc( 100% - 74px);
+	height:					calc( 100% - 76px);
 	color:					gray;
 	font-size:				12px;
 	opacity:				0.9;
