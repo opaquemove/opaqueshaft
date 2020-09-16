@@ -465,7 +465,7 @@ router.post('/reserveday', function(req, res, next ){
   res.header('Content-Type', 'application/json;charset=utf-8');
 
   var sql = null;
-  sql =  'select * from reserves where day = $1';
+  sql =  'select r.*,c.child_name, c.kana, c.child_type,c.child_grade from reserves r inner join children c on c.child_id = r.child_id where r.day = $1';
   console.log( 'sql:' + sql );
   db.any( {
       text: sql,

@@ -1160,9 +1160,22 @@ function loadWhiteboardReserveChildren( day ){
 					var result = JSON.parse( xmlhttp.responseText );
 					for ( var i=0; i<result.length; i++ ){
 						var c = result[i];
-						// alreadyExistChildOnWhiteboard( c.child_id )
-						console.log( 'child_id:' + c.child_id + ',' + c.sott + ',' + c.eott );
+						if ( ! alreadyExistChildOnWhiteboard( c.child_id ) ){
+							var top 		= ( ( 15 - 8 ) * pixelPerHour ) + 'px';
+							var left 		= '50%';
+							var child_id 	= c.child_id;
+							var child_name 	= c.child_name;
+							var kana 		= c.kana;
+							var child_type 	= c.child_type;
+							var child_grade = c.child_grade;
+							console.log( 'child_id:' + c.child_id + ',' + c.sott + ',' + c.eott );
+							addChild( top, left, child_id, child_name, kana, child_type,
+								child_grade, null, null, false, false, false );
+						} else {
+							console.log( 'child_id:' + c.child_id + ' already deploy')
+						}
 					}
+					showWhiteboardChildCount();
 				}
 				break;
 		}
