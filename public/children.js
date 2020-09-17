@@ -218,8 +218,8 @@ function finderHelper( keyword ){
 				case 4://done
 					console.log('status:' + xmlhttp.status );
 
-/*
 					if ( xmlhttp.status == 200 ){
+						/*
 						var result = JSON.parse( xmlhttp.responseText );
 						
 						fa.innerText = '';
@@ -473,10 +473,10 @@ function finderHelper( keyword ){
 
 	
 						}
+						*/
 					} else{
 						console.log( null, 'findChildrenTable:' + xmlhttp.status );
 					}
-*/
 					break;
 			}
 
