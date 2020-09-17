@@ -220,36 +220,36 @@ function finderHelper( keyword ){
 
 					if ( xmlhttp.status == 200 ){
 						
-						var result = JSON.parse( xmlhttp.responseText );
+						// var result = JSON.parse( xmlhttp.responseText );
 						
-						fa.innerText = '';
+						fa.innerText = xmlhttp.responseText;
+						/*
 						for ( var i=0; i<result.length; i++ ){
-	
-							// var child_id    = result[i].child_id;
-							// var child_name  = result[i].child_name;
-							// var kana        = result[i].kana;
-							// var remark		= result[i].remark;
-							// if ( remark == null ) remark = '';
-							// var child_type  = result[i].child_type;
-							// var child_grade = result[i].child_grade;
-							// var range_id	= result[i].range_id;
-							// var imagefile	= result[i].imagefile;
-							// if ( imagefile == null ) imagefile = '';
+							var child_id    = result[i].child_id;
+							var child_name  = result[i].child_name;
+							var kana        = result[i].kana;
+							var remark		= result[i].remark;
+							if ( remark == null ) remark = '';
+							var child_type  = result[i].child_type;
+							var child_grade = result[i].child_grade;
+							var range_id	= result[i].range_id;
+							var imagefile	= result[i].imagefile;
+							if ( imagefile == null ) imagefile = '';
 							var c = document.createElement('DIV');
-							// c.setAttribute("child_id",    child_id );
-							// c.setAttribute("id",          "c_1");
-							// c.setAttribute("class",       "PALLETE_CHILD");
-							// c.setAttribute('kana',        kana );
-							// c.setAttribute('child_type',  child_type );
-							// c.setAttribute('child_grade', child_grade );
+							c.setAttribute("child_id",    child_id );
+							c.setAttribute("id",          "c_1");
+							c.setAttribute("class",       "PALLETE_CHILD");
+							c.setAttribute('kana',        kana );
+							c.setAttribute('child_type',  child_type );
+							c.setAttribute('child_grade', child_grade );
 							c.style.margin	        = '1px';
 							c.style.padding			= '2px';
 							c.style.float           = 'left';
 							var cc = fa.appendChild( c );
 							var cc_width = cc.offsetWidth;
-
+*/
+/*
 							r = 'hoge';
-	/*
 							r += '<div profeel="yes" style="float:left;width:' + cc_width + 'px;height:86px;overflow:hidden;" >';
 								if ( imagefile != ''){
 									r += '<div style="float:left;width:70px;height:70px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
@@ -360,10 +360,10 @@ function finderHelper( keyword ){
 							r += '</div>';
 							r += '</form>';
 							// r += '</div>';
+							cc.innerHTML = r;
 */
 					
 
-							cc.innerHTML = r;
 /*
 							var brs = cc.getElementsByClassName('B_RELOAD_RESERVE' )[0];
 							brs.addEventListener('click', 
@@ -468,10 +468,10 @@ function finderHelper( keyword ){
 									}
 								}					
 							}, false );
-							*/
-
-	
+							
+							
 						}
+						*/
 					} else{
 						console.log( null, 'findChildrenTable:' + xmlhttp.status );
 					}
