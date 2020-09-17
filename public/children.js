@@ -263,7 +263,6 @@ function finderHelper( keyword ){
 									r += '<div class="CHILD_NAME" style="font-size:16px;padding-left:2px;">';
 										r += child_name;
 									r += '</div>';
-									// r += '<div style="padding:1px;text-align:right;" >ID:' + child_id + '</div>';
 									r += '<div style="font-size:14px;text-align:right;padding-top:2px;" >';
 										r += child_grade + child_type;
 										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
@@ -272,10 +271,7 @@ function finderHelper( keyword ){
 									r += '<div style="padding:1px;" >id/Range:' + child_id + '/' + range_id + '</div>';
 								r += '</div>';
 							r += '</div>';
-							// r += '<div style="clear:both;" >';
-							// 	r += '<div style="padding:1px;" >Type:' + child_type + '</div>';
-							// 	r += '<div style="padding:1px;" >Grade:' + child_grade + '</div>';
-							// r += '</div>';
+/*
 							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
 								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;border-bottom:1px solid lightgrey;" >Property:</div>';
@@ -362,7 +358,7 @@ function finderHelper( keyword ){
 							r += '</div>';
 							r += '</form>';
 							// r += '</div>';
-
+*/
 					
 
 							cc.innerHTML = r;
