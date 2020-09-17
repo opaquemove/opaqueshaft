@@ -273,7 +273,7 @@ function finderHelper( keyword ){
 								r += '</div>';
 							r += '</div>';
 
-/*
+
 							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
 								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;border-bottom:1px solid lightgrey;" >Property:</div>';
@@ -330,8 +330,8 @@ function finderHelper( keyword ){
 								r += '</div>';
 								r += '<div class="RESULT_LST" style="padding:1px;width:250px;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
-*/
-/*
+
+
 							r += '<div class="appendix" style="float:left;width:97%;display:none;" >';
 								r += '<div                     style="padding:1px;font-size:14px;font-weight:bold;" >';
 									r += 'Reserve:';
@@ -361,11 +361,10 @@ function finderHelper( keyword ){
 							r += '</div>';
 							r += '</form>';
 							// r += '</div>';
-*/
+
 							cc.innerHTML = r;
 					
 
-/*
 							var brs = cc.getElementsByClassName('B_RELOAD_RESERVE' )[0];
 							brs.addEventListener('click', 
 								function(e){
@@ -470,7 +469,6 @@ function finderHelper( keyword ){
 								}					
 							}, false );
 							
-							*/
 							
 						}
 					} else{
