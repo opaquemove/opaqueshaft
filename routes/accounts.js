@@ -412,7 +412,7 @@ router.post('/reserveadd', function(req, res, next ){
       text: sql,
       values: [ day, sott, eott, child_id ] } )
     .then( function() {
-      res.json( { status: 'SUCCESS', message:  'insert reserve' });
+      res.json( { status: 'SUCCESS', message:  'insert reserve(' + day +',' + child_id + ')' });
     });
 });
 
@@ -431,7 +431,7 @@ router.post('/reservedelete', function(req, res, next ){
       text: sql,
       values: [ day, child_id ] } )
     .then( function() {
-      res.json( { status: 'SUCCESS', message:  'delete reserve' });
+      res.json( { status: 'SUCCESS', message:  'delete reserve(' + day +',' + child_id + ')' });
     });
 });
 

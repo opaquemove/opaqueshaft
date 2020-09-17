@@ -935,12 +935,18 @@ reserveSelector.prototype = {
 	},
 	delete : function(){
 		// child_id 取得
-		var children = document.getElementById('FINDER_AREA').childNodes;
 		var c = null;
-		for ( var i=0; i<children.length; i++ ){
-			c = children[i];
-			if ( c.hasAttribute('selected') ) break;
+		// var children = document.getElementById('FINDER_AREA').childNodes;
+		// for ( var i=0; i<children.length; i++ ){
+		// 	c = children[i];
+		// 	if ( c.hasAttribute('selected') ) break;
+		// }
+		c = this.resv_lst;
+		while ( ! c.hasAttribute('child_id') ){
+			c = c.parentNode;
+			if ( c.tagName == 'BODY') return;
 		}
+
 		if ( c == null ) return;
 		var child_id = c.getAttribute('child_id');
 		console.log( 'child_id:' + child_id );
@@ -988,11 +994,17 @@ reserveSelector.prototype = {
 	},
 	commit : function(){
 		// child_id 取得
-		var children = document.getElementById('FINDER_AREA').childNodes;
 		var c = null;
-		for ( var i=0; i<children.length; i++ ){
-			c = children[i];
-			if ( c.hasAttribute('selected') ) break;
+		// var children = document.getElementById('FINDER_AREA').childNodes;
+		// for ( var i=0; i<children.length; i++ ){
+		// 	c = children[i];
+		// 	if ( c.hasAttribute('selected') ) break;
+		// }
+
+		c = this.resv_lst;
+		while ( ! c.hasAttribute('child_id') ){
+			c = c.parentNode;
+			if ( c.tagName == 'BODY') return;
 		}
 		if ( c == null ) return;
 		var child_id = c.getAttribute('child_id');
@@ -1037,10 +1049,14 @@ reserveSelector.prototype = {
 					case 4://done
 						if ( xmlhttp.status == 200 ){
 							var result = JSON.parse( xmlhttp.responseText );
+							oLog.log( null, result.message );
+							oLog.open(3);
 						}
 						break;
 				}
 			}, false );
+		
+		console.log( 'day=' + day + '&sott=' + sott + '&eott=' + eott + '&child_id=' + child_id );
 		xmlhttp.open("POST", "/accounts/reserveadd", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( 'day=' + day + '&sott=' + sott + '&eott=' + eott + '&child_id=' + child_id );
