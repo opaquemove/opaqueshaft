@@ -7,7 +7,7 @@ var w_child			= null;
 var oReserve		= null;
 var oLog			= null;
 
-var edit_day		= null;
+var edit_month		= null;
 
 
 const arChildGrade = ['','4px solid lightcoral', '4px solid lightgreen', '4px solid lightblue','4px solid lightcyan','4px solid lightyellow','4px solid lightseagreen'];
@@ -34,8 +34,8 @@ function init(){
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
 	//	編集月を初期化
-	edit_day = new Date();
-	edit_day = new Date( edit_day.getFullYear() + '/' + ( edit_day.getMonth() + 1 ) + '/1' );
+	edit_month = new Date();
+	edit_month = new Date( edit_month.getFullYear() + '/' + ( edit_month.getMonth() + 1 ) + '/1' );
 
 	//	ログエリアの初期化
 	oLog = new messageLog();
@@ -337,14 +337,14 @@ function finderHelper( keyword ){
 								r += '<div                     style="padding:1px;font-size:14px;font-weight:bold;" >';
 									r += 'Reserve:';
 								r += '</div>';
-								r += '<div class="RESERVE_HDR" style="padding:1px;width:99%;height:14px;background-color:#EDEDED;border:1px solid lightgrey;" >';
+								r += '<div class="RESERVE_HDR" edit_month="' + edit_month.getFullYear() + '/' + (edit_month.getMonth()+1) + '" style="padding:1px;width:99%;height:14px;background-color:#EDEDED;border:1px solid lightgrey;" >';
 									r += '<div class="day_data"  >Day</div>';
 									r += '<div class="sott_data" >Sott</div>';
 									r += '<div class="eott_data" >Eott</div>';
 									r += '<div class="B_RELOAD_RESERVE" style="pointer-events:auto;float:right;width:12px;height:12px;background-image:url(./images/recycle.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-									r += '<div class="" style="float:right;width:12px;height:12px;background-image:url(./images/next.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-									r += '<div class="" style="float:right;width:12px;height:12px;background-image:url(./images/prev.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-									r += '<div class="" style="float:right;" >2020/9</div>';
+									r += '<div class="next_month"    style="float:right;width:12px;height:12px;background-image:url(./images/next.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+									r += '<div class="prev_month"    style="float:right;width:12px;height:12px;background-image:url(./images/prev.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+									r += '<div class="reserve_month" style="float:right;" >' + edit_month.getFullYear() + '/' + (edit_month.getMonth()+1) + '</div>';
 								r += '</div>';
 								r += '<div class="RESERVE_LST" style="padding:1px;width:99%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
@@ -378,6 +378,29 @@ function finderHelper( keyword ){
 									var reserve_lst = sc.getElementsByClassName('RESERVE_LST')[0];
 									makeReserveList( cid, reserve_lst );
 								}, false );
+							var prev_month = cc.getElementsByClassName('prev_month')[0];
+							prev_month.addEventListener( 'click', function(e){
+									var em = this.parentNode.getAttribute('edit_month');
+									var oEm = new Date( em + '/1' );
+									oEm.setMonth( oEm.getMonth() - 1 );
+									this.parentNode.setAttribute('edit_month', oEm.getFullYear() + '/' + ( oEm.getMonth()+1 ) );
+									var sc = scanChild( e.target );
+									sc.getElementsByClassName('reserve_month')[0].innerText =
+										this.parentNode.getAttribute( 'edit_month' );
+
+								}, false );
+							var next_month = cc.getElementsByClassName('next_month')[0];
+							next_month.addEventListener( 'click', function(e){
+									var em = this.parentNode.getAttribute('edit_month');
+									var oEm = new Date( em + '/1' );
+									oEm.setMonth( oEm.getMonth() + 1 );
+									this.parentNode.setAttribute('edit_month', oEm.getFullYear() + '/' + ( oEm.getMonth()+1 ) );
+									var sc = scanChild( e.target );
+									sc.getElementsByClassName('reserve_month')[0].innerText =
+										this.parentNode.getAttribute( 'edit_month' );
+
+								}, false );
+	
 							var bcomc = cc.getElementsByClassName('BTN_COMMIT_CHILD')[0];
 							bcomc.addEventListener( 'click', function(e){
 									var cid = scanChild( e.target ).getAttribute('child_id');
