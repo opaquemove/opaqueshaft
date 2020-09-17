@@ -219,7 +219,7 @@ function finderHelper( keyword ){
 					console.log('status:' + xmlhttp.status );
 
 					if ( xmlhttp.status == 200 ){
-						/*
+						
 						var result = JSON.parse( xmlhttp.responseText );
 						
 						fa.innerText = '';
@@ -366,7 +366,7 @@ function finderHelper( keyword ){
 					
 
 							cc.innerHTML = r;
-
+/*
 							var brs = cc.getElementsByClassName('B_RELOAD_RESERVE' )[0];
 							brs.addEventListener('click', 
 								function(e){
@@ -470,10 +470,10 @@ function finderHelper( keyword ){
 									}
 								}					
 							}, false );
+							*/
 
 	
 						}
-						*/
 					} else{
 						console.log( null, 'findChildrenTable:' + xmlhttp.status );
 					}
