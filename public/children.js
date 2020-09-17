@@ -220,10 +220,10 @@ function finderHelper( keyword ){
 
 					if ( xmlhttp.status == 200 ){
 						
-						// var result = JSON.parse( xmlhttp.responseText );
+						var result = JSON.parse( xmlhttp.responseText );
 						
-						fa.innerText = xmlhttp.status + ',' + xmlhttp.responseText;
-						/*
+						fa.innerText = '';
+						
 						for ( var i=0; i<result.length; i++ ){
 							var child_id    = result[i].child_id;
 							var child_name  = result[i].child_name;
@@ -247,9 +247,9 @@ function finderHelper( keyword ){
 							c.style.float           = 'left';
 							var cc = fa.appendChild( c );
 							var cc_width = cc.offsetWidth;
-*/
-/*
-							r = 'hoge';
+
+
+							r = '';
 							r += '<div profeel="yes" style="float:left;width:' + cc_width + 'px;height:86px;overflow:hidden;" >';
 								if ( imagefile != ''){
 									r += '<div style="float:left;width:70px;height:70px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
@@ -272,7 +272,7 @@ function finderHelper( keyword ){
 									r += '<div style="padding:1px;" >id/Range:' + child_id + '/' + range_id + '</div>';
 								r += '</div>';
 							r += '</div>';
-*/
+
 /*
 							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
@@ -330,7 +330,8 @@ function finderHelper( keyword ){
 								r += '</div>';
 								r += '<div class="RESULT_LST" style="padding:1px;width:250px;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
-
+*/
+/*
 							r += '<div class="appendix" style="float:left;width:97%;display:none;" >';
 								r += '<div                     style="padding:1px;font-size:14px;font-weight:bold;" >';
 									r += 'Reserve:';
@@ -360,8 +361,8 @@ function finderHelper( keyword ){
 							r += '</div>';
 							r += '</form>';
 							// r += '</div>';
-							cc.innerHTML = r;
 */
+							cc.innerHTML = r;
 					
 
 /*
@@ -469,9 +470,9 @@ function finderHelper( keyword ){
 								}					
 							}, false );
 							
+							*/
 							
 						}
-						*/
 					} else{
 						console.log( null, 'findChildrenTable:' + xmlhttp.status );
 					}
