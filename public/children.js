@@ -128,8 +128,9 @@ function locateFinder( e ){
 						var result_lst  = c.getElementsByClassName('RESULT_LST')[0];
 						var reserve_lst = c.getElementsByClassName('RESERVE_LST')[0];
 						var child_id = c.getAttribute('child_id');
+						var ym = edit_month.getFullYear() + '/' + ( edit_month.getMonth() + 1 );
 						makeResultList( child_id, result_lst );
-						makeReserveList( child_id, reserve_lst );
+						makeReserveList( ym, child_id, reserve_lst );
 	
 						// 他のチャイルドを非表示
 						// var children = this.childNodes;
@@ -216,6 +217,8 @@ function finderHelper( keyword ){
 					break;
 				case 4://done
 					console.log('status:' + xmlhttp.status );
+
+/*
 					if ( xmlhttp.status == 200 ){
 						var result = JSON.parse( xmlhttp.responseText );
 						
@@ -312,11 +315,8 @@ function finderHelper( keyword ){
 											r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
 											r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:12px;height:21px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:7px 4px 2px 8px;" >' + ( g+1 ) + '</label>';
 										}
-										// r += '<input type="text" name="child_grade0" value="' + child_grade + '" />';
 	
 									r += '</div>';
-									// r += '<div style="clear:both;width:100%;" >';
-									// r += '</div>';
 									r += '<div style="clear:both;width:100%;" >';
 										r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
 									r += '</div>';
@@ -349,8 +349,6 @@ function finderHelper( keyword ){
 								r += '<div class="RESERVE_LST" style="padding:1px;width:99%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
 
-								// r += '<div                    style="padding:1px;font-size:17px;font-weight:bold;" >Reservation:</div>';
-								// r += '<div class="RESERV_LST" style="padding:1px;height:84px;border:1px solid lightgrey;" ></div>';
 							r += '<div class="appendix vh-center" style="padding:10px 1px 1px 1px;width:100%;display:none;" >';
 								r += '<button class="BTN_COMMIT_CHILD" style="border:none;background-color:transparent;" >';
 									r += '<img width="24px" src="./images/check-3.png" />';
@@ -373,31 +371,38 @@ function finderHelper( keyword ){
 							brs.addEventListener('click', 
 								function(e){
 									console.log('reload reserve');
-									var sc = scanChild( e.target );
-									var cid = sc.getAttribute('child_id');
+									var sc 			= scanChild( e.target );
+									var cid 		= sc.getAttribute('child_id');
 									var reserve_lst = sc.getElementsByClassName('RESERVE_LST')[0];
-									makeReserveList( cid, reserve_lst );
+									var ym 			= this.parentNode.getAttribute('edit_month')[0];
+									makeReserveList( ym, cid, reserve_lst );
 								}, false );
 							var prev_month = cc.getElementsByClassName('prev_month')[0];
 							prev_month.addEventListener( 'click', function(e){
-									var em = this.parentNode.getAttribute('edit_month');
-									var oEm = new Date( em + '/1' );
+									var sc 			= scanChild( e.target );
+									var cid 		= sc.getAttribute('child_id');
+									var reserve_lst = sc.getElementsByClassName('RESERVE_LST')[0];
+									var ym 			= this.parentNode.getAttribute('edit_month');
+									var oEm 		= new Date( ym + '/1' );
 									oEm.setMonth( oEm.getMonth() - 1 );
 									this.parentNode.setAttribute('edit_month', oEm.getFullYear() + '/' + ( oEm.getMonth()+1 ) );
-									var sc = scanChild( e.target );
 									sc.getElementsByClassName('reserve_month')[0].innerText =
 										this.parentNode.getAttribute( 'edit_month' );
+									makeReserveList( this.parentNode.getAttribute( 'edit_month' ), cid, reserve_lst );
 
 								}, false );
 							var next_month = cc.getElementsByClassName('next_month')[0];
 							next_month.addEventListener( 'click', function(e){
-									var em = this.parentNode.getAttribute('edit_month');
-									var oEm = new Date( em + '/1' );
+									var sc 			= scanChild( e.target );
+									var cid 		= sc.getAttribute('child_id');
+									var reserve_lst = sc.getElementsByClassName('RESERVE_LST')[0];
+									var ym 			= this.parentNode.getAttribute('edit_month');
+									var oEm = new Date( ym + '/1' );
 									oEm.setMonth( oEm.getMonth() + 1 );
 									this.parentNode.setAttribute('edit_month', oEm.getFullYear() + '/' + ( oEm.getMonth()+1 ) );
-									var sc = scanChild( e.target );
 									sc.getElementsByClassName('reserve_month')[0].innerText =
 										this.parentNode.getAttribute( 'edit_month' );
+									makeReserveList( this.parentNode.getAttribute( 'edit_month' ), cid, reserve_lst );
 
 								}, false );
 	
@@ -471,6 +476,7 @@ function finderHelper( keyword ){
 					} else{
 						console.log( null, 'findChildrenTable:' + xmlhttp.status );
 					}
+*/
 					break;
 			}
 
@@ -544,7 +550,7 @@ function makeResultList( child_id, p ){
 //
 //	リザルト（履歴）リスト取得
 //
-function makeReserveList( child_id, p ){
+function makeReserveList( ym, child_id, p ){
 
 	var range_id = 2020;
 	oReserve.close();
@@ -572,7 +578,7 @@ function makeReserveList( child_id, p ){
 							var ymd = d.getFullYear() + '/' + ( d.getMonth()+1 ) + '/' + d.getDate();
 							am_resv.set( ymd, { 'sott' : rs.sott.substr(0,5), 'eott' : rs.eott.substr(0,5) } );
 						}
-						makeReserveListHelper( child_id, p, am_resv );
+						makeReserveListHelper( ym, child_id, p, am_resv );
 					}
 				break;
 			}
@@ -584,10 +590,11 @@ function makeReserveList( child_id, p ){
 
 }
 
-function makeReserveListHelper( child_id, p, am_resv ){
+function makeReserveListHelper( ym, child_id, p, am_resv ){
 
 	console.log( am_resv );
-	var today = new Date();
+	//	対象月を取得
+	var today = new Date( ym + '/1' );
 	var sotd   = new Date( today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/' + 1 );
 	var curDay = new Date( today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/' + 1 );
 	var curMon = sotd.getMonth();
