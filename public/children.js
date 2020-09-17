@@ -222,7 +222,7 @@ function finderHelper( keyword ){
 						
 						// var result = JSON.parse( xmlhttp.responseText );
 						
-						fa.innerText = xmlhttp.responseText;
+						fa.innerText = xmlhttp.status;
 						/*
 						for ( var i=0; i<result.length; i++ ){
 							var child_id    = result[i].child_id;
