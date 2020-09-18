@@ -409,7 +409,7 @@ function finderHelper( keyword ){
 										r += '<input type="text" name="child_name" style="width:98%;" value="' + child_name  + '" />';
 									r += '</div>';
 									r += '<div style="clear:both;width:100%;" >';
-										r += '<textarea name="remark" style="width:95%;" autocomplete="off" >' + remark + '</textarea>';
+										r += '<textarea name="remark" style="width:90%;" autocomplete="off" >' + remark + '</textarea>';
 									r += '</div>';
 									r += '<div class="vh-center" style="clear:both;width:100%;text-align:center;" >';
 										// r += '<input type="text" name="child_type"  value="' + child_type  + '" /><br/>';
