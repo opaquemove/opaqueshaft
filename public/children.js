@@ -227,6 +227,8 @@ function locateFinder( e ){
 					//	プロフィールエリア内なら
 					if ( isProfeel( e.target )){
 						c.classList.remove('selected');
+						c.classList.remove( 'onProfeel' );
+						c.classList.add( 'offProfeel' );
 						c.removeAttribute('selected');
 						c.style.height = '';
 						var appx = c.getElementsByClassName('appendix');
@@ -238,6 +240,8 @@ function locateFinder( e ){
 				} else{
 					if ( ! lf_moved ){
 						c.classList.add( 'selected' );
+						c.classList.remove( 'offProfeel' );
+						c.classList.add( 'onProfeel' );
 						c.setAttribute( 'selected', 'yes' );
 						c.style.height = '596px';
 						var appx = c.getElementsByClassName('appendix');
@@ -357,7 +361,8 @@ function finderHelper( keyword ){
 							var c = document.createElement('DIV');
 							c.setAttribute("child_id",    child_id );
 							c.setAttribute("id",          "c_1");
-							c.setAttribute("class",       "PALLETE_CHILD");
+							c.classList.add( "PALLETE_CHILD" );
+							c.classList.add( "offProfeel" );
 							c.setAttribute('kana',        kana );
 							c.setAttribute('child_type',  child_type );
 							c.setAttribute('child_grade', child_grade );
@@ -395,13 +400,13 @@ function finderHelper( keyword ){
 
 							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
-								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;border-bottom:1px solid lightgrey;" >Property:</div>';
+								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;" >Profeel:</div>';
 								r += '<div style="width:97%;height:180px;padding:1px;" >';
 									r += '<div style="width:100%;height:24px;padding:4px 0px 2px 0px;" >';
-										r += '<input type="text" name="kana"  style="width:100%;"  value="' + kana        + '" />';
+										r += '<input type="text" name="kana"  style="width:98%;"  value="' + kana        + '" />';
 									r += '</div>';
 									r += '<div style="width:100%;height:24px;padding:2px 0px 2px 0px;" >';
-										r += '<input type="text" name="child_name" style="width:100%;" value="' + child_name  + '" />';
+										r += '<input type="text" name="child_name" style="width:98%;" value="' + child_name  + '" />';
 									r += '</div>';
 									r += '<div style="clear:both;width:100%;" >';
 										r += '<textarea name="remark" style="width:98%;" autocomplete="off" >' + remark + '</textarea>';
@@ -455,14 +460,14 @@ function finderHelper( keyword ){
 								r += '<div                     style="padding:1px;font-size:14px;font-weight:bold;" >';
 									r += 'Reserve:';
 								r += '</div>';
-								r += '<div class="RESERVE_HDR" edit_month="' + edit_month.getFullYear() + '/' + (edit_month.getMonth()+1) + '" style="padding:1px;width:99%;height:14px;background-color:#EDEDED;border:1px solid lightgrey;" >';
+								r += '<div class="RESERVE_HDR" edit_month="' + edit_month.getFullYear() + '/' + (edit_month.getMonth()+1) + '" style="padding:1px;width:99%;height:18px;background-color:#EDEDED;border:1px solid lightgrey;" >';
 									r += '<div class="day_data"  >Day</div>';
 									r += '<div class="sott_data" >Sott</div>';
 									r += '<div class="eott_data" >Eott</div>';
-									r += '<div class="B_RELOAD_RESERVE" style="pointer-events:auto;float:right;width:12px;height:12px;background-image:url(./images/recycle.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-									r += '<div class="next_month"    style="float:right;width:12px;height:12px;background-image:url(./images/next.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-									r += '<div class="prev_month"    style="float:right;width:12px;height:12px;background-image:url(./images/prev.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-									r += '<div class="reserve_month" style="float:right;" >' + edit_month.getFullYear() + '/' + (edit_month.getMonth()+1) + '</div>';
+									r += '<div class="B_RELOAD_RESERVE" style="pointer-events:auto;float:right;width:18px;height:18px;background-image:url(./images/recycle.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+									r += '<div class="next_month"    style="float:right;width:18px;height:18px;background-image:url(./images/next.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+									r += '<div class="prev_month"    style="float:right;width:18px;height:18px;background-image:url(./images/prev.png);background-size:10px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+									r += '<div class="reserve_month" >' + edit_month.getFullYear() + '/' + (edit_month.getMonth()+1) + '</div>';
 								r += '</div>';
 								r += '<div class="RESERVE_LST" style="padding:1px;width:99%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
@@ -725,7 +730,7 @@ function makeReserveListHelper( ym, child_id, p, am_resv ){
 			sott = resv.sott;
 			eott = resv.eott;
 		}
-		r += '<div day="' + d + '" style="clear:both;width:100%;height:16px;border-bottom:1px solid lightgrey;" >';
+		r += '<div day="' + d + '" style="clear:both;width:100%;height:18px;border-bottom:1px solid lightgrey;" >';
 			r += '<div class="day_data"   >' + d    + '</div>';
 			r += '<div class="sott_data"  >' + sott + '</div>';
 			r += '<div class="eott_data"  >' + eott + '</div>';
