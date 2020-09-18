@@ -61,7 +61,7 @@ function initModalDialog(){
 //
 function openModalDialog( title, r , option, proc, dialog_size ){
 	// タイムセレクタを非表示
-	palleteTimeSelector.close();
+	try { palleteTimeSelector.close(); } catch(e){;}
 	var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 

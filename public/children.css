@@ -89,6 +89,7 @@ BUTTON:focus{
 	color:					gray;
 	background-color:		white;
 	overflow:				visible;
+	visibility: 			hidden;
 }
 #OPAQUESHAFT_TITLE{
 	pointer-events:			none;
@@ -127,6 +128,7 @@ BUTTON:focus{
 	background-color:		white;
 	overflow:				hidden;
 	opacity:				0.9;
+	visibility: 			hidden;
 }
 #TOOLBAR2{
 	width:					262px;
@@ -149,6 +151,7 @@ BUTTON:focus{
 	font-size:				12px;
 	opacity:				0.9;
 	overflow:				scroll;
+	visibility: 			hidden;
 }
 
 .CHILD_NAME{

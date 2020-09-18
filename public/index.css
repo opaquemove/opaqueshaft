@@ -318,17 +318,6 @@ INPUT[type=password]:focus{
 	margin:					1px;
 }
 
-#OPAQUESHAFT_DIALOG_TITLE{
-	float:					left;
-	height:					21px;
-	color:					whitesmoke;
-	font-size:				12px;
-	border-left:			10px solid red;
-	border-right:			1px solid lightgrey;
-	border-radius: 			8px 0px 0px 0px;
-	padding-top:			8px;
-	padding-right:			8px;
-}
 
 
 #OPAQUESHAFT_LOGINTITLE{

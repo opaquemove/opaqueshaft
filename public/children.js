@@ -70,14 +70,133 @@ function init(){
 	oLog.log( null, 'initialized.');
 	oLog.open( 2 );
 
+
 	// signin
 	if ( ! checkSign() ){
-
+		ctlToolbar();
+		oLog.log( null, 'not signin.');
+		oLog.open( 3 );
 	}else{
-
+		ctlToolbar();
 	}
 
 }
+
+
+//
+//	サインイン・アウト時のUIデザイン
+//
+function ctlToolbar(){
+	if ( checkSign() ) {
+		ctlToolbarHelper( 'visible' );
+	} else {
+		ctlToolbarHelper( 'hidden' );
+		signForm();
+	}
+}
+
+function ctlToolbarHelper( flg ){
+	console.log( flg );
+	var header 	= document.getElementById('HEADER');
+	var toolbar	= document.getElementById('TOOLBAR');
+	var finder	= document.getElementById('FINDER_AREA');
+
+	header.style.visibility		= flg;
+	toolbar.style.visibility	= flg;
+	finder.style.visibility		= flg;
+}
+
+//
+//	サインインフォーム
+//
+function signForm()
+{
+	
+	var r = "";	
+	r += "<div style='width:350px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
+		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign in to your account</div>";
+		r += "<div style='margin:10px auto;width:210px;' >";
+			r += "<form name='sign_form' onsubmit='return false;' >";
+			r += "<div>ID:</div>";
+			r += "<div><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
+			r += "<div style='padding-top:20px;' >Password:</div>";
+			r += "<div><input style='width:200px;height:18px;' type='password' name='pwd' tabindex=2 /></div>";
+			r += "<div style='padding-top:20px;text-align:center;' >";
+				r += "<button style='background-color:transparent;border:none;' onclick='sign()' ><img width='50px;' src='/images/arrow-right.png' ></button>";
+			r += "</div>";
+			r += "</form>";
+		r += "</div>";
+	r += "</div>";
+
+	neverCloseDialog = true;
+	openModalDialog( null, r, 'NOBUTTON', null, 'SIGNIN' );
+	o = document.getElementById( 'acc_id' );
+	o.focus();
+	
+}
+//
+//	サイン処理
+//
+function sign()
+{
+	var r = "";
+	var xmlhttp = new XMLHttpRequest();
+
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+				break;
+			case 2://header received
+				break;
+			case 3://loading
+				oLog.log( null, 'signin...' );
+				oLog.open( 3 );
+				break;
+			case 4://done
+				r = '';
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					switch( result.cmd ){
+						case 'signin':
+							if ( result.status == 'SUCCESS' ){
+								oLog.log( null, 'signin ok.' );
+								oLog.open( 3 );
+								acc_id = result.acc_id;
+								// procedure
+								neverCloseDialog = false;
+								closeModalDialog();
+								ctlToolbar();
+
+							} else {
+								oLog.log( null, 'signin error.' );
+								oLog.open( 3 );
+							}
+							break;
+						default:
+							oLog.log( null, 'sign:cmd:' + result );
+							oLog.open( 3 );
+							break;
+					}
+				} else{
+					alert( xmlhttp.status );
+				}
+				break;
+		}
+	}
+
+	try{
+		var sign_id = sign_form.id.value;
+		var sign_pwd = sign_form.pwd.value;
+		xmlhttp.open("POST", "/accounts/signin", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( "acc=" + sign_id + "&pwd=" + sign_pwd );
+	} catch ( e ) {
+		oLog.log( null, 'sign:e:' + e );
+		oLog.open( 3 );
+	}
+}
+
+
 
 var lf_moved	= false;
 function locateFinder( e ){
