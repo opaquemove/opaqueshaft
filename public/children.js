@@ -1,5 +1,7 @@
 window.onload = init;
 window.onresize = fitting;
+window.onorientationchange = fitting;
+
 
 var w_whiteboard    = null;
 var w_child			= null;
@@ -78,6 +80,11 @@ function init(){
 		oLog.open( 3 );
 	}else{
 		ctlToolbar();
+		var ss = document.getElementById('SIGNIN_STATUS');
+		ss.innerText = isSignId();
+		var oAcc = getAccount( isSignId() );
+		var rs = document.getElementById('RANGE_STATUS');
+		rs.innerText = oAcc.range_id;
 	}
 
 }

@@ -28,6 +28,23 @@ function isSignId(){
 	return acc_id;
 }
 
+
+//
+//	アカウント情報を取得
+//
+function getAccount( id ){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/accounts/property", false );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'acc=' + id );
+	if ( xmlhttp.status == 200 ){
+		//alert( xmlhttp.responseText );
+		var result = JSON.parse( xmlhttp.responseText );
+		return ( result != null )? result:null;	
+	} else return null;
+
+}
+
 //
 //  モーダルダイアログを準備
 //

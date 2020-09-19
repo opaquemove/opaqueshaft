@@ -2570,6 +2570,7 @@ function markPalleteChild( e ){
 //	セレクトしたチャイルドをホワイトボードにチェックイン
 //
 function checkinSelectedChild( hm ){
+	console.log( 'checkinSelectedChild(' + hm + ')');
 	// var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT').childNodes;
 	var ffct2 = null;
 	if ( document.getElementById('FOLDER_FIND_CHILDREN_TABLE2') != null )
@@ -2582,34 +2583,6 @@ function checkinSelectedChild( hm ){
 	console.log( 'top:' + top + ' left:' + left );
 	var cursor	= 0;
 
-	// CHILDREN_PALLETE
-/*	
-	for ( var i=0; i<cpc.length; i++ ){
-		var c = cpc[i];
-		if ( c.hasAttribute('selected') ){
-			var id = c.getAttribute('child_id');
-			var child_name	= c.getElementsByClassName('CHILD_NAME')[0].innerText;
-			var kana		= c.getAttribute('kana');
-			var child_type	= c.getAttribute('child_type');
-			var child_grade	= c.getAttribute('child_grade');
-			if ( alreadyExistChildOnWhiteboard( id ) ){
-				c.classList.remove('selected');
-				c.removeAttribute('selected');
-				// c.style.color = '';
-				// c.style.backgroundColor = '';	
-				oLog.log( null, child_name + ' : すでにホワイトボードに配置されています.');
-				oLog.open( 3 );
-				continue;
-			} 
-			addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, null, false, false, false );
-			cursor++;
-			c.classList.remove('selected');
-			// c.style.color = '';
-			// c.style.backgroundColor = '';
-			c.removeAttribute('selected');
-		}
-	}
-*/
 
 	// FOLDER_FIND_CHILDREN_TABLE2
 	if ( ffct2 != null ){

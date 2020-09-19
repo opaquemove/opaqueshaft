@@ -287,7 +287,7 @@ function reportWhiteboardDetail(){
                     direction += '<img width="10px" src="./images/next.png" />';
                     break;
                 default:
-                    direction += '&nbsp;'
+                    direction += '&nbsp;';
                     break;
             }
             var escort      = '';
@@ -598,9 +598,14 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     if ( remark == null ) remark = '';
     c.setAttribute('remark', encodeURIComponent( remark ) );
 
-    c.style.position    = 'absolute;'
-    if ( top == '' || top == null ) top = pixelPerHour * ( 12 - 8 );
+    console.log('before addChild(top,left)=' + top + ',' + left );
+
+    c.style.position    = 'absolute';
+    if ( top === '' || top  == null ) top = pixelPerHour * ( 12 - 8 );
     if ( left == '' || left == null ) left = 42; 
+
+    console.log('before2 addChild(top,left)=' + top + ',' + left );
+
     c.style.top         = top + 'px';
     if ( ( left + '' ).indexOf( '%', 0 ) > -1 )
         c.style.left    = left;
@@ -608,6 +613,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
         c.style.left    = left + 'px';
     // c.style.borderRight = arChildGrade[ child_grade ];
 
+    console.log('addChild(top,left)=' + c.style.top + ',' + c.style.left );
 
     var r = '';
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
@@ -682,7 +688,7 @@ function addChildManage( oParent, oChild ){
     // c.style.position    = 'relative';
 //    c.style.height      = '30px';
     c.style.clear       = 'both';
-    // c.style.borderBottom= '1px solid lightgrey;'
+    // c.style.borderBottom= '1px solid lightgrey';
     // c.style.borderRight = arChildGrade[ oChild.child_grade ];
     c.style.float       ='left';
     var r = '';
@@ -1064,7 +1070,7 @@ function makeDeleteChildList(){
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         var o = document.createElement('DIV');
-        o.style.borderBottom    = '1px solid lightgrey;'
+        o.style.borderBottom    = '1px solid lightgrey';
         o.style.height          = '20px';
         o.innerText = c.getElementsByClassName('CHILD_NAME')[0].innerText;
         lst.appendChild( o );
@@ -1452,7 +1458,7 @@ function checkoutChild( c, operator, co_time, direction ){
             break;
     }
 
-    c.style.transformOrigin     = 'top left;'
+    c.style.transformOrigin     = 'top left';
     c.style.transform           = 'rotate(-45deg)';
 
     updateFlg   = true;
@@ -1683,7 +1689,7 @@ function checkoutClearChild( c ){
     df.style.backgroundRepeat   = '';
     df.style.backgroundSize     = '';
 
-    c.style.transformOrigin     = 'top left;'
+    c.style.transformOrigin     = 'top left';
     c.style.transform           = 'rotate(0deg)';
 
     updateFlg   = true;
@@ -1712,7 +1718,7 @@ function absentChild(){
         // c.style.backgroundSize      = '20px';
         // c.style.backgroundPosition  = 'right center';
         // c.style.backgroundRepeat    = 'no-repeat';
-        // c.style.transformOrigin     = 'top left;'
+        // c.style.transformOrigin     = 'top left';
         // c.style.transform           = 'rotate(-45deg)';
     
         abs.appendChild( c );
@@ -1725,7 +1731,7 @@ function absentChildHelper( c ){
     c.style.backgroundSize      = '20px';
     c.style.backgroundPosition  = 'right center';
     c.style.backgroundRepeat    = 'no-repeat';
-    c.style.transformOrigin     = 'top left;'
+    c.style.transformOrigin     = 'top left';
     c.style.transform           = 'rotate(-45deg)';
 
 }
@@ -1796,19 +1802,4 @@ function propertyAccount(){
 }
 
 
-//
-//	アカウント情報を取得
-//
-function getAccount( id ){
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "/accounts/property", false );
-	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send( 'acc=' + id );
-	if ( xmlhttp.status == 200 ){
-		//alert( xmlhttp.responseText );
-		var result = JSON.parse( xmlhttp.responseText );
-		return ( result != null )? result:null;	
-	} else return null;
-
-}
 
