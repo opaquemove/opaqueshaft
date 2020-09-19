@@ -447,7 +447,7 @@ function finderHelper( keyword ){
 							
 							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
 								r += '<div                    style="padding:1px;font-size:14px;font-weight:bold;" >Result:</div>';
-								r += '<div class="RESULT_HDR" style="padding:1px;width:250px;height:14px;background-color:#EDEDED;border:1px solid lightgrey;" >';
+								r += '<div class="RESULT_HDR" style="padding:1px;width:250px;height:18px;background-color:#EDEDED;border:1px solid lightgrey;" >';
 										r += '<div class="day_data" >Day</div>';
 										r += '<div class="estimate_data" >Est</div>';
 										r += '<div class="remark_data" >Remark</div>';

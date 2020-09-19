@@ -176,7 +176,7 @@ BUTTON:focus{
 }
 
 .PALLETE_CHILD{
-	width:					256px;
+	width:					280px;
 	height:					80px;
 	/* display:				flex;
 	flex-direction: 		row;
@@ -204,7 +204,7 @@ BUTTON:focus{
 
 .day_data{
 	float:					left;
-	width:					70px;
+	width:					80px;
 	font-size:				14px;
 }
 .sott_data{

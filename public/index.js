@@ -55,6 +55,7 @@ var oReportDlg			= null;
 
 window.onload = init;
 window.onresize = fitting;
+window.onorientationchange = fitting;
 
 //
 //	初期化処理
