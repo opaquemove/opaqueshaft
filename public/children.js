@@ -9,6 +9,7 @@ var w_child			= null;
 var oReserve		= null;
 var oLog			= null;
 
+var cur_range_id	= 0;
 var edit_month		= null;
 
 
@@ -48,6 +49,10 @@ function init(){
 	//モーダルダイアログ初期化
 	initModalDialog();
 
+	document.getElementById('ADD_CHILD').addEventListener( 'click',
+		function(e){
+			newChildForm();
+		}, false );
 
 	fitting();
 	
@@ -85,6 +90,7 @@ function init(){
 		var oAcc = getAccount( isSignId() );
 		var rs = document.getElementById('RANGE_STATUS');
 		rs.innerText = oAcc.range_id;
+		cur_range_id = oAcc.range_id;
 	}
 
 }
@@ -680,7 +686,7 @@ function makeResultList( child_id, p ){
 //
 function makeReserveList( ym, child_id, p ){
 
-	var range_id = 2020;
+	var range_id = cur_range_id;
 	oReserve.close();
 
 	var r = '';
@@ -813,43 +819,70 @@ function updateChild( child_id, child_name, kana, remark, child_grade, child_typ
 //
 function newChildForm(){
 	var r = '';
-	r += makeChildForm( null );
-	openModalDialog( null, r, 'NOBUTTON', null, null );
+	r += makeChildForm();
+	openModalDialog( null, r, 'OK_CANCEL', newChildSend, null );
 }
 
 //
 //	チャイルドフォームの生成
 //
-function makeChildForm( oChild ){
-	var id    = null;
-	var name  = '';
-	var type  = '';
-	var grade = '';
-	if ( oChild != null ) {
-		id = oChild.child_id;
-		name = oChild.child_name;
-		type = oChild.child_type;
-		grade = oChild.child_grade;
-	}
+function makeChildForm( ){
+	var id  			= null;
+	var kana			= '';
+	var child_name 		= '';
+	var child_type  	= 'A';
+	var child_grade 	= '1';
+	var range_id		= cur_range_id;
 	var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >Child</div>';
-	r += '<div style="margin:0 auto;width:110px;">';
-		r += '<form name="child_form" onsubmit="return false;" >';
-		if ( id != null ){
-			r += '<input type="hidden" name="child_id" value="' + id + '"  />';
-		}
-//		r += '<div>id:</div>';
-//		r += '<div><input type="text" name="child_id"    value="' + id    + '" readonly /></div>';
+	r += '<div style="margin:0 auto;width:180px;">';
+		r += '<form name="childprop_form" onsubmit="return false;" >';
+		r += '<div>kana:</div>';
+		r += '<div><input type="text" id="f_kana"       name="kana"        value="' + kana  + '" autocomplete="off" /></div>';
 		r += '<div>name:</div>';
-		r += '<div><input type="text" name="child_name"  value="' + name  + '" /></div>';
-		r += '<div>type:</div>';
-		r += '<div><input type="text" name="child_type"  value="' + type  + '" /></div>';
-		r += '<div>grade:</div>';
-		r += '<div><input type="text" name="child_grade" value="' + grade + '" /></div>';
+		r += '<div><input type="text" id="f_child_name" name="child_name"  value="' + child_name  + '" autocomplete="off" /></div>';
+		r += '<div>type/grade:</div>';
+		// r += '<div><input type="text" name="child_type"  value="' + type  + '" /></div>';
+		// r += '<div>grade:</div>';
+		// r += '<div><input type="text" name="child_grade" value="' + grade + '" /></div>';
+
+		r += '<div class="vh-center" style="clear:both;width:100%;text-align:center;" >';
+		switch ( child_type ){
+			case 'A':
+				var a = ' checked ';
+				var b = ' ';
+				break;
+			default:
+				var a = '  ';
+				var b = ' checked ';
+				break;
+		}
+		r += '<input type="radio" id="child_type_a" name="child_type" value="A" ' + a + '/>';
+		r += '<label for="child_type_a"  style="display:block;float:left;width:15px;height:21px;font-size:10px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 1px 5px;" >A</label>';
+		r += '&nbsp;'
+		r += '<input type="radio" id="child_type_b" name="child_type" value="B" ' + b + '/>';
+		r += '<label for="child_type_b"  style="display:block;float:left;width:15px;height:21px;font-size:10px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 1px 5px;" >B</label>';
+
+		r += '<img width="14px" src="./images/minus-3.png" />';
+
+		var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
+		grades[ child_grade - 1 ] = ' checked ';
+		for ( var g=0; g<grades.length; g++ ){
+			r += '<input type="radio" id="child_grade_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
+			r += '<label for="child_grade_' + g + '"  style="display:block;float:left;width:12px;height:21px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:7px 4px 2px 8px;" >' + ( g+1 ) + '</label>';
+		}
+
+	r += '</div>';
+
+		r += '<div>remark:</div>';
+		r += '<div><textarea name="remark" resize="none"  ></textarea></div>';
 		r += '</form>';
-		r += '<div style="padding-top:10px;" >';
-			r += "<button type='button' onclick='newChildSend()' >next...</button>";
-		r += '</div>';	
+		r += '<div>range:</div>';
+		r += '<div><input type="text" name="range_id"    value="' + range_id + '" readonly /></div>';
+		r += '</form>';
+		// r += '<div style="padding-top:10px;" >';
+		// 	r += "<button type='button' onclick='newChildSend()' >next...</button>";
+		// r += '</div>';	
 	r += '</div>';
 	return r;
 
@@ -859,26 +892,46 @@ function makeChildForm( oChild ){
 //	チャイルド情報を送信
 //
 function newChildSend(){
-	var result = newChildSendHelper();
-	oLog.log( null, 'newChildSend : ' + result );
-	// alert( result );
+	var kana        = childprop_form.kana.value;
+	var child_name  = childprop_form.child_name.value;
+	if ( kana =='' ){
+		oLog.log( null, 'カナを入力してください.' );
+		oLog.open( 3 );
+		return;
+	} ;
+	if ( child_name =='' ){
+		oLog.log( null, '名前を入力してください.' );
+		oLog.open( 3 );
+		return;
+	} ;
+
+	if ( newChildSendHelper() ){
+		oLog.log( null, 'add child : SUCCESS' );
+		closeModalDialog();
+	} else{
+		oLog.log( null, 'add child : FAILED' );
+	}
+	oLog.open( 3 );
 }
 
 //
 //	チャイルドの登録（REST)
 //
 function newChildSendHelper(){
-	var name  = child_form.child_name.value;
-	var grade = child_form.child_grade.value;
-	var type  = child_form.child_type.value;
+	var kana  		= childprop_form.kana.value;
+	var child_name  = childprop_form.child_name.value;
+	var child_grade = childprop_form.child_grade.value;
+	var child_type  = childprop_form.child_type.value;
+	var range_id	= childprop_form.range_id.value;
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/childadd", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send( 'child_name=' + name + '&child_grade=' + grade + '&child_type=' + type );
+	xmlhttp.send( 'child_name=' + child_name + '&kana=' +  kana + '&child_grade=' + child_grade + '&child_type=' + child_type + '&range_id=' + range_id );
 	if ( xmlhttp.status == 200 ){
 		var result = JSON.parse( xmlhttp.responseText );
-		return ( result != null )? result:null;	
-	} else return null;
+		if ( result == null ) return false;
+		return ( result.status == 'SUCCESS' );
+	} else return false;
 
 }
 

@@ -144,14 +144,17 @@ router.post('/child', function(req, res, next ){
 //  チャイルド追加
 //
 router.post('/childadd', function(req, res, next ){
-    var name  = req.body.child_name;
-    var grade = req.body.child_grade;
-    var type  = req.body.child_type;
+    var name      = req.body.child_name;
+    var kana      = req.body.kana;
+    var grade     = req.body.child_grade;
+    var type      = req.body.child_type;
+    var remark    = req.body.remark;
+    var range_id  = req.body.range_id;
     console.log('childadd:' + name );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
-        text: 'INSERT INTO children (child_name,child_grade,child_type) VALUES($1,$2,$3)',
-        values: [ name,grade,type ] } )
+        text: 'INSERT INTO children (child_name,kana,child_grade,child_type,remark,range_id) VALUES($1,$2,$3,$4,$5,$6)',
+        values: [ name,kana,grade,type,remark,range_id ] } )
       .then( function() {
         res.json( {status: 'SUCCESS', message:  'add child'});
       });
@@ -323,7 +326,7 @@ router.post('/resultadd', function(req, res, next ){
     console.log('direction:' + direction );   // none,left,right
     console.log('absent:' + absent );          // 0: alive, 1:absent
 
-    var sql = "insert into results( acc_id, day, child_id, child_name, child_grade,child_type, checkin, estimate, checkout, escort, direction, absent, lastupdate ) select $1 acc_id, $2, child_id,child_name,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, $8 absent, now() lastupdate from children where child_id = $9";
+    var sql = "insert into results( acc_id, day, child_id, child_name, kana, child_grade,child_type, checkin, estimate, checkout, escort, direction, absent, lastupdate ) select $1 acc_id, $2, child_id,child_name,kana,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, $8 absent, now() lastupdate from children where child_id = $9";
     console.log( 'sql:' + sql );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
@@ -374,7 +377,7 @@ router.post('/resultwhiteboard', function(req, res, next ){
   var day    = req.body.day;
   res.header('Content-Type', 'application/json;charset=utf-8');
   db.any( {
-      text: 'SELECT r.*, c.child_name, c.kana, c.child_type, c.child_grade, c.imagefile FROM results r INNER JOIN children c ON c.child_id = r.child_id WHERE r.day = $1',
+      text: 'SELECT r.*, c.kana, c.imagefile FROM results r INNER JOIN children c ON c.child_id = r.child_id WHERE r.day = $1',
       values: [ day ] } )
     .then( rows => {
           res.json( rows );
