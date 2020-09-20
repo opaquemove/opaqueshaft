@@ -1324,6 +1324,8 @@ function getJSONChildren(){
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
 		var child_id	= c.getAttribute('child_id');
+		var kana		= c.getAttribute('kana');
+		var child_name	= c.getElementsByClassName('CHILD_NAME')[0].innerText;
 		var coordi_top	= c.offsetTop;
 		// var coordi_left	= c.offsetLeft;
 		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
@@ -1935,6 +1937,7 @@ function showToolbar(){
 	// var is		= document.getElementById('ID_SEARCH');
 	// var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
+	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_NO_ESCORT');
 	var ime  	= document.getElementById('ID_MODE_ESCORT');
@@ -1946,6 +1949,7 @@ function showToolbar(){
 	// is.style.visibility		= 'visible';
 	// ic.style.visibility		= 'visible';
 	tlb.style.visibility	= 'visible';
+	tlba.style.visibility	= 'visible';
 	psb.style.visibility	= 'visible';
 	imne.style.visibility	= 'visible';
 	ime.style.visibility	= 'visible';
@@ -1963,6 +1967,7 @@ function hideToolbar(){
 	// var is		= document.getElementById('ID_SEARCH');
 	// var ic		= document.getElementById('ID_CHILDREN');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
+	var tlba		= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_NO_ESCORT');
 	var ime  	= document.getElementById('ID_MODE_ESCORT');
@@ -1974,6 +1979,7 @@ function hideToolbar(){
 	// is.style.visibility		= 'hidden';
 	// ic.style.visibility		= 'hidden';
 	tlb.style.visibility	= 'hidden';
+	tlba.style.visibility	= 'hidden';
 	psb.style.visibility	= 'hidden';
 	imne.style.visibility	= 'hidden';
 	ime.style.visibility	= 'hidden';

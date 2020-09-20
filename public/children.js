@@ -91,6 +91,7 @@ function init(){
 		var rs = document.getElementById('RANGE_STATUS');
 		rs.innerText = oAcc.range_id;
 		cur_range_id = oAcc.range_id;
+		rs.addEventListener( 'click', scheduler, false );
 	}
 
 }
@@ -821,6 +822,7 @@ function newChildForm(){
 	var r = '';
 	r += makeChildForm();
 	openModalDialog( null, r, 'OK_CANCEL', newChildSend, null );
+	childprop_form.kana.focus();
 }
 
 //
@@ -876,7 +878,6 @@ function makeChildForm( ){
 
 		r += '<div>remark:</div>';
 		r += '<div><textarea name="remark" resize="none"  ></textarea></div>';
-		r += '</form>';
 		r += '<div>range:</div>';
 		r += '<div><input type="text" name="range_id"    value="' + range_id + '" readonly /></div>';
 		r += '</form>';
@@ -922,11 +923,12 @@ function newChildSendHelper(){
 	var child_name  = childprop_form.child_name.value;
 	var child_grade = childprop_form.child_grade.value;
 	var child_type  = childprop_form.child_type.value;
+	var remark		= encodeURIComponent( childprop_form.remark.value );
 	var range_id	= childprop_form.range_id.value;
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "/accounts/childadd", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send( 'child_name=' + child_name + '&kana=' +  kana + '&child_grade=' + child_grade + '&child_type=' + child_type + '&range_id=' + range_id );
+	xmlhttp.send( 'child_name=' + child_name + '&kana=' +  kana + '&remark=' + remark + '&child_grade=' + child_grade + '&child_type=' + child_type + '&range_id=' + range_id );
 	if ( xmlhttp.status == 200 ){
 		var result = JSON.parse( xmlhttp.responseText );
 		if ( result == null ) return false;
@@ -1286,3 +1288,24 @@ reserveSelector.prototype = {
 	}
 };
 
+//
+//	スケジューラ関連
+//
+function scheduler( e ){
+	var fa = document.getElementById('FINDER_AREA');
+	switch ( fa.style.display ){
+		case 'flex':
+			fa.style.display		= '';
+			fa.style.flexWrap		= '';
+			fa.style.flexDirection	= '';
+			break;
+		default:
+			fa.style.display		= 'flex';
+			fa.style.flexWrap		= 'nowrap';
+			fa.style.flexDirection	= 'column';
+			break;
+	}
+	// fa.innerHTML = '';
+
+
+}
