@@ -186,8 +186,7 @@ BUTTON:focus{
 	font-size:				10px;
 }
 
-
-#FINDER_AREA{
+#FINDER_FRAME{
 	position:				absolute;
 	top:					76px;
 	left:					0px;
@@ -204,6 +203,26 @@ BUTTON:focus{
 	align-content: 			flex-start; */
 	visibility: 			hidden;
 }
+#FINDER_AREA{
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					100%;
+	height:					100%;
+	color:					gray;
+	/* overflow:				scroll; */
+	visibility: 			hidden;
+}
+#FINDER_DETAIL{
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					100%;
+	height:					100%;
+	color:					gray;
+	/* overflow:				scroll; */
+	display:	 			none;
+}
 
 .CHILD_NAME{
 	font-weight: 			bold;
@@ -211,7 +230,7 @@ BUTTON:focus{
 
 .PALLETE_CHILD{
 	width:					280px;
-	height:					80px;
+	height:					82px;
 	/* display:				flex;
 	flex-direction: 		row;
 	justify-content: 		center;
@@ -219,9 +238,26 @@ BUTTON:focus{
 
 	color:					gray;
 	background-color:		white;
-	padding-top:			4px;
-	margin-bottom:			1px;
+	overflow: 				hidden;
+	padding:				2px;
+	margin:					1px;
 	font-size:				12px;
+	border-radius: 			4px;
+	-webkit-user-select: 	none;
+}
+.schedule_detail{
+	width:					100%;
+	height:					82px;
+	display:				flex;
+	flex-direction: 		row;
+	flex-wrap: 				nowrap;
+	justify-content:		flex-start;		
+	/* align-items */
+	color:					gray;
+	background-color:		white;
+	overflow: 			hidden;
+	padding:				2px;
+	margin:					1px;
 	border-radius: 			4px;
 	-webkit-user-select: 	none;
 }

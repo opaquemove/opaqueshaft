@@ -111,13 +111,15 @@ function ctlToolbar(){
 
 function ctlToolbarHelper( flg ){
 	console.log( flg );
-	var header 	= document.getElementById('HEADER');
-	var toolbar	= document.getElementById('TOOLBAR');
-	var finder	= document.getElementById('FINDER_AREA');
+	var header 			= document.getElementById('HEADER');
+	var toolbar			= document.getElementById('TOOLBAR');
+	var finder_frame	= document.getElementById('FINDER_FRAME');
+	var finder			= document.getElementById('FINDER_AREA');
 
-	header.style.visibility		= flg;
-	toolbar.style.visibility	= flg;
-	finder.style.visibility		= flg;
+	header.style.visibility				= flg;
+	toolbar.style.visibility			= flg;
+	finder_frame.style.visibility		= flg;
+	finder.style.visibility				= flg;
 }
 
 //
@@ -380,8 +382,8 @@ function finderHelper( keyword ){
 							c.setAttribute('kana',        kana );
 							c.setAttribute('child_type',  child_type );
 							c.setAttribute('child_grade', child_grade );
-							c.style.margin	        = '1px';
-							c.style.padding			= '2px';
+							// c.style.margin	        = '1px';
+							// c.style.padding			= '2px';
 							c.style.float           = 'left';
 							var cc = fa.appendChild( c );
 							var cc_width = cc.offsetWidth;
@@ -1292,20 +1294,54 @@ reserveSelector.prototype = {
 //	スケジューラ関連
 //
 function scheduler( e ){
+	var fd = document.getElementById('FINDER_DETAIL')
 	var fa = document.getElementById('FINDER_AREA');
-	switch ( fa.style.display ){
-		case 'flex':
+	switch ( fd.style.display ){
+		case 'inline':
+			fa.style.width			= '';
 			fa.style.display		= '';
 			fa.style.flexWrap		= '';
 			fa.style.flexDirection	= '';
+			fd.style.width			= '';
+			fd.style.left			= '';
+			fd.style.display		= '';
 			break;
 		default:
-			fa.style.display		= 'flex';
-			fa.style.flexWrap		= 'nowrap';
-			fa.style.flexDirection	= 'column';
+			fa.style.width			= '286px';
+			// fa.style.display		= 'flex';
+			// fa.style.flexWrap		= 'nowrap';
+			// fa.style.flexDirection	= 'column';
+			fd.style.width			= 'calc(100%-286px)';
+			fd.style.left			= '286px';
+			fd.style.display		= 'inline';
+			details();
 			break;
 	}
-	// fa.innerHTML = '';
+	
+}
 
+function details(){
+	var fd = document.getElementById('FINDER_DETAIL')
+	var fa = document.getElementById('FINDER_AREA');
+
+	while ( fd.firstChild ){
+		fd.removeChild( fd.firstChild );
+	}
+
+	var children = fa.childNodes;
+	for ( var i=0; i<children.length; i++){
+		var c = children[i];
+		var o = document.createElement( 'DIV' );
+		o.classList.add( 'schedule_detail');
+		var d = fd.appendChild( o );
+		for ( var j=0; j<31; j++ ){
+			var dd = document.createElement('DIV');
+			dd.style.borderRight 	= '1px solid lightgrey';
+			dd.style.width			= 'calc(100%/21)';
+			dd.style.height			= '100%';
+			dd.innerText			= j+1;
+			d.appendChild( dd );
+		}
+	}
 
 }
