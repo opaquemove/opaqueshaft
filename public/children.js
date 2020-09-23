@@ -54,6 +54,9 @@ function init(){
 			newChildForm();
 		}, false );
 
+	var sm = document.getElementById('SCHEDULE_MONTH');
+	sm.innerText = edit_month.getFullYear() + '/' + ( edit_month.getMonth() + 1);
+
 	fitting();
 	
 	child_form.keyword.focus();
@@ -390,17 +393,17 @@ function finderHelper( keyword ){
 
 
 							r = '';
-							r += '<div profeel="yes" style="float:left;width:' + cc_width + 'px;height:86px;overflow:hidden;" >';
+							r += '<div profeel="yes" style="float:left;width:' + cc_width + 'px;height:140px;overflow:hidden;" >';
 								if ( imagefile != ''){
-									r += '<div style="float:left;width:70px;height:70px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="float:left;width:60px;height:60px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp;';
 									r += '</div>';
 								} else{
-									r += '<div style="float:left;width:70px;height:70px;color:black;font-size:8px;opacity:0.3;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="float:left;width:60px;height:60px;color:black;font-size:8px;opacity:0.3;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp';
 									r += '</div>';
 								}
-								r += '<div style="float:right;width:168px;height:168px;" >';
+								r += '<div style="float:right;width:94px;height:168px;" >';
 									r += '<div class="CHILD_NAME" style="font-size:16px;padding-left:2px;">';
 										r += child_name;
 									r += '</div>';
@@ -1296,6 +1299,8 @@ reserveSelector.prototype = {
 function scheduler( e ){
 	var fd = document.getElementById('FINDER_DETAIL')
 	var fa = document.getElementById('FINDER_AREA');
+	var w = document.body.clientWidth;
+
 	switch ( fd.style.display ){
 		case 'inline':
 			fa.style.width			= '';
@@ -1307,12 +1312,12 @@ function scheduler( e ){
 			fd.style.display		= '';
 			break;
 		default:
-			fa.style.width			= '286px';
+			fa.style.width			= '186px';
 			// fa.style.display		= 'flex';
 			// fa.style.flexWrap		= 'nowrap';
 			// fa.style.flexDirection	= 'column';
-			fd.style.width			= 'calc(100%-286px)';
-			fd.style.left			= '286px';
+			fd.style.width			= ( w - fa.offsetWidth ) + 'px';
+			fd.style.left			= '186px';
 			fd.style.display		= 'inline';
 			details();
 			break;
@@ -1329,18 +1334,22 @@ function details(){
 	}
 
 	var children = fa.childNodes;
+	var week = ['S','M','T','W','T','F','S'];
 	for ( var i=0; i<children.length; i++){
 		var c = children[i];
 		var o = document.createElement( 'DIV' );
 		o.classList.add( 'schedule_detail');
 		var d = fd.appendChild( o );
-		for ( var j=0; j<31; j++ ){
+		var dy = new Date( edit_month.getFullYear() + '/' + ( edit_month.getMonth()+1 ) + '/1' ) ;
+		var m = dy.getMonth();
+		while ( m == dy.getMonth() ){
 			var dd = document.createElement('DIV');
 			dd.style.borderRight 	= '1px solid lightgrey';
-			dd.style.width			= 'calc(100%/21)';
+			dd.style.width			= '10px';
 			dd.style.height			= '100%';
-			dd.innerText			= j+1;
+			dd.innerHTML			= dy.getDate() + '<br/>' + week[dy.getDay()];
 			d.appendChild( dd );
+			dy.setDate( dy.getDate() + 1 );
 		}
 	}
 
