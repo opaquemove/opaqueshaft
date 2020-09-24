@@ -438,7 +438,7 @@ router.post('/reservedelete', function(req, res, next ){
     });
 });
 
-//  リザーブ削除（日付け、チャイルドID）
+//  リザーブ取得（rangeid、チャイルドID）
 router.post('/reserveget', function(req, res, next ){
   var range_id    = req.body.range_id;
   var child_id    = req.body.child_id;
@@ -459,6 +459,28 @@ router.post('/reserveget', function(req, res, next ){
         res.json( rows );
   });
 });
+
+//  リザーブ取得（rangeid）
+router.post('/reservelist', function(req, res, next ){
+  var range_id    = req.body.range_id;
+
+  console.log('range_id:' + range_id );         // YYYY/MM/DD
+  res.header('Content-Type', 'application/json;charset=utf-8');
+
+  var sql = null;
+  sql =  'select * from reserves where ';
+  sql += '( day >= (select sotd from ranges where range_id = $2 ) and ';
+  sql += '  day <= (select eotd from ranges where range_id = $2 ) )';
+  sql += ' order by day';
+  console.log( 'sql:' + sql );
+  db.any( {
+      text: sql,
+      values: [ child_id, range_id ] } )
+      .then( rows => {
+        res.json( rows );
+  });
+});
+
 
 //  リザーブ削除（日付け、チャイルドID）
 router.post('/reserveday', function(req, res, next ){

@@ -56,7 +56,27 @@ function init(){
 
 	var sm = document.getElementById('SCHEDULE_MONTH');
 	sm.innerText = edit_month.getFullYear() + '/' + ( edit_month.getMonth() + 1);
-
+	var sm_prev = document.getElementById('SCHEDULE_MONTH_PREV');
+	sm_prev.addEventListener('click',
+		function(e){
+			var dy = new Date( document.getElementById('SCHEDULE_MONTH').innerText + '/1' );
+			dy.setMonth( dy.getMonth() - 1 );
+			document.getElementById('SCHEDULE_MONTH').innerText =
+				dy.getFullYear() + '/' + (dy.getMonth()+1 );
+			var fd = document.getElementById('FINDER_DETAIL');
+			if ( fd.style.display == 'inline' ) details();
+		}, false );
+	var sm_next = document.getElementById('SCHEDULE_MONTH_NEXT');
+	sm_next.addEventListener('click',
+		function(e){
+			var dy = new Date( document.getElementById('SCHEDULE_MONTH').innerText + '/1' );
+			dy.setMonth( dy.getMonth() + 1 );
+			document.getElementById('SCHEDULE_MONTH').innerText =
+				dy.getFullYear() + '/' + (dy.getMonth() + 1 );
+			var fd = document.getElementById('FINDER_DETAIL');
+			if ( fd.style.display == 'inline' ) details();
+			}, false );
+	
 	fitting();
 	
 	child_form.keyword.focus();
@@ -1339,8 +1359,10 @@ function details(){
 		var c = children[i];
 		var o = document.createElement( 'DIV' );
 		o.classList.add( 'schedule_detail');
+		o.setAttribute( 'child_id', c.getAttribute('child_id') );
 		var d = fd.appendChild( o );
-		var dy = new Date( edit_month.getFullYear() + '/' + ( edit_month.getMonth()+1 ) + '/1' ) ;
+		var sm = document.getElementById('SCHEDULE_MONTH').innerText + '/1';
+		var dy = new Date( sm ) ;
 		var m = dy.getMonth();
 		while ( m == dy.getMonth() ){
 			var dd = document.createElement('DIV');
@@ -1348,9 +1370,58 @@ function details(){
 			dd.style.width			= '10px';
 			dd.style.height			= '100%';
 			dd.innerHTML			= dy.getDate() + '<br/>' + week[dy.getDay()];
+			if ( dy.getDay() == 0 || dy.getDay() == 6 )
+				dd.innerHTML			+= '<div style="width:100%;height:4px;background-color:red;" >&nbsp;</div>';
 			d.appendChild( dd );
 			dy.setDate( dy.getDate() + 1 );
 		}
+	}
+
+
+}
+
+function reserveList(){
+
+	var xmlhttp = new XMLHttpRequest();
+
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+				break;
+			case 2://header received
+				break;
+			case 3://loading
+				oLog.log( null, 'reserve list...' );
+				oLog.open( 3 );
+				break;
+			case 4://done
+				r = '';
+				if ( xmlhttp.status == 200 ){
+					var results = JSON.parse( xmlhttp.responseText );
+					oLog.log( null, 'reserve list loaded.');
+					oLog.open(2);
+					// var am_resv = new Map();
+					// for ( var i=0; i<result.length; i++ ){
+					// 	var rs = result[i];
+					// 	var d = new Date( rs.day );
+					// 	var ymd = d.getFullYear() + '/' + ( d.getMonth()+1 ) + '/' + d.getDate();
+					// 	am_resv.set( ymd, { 'sott' : rs.sott.substr(0,5), 'eott' : rs.eott.substr(0,5) } );
+					// }
+			} else{
+					alert( xmlhttp.status );
+				}
+				break;
+		}
+	}
+
+	try{
+		var range_id = cur_range_id;
+		xmlhttp.open("POST", "/accounts/reservelist", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( "range_id=" + range_id );
+	} catch ( e ) {
+		oLog.log( null, 'sign:e:' + e );
+		oLog.open( 3 );
 	}
 
 }
