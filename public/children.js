@@ -1400,6 +1400,8 @@ function details(){
 		while ( m == dy.getMonth() ){
 			var dd = document.createElement('DIV');
 			dd.classList.add('schedule_unit');
+			if ( dy.getDay() == 1 )
+				dd.style.borderLeft = '2px solid lightgrey';
 			dd.setAttribute('schedule_unit', 'yes' );
 			dd.innerHTML			= dy.getDate() + '<br/>' + week[dy.getDay()];
 			if ( dy.getDay() == 0 || dy.getDay() == 6 )
