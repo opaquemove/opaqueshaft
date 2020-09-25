@@ -1352,6 +1352,7 @@ reserveSelector.prototype = {
 function scheduler( e ){
 	var fd = document.getElementById('FINDER_DETAIL')
 	var fa = document.getElementById('FINDER_AREA');
+	var dr = document.getElementById('DAY_RULER');
 	var w = document.body.clientWidth;
 
 	switch ( fd.style.display ){
@@ -1363,6 +1364,7 @@ function scheduler( e ){
 			fd.style.width			= '';
 			fd.style.left			= '';
 			fd.style.display		= '';
+			dr.innerHTML			= '';
 			break;
 		default:
 			fa.style.width			= '186px';
@@ -1372,6 +1374,8 @@ function scheduler( e ){
 			fd.style.width			= ( w - fa.offsetWidth ) + 'px';
 			fd.style.left			= '186px';
 			fd.style.display		= 'inline';
+			dr.style.width			= ( w - fa.offsetWidth ) + 'px';
+
 			details();
 			break;
 	}
@@ -1381,6 +1385,8 @@ function scheduler( e ){
 function details(){
 	var fd = document.getElementById('FINDER_DETAIL')
 	var fa = document.getElementById('FINDER_AREA');
+
+	makeRuler();
 
 	while ( fd.firstChild ){
 		fd.removeChild( fd.firstChild );
@@ -1415,6 +1421,25 @@ function details(){
 
 }
 
+function makeRuler(){
+	var week = ['S','M','T','W','T','F','S'];
+
+	var ruler = document.getElementById('DAY_RULER');
+	ruler.innerHTML = '';
+	var sm = document.getElementById('SCHEDULE_MONTH').innerText + '/1';
+	var dy = new Date( sm );
+	var m = dy.getMonth();
+	while ( m == dy.getMonth() ){
+		var dd = document.createElement('DIV');
+		dd.classList.add('schedule_unit');
+		if ( dy.getDay() == 1 )
+			dd.style.borderLeft = '2px solid lightgrey';
+		dd.innerHTML			= week[dy.getDay()] + '&nbsp;' + dy.getDate();
+		ruler.appendChild( dd );
+		dy.setDate( dy.getDate() + 1 );
+	}
+
+}
 //
 //	リザーブ情報をレンダリング
 //

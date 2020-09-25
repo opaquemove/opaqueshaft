@@ -157,6 +157,7 @@ BUTTON:focus{
 	left:					0px;
 	width:					100%;
 	height:					42px;
+	font-size: 				12px;
 	color:					dimgray;
 	background-color:		white;
 	overflow:				hidden;
@@ -164,13 +165,31 @@ BUTTON:focus{
 	visibility: 			hidden;
 }
 #TOOLBAR2{
-	width:					186px;
+	width:					170px;
 	height:					31px;
 	float:					left;
 	color:					dimgray;
 	background-color:		white;
 	border-right:			1px solid lightgrey;
 	overflow:				visible;
+}
+#DAY_RULER{
+	width:					0px;	/* dummy */
+	/* height:					; */
+	float:					right;
+	/* border:					1px solid red; */
+	display:				flex;
+	flex-direction: 		row;
+	flex-wrap: 				nowrap;
+	justify-content:		space-around;		
+	color:					gray;
+	background-color:		white;
+	font-size:				11px;
+	overflow: 				hidden;
+	padding:				2px;
+	margin:					1px;
+	/* border-radius: 			4px; */
+	-webkit-user-select: 	none;
 }
 #ADD_CHILD{
 	pointer-events:			auto;
@@ -197,7 +216,7 @@ BUTTON:focus{
 #SCHEDULE_MONTH_PREV{
 	pointer-events:			auto;
 	float:					right;
-	width:					16px;
+	width:					26px;
 	height:					31px;
 	color:					gray;
 	background-color:		transparent;
@@ -210,7 +229,7 @@ BUTTON:focus{
 #SCHEDULE_MONTH_NEXT{
 	pointer-events:			auto;
 	float:					right;
-	width:					16px;
+	width:					26px;
 	height:					31px;
 	color:					gray;
 	background-color:		transparent;
