@@ -303,13 +303,17 @@ function locateFinder( e ){
 	}
 }
 
+var lfd_moved	= false;
+
 function locateFinderDetail( e ){
 	switch ( e.type ){
 		case 'touchstart':
 		case 'mousedown':
+			lfd_moved = false;
 			break;
 		case 'mousemove':
 		case 'touchmove':
+			lfd_moved = true;
 			break;
 		case 'touchend':
 		case 'mouseup':
@@ -320,8 +324,10 @@ function locateFinderDetail( e ){
 					u.classList.remove( 'selected2' );
 					u.removeAttribute( 'selected', 'yes' );
 				} else{
-					u.classList.add( 'selected2' );
-					u.setAttribute( 'selected', 'yes' );
+					if ( !lfd_moved ){
+						u.classList.add( 'selected2' );
+						u.setAttribute( 'selected', 'yes' );
+					}
 				}
 			}
 			break;
