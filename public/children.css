@@ -285,7 +285,7 @@ BUTTON:focus{
 }
 .schedule_detail{
 	width:					100%;
-	height:					140px;
+	height:					141px;
 	display:				flex;
 	flex-direction: 		row;
 	flex-wrap: 				nowrap;
@@ -298,6 +298,35 @@ BUTTON:focus{
 	margin:					1px;
 	border-radius: 			4px;
 	-webkit-user-select: 	none;
+}
+.schedule_unit{
+	position: 				relative;
+	width:					100%;
+	height:					100%;
+	border-left:			1px solid lightgrey;
+	/* border-right:			1px solid lightgrey; */
+}
+.schedule_reserve_unit{
+	position: 				absolute;
+	top:					40px;
+	left:					0px;
+	width:					100%;
+	height:					30px;
+	font-size:				8px;
+	color:					gray;
+	background-color: 		rgb(122, 236, 198);
+	border-radius: 			2px;
+}
+.schedule_result_unit{
+	position: 				absolute;
+	top:					70px;
+	left:					0px;
+	width:					100%;
+	height:					40px;
+	font-size:				8px;
+	color:					gray;
+	background-color: 		rgb(148, 188, 248);
+	border-radius: 			2px;
 }
 
 .prev_class{

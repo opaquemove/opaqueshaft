@@ -369,6 +369,20 @@ router.post('/resultlist', function(req, res, next ){
             res.json( rows );
       });
 });
+//
+//  チャイルド履歴リスト取得２
+//
+router.post('/resultlist2', function(req, res, next ){
+  var sotd    = req.body.sotd;
+  var eotd    = req.body.eotd;
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.any( {
+      text: 'SELECT * FROM results WHERE day >= $1 AND day <= $2 ORDER BY day',
+      values: [ sotd, eotd ] } )
+    .then( rows => {
+          res.json( rows );
+    });
+});
 
 //
 //  ホワイトボードチャイルド履歴リスト取得
@@ -463,19 +477,22 @@ router.post('/reserveget', function(req, res, next ){
 //  リザーブ取得（rangeid）
 router.post('/reservelist', function(req, res, next ){
   var range_id    = req.body.range_id;
+  var sotd        = req.body.sotd;
+  var eotd        = req.body.eotd;
 
   console.log('range_id:' + range_id );         // YYYY/MM/DD
+  console.log( 'sotd:' + sotd );
+  console.log( 'eotd:' + eotd );
   res.header('Content-Type', 'application/json;charset=utf-8');
 
   var sql = null;
   sql =  'select * from reserves where ';
-  sql += '( day >= (select sotd from ranges where range_id = $2 ) and ';
-  sql += '  day <= (select eotd from ranges where range_id = $2 ) )';
-  sql += ' order by day';
+  sql += ' day >= $1 and day <= $2 ';
+  sql += ' order by child_id, day';
   console.log( 'sql:' + sql );
   db.any( {
       text: sql,
-      values: [ child_id, range_id ] } )
+      values: [ sotd, eotd ] } )
       .then( rows => {
         res.json( rows );
   });

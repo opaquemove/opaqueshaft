@@ -91,6 +91,10 @@ function init(){
 	document.getElementById('FINDER_AREA').addEventListener( evtMove, locateFinder, false );
 	document.getElementById('FINDER_AREA').addEventListener( evtEnd, locateFinder, false );
 
+	document.getElementById('FINDER_DETAIL').addEventListener( evtStart, locateFinderDetail, false );
+	document.getElementById('FINDER_DETAIL').addEventListener( evtMove,  locateFinderDetail, false );
+	document.getElementById('FINDER_DETAIL').addEventListener( evtEnd,   locateFinderDetail, false );
+
 	document.getElementById('BTN_PREV_CHILDREN').addEventListener( 'click',
 		function(e){
 			var p = document.getElementById('FINDER_AREA');
@@ -253,15 +257,6 @@ function locateFinder( e ){
 			var c = scanChild( e.target );
 			if ( c != null ){
 				if ( c.hasAttribute('selected')){
-					// c.classList.remove('selected');
-					// c.removeAttribute('selected');
-					// c.getElementsByClassName('appendix')[0].style.display = 'none';
-					// c.style.height = '';
-					// var children = this.childNodes;
-					// for ( var i=0; i<children.length; i++ ){
-					// 	if ( c!= children[i] )
-					// 		children[i].style.display = 'inline'
-					// }
 
 					//	プロフィールエリア内なら
 					if ( isProfeel( e.target )){
@@ -308,6 +303,32 @@ function locateFinder( e ){
 	}
 }
 
+function locateFinderDetail( e ){
+	switch ( e.type ){
+		case 'touchstart':
+		case 'mousedown':
+			break;
+		case 'mousemove':
+		case 'touchmove':
+			break;
+		case 'touchend':
+		case 'mouseup':
+			var u = scanUnit( e.target );
+			console.log('u:' + u );
+			if ( u != null ){
+				if ( u.hasAttribute('selected')){
+					u.classList.remove( 'selected2' );
+					u.removeAttribute( 'selected', 'yes' );
+				} else{
+					u.classList.add( 'selected2' );
+					u.setAttribute( 'selected', 'yes' );
+				}
+			}
+			break;
+	}
+}
+
+
 function prevChildren( p ){
 	oReserve.close();
 	if ( !p.hasChildNodes ) return;
@@ -327,6 +348,16 @@ function prevChildren( p ){
 		c.style.display = 'inline'
 	}
 
+}
+
+function scanUnit( o ) {
+    while ( true ) {
+        var tn = o.tagName;
+        if ( tn.toLowerCase() == "body" ) return null;
+        // if ( o.getAttribute("child") == "yes" ) return o;
+        if ( o.hasAttribute( 'schedule_unit' ) ) return o;
+        o = o.parentNode;
+    }
 }
 
 function scanChild( o ) {
@@ -363,6 +394,8 @@ function finder( e ){
 function finderHelper( keyword ){
 	console.log( 'keyword:' + keyword );
 	var fa = document.getElementById('FINDER_AREA');
+	var fd = document.getElementById('FINDER_DETAIL');
+	fd.innerText = '';
 	fa.innerText = keyword;
 
 	var r = '';
@@ -1354,7 +1387,7 @@ function details(){
 	}
 
 	var children = fa.childNodes;
-	var week = ['S','M','T','W','T','F','S'];
+	var week = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 	for ( var i=0; i<children.length; i++){
 		var c = children[i];
 		var o = document.createElement( 'DIV' );
@@ -1366,9 +1399,8 @@ function details(){
 		var m = dy.getMonth();
 		while ( m == dy.getMonth() ){
 			var dd = document.createElement('DIV');
-			dd.style.borderRight 	= '1px solid lightgrey';
-			dd.style.width			= '10px';
-			dd.style.height			= '100%';
+			dd.classList.add('schedule_unit');
+			dd.setAttribute('schedule_unit', 'yes' );
 			dd.innerHTML			= dy.getDate() + '<br/>' + week[dy.getDay()];
 			if ( dy.getDay() == 0 || dy.getDay() == 6 )
 				dd.innerHTML			+= '<div style="width:100%;height:4px;background-color:red;" >&nbsp;</div>';
@@ -1376,14 +1408,16 @@ function details(){
 			dy.setDate( dy.getDate() + 1 );
 		}
 	}
-
+	reserveList();
+	resultList();
 
 }
 
+//
+//	リザーブ情報をレンダリング
+//
 function reserveList(){
-
 	var xmlhttp = new XMLHttpRequest();
-
 	xmlhttp.onreadystatechange = function() {
 		switch ( xmlhttp.readyState){
 			case 1://opened
@@ -1400,13 +1434,7 @@ function reserveList(){
 					var results = JSON.parse( xmlhttp.responseText );
 					oLog.log( null, 'reserve list loaded.');
 					oLog.open(2);
-					// var am_resv = new Map();
-					// for ( var i=0; i<result.length; i++ ){
-					// 	var rs = result[i];
-					// 	var d = new Date( rs.day );
-					// 	var ymd = d.getFullYear() + '/' + ( d.getMonth()+1 ) + '/' + d.getDate();
-					// 	am_resv.set( ymd, { 'sott' : rs.sott.substr(0,5), 'eott' : rs.eott.substr(0,5) } );
-					// }
+					renderingSchedule( results, 'reserves' );
 			} else{
 					alert( xmlhttp.status );
 				}
@@ -1416,12 +1444,140 @@ function reserveList(){
 
 	try{
 		var range_id = cur_range_id;
+		var sm = document.getElementById('SCHEDULE_MONTH').innerText + '/1';
+		var dy = new Date( sm );
+		var dy2 = new Date( sm );
+		dy2.setMonth( dy2.getMonth() + 1 );
+		dy2.setDate( dy2.getDate() - 1 );
+		var sotd = dy.getFullYear() + '/' + ( dy.getMonth()+1 ) + '/1';
+		var eotd = dy2.getFullYear() + '/' + ( dy2.getMonth()+1 ) + '/' + dy2.getDate();
+
 		xmlhttp.open("POST", "/accounts/reservelist", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send( "range_id=" + range_id );
+		xmlhttp.send( "range_id=" + range_id + '&sotd=' + sotd + '&eotd=' + eotd );
 	} catch ( e ) {
-		oLog.log( null, 'sign:e:' + e );
+		oLog.log( null, 'reserve list:e:' + e );
 		oLog.open( 3 );
 	}
 
+}
+
+//
+//	リザルト情報をレンダリング
+//
+function resultList(){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+				break;
+			case 2://header received
+				break;
+			case 3://loading
+				oLog.log( null, 'result list...' );
+				oLog.open( 3 );
+				break;
+			case 4://done
+				r = '';
+				if ( xmlhttp.status == 200 ){
+					var results = JSON.parse( xmlhttp.responseText );
+					oLog.log( null, 'result list loaded.');
+					oLog.open(2);
+					renderingSchedule( results, 'results' );
+			} else{
+					alert( xmlhttp.status );
+				}
+				break;
+		}
+	}
+
+	try{
+		var range_id = cur_range_id;
+		var sm = document.getElementById('SCHEDULE_MONTH').innerText + '/1';
+		var dy = new Date( sm );
+		var dy2 = new Date( sm );
+		dy2.setMonth( dy2.getMonth() + 1 );
+		dy2.setDate( dy2.getDate() - 1 );
+		var sotd = dy.getFullYear() + '/' + ( dy.getMonth()+1 ) + '/1';
+		var eotd = dy2.getFullYear() + '/' + ( dy2.getMonth()+1 ) + '/' + dy2.getDate();
+
+		xmlhttp.open("POST", "/accounts/resultlist2", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( "range_id=" + range_id + '&sotd=' + sotd + '&eotd=' + eotd );
+	} catch ( e ) {
+		oLog.log( null, 'reserve list:e:' + e );
+		oLog.open( 3 );
+	}
+
+}
+
+
+function renderingSchedule( results, data_type ){
+	for ( var i=0; i<results.length; i++ ){
+		var rs = results[i];
+		var child_id = rs.child_id;
+		var s = scanScheduleDetail( child_id );
+		if ( s == null ) continue;
+		var day = new Date( rs.day );
+		var dy = day.getDate() - 1;
+		var o = document.createElement('DIV');
+		switch ( data_type ){
+			case 'reserves':				//	リザーブ情報
+				o.classList.add('schedule_reserve_unit');
+				var r = '';
+				r += '<div style="text-align:center;" >' + rs.sott.substr(0,5).replace(':','') + '</div>';
+				r += '<div style="text-align:center;" >' + rs.eott.substr(0,5).replace(':','') + '</div>';
+				o.innerHTML = r;
+				break;
+			case 'results':					//	リザルト情報
+				o.classList.add('schedule_result_unit');
+				var r = '';
+				switch ( rs.checkout ){
+					case null:
+					case 'null':
+					case '':
+						r += '<div>' + rs.estimate.substr(0,5).replace(':','') + '</div>';
+						break;
+					default:
+						r += '<div>';
+						r += '<img width="9px" src="./images/checked-symbol.png" />';
+						r += rs.estimate.substr(0,5).replace(':','') + '</div>';
+						break;
+				}
+				// r += '<div>' + rs.checkout + '</div>';
+				switch ( rs.escort ){
+					case '0':
+					case 0:
+						r += '<div><img width="10px" src="./images/user-2.png" /></div>';
+						break;
+					default:
+						r += '<div><img width="10px" src="./images/family.png" /></div>';
+						break;
+				}
+				switch ( rs.direction ){
+					case 'left':
+						r += '<div><img width="10px" src="./images/prev.png" /></div>';
+						break;
+					case 'right':
+						r += '<div><img width="10px" src="./images/next.png" /></div>';
+						break;
+				}
+				o.innerHTML = r;
+			break;
+		}
+		s.childNodes[dy].appendChild( o );
+
+		// s.childNodes[dy].innerHTML += '●';
+
+	}
+}
+
+function scanScheduleDetail( child_id ){
+	var fd = document.getElementById('FINDER_DETAIL');
+	var scheds = fd.childNodes;
+	for ( var i=0; i<scheds.length; i++ ){
+		var s = scheds[i];
+		if ( child_id == s.getAttribute('child_id' ) ) return s;
+	}
+	return null;
 }
