@@ -1371,10 +1371,10 @@ function scheduler( e ){
 			// fa.style.display		= 'flex';
 			// fa.style.flexWrap		= 'nowrap';
 			// fa.style.flexDirection	= 'column';
-			fd.style.width			= ( w - fa.offsetWidth ) + 'px';
+			fd.style.width			= ( w - fa.offsetWidth - 6 ) + 'px';
 			fd.style.left			= '186px';
 			fd.style.display		= 'inline';
-			dr.style.width			= ( w - fa.offsetWidth ) + 'px';
+			dr.style.width			= ( w - fa.offsetWidth - 6 ) + 'px';
 
 			details();
 			break;
@@ -1409,9 +1409,9 @@ function details(){
 			if ( dy.getDay() == 1 )
 				dd.style.borderLeft = '2px solid lightgrey';
 			dd.setAttribute('schedule_unit', 'yes' );
-			dd.innerHTML			= dy.getDate() + '<br/>' + week[dy.getDay()];
-			if ( dy.getDay() == 0 || dy.getDay() == 6 )
-				dd.innerHTML			+= '<div style="width:100%;height:4px;background-color:red;" >&nbsp;</div>';
+			// dd.innerHTML			= dy.getDate() + '<br/>' + week[dy.getDay()];
+			// if ( dy.getDay() == 0 || dy.getDay() == 6 )
+			// 	dd.innerHTML			+= '<div style="width:100%;height:4px;background-color:red;" >&nbsp;</div>';
 			d.appendChild( dd );
 			dy.setDate( dy.getDate() + 1 );
 		}
@@ -1433,8 +1433,13 @@ function makeRuler(){
 		var dd = document.createElement('DIV');
 		dd.classList.add('schedule_unit');
 		if ( dy.getDay() == 1 )
-			dd.style.borderLeft = '2px solid lightgrey';
+			dd.style.borderLeft = '2px solid white';
+			else
+			dd.style.borderLeft = '1px solid white';
+
 		dd.innerHTML			= week[dy.getDay()] + '&nbsp;' + dy.getDate();
+		if ( dy.getDay() == 0 || dy.getDay() == 6 )
+			dd.innerHTML		+= '<div style="width:100%;height:2px;background-color:red;" ></div>';
 		ruler.appendChild( dd );
 		dy.setDate( dy.getDate() + 1 );
 	}

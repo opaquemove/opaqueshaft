@@ -166,7 +166,7 @@ BUTTON:focus{
 }
 #TOOLBAR2{
 	width:					170px;
-	height:					31px;
+	height:					41px;
 	float:					left;
 	color:					dimgray;
 	background-color:		white;
@@ -175,18 +175,20 @@ BUTTON:focus{
 }
 #DAY_RULER{
 	width:					0px;	/* dummy */
-	/* height:					; */
+	height:					20px;
 	float:					right;
-	/* border:					1px solid red; */
+	/* border-bottom:					1px solid red; */
 	display:				flex;
 	flex-direction: 		row;
 	flex-wrap: 				nowrap;
 	justify-content:		space-around;		
 	color:					gray;
+	font-weight: 			bold;
 	background-color:		white;
 	font-size:				11px;
+	text-align:				center;
 	overflow: 				hidden;
-	padding:				2px;
+	padding:				12px 2px 2px 2px;
 	margin:					1px;
 	/* border-radius: 			4px; */
 	-webkit-user-select: 	none;
@@ -332,7 +334,7 @@ BUTTON:focus{
 	width:					100%;
 	height:					30px;
 	font-size:				8px;
-	color:					gray;
+	color:					rgb(37, 37, 37);
 	background-color: 		rgb(122, 236, 198);
 	border-radius: 			2px;
 }
@@ -343,7 +345,7 @@ BUTTON:focus{
 	width:					100%;
 	height:					40px;
 	font-size:				8px;
-	color:					gray;
+	color:					rgb(37, 37, 37);
 	background-color: 		rgb(148, 188, 248);
 	border-radius: 			2px;
 }
