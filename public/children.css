@@ -282,6 +282,12 @@ BUTTON:focus{
 	display:	 			none;
 }
 
+.child_header{
+	font-size:				16px;
+	font-weight: 			bold;
+	border-bottom:			1px solid lightgrey;
+	padding:				2px 0px 2px 0px;
+}
 .CHILD_NAME{
 	font-weight: 			bold;
 }

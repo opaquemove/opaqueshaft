@@ -320,15 +320,27 @@ function locateFinderDetail( e ){
 			var u = scanUnit( e.target );
 			console.log('u:' + u );
 			if ( u != null ){
-				if ( u.hasAttribute('selected')){
-					u.classList.remove( 'selected2' );
-					u.removeAttribute( 'selected', 'yes' );
-				} else{
-					if ( !lfd_moved ){
-						u.classList.add( 'selected2' );
-						u.setAttribute( 'selected', 'yes' );
+				switch ( u.getAttribute('unit')){
+					case 'schedule_unit':
+						if ( u.hasAttribute('selected')){
+							u.classList.remove( 'selected2' );
+							u.removeAttribute( 'selected', 'yes' );
+						} else{
+							if ( !lfd_moved ){
+								u.classList.add( 'selected2' );
+								u.setAttribute( 'selected', 'yes' );
+							}
+						}
+						break;
+					case 'schedule_reserve_unit':
+						oLog.log( null, u.getAttribute('unit') );
+						oLog.open( 2 );
+						break;
+					case 'schedule_result_unit':
+						oLog.log( null, u.getAttribute('unit') );
+						oLog.open( 2 );
+						break;
 					}
-				}
 			}
 			break;
 	}
@@ -361,7 +373,7 @@ function scanUnit( o ) {
         var tn = o.tagName;
         if ( tn.toLowerCase() == "body" ) return null;
         // if ( o.getAttribute("child") == "yes" ) return o;
-        if ( o.hasAttribute( 'schedule_unit' ) ) return o;
+        if ( o.hasAttribute( 'unit' ) ) return o;
         o = o.parentNode;
     }
 }
@@ -389,6 +401,20 @@ function fitting(){
 	var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 	var screen_ratio = Math.floor( w / h * 100 ) / 100;
+
+	var fa = document.getElementById( 'FINDER_AREA' );
+	var fd = document.getElementById( 'FINDER_DETAIL' );
+	var dr = document.getElementById( 'DAY_RULER' );
+
+	switch ( fd.style.display ){
+		case 'inline':
+			fd.style.width			= ( w - fa.offsetWidth - 6 ) + 'px';
+			dr.style.width			= ( w - fa.offsetWidth - 6 ) + 'px';
+			break;
+		default:
+			break;
+	}
+
 	console.log( 'screen ratio:' + screen_ratio );
 }
 
@@ -452,7 +478,11 @@ function finderHelper( keyword ){
 
 
 							r = '';
-							r += '<div profeel="yes" style="float:left;width:' + cc_width + 'px;height:140px;overflow:hidden;" >';
+							r += '<div class="child_header" style="" >';
+								r += child_name + '&nbsp;&nbsp;' + child_grade + child_type;
+								r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
+							r += '</div>';
+							r += '<div profeel="yes" style="float:left;width:' + cc_width + 'px;height:80px;overflow:hidden;" >';
 								if ( imagefile != ''){
 									r += '<div style="float:left;width:60px;height:60px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp;';
@@ -462,24 +492,24 @@ function finderHelper( keyword ){
 										r += '&nbsp';
 									r += '</div>';
 								}
-								r += '<div style="float:right;width:94px;height:168px;" >';
-									r += '<div class="CHILD_NAME" style="font-size:16px;padding-left:2px;">';
-										r += child_name;
-									r += '</div>';
-									r += '<div style="font-size:14px;text-align:right;padding-top:2px;" >';
-										r += child_grade + child_type;
-										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
-									r += '</div>';
+								r += '<div style="float:right;width:100px;height:80px;" >';
+									// r += '<div class="CHILD_NAME" style="font-size:16px;padding-left:2px;">';
+									// 	r += child_name;
+									// r += '</div>';
+									// r += '<div style="font-size:14px;text-align:right;padding-top:2px;" >';
+									// 	r += child_grade + child_type;
+									// 	r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
+									// r += '</div>';
 									r += '<div style="padding:1px;" >' + kana + '</div>';
 									r += '<div style="padding:1px;" >id/Range:' + child_id + '/' + range_id + '</div>';
 								r += '</div>';
 							r += '</div>';
 
 
-							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
+							r += '<div class="appendix" style="float:left;width:' + ( cc_width - 6 ) + 'px;display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
 								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;" >Profeel:</div>';
-								r += '<div style="width:97%;height:180px;padding:1px;" >';
+								r += '<div style="width:97%;height:144px;padding:1px;" >';
 									r += '<div style="width:100%;height:24px;padding:4px 0px 2px 0px;" >';
 										r += '<input type="text" name="kana"  style="width:98%;"  value="' + kana        + '" />';
 									r += '</div>';
@@ -1374,9 +1404,6 @@ function scheduler( e ){
 			break;
 		default:
 			fa.style.width			= '186px';
-			// fa.style.display		= 'flex';
-			// fa.style.flexWrap		= 'nowrap';
-			// fa.style.flexDirection	= 'column';
 			fd.style.width			= ( w - fa.offsetWidth - 6 ) + 'px';
 			fd.style.left			= '186px';
 			fd.style.display		= 'inline';
@@ -1402,6 +1429,7 @@ function details(){
 	var week = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 	for ( var i=0; i<children.length; i++){
 		var c = children[i];
+		var child_id = c.getAttribute('child_id');
 		var o = document.createElement( 'DIV' );
 		o.classList.add( 'schedule_detail');
 		o.setAttribute( 'child_id', c.getAttribute('child_id') );
@@ -1414,10 +1442,10 @@ function details(){
 			dd.classList.add('schedule_unit');
 			if ( dy.getDay() == 1 )
 				dd.style.borderLeft = '2px solid lightgrey';
-			dd.setAttribute('schedule_unit', 'yes' );
-			// dd.innerHTML			= dy.getDate() + '<br/>' + week[dy.getDay()];
-			// if ( dy.getDay() == 0 || dy.getDay() == 6 )
-			// 	dd.innerHTML			+= '<div style="width:100%;height:4px;background-color:red;" >&nbsp;</div>';
+			dd.setAttribute( 'unit', 'schedule_unit' );
+			dd.setAttribute( 'day', dy.getFullYear() + '/' + ( dy.getMonth() + 1 ) + '/' + dy.getDate() );
+			dd.setAttribute( 'child_id', child_id );
+
 			d.appendChild( dd );
 			dy.setDate( dy.getDate() + 1 );
 		}
@@ -1549,11 +1577,14 @@ function resultList(){
 
 }
 
-
+//
+//	スケジュール（リザーブ、リザルト）をカレンダーにレンダリング
+//
 function renderingSchedule( results, data_type ){
 	for ( var i=0; i<results.length; i++ ){
 		var rs = results[i];
 		var child_id = rs.child_id;
+		//	schedule_detail 行を特定
 		var s = scanScheduleDetail( child_id );
 		if ( s == null ) continue;
 		var day = new Date( rs.day );
@@ -1562,6 +1593,8 @@ function renderingSchedule( results, data_type ){
 		switch ( data_type ){
 			case 'reserves':				//	リザーブ情報
 				o.classList.add('schedule_reserve_unit');
+				o.setAttribute( 'reserve_id', rs.reserve_id );
+				o.setAttribute( 'unit', 'schedule_reserve_unit' );
 				var r = '';
 				r += '<div style="text-align:center;" >' + rs.sott.substr(0,5).replace(':','') + '</div>';
 				r += '<div style="text-align:center;" >' + rs.eott.substr(0,5).replace(':','') + '</div>';
@@ -1569,6 +1602,8 @@ function renderingSchedule( results, data_type ){
 				break;
 			case 'results':					//	リザルト情報
 				o.classList.add('schedule_result_unit');
+				o.setAttribute( 'result_id', rs.result_id );
+				o.setAttribute( 'unit', 'schedule_result_unit' );
 				var r = '';
 				switch ( rs.checkout ){
 					case null:
