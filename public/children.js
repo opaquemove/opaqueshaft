@@ -49,10 +49,15 @@ function init(){
 	//モーダルダイアログ初期化
 	initModalDialog();
 
-	document.getElementById('ADD_CHILD').addEventListener( 'click',
+	document.getElementById('ADD_RESERVE').addEventListener( 'click',
 		function(e){
-			newChildForm();
+			oReserve.open( null );
 		}, false );
+
+	document.getElementById('ADD_CHILD').addEventListener( 'click',
+	function(e){
+		newChildForm();
+	}, false );
 
 	var sm = document.getElementById('SCHEDULE_MONTH');
 	sm.innerText = edit_month.getFullYear() + '/' + ( edit_month.getMonth() + 1);
@@ -277,7 +282,7 @@ function locateFinder( e ){
 						c.classList.remove( 'offProfeel' );
 						c.classList.add( 'onProfeel' );
 						c.setAttribute( 'selected', 'yes' );
-						c.style.height = '596px';
+						c.style.height = '594px';
 						var appx = c.getElementsByClassName('appendix');
 						for ( var i=0; i<appx.length; i++ ){
 							appx[i].style.display = 'inline';
@@ -478,7 +483,7 @@ function finderHelper( keyword ){
 
 
 							r = '';
-							r += '<div class="child_header" style="" >';
+							r += '<div profeel="yes" class="child_header" style="" >';
 								r += child_name + '&nbsp;&nbsp;' + child_grade + child_type;
 								r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
 							r += '</div>';
@@ -553,14 +558,14 @@ function finderHelper( keyword ){
 								r += '</div>';
 							r += '</div>';
 							
-							r += '<div class="appendix" style="float:left;width:' + cc_width + 'px;display:none;" >';
+							r += '<div class="appendix" style="float:left;width:' + ( cc_width - 6 ) + 'px;display:none;" >';
 								r += '<div                    style="padding:1px;font-size:14px;font-weight:bold;" >Result:</div>';
-								r += '<div class="RESULT_HDR" style="padding:1px;width:250px;height:18px;background-color:#EDEDED;border:1px solid lightgrey;" >';
+								r += '<div class="RESULT_HDR" style="padding:1px;width:99%;height:18px;background-color:#EDEDED;border:1px solid lightgrey;" >';
 										r += '<div class="day_data" >Day</div>';
 										r += '<div class="estimate_data" >Est</div>';
 										r += '<div class="remark_data" >Remark</div>';
 								r += '</div>';
-								r += '<div class="RESULT_LST" style="padding:1px;width:250px;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
+								r += '<div class="RESULT_LST" style="padding:1px;width:99%;height:84px;border:1px solid lightgrey;overflow:scroll;" ></div>';
 							r += '</div>';
 
 
@@ -1370,7 +1375,8 @@ reserveSelector.prototype = {
 	
 	},
 	open : function( resv_lst ){
-		this.resv_lst = resv_lst;
+		if ( resv_lst != null )
+			this.resv_lst = resv_lst;
 		this.overlay.style.visibility 	= 'visible'; 
 		this.frame1.style.visibility 	= 'visible'; 
 		this.frame2.style.visibility 	= 'visible'; 
@@ -1605,6 +1611,36 @@ function renderingSchedule( results, data_type ){
 				o.setAttribute( 'result_id', rs.result_id );
 				o.setAttribute( 'unit', 'schedule_result_unit' );
 				var r = '';
+				r += '<div>';
+					switch ( rs.checkout ){
+						case null:
+						case 'null':
+						case '':
+							r += '<img width="9px" src="./images/dry-clean.png" />';
+							break;
+						default:
+							r += '<img width="9px" src="./images/checked-symbol.png" />';
+							break;
+					}
+					switch ( rs.escort ){
+						case '0':
+						case 0:
+							r += '<img width="9px" src="./images/user-2.png" />';
+							break;
+						default:
+							r += '<img width="9px" src="./images/family.png" />';
+							break;
+					}
+					switch ( rs.direction ){
+						case 'left':
+							r += '<img width="9px" src="./images/prev.png" />';
+							break;
+						case 'right':
+							r += '<img width="9px" src="./images/next.png" />';
+							break;
+					}
+	
+				r += '</div>';
 				switch ( rs.checkout ){
 					case null:
 					case 'null':
@@ -1612,29 +1648,10 @@ function renderingSchedule( results, data_type ){
 						r += '<div>' + rs.estimate.substr(0,5).replace(':','') + '</div>';
 						break;
 					default:
-						r += '<div>';
-						r += '<img width="9px" src="./images/checked-symbol.png" />';
-						r += rs.estimate.substr(0,5).replace(':','') + '</div>';
+						r += '<div>' + rs.estimate.substr(0,5).replace(':','') + '</div>';
 						break;
 				}
 				// r += '<div>' + rs.checkout + '</div>';
-				switch ( rs.escort ){
-					case '0':
-					case 0:
-						r += '<div><img width="10px" src="./images/user-2.png" /></div>';
-						break;
-					default:
-						r += '<div><img width="10px" src="./images/family.png" /></div>';
-						break;
-				}
-				switch ( rs.direction ){
-					case 'left':
-						r += '<div><img width="10px" src="./images/prev.png" /></div>';
-						break;
-					case 'right':
-						r += '<div><img width="10px" src="./images/next.png" /></div>';
-						break;
-				}
 				o.innerHTML = r;
 			break;
 		}
