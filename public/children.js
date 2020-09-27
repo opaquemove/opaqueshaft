@@ -1069,6 +1069,7 @@ function reserveSelector(){
 	fm.style.height				= '286px';
 	fm.style.backgroundColor	= 'white';
 	fm.style.marginRight		= '1px';
+	fm.style.border				= '1px solid lightgrey';
 	fm.style.borderRadius		= '4px';
 	this.makeButton( 'start time', fm );
 	this.frame1 = this.overlay.appendChild( fm );
@@ -1080,6 +1081,7 @@ function reserveSelector(){
 	fm.style.width				= '128px';
 	fm.style.height				= '286px';
 	fm.style.backgroundColor	= 'white';
+	fm.style.border				= '1px solid lightgrey';
 	fm.style.borderRadius		= '4px';
 	this.makeButton( 'end time', fm );
 	this.frame2 = this.overlay.appendChild( fm );
@@ -1100,7 +1102,8 @@ function reserveSelector(){
 		} ).bind( this ), false );
 	this.tool.getElementsByClassName('commit_reservation')[0].addEventListener('click',
 		( function(e){
-			this.commit();
+			// this.commit();
+			this.commit2();
 		} ).bind( this ), false );
 	this.tool.getElementsByClassName('reset_reservation')[0].addEventListener('click',
 		( function(e){
@@ -1304,21 +1307,73 @@ reserveSelector.prototype = {
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( 'day=' + day + '&child_id=' + child_id );
 	},
+	commit2 : function(){
+		
+		// リザベーションを取得
+		// var children = this.resv_lst.childNodes;
+		var children = document.getElementById('FINDER_DETAIL').childNodes;
+		var lst = [];
+		for ( var i=0; i<children.length; i++ ){
+			var cld = children[i];
+			var child_id = cld.getAttribute('child_id');
+			console.log( 'child_id:' + child_id );
+			var days = cld.childNodes;
+			for ( var j=0; j<days.length; j++ ){
+				var d = days[j];
+				if ( d.hasAttribute( 'day' ) && d.hasAttribute( 'selected' )) lst.push( {  child_id : child_id, unit: d } );
+			}
+		}
+		if ( lst.length == 0 ){
+			console.log( 'not select reserve' );
+			return;
+		}
+		console.log( lst );
+		// タイムをリザベーションに設定
+		if ( this.sott >= 800 && this.eott >= 800 ){
+			for ( var i=0; i<lst.length; i++ ){
+				var ls = lst[i];
+				var o = null;
+				var r = '';
+				r += '<div style="text-align:center;" >' + this.sott + '</div>';
+				r += '<div style="text-align:center;" >' + this.eott + '</div>';
+
+				if ( ls.unit.getElementsByClassName('schedule_reserve_unit').length == 0 ){
+					o = document.createElement('DIV');
+					o.classList.add( 'schedule_reserve_unit' );
+					o.innerHTML = r;
+					ls.unit.appendChild( o );
+				} else {
+					o = ls.unit.getElementsByClassName('schedule_reserve_unit')[0];
+					o.innerHTML = r;
+				}
+			}
+		}else{
+			oLog.log( null, '時間設定が不十分です.' );
+			oLog.open( 3 );
+		}
+		// タイムをリザベーションに設定
+		// if ( this.sott >= 800 && this.eott >= 800 ){
+		// 	lst[0].setAttribute('sott', this.sott );
+		// 	lst[0].getElementsByClassName('sott_data')[0].innerText = this.sott;
+		// 	lst[0].setAttribute('eott', this.eott );
+		// 	lst[0].getElementsByClassName('eott_data')[0].innerText = this.eott;
+		// 	this.close();
+		// 	this.commitHelper( lst[0].getAttribute( 'day' ), this.sott, this.eott, child_id );
+		// }else{
+		// 	oLog.log( null, '時間設定が不十分です.' );
+		// 	oLog.open( 3 );
+		// }
+	},
+	//	FINDER_DETAIL用Commit
 	commit : function(){
 		// child_id 取得
-		var c = null;
-		// var children = document.getElementById('FINDER_AREA').childNodes;
-		// for ( var i=0; i<children.length; i++ ){
-		// 	c = children[i];
-		// 	if ( c.hasAttribute('selected') ) break;
-		// }
-
-		c = this.resv_lst;
+		var c = this.resv_lst;
 		while ( ! c.hasAttribute('child_id') ){
 			c = c.parentNode;
 			if ( c.tagName == 'BODY') return;
 		}
 		if ( c == null ) return;
+		
 		var child_id = c.getAttribute('child_id');
 		console.log( 'child_id:' + child_id );
 
@@ -1347,6 +1402,7 @@ reserveSelector.prototype = {
 			oLog.open( 3 );
 		}
 	},
+
 	commitHelper : function( day, sott, eott, child_id ){
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.addEventListener('readystatechange', 
@@ -1446,6 +1502,8 @@ function details(){
 		while ( m == dy.getMonth() ){
 			var dd = document.createElement('DIV');
 			dd.classList.add('schedule_unit');
+			if ( dy.getDay() == 0 )
+				dd.style.display	= 'none';
 			if ( dy.getDay() == 1 )
 				dd.style.borderLeft = '2px solid lightgrey';
 			dd.setAttribute( 'unit', 'schedule_unit' );
@@ -1472,6 +1530,8 @@ function makeRuler(){
 	while ( m == dy.getMonth() ){
 		var dd = document.createElement('DIV');
 		dd.classList.add('schedule_unit');
+		if ( dy.getDay() == 0 )
+			dd.style.display	= 'none';
 		if ( dy.getDay() == 1 )
 			dd.style.borderLeft = '2px solid white';
 			else
@@ -1649,6 +1709,14 @@ function renderingSchedule( results, data_type ){
 						break;
 					default:
 						r += '<div>' + rs.estimate.substr(0,5).replace(':','') + '</div>';
+						break;
+				}
+				switch ( rs.absent ){
+					case '1':
+					case 1:
+						r += '<img width="9px" src="./images/remove.png" />';
+						break;
+					default:
 						break;
 				}
 				// r += '<div>' + rs.checkout + '</div>';
