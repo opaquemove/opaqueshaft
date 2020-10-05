@@ -91,6 +91,12 @@ function init(){
 			var keyword = child_form.keyword.value;	
 			finderHelper( keyword );
 		}, false );
+	document.getElementById('BTN_CLEAR_FIND_CHILDREN' ).addEventListener('click',
+	function(e){
+		document.getElementById('FINDER_AREA').innerHTML = '';
+		document.getElementById('FINDER_DETAIL').innerHTML = '';
+
+	}, false );
 
 	document.getElementById('FINDER_AREA').addEventListener( evtStart, locateFinder, false );
 	document.getElementById('FINDER_AREA').addEventListener( evtMove, locateFinder, false );
@@ -282,7 +288,7 @@ function locateFinder( e ){
 						c.classList.remove( 'offProfeel' );
 						c.classList.add( 'onProfeel' );
 						c.setAttribute( 'selected', 'yes' );
-						c.style.height = '594px';
+						c.style.height = '591px';
 						var appx = c.getElementsByClassName('appendix');
 						for ( var i=0; i<appx.length; i++ ){
 							appx[i].style.display = 'inline';
@@ -338,10 +344,12 @@ function locateFinderDetail( e ){
 						}
 						break;
 					case 'schedule_reserve_unit':
+						propertyChild( u );
 						oLog.log( null, u.getAttribute('unit') );
 						oLog.open( 2 );
 						break;
 					case 'schedule_result_unit':
+						propertyChild( u );
 						oLog.log( null, u.getAttribute('unit') );
 						oLog.open( 2 );
 						break;
@@ -1465,11 +1473,11 @@ function scheduler( e ){
 			dr.innerHTML			= '';
 			break;
 		default:
-			fa.style.width			= '186px';
-			fd.style.width			= ( w - fa.offsetWidth - 6 ) + 'px';
-			fd.style.left			= '186px';
+			fa.style.width			= '185px';
+			fd.style.width			= ( w - fa.offsetWidth - 4 ) + 'px';
+			fd.style.left			= '185px';
 			fd.style.display		= 'inline';
-			dr.style.width			= ( w - fa.offsetWidth - 6 ) + 'px';
+			dr.style.width			= ( w - fa.offsetWidth - 4 ) + 'px';
 
 			details();
 			break;
@@ -1506,6 +1514,8 @@ function details(){
 				dd.style.display	= 'none';
 			if ( dy.getDay() == 1 )
 				dd.style.borderLeft = '2px solid lightgrey';
+			if ( dy.getDate() == 1 )
+				dd.style.borderLeftColor = 'white';
 			dd.setAttribute( 'unit', 'schedule_unit' );
 			dd.setAttribute( 'day', dy.getFullYear() + '/' + ( dy.getMonth() + 1 ) + '/' + dy.getDate() );
 			dd.setAttribute( 'child_id', child_id );
@@ -1738,4 +1748,33 @@ function scanScheduleDetail( child_id ){
 		if ( child_id == s.getAttribute('child_id' ) ) return s;
 	}
 	return null;
+}
+
+function propertyChild( unit ){
+    var frame = document.createElement('DIV');
+    frame.style.position            = 'absolute';
+    frame.style.top                 = '0px';
+    frame.style.left                = '0px';
+    frame.style.width               = '100%';
+    frame.style.height              = '100%';
+    frame.style.paddingTop          = '84px';
+    frame.style.overflow            = 'scroll';
+    frame.style.display             = 'flex';
+    frame.style.flexWrap            = 'wrap';
+    frame.style.justifyContent      = 'center';
+    frame.style.alignItems          = 'center';
+    frame.style.backgroundColor     = 'white';
+    frame.style.backgroundImage     = 'url(./images/cancel-2.png)';
+    frame.style.backgroundSize      = '42px';
+    frame.style.backgroundPosition  = 'top right';
+    frame.style.backgroundRepeat    = 'no-repeat';
+
+    frame.style.opacity         = 0.9;
+    frame.style.zIndex          = 70000;
+    var oFrame = document.body.appendChild( frame );
+    oFrame.addEventListener( 'click',
+        function(e){
+            if ( this == e.target ) document.body.removeChild( this );
+        }, false );
+
 }

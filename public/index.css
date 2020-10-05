@@ -724,7 +724,15 @@ INPUT[type=password]:focus{
 	height:				1px;
 	background-color:	transparent;
 	border-bottom:		1px dashed lightgrey;
-
+}
+.timeline3_class{
+	position:			absolute;
+	left:				calc(100% - 84px);
+	width:				84px;
+	/* margin:				0 auto; */
+	height:				1px;
+	background-color:	transparent;
+	border-bottom:		1px dashed lightgrey;
 }
 
 #REPORT_FRAME{

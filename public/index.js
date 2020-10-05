@@ -441,25 +441,23 @@ function makeTimelineIndicator(){
 		o.setAttribute('class', 'timeline_class vh-center' );
 		o.innerHTML = '<div style="border-bottom:4px solid white;" >' + arTL[i] + '</div>';
 		wbt.appendChild( o );
-
 	}
 	
-	for ( var i=0; i<arTL.length - 1; i++ ){
+	for ( var i=0; i<arTL.length - 0; i++ ){
 		var guide = document.createElement('DIV');
 		guide.setAttribute('class', 'timeline2_class' );
-		// guide.style.position		= 'absolute';
 		guide.style.top				= ( ( i + 1 ) * pixelPerHour - 1 )+ 'px';
-		// guide.style.left			= '40%';
-		// guide.style.width			= '20%';
-		// guide.style.margin			= '0 auto';
-		// guide.style.height			= '1px';
-		// guide.style.backgroundColor	= 'transparent';
-		// guide.style.borderBottom	= '1px dashed lightgrey';
 		guide.style.pointerEvents	= 'auto';
-		// guide.style.zIndex			= 17000;
 		guide.innerHTML				= '&nbsp;';
 		wbf.appendChild( guide );
-
+	}
+	for ( var i=0; i<arTL.length - 0; i++ ){
+		var guide = document.createElement('DIV');
+		guide.setAttribute('class', 'timeline3_class' );
+		guide.style.top				= ( ( i + 1 ) * pixelPerHour - 1 )+ 'px';
+		guide.style.pointerEvents	= 'auto';
+		guide.innerHTML				= '&nbsp;';
+		wbf.appendChild( guide );
 	}
 
 
