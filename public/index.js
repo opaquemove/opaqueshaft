@@ -254,7 +254,7 @@ function init()
 	//
 	//	パースペクティブバー初期化
 	//
-	initPerspectivebar( evtStart, evtMove, evtEnd );
+	// initPerspectivebar( evtStart, evtMove, evtEnd );
 
 	makeToolbarCheckoutProgress( 0 );
 }
@@ -741,7 +741,7 @@ function locateTimelinebar( e ){
 				itb.style.top 	= new_top + 'px';
 				if ( ( new_left ) >= tlbOffsetLeft + 0
 				&& ( new_left ) <= tlbOffsetLeft + 84 ){
-					itb.style.left	= new_left + 'px';
+					// itb.style.left	= new_left + 'px';
 					var wbf = document.getElementById('WHITEBOARD_FRAME');
 					var wb  = document.getElementById('WHITEBOARD');
 					var wbt = document.getElementById('WHITEBOARD_TIMELINE');
