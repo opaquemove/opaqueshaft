@@ -2,7 +2,6 @@ window.onload = init;
 window.onresize = fitting;
 window.onorientationchange = fitting;
 
-
 var w_whiteboard    = null;
 var w_child			= null;
 
