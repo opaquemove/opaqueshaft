@@ -1,6 +1,7 @@
 var express = require('express');
 var router  = express.Router();
 var pgp     = require('pg-promise')();
+pgp.defaults.ssl = true;
 var db      = pgp( process.env.DATABASE_URL );
 //
 //  prepare 
