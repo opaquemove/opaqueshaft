@@ -4,7 +4,7 @@ var pgp     = require('pg-promise')();
 var conf = {
   connectionString : process.env.DATABASE_URL,
   max : 30,
-  ssl : { rejectAuthorized: false }
+  ssl : true 
  };
 
 var db      = pgp( conf );
