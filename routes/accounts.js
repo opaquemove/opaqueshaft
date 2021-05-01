@@ -1,7 +1,14 @@
 var express = require('express');
 var router  = express.Router();
 var pgp     = require('pg-promise')();
-var db      = pgp( process.env.DATABASE_URL );
+// SSL OFF connection 20210501 fix
+var conf    = {
+    connectionString : process.env.DATABASE_URL;
+    max : 30,
+    ssl : { rejectUnauthorized: false }
+    };
+var db      = pgp( conf );
+//var db      = pgp( process.env.DATABASE_URL;
 //
 //  prepare 
 //  $export DATABASE_URL=postgres://[id]:[password]@localhost:5432/opaqueshaft
