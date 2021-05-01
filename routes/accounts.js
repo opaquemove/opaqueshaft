@@ -3,7 +3,7 @@ var router  = express.Router();
 var pgp     = require('pg-promise')();
 // SSL OFF connection 20210501 fix
 var conf    = {
-    connectionString : process.env.DATABASE_URL;
+    connectionString : process.env.DATABASE_URL,
     max : 30,
     ssl : { rejectUnauthorized: false }
     };
