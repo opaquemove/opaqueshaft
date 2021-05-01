@@ -7,11 +7,15 @@ var conf    = {
     max : 30,
     ssl : { rejectUnauthorized: false }
     };
-var db      = pgp( conf );
-//var db      = pgp( process.env.DATABASE_URL;
+var db;
+    if ( process.env.NODE_ENV == 'production' ) // heroku server specific
+        db = pgp( conf );
+      else
+        db = pgp( process.env.DATABASE_URL );	// development pc
 //
 //  prepare 
 //  $export DATABASE_URL=postgres://[id]:[password]@localhost:5432/opaqueshaft
+//  $NODE_ENV=production is HEROKU production server 
 
 router.get('/', function(req, res, next ){
     res.header('Content-Type', 'application/json;charset=utf-8');
