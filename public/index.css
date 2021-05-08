@@ -154,9 +154,9 @@ INPUT[type=password]:focus{
 	left:					42px;
 	width:					42px;
 	height:					168px;
-	color:					white;
+	color:					darkgray;
 	background-color:		transparent;
-	font-size:				14px;
+	font-size:				6px;
 	z-index:				65001;
 }
 #ID_NAV_TILE{
@@ -171,7 +171,7 @@ INPUT[type=password]:focus{
 	background-size:		24px;
 	background-repeat:		no-repeat;
 	background-position:	center center;
-	font-size:				14px;
+/*	font-size:				14px;	*/
 	border-radius: 			8px;
 }
 #ID_NAV_REPORT{
@@ -186,7 +186,7 @@ INPUT[type=password]:focus{
 	background-size:		24px;
 	background-repeat:		no-repeat;
 	background-position:	center center;
-	font-size:				14px;
+/*	font-size:				14px;	*/
 	border-radius: 			8px;
 }
 /*
@@ -239,7 +239,7 @@ INPUT[type=password]:focus{
 	background-size:		24px;
 	background-repeat:		no-repeat;
 	background-position:	center center;
-	font-size:				14px;
+/*	font-size:				14px;	*/
 	border-radius: 			8px;
 }
 #ID_NAV_LOG{
@@ -248,13 +248,13 @@ INPUT[type=password]:focus{
 	left:					0px;
 	width:					42px;
 	height:					42px;
-	color:					snow;
+	color:					darkgray;
 	background-color:		rgb(250, 217, 217);
 	background-image:		url(./images/list.png);
 	background-size:		24px;
 	background-repeat:		no-repeat;
 	background-position:	center center;
-	font-size:				14px;
+/*	font-size:				6px; */
 	border-radius: 			8px;
 }
 

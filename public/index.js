@@ -1682,7 +1682,7 @@ function Nav( func ){
 	m.style.height			= '126px';
 	m.style.color			= 'snow';
 	m.style.backgroundColor	= 'transparent';
-	m.style.fontSize		= '14px';
+	m.style.fontSize		= '6px';
 	// m.style.pointerEvents	= 'none';
 	m.style.zIndex			= 65000;
 	m.style.visibility		= 'hidden';
@@ -1690,29 +1690,43 @@ function Nav( func ){
 	r += '<div                        class="vh-center nav_icon2" style="position:absolute;top:42px;left:42px;" >';
 		r += '&nbsp;';
 	r += '</div>';
-	r += '<div marked="yes" target="escort"        class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';
-		r += '<img width="22px" src="./images/family.png" />';
+	r += '<div marked="yes" target="escort"        class="nav_icon2" ';
+	r += ' style="text-align:center;position:absolute;top:84px;left:42px;background-image:url(./images/family.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';
+		r += 'escort';
+		//r += '<img width="22px" src="./images/family.png" />';
 	r += '</div>';
 	// r += '<div target="close" class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';	//	Close NAV
 	// 	r += '<img width="16px" src="./images/cancel.png" />';
 	// r += '</div>';
-	r += '<div marked="yes" target="delete"        class="vh-center nav_icon2" style="position:absolute;top:0px;left:42px;" >';	// Delete Mark Child
-		r += '<img width="22px" src="./images/minus-2.png" />';
+	r += '<div marked="yes" target="delete"        class="nav_icon2" ';
+	r += ' style="text-align:center;position:absolute;top:0px;left:42px;background-image:url(./images/minus-2.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Delete Mark Child
+		r += 'delete';
+		//r += '<img width="22px" src="./images/minus-2.png" />';
 	r += '</div>';
-	r += '<div marked="yes" target="checkout"      class="vh-center nav_icon2" style="position:absolute;top:21px;left:84px;" >';	// Checkout Mark Child
-		r += '<img width="22px" src="./images/check-3.png" />';
+	r += '<div marked="yes" target="checkout"      class="nav_icon2" ';
+	r += ' style="text-align:center;position:absolute;top:21px;left:84px;background-image:url(./images/check-3.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
+		r += 'chk out';
+		//r += '<img width="22px" src="./images/check-3.png" />';
 	r += '</div>';
-	r += '<div marked="yes" target="checkoutclear" class="vh-center nav_icon2" style="position:absolute;top:63px;left:84px;" >';	// Checkout Clear Mark Child
-		r += '<img width="22px" src="./images/dry-clean.png" />';
+	r += '<div marked="yes" target="checkoutclear" class="nav_icon2" ';
+	r += ' style="text-align:center;position:absolute;top:63px;left:84px;background-image:url(./images/dry-clean.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Clear Mark Child
+		r += 'chk clr';
+		//r += '<img width="22px" src="./images/dry-clean.png" />';
 	r += '</div>';
-	r += '<div marked="yes" target="property"      class="vh-center nav_icon2" style="position:absolute;top:21px;left:0px;" >';	// Checkout Mark Child
-		r += '<img width="22px" src="./images/hexagon.png" />';
+	r += '<div marked="yes" target="property"      class="nav_icon2" ';
+	r += ' style="text-align:center;position:absolute;top:21px;left:0px;background-image:url(./images/hexagon.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
+		r += 'property';
+		//r += '<img width="22px" src="./images/hexagon.png" />';
 	r += '</div>';
-	r += '<div marked="yes" target="absent" class="vh-center nav_icon2" style="position:absolute;top:63px;left:0px;" >';	// Checkout Clear Mark Child
-		r += '<img width="22px" src="./images/sleep-2.png" />';
+	r += '<div marked="yes" target="absent" class="nav_icon2" ';
+	r += ' style="text-align:center;position:absolute;top:63px;left:0px;background-image:url(./images/sleep-2.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Absent Child
+		r += 'absent';
+		//r += '<img width="22px" src="./images/sleep-2.png" />';
 	r += '</div>';
-	r += '<div target="exchange"   class="vh-center nav_icon2" style="position:absolute;top:105px;left:84px;height:21px;" >';
-		r += '<img width="12px" src="./images/exchange.png" />';
+	r += '<div target="exchange"   class="vh-center nav_icon2" ';
+	r += ' style="position:absolute;top:105px;left:84px;height:21px;background-image:url(./images/exchange.png);background-size:12px;background-position:center center;background-repeat:no-repeat;" >';
+		r += 'socket';
+		//r += '<img width="12px" src="./images/exchange.png" />';
 	r += '</div>';
 
 	m.innerHTML				= r;
