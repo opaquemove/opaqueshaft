@@ -61,19 +61,19 @@ spotlight.prototype = {
         o3.setAttribute( 'id',    'CHILDFINDER_HEADER' );
         o3.setAttribute( 'class', 'not_select' );
         r = '';
-        r += '<div id="BTN_ALIGN_SPOTLIGHT" style="float:left;width:42px;height:42px;background-color:rgb(255, 123, 0);background-image:url(./images/searching.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_ALIGN_SPOTLIGHT" style="float:left;width:42px;height:42px;background-color:rgb(255, 123, 0);background-image:url(./images/searching.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >child</div>';
         r += '<div style="float:left;padding:10px 10px 10px 10px;" >';
             r += '<form onsubmit="return false;" >';
             r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:100px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
             r += '</form>';
         r += '</div>';
-        r += '<div id="BTN_CLOSE_SPOTLIGHT"   style="float:right;width:26px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_LISTALL"           style="float:right;width:26px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_TIMESELECTOR"      style="float:right;width:26px;height:42px;background-image:url(./images/time.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_CLOSE_SPOTLIGHT"   style="float:right;width:26px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >close</div>';
+        r += '<div id="BTN_LISTALL"           style="float:right;width:26px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >all</div>';
+        r += '<div id="BTN_TIMESELECTOR"      style="float:right;width:26px;height:42px;background-image:url(./images/time.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >time</div>';
         r += '<div id="BTN_CHILD_PROPERTY"    style="float:right;width:26px;height:42px;background-image:url(./images/hexagon.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_CLEAR_LIST"        style="float:right;width:26px;height:42px;background-image:url(./images/eraser.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_REFRESH_LIST"      style="float:right;width:26px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
-        r += '<div id="BTN_FOLDING_SPOTLIGHT" style="float:right;width:26px;height:42px;background-image:url(./images/prev.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
+        r += '<div id="BTN_CLEAR_LIST"        style="float:right;width:26px;height:42px;background-image:url(./images/eraser.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >clear</div>';
+        r += '<div id="BTN_REFRESH_LIST"      style="float:right;width:26px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >refrsh</div>';
+        r += '<div id="BTN_FOLDING_SPOTLIGHT" style="float:right;width:26px;height:42px;background-image:url(./images/prev.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >large</div>';
 
         o3.innerHTML = r;
         this.header     = this.frame.appendChild( o3 );
@@ -83,9 +83,11 @@ spotlight.prototype = {
                 if ( this.frame.style.width == '90%' ){
                     this.frame.style.width = '';
                     document.getElementById('BTN_FOLDING_SPOTLIGHT').style.backgroundImage= 'url(./images/prev.png)';
+                    document.getElementById('BTN_FOLDING_SPOTLIGHT').innerText = 'large';
                 } else{
                     this.frame.style.width = '90%';
                     document.getElementById('BTN_FOLDING_SPOTLIGHT').style.backgroundImage= 'url(./images/next.png)';
+                    document.getElementById('BTN_FOLDING_SPOTLIGHT').innerText = 'small';
                 }
             }).bind( this ), false );
         document.getElementById('BTN_TIMESELECTOR').addEventListener( 'click',
