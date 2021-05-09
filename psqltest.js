@@ -1,7 +1,7 @@
 const pg = require('pg');
 
-var id = 'masa';
-var pwd = 'password';
+var id = 'なんとか';
+var pwd = 'かんとか';
 var rs = null;
 authAccount( id, pwd ).then( result => {
   console.log('mark1');
