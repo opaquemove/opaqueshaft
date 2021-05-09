@@ -27,7 +27,7 @@ BODY{
 }
 
 BUTTON{
-	color:				darkgray;
+	color:				black;
 }
 BUTTON:focus{
 	outline:			none;
