@@ -1327,17 +1327,3 @@ INPUT[type=password]:focus{
 http://kachibito.net/css/svg-circular-progress-css-animated-angle-gradient
 */
 
-::-webkit-scrollbar {
-	width: 10px;
-}
-
-::-webkit-scrollbar-track {
-	border-radius: 10px;
-	box-shadow: inset 0 0 6px rgba( 0, 0, 0, .1);
-}
-
-::-webkit-scrollbar-thumb {
-	background-color: rgba(0, 0, 50, .5);
-	border-radius: 10px;
-	box-shadow: 0 0 0 1px rgba(255,255,255,.3);
-}
