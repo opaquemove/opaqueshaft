@@ -10,8 +10,14 @@ var getDevice = function(){
 
 switch ( getDevice() ){
     case 'smartphone':
-    case 'other':
         document.write('<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">');
+        break;
+    case 'other':
+        var ua = navigator.userAgent;
+        document.write('<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">');
+        if ( ua.indexOf('windows nt') != -1 ){
+            document.write('<link rel="stylesheet" type="text/css" href="./modal.css" />' );
+        }
         break;
     case 'tablet':
         document.write('<meta name="viewport" content="width=1280">');
