@@ -16,7 +16,7 @@ switch ( getDevice() ){
         var ua = navigator.userAgent;
         document.write('<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">');
         if ( ua.indexOf('windows nt') != -1 ){
-            document.write('<link rel="stylesheet" type="text/css" href="./modal.css" />' );
+            document.write('<link rel="stylesheet" type="text/css" href="./scrollbar.css" />' );
         }
         break;
     case 'tablet':
