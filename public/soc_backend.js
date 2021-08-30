@@ -899,14 +899,14 @@ function propertyChildren(){
     frame.style.flexWrap            = 'wrap';
     frame.style.justifyContent      = 'center';
     frame.style.alignItems          = 'center';
-    frame.style.backgroundColor     = 'white';
+    frame.style.background          = 'rgba(0,0,0,0.5)';
     frame.style.backgroundImage     = 'url(./images/cancel-2.png)';
     frame.style.backgroundSize      = '42px';
     frame.style.backgroundPosition  = 'top right';
     frame.style.backgroundRepeat    = 'no-repeat';
 
     // frame.style.filter          = 'blur(4px)';
-    frame.style.opacity         = 0.9;
+    //frame.style.opacity         = 0.5;
     frame.style.zIndex          = 70000;
     var oFrame = document.body.appendChild( frame );
     oFrame.addEventListener( 'click',
@@ -940,6 +940,7 @@ function propertyChildren(){
         o.style.border          = '1px solid black';
         o.style.color           = 'dimgray';
         o.style.fontSize        = '12px';
+    
 
         var r = '';
         r += '<div style="width:100%;height:;" >';
@@ -1013,6 +1014,8 @@ function propertyChildren(){
         document.getElementById('BTN_UPDATE_CHILD_REMARK_' + id ).addEventListener(
             'click', function(e){
                 updateChildRemark( id );
+                oLog.log( null, 'update child.' );
+                oLog.open( 3 );
             }, false );
         propertyWhiteboardChildHelper( id );
 

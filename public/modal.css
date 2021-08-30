@@ -318,7 +318,7 @@
 }
 
 #MODAL_OVERLAY_MESSAGELOG{
-	z-index:			69999;
+	z-index:			70001;
 	pointer-events: 	none;
 	visibility:			hidden;
 	position:			fixed;
