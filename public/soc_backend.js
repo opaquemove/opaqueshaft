@@ -1048,20 +1048,28 @@ function deleteWhiteboardChild(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'delete child';
 	r += '</div>';
-    r += '<div id="CHILD_LST" style="margin:0 auto;width:60%;height:150px;font-size:14px;border:1px solid lightgrey;">';
+    r += '<div id="CHILD_LST" style="margin:0 auto;width:80%;height:150px;font-size:14px;border:1px solid lightgrey;">';
 	r += '</div>';
 	r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
         r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button" ';
-        r += ' style="width:130px;height:30px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/minus.png);background-size:24px;background-position:left center;background-repeat:no-repeat;" ';
+        r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/minus.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
         r += ' onclick="deleteWhiteboardChildHelper();"   >';
-        r += 'Delete</button>';
-	r += '</div>';
-    openModalDialog( 'delete child', r, 'OK_CANCEL',
-        function(){
-            deleteWhiteboardChildHelper();
-            closeModalDialog();
-        }, null );
-    document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();
+        r += '</button>';
+
+        r += '<button id="" type="button" ';
+        r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+        r += ' onclick="closeModalDialog();" >';
+        r += '</button>'
+
+        r += '</div>';
+    openModalDialog( 'delete child', r, 'NOBUTTON',
+        null, 'DELETE' );
+    // openModalDialog( 'delete child', r, 'OK_CANCEL',
+    //     function(){
+    //         deleteWhiteboardChildHelper();
+    //         closeModalDialog();
+    //     }, 'DELETE' );
+    // document.getElementById('BTN_DELETEWHITEBOARDCHILD').focus();
     makeDeleteChildList();
  
 }
@@ -1074,6 +1082,7 @@ function makeDeleteChildList(){
         var c = children[i];
         var o = document.createElement('DIV');
         o.style.borderBottom    = '1px solid lightgrey';
+        o.style.padding         = '2px';
         o.style.height          = '20px';
         o.innerText = c.getElementsByClassName('CHILD_NAME')[0].innerText;
         lst.appendChild( o );
@@ -1493,26 +1502,27 @@ function checkoutWhiteboardChild(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'checkout children';
     r += '</div>';
-    r += '<div style="clear:both;margin:0 auto;width:97%;height:18px;font-size:12px;color:red;background-color:lightgrey;border:1px solid lightgrey;" >';
+    r += '<div style="clear:both;margin:0 auto;width:90%;height:18px;font-size:12px;color:red;background-color:lightgrey;border:1px solid lightgrey;" >';
         r += '<div style="float:left;" >Name</div>';
-        r += '<div style="float:right;width:26px;border-left:1px solid grey;" >Right</div>';
-        r += '<div style="float:right;width:26px;border-left:1px solid grey;" >Left</div>';
+        r += '<div style="float:right;width:34px;border-left:1px solid grey;" >Right</div>';
+        r += '<div style="float:right;width:34px;border-left:1px solid grey;" >Left</div>';
+        r += '<div style="float:right;width:58px;border-left:1px solid grey;" >Check</div>';
     r += '</div>';
     r += '<form name="directions" onsubmit="return false;" >';
-    r += '<div id="ID_MARKEDCHILDREN_LIST" style="clear:both;margin:0 auto;width:97%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '<div id="ID_MARKEDCHILDREN_LIST" style="clear:both;margin:0 auto;width:90%;height:270px;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
     r += '</form>';
 	r += '<div style="clear:both;margin:0 auto;width:97%;text-align:center;margin:0 auto;">';
         r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
-        r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-position:center center;background-size:60px;background-repeat:no-repeat;" ';
+        r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
         r += 'onclick="checkoutWhiteboardChildHelper();closeModalDialog();" >';
-        r += '</button>'
+        r += '</button>';
         r += '<button id="" type="button" ';
-        r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:60px;background-repeat:no-repeat;" ';
+        r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
         r += 'onclick="closeModalDialog();" >';
         r += '</button>'
 	r += '</div>';
-    openModalDialog( 'checkout children', r, 'NOBUTTON', null, 'MAX' );
+    openModalDialog( 'checkout children', r, 'NOBUTTON', null, 'CHECK' );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
     var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
@@ -1524,7 +1534,7 @@ function checkoutWhiteboardChild(){
         // var oChild = getChild( id );
         var o = document.createElement('DIV');
         o.style.width = '100%';
-        o.style.height = '30px';
+        o.style.height = '40px';
         o.style.clear = "both";
         o.style.borderBottom = '1px solid lightgrey';
         r = '';
@@ -1616,31 +1626,43 @@ function checkoutClearWhiteboardChild(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'checkout clear children';
     r += '</div>';
-    r += '<div id="ID_MARKEDCHILDREN_LIST" style="margin:0 auto;width:70%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '<div id="ID_MARKEDCHILDREN_LIST" style="margin:0 auto;width:90%;height:270px;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
-	// r += '<div style="margin:0 auto;width:110px;margin:0 auto;">';
-    //     r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
-    //     r += 'style="width:140px;height:30px;font-size:12px;" ';
-    //     r += 'onclick="checkoutClearWhiteboardChildHelper();closeModalDialog();" >';
-    //     r += '<img width="24px" src="./images/close.png" />Checkout Clear</button>';
-	// r += '</div>';
-    openModalDialog( 'checkout clear children', r, 'OK_CANCEL',
-        function(){
-            checkoutClearWhiteboardChildHelper();
-            closeModalDialog();
-        }, null );
+	r += '<div style="margin:0 auto;width:97%;text-align:center;">';
+        r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
+        r +=  'style="width:80px;height:80px;font-size:12px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+        r +=  'onclick="checkoutClearWhiteboardChildHelper();closeModalDialog();" >';
+        // r +=  '<img width="24px" src="./images/check-3.png" />';
+        r += '</button>';
+        r += '<button id="" type="button" ';
+        r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+        r += 'onclick="closeModalDialog();" >';
+        r += '</button>'
+	r += '</div>';
+
+    openModalDialog( 'checkout clear children', r, 'NOBUTTON',
+        null, 'CHECK' );
+    // openModalDialog( 'checkout clear children', r, 'OK_CANCEL',
+    // function(){
+    //     checkoutClearWhiteboardChildHelper();
+    //     closeModalDialog();
+    // }, 'CHECK' );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
     var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
-        var id = children[i].getAttribute('child_id');
-        var oChild = getChild( id );
+        var c = children[i];
+        var id = c.getAttribute('child_id');
+        var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
+
+        // var oChild = getChild( id );
         var o = document.createElement('DIV');
         o.style.width = '100%';
         o.style.height = '40px';
         o.style.clear = "both";
+        o.style.padding        = '2px';
         o.style.borderBottom = '1px solid lightgrey';
         r = '';
-        r += '<div style="float:left;width:150px;font-size:14px;" >' + oChild.child_name + '</div>';
+        r += '<div style="float:left;width:150px;font-size:14px;" >' + child_name + '</div>';
 
         o.innerHTML = r;
         imcl.appendChild( o );
