@@ -267,28 +267,29 @@ function initWhiteboardMode(){
 	var ime  = document.getElementById('ID_MODE_ESCORT');
 	imne.addEventListener( 'click', modeWhiteboard, false );
 	ime.addEventListener( 'click', modeWhiteboard, false );
-	document.getElementById('ID_MODE_FRAME').addEventListener( 'dblclick',
-		function(e){
-			var wb  = document.getElementById('WHITEBOARD');
-			var wbe = document.getElementById('WHITEBOARD_ESCORT');
-			var wba = document.getElementById('WHITEBOARD_ABSENT');
-			switch ( wb.style.width ){
-				case '50%':
-					wb.style.width 	= '';
-					wbe.style.left 	= '';
-					wbe.style.width	= '';	
-					wba.style.width	= '';		
-					criteriaEscortPixel = document.body.clientWidth;	
-					break;
-				default:
-					wb.style.width 	= '50%';
-					wbe.style.left 	= '50%';
-					wbe.style.width	= '50%';	
-					wba.style.width	= '50%';	
-					criteriaEscortPixel = document.body.clientWidth / 2;	
-					break;
-			}
-		}, false );
+	imne.dispatchEvent( new Event('click') );
+	// document.getElementById('ID_MODE_FRAME').addEventListener( 'dblclick',
+	// 	function(e){
+	// 		var wb  = document.getElementById('WHITEBOARD');
+	// 		var wbe = document.getElementById('WHITEBOARD_ESCORT');
+	// 		var wba = document.getElementById('WHITEBOARD_ABSENT');
+	// 		switch ( wb.style.width ){
+	// 			case '50%':
+	// 				wb.style.width 	= '';
+	// 				wbe.style.left 	= '';
+	// 				wbe.style.width	= '';	
+	// 				wba.style.width	= '';		
+	// 				criteriaEscortPixel = document.body.clientWidth;	
+	// 				break;
+	// 			default:
+	// 				wb.style.width 	= '50%';
+	// 				wbe.style.left 	= '50%';
+	// 				wbe.style.width	= '50%';	
+	// 				wba.style.width	= '50%';	
+	// 				criteriaEscortPixel = document.body.clientWidth / 2;	
+	// 				break;
+	// 		}
+	// 	}, false );
 
 }
 function modeWhiteboard( e ){
@@ -300,21 +301,27 @@ function modeWhiteboard( e ){
 	var wba	= document.getElementById('WHITEBOARD_ABSENT');
 	switch ( this.getAttribute('id')){
 		case 'ID_MODE_NO_ESCORT':
-			this.classList.add( 'mode_on' );
+			imne.classList.add( 'mode_on' );
 			ime.classList.remove( 'mode_on' );
 			wb.style.zIndex		= 3;
+			wb.style.opacity	= 1;
 			wbe.style.zIndex	= 2;
+			wbe.style.opacity	= 0.5;
 			wba.style.zIndex	= 1;
+			wba.style.opacity	= 0.5;
 			curWhiteboard		= 'WHITEBOARD';
-		break;
+			break;
 		case 'ID_MODE_ESCORT':
-			this.classList.add( 'mode_on' );
+			ime.classList.add( 'mode_on' );
 			imne.classList.remove( 'mode_on' );
 			wbe.style.zIndex	= 3;
+			wbe.style.opacity	= 1;
 			wb.style.zIndex		= 2;
+			wb.style.opacity	= 0.5;
 			wba.style.zIndex	= 1;
+			wba.style.opacity	= 0.5;
 			curWhiteboard		= 'WHITEBOARD_ESCORT';
-		break;
+			break;
 		}
 
 }
