@@ -1000,7 +1000,7 @@ function propertyChildren(){
                 r += '<div style="float:left;width:30px;text-align:center;" >escort</div>';
             r += '</div>';
 
-            r += '<div id="HISTORY_LST_' + id + '" style="height:100px;font-size:10px;border:1px solid lightgrey;" >';
+            r += '<div id="HISTORY_LST_' + id + '" style="height:80px;font-size:10px;border:1px solid lightgrey;" >';
             r += '</div>';
 
 			r += '<div style="width:100%;padding-top:4px;text-align:center;" >';
