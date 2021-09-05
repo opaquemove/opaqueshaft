@@ -134,7 +134,7 @@ function clearWhiteboardHelper(){
         wb.removeChild( wb.firstChild );
         updateFlg   = true;
     }
-    var wb = document.getElementById('WHITEBOARD_ESCORT');
+    var wb = document.getElementById('WHITEBOARD_CHECKOUT');
     while ( wb.firstChild){
         wb.removeChild( wb.firstChild );
         updateFlg   = true;
@@ -207,7 +207,7 @@ function reportWhiteboardSummary(){
     var c_escort        = 0;
     var c_children      = 0;
     var wb  = document.getElementById('WHITEBOARD');
-    var wbe = document.getElementById('WHITEBOARD_ESCORT');
+    var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
     
     c_children = wb.childNodes.length;
     for ( var i=0; i<wb.childNodes.length; i++ ){
@@ -539,6 +539,8 @@ function attendChildHelper( c ){
     c.style.backgroundRepeat    = '';
     c.style.transformOrigin     = ''
     c.style.transform           = '';
+    c.removeAttribute('absent');
+
     console.log( 'attend before left:' + c.style.left );
     var cc = wb.appendChild( c );
     console.log( 'attend before after:' + cc.style.left );
@@ -560,7 +562,7 @@ function getChildrenByHour( h ){
         if ( c.offsetTop >= s && c.offsetTop <= e )
              h_children[i++] = c;  
     }
-    children = document.getElementById('WHITEBOARD_ESCORT').childNodes;
+    children = document.getElementById('WHITEBOARD_CHECKOUT').childNodes;
     for ( var j=0; j<children.length; j++ ){
         var c = children[j];
         var s = ( h - 8 ) * pixelPerHour;
@@ -641,7 +643,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     c.innerHTML = r;
     //
     //  WHITEBOARD/WHITEBOARD_ABSENTに追加
-    //  escort:trueならWHITEBOARD_ESCORTに移動
+    //  escort:trueならWHITEBOARD_XXXに移動
     //
     var cc = wb.appendChild( c );
     var et = cc.getElementsByClassName('ESTIMATE_TIME')[0];
@@ -651,8 +653,8 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     // var escort = coordinateToEscort( cc.offsetTop, cc.offsetLeft );
     // エスコート処理
     if ( escort ){
-        var wbe = document.getElementById('WHITEBOARD_ESCORT');
-        cc = wbe.appendChild( cc );
+        // var wbe = document.getElementById('WHITEBOARD_XXX');
+        // cc = wbe.appendChild( cc );
         cc.setAttribute('escort', 'yes' );
         setEscortHelper( cc, 'ON' );
     }
@@ -1138,7 +1140,7 @@ function getMarkedChild(){
             children.push( c );
         c = c.nextSibling;
     }
-    p = document.getElementById( 'WHITEBOARD_ESCORT' );
+    p = document.getElementById( 'WHITEBOARD_CHECKOUT' );
     c = p.firstChild;
     while( c ){
         if ( isMarkedChild( c ) )
@@ -1157,7 +1159,7 @@ function getMarkedChild(){
 function getMarkedEscortChild(){
     var children = [];
     var index = 0;
-    var p = document.getElementById( 'WHITEBOARD_ESCORT');
+    var p = document.getElementById( 'WHITEBOARD_CHECKOUT');
     var c = p.firstChild;
     while( c ){
         if ( isMarkedChild( c ) )
@@ -1188,7 +1190,7 @@ function scanWhiteboardChild( child_id ){
             }
         }
     }
-    children = document.getElementById('WHITEBOARD_ESCORT').childNodes;
+    children = document.getElementById('WHITEBOARD_CHECKOUT').childNodes;
     for ( var i=0; i<children.length; i++){
         var c = children[i];
         if ( c.hasAttribute('child_id') ){
@@ -1278,7 +1280,7 @@ function unmarkChild( c ) {
 //
 function showWhiteboardChildCount(){
     var wb  = document.getElementById('WHITEBOARD').childNodes;
-    var wbe = document.getElementById('WHITEBOARD_ESCORT').childNodes;
+    var wbe = document.getElementById('WHITEBOARD_CHECKOUT').childNodes;
     var wcc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT');
     wcc.innerText = wb.length + wbe.length;
     var c_checkout = showWhiteboardChildCountCheckout();
@@ -1303,7 +1305,7 @@ function showWhiteboardChildCountCheckout(){
         var c = children[i];
         if ( c.hasAttribute('checkout')) cnt++;
     }
-    children  = document.getElementById('WHITEBOARD_ESCORT').childNodes;
+    children  = document.getElementById('WHITEBOARD_CHECKOUT').childNodes;
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         if ( c.hasAttribute('checkout')) cnt++;
@@ -1342,17 +1344,19 @@ function escortChild(){
     if ( children.length == 0 ) return;
 
     var wb  = document.getElementById('WHITEBOARD');
-    var wbe = document.getElementById('WHITEBOARD_ESCORT');
+    var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         switch ( curWhiteboard ){
-            case 'WHITEBOARD':      //  WHITEBOARD -> WHITEBOARD_ESCORT
-                var cc = wbe.appendChild( c );
+            case 'WHITEBOARD':      //  WHITEBOARD -> WHITEBOARD_CHECKOUT
+                // var cc = wbe.appendChild( c );
+                var cc = c;
                 cc.setAttribute('escort', 'yes');
                 setEscortHelper( cc, 'ON' );
                 break;
-            case 'WHITEBOARD_ESCORT':   // WHITEBOARD_ESCORT -> WHITEBOARD
-                var cc = wb.appendChild( c );
+            case 'WHITEBOARD_CHECKOUT':   // WHITEBOARD_CHECKOUT -> WHITEBOARD
+                // var cc = wb.appendChild( c );
+                var cc = c;
                 cc.removeAttribute('escort');
                 setEscortHelper( cc, 'OFF' );
                 break;
@@ -1371,11 +1375,12 @@ function escortWhiteboardChild(){
     var children = getMarkedChild();
     if ( children.length == 0 ) return;
     
-    var wbe = document.getElementById('WHITEBOARD_ESCORT');
+    var wbe = document.getElementById('WHITEBOARD_XXX');
     
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
-        var cc = wbe.appendChild( c );
+        // var cc = wbe.appendChild( c );
+        var cc = c;
         unmarkChild( cc );
         cc.setAttribute('escort', 'yes');
         setEscortHelper( cc, 'ON' );
@@ -1476,9 +1481,8 @@ function checkoutChild( c, operator, co_time, direction ){
     updateFlg   = true;
 
     //WHITEBOARD_CHECKOUTへ移動
-    // var wbc = document.getElementById('WHITEBOARD_CHECKOUT');
-    // var cc = wbc.appendChild( c );
-
+    var wbc = document.getElementById('WHITEBOARD_CHECKOUT');
+    var cc = wbc.appendChild( c );
 
     showWhiteboardChildCountCheckout();
     
@@ -1717,6 +1721,10 @@ function checkoutClearChild( c ){
     c.style.transformOrigin     = 'top left';
     c.style.transform           = 'rotate(0deg)';
 
+    //WHITEBOARDへ移動
+    var wb = document.getElementById('WHITEBOARD');
+    var cc = wb.appendChild( c );
+
     updateFlg   = true;
 
 
@@ -1739,18 +1747,16 @@ function absentChild(){
         var c = children[i];
         unmarkChild( c );
         absentChildHelper( c );
-        // c.style.backgroundImage     = 'url(./images/remove.png)';
-        // c.style.backgroundSize      = '20px';
-        // c.style.backgroundPosition  = 'right center';
-        // c.style.backgroundRepeat    = 'no-repeat';
-        // c.style.transformOrigin     = 'top left';
-        // c.style.transform           = 'rotate(-45deg)';
     
         abs.appendChild( c );
         updateFlg   = true;
     }
     showWhiteboardChildCount();
 }
+
+//
+//
+//
 function absentChildHelper( c ){
     c.style.backgroundImage     = 'url(./images/remove.png)';
     c.style.backgroundSize      = '20px';
@@ -1758,6 +1764,18 @@ function absentChildHelper( c ){
     c.style.backgroundRepeat    = 'no-repeat';
     c.style.transformOrigin     = 'top left';
     c.style.transform           = 'rotate(-45deg)';
+
+    c.setAttribute('absent', 'yes');
+
+    // if ( c.hasAttribute('absent')){
+    //     console.log('attend');
+    //     c.style.backgroundColor = '';
+    //     c.removeAttribute('absent');
+    // } else {
+    //     console.log('absent');
+    //     c.style.backgroundColor = 'lightgrey';
+    //     c.setAttribute('absent', 'yes');
+    // }
 
 }
 

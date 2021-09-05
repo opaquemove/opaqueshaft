@@ -207,7 +207,7 @@ INPUT[type=password]:focus{
 }
 */
 
-#ID_MODE_NO_ESCORT{
+#ID_MODE_CHECKIN{
 	width:					40px;
 	height:					40px;
 	color:					snow;
@@ -215,6 +215,13 @@ INPUT[type=password]:focus{
 	border:					1px solid rgb(255, 123, 0);
 }
 #ID_MODE_ESCORT{
+	width:					40px;
+	height:					40px;
+	color:					snow;
+	background-color:		rgb(255, 123, 0);
+	border:					1px solid rgb(255, 123, 0);
+}
+#ID_MODE_ABSENT{
 	width:					40px;
 	height:					40px;
 	color:					snow;
@@ -266,7 +273,7 @@ INPUT[type=password]:focus{
 	padding-top:			0px;
 	padding-bottom:			2px;
 	width:					100%;
-	height:					82px;
+	height:					122px;
 	color:					gray;
 	background-color:		transparent;
 /*	border-bottom:			1px solid lightgrey;*/
@@ -560,7 +567,7 @@ INPUT[type=password]:focus{
 #ID_MODE_FRAME{
 	pointer-events: 		auto;
 	width:					42px;
-	height:					84px;
+	height:					124px;
 	float:					right;
 	background-color: 		transparent;
 	padding:				0px;
@@ -674,7 +681,8 @@ INPUT[type=password]:focus{
 	visibility: 		visible;
 	z-index:			3;
 }
-#WHITEBOARD_ESCORT{
+/* old name is WHITEBOARD_ESCORT */
+#WHITEBOARD_CHECKOUT{
 	pointer-events: 	auto;
 	position: 			absolute;
 	top:				0px;

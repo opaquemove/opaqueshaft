@@ -263,7 +263,7 @@ function init()
 	//	ホワイトボード表示制御機能の初期化
 //
 function initWhiteboardMode(){
-	var imne = document.getElementById('ID_MODE_NO_ESCORT');
+	var imne = document.getElementById('ID_MODE_CHECKIN');
 	var ime  = document.getElementById('ID_MODE_ESCORT');
 	imne.addEventListener( 'click', modeWhiteboard, false );
 	ime.addEventListener( 'click', modeWhiteboard, false );
@@ -271,7 +271,7 @@ function initWhiteboardMode(){
 	// document.getElementById('ID_MODE_FRAME').addEventListener( 'dblclick',
 	// 	function(e){
 	// 		var wb  = document.getElementById('WHITEBOARD');
-	// 		var wbe = document.getElementById('WHITEBOARD_ESCORT');
+	// 		var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
 	// 		var wba = document.getElementById('WHITEBOARD_ABSENT');
 	// 		switch ( wb.style.width ){
 	// 			case '50%':
@@ -293,14 +293,14 @@ function initWhiteboardMode(){
 
 }
 function modeWhiteboard( e ){
-	var imne = document.getElementById('ID_MODE_NO_ESCORT');
+	var imne = document.getElementById('ID_MODE_CHECKIN');
 	var ime  = document.getElementById('ID_MODE_ESCORT');
 
 	var wb	= document.getElementById('WHITEBOARD');
-	var wbe	= document.getElementById('WHITEBOARD_ESCORT');
+	var wbe	= document.getElementById('WHITEBOARD_CHECKOUT');
 	var wba	= document.getElementById('WHITEBOARD_ABSENT');
 	switch ( this.getAttribute('id')){
-		case 'ID_MODE_NO_ESCORT':
+		case 'ID_MODE_CHECKIN':
 			imne.classList.add( 'mode_on' );
 			ime.classList.remove( 'mode_on' );
 			wb.style.zIndex		= 3;
@@ -320,7 +320,7 @@ function modeWhiteboard( e ){
 			wb.style.opacity	= 0.5;
 			wba.style.zIndex	= 1;
 			wba.style.opacity	= 0.5;
-			curWhiteboard		= 'WHITEBOARD_ESCORT';
+			curWhiteboard		= 'WHITEBOARD_CHECKOUT';
 			break;
 		}
 
@@ -702,7 +702,7 @@ function locateTimelinebar( e ){
 
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	var wb  = document.getElementById('WHITEBOARD');
-	var wbe = document.getElementById('WHITEBOARD_ESCORT');
+	var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
 	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	var itb = document.getElementById('ID_TIMELINE_BAR');
 	switch ( e.type ){
@@ -996,7 +996,7 @@ function alreadyExistChildOnWhiteboard( id ){
 		if ( children[i].getAttribute('child_id') == id )
 			return true;
 	}
-	children = document.getElementById('WHITEBOARD_ESCORT').childNodes;
+	children = document.getElementById('WHITEBOARD_CHECKOUT').childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		if ( children[i].getAttribute('child_id') == id )
 			return true;
@@ -1248,7 +1248,8 @@ function saveWhiteboardHelper(){
 	//	whiteboardレコードを更新
 	var rc = '';
 	var wb = document.getElementById('WHITEBOARD');
-	var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
+	var wb_checkout	= document.getElementById('WHITEBOARD_CHECKOUT');
+	var wb_absent	= document.getElementById('WHITEBOARD_ABSENT');
 
 	var desc =  document.getElementById('WB_DESC').value;
 	wb_description = desc;
@@ -1260,6 +1261,7 @@ function saveWhiteboardHelper(){
 				'&html=' + encodeURIComponent( wb.innerHTML ) +
 				'&html_absent=' + encodeURIComponent( wb_absent.innerHTML ) +
 				'&json_children=' + encodeURIComponent( JSON.stringify(json_children ) ) );
+	//	html,html_absentは意味はない
 
 	// var progress = document.getElementById('SAVE_PROGRESS');
 	// var r = '';
@@ -1274,41 +1276,7 @@ function saveWhiteboardHelper(){
 	//	Results削除
 	// rc = deleteChildResult( dayWhiteboard );
 	// oLog.log( null, 'delete child results...' );
-/*
-	// チャイルドのセーブ
-	var children = wb.childNodes;
-	for ( var i=0; i<children.length; i++ ){
-		var c = children[i];
-		var day = dayWhiteboard;
-		var child_id	= c.getAttribute('child_id');
-		var checkin		= c.getAttribute('checkin');
-		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
-		var checkout	= c.getAttribute('checkout');
-		//	if ( checkout == null ) checkout = checkin;
-		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
-		var direction	= c.getAttribute('direction');
-		if ( direction == null ) direction = '';
-		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, false );
-		oLog.log( null, 'save child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText + '(' + rc + ')' );
-	}
 
-	// 欠席チャイルドのセーブ
-	var absents = wb_absent.childNodes;
-	for ( var i=0; i<absents.length; i++ ){
-		var c = absents[i];
-		var day = dayWhiteboard;
-		var child_id	= c.getAttribute('child_id');
-		var checkin		= c.getAttribute('checkin');
-		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
-		var checkout	= c.getAttribute('checkout');
-		//	if ( checkout == null ) checkout = checkin;
-		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
-		var direction	= c.getAttribute('direction');
-		if ( direction == null ) direction = '';
-		rc = saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, true );
-		oLog.log( null, 'save absent child ' + c.getElementsByClassName('CHILD_NAME')[0].innerText + '(' + rc + ')' );
-	}
-*/	
 	oLog.log( null, 'save process completed.' );
 	oLog.open( 5 );
 
@@ -1322,6 +1290,7 @@ function saveWhiteboardHelper(){
 //
 function getJSONChildren(){
 	// var w = document.body.clientWidth;
+
 	var w = document.getElementById('WHITEBOARD').offsetWidth;
 
 	var jsonChildren = [];
@@ -1357,7 +1326,7 @@ function getJSONChildren(){
 			 'absent' 		: 0
 			 } );
 	}
-	var children = document.getElementById('WHITEBOARD_ESCORT').childNodes;
+	var children = document.getElementById('WHITEBOARD_CHECKOUT').childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
 		var child_id	= c.getAttribute('child_id');
@@ -1401,6 +1370,7 @@ function getJSONChildren(){
 		var operator	= c.getAttribute('operator');
 		if ( operator == null ) operator = acc_id;
 		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
+		var absent		= ( c.hasAttribute('absent') )? 1:0;		// 0: attend, 1: absent
 		var direction	= c.getAttribute('direction');
 		if ( direction == null ) direction = '';
 		var remark 		= ( c.hasAttribute('remark') )? decodeURIComponent( c.getAttribute('remark') ) : '';
@@ -1415,7 +1385,7 @@ function getJSONChildren(){
 			 'coordi_top'	: coordi_top,
 			 'coordi_left'	: coordi_left,
 			 'remark'		: remark,
-			 'absent' 		: 1
+			 'absent' 		: absent
 			 } );
 	}
 
@@ -1554,7 +1524,7 @@ function turnWhiteboard(){
 function hiddenWhiteboard(){
 	openWhiteboardFlg = false;
 	var wb  = document.getElementById('WHITEBOARD');
-	var wbe = document.getElementById('WHITEBOARD_ESCORT');
+	var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
 	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	wb.style.visibility = 'hidden';
 	wbe.style.visibility = 'hidden';
@@ -1568,7 +1538,7 @@ function hiddenWhiteboard(){
 function visibleWhiteboard(){
 	openWhiteboardFlg = true;
 	var wb  = document.getElementById('WHITEBOARD');
-	var wbe = document.getElementById('WHITEBOARD_ESCORT');
+	var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
 	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	wb.style.visibility = 'visible';
 	wbe.style.visibility = 'visible';
@@ -1582,7 +1552,7 @@ function visibleWhiteboard(){
 function locateWhiteboard( e ){
 	//e.preventDefault();
 	var wb = document.getElementById('WHITEBOARD');
-	var wbe = document.getElementById('WHITEBOARD_ESCORT');
+	var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
 	switch ( e.type ){
 		case 'touchstart':
 		case 'mousedown':
@@ -1881,7 +1851,7 @@ function fitting(){
 		cfm.style.height = h + 'px';
 	}
 
-	var imne = document.getElementById('ID_MODE_NO_ESCORT');
+	var imne = document.getElementById('ID_MODE_CHECKIN');
 	var ime  = document.getElementById('ID_MODE_ESCORT');
 	imne.style.top	= '84px';
 	imne.style.left	= ( w - imne.offsetWidth ) + 'px'
@@ -1958,8 +1928,9 @@ function showToolbar(){
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
-	var imne 	= document.getElementById('ID_MODE_NO_ESCORT');
+	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_ESCORT');
+	var ima		= document.getElementById('ID_MODE_ABSENT');
 	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'visible';
 	nsi2.style.visibility	= 'visible';
@@ -1972,6 +1943,7 @@ function showToolbar(){
 	psb.style.visibility	= 'visible';
 	imne.style.visibility	= 'visible';
 	ime.style.visibility	= 'visible';
+	ima.style.visibility	= 'visible';
 	// eam.style.visibility	= 'visible';
 	visibleWhiteboard();
 
@@ -1988,8 +1960,9 @@ function hideToolbar(){
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba		= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
-	var imne 	= document.getElementById('ID_MODE_NO_ESCORT');
+	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_ESCORT');
+	var ima  	= document.getElementById('ID_MODE_ABSENT');
 	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'hidden';
 	nsi2.style.visibility	= 'hidden';
@@ -2002,6 +1975,7 @@ function hideToolbar(){
 	psb.style.visibility	= 'hidden';
 	imne.style.visibility	= 'hidden';
 	ime.style.visibility	= 'hidden';
+	ima.style.visibility	= 'hidden';
 	// eam.style.visibility	= 'hidden';
 	hiddenWhiteboard();
 
@@ -3089,7 +3063,7 @@ function resetChildMark(){
 	for ( var i=0; i<children.length; i++ ){
 		unmarkChild( children[i] );
 	}
-	children = document.getElementById( 'WHITEBOARD_ESCORT' ).childNodes;
+	children = document.getElementById( 'WHITEBOARD_CHECKOUT' ).childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		unmarkChild( children[i] );
 	}
