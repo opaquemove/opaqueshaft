@@ -43,6 +43,7 @@ var tl_drag = false;
 var dndOffsetX = 0;
 var dndOffsetY = 0;
 
+var oldScrollPos = 0;
 // ホワイトボードが開いているかフラグ
 var openWhiteboardFlg = false;
 var dayWhiteboard  = null;
@@ -96,6 +97,16 @@ function init()
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.addEventListener('scroll',
 		function(e){
+			if ( oldScrollPos > e.target.scrollTop ){
+				// console.log( 'up' );
+				if ( !oNav.opened() )
+					oNav.open();
+			} else {
+				// console.log( 'down' );
+				if ( oNav.opened() )
+					oNav.close();
+			}
+			oldScrollPos = e.target.scrollTop;
 			//  if ( curChildMoved )
 			// 	 e.preventDefault();
 			// document.getElementById('ID_ON_SCROLL').innerText = 'scroll:' + e.target.scrollTop;
@@ -1020,6 +1031,9 @@ function whiteboard(){
 //	ホワイトボードをロードする
 //
 function loadWhiteboard(){
+
+	//	スクロールポジションの初期化
+	oldScrollPos = 0;
 
 	//ホワイトボード概要をロードする
 	loadWhiteboardHelper();
