@@ -224,8 +224,8 @@ function reportWhiteboardSummary(){
         if ( c.hasAttribute('escort'))      c_escort++;
     }
     
-    var c_absent = document.getElementById('WHITEBOARD_ABSENT').childNodes.length;
-
+    // var c_absent = document.getElementById('WHITEBOARD_ABSENT').childNodes.length;
+    var c_absent = countAbsentWhiteboard();
     r += '<div style="float:left;padding-left:10px;" >children:'   + c_all_children + '</div>';
     r += '<div style="float:left;padding-left:10px;" >checkout:'   + c_checkout + '</div>';
     r += '<div style="float:left;padding-left:10px;" >no checkout:'   + ( c_all_children - c_checkout ) + '</div>';
@@ -254,6 +254,20 @@ function reportWhiteboardSummary(){
     cp.play();
 
 
+}
+
+//
+//  ホワイトボード上のアブセントオブジェクト数を取得する
+//
+function countAbsentWhiteboard(){
+    var wbc = document.getElementById('WHITEBOARD_CHECKOUT');
+    var cnt = 0;
+    for ( var i=0; i<wbc.childNodes.length; i++ ){
+        var c = wbc.childNodes[i];
+        if ( c.hasAttribute('absent'))
+            cnt++;
+    }
+    return cnt;
 }
 
 //
@@ -333,9 +347,12 @@ function reportWhiteboardDetail(){
     // o.style.clear           = 'both';
     o.innerHTML             = '<div class="hour_tab" >Absent</div>';
     lst_area.appendChild( o );
-    var wba = document.getElementById('WHITEBOARD_ABSENT');
+    // var wba = document.getElementById('WHITEBOARD_ABSENT');
+    var wba = document.getElementById('WHITEBOARD_CHECKOUT');
     for ( var i=0; i<wba.childNodes.length; i++ ){
         var c = wba.childNodes[i];
+        if ( !c.hasAttribute('absent')) continue;
+
         var cc = document.createElement('DIV');
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
         var child_type  = c.getAttribute('child_type');
@@ -575,7 +592,8 @@ function getChildrenByHour( h ){
 }
 
 //
-//  WhiteBoardにチャイルド(240x60)を実体化
+//  WHITEBOARD/WHITEBOARD_ABSENTにチャイルド(240x60)を実体化
+//  WHITEBOARD_CHECKOUTには実体化はできない
 //
 function addChild( top, left, child_id, child_name, kana, child_type, child_grade, imagefile, remark, escort, absent, mark ){
     var now = new Date();
@@ -584,8 +602,9 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     var checkin_time = h + ':' + m;
     
     var wb = null;
-    if ( absent )   wb = document.getElementById('WHITEBOARD_ABSENT');
-        else        wb = document.getElementById('WHITEBOARD');
+    // if ( absent )   wb = document.getElementById('WHITEBOARD_ABSENT');
+    //     else        wb = document.getElementById('WHITEBOARD');
+    wb = document.getElementById('WHITEBOARD');
 
     var c = document.createElement("DIV");
 	c.setAttribute("id",          "c_1");
@@ -659,8 +678,10 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
         setEscortHelper( cc, 'ON' );
     }
 
-    //  アブセント表現
-    if ( absent ) absentChildHelper( cc );
+    //  アブセント処理・表現
+    if ( absent ){
+        absentChildHelper( cc );
+    } 
 
     if ( mark )
         markChild( cc );
@@ -1319,9 +1340,10 @@ function showWhiteboardChildCountCheckout(){
 //  ホワイトボード内のアブセント（欠席）チャイルド数を表示
 //
 function showWhiteboardChildCountAbsent(){
-    var wba  = document.getElementById('WHITEBOARD_ABSENT');
+    // var wba  = document.getElementById('WHITEBOARD_ABSENT');
     var wcca = document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT');
-    var c = wba.childNodes.length;
+    // var c = wba.childNodes.length;
+    var c = countAbsentWhiteboard();
     wcca.innerText = c;
 
 }
@@ -1749,14 +1771,12 @@ function absentWhiteboardChild(){
 //
 function absentChild(){
     var children = getMarkedChild();
-    var abs = document.getElementById('WHITEBOARD_ABSENT');
-//    var abs = document.getElementById('WHITEBOARD_CHECKOUT');
+    // var abs = document.getElementById('WHITEBOARD_ABSENT');
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         unmarkChild( c );
-        absentChildHelper( c );
-    
-        abs.appendChild( c );
+        absentChildHelper( c );   
+        // abs.appendChild( c );
         updateFlg   = true;
     }
     showWhiteboardChildCount();
@@ -1766,6 +1786,10 @@ function absentChild(){
 //  アブセント処理
 //
 function absentChildHelper( c ){
+
+    // var abs = document.getElementById('WHITEBOARD_ABSENT');
+    var abs = document.getElementById('WHITEBOARD_CHECKOUT');
+    
     c.style.backgroundImage     = 'url(./images/remove.png)';
     c.style.backgroundSize      = '20px';
     c.style.backgroundPosition  = 'right center';
@@ -1774,6 +1798,8 @@ function absentChildHelper( c ){
     c.style.transform           = 'rotate(-45deg)';
 
     c.setAttribute('absent', 'yes');
+
+    abs.appendChild( c );
 
     // if ( c.hasAttribute('absent')){
     //     console.log('attend');
