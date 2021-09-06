@@ -292,6 +292,7 @@ function initWhiteboardMode(){
 	// 	}, false );
 
 }
+
 function modeWhiteboard( e ){
 	var imne = document.getElementById('ID_MODE_CHECKIN');
 	var ime  = document.getElementById('ID_MODE_ESCORT');

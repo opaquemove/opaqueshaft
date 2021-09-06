@@ -331,6 +331,10 @@ spotlight.prototype = {
         for ( var i=0; i<children.length; i++ ){
             if ( id == children[i].getAttribute('child_id')) return true;
         }
+        var children = document.getElementById('WHITEBOARD_CHECKOUT').childNodes;
+        for ( var i=0; i<children.length; i++ ){
+            if ( id == children[i].getAttribute('child_id')) return true;
+        }
         var children = document.getElementById('WHITEBOARD_ABSENT').childNodes;
         for ( var i=0; i<children.length; i++ ){
             if ( id == children[i].getAttribute('child_id')) return true;
@@ -339,14 +343,13 @@ spotlight.prototype = {
     },
 
     findWhiteboardChild : function ( parent, keyword ){
-        // var children = document.getElementById('WHITEBOARD').childNodes;
-        // this.findWhiteboardChildHelper( parent, keyword, children, false );
+        // WHITEBOARD,WHITEBOARD_CHECKOUTを検索
         for ( var i=0; i<12; i++ ){
             var children = getChildrenByHour( i + 8 );
             this.findWhiteboardChildHelper( parent, keyword, children, false );
         }
         
-
+        // WHITEBOARD_ABSENTを検索
         var absents = document.getElementById('WHITEBOARD_ABSENT').childNodes;
         this.findWhiteboardChildHelper( parent, keyword, absents, true );
     

@@ -1347,21 +1347,28 @@ function escortChild(){
     var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
-        switch ( curWhiteboard ){
-            case 'WHITEBOARD':      //  WHITEBOARD -> WHITEBOARD_CHECKOUT
-                // var cc = wbe.appendChild( c );
-                var cc = c;
-                cc.setAttribute('escort', 'yes');
-                setEscortHelper( cc, 'ON' );
-                break;
-            case 'WHITEBOARD_CHECKOUT':   // WHITEBOARD_CHECKOUT -> WHITEBOARD
-                // var cc = wb.appendChild( c );
-                var cc = c;
-                cc.removeAttribute('escort');
-                setEscortHelper( cc, 'OFF' );
-                break;
+        // switch ( curWhiteboard ){
+        //     case 'WHITEBOARD':      //  WHITEBOARD -> WHITEBOARD_CHECKOUT
+        //         // var cc = wbe.appendChild( c );
+        //         var cc = c;
+        //         cc.setAttribute('escort', 'yes');
+        //         setEscortHelper( cc, 'ON' );
+        //         break;
+        //     case 'WHITEBOARD_CHECKOUT':   // WHITEBOARD_CHECKOUT -> WHITEBOARD
+        //         // var cc = wb.appendChild( c );
+        //         var cc = c;
+        //         cc.removeAttribute('escort');
+        //         setEscortHelper( cc, 'OFF' );
+        //         break;
+        // }
+        if ( c.hasAttribute('escort') ){
+            c.removeAttribute('escort');
+            setEscortHelper( c, 'OFF' );
+        } else {
+            c.setAttribute('escort', 'yes');
+            setEscortHelper( c, 'ON' );
         }
-        unmarkChild( cc );
+        unmarkChild( c );
     }
 
 
@@ -1743,6 +1750,7 @@ function absentWhiteboardChild(){
 function absentChild(){
     var children = getMarkedChild();
     var abs = document.getElementById('WHITEBOARD_ABSENT');
+//    var abs = document.getElementById('WHITEBOARD_CHECKOUT');
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         unmarkChild( c );
@@ -1755,7 +1763,7 @@ function absentChild(){
 }
 
 //
-//
+//  アブセント処理
 //
 function absentChildHelper( c ){
     c.style.backgroundImage     = 'url(./images/remove.png)';
