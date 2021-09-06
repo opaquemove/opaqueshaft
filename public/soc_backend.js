@@ -1775,7 +1775,11 @@ function absentChild(){
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         unmarkChild( c );
-        absentChildHelper( c );   
+        if ( c.hasAttribute('absent')){
+            attendChildHelper( c );
+        } else {
+            absentChildHelper( c );   
+        }
         // abs.appendChild( c );
         updateFlg   = true;
     }
@@ -1791,7 +1795,7 @@ function absentChildHelper( c ){
     var abs = document.getElementById('WHITEBOARD_CHECKOUT');
     
     c.style.backgroundImage     = 'url(./images/remove.png)';
-    c.style.backgroundSize      = '20px';
+    c.style.backgroundSize      = '16px';
     c.style.backgroundPosition  = 'right center';
     c.style.backgroundRepeat    = 'no-repeat';
     c.style.transformOrigin     = 'top left';

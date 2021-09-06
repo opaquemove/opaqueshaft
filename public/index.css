@@ -29,7 +29,7 @@ BODY{
 BUTTON{
 	color:				black;
 }
-BUTTON:focus{
+BUTTON:focus-visible{
 	outline:			none;
 }
 
@@ -207,6 +207,15 @@ INPUT[type=password]:focus{
 }
 */
 
+#ID_MODE_FRAME{
+	pointer-events: 		auto;
+	width:					42px;
+	height:					84px;
+	float:					right;
+	background-color: 		transparent;
+	padding:				0px;
+}
+
 #ID_MODE_CHECKIN{
 	width:					40px;
 	height:					40px;
@@ -214,26 +223,22 @@ INPUT[type=password]:focus{
 	background-color:		rgb(255, 123, 0);
 	border:					1px solid rgb(255, 123, 0);
 }
-#ID_MODE_ESCORT{
+
+#ID_MODE_CHECKOUT{
 	width:					40px;
 	height:					40px;
 	color:					snow;
 	background-color:		rgb(255, 123, 0);
 	border:					1px solid rgb(255, 123, 0);
 }
-#ID_MODE_ABSENT{
-	width:					40px;
-	height:					40px;
-	color:					snow;
-	background-color:		rgb(255, 123, 0);
-	border:					1px solid rgb(255, 123, 0);
-}
+
 .mode_on{
 	background-image:		url(./images/checked-symbol.png);
 	background-size:		10px;
 	background-repeat:		no-repeat;
 	background-position:	right center;
 }
+
 #ID_NAV_SEARCH{
 	position:				absolute;
 	top:					84px;
@@ -249,6 +254,7 @@ INPUT[type=password]:focus{
 /*	font-size:				14px;	*/
 	border-radius: 			8px;
 }
+
 #ID_NAV_LOG{
 	position:				absolute;
 	top:					126px;
@@ -273,7 +279,7 @@ INPUT[type=password]:focus{
 	padding-top:			0px;
 	padding-bottom:			2px;
 	width:					100%;
-	height:					122px;
+	height:					82px;
 	color:					gray;
 	background-color:		transparent;
 /*	border-bottom:			1px solid lightgrey;*/
@@ -563,14 +569,6 @@ INPUT[type=password]:focus{
 	background-color: 		transparent;
 	padding-top:			8px;
 	padding-left:			4px;
-}
-#ID_MODE_FRAME{
-	pointer-events: 		auto;
-	width:					42px;
-	height:					124px;
-	float:					right;
-	background-color: 		transparent;
-	padding:				0px;
 }
 
 

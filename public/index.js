@@ -264,7 +264,7 @@ function init()
 //
 function initWhiteboardMode(){
 	var imne = document.getElementById('ID_MODE_CHECKIN');
-	var ime  = document.getElementById('ID_MODE_ESCORT');
+	var ime  = document.getElementById('ID_MODE_CHECKOUT');
 	imne.addEventListener( 'click', modeWhiteboard, false );
 	ime.addEventListener( 'click', modeWhiteboard, false );
 	imne.dispatchEvent( new Event('click') );
@@ -295,7 +295,7 @@ function initWhiteboardMode(){
 
 function modeWhiteboard( e ){
 	var imne = document.getElementById('ID_MODE_CHECKIN');
-	var ime  = document.getElementById('ID_MODE_ESCORT');
+	var ime  = document.getElementById('ID_MODE_CHECKOUT');
 
 	var wb	= document.getElementById('WHITEBOARD');
 	var wbe	= document.getElementById('WHITEBOARD_CHECKOUT');
@@ -312,7 +312,7 @@ function modeWhiteboard( e ){
 			wba.style.opacity	= 0.5;
 			curWhiteboard		= 'WHITEBOARD';
 			break;
-		case 'ID_MODE_ESCORT':
+		case 'ID_MODE_CHECKOUT':
 			ime.classList.add( 'mode_on' );
 			imne.classList.remove( 'mode_on' );
 			wbe.style.zIndex	= 3;
@@ -900,7 +900,7 @@ function openWhiteboard(){
 		r += '</form>';
 		r += '<div style="text-align:center;padding-top:5px;" >';
 		r += '<button id="BTN_OPENWHITEBOARD" ';
-		r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/arrow-right.png);background-size:50px;background-repeat:no-repeat;background-position:center center;" ';
+		r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/arrow-right.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
 		r += ' onclick="createWhiteboard()" >';
 		// r += '<img width="50px;" src="./images/next.png" >';
 			r += '';
@@ -1853,7 +1853,7 @@ function fitting(){
 	}
 
 	var imne = document.getElementById('ID_MODE_CHECKIN');
-	var ime  = document.getElementById('ID_MODE_ESCORT');
+	var ime  = document.getElementById('ID_MODE_CHECKOUT');
 	imne.style.top	= '84px';
 	imne.style.left	= ( w - imne.offsetWidth ) + 'px'
 	ime.style.top	= '84px';
@@ -1930,8 +1930,7 @@ function showToolbar(){
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
-	var ime  	= document.getElementById('ID_MODE_ESCORT');
-	var ima		= document.getElementById('ID_MODE_ABSENT');
+	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
 	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'visible';
 	nsi2.style.visibility	= 'visible';
@@ -1944,7 +1943,6 @@ function showToolbar(){
 	psb.style.visibility	= 'visible';
 	imne.style.visibility	= 'visible';
 	ime.style.visibility	= 'visible';
-	ima.style.visibility	= 'visible';
 	// eam.style.visibility	= 'visible';
 	visibleWhiteboard();
 
@@ -1962,8 +1960,7 @@ function hideToolbar(){
 	var tlba		= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
-	var ime  	= document.getElementById('ID_MODE_ESCORT');
-	var ima  	= document.getElementById('ID_MODE_ABSENT');
+	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
 	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'hidden';
 	nsi2.style.visibility	= 'hidden';
@@ -1976,7 +1973,6 @@ function hideToolbar(){
 	psb.style.visibility	= 'hidden';
 	imne.style.visibility	= 'hidden';
 	ime.style.visibility	= 'hidden';
-	ima.style.visibility	= 'hidden';
 	// eam.style.visibility	= 'hidden';
 	hiddenWhiteboard();
 
@@ -2133,14 +2129,14 @@ function sign()
 					switch( result.cmd ){
 						case 'signin':
 							if ( result.status == 'SUCCESS' ){
-								oLog.log( null, 'signin ok.' );
+								oLog.log( null, 'sign in ok.' );
 								oLog.open( 3 );
 								acc_id = result.acc_id;
 								if ( !openWhiteboardFlg ){
 									openWhiteboard();
 								}
 							} else {
-								oLog.log( null, 'signin error.' );
+								oLog.log( null, 'sign in error.' );
 								oLog.open( 3 );
 							}
 							break;
@@ -2350,22 +2346,22 @@ function signForm()
 	var r = "";	
 	r += "<div style='width:350px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
 		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign in to your account</div>";
-		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
+		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >&nbsp;</div>";
 		r += "<div style='margin:10px auto;width:210px;' >";
 			r += "<form name='sign_form' onsubmit='return false;' >";
 			r += "<div>ID:</div>";
 			r += "<div><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
 			r += "<div style='padding-top:20px;' >Password:</div>";
 			r += "<div><input style='width:200px;height:18px;' type='password' name='pwd' tabindex=2 /></div>";
-			r += "<div style='padding-top:20px;text-align:center;' >";
-				r += "<button style='background-color:transparent;border:none;' onclick='sign()' ><img width='50px;' src='/images/arrow-right.png' ></button>";
+			r += "<div style=';padding-top:40px;text-align:center;' >";
+				r += "<button style='background-color:transparent;border:none;' onclick='sign()' ><img width='26px;' src='/images/arrow-right.png' /></button>";
 			r += "</div>";
 			r += "</form>";
 		r += "</div>";
 	r += "</div>";
 
 	neverCloseDialog = true;
-	openModalDialog( null, r, 'NOBUTTON', null, 'SIGNIN' );
+	openModalDialog( 'sign in to your account', r, 'NOBUTTON', null, 'SIGNIN' );
 	o = document.getElementById( 'acc_id' );
 	o.focus();
 	
