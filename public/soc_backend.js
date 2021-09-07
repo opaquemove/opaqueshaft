@@ -1564,7 +1564,6 @@ function checkoutWhiteboardChild(){
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
         var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
         var checkout    = c.hasAttribute('checkout');
-        // var oChild = getChild( id );
         var o = document.createElement('DIV');
         o.style.width = '100%';
         o.style.height = '40px';
@@ -1687,7 +1686,6 @@ function checkoutClearWhiteboardChild(){
         var id = c.getAttribute('child_id');
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
 
-        // var oChild = getChild( id );
         var o = document.createElement('DIV');
         o.style.width = '100%';
         o.style.height = '40px';

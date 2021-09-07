@@ -214,9 +214,6 @@ spotlight.prototype = {
                 var kana        = c.getAttribute('kana');
                 var child_type  = c.getAttribute('child_type');
                 var child_grade = c.getAttribute('child_grade');
-                // var oChild = getChild( child_id );
-                // if ( oChild != null ){
-                    // addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, null, false, false, true );
                 addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), child_id, child_name, kana, child_type, child_grade, null, null, false, false, true );
 
                 oLog.log( null, 'addChild');
@@ -494,6 +491,7 @@ spotlight.prototype = {
                                             // console.log( e.dataTransfer );
                                             // console.log('offsetY:' + dndOffsetY + ' OffsetX:' + dndOffsetX );
                                             e.dataTransfer.setData('text', e.target.getAttribute( 'child_id' ) );
+                                            e.dataTransfer.setData('text2', e.target.getElementsByClassName('CHILD_NAME')[0].innerText );
                                         }).bind(this), { passive : false } );  
                                 }
 

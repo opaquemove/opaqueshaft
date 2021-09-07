@@ -29,7 +29,7 @@ BODY{
 BUTTON{
 	color:				black;
 }
-BUTTON:focus-visible{
+BUTTON:focus{
 	outline:			none;
 }
 

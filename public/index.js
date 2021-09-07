@@ -357,16 +357,18 @@ function dropHandler( e ){
 	}
 	//alert( e.dataTransfer.getData('text') );
 	var id = e.dataTransfer.getData('text');
+	var child_name = e.dataTransfer.getData('text2');
 	var wb = document.getElementById('WHITEBOARD');
 	console.log( e.target.getAttribute('id'), e.pageY, e.pageX, id );
-	var oChild = getChild(id);
 	if ( alreadyExistChildOnWhiteboard( id )){
 		// alert('すでにホワイトボードに配置されています．');
-		var child_name = e.target.getElementsByClassName('CHILD_NAME')[0].innerText;
-		oLog.log( null, oChild.child_name + ' : すでにホワイトボードに配置されています.');
+		//var child_name = e.target.getElementsByClassName('CHILD_NAME')[0].innerText;
+		oLog.log( null, child_name + ' : すでにホワイトボードに配置されています.');
 		oLog.open( 3 );
 		return;
 	}
+
+	var oChild = getChild(id);
 	// var itb = document.getElementById('ID_TIMELINE_BAR');
 	// var hm  = itb.innerText;
 	// var arHM = hm.split(':');
@@ -1002,6 +1004,9 @@ function createWhiteboardHelper( day ){
 	xmlhttp.send( 'day=' + day );
 }
 
+//
+//	ホワイトボードにすでに配置されているかをチェック
+//
 function alreadyExistChildOnWhiteboard( id ){
 	var children = document.getElementById('WHITEBOARD').childNodes;
 	for ( var i=0; i<children.length; i++ ){
