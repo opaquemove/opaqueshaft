@@ -730,10 +730,10 @@ function locateTimelinebar( e ){
 			if ( itb != e.target ) return;
 			// if ( tlbOffset == null ) tlbOffset = e.target.offsetTop;
 			//e.target.position = 'absolute';
-			itb.style.width 		= '24px';
-			itb.style.paddingLeft	= '60px'
-			itb.style.height		= '84px';
-			itb.style.fontSize 		= '20px';
+			// itb.style.width 		= '24px';
+			// itb.style.paddingLeft	= '60px'
+			// itb.style.height		= '84px';
+			// itb.style.fontSize 		= '20px';
 			tly = event.pageY - event.target.offsetTop;
 			tlx = event.pageX - event.target.offsetLeft;
 			tl_drag = true;
@@ -806,7 +806,7 @@ function locateTimelinebar( e ){
 				var h = Math.floor( ttl_min / 60 ) + 8;
 				var m = ttl_min % 60;
 				// console.log( 'hour:' + h + ':' + m );
-				itb.innerHTML = ( '00' + h ).slice(-2) + ':' + ( '00' + m ).slice(-2) + '<br>' + itb.style.left;
+				itb.innerHTML = ( '00' + h ).slice(-2) + ':' + ( '00' + m ).slice(-2) + '<br>';
 				moveMarkedChildByTimelinebar( h );
 				scrollWhiteboard( h );
 			} else {
@@ -1874,9 +1874,14 @@ function fitting(){
 	var imne = document.getElementById('ID_MODE_CHECKIN');
 	var ime  = document.getElementById('ID_MODE_CHECKOUT');
 	imne.style.top	= '84px';
-	imne.style.left	= ( w - imne.offsetWidth ) + 'px'
+	imne.style.left	= ( w - imne.offsetWidth ) + 'px';
 	ime.style.top	= '84px';
-	ime.style.left	= ( w - ime.offsetWidth * 2 ) + 'px'
+	ime.style.left	= ( w - ime.offsetWidth * 2 ) + 'px';
+
+	var itba = document.getElementById('ID_TIMELINE_BAR_AREA');
+	var itb = document.getElementById('ID_TIMELINE_BAR');
+	itba.style.left	= ( w - itba.offsetWidth ) + 'px';
+	itb.style.left	= ( w - itb.offsetWidth  ) + 'px';
 
 
 	// レポートダイアログのサイズ調整

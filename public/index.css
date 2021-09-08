@@ -1122,10 +1122,10 @@ INPUT[type=password]:focus{
 	pointer-events: 		none;
 	position:				absolute;
 	margin-top:				0px;
-	top:					168px;
+	top:					84px;
 	left:					18px;
 	width:					4px;
-	height:					172px;
+	height:					162px;
 	background-color:		lightgrey;
 	overflow:				hidden;
 	border-radius: 			2px;
@@ -1135,7 +1135,7 @@ INPUT[type=password]:focus{
 #ID_TIMELINE_BAR{
 	position:				absolute;
 	margin-top:				0px;
-	top:					168px;
+	top:					84px;
 	left:					0px;
 	width:					30px;
 	height:					41px;
