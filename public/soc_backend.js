@@ -434,9 +434,10 @@ function absentWhiteboard(){
 //
 function absentWhiteboardSummary(){
     var lst_area = document.getElementById('ABSENT_SUMMARY');
-    var wba = document.getElementById('WHITEBOARD_ABSENT');
+    // var wba = document.getElementById('WHITEBOARD_ABSENT');
+    var cnt = countAbsentWhiteboard();
     var r = '';
-    r += '<div style="padding-left:4px;" >children:' + wba.childNodes.length + '</div>';
+    r += '<div style="padding-left:4px;" >children:' + cnt + '</div>';
     lst_area.innerHTML = r;
 
 }
@@ -446,9 +447,10 @@ function absentWhiteboardSummary(){
 //
 function absentWhiteboardDetail(){
     var lst_area = document.getElementById('ABSENT_LIST');
-    var wba = document.getElementById('WHITEBOARD_ABSENT');
+    var wba = document.getElementById('WHITEBOARD_CHECKOUT');
     for ( var j=0; j<wba.childNodes.length; j++ ){
         var c = wba.childNodes[j];
+        if ( ! c.hasAttribute('absent')) continue;
 
         var cc = document.createElement('DIV');
         var child_id    = c.getAttribute('child_id');
