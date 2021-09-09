@@ -1909,6 +1909,8 @@ function fitting(){
 	itba.style.left	= ( w - itba.offsetWidth ) + 'px';
 	itb.style.left	= ( w - itb.offsetWidth  ) + 'px';
 
+	var icf = document.getElementById('ID_CHILD_FINDER');
+	icf.style.left	= ( w - icf.offsetWidth ) + 'px';
 
 	// レポートダイアログのサイズ調整
 	oReportDlg.init();
@@ -1969,6 +1971,9 @@ function ctlToolbar(){
 
 }
 
+//
+//	ツールバーの表示制御
+//
 function showToolbar(){
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	var nsi2 	= document.getElementById('NAV_START_ICON2');
@@ -1976,6 +1981,7 @@ function showToolbar(){
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	// var is		= document.getElementById('ID_SEARCH');
 	// var ic		= document.getElementById('ID_CHILDREN');
+	var icf		= document.getElementById('ID_CHILD_FINDER');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
@@ -1993,6 +1999,7 @@ function showToolbar(){
 	psb.style.visibility	= 'visible';
 	imne.style.visibility	= 'visible';
 	ime.style.visibility	= 'visible';
+	icf.style.visibility	= 'visible';
 	// eam.style.visibility	= 'visible';
 	visibleWhiteboard();
 
@@ -2006,6 +2013,7 @@ function hideToolbar(){
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	// var is		= document.getElementById('ID_SEARCH');
 	// var ic		= document.getElementById('ID_CHILDREN');
+	var icf		= document.getElementById('ID_CHILD_FINDER');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba		= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
@@ -2023,6 +2031,7 @@ function hideToolbar(){
 	psb.style.visibility	= 'hidden';
 	imne.style.visibility	= 'hidden';
 	ime.style.visibility	= 'hidden';
+	icf.style.visibility	= 'hidden';
 	// eam.style.visibility	= 'hidden';
 	hiddenWhiteboard();
 
