@@ -443,6 +443,7 @@ INPUT[type=password]:focus{
 	padding-top:			12px;
 	/* border-left:			1px solid darkgrey; */
 	background-color: 		transparent;
+	opacity: 				0.8;
 
 }
 

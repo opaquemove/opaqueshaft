@@ -100,11 +100,11 @@ function locatePerspectivebar( e ){
                         wbck.style.transformStyle       = 'preserve-3d';
                         // wba.style.transformStyle        = 'preserve-3d';
                         wbt.style.transformStyle        = 'preserve-3d';
-						bf.style.transform 		        = 'perspective(570px) translate3d( 0px, 0px, -1110px)' + rotate;
-						wbck.style.transform 	        = 'perspective(570px) translate3d( ' + ( - wb_width ) + 'px, 0px, -1100px)' + rotate;
-						// wba.style.transform 	        = 'perspective(570px) translate3d( ' + wb_width + 'px, 0px, -1100px)' + rotate;
-						wb.style.transform 		        = 'perspective(570px) translate3d( 0px, 0px, -1100px)' + rotate;
-						wbt.style.transform 		    = 'perspective(570px) translate3d( 0px, 0px, -1100px)' + rotate;
+						bf.style.transform 		        = 'perspective(570px) translate3d( 0px, 0px, -2110px)' + rotate;
+						wbck.style.transform 	        = 'perspective(570px) translate3d( ' + ( - wb_width ) + 'px, 0px, -2100px)' + rotate;
+						// wba.style.transform 	        = 'perspective(570px) translate3d( ' + wb_width + 'px, 0px, -2100px)' + rotate;
+						wb.style.transform 		        = 'perspective(570px) translate3d( 0px, 0px, -2100px)' + rotate;
+						wbt.style.transform 		    = 'perspective(570px) translate3d( 0px, 0px, -2100px)' + rotate;
                         // wba.style.border                = '1px dashed white';
                         wbck.style.border                = '1px dashed white';
                         wb.style.border                 = '1px solid white';

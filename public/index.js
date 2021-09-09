@@ -748,10 +748,13 @@ function locateTimelinebar( e ){
 			var o = document.createElement('DIV');
 			o.id					= 'INDICATOR1'
 			o.style.position		= 'absolute';
-			o.style.backgroundColor	= 'white';
+			o.style.textAlign		= 'center';
+			o.style.color			= 'white';
+			o.style.backgroundColor	= 'red';
 			o.style.fontSize		= '24px';
 			o.style.width			= '80px';
 			o.style.height			= '32px';
+			o.style.borderRadius	= '4px';
 			//var new_top  = event.pageY - tly;
 
 			o.style.top		= ( event.pageY - tly ) + 'px';
@@ -1720,40 +1723,30 @@ function Nav( func ){
 	r += '<div marked="yes" target="escort"        class="nav_icon2" ';
 	r += ' style="text-align:center;position:absolute;top:84px;left:42px;background-image:url(./images/family.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';
 		r += 'escort';
-		//r += '<img width="22px" src="./images/family.png" />';
 	r += '</div>';
-	// r += '<div target="close" class="vh-center nav_icon2" style="position:absolute;top:84px;left:42px;" >';	//	Close NAV
-	// 	r += '<img width="16px" src="./images/cancel.png" />';
-	// r += '</div>';
 	r += '<div marked="yes" target="delete"        class="nav_icon2" ';
 	r += ' style="text-align:center;position:absolute;top:0px;left:42px;background-image:url(./images/minus-2.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Delete Mark Child
 		r += 'delete';
-		//r += '<img width="22px" src="./images/minus-2.png" />';
 	r += '</div>';
 	r += '<div marked="yes" target="checkout"      class="nav_icon2" ';
 	r += ' style="text-align:center;position:absolute;top:21px;left:84px;background-image:url(./images/check-3.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
 		r += 'chk out';
-		//r += '<img width="22px" src="./images/check-3.png" />';
 	r += '</div>';
 	r += '<div marked="yes" target="checkoutclear" class="nav_icon2" ';
 	r += ' style="text-align:center;position:absolute;top:63px;left:84px;background-image:url(./images/dry-clean.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Clear Mark Child
 		r += 'chk clr';
-		//r += '<img width="22px" src="./images/dry-clean.png" />';
 	r += '</div>';
 	r += '<div marked="yes" target="property"      class="nav_icon2" ';
 	r += ' style="text-align:center;position:absolute;top:21px;left:0px;background-image:url(./images/hexagon.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
 		r += 'property';
-		//r += '<img width="22px" src="./images/hexagon.png" />';
 	r += '</div>';
 	r += '<div marked="yes" target="absent" class="nav_icon2" ';
 	r += ' style="text-align:center;position:absolute;top:63px;left:0px;background-image:url(./images/sleep-2.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Absent Child
 		r += 'absent';
-		//r += '<img width="22px" src="./images/sleep-2.png" />';
 	r += '</div>';
 	r += '<div target="exchange"   class="vh-center nav_icon2" ';
 	r += ' style="position:absolute;top:105px;left:84px;height:21px;background-image:url(./images/exchange.png);background-size:12px;background-position:center center;background-repeat:no-repeat;" >';
 		r += 'socket';
-		//r += '<img width="12px" src="./images/exchange.png" />';
 	r += '</div>';
 
 	m.innerHTML				= r;
@@ -1880,7 +1873,9 @@ function fitting(){
 	// sts.style.top		= ( h - sts_height ) + 'px';
 
 	var nsi = document.getElementById('NAV_START_ICON');
-	nsi.style.top = ( ( h / 2 ) - ( nsi.offsetHeight / 2) ) + 'px';
+	nsi.style.top 	= ( ( h / 2 ) - ( nsi.offsetHeight / 2) ) + 'px';
+	// nsi.style.left	= ( ( w / 2 ) - ( nsi.offsetWidth / 2 ) ) + 'px';
+
 	//	NAVリロケーション
 	if ( oNav.opened() ){
 		oNav.frame.style.top	= ( ( h / 2 ) - ( oNav.frame.offsetHeight / 2 ) ) + 'px';
