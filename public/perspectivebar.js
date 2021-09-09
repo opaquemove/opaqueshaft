@@ -28,7 +28,7 @@ function locatePerspectivebar( e ){
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
     var wb  = document.getElementById('WHITEBOARD');
     var wbt = document.getElementById('WHITEBOARD_TIMELINE');
-    var wba = document.getElementById('WHITEBOARD_ABSENT');
+    var wbck = document.getElementById('WHITEBOARD_CHECKOUT');
 	var psb = document.getElementById('ID_PERSPECTIVE_BAR');
 	switch ( e.type ){
 		case 'touchstart':
@@ -75,8 +75,8 @@ function locatePerspectivebar( e ){
                     var wbf = document.getElementById('WHITEBOARD_FRAME');
                     var wb  = document.getElementById('WHITEBOARD');
                     var wbt = document.getElementById('WHITEBOARD_TIMELINE');
-                    var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
-                    var wba = document.getElementById('WHITEBOARD_ABSENT');
+                    var wbck = document.getElementById('WHITEBOARD_CHECKOUT');
+                    // var wba = document.getElementById('WHITEBOARD_ABSENT');
                     var bo = document.getElementById('BOTTOM_OVERLAY');
                     var bf = document.getElementById('BOTTOM_FRAME');
                     var wb_width = wb.offsetWidth;
@@ -86,10 +86,10 @@ function locatePerspectivebar( e ){
 						bf.style.transform 		        = '';
                         wbf.style.perspective 	        = '';
 						wb.style.transform 		        = '';
-						wbe.style.transform 		        = '';
-						wba.style.transform 	        = '';
-                        wba.style.border                = '';
-                        wbe.style.border                = '';
+						wbck.style.transform 		        = '';
+						// wba.style.transform 	        = '';
+                        // wba.style.border                = '';
+                        wbck.style.border                = '';
                         wb.style.border                 = '';
                     } else{
                         // bo.style.perspective 	= 1770 + ( new_top - psbOffsetTop )*1.5 + 'px';
@@ -97,16 +97,16 @@ function locatePerspectivebar( e ){
                         // bo.style.perspective 	        = '570px';
                         // wbf.style.perspective 	        = '570px';
                         wb.style.transformStyle         = 'preserve-3d';
-                        wbe.style.transformStyle        = 'preserve-3d';
-                        wba.style.transformStyle        = 'preserve-3d';
+                        wbck.style.transformStyle       = 'preserve-3d';
+                        // wba.style.transformStyle        = 'preserve-3d';
                         wbt.style.transformStyle        = 'preserve-3d';
 						bf.style.transform 		        = 'perspective(570px) translate3d( 0px, 0px, -1110px)' + rotate;
-						wbe.style.transform 	        = 'perspective(570px) translate3d( ' + ( - wb_width ) + 'px, 0px, -1100px)' + rotate;
-						wba.style.transform 	        = 'perspective(570px) translate3d( ' + wb_width + 'px, 0px, -1100px)' + rotate;
+						wbck.style.transform 	        = 'perspective(570px) translate3d( ' + ( - wb_width ) + 'px, 0px, -1100px)' + rotate;
+						// wba.style.transform 	        = 'perspective(570px) translate3d( ' + wb_width + 'px, 0px, -1100px)' + rotate;
 						wb.style.transform 		        = 'perspective(570px) translate3d( 0px, 0px, -1100px)' + rotate;
 						wbt.style.transform 		    = 'perspective(570px) translate3d( 0px, 0px, -1100px)' + rotate;
-                        wba.style.border                = '1px dashed white';
-                        wbe.style.border                = '1px dashed white';
+                        // wba.style.border                = '1px dashed white';
+                        wbck.style.border                = '1px dashed white';
                         wb.style.border                 = '1px solid white';
                         var timelines = document.getElementsByClassName('timeline2_class');
                         for ( var i=0; i<timelines.length; i++ ){

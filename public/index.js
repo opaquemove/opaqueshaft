@@ -265,7 +265,7 @@ function init()
 	//
 	//	パースペクティブバー初期化
 	//
-	// initPerspectivebar( evtStart, evtMove, evtEnd );
+	 initPerspectivebar( evtStart, evtMove, evtEnd );
 
 	makeToolbarCheckoutProgress( 0 );
 }
@@ -744,6 +744,23 @@ function locateTimelinebar( e ){
 				oSpotlight.checkin( itb.innerText );	// マーク状態でチェックインする
 			}
 
+			//	タイムラインを分かりやすく表示するインジケータ
+			var o = document.createElement('DIV');
+			o.id					= 'INDICATOR1'
+			o.style.position		= 'absolute';
+			o.style.backgroundColor	= 'white';
+			o.style.fontSize		= '24px';
+			o.style.width			= '80px';
+			o.style.height			= '32px';
+			//var new_top  = event.pageY - tly;
+
+			o.style.top		= ( event.pageY - tly ) + 'px';
+			o.style.left	= ( event.pageX - tlx - 100 ) + 'px';
+			o.innerText = event.target.innerText;
+
+			document.body.appendChild( o );
+
+
 			break;
 		case 'touchmove':
 		case 'mousemove':
@@ -807,6 +824,14 @@ function locateTimelinebar( e ){
 				var m = ttl_min % 60;
 				// console.log( 'hour:' + h + ':' + m );
 				itb.innerHTML = ( '00' + h ).slice(-2) + ':' + ( '00' + m ).slice(-2) + '<br>';
+
+				var o = document.getElementById('INDICATOR1');
+				if ( o != null ){
+					o.style.top		= ( event.pageY - tly ) + 'px';
+					// o.style.left	= ( event.pageX - tlx - 100 ) + 'px';
+					o.innerText = event.target.innerText;
+				}
+	
 				moveMarkedChildByTimelinebar( h );
 				scrollWhiteboard( h );
 			} else {
@@ -822,6 +847,11 @@ function locateTimelinebar( e ){
 			itb.style.fontSize 		= '';
 			tl_drag = false;
 			tly = null;
+
+			var o = document.getElementById('INDICATOR1');
+			if ( o != null ){
+				document.body.removeChild( o );
+			}
 			break;
 	}
 }

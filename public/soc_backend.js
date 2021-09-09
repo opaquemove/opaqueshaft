@@ -969,7 +969,7 @@ function propertyChildren(){
 
         var r = '';
         r += '<div style="width:100%;height:;" >';
-            r += '<div style="font-size:16px;font-weight:bold;border-bottom:1px solid lightgrey;" >';
+            r += '<div style="width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:16px;font-weight:bold;border-bottom:1px solid lightgrey;" >';
             r += child_name + '&nbsp;' + child_grade + child_type;
             r += '</div>';
             r += '<div style="clear:both;width:100%;overflow:hidden;display:inline;" >';
