@@ -365,6 +365,7 @@ INPUT[type=password]:focus{
 	visibility:			hidden;
 	width:				375px;
 	height:				70%;
+	padding-right:		42px;
 /*	
 	background-color:	rgb(241, 241, 241);
 	border:				1px solid lightgrey;

@@ -191,6 +191,7 @@ function init()
 	// new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
 	new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
 	new Button( 'ID_NAV_LOG',               ctlMessageLog ).play();
+	new Button( 'ID_CHILD_FINDER',          ctlSpotlight ).play();
 
 
 	//	モーダルダイアログの外側をクリックしたらクローズ
@@ -1862,16 +1863,6 @@ function fitting(){
 	var wb = document.getElementById('WHITEBOARD');
 //	wb.style.width   = ( w - 70 ) + 'px';
 
-	// var cpf  = document.getElementById('CHILDREN_PALLETE_FRAME');
-	// cpf.style.height  = ( h -tb_height - sts_height ) + 'px';
-	// cpf.style.left    = ( w - 42 ) + 'px';
-
-	// var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
-	// cpc.style.height	= ( cpf.offsetHeight - parseInt(cpc.style.marginTop ) - 1 ) + 'px'; 
-
-	// var sts = document.getElementById('STATUS');
-	// sts.style.top		= ( h - sts_height ) + 'px';
-
 	var nsi = document.getElementById('NAV_START_ICON');
 	nsi.style.top 	= ( ( h / 2 ) - ( nsi.offsetHeight / 2) ) + 'px';
 	// nsi.style.left	= ( ( w / 2 ) - ( nsi.offsetWidth / 2 ) ) + 'px';
@@ -2011,11 +2002,9 @@ function hideToolbar(){
 	var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
-	// var is		= document.getElementById('ID_SEARCH');
-	// var ic		= document.getElementById('ID_CHILDREN');
 	var icf		= document.getElementById('ID_CHILD_FINDER');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
-	var tlba		= document.getElementById('ID_TIMELINE_BAR_AREA');
+	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
