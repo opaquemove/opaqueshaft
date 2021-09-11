@@ -1121,7 +1121,7 @@ INPUT[type=password]:focus{
 }
 
 #ID_CHILD_FINDER{
-	pointer-events: 		none;
+/*	pointer-events: 		none;	*/
 	position:				absolute;
 	margin-top:				0px;
 	top:					84px;

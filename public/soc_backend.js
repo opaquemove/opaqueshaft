@@ -1258,7 +1258,7 @@ function markChild( c ) {
     // c.style.color           = 'gray';
     c.classList.add("marked");
 
-    commonProc();
+    // commonProc();
 }
 
 //
@@ -1275,7 +1275,7 @@ function unmarkChild( c ) {
     var cMenu = c.lastChild;
     if ( cMenu.hasAttribute('cmenu'))
         c.removeChild(cMenu);
-    commonProc();
+    // commonProc();
 }
 
 //  コンテキストメニューが表示されているかをチェック

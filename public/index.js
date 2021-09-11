@@ -392,7 +392,6 @@ function test(){
 //	ツールバーにチェックアウトプログレスを表示
 //
 function makeToolbarCheckoutProgress( progress_ratio ){
-	console.log( 'maketoolbarcheckoutprogress:' + progress_ratio );
 	var p = document.getElementById('ID_PROGRESS');
 	if ( p.firstChild != null )
 		p.removeChild( p.firstChild );
@@ -433,6 +432,7 @@ function commonProc(){
 
 	}
 
+	// console.log('commonProc.schowWhiteboardChildCount');
 	showWhiteboardChildCount();
 
 }
