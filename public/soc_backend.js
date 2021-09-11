@@ -1313,6 +1313,7 @@ function showWhiteboardChildCount(){
     if ( ( wb.length + wbe.length )  != 0)
         ratio =  Math.floor( c_checkout / ( wb.length + wbe.length ) * 100 );
 
+    console.log( 'maketoolbarcheckoutprogress:' + ratio );
     makeToolbarCheckoutProgress( ratio );
 }
 

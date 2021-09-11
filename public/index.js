@@ -173,19 +173,8 @@ function init()
 	oSpotlight.play();
 
 	fitting();
-	//new Button( 'OPAQUESHAFT_NAV', test ).play();
-	// new Button( 'SIGN_STATUS',              signMenu       ).play();
-	// new Button( 'OPAQUESHAFT_TITLE',        whiteboardMenu ).play();
-	// new Button( 'WHITEBOARD_DAY_FRAME',     whiteboardMenu ).play();
-//	new Button( 'CHILD_FINDER',				childFinder    ).play();
-//	new Button( 'ID_NAV',                   ctlNav         ).play();
-	// new Button( 'ID_SEARCH',                ctlSpotlight   ).play();
 	new Button( 'WHITEBOARD_DAY_FRAME',     saveWhiteboard ).play();
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
-	// new Button( 'CHILDREN_PALLETE_TAB',     foldingChildrenPallete ).play();
-	// new Button( 'ID_CHILDREN',		        foldingChildrenPallete ).play();
-	// new Button( 'CPC_RELOAD',               makeChildrenPalleteList ).play();
-	// new Button( 'CPC_UPDATE_CHILD_TIME',	showTimelineSelector ).play();
 	new Button( 'ID_NAV_TILE',  			showTile ).play();
 	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
 	// new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
@@ -1610,7 +1599,11 @@ function locateWhiteboard( e ){
 	switch ( e.type ){
 		case 'touchstart':
 		case 'mousedown':
-			if ( wb != e.target && wbe != e.target ) return;
+			console.log( 'locateWhiteboard(' + e.type + ')')
+			if ( wb != e.target && wbe != e.target ) {
+				console.log( 'wb_touch_move:' + wb_touch_move );
+				return;
+			}
 			if(e.type === "mousedown") {
 					var event = e;
 				} else {
@@ -1626,6 +1619,7 @@ function locateWhiteboard( e ){
 			break;
 		case 'touchend':
 		case 'mouseup':
+			console.log( 'locateWhiteboard(' + e.type + ')')
 			if(e.type === "mouseup") {
 				var event = e;
 			} else {
@@ -3104,6 +3098,7 @@ function makeContextMenu(){
 //	チャイルドのマークをリセット
 //
 function resetChildMark(){
+	console.log('resetChild()');
 	var children = document.getElementById( 'WHITEBOARD' ).childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		unmarkChild( children[i] );
