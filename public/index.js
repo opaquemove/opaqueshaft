@@ -451,7 +451,7 @@ function makeTimelineIndicator(){
 	for ( var i=0; i<arTL.length; i++ ){
 		var o = document.createElement('DIV');
 		o.setAttribute('class', 'timeline_class vh-center' );
-		o.innerHTML = '<div style="border-bottom:4px solid white;" >' + arTL[i] + '</div>';
+		o.innerHTML = '<div style="border-bottom:4px solid white;" >' + arTL[i] + ':00' + '</div>';
 		wbt.appendChild( o );
 	}
 	
