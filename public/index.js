@@ -1631,7 +1631,11 @@ function locateWhiteboard( e ){
 
 			if ( wb_touch_cnt_max < 2){
 				if ( wb == e.target || wbe == e.target ){
-					if ( ! wb_touch_move ) resetChildMark();
+					if ( ! wb_touch_move ){
+						if ( oNav.opened() )
+							oNav.close();
+						resetChildMark();
+					}
 				}
 			} else {
 			}
@@ -1783,8 +1787,8 @@ Nav.prototype = {
 		var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
 		this.frame.style.top 		= ( ( h / 2 ) - ( this.frame.offsetHeight / 2 ) ) + 'px';
-		// this.frame.style.left		= ( ( w / 2 ) - this.size )+ 'px';
-		this.frame.style.left		= '0px';
+		this.frame.style.left		= ( ( w / 2 ) - ( this.frame.offsetWidth / 2 ) )+ 'px';
+		// this.frame.style.left		= '0px';
 		this.frame.style.visibility	= 'visible';
 		commonProc();
 	},
@@ -1864,8 +1868,8 @@ function fitting(){
 	//	NAVリロケーション
 	if ( oNav.opened() ){
 		oNav.frame.style.top	= ( ( h / 2 ) - ( oNav.frame.offsetHeight / 2 ) ) + 'px';
-		// oNav.frame.style.left	= ( ( w / 2 ) - ( oNav.frame.offsetWidth  / 2 ) ) + 'px';	
-		oNav.frame.style.left	= '0px';
+		oNav.frame.style.left	= ( ( w / 2 ) - ( oNav.frame.offsetWidth  / 2 ) ) + 'px';	
+		// oNav.frame.style.left	= '0px';
 	}
 
 	var nsi2 = document.getElementById('NAV_START_ICON2');
