@@ -97,13 +97,14 @@ function init()
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.addEventListener('scroll',
 		function(e){
+			var marked = ( getMarkedChild().length > 0 );
 			if ( oldScrollPos > e.target.scrollTop ){
 				// console.log( 'up' );
-				if ( !oNav.opened() )
+				if ( !oNav.opened() && marked )
 					oNav.open();
 			} else {
 				// console.log( 'down' );
-				if ( oNav.opened() )
+				if ( oNav.opened() && !marked )
 					oNav.close();
 			}
 			oldScrollPos = e.target.scrollTop;
@@ -1586,7 +1587,7 @@ function visibleWhiteboard(){
 	wb.style.visibility = 'visible';
 	wbe.style.visibility = 'visible';
 	wba.style.visibility = 'visible';
-	oNav.open();
+	// oNav.open();
 }
 
 //
@@ -1716,9 +1717,9 @@ function Nav( func ){
 	m.style.zIndex			= 65000;
 	m.style.visibility		= 'hidden';
 	var r = '';
-	r += '<div                        class="vh-center nav_icon2" style="position:absolute;top:42px;left:42px;" >';
-		r += '&nbsp;';
-	r += '</div>';
+	// r += '<div                        class="vh-center nav_icon2" style="position:absolute;top:42px;left:42px;" >';
+	// 	r += '&nbsp;';
+	// r += '</div>';
 	r += '<div marked="yes" target="escort"        class="nav_icon2" ';
 	r += ' style="text-align:center;position:absolute;top:84px;left:42px;background-image:url(./images/family.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';
 		r += 'escort';
@@ -1977,7 +1978,7 @@ function showToolbar(){
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
 	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
-	nsi.style.visibility	= 'visible';
+	// nsi.style.visibility	= 'visible';
 	nsi2.style.visibility	= 'visible';
 	tb.style.visibility     = 'visible';
 	wbf.style.visibility    = 'visible';
@@ -1985,7 +1986,7 @@ function showToolbar(){
 	// ic.style.visibility		= 'visible';
 	tlb.style.visibility	= 'visible';
 	tlba.style.visibility	= 'visible';
-	psb.style.visibility	= 'visible';
+	// psb.style.visibility	= 'visible';
 	imne.style.visibility	= 'visible';
 	ime.style.visibility	= 'visible';
 	icf.style.visibility	= 'visible';
