@@ -722,7 +722,7 @@ INPUT[type=password]:focus{
 	border-top:			1px dashed white;
 	/* border-right:		1px solid lightgrey; */
 	border-bottom:		1px dashed white;
-	z-index:			3000;
+	z-index:			6000;
 	opacity:			0.7;
 	/* writing-mode: 		vertical-lr; */
 }
@@ -739,6 +739,7 @@ INPUT[type=password]:focus{
 	text-align:			center;
 	background-color:	transparent;
 	/*border-top:		1px dashed lightgrey; */
+	z-index:			6000;
 }
 .timeline2_class{
 	position:			absolute;
@@ -748,6 +749,7 @@ INPUT[type=password]:focus{
 	height:				1px;
 	background-color:	transparent;
 	border-top:			1px dashed lightgrey;
+	z-index:			6000;
 }
 .timeline3_class{
 	position:			absolute;
@@ -757,6 +759,7 @@ INPUT[type=password]:focus{
 	height:				1px;
 	background-color:	transparent;
 	border-top:			1px dashed lightgrey;
+	z-index:			6000;
 }
 .timeline_15minute_class{
 	position:			fixed;
@@ -769,6 +772,7 @@ INPUT[type=password]:focus{
 	text-shadow: 		2px 2px 2px black;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
+	z-index:			6000;
 }
 .timeline_30minute_class{
 	position:			fixed;
@@ -781,6 +785,7 @@ INPUT[type=password]:focus{
 	text-shadow: 		2px 2px 2px black;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
+	z-index:			6000;
 }
 .timeline_45minute_class{
 	position:			fixed;
@@ -793,6 +798,7 @@ INPUT[type=password]:focus{
 	text-shadow: 		2px 2px 2px black;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
+	z-index:			6000;
 }
 
 #REPORT_FRAME{
