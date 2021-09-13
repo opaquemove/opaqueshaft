@@ -765,6 +765,8 @@ INPUT[type=password]:focus{
 	width:				24px;
 	/* margin:				0 auto; */
 	height:				24px;
+	color:				white;
+	text-shadow: 		2px 2px 2px black;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
 }
@@ -775,6 +777,8 @@ INPUT[type=password]:focus{
 	width:				24px;
 	/* margin:				0 auto; */
 	height:				24px;
+	color:				white;
+	text-shadow: 		2px 2px 2px black;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
 }
@@ -785,6 +789,8 @@ INPUT[type=password]:focus{
 	width:				24px;
 	/* margin:				0 auto; */
 	height:				24px;
+	color:				white;
+	text-shadow: 		2px 2px 2px black;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
 }
