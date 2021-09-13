@@ -726,6 +726,20 @@ INPUT[type=password]:focus{
 	opacity:			0.7;
 	/* writing-mode: 		vertical-lr; */
 }
+.timeline1_class{
+	position:			absolute;
+	left:				0px;
+	width:				84px;
+	/* margin:				0 auto; */
+	height:				8px;
+	color:				white;
+	/* background-color:	darkgray; */
+	font-size:			8px;
+	font-weight:		bold;
+	text-align:			center;
+	background-color:	transparent;
+	/*border-top:		1px dashed lightgrey; */
+}
 .timeline2_class{
 	position:			absolute;
 	left:				40%;
@@ -733,7 +747,7 @@ INPUT[type=password]:focus{
 	margin:				0 auto;
 	height:				1px;
 	background-color:	transparent;
-	border-bottom:		1px dashed lightgrey;
+	border-top:			1px dashed lightgrey;
 }
 .timeline3_class{
 	position:			absolute;
@@ -742,7 +756,37 @@ INPUT[type=password]:focus{
 	/* margin:				0 auto; */
 	height:				1px;
 	background-color:	transparent;
-	border-bottom:		1px dashed lightgrey;
+	border-top:			1px dashed lightgrey;
+}
+.timeline_15minute_class{
+	position:			fixed;
+	top:				0px;
+	left:				calc(25% - 0px);
+	width:				24px;
+	/* margin:				0 auto; */
+	height:				24px;
+	background-color:	transparent;
+	border-left:		1px dashed lightgrey;
+}
+.timeline_30minute_class{
+	position:			fixed;
+	top:				0px;
+	left:				calc(50% - 0px);
+	width:				24px;
+	/* margin:				0 auto; */
+	height:				24px;
+	background-color:	transparent;
+	border-left:		1px dashed lightgrey;
+}
+.timeline_45minute_class{
+	position:			fixed;
+	top:				0px;
+	left:				calc(75% - 0px);
+	width:				24px;
+	/* margin:				0 auto; */
+	height:				24px;
+	background-color:	transparent;
+	border-left:		1px dashed lightgrey;
 }
 
 #REPORT_FRAME{

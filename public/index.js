@@ -457,6 +457,14 @@ function makeTimelineIndicator(){
 	
 	for ( var i=0; i<arTL.length - 0; i++ ){
 		var guide = document.createElement('DIV');
+		guide.setAttribute('class', 'timeline1_class' );
+		guide.style.top				= ( ( i + 0 ) * pixelPerHour - 1 )+ 'px';
+		guide.style.pointerEvents	= 'auto';
+		guide.innerHTML = '<div style="" >' + arTL[i] + ':00' + '</div>';
+		wbf.appendChild( guide );
+	}
+	for ( var i=0; i<arTL.length - 0; i++ ){
+		var guide = document.createElement('DIV');
 		guide.setAttribute('class', 'timeline2_class' );
 		guide.style.top				= ( ( i + 1 ) * pixelPerHour - 1 )+ 'px';
 		guide.style.pointerEvents	= 'auto';
@@ -472,6 +480,21 @@ function makeTimelineIndicator(){
 		wbf.appendChild( guide );
 	}
 
+	guide = document.createElement('DIV');
+	guide.setAttribute('class', 'timeline_15minute_class' );
+	guide.style.pointerEvents	= 'auto';
+	guide.innerHTML				= '15min';
+	wbf.appendChild( guide );
+	guide = document.createElement('DIV');
+	guide.setAttribute('class', 'timeline_30minute_class' );
+	guide.style.pointerEvents	= 'auto';
+	guide.innerHTML				= '30min';
+	wbf.appendChild( guide );
+	guide = document.createElement('DIV');
+	guide.setAttribute('class', 'timeline_45minute_class' );
+	guide.style.pointerEvents	= 'auto';
+	guide.innerHTML				= '45min';
+	wbf.appendChild( guide );
 
 }
 
