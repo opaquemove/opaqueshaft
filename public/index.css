@@ -118,16 +118,15 @@ INPUT[type=password]:focus{
 }
 
 #OPAQUESHAFT_TITLE{
-	pointer-events:			none;
+	pointer-events:			auto;
 	float:					left;
 	width:					140px;
 	height:					54px;
 	color:					white;
 	text-shadow: 			2px 2px 2px black;
 	background-color:		transparent;
+	opacity: 				0.7;
 	font-size:				20px;
-/*	border-left:			42px solid red; */
-	/* border-right:		1px solid darkgrey; */
 	padding-top:			30px;
 	padding-left:			0px;
 	padding-right:			0px;
