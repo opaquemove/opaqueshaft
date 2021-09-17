@@ -164,7 +164,9 @@ spotlight.prototype = {
         this.ctlMain();
         // this.keyword.focus();
         this.resize();
-
+        var imne = document.getElementById('ID_MODE_CHECKIN');
+        imne.dispatchEvent( new Event('click') );
+    
     },
     close : function(){
         this.overlay.style.visibility   = 'hidden';
