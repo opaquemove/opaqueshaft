@@ -3034,6 +3034,12 @@ function mUp( e ) {
 			if ( curChild != null ){
 				if ( isMarkedChild( curChild ) ) {
 						unmarkChild( curChild );
+						if ( getMarkedChild().length == 0 ){
+							if ( oNav.opened() )
+								oNav.close();
+						}
+
+
 				}else {
 					markChild( curChild );
 				}

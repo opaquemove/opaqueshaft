@@ -1507,8 +1507,8 @@ function checkoutChild( c, operator, co_time, direction ){
             break;
     }
 
-    c.style.transformOrigin     = 'top left';
-    c.style.transform           = 'rotate(-45deg)';
+    // c.style.transformOrigin     = 'top left';
+    // c.style.transform           = 'rotate(-45deg)';
 
     updateFlg   = true;
 
@@ -1748,8 +1748,8 @@ function checkoutClearChild( c ){
     df.style.backgroundRepeat   = '';
     df.style.backgroundSize     = '';
 
-    c.style.transformOrigin     = 'top left';
-    c.style.transform           = 'rotate(0deg)';
+    // c.style.transformOrigin     = 'top left';
+    // c.style.transform           = 'rotate(0deg)';
 
     //WHITEBOARDへ移動
     var wb = document.getElementById('WHITEBOARD');
