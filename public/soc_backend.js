@@ -129,26 +129,31 @@ function clearWhiteboard(){
         } , null );
 }
 function clearWhiteboardHelper(){
-    var wb = document.getElementById('WHITEBOARD');
-    while ( wb.firstChild){
-        wb.removeChild( wb.firstChild );
-        updateFlg   = true;
-    }
-    var wb = document.getElementById('WHITEBOARD_CHECKOUT');
-    while ( wb.firstChild){
-        wb.removeChild( wb.firstChild );
-        updateFlg   = true;
-    }
-    wb = document.getElementById('WHITEBOARD_ABSENT');
-    while ( wb.firstChild){
-        wb.removeChild( wb.firstChild );
-        updateFlg   = true;
-    }
+    deleteWhiteboardChildren();
+    updateFlg   = true;
     oLog.log( null, 'all child on whiteboard was cleared.' );
     oLog.open( 3 );
     showWhiteboardChildCount();
 }
 
+//
+//  ホワイトボード内のチルドレンを全削除
+//
+function deleteWhiteboardChildren(){
+    var wb = document.getElementById('WHITEBOARD');
+    while ( wb.firstChild){
+        wb.removeChild( wb.firstChild );
+    }
+    var wb = document.getElementById('WHITEBOARD_CHECKOUT');
+    while ( wb.firstChild){
+        wb.removeChild( wb.firstChild );
+    }
+    wb = document.getElementById('WHITEBOARD_ABSENT');
+    while ( wb.firstChild){
+        wb.removeChild( wb.firstChild );
+    }
+
+}
 //
 //  レポーティング
 //

@@ -151,17 +151,20 @@ INPUT[type=password]:focus{
 	position:				absolute;
 	top:					-42px;		/* dummy */ 
 	left:					42px;
-	width:					42px;
-	height:					168px;
+	width:					200px;		/* old 168px */
+	height:					50px;		/* old 42px */
 	color:					darkgray;
 	background-color:		transparent;
 	font-size:				6px;
+	display: 				flex;
+	justify-content:		space-evenly;
+	align-items: 			center;		/* old flex-end */
 	z-index:				65001;
 }
 #ID_NAV_TILE{
-	position:				absolute;
+	/* position:				absolute;
 	top:					0px;
-	left:					0px;
+	left:					0px; */
 	width:					42px;
 	height:					42px;
 	color:					snow;
@@ -174,9 +177,9 @@ INPUT[type=password]:focus{
 	border-radius: 			8px;
 }
 #ID_NAV_REPORT{
-	position:				absolute;
+	/* position:				absolute;
 	top:					42px;
-	left:					0px;
+	left:					0px; */
 	width:					42px;
 	height:					42px;
 	color:					snow;
@@ -239,9 +242,9 @@ INPUT[type=password]:focus{
 }
 
 #ID_NAV_SEARCH{
-	position:				absolute;
+	/* position:				absolute;
 	top:					84px;
-	left:					0px;
+	left:					0px; */
 	width:					42px;
 	height:					42px;
 	color:					snow;
@@ -255,9 +258,9 @@ INPUT[type=password]:focus{
 }
 
 #ID_NAV_LOG{
-	position:				absolute;
+	/* position:				absolute;
 	top:					126px;
-	left:					0px;
+	left:					0px; */
 	width:					42px;
 	height:					42px;
 	color:					darkgray;
@@ -542,7 +545,7 @@ INPUT[type=password]:focus{
 #ID_WHITEBOARD_CHILD_COUNT{
 	position:				absolute;
 	top:					34px;
-	left:					42px;
+	left:					40px;
 	width:					40px;
 	font-size:				22px;
 	text-align:				center;

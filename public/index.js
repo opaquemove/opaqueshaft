@@ -100,10 +100,12 @@ function init()
 			var marked = ( getMarkedChild().length > 0 );
 			if ( oldScrollPos > e.target.scrollTop ){
 				// console.log( 'up' );
+				showStartIcon();
 				if ( !oNav.opened() && marked )
 					oNav.open();
 			} else {
 				// console.log( 'down' );
+				hideStartIcon();
 				if ( oNav.opened() && !marked )
 					oNav.close();
 			}
@@ -1156,10 +1158,16 @@ function loadWhiteboardChildren(){
 	var touchdevice = ( 'ontouchend' in document );
 
 	var day = dayWhiteboard;
-	var wb = document.getElementById('WHITEBOARD');
-	var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
-	wb.innerHTML 		= '';
-	wb_absent.innerHTML	= '';
+	//
+	//	ホワイトボード内のチルドレンを全削除
+	//
+	deleteWhiteboardChildren();
+	// var wb = document.getElementById('WHITEBOARD');
+	// var wbc = document.getElementById('WHITEBOARD_CHECKOUT');
+	// var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
+	// wb.innerHTML 		= '';
+	// wbc.innerHTML		= '';
+	// wb_absent.innerHTML	= '';
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -1904,7 +1912,8 @@ function fitting(){
 	var nsi2 = document.getElementById('NAV_START_ICON2');
 	// nsi2.style.top = ( ( h / 2 ) - ( tb_height + ( nsi2.offsetHeight / 2 ) ) ) + 'px';
 	nsi2.style.top = ( h - nsi2.offsetHeight ) + 'px';
-	nsi2.style.left	= ( w - 42 ) + 'px';
+	// nsi2.style.left	= ( w - 42 ) + 'px';
+	nsi2.style.left	= ( ( w / 2 ) - ( nsi2.offsetWidth / 2 ) ) + 'px';
 
 	var cfm = document.getElementById('CHILDFINDER_MAIN');
 	if ( cfm != null ){
@@ -1994,7 +2003,7 @@ function ctlToolbar(){
 //
 function showToolbar(){
 	var nsi 	= document.getElementById('NAV_START_ICON');
-	var nsi2 	= document.getElementById('NAV_START_ICON2');
+	// var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	// var is		= document.getElementById('ID_SEARCH');
@@ -2007,7 +2016,7 @@ function showToolbar(){
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
 	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	// nsi.style.visibility	= 'visible';
-	nsi2.style.visibility	= 'visible';
+	// nsi2.style.visibility	= 'visible';
 	tb.style.visibility     = 'visible';
 	wbf.style.visibility    = 'visible';
 	// is.style.visibility		= 'visible';
@@ -2019,6 +2028,7 @@ function showToolbar(){
 	ime.style.visibility	= 'visible';
 	icf.style.visibility	= 'visible';
 	// eam.style.visibility	= 'visible';
+	// showStartIcon();
 	visibleWhiteboard();
 
 }
@@ -2026,7 +2036,7 @@ function showToolbar(){
 function hideToolbar(){
 	console.log('hideToolbar');
 	var nsi 	= document.getElementById('NAV_START_ICON');
-	var nsi2 	= document.getElementById('NAV_START_ICON2');
+	// var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var icf		= document.getElementById('ID_CHILD_FINDER');
@@ -2037,7 +2047,7 @@ function hideToolbar(){
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
 	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'hidden';
-	nsi2.style.visibility	= 'hidden';
+	// nsi2.style.visibility	= 'hidden';
 	tb.style.visibility     = 'hidden';
 	wbf.style.visibility    = 'hidden';
 	// is.style.visibility		= 'hidden';
@@ -2049,9 +2059,24 @@ function hideToolbar(){
 	ime.style.visibility	= 'hidden';
 	icf.style.visibility	= 'hidden';
 	// eam.style.visibility	= 'hidden';
+	hideStartIcon();
 	hiddenWhiteboard();
 
 }
+
+//
+//	スタートアイコン表示制御
+//
+function showStartIcon(){
+	var nsi2 	= document.getElementById('NAV_START_ICON2');
+	nsi2.style.visibility	= 'visible';
+}
+function hideStartIcon(){
+	var nsi2 	= document.getElementById('NAV_START_ICON2');
+	nsi2.style.visibility	= 'hidden';
+}
+
+
 
 function getCookie(){
 	var c = document.cookie;
