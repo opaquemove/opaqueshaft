@@ -462,7 +462,11 @@ function makeTimelineIndicator(){
 		guide.style.top				= ( ( i + 0 ) * pixelPerHour - 1 )+ 'px';
 		guide.style.pointerEvents	= 'auto';
 		guide.innerHTML = '<div style="" >' + arTL[i] + ':00' + '</div>';
-		wbf.appendChild( guide );
+		wbf.appendChild( guide ).addEventListener('click',
+			function (e ){
+				alert( e.target.innerText);
+			}
+		);
 	}
 	for ( var i=0; i<arTL.length - 0; i++ ){
 		var guide = document.createElement('DIV');
