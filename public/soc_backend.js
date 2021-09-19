@@ -1082,7 +1082,7 @@ function deleteWhiteboardChild(){
 	r += '</div>';
 	r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
         r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button" ';
-        r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/minus.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+        r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
         r += ' onclick="deleteWhiteboardChildHelper();"   >';
         r += '</button>';
 

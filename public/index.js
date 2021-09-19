@@ -299,12 +299,15 @@ function initWhiteboardMode(){
 }
 
 function modeWhiteboard( e ){
+	console.log( curWhiteboard, this.getAttribute('id'));
 	var imne = document.getElementById('ID_MODE_CHECKIN');
 	var ime  = document.getElementById('ID_MODE_CHECKOUT');
 
 	var wb	= document.getElementById('WHITEBOARD');
 	var wbe	= document.getElementById('WHITEBOARD_CHECKOUT');
 	var wba	= document.getElementById('WHITEBOARD_ABSENT');
+
+	resetChildMark();
 	switch ( this.getAttribute('id')){
 		case 'ID_MODE_CHECKIN':
 			imne.classList.add( 'mode_on' );
@@ -1287,7 +1290,7 @@ function saveWhiteboard(){
 	//	マーク状態をクリア
 	resetChildMark();
 	var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
+	r += '<div style="font-size:24px;text-align:center;padding-top:4px;padding-bottom:4px;" >';
 	// 	r += 'save whiteboard';
 	r += '</div>';
 	r += '<div style="margin:0 auto;width:70%;font-size:18px;">';
@@ -1305,12 +1308,29 @@ function saveWhiteboard(){
 		r += '<textarea id="WB_REPORT" name="report" style="width:100%;" >' + wb_report + '</textarea>';
 		r += '</div>';
 		r += '</form>';
+
+		r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
+			r += '<button id="BTN_SAVEWHITEBOARD" type="button" ';
+			r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+			r += ' onclick="saveWhiteboardHelper();closeModalDialog();"   >';
+			r += '</button>';
+
+			r += '<button id="" type="button" ';
+			r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+			r += ' onclick="closeModalDialog();" >';
+			r += '</button>'
+
+        r += '</div>';
+
 	r += '</div>';
-	openModalDialog( 'save whiteboard', r, 'OK_CANCEL',
-			function(){
-				saveWhiteboardHelper();
-				closeModalDialog();
-			}, null );
+
+	openModalDialog( 'save whiteboard', r, 'NOBUTTON', null, null );
+
+	// openModalDialog( 'save whiteboard', r, 'OK_CANCEL',
+	// 		function(){
+	// 			saveWhiteboardHelper();
+	// 			closeModalDialog();
+	// 		}, null );
 }
 
 //
@@ -1920,6 +1940,7 @@ function fitting(){
 		var cff 	= document.getElementById('CHILDFINDER_FRAME')
 		var cfh   	= document.getElementById('CHILDFINDER_HEADER');
 		var h 		= cff.offsetHeight - cfh.offsetHeight;
+		console.log( 'CHILDFINDER_HEADER height:' + cfh.offsetHeight);
 		// console.log( 'cfm height:' + h );
 		cfm.style.height = h + 'px';
 	}
@@ -3162,7 +3183,7 @@ function makeContextMenu(){
 //	チャイルドのマークをリセット
 //
 function resetChildMark(){
-	console.log('resetChild()');
+	console.log('resetChildMark()');
 	var children = document.getElementById( 'WHITEBOARD' ).childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		unmarkChild( children[i] );

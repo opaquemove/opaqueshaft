@@ -365,8 +365,8 @@ INPUT[type=password]:focus{
 }
 #CHILDFINDER_FRAME{
 	visibility:			hidden;
-	width:				375px;
-	height:				70%;
+	width:				200px;
+	height:				100%;
 	padding-right:		42px;
 /*	
 	background-color:	rgb(241, 241, 241);
@@ -376,7 +376,7 @@ INPUT[type=password]:focus{
 #CHILDFINDER_HEADER{
 	visibility:				hidden;
 	width:					100%;
-	height:					42px;
+	height:					84px;
 	font-size:				6px;
 	text-align: 			center;
 	pointer-events: 		auto;
@@ -819,11 +819,12 @@ INPUT[type=password]:focus{
 }
 #REPORT_CONTENT{
 	position:				absolute;
-	top:					0px;
+	top:					42px;
 	left:					0px;
 	width:					100%;
 	height:					calc(100% - 42px);
-	padding-top:			42px;
+	padding-top:			0px;
+	border-top:				0px solid red;
 	overflow:				scroll;
 }
 #REPORT_CONTENT_HANDLE{
