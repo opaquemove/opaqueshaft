@@ -62,8 +62,8 @@ spotlight.prototype = {
         o3.setAttribute( 'class', 'not_select' );
         r = '';
         r += '<div style="width:100%;height:42px;" >';
-            r += '<div id="BTN_ALIGN_SPOTLIGHT" style="float:left;width:42px;height:42px;background-color:rgb(255, 123, 0);background-image:url(./images/searching.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >child</div>';
-            r += '<div id="BTN_CLOSE_SPOTLIGHT"   style="float:right;width:26px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >close</div>';
+            r += '<div id="BTN_ALIGN_SPOTLIGHT"   style="float:left;width:42px;height:42px;background-color:rgb(255, 123, 0);background-image:url(./images/searching.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >child</div>';
+            // r += '<div id="BTN_CLOSE_SPOTLIGHT"   style="float:right;width:26px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >close</div>';
             r += '<div id="BTN_LISTALL"           style="float:right;width:26px;height:42px;background-image:url(./images/list.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >all</div>';
             r += '<div id="BTN_TIMESELECTOR"      style="float:right;width:26px;height:42px;background-image:url(./images/time.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >time</div>';
             // r += '<div id="BTN_CHILD_PROPERTY"    style="float:right;width:26px;height:42px;background-image:url(./images/hexagon.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
@@ -102,10 +102,10 @@ spotlight.prototype = {
             ( function(e) {
                 this.close();
             }).bind( this ), false );
-        document.getElementById('BTN_CLOSE_SPOTLIGHT').addEventListener( 'click',
-        ( function(e) {
-            this.close();
-        }).bind( this ), false );
+        // document.getElementById('BTN_CLOSE_SPOTLIGHT').addEventListener( 'click',
+        // ( function(e) {
+        //     this.close();
+        // }).bind( this ), false );
         document.getElementById('BTN_LISTALL').addEventListener( 'click',
             ( function(e) {
                 this.keyword.value = '*';

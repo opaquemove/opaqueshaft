@@ -365,7 +365,7 @@ INPUT[type=password]:focus{
 }
 #CHILDFINDER_FRAME{
 	visibility:			hidden;
-	width:				200px;
+	width:				180px;
 	height:				100%;
 	padding-right:		42px;
 /*	
