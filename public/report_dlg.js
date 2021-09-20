@@ -6,7 +6,9 @@ function ctlReportDlg(){
 
 function report_dlg(){
     this.frame      = null;
+    this.handle     = null;
     this.content    = null;
+    this.footer     = null;
     this.tid        = null;
     this.top        = 84;
     this.height     = null;
@@ -15,6 +17,7 @@ function report_dlg(){
     this.frame      = document.getElementById('REPORT_FRAME');
     this.content    = document.getElementById('REPORT_CONTENT');
     this.handle     = document.getElementById('REPORT_CONTENT_HANDLE');
+    this.footer     = document.getElementById('REPORT_CONTENT_FOOTER');
     this.handle.addEventListener( 'click',
         ( function(e){
             this.close();
@@ -81,8 +84,11 @@ report_dlg.prototype = {
     set : function( r ){
         this.content.innerHTML = r;
     },
-    title : function( r ){
+    setHandle : function( r ){
         this.handle.innerHTML = r;
+    },
+    setFooter : function( r ){
+        this.footer.innerHTML = r;
     }
 
 

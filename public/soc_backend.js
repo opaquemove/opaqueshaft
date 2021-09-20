@@ -186,8 +186,19 @@ function reportWhiteboard(){
     r += '</div>';
     r += '<div id="REPORT_LIST" style="width:97%;height:;font-size:12px;clear:both;margin:0 auto;border:1px solid white;overflow:scroll;" >';
     r += '</div>';
+
+    var f = '';
+    f += '<div style="margin:0 auto;width:60%;height:100%;text-align:center;">';
+        f += '<button id="" type="button" ';
+        f += ' style="font-size:24px;width:80px;height:100%;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+        f += ' onclick="oReportDlg.close();"   >';
+        f += '</button>';
+    f += '</div>';
+
+
     // openModalDialog( 'report ' + dayWhiteboard, r, 'NORMAL', null, 'MAX' );
-    oReportDlg.title( t );
+    oReportDlg.setHandle( t );
+    oReportDlg.setFooter( f );
     oReportDlg.set( r );
     oReportDlg.open();
     reportWhiteboardSummary();
