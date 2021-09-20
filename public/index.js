@@ -185,6 +185,7 @@ function init()
 	new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
 	new Button( 'ID_NAV_LOG',               ctlMessageLog ).play();
 	new Button( 'ID_CHILD_FINDER',          ctlSpotlight ).play();
+	new Button( 'ID_ACCOUNT', function(){ propertyAccount(); oTile.close();} ).play();
 
 
 	//	モーダルダイアログの外側をクリックしたらクローズ
@@ -779,6 +780,7 @@ function locateTimelinebar( e ){
 			o.style.width			= '80px';
 			o.style.height			= '32px';
 			o.style.borderRadius	= '4px';
+			o.style.zIndex			= 40001;
 			//var new_top  = event.pageY - tly;
 
 			o.style.top		= ( event.pageY - tly ) + 'px';
@@ -1957,6 +1959,8 @@ function fitting(){
 	itba.style.left	= ( w - itba.offsetWidth ) + 'px';
 	itb.style.left	= ( w - itb.offsetWidth  ) + 'px';
 
+	var ia  = document.getElementById('ID_ACCOUNT');
+	ia.style.left	= ( w - ia.offsetWidth ) + 'px';
 	var icf = document.getElementById('ID_CHILD_FINDER');
 	icf.style.left	= ( w - icf.offsetWidth ) + 'px';
 
@@ -2029,6 +2033,7 @@ function showToolbar(){
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	// var is		= document.getElementById('ID_SEARCH');
 	// var ic		= document.getElementById('ID_CHILDREN');
+	var ia		= document.getElementById('ID_ACCOUNT');
 	var icf		= document.getElementById('ID_CHILD_FINDER');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
@@ -2047,6 +2052,7 @@ function showToolbar(){
 	// psb.style.visibility	= 'visible';
 	imne.style.visibility	= 'visible';
 	ime.style.visibility	= 'visible';
+	ia.style.visibility		= 'visible';
 	icf.style.visibility	= 'visible';
 	// eam.style.visibility	= 'visible';
 	// showStartIcon();
@@ -2060,6 +2066,7 @@ function hideToolbar(){
 	// var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
+	var ia		= document.getElementById('ID_ACCOUNT');
 	var icf		= document.getElementById('ID_CHILD_FINDER');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
@@ -2078,6 +2085,7 @@ function hideToolbar(){
 	psb.style.visibility	= 'hidden';
 	imne.style.visibility	= 'hidden';
 	ime.style.visibility	= 'hidden';
+	ia.style.visibility		= 'hidden';
 	icf.style.visibility	= 'hidden';
 	// eam.style.visibility	= 'hidden';
 	hideStartIcon();

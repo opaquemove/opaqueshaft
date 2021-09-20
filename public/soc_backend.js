@@ -190,7 +190,7 @@ function reportWhiteboard(){
     var f = '';
     f += '<div style="margin:0 auto;width:60%;height:100%;text-align:center;">';
         f += '<button id="" type="button" ';
-        f += ' style="font-size:24px;width:80px;height:100%;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+        f += ' style="font-size:24px;width:42px;height:100%;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
         f += ' onclick="oReportDlg.close();"   >';
         f += '</button>';
     f += '</div>';
@@ -1898,7 +1898,7 @@ function propertyAccount(){
     r += "</form>";
     r += "</div>";
 
-    openModalDialog( 'Account property', r, 'NORMAL', null, null );
+    openModalDialog( 'Account property', r, 'NORMAL', null, 'ACCOUNT' );
 
 }
 

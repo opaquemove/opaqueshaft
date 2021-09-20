@@ -1191,11 +1191,28 @@ INPUT[type=password]:focus{
 	background-size: 		16px;
 }
 
+#ID_ACCOUNT{
+	position:				absolute;
+	margin-top:				0px;
+	top:					84px;
+	left:					18px;
+	width:					40px;
+	height:					40px;
+	color:					snow;
+	background-color:		rgb(255, 123, 0);
+	background-image:		url(./images/user-2.png);
+	background-size:		14px;
+	background-repeat:		no-repeat;
+	background-position:	center center;
+	border:					1px solid rgb(255, 123, 0);
+	overflow:				hidden;
+}
+	
 #ID_CHILD_FINDER{
 /*	pointer-events: 		none;	*/
 	position:				absolute;
 	margin-top:				0px;
-	top:					84px;
+	top:					126px;
 	left:					18px;
 	width:					40px;
 	height:					40px;
@@ -1213,7 +1230,7 @@ INPUT[type=password]:focus{
 	pointer-events: 		none;
 	position:				absolute;
 	margin-top:				0px;
-	top:					126px;
+	top:					168px;
 	left:					18px;
 	width:					4px;
 	height:					162px;
@@ -1226,7 +1243,7 @@ INPUT[type=password]:focus{
 #ID_TIMELINE_BAR{
 	position:				absolute;
 	margin-top:				0px;
-	top:					126px;
+	top:					168px;
 	left:					0px;
 	width:					30px;
 	height:					41px;
