@@ -72,12 +72,16 @@ spotlight.prototype = {
             r += '<div id="BTN_FOLDING_SPOTLIGHT" style="float:right;width:26px;height:42px;background-image:url(./images/prev.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >large</div>';
         r += '</div>';
         r += '<div style="width:100%;height:42px;" >';
-            r += '<div id=""   style="float:right;width:32px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >find</div>';
-            r += '<div style="float:right;padding:10px 10px 10px 10px;" >';
-                r += '<form onsubmit="return false;" >';
-                r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:70px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
-                r += '</form>';
+            r += '<form onsubmit="return false;" >';
+            r += '<div id=""   style="float:right;width:32px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >';
+
+                r += '<button type="submit" >find</button>';
+
             r += '</div>';
+            r += '<div style="float:right;padding:10px 10px 10px 10px;" >';
+                r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:70px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
+            r += '</div>';
+            r += '</form>';
         r += '</div>';
 
         o3.innerHTML = r;
