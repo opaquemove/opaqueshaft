@@ -73,9 +73,9 @@ spotlight.prototype = {
         r += '</div>';
         r += '<div style="width:100%;height:42px;" >';
             r += '<form onsubmit="return false;" >';
-            r += '<div id=""   style="float:right;width:32px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >';
+            r += '<div id="BTN_FIND"   style="float:right;width:32px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >';
 
-                r += '<button type="submit" >find</button>';
+                // r += '<button type="submit" >find</button>';
 
             r += '</div>';
             r += '<div style="float:right;padding:10px 10px 10px 10px;" >';
@@ -111,11 +111,16 @@ spotlight.prototype = {
         // ( function(e) {
         //     this.close();
         // }).bind( this ), false );
-        document.getElementById('BTN_LISTALL').addEventListener( 'click',
+        document.getElementById('BTN_FIND').addEventListener( 'click',
             ( function(e) {
-                this.keyword.value = '*';
+                this.keyword.value = '';
                 this.ctlMain();
             }).bind( this ), false );
+        document.getElementById('BTN_LISTALL').addEventListener( 'click',
+        ( function(e) {
+            this.keyword.value = '*';
+            this.ctlMain();
+        }).bind( this ), false );
         document.getElementById('BTN_REFRESH_LIST').addEventListener( 'click',
             ( function(e) {
                 this.ctlMain();
