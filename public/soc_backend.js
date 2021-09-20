@@ -158,10 +158,12 @@ function deleteWhiteboardChildren(){
 //  レポーティング
 //
 function reportWhiteboard(){
+    var t = '';
+	t += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
+		t += 'report  ' + dayWhiteboard;
+    t += '</div>';
+
     var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
-		r += 'report  ' + dayWhiteboard;
-    r += '</div>';
     r += '<div style="width:97%;height:;font-size:16px;clear:both;margin:0 auto;" >';
         r += 'Summary:'
     r += '</div>';
@@ -185,6 +187,7 @@ function reportWhiteboard(){
     r += '<div id="REPORT_LIST" style="width:97%;height:;font-size:12px;clear:both;margin:0 auto;border:1px solid white;overflow:scroll;" >';
     r += '</div>';
     // openModalDialog( 'report ' + dayWhiteboard, r, 'NORMAL', null, 'MAX' );
+    oReportDlg.title( t );
     oReportDlg.set( r );
     oReportDlg.open();
     reportWhiteboardSummary();

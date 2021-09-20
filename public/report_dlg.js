@@ -80,6 +80,9 @@ report_dlg.prototype = {
     },
     set : function( r ){
         this.content.innerHTML = r;
+    },
+    title : function( r ){
+        this.handle.innerHTML = r;
     }
 
 

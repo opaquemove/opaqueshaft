@@ -817,26 +817,36 @@ INPUT[type=password]:focus{
 	visibility:				hidden;
 	z-index:				69999;
 }
-#REPORT_CONTENT{
-	position:				absolute;
-	top:					42px;
-	left:					0px;
-	width:					100%;
-	height:					calc(100% - 42px);
-	padding-top:			0px;
-	border-top:				0px solid red;
-	overflow:				scroll;
-}
 #REPORT_CONTENT_HANDLE{
 	position:				absolute;
 	top:					0px;
 	left:					0px;
 	width:					100%;
 	height:					42px;
+	color:					darkgray;
 	background-image:		url(./images/down-arrow.png);
 	background-size:		20px;
 	background-position:	right center;
 	background-repeat: 		no-repeat;
+	margin:					0px auto;
+}
+#REPORT_CONTENT{
+	position:				absolute;
+	top:					42px;
+	left:					0px;
+	width:					100%;
+	height:					calc(100% - 42px - 42px);
+	padding-top:			0px;
+	border-top:				0px solid red;
+	overflow:				scroll;
+}
+#REPORT_CONTENT_FOOTER{
+	position:				absolute;
+	top:					calc(100% - 42px);
+	left:					0px;
+	width:					100%;
+	height:					42px;
+	color:					darkgray;
 	margin:					0px auto;
 }
 #REPORT_CONTENT_ICON{
