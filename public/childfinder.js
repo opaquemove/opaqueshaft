@@ -69,7 +69,7 @@ spotlight.prototype = {
             // r += '<div id="BTN_CHILD_PROPERTY"    style="float:right;width:26px;height:42px;background-image:url(./images/hexagon.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" ></div>';
             r += '<div id="BTN_CLEAR_LIST"        style="float:right;width:26px;height:42px;background-image:url(./images/eraser.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >clear</div>';
             r += '<div id="BTN_REFRESH_LIST"      style="float:right;width:26px;height:42px;background-image:url(./images/recycle.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >refrsh</div>';
-            r += '<div id="BTN_FOLDING_SPOTLIGHT" style="float:right;width:26px;height:42px;background-image:url(./images/prev.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >large</div>';
+            // r += '<div id="BTN_FOLDING_SPOTLIGHT" style="float:right;width:26px;height:42px;background-image:url(./images/prev.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >large</div>';
         r += '</div>';
         r += '<div style="width:100%;height:42px;" >';
             r += '<form onsubmit="return false;" >';
@@ -86,19 +86,19 @@ spotlight.prototype = {
 
         o3.innerHTML = r;
         this.header     = this.frame.appendChild( o3 );
-        document.getElementById('BTN_FOLDING_SPOTLIGHT').addEventListener( 'click',
-            ( function(e) {
-                // this.close();
-                if ( this.frame.style.width == '90%' ){
-                    this.frame.style.width = '';
-                    document.getElementById('BTN_FOLDING_SPOTLIGHT').style.backgroundImage= 'url(./images/prev.png)';
-                    document.getElementById('BTN_FOLDING_SPOTLIGHT').innerText = 'large';
-                } else{
-                    this.frame.style.width = '90%';
-                    document.getElementById('BTN_FOLDING_SPOTLIGHT').style.backgroundImage= 'url(./images/next.png)';
-                    document.getElementById('BTN_FOLDING_SPOTLIGHT').innerText = 'small';
-                }
-            }).bind( this ), false );
+        // document.getElementById('BTN_FOLDING_SPOTLIGHT').addEventListener( 'click',
+        //     ( function(e) {
+        //         // this.close();
+        //         if ( this.frame.style.width == '90%' ){
+        //             this.frame.style.width = '';
+        //             document.getElementById('BTN_FOLDING_SPOTLIGHT').style.backgroundImage= 'url(./images/prev.png)';
+        //             document.getElementById('BTN_FOLDING_SPOTLIGHT').innerText = 'large';
+        //         } else{
+        //             this.frame.style.width = '90%';
+        //             document.getElementById('BTN_FOLDING_SPOTLIGHT').style.backgroundImage= 'url(./images/next.png)';
+        //             document.getElementById('BTN_FOLDING_SPOTLIGHT').innerText = 'small';
+        //         }
+        //     }).bind( this ), false );
         document.getElementById('BTN_TIMESELECTOR').addEventListener( 'click',
             ( function(e) {
                 showTimelineSelector();
@@ -175,6 +175,7 @@ spotlight.prototype = {
         this.overlay.style.visibility   = 'visible';
         this.frame.style.visibility     = 'visible';
         this.header.style.visibility    = 'visible';
+        this.keyword.value              = '*';           
         this.ctlMain();
         // this.keyword.focus();
         this.resize();
