@@ -288,6 +288,19 @@ INPUT[type=password]:focus{
 	z-index:				40000;
 	overflow:				visible;
 	opacity: 				1;
+}
+#TOOLBAR_RIGHT{
+	position:				absolute;
+	top:					400px;
+	left:					-42px;
+	width:					42px;
+	height:					42px;
+	pointer-events: 		auto;
+	color:					gray;
+	background-color:		transparent;
+	z-index:				40000;
+	overflow:				visible;
+	opacity: 				1;
 
 }
 #OPAQUESHAFT_NAV{
@@ -737,6 +750,7 @@ INPUT[type=password]:focus{
 	/* margin:				0 auto; */
 	height:				32px;
 	color:				white;
+	text-shadow: 		2px 2px 2px black;
 	/* background-color:	darkgray; */
 	font-size:			24px;
 	font-weight:		bold;

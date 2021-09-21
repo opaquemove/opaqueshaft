@@ -27,10 +27,7 @@
 	</div>
 	<div id="NAV_START_ICON"  class="not_select vh-center toolbar_hidden">&nbsp;</div>
 	<div id="NAV_START_ICON2" class="not_select vh-center toolbar_hidden" style="text-align:center;">
-		<div id="ID_NAV_TILE"   >menu</div>
-		<div id="ID_NAV_REPORT" >report</div>
 		<div id="ID_NAV_SEARCH" >child</div>
-		<div id="ID_NAV_LOG"    >log</div>
 	</div>
 	<div id="TOOLBAR" class="not_select toolbar_hidden">
 		<div id="OPAQUESHAFT_NAV" >&nbsp;</div>
@@ -42,13 +39,6 @@
 		</div> 
 		<div style="float:left;padding-top:10px;padding-left: 10px;">
 			<div id="ID_CHILD_COORDINATE"                class="status_column" style="width:100px;display:none;" ></div>
-			<!--
-				<div id="ID_WHITEBOARD_CHILD_COUNT_ABSENT00"   class="status_column" style="width:30px;" ></div>
-				<div id="ID_ON_SCROLL"                       class="status_column" style="width:50px;" ></div>
-				<button onclick="postWebBackend()"       >sign status(webbackend)</button>
-				<button onclick="getAccountList()"       >getAccountList(socket.io)...</button>
-				<button onclick="loadChildrenForm()"     >load Children(socket.io)</button>
-			-->	
 		</div>
 		<div id="ID_MODE_FRAME"		   class="not_select" >
 			<div id="ID_MODE_CHECKIN"  class="not_select toolbar_hidden vh-center mode_on" >
@@ -66,10 +56,15 @@
 			<div id="ID_WHITEBOARD_CHILD_COUNT_ABSENT"   class="not_select" ></div>
 
 		</div>
-
 		<div id="WHITEBOARD_DAY_FRAME" class="not_select">
 			<span id="CUR_WHITEBOARD_DAY" ></span>
 		</div>
+	</div>
+
+	<div id="TOOLBAR_RIGHT" class="not_select toolbar_hidden">
+		<div id="ID_NAV_TILE"   >menu</div>
+		<div id="ID_NAV_REPORT" >report</div>
+		<div id="ID_NAV_LOG"    >log</div>
 	</div>
 	
 	<div id="WHITEBOARD_FRAME" class="not_select toolbar_hidden">

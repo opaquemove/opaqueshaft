@@ -1966,6 +1966,9 @@ function fitting(){
 	var iprog = document.getElementById('ID_PROGRESS2');
 	iprog.style.left	= ( w - iprog.offsetWidth ) + 'px';
 
+	var tr = document.getElementById('TOOLBAR_RIGHT');
+	tr.style.left	= ( w - tr.offsetWidth ) + 'px';
+
 	// レポートダイアログのサイズ調整
 	oReportDlg.init();
 
@@ -2032,6 +2035,7 @@ function showToolbar(){
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	// var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
+	var tr  	= document.getElementById('TOOLBAR_RIGHT');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	// var is		= document.getElementById('ID_SEARCH');
 	// var ic		= document.getElementById('ID_CHILDREN');
@@ -2047,6 +2051,7 @@ function showToolbar(){
 	// nsi.style.visibility	= 'visible';
 	// nsi2.style.visibility	= 'visible';
 	tb.style.visibility     = 'visible';
+	tr.style.visibility		= 'visible';
 	wbf.style.visibility    = 'visible';
 	// is.style.visibility		= 'visible';
 	// ic.style.visibility		= 'visible';
@@ -2069,6 +2074,7 @@ function hideToolbar(){
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	// var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
+	var tr		= document.getElementById('TOOLBAR_RIGHT');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var ia		= document.getElementById('ID_ACCOUNT');
 	var icf		= document.getElementById('ID_CHILD_FINDER');
@@ -2082,6 +2088,7 @@ function hideToolbar(){
 	nsi.style.visibility	= 'hidden';
 	// nsi2.style.visibility	= 'hidden';
 	tb.style.visibility     = 'hidden';
+	tr.style.visibility		= 'hidden';
 	wbf.style.visibility    = 'hidden';
 	// is.style.visibility		= 'hidden';
 	// ic.style.visibility		= 'hidden';
