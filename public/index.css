@@ -525,7 +525,7 @@ INPUT[type=password]:focus{
 	top:					16px;
 	left:					21px;
 	width:					40px;
-	font-size:				22px;
+	font-size:				16px;
 	text-align:				center;
 	text-shadow: 			2px 2px 2px black;
 	transform: 				rotate(-49deg);
@@ -534,7 +534,7 @@ INPUT[type=password]:focus{
 	position:				absolute;
 	top:					36px;
 	left:					32px;
-	width:					38px;
+	width:					30px;
 	height:					2px;
 	font-size:				28px;
 	text-shadow: 			2px 2px 2px black;
@@ -547,7 +547,7 @@ INPUT[type=password]:focus{
 	top:					34px;
 	left:					40px;
 	width:					40px;
-	font-size:				22px;
+	font-size:				16px;
 	text-align:				center;
 	text-shadow: 			2px 2px 2px black;
 	transform: 				rotate(-49deg);
@@ -557,7 +557,7 @@ INPUT[type=password]:focus{
 	top:					51px;
 	left:					22px;
 	width:					20px;
-	font-size:				16px;
+	font-size:				12px;
 	text-align:				center;
 	text-shadow: 			2px 2px 2px black;
 	transform: 				rotate(-49deg);
@@ -719,7 +719,7 @@ INPUT[type=password]:focus{
 	color:				white;
 	text-shadow: 		2px 2px 2px black;
 	/* background-color:	darkgray; */
-	font-size:			24px;
+	font-size:			18px;
 	font-weight:		bold;
 	text-align:			center;
 	padding:			0px;
@@ -735,15 +735,16 @@ INPUT[type=password]:focus{
 	left:				0px;
 	width:				84px;
 	/* margin:				0 auto; */
-	height:				8px;
+	height:				32px;
 	color:				white;
 	/* background-color:	darkgray; */
-	font-size:			8px;
+	font-size:			24px;
 	font-weight:		bold;
 	text-align:			center;
 	background-color:	transparent;
 	/*border-top:		1px dashed lightgrey; */
 	z-index:			6000;
+	opacity:			0.7;
 }
 .timeline2_class{
 	position:			absolute;
@@ -1220,7 +1221,7 @@ INPUT[type=password]:focus{
 	height:					40px;
 	color:					snow;
 	background-color:		rgb(255, 123, 0);
-	background-image:		url(./images/searching.png);
+	background-image:		url(./images/plus3.png);
 	background-size:		14px;
 	background-repeat:		no-repeat;
 	background-position:	center center;

@@ -269,7 +269,7 @@ function reportWhiteboardSummary(){
     d.style.backgroundColor	= 'white';
     // d.style.border			= '1px solid lightgrey';
     var ccl = summary_area.appendChild( d );
-    var cp = new CircleProgress( ccl, 64, 64, progress_ratio, 'gray', 22 );
+    var cp = new CircleProgress( ccl, 64, 64, progress_ratio, 'rgb(255, 123, 0)', 22 );
     cp.play();
 
 

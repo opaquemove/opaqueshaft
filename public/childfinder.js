@@ -73,7 +73,7 @@ spotlight.prototype = {
         r += '</div>';
         r += '<div style="width:100%;height:42px;" >';
             r += '<form onsubmit="return false;" >';
-            r += '<div id="BTN_FIND"   style="float:right;width:32px;height:42px;background-image:url(./images/cancel-2.png);background-size:16px;background-repeat:no-repeat;background-position:center center;" >';
+            r += '<div id="BTN_FIND"   style="float:right;width:32px;height:42px;background-image:url(./images/right-arrow-black-triangle.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" >';
 
                 // r += '<button type="submit" >find</button>';
 
@@ -401,7 +401,7 @@ spotlight.prototype = {
                 if ( absent )
                     r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/sleep-2.png);background-size:16px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                     else
-                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/godzilla.png);background-size:16px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/dry-clean.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                 if ( checkout )
                     r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/check.png);background-size:14px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                     else

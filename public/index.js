@@ -414,7 +414,7 @@ function makeToolbarCheckoutProgress( progress_ratio ){
 	// d.style.backgroundColor	= 'rgb(241,241,241)';
 	// d.style.border			= '1px solid lightgrey';
 	var ccl = p.appendChild( d );
-	var cp = new CircleProgress( ccl, 40, 40, progress_ratio, 'gray', 14 );
+	var cp = new CircleProgress( ccl, 40, 40, progress_ratio, 'white', 14 );
 	cp.play();
 
 }
@@ -458,7 +458,7 @@ function makeTimelineIndicator(){
 	for ( var i=0; i<arTL.length; i++ ){
 		var o = document.createElement('DIV');
 		o.setAttribute('class', 'timeline_class vh-center' );
-		o.innerHTML = '<div style="border-bottom:4px solid white;" >' + arTL[i] + ':00' + '</div>';
+		o.innerHTML = '<div style="border-bottom:0px solid white;" >' + arTL[i] + ':00' + '</div>';
 		wbt.appendChild( o );
 	}
 	
