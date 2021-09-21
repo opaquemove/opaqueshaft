@@ -1226,11 +1226,24 @@ INPUT[type=password]:focus{
 	overflow:				hidden;
 }
 
+#ID_PROGRESS2{
+	/*	pointer-events: 		none;	*/
+		position:				absolute;
+		margin-top:				0px;
+		top:					168px;
+		left:					18px;
+		width:					42px;
+		height:					42px;
+		color:					snow;
+		background-color:		rgb(255, 123, 0);
+		overflow:				hidden;
+	}
+	
 #ID_TIMELINE_BAR_AREA{
 	pointer-events: 		none;
 	position:				absolute;
 	margin-top:				0px;
-	top:					168px;
+	top:					210px;
 	left:					18px;
 	width:					4px;
 	height:					162px;
@@ -1243,7 +1256,7 @@ INPUT[type=password]:focus{
 #ID_TIMELINE_BAR{
 	position:				absolute;
 	margin-top:				0px;
-	top:					168px;
+	top:					210px;
 	left:					0px;
 	width:					30px;
 	height:					41px;
@@ -1256,6 +1269,7 @@ INPUT[type=password]:focus{
 	writing-mode: 			vertical-lr;		
 }
 
+	
 #ID_PERSPECTIVE_BAR{
 	position:				absolute;
 	margin-top:				0px;

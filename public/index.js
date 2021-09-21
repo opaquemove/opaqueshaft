@@ -400,7 +400,7 @@ function test(){
 //	ツールバーにチェックアウトプログレスを表示
 //
 function makeToolbarCheckoutProgress( progress_ratio ){
-	var p = document.getElementById('ID_PROGRESS');
+	var p = document.getElementById('ID_PROGRESS2');
 	if ( p.firstChild != null )
 		p.removeChild( p.firstChild );
 	// p.innerHTML = '';
@@ -409,12 +409,12 @@ function makeToolbarCheckoutProgress( progress_ratio ){
 	d.style.position		= 'relative';
 	d.style.paddingTop		= '1px';
 	d.style.paddingLeft		= '1px';
-	d.style.width			= '80px';
-	d.style.height			= '80px';
+	d.style.width			= '42px';
+	d.style.height			= '42px';
 	// d.style.backgroundColor	= 'rgb(241,241,241)';
 	// d.style.border			= '1px solid lightgrey';
 	var ccl = p.appendChild( d );
-	var cp = new CircleProgress( ccl, 70, 70, progress_ratio, 'gray', 12 );
+	var cp = new CircleProgress( ccl, 40, 40, progress_ratio, 'gray', 14 );
 	cp.play();
 
 }
@@ -1963,6 +1963,8 @@ function fitting(){
 	ia.style.left	= ( w - ia.offsetWidth ) + 'px';
 	var icf = document.getElementById('ID_CHILD_FINDER');
 	icf.style.left	= ( w - icf.offsetWidth ) + 'px';
+	var iprog = document.getElementById('ID_PROGRESS2');
+	iprog.style.left	= ( w - iprog.offsetWidth ) + 'px';
 
 	// レポートダイアログのサイズ調整
 	oReportDlg.init();
@@ -2035,6 +2037,7 @@ function showToolbar(){
 	// var ic		= document.getElementById('ID_CHILDREN');
 	var ia		= document.getElementById('ID_ACCOUNT');
 	var icf		= document.getElementById('ID_CHILD_FINDER');
+	var iprog	= document.getElementById('ID_PROGRESS2');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
@@ -2054,6 +2057,7 @@ function showToolbar(){
 	ime.style.visibility	= 'visible';
 	ia.style.visibility		= 'visible';
 	icf.style.visibility	= 'visible';
+	iprog.style.visibility	= 'visible';
 	// eam.style.visibility	= 'visible';
 	// showStartIcon();
 	visibleWhiteboard();
@@ -2068,6 +2072,7 @@ function hideToolbar(){
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var ia		= document.getElementById('ID_ACCOUNT');
 	var icf		= document.getElementById('ID_CHILD_FINDER');
+	var iprog	= document.getElementById('ID_PROGRESS2');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
@@ -2087,6 +2092,7 @@ function hideToolbar(){
 	ime.style.visibility	= 'hidden';
 	ia.style.visibility		= 'hidden';
 	icf.style.visibility	= 'hidden';
+	iprog.style.visibility	= 'hidden';
 	// eam.style.visibility	= 'hidden';
 	hideStartIcon();
 	hiddenWhiteboard();
