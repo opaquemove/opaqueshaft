@@ -949,6 +949,8 @@ INPUT[type=password]:focus{
 	border-radius: 		4px;
 /*	overflow:			hidden;*/
 	-webkit-user-select: none;
+	transform: 				rotate(-40deg);
+
 }
 
 .CHILD_CONTEXTMENU{
