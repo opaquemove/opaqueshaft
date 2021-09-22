@@ -169,27 +169,27 @@ INPUT[type=password]:focus{
 	height:					42px;
 	color:					snow;
 	background-color:		rgb(0, 132, 255);
-	background-image:		url(./images/shutter.png);
-	background-size:		24px;
+	background-image:		url(./images/menu.png);
+	background-size:		14px;
 	background-repeat:		no-repeat;
 	background-position:	center center;
 /*	font-size:				14px;	*/
-	border-radius: 			8px;
+	/* border-radius: 			8px; */
 }
 #ID_NAV_REPORT{
 	/* position:				absolute;
-	top:					42px;
+	top:					84px;
 	left:					0px; */
 	width:					42px;
 	height:					42px;
 	color:					snow;
-	background-color:		red;
+	background-color:		rgb(255, 123, 0);
 	background-image:		url(./images/report.png);
-	background-size:		24px;
+	background-size:		18px;
 	background-repeat:		no-repeat;
 	background-position:	center center;
 /*	font-size:				14px;	*/
-	border-radius: 			8px;
+	/* border-radius: 			8px; */
 }
 /*
 #ID_NAV_CHILD{
@@ -208,6 +208,17 @@ INPUT[type=password]:focus{
 	border-radius: 			8px;
 }
 */
+
+#ID_SYSMENU{
+	pointer-events: 		auto;
+	width:					42px;
+	height:					84px;
+	float:					right;
+	background-color: 		transparent;
+	color:					white;
+	text-align:				center;
+	padding:				0px;
+}
 
 #ID_MODE_FRAME{
 	pointer-events: 		auto;
@@ -270,7 +281,7 @@ INPUT[type=password]:focus{
 	background-repeat:		no-repeat;
 	background-position:	center center;
 /*	font-size:				6px; */
-	border-radius: 			8px;
+	/* border-radius: 			8px; */
 }
 
 #TOOLBAR{
@@ -298,6 +309,7 @@ INPUT[type=password]:focus{
 	pointer-events: 		auto;
 	color:					gray;
 	background-color:		transparent;
+	text-align:				center;
 	z-index:				40000;
 	overflow:				visible;
 	opacity: 				1;
@@ -403,7 +415,8 @@ INPUT[type=password]:focus{
 	width:					100%;
 	height:					0px;	/*	dummy -> fitting proc */
 	visibility:				hidden;
-	background-color:		rgb(241, 241, 241);
+	background-color: 		transparent;
+	/* background-color:		rgb(241, 241, 241); */
 	overflow:				scroll;
 	border-radius: 			0px 0px 4px 4px;
 }
@@ -1209,9 +1222,9 @@ INPUT[type=password]:focus{
 }
 
 #ID_ACCOUNT{
-	position:				absolute;
+	/* position:				absolute;
 	margin-top:				0px;
-	top:					84px;
+	top:					84px; */
 	left:					18px;
 	width:					40px;
 	height:					40px;
@@ -1229,7 +1242,7 @@ INPUT[type=password]:focus{
 /*	pointer-events: 		none;	*/
 	position:				absolute;
 	margin-top:				0px;
-	top:					126px;
+	top:					84px;
 	left:					18px;
 	width:					40px;
 	height:					40px;
