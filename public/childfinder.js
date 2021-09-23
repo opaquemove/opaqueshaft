@@ -481,7 +481,8 @@ spotlight.prototype = {
                                 c.setAttribute('child_grade', child_grade );
                                 // c.setAttribute("draggable",   "true");
                                 c.style.marginTop       = '1px';
-                                c.style.marginLeft      = '1px';
+                                c.style.marginLeft      = '0px';
+                                c.style.height          = '20px';
                                 c.style.float           = 'left';
                                 c.style.transform       = 'rotate(0deg)';
                                 r = '';

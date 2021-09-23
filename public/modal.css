@@ -122,8 +122,8 @@
 	height:				100%;
 	background-color: 	transparent;
 	display:			flex;
-	justify-content: 	center;
-	align-items: 		flex-end;
+	justify-content:start;
+	align-items:		flex-start;
 }
 #MODAL_TILE1{
 	float:				left;

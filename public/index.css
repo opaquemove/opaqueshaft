@@ -1502,9 +1502,9 @@ INPUT[type=password]:focus{
 	background-color:		red;
 }
 .already_checkin{
-	background-image: 		url(./images/remove.png);
+	background-image: 		url(./images/check-3.png);
 	background-size: 		10px;
-	background-position: 	right center;
+	background-position: 	right bottom;
 	background-repeat: 		no-repeat;
 }
 /*
