@@ -889,7 +889,7 @@ function locateTimelinebar( e ){
 				}
 	
 				moveMarkedChildByTimelinebar( h );
-				scrollWhiteboard( h );
+				scrollWhiteboard( h, m );
 			} else {
 				//console.log( 'other:' + e.target.offsetTop + ':' + tlbOffset );
 			}
@@ -958,12 +958,12 @@ function moveMarkedChildByTimelinebar( hour ){
 //
 //	タイムライン・バーに連動してホワイトボードをスクロール
 //
-function scrollWhiteboard( hour ){
+function scrollWhiteboard( hour, minute ){
 	// var wbt = document.getElementById('WHITEBOARD_TIMELINE');
 	// var wb  = document.getElementById('WHITEBOARD');
 	// wbt.style.top = 0 - ( ( hour - 8 ) * pixelPerHour  ) - 0 + 'px';
 	// wb.style.top  = 0 - ( ( hour - 8 ) * pixelPerHour  ) - 4802 + 'px';
-	document.getElementById('WHITEBOARD_FRAME').scrollTop = ( hour - 8 ) * pixelPerHour;
+	document.getElementById('WHITEBOARD_FRAME').scrollTop = ( hour - 8 ) * pixelPerHour + ( pixelPerHour * minute / 60 );
 }
 
 
