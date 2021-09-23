@@ -176,7 +176,6 @@ function init()
 	oSpotlight.play();
 
 	fitting();
-	new Button( 'OPAQUESHAFT_TITLE',		showTile       ).play();
 	new Button( 'WHITEBOARD_DAY_FRAME',     saveWhiteboard ).play();
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'ID_NAV_TILE',  			showTile ).play();
@@ -737,6 +736,8 @@ Tile.prototype = {
 //	タイムライン・バー操作
 //
 function locateTimelinebar( e ){
+	// var w = document.body.clientWidth;
+
 	e.preventDefault();
 
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
@@ -788,6 +789,26 @@ function locateTimelinebar( e ){
 			o.innerText = event.target.innerText;
 
 			document.body.appendChild( o );
+
+			//	タイムラインを分かりやすく表示するインジケータ
+			o = document.createElement('DIV');
+			o.id					= 'INDICATOR2'
+			o.style.position		= 'absolute';
+			o.style.textAlign		= 'center';
+			o.style.color			= 'white';
+			o.style.backgroundColor	= 'rgb(255, 123, 0)';
+			o.style.fontSize		= '24px';
+			o.style.width			= '4px';
+			o.style.height			= '24px';
+			o.style.zIndex			= 40001;
+
+			var minute = event.target.innerText.split(':')[1];
+			o.style.top		= '0px';
+			o.style.left	= ( parseInt( minute) / 60 * 100 ) + '%';
+			// o.innerText = o.style.left;
+
+			document.body.appendChild( o );
+
 
 
 			break;
@@ -860,6 +881,12 @@ function locateTimelinebar( e ){
 					// o.style.left	= ( event.pageX - tlx - 100 ) + 'px';
 					o.innerText = event.target.innerText;
 				}
+				o = document.getElementById('INDICATOR2');
+				if ( o != null ){
+					var minute = event.target.innerText.split(':')[1];
+					o.style.left	= ( parseInt( minute) / 60 * 100 ) + '%';
+					// o.innerText = o.style.left;
+				}
 	
 				moveMarkedChildByTimelinebar( h );
 				scrollWhiteboard( h );
@@ -878,6 +905,10 @@ function locateTimelinebar( e ){
 			tly = null;
 
 			var o = document.getElementById('INDICATOR1');
+			if ( o != null ){
+				document.body.removeChild( o );
+			}
+			o = document.getElementById('INDICATOR2');
 			if ( o != null ){
 				document.body.removeChild( o );
 			}
