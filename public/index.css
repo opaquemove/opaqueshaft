@@ -120,15 +120,15 @@ INPUT[type=password]:focus{
 #OPAQUESHAFT_TITLE{
 	pointer-events:			auto;
 	float:					left;
-	width:					140px;
+	width:					118px;
 	height:					54px;
 	color:					white;
 	text-shadow: 			2px 2px 2px black;
 	background-color:		transparent;
 	opacity: 				0.7;
-	font-size:				20px;
+	font-size:				16px;
 	padding-top:			30px;
-	padding-left:			0px;
+	padding-left:			22px;
 	padding-right:			0px;
 }
 #NAV_START_ICON{
@@ -762,12 +762,13 @@ INPUT[type=password]:focus{
 	left:				0px;
 	width:				84px;
 	/* margin:				0 auto; */
-	height:				32px;
+	height:				84px;
 	color:				white;
+	writing-mode: vertical-lr;
 	text-shadow: 		2px 2px 2px black;
 	/* background-color:	darkgray; */
-	font-size:			24px;
-	font-weight:		bold;
+	font-size:			20px;
+	/* font-weight:		bold; */
 	text-align:			center;
 	background-color:	transparent;
 	/*border-top:		1px dashed lightgrey; */
