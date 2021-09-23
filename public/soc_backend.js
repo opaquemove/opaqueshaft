@@ -1324,8 +1324,13 @@ function showWhiteboardChildCount(){
     var wb  = document.getElementById('WHITEBOARD').childNodes;
     var wbe = document.getElementById('WHITEBOARD_CHECKOUT').childNodes;
     var wcc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT');
+    var cci = document.getElementById('C_CHECKIN');
+    var cco = document.getElementById('C_CHECKOUT');
     wcc.innerText = wb.length + wbe.length;
     var c_checkout = showWhiteboardChildCountCheckout();
+
+    cci.innerText = wb.length;
+    cco.innerText = wbe.length;
     showWhiteboardChildCountAbsent();
 
     var ratio = 0;
