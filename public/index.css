@@ -224,7 +224,7 @@ INPUT[type=password]:focus{
 	pointer-events: 		auto;
 	width:					42px;
 	height:					84px;
-	float:					right;
+	/* float:					right; */
 	background-color: 		transparent;
 	padding:				0px;
 }
@@ -302,7 +302,7 @@ INPUT[type=password]:focus{
 }
 #TOOLBAR_RIGHT{
 	position:				absolute;
-	top:					400px;
+	top:					126px;
 	left:					-42px;
 	width:					42px;
 	height:					42px;
@@ -878,18 +878,6 @@ INPUT[type=password]:focus{
 	color:					darkgray;
 	margin:					0px auto;
 }
-#REPORT_CONTENT_ICON{
-	position:				absolute;
-	top:					0px;
-	left:					0px;
-	width:					42px;
-	height:					42px;
-	background-color:		red;
-	background-image:		url(./images/report.png);
-	background-size:		24px;
-	background-position:	center center;
-	background-repeat: 		no-repeat;
-}
 
 #REPORT{
 	pointer-events: 	auto;
@@ -1263,7 +1251,7 @@ INPUT[type=password]:focus{
 	/*	pointer-events: 		none;	*/
 		position:				absolute;
 		margin-top:				0px;
-		top:					168px;
+		top:					300px;
 		left:					18px;
 		width:					42px;
 		height:					42px;
@@ -1276,7 +1264,7 @@ INPUT[type=password]:focus{
 	pointer-events: 		none;
 	position:				absolute;
 	margin-top:				0px;
-	top:					210px;
+	top:					342px;
 	left:					18px;
 	width:					4px;
 	height:					162px;
@@ -1289,7 +1277,7 @@ INPUT[type=password]:focus{
 #ID_TIMELINE_BAR{
 	position:				absolute;
 	margin-top:				0px;
-	top:					210px;
+	top:					342px;
 	left:					0px;
 	width:					30px;
 	height:					41px;

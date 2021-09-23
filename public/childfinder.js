@@ -483,6 +483,7 @@ spotlight.prototype = {
                                 c.style.marginTop       = '1px';
                                 c.style.marginLeft      = '1px';
                                 c.style.float           = 'left';
+                                c.style.transform       = 'rotate(0deg)';
                                 r = '';
                                 r += '<div class="CHILD_NAME" style="float:left;font-size:12px;height:20px;padding-left:2px;">';
                                     r += child_name;
