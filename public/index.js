@@ -399,7 +399,7 @@ function test(){
 //	ツールバーにチェックアウトプログレスを表示
 //
 function makeToolbarCheckoutProgress( progress_ratio ){
-	var p = document.getElementById('ID_PROGRESS2');
+	var p = document.getElementById('ID_PROGRESS');
 	if ( p.firstChild != null )
 		p.removeChild( p.firstChild );
 	// p.innerHTML = '';
@@ -888,7 +888,7 @@ function locateTimelinebar( e ){
 					// o.innerText = o.style.left;
 				}
 	
-				moveMarkedChildByTimelinebar( h );
+				moveMarkedChildByTimelinebar( h, m );
 				scrollWhiteboard( h, m );
 			} else {
 				//console.log( 'other:' + e.target.offsetTop + ':' + tlbOffset );
@@ -934,8 +934,9 @@ function setTimelinebarByScroll(){
 
 //
 //	タイムラインバーに連動してマークしているチャイルドの移動を行う
+//	minuteパラメータはまだ対応検討中
 //
-function moveMarkedChildByTimelinebar( hour ){
+function moveMarkedChildByTimelinebar( hour, minute ){
 	var children = getMarkedChild();
 	if ( children.length == 0 ) return;
 	for ( var i=0; i<children.length; i++ ){
@@ -1994,7 +1995,7 @@ function fitting(){
 	ia.style.left	= ( w - ia.offsetWidth ) + 'px';
 	var icf = document.getElementById('ID_CHILD_FINDER');
 	icf.style.left	= ( w - icf.offsetWidth ) + 'px';
-	var iprog = document.getElementById('ID_PROGRESS2');
+	var iprog = document.getElementById('ID_PROGRESS');
 	iprog.style.left	= ( w - iprog.offsetWidth ) + 'px';
 
 	var tr = document.getElementById('TOOLBAR_RIGHT');
@@ -2004,16 +2005,8 @@ function fitting(){
 	oReportDlg.init();
 
 	if ( w <= 414){
-		//document.getElementById('OPAQUESHAFT_TITLE').style.display = 'none';
-		// document.getElementById('ID_PROGRESS').style.display = 'none';
-		// document.getElementById('ID_PROGRESS_COUNT').style.display = 'none';
-		// document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT').style.display = 'none';
 		document.getElementById('WHITEBOARD_DAY_FRAME').style.display = 'none';
 	} else{
-		// document.getElementById('OPAQUESHAFT_TITLE').style.display = 'inline';
-		// document.getElementById('ID_PROGRESS').style.display = 'inline';
-		// document.getElementById('ID_PROGRESS_COUNT').style.display = 'inline';
-		// document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT').style.display = 'inline';
 		document.getElementById('WHITEBOARD_DAY_FRAME').style.display = 'inline';
 	}
 
@@ -2072,7 +2065,7 @@ function showToolbar(){
 	// var ic		= document.getElementById('ID_CHILDREN');
 	var ia		= document.getElementById('ID_ACCOUNT');
 	var icf		= document.getElementById('ID_CHILD_FINDER');
-	var iprog	= document.getElementById('ID_PROGRESS2');
+	var iprog	= document.getElementById('ID_PROGRESS');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
@@ -2109,7 +2102,7 @@ function hideToolbar(){
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var ia		= document.getElementById('ID_ACCOUNT');
 	var icf		= document.getElementById('ID_CHILD_FINDER');
-	var iprog	= document.getElementById('ID_PROGRESS2');
+	var iprog	= document.getElementById('ID_PROGRESS');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');

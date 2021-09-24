@@ -623,7 +623,7 @@ INPUT[type=password]:focus{
 	transform: 				rotate(-48deg);
 }
 
-#ID_PROGRESS{
+/* #ID_PROGRESS{
 	width:					80px;
 	height:					76px;
 	text-align:				center;
@@ -633,7 +633,7 @@ INPUT[type=password]:focus{
 	background-color: 		transparent;
 	padding-top:			8px;
 	padding-left:			4px;
-}
+} */
 
 
 #SIGN_STATUS{
@@ -1281,7 +1281,7 @@ INPUT[type=password]:focus{
 	overflow:				hidden;
 }
 
-#ID_PROGRESS2{
+#ID_PROGRESS{
 	/*	pointer-events: 		none;	*/
 		position:				absolute;
 		margin-top:				0px;

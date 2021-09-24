@@ -158,6 +158,12 @@ function deleteWhiteboardChildren(){
 //  レポーティング
 //
 function reportWhiteboard(){
+
+    // すでに開いていればクローズ
+    if ( oReportDlg.opened() ){
+        oReportDlg.close();
+        return;
+    }
     var t = '';
 	t += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
 		t += 'report  ' + dayWhiteboard;
