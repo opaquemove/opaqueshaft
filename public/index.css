@@ -177,6 +177,42 @@ INPUT[type=password]:focus{
 /*	font-size:				14px;	*/
 	/* border-radius: 			8px; */
 }
+
+#ID_NAV_ACCOUNT{
+	/* position:				absolute;
+	margin-top:				0px;
+	top:					84px;
+	left:					18px; */
+	width:					40px;
+	height:					40px;
+	color:					snow;
+	background-color:		rgb(255, 123, 0);
+	background-image:		url(./images/user-2.png);
+	background-size:		14px;
+	background-repeat:		no-repeat;
+	background-position:	center center;
+	border:					1px solid rgb(255, 123, 0);
+	overflow:				hidden;
+}
+	
+#ID_NAV_CHILDFINDER{
+/*	pointer-events: 		none;	*/
+	/* position:				absolute;
+	top:					84px;
+	left:					18px; */
+	width:					40px;
+	height:					40px;
+	color:					snow;
+	background-color:		rgb(255, 123, 0);
+	background-image:		url(./images/plus3.png);
+	background-size:		14px;
+	background-repeat:		no-repeat;
+	background-position:	center center;
+	border:					1px solid rgb(255, 123, 0);
+	margin-top:				0px;
+	overflow:				hidden;
+}
+
 #ID_NAV_REPORT{
 	/* position:				absolute;
 	top:					84px;
@@ -335,7 +371,7 @@ INPUT[type=password]:focus{
 }
 #TOOLBAR_RIGHT{
 	position:				absolute;
-	top:					126px;
+	top:					84px;
 	left:					-42px;
 	width:					42px;
 	height:					42px;
@@ -569,7 +605,8 @@ INPUT[type=password]:focus{
 	padding-top:			10px;
 	/* border-left:			1px solid darkgrey; */
 }
-#ID_PROGRESS_COUNT{
+
+/* #ID_PROGRESS_COUNT{
 	position:				relative;
 	width:					45px;
 	height:					45px;
@@ -621,7 +658,7 @@ INPUT[type=password]:focus{
 	text-align:				center;
 	text-shadow: 			2px 2px 2px black;
 	transform: 				rotate(-48deg);
-}
+} */
 
 /* #ID_PROGRESS{
 	width:					80px;
@@ -1246,40 +1283,6 @@ INPUT[type=password]:focus{
 	background-size: 		16px;
 }
 
-#ID_ACCOUNT{
-	/* position:				absolute;
-	margin-top:				0px;
-	top:					84px; */
-	left:					18px;
-	width:					40px;
-	height:					40px;
-	color:					snow;
-	background-color:		rgb(255, 123, 0);
-	background-image:		url(./images/user-2.png);
-	background-size:		14px;
-	background-repeat:		no-repeat;
-	background-position:	center center;
-	border:					1px solid rgb(255, 123, 0);
-	overflow:				hidden;
-}
-	
-#ID_CHILD_FINDER{
-/*	pointer-events: 		none;	*/
-	position:				absolute;
-	margin-top:				0px;
-	top:					84px;
-	left:					18px;
-	width:					40px;
-	height:					40px;
-	color:					snow;
-	background-color:		rgb(255, 123, 0);
-	background-image:		url(./images/plus3.png);
-	background-size:		14px;
-	background-repeat:		no-repeat;
-	background-position:	center center;
-	border:					1px solid rgb(255, 123, 0);
-	overflow:				hidden;
-}
 
 #ID_PROGRESS{
 	/*	pointer-events: 		none;	*/

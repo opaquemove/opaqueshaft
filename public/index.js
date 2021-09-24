@@ -183,8 +183,8 @@ function init()
 	// new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
 	// new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
 	new Button( 'ID_NAV_LOG',               ctlMessageLog ).play();
-	new Button( 'ID_CHILD_FINDER',          ctlSpotlight ).play();
-	new Button( 'ID_ACCOUNT', function(){ propertyAccount(); oTile.close();} ).play();
+	new Button( 'ID_NAV_CHILDFINDER',       ctlSpotlight ).play();
+	new Button( 'ID_NAV_ACCOUNT',           function(){ propertyAccount(); oTile.close();} ).play();
 
 
 	//	モーダルダイアログの外側をクリックしたらクローズ
@@ -1811,31 +1811,31 @@ function Nav( func ){
 	// 	r += '&nbsp;';
 	// r += '</div>';
 	r += '<div marked="yes" target="escort"        class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:84px;left:42px;background-image:url(./images/family.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';
+	r += ' style="text-align:center;position:absolute;top:84px;left:42px;background-image:url(./images/family.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';
 		r += 'escort';
 	r += '</div>';
 	r += '<div marked="yes" target="delete"        class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:0px;left:42px;background-image:url(./images/minus-2.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Delete Mark Child
+	r += ' style="text-align:center;position:absolute;top:0px;left:42px;background-image:url(./images/minus-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';	// Delete Mark Child
 		r += 'delete';
 	r += '</div>';
 	r += '<div marked="yes" target="checkout"      class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:21px;left:84px;background-image:url(./images/check-3.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
+	r += ' style="text-align:center;position:absolute;top:21px;left:84px;background-image:url(./images/check-3.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
 		r += 'chk out';
 	r += '</div>';
 	r += '<div marked="yes" target="checkoutclear" class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:63px;left:84px;background-image:url(./images/dry-clean.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Clear Mark Child
+	r += ' style="text-align:center;position:absolute;top:63px;left:84px;background-image:url(./images/dry-clean.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Clear Mark Child
 		r += 'chk clr';
 	r += '</div>';
 	r += '<div marked="yes" target="property"      class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:21px;left:0px;background-image:url(./images/hexagon.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
+	r += ' style="text-align:center;position:absolute;top:21px;left:0px;background-image:url(./images/hexagon.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
 		r += 'property';
 	r += '</div>';
 	r += '<div marked="yes" target="absent" class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:63px;left:0px;background-image:url(./images/sleep-2.png);background-size:22px;background-position:center center;background-repeat:no-repeat;" >';	// Absent Child
+	r += ' style="text-align:center;position:absolute;top:63px;left:0px;background-image:url(./images/sleep-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';	// Absent Child
 		r += 'absent';
 	r += '</div>';
 	r += '<div target="exchange"   class="vh-center nav_icon2" ';
-	r += ' style="position:absolute;top:105px;left:84px;height:21px;background-image:url(./images/exchange.png);background-size:12px;background-position:center center;background-repeat:no-repeat;" >';
+	r += ' style="position:absolute;top:105px;left:84px;height:21px;background-image:url(./images/exchange.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';
 		r += 'socket';
 	r += '</div>';
 
@@ -1991,9 +1991,9 @@ function fitting(){
 	itba.style.left	= ( w - itba.offsetWidth ) + 'px';
 	itb.style.left	= ( w - itb.offsetWidth  ) + 'px';
 
-	var ia  = document.getElementById('ID_ACCOUNT');
-	ia.style.left	= ( w - ia.offsetWidth ) + 'px';
-	var icf = document.getElementById('ID_CHILD_FINDER');
+	// var ia  = document.getElementById('ID_NAV_ACCOUNT');
+	// ia.style.left	= ( w - ia.offsetWidth ) + 'px';
+	var icf = document.getElementById('ID_NAV_CHILDFINDER');
 	icf.style.left	= ( w - icf.offsetWidth ) + 'px';
 	var iprog = document.getElementById('ID_PROGRESS');
 	iprog.style.left	= ( w - iprog.offsetWidth ) + 'px';
@@ -2061,30 +2061,23 @@ function showToolbar(){
 	var tb      = document.getElementById('TOOLBAR');
 	var tr  	= document.getElementById('TOOLBAR_RIGHT');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
-	// var is		= document.getElementById('ID_SEARCH');
-	// var ic		= document.getElementById('ID_CHILDREN');
-	var ia		= document.getElementById('ID_ACCOUNT');
-	var icf		= document.getElementById('ID_CHILD_FINDER');
+	// var ia		= document.getElementById('ID_NAV_ACCOUNT');
+	var icf		= document.getElementById('ID_NAV_CHILDFINDER');
 	var iprog	= document.getElementById('ID_PROGRESS');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
-	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
-	// nsi.style.visibility	= 'visible';
-	// nsi2.style.visibility	= 'visible';
 	tb.style.visibility     = 'visible';
 	tr.style.visibility		= 'visible';
 	wbf.style.visibility    = 'visible';
-	// is.style.visibility		= 'visible';
-	// ic.style.visibility		= 'visible';
 	tlb.style.visibility	= 'visible';
 	tlba.style.visibility	= 'visible';
 	// psb.style.visibility	= 'visible';
 	imne.style.visibility	= 'visible';
 	ime.style.visibility	= 'visible';
-	ia.style.visibility		= 'visible';
+	// ia.style.visibility		= 'visible';
 	icf.style.visibility	= 'visible';
 	iprog.style.visibility	= 'visible';
 	// eam.style.visibility	= 'visible';
@@ -2096,32 +2089,28 @@ function showToolbar(){
 function hideToolbar(){
 	console.log('hideToolbar');
 	var nsi 	= document.getElementById('NAV_START_ICON');
-	// var nsi2 	= document.getElementById('NAV_START_ICON2');
 	var tb      = document.getElementById('TOOLBAR');
 	var tr		= document.getElementById('TOOLBAR_RIGHT');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
-	var ia		= document.getElementById('ID_ACCOUNT');
-	var icf		= document.getElementById('ID_CHILD_FINDER');
+	// var ia		= document.getElementById('ID_NAV_ACCOUNT');
+	var icf		= document.getElementById('ID_NAV_CHILDFINDER');
 	var iprog	= document.getElementById('ID_PROGRESS');
 	var tlb		= document.getElementById('ID_TIMELINE_BAR');
 	var tlba	= document.getElementById('ID_TIMELINE_BAR_AREA');
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
-	// var eam		= document.getElementById('ESCORT_AREA_MARKER');
 	nsi.style.visibility	= 'hidden';
 	// nsi2.style.visibility	= 'hidden';
 	tb.style.visibility     = 'hidden';
 	tr.style.visibility		= 'hidden';
 	wbf.style.visibility    = 'hidden';
-	// is.style.visibility		= 'hidden';
-	// ic.style.visibility		= 'hidden';
 	tlb.style.visibility	= 'hidden';
 	tlba.style.visibility	= 'hidden';
 	psb.style.visibility	= 'hidden';
 	imne.style.visibility	= 'hidden';
 	ime.style.visibility	= 'hidden';
-	ia.style.visibility		= 'hidden';
+	// ia.style.visibility		= 'hidden';
 	icf.style.visibility	= 'hidden';
 	iprog.style.visibility	= 'hidden';
 	// eam.style.visibility	= 'hidden';

@@ -1329,10 +1329,10 @@ function unmarkChild( c ) {
 function showWhiteboardChildCount(){
     var wb  = document.getElementById('WHITEBOARD').childNodes;
     var wbe = document.getElementById('WHITEBOARD_CHECKOUT').childNodes;
-    var wcc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT');
+    // var wcc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT');
     var cci = document.getElementById('C_CHECKIN');
     var cco = document.getElementById('C_CHECKOUT');
-    wcc.innerText = wb.length + wbe.length;
+    // wcc.innerText = wb.length + wbe.length;
     var c_checkout = showWhiteboardChildCountCheckout();
 
     cci.innerText = wb.length;
@@ -1351,7 +1351,7 @@ function showWhiteboardChildCount(){
 //  ホワイトボードのチェックアウトしたチャイルド数をステータス表示
 //
 function showWhiteboardChildCountCheckout(){
-    var wccc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT_CHECKOUT');
+    // var wccc = document.getElementById('ID_WHITEBOARD_CHILD_COUNT_CHECKOUT');
 
     var cnt = 0;
     var children  = document.getElementById('WHITEBOARD').childNodes;
@@ -1365,7 +1365,7 @@ function showWhiteboardChildCountCheckout(){
         if ( c.hasAttribute('checkout')) cnt++;
     }
 
-    wccc.innerText = cnt;
+    // wccc.innerText = cnt;
     return cnt;
 }
 
@@ -1373,11 +1373,9 @@ function showWhiteboardChildCountCheckout(){
 //  ホワイトボード内のアブセント（欠席）チャイルド数を表示
 //
 function showWhiteboardChildCountAbsent(){
-    // var wba  = document.getElementById('WHITEBOARD_ABSENT');
-    var wcca = document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT');
-    // var c = wba.childNodes.length;
-    var c = countAbsentWhiteboard();
-    wcca.innerText = c;
+    // var wcca = document.getElementById('ID_WHITEBOARD_CHILD_COUNT_ABSENT');
+    // var c = countAbsentWhiteboard();
+    // wcca.innerText = c;
 
 }
 //
