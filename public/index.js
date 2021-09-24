@@ -1070,8 +1070,10 @@ function openWhiteboard(){
 function createWhiteboard(){
 	var target_day = guidedance_whiteboard_form.day.value;
 	var cwd = document.getElementById('CUR_WHITEBOARD_DAY');
+	var itba = document.getElementById('ID_TIMELINE_BAR_AREA');
 	dayWhiteboard 	= target_day;
 	cwd.innerText 	= target_day;
+	itba.innerText	= target_day;
 	updateFlg		= false;
 	//createWhiteboardHelper( dayWhiteboard );
 	neverCloseDialog = false;

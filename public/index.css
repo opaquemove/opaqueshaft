@@ -1304,12 +1304,14 @@ INPUT[type=password]:focus{
 	margin-top:				0px;
 	top:					342px;
 	left:					18px;
-	width:					4px;
+	width:					14px;
 	height:					162px;
+	writing-mode: 			vertical-lr;		
 	background-color:		lightgrey;
+	text-shadow: 			2px 2px 2px black;
 	overflow:				hidden;
 	border-radius: 			2px;
-	opacity:				0.5;
+	opacity:				0.9;
 }
 
 #ID_TIMELINE_BAR{
