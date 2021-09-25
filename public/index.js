@@ -841,47 +841,42 @@ function locateTimelinebar( e ){
 			if ( event.target != itb ) 	return;
 			if ( !tl_drag ) 		return;
 			var new_top  = event.pageY - tly;
-			var new_left = event.pageX - tlx
+			var new_left = event.pageX - tlx;
+			console.log('origin:' + tlbOffsetLeft + ' new_left:' + new_left );
 			if ( ( new_top ) >= tlbOffset + 0 
 				&& ( new_top ) <= tlbOffset + 132 ){
+				//	縦方向移動
 				itb.style.top 	= new_top + 'px';
+
 				if ( ( new_left ) <= tlbOffsetLeft + 0
-				&& ( new_left ) >= tlbOffsetLeft - 84 ){
-					//  itb.style.left	= new_left + 'px';
+					&& ( new_left ) >= tlbOffsetLeft - 84 ){
+					//	横方向移動
+					itb.style.left	= new_left + 'px';
 					var wbf = document.getElementById('WHITEBOARD_FRAME');
 					var wb  = document.getElementById('WHITEBOARD');
 					var wbt = document.getElementById('WHITEBOARD_TIMELINE');
 					var wba = document.getElementById('WHITEBOARD_ABSENT');
 					var bo  = document.getElementById('BOTTOM_OVERLAY');
 					var bf  = document.getElementById('BOTTOM_FRAME');
-					if ( itb.offsetLeft == tlbOffsetLeft + 0 ){
-						wbf.style.perspective	= '';
-						wb.style.transform 		= '';
-						wb.style.border 		= '';
-						wbt.style.border 		= '';
-						wbt.style.transform		= '';
-						wba.style.border 		= '';
-						bo.style.perspective 	= '';
-						bf.style.transform 		= '';
-						// bf.style.border 		= '';
-						// console.log('0');
-					} else {
-						// wbf.style.perspective	= '470px';
-						wb.style.transformStyle	= 'preserve-3d';
-						wb.style.transform 		= 'perspective(470px) translate3d( 0px, 0px, -700px) rotateX(' + ( new_left - tlbOffsetLeft ) + 'deg)';
-						wb.style.border 		= '1px solid white';
-						wbt.style.transformStyle	= 'preserve-3d';
-						wbt.style.transform 	= 'perspective(470px) translate3d( 0px, 0px, -700px) rotateX(' + ( new_left - tlbOffsetLeft ) + 'deg)';
-						wbt.style.border 		= '1px solid white';
-						// wba.style.transformStyle	= 'preserve-3d';
-						// wba.style.transform 	= 'translate3d( 0px, 0px, -350px) rotateY(' + ( new_left - tlbOffsetLeft ) + 'deg)';
-						// wba.style.border 		= '1px solid red';
-						// bo.style.perspective 	= '470px';
-						bo.style.transformStyle	= 'preserve-3d';
-						bf.style.transform 		= 'perspective(470px) translate3d( 0px, 0px, -710px) rotateX(' + ( new_left - tlbOffsetLeft ) + 'deg)';
-						// bf.style.border 		= '1px solid white';
-						// console.log('42');
-					}
+					// if ( itb.offsetLeft == tlbOffsetLeft + 0 ){
+					// 	wbf.style.perspective	= '';
+					// 	wb.style.transform 		= '';
+					// 	wb.style.border 		= '';
+					// 	wbt.style.border 		= '';
+					// 	wbt.style.transform		= '';
+					// 	wba.style.border 		= '';
+					// 	bo.style.perspective 	= '';
+					// 	bf.style.transform 		= '';
+					// } else {
+					// 	wb.style.transformStyle	= 'preserve-3d';
+					// 	wb.style.transform 		= 'perspective(470px) translate3d( 0px, 0px, -700px) rotateX(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+					// 	wb.style.border 		= '1px solid white';
+					// 	wbt.style.transformStyle	= 'preserve-3d';
+					// 	wbt.style.transform 	= 'perspective(470px) translate3d( 0px, 0px, -700px) rotateX(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+					// 	wbt.style.border 		= '1px solid white';
+					// 	bo.style.transformStyle	= 'preserve-3d';
+					// 	bf.style.transform 		= 'perspective(470px) translate3d( 0px, 0px, -710px) rotateX(' + ( new_left - tlbOffsetLeft ) + 'deg)';
+					// }
 				}
 
 				//	8:00からマウス増分

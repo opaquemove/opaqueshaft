@@ -115,25 +115,6 @@ function locatePerspectivebar( e ){
                             tlb.style.transform         = 'perspective(570px) translate3d(0px,0px,-1100px)' + rotate;
                         }                    
                     }
-/*                
-                    if ( new_top == psbOffsetTop && new_left == psbOffsetLeft ){
-                        wbf.style.perspective           = '270px';
-                        wba.style.border                = '';
-                        wb.style.border                 = '';
-                    } else{
-                        wbf.style.perspective           = 70 - ( new_top - psbOffsetTop )  + 'px';
-                        wba.style.border                = '1px solid red';
-                        wb.style.border                 = '1px solid white';
-                        wb.style.transform              = 'translate3d(0px, 0px,-300px)' + rotate;
-                        wbt.style.transform             = 'translate3d(0px, 0px,-300px)' + rotate;
-                        wba.style.transform             = 'translate3d(0px, 0px,-350px)' + rotate;
-                        var timelines = document.getElementsByClassName('timeline2_class');
-                        for ( var i=0; i<timelines.length; i++ ){
-                            var tlb = timelines[i];
-                            tlb.style.transform = 'translate3d(0px,0px,-300px)' + rotate;
-                        }                    
-                    } 
-*/
                 } else{
                     if ( new_top < psbOffsetTop ) new_top = psbOffsetTop;
                         else                        new_top = psbOffsetTop + 270;
@@ -150,12 +131,3 @@ function locatePerspectivebar( e ){
 	}
 }
 
-//stock
-                        // wb.style.transform              = 'translate3d(0px, 0px,-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
-                        // wbt.style.transform             = 'translate3d(0px, 0px,-' + ( new_top - psbOffsetTop ) *2       + 'px)' + rotate;
-                        // wba.style.transform             = 'translate3d(0,0,-' + ( new_top - psbOffsetTop + 60 ) * 2 + 'px)' + rotate;
-                        // var timelines = document.getElementsByClassName('timeline2_class');
-                        // for ( var i=0; i<timelines.length; i++ ){
-                        //     var tlb = timelines[i];
-                        //     tlb.style.transform = 'translate3d(0px,0px,-' + ( new_top - psbOffsetTop ) * 2 + 'px)' + rotate;
-                        // }                    
