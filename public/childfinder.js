@@ -386,6 +386,7 @@ spotlight.prototype = {
                 var o = document.createElement('DIV');
                 o.setAttribute( 'child_id', child_id );
                 o.setAttribute( 'class', 'PALLETE_CHILD' );
+                // o.style.height          = '20px';
                 o.style.marginTop       = '1px';
                 o.style.marginLeft      = '1px';
                 o.style.float           = 'left';
@@ -484,7 +485,6 @@ spotlight.prototype = {
                                 c.style.marginLeft      = '0px';
                                 c.style.height          = '20px';
                                 c.style.float           = 'left';
-                                c.style.transform       = 'rotate(0deg)';
                                 r = '';
                                 r += '<div class="CHILD_NAME" style="float:left;font-size:12px;height:20px;padding-left:2px;">';
                                     r += child_name;

@@ -22,6 +22,7 @@ var wb_touch_cnt_max	= 0;
 var wb_description		= '';
 var wb_report			= '';
 
+var manageHourBand		= 12;
 var pixelPerHour		= 600;
 var oNav				= null;
 var oSpotlight			= null;
@@ -76,6 +77,10 @@ function init()
 			var evtEnd		= 'mouseup';
 			break;
 	}
+
+	//	ホワイトボードサイズ初期化
+	initWhiteboardSize();
+
 
 	//	ログエリアの初期化
 	oLog = new messageLog();
@@ -265,7 +270,20 @@ function init()
 }
 
 //
-	//	ホワイトボード表示制御機能の初期化
+//	ホワイトボードサイズの初期化
+//
+function initWhiteboardSize(){
+	var wb = document.getElementById('WHITEBOARD');
+	var wbco = document.getElementById('WHITEBOARD_CHECKOUT');
+	var wbab = document.getElementById('WHITEBOARD_ABSENT');
+	var wbtl = document.getElementById('WHITEBOARD_TIMELINE');
+	wb.style.height	= ( pixelPerHour *  manageHourBand ) + 'px';
+	wbco.style.height	= wb.style.height;
+	wbab.style.height	= wb.style.height;
+	wbtl.style.height	= wb.style.height;
+}
+//
+//	ホワイトボード表示制御機能の初期化
 //
 function initWhiteboardMode(){
 	var imne = document.getElementById('ID_MODE_CHECKIN');
@@ -827,9 +845,9 @@ function locateTimelinebar( e ){
 			if ( ( new_top ) >= tlbOffset + 0 
 				&& ( new_top ) <= tlbOffset + 132 ){
 				itb.style.top 	= new_top + 'px';
-				if ( ( new_left ) >= tlbOffsetLeft + 0
-				&& ( new_left ) <= tlbOffsetLeft + 84 ){
-					// itb.style.left	= new_left + 'px';
+				if ( ( new_left ) <= tlbOffsetLeft + 0
+				&& ( new_left ) >= tlbOffsetLeft - 84 ){
+					//  itb.style.left	= new_left + 'px';
 					var wbf = document.getElementById('WHITEBOARD_FRAME');
 					var wb  = document.getElementById('WHITEBOARD');
 					var wbt = document.getElementById('WHITEBOARD_TIMELINE');
