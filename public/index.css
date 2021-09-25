@@ -833,7 +833,7 @@ INPUT[type=password]:focus{
 	width:				84px;
 	/* margin:				0 auto; */
 	height:				84px;
-	color:				white;
+	color:				rgb(255, 123, 0);
 	writing-mode: vertical-lr;
 	text-shadow: 		2px 2px 2px black;
 	/* background-color:	darkgray; */
@@ -843,7 +843,7 @@ INPUT[type=password]:focus{
 	background-color:	transparent;
 	/*border-top:		1px dashed lightgrey; */
 	z-index:			6000;
-	opacity:			0.7;
+	opacity:			1;
 }
 .timeline2_class{
 	position:			absolute;
@@ -1304,7 +1304,7 @@ INPUT[type=password]:focus{
 	margin-top:				0px;
 	top:					342px;
 	left:					18px;
-	width:					14px;
+	width:					4px;
 	height:					162px;
 	writing-mode: 			vertical-lr;		
 	background-color:		lightgrey;

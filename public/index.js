@@ -713,7 +713,7 @@ Tile.prototype = {
 			} ).bind( this ), false );
 
 		new Button( 'MODAL_TILE2', function(){ propertyAccount(); oTile.close();} ).play();
-		new Button( 'MODAL_TILE3', showTile     ).play();
+		// new Button( 'MODAL_TILE3', showTile     ).play();
 		new Button( 'MODAL_TILE4', function(){ saveWhiteboard(); oTile.close(); } ).play();
 		new Button( 'MODAL_TILE5', function(){ signoutForm(); oTile.close(); } ).play();
 		new Button( 'MODAL_TILE6', function(){ clearWhiteboard(); oTile.close(); } ).play();
@@ -734,8 +734,8 @@ Tile.prototype = {
 		this.frame.style.visibility = 'hidden';
 		var mt1 = document.getElementById('MODAL_TILE1');
 		mt1.innerHTML = '';
-		var mt3 = document.getElementById('MODAL_TILE3');
-		mt3.innerHTML = '';
+		// var mt3 = document.getElementById('MODAL_TILE3');
+		// mt3.innerHTML = '';
 	},
 	opened : function(){
 		return ( this.frame.style.visibility == 'visible' );
@@ -1086,7 +1086,7 @@ function createWhiteboard(){
 	var itba = document.getElementById('ID_TIMELINE_BAR_AREA');
 	dayWhiteboard 	= target_day;
 	cwd.innerText 	= target_day;
-	itba.innerText	= target_day;
+	// itba.innerText	= target_day;
 	updateFlg		= false;
 	//createWhiteboardHelper( dayWhiteboard );
 	neverCloseDialog = false;

@@ -1000,7 +1000,6 @@ function propertyChildren(){
             r += '<div style="clear:both;width:100%;overflow:hidden;display:inline;" >';
                 if ( imagefile != '' ){
                     r += '<div style="float:left;width:60px;height:60px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
-                        // r += '<img width="100%" src="./images/children/' + imagefile + '" />';
                     r += '</div>';
                 }
                 r += '<div style="float:right;" >';

@@ -146,6 +146,7 @@
 }
 #MODAL_TILE2{
 	float:				left;
+	clear:				left;
 	pointer-events: 	auto;
 	width:				42px;
 	height:				38px;
@@ -166,7 +167,6 @@
 }
 #MODAL_TILE3{
 	float:				left;
-	clear:				left;
 	pointer-events: 	auto;
 	width:				42px;
 	height:				38px;
@@ -205,6 +205,7 @@
 }
 #MODAL_TILE5{
 	float:				left;
+	clear:				left;
 	pointer-events: 	auto;
 	width:				42px;
 	height:				38px;
@@ -225,7 +226,6 @@
 }
 #MODAL_TILE6{
 	float:				left;
-	clear:				left;
 	pointer-events: 	auto;
 	width:				42px;
 	height:				38px;
@@ -246,7 +246,7 @@
 }
 #MODAL_TILE7{
 	float:				left;
-	/* clear:				left; */
+	clear:				left;
 	pointer-events: 	auto;
 	width:				42px;
 	height:				38px;
