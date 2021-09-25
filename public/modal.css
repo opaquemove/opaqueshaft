@@ -122,7 +122,8 @@
 	height:				100%;
 	background-color: 	transparent;
 	display:			flex;
-	justify-content:start;
+	flex-direction: row-reverse;
+	justify-content:	right;
 	align-items:		flex-start;
 }
 #MODAL_TILE1{
@@ -140,7 +141,7 @@
 	opacity: 			0.8;
 	font-size:			18px;
 	margin:				2px;
-	border-radius: 		20px;
+	/* border-radius: 		20px; */
 }
 #MODAL_TILE2{
 	float:				left;
@@ -158,7 +159,7 @@
 	font-size:			16px;
 	padding-top:		10px;
 	margin:				2px;
-	border-radius: 		20px;
+	/* border-radius: 		20px; */
 	/* clear:				both; */
 }
 #MODAL_TILE3{
@@ -330,7 +331,7 @@
 	background-color: 	transparent;
 	display:			flex;
 	justify-content: 	center;
-	align-items: flex-start;
+	align-items: 		flex-end;
 }
 #MESSAGELOG_FRAME{
 	position:			relative;
@@ -343,18 +344,18 @@
 	visibility: 		hidden;
 	/* border-radius: 		4px; */
 }
-#MESSAGELOG_TAB{
+/* #MESSAGELOG_TAB{
 	position:			absolute;
 	top:				0px;
 	left:				0px;
 	width:				8px;
 	height:				4px;
 	background-color:	red;
-}
+} */
 #MESSAGELOG_CONTENT{
 	pointer-events: 	all;
 	position:			absolute;
-	top:				4px;
+	top:				0px;
 	left:				0px;
 	width:				394px;
 	height:				34px;
