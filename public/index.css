@@ -109,8 +109,8 @@ INPUT[type=password]:focus{
 	width:				100%;
 	height:				100%;
 	/* border:				1px solid white; */
-	background-color:	rgb(252, 141, 36);
-	background-image:	url(./images/maki.jpg);
+	background-color:	white;
+	background-image:	url(./images/mina-2.jpg);
 	background-position: center center;
 	background-size: 	contain;
 	background-repeat: 	no-repeat;
