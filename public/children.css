@@ -320,7 +320,7 @@ BUTTON:focus{
 	background-color:		white;
 	overflow: 				hidden;
 	padding:				2px;
-	margin:					1px 1px 0px 0px;
+	margin:					1px 0px 0px 0px;
 	font-size:				12px;
 	/* border-radius: 			4px; */
 	-webkit-user-select: 	none;

@@ -64,7 +64,6 @@ spotlight.prototype = {
         r += '<div style="width:100%;height:42px;" >';
             r += '<div id="BTN_ALIGN_SPOTLIGHT"   style="float:left;width:42px;height:42px;background-color:rgb(255, 123, 0);background-image:url(./images/searching.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >child</div>';
             // r += '<div id="BTN_CLOSE_SPOTLIGHT"   style="float:right;width:26px;height:42px;background-image:url(./images/cancel-2.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >close</div>';
-            r += '<div id="BTN_LISTALL"           style="float:right;width:26px;height:42px;background-image:url(./images/list.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >all</div>';
             r += '<div id="BTN_TIMESELECTOR"      style="float:right;width:26px;height:42px;background-image:url(./images/time.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >time</div>';
             // r += '<div id="BTN_CHILD_PROPERTY"    style="float:right;width:26px;height:42px;background-image:url(./images/hexagon.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" ></div>';
             r += '<div id="BTN_CLEAR_LIST"        style="float:right;width:26px;height:42px;background-image:url(./images/eraser.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >clear</div>';
@@ -73,13 +72,14 @@ spotlight.prototype = {
         r += '</div>';
         r += '<div style="width:100%;height:42px;" >';
             r += '<form onsubmit="return false;" >';
-            r += '<div id="BTN_FIND"   style="float:right;width:32px;height:42px;background-image:url(./images/right-arrow-black-triangle.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" >';
+            r += '<div id="BTN_LISTALL"  style="float:right;width:26px;height:42px;background-image:url(./images/list.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >all</div>';
+            r += '<div id="BTN_FIND"     style="float:right;width:32px;height:42px;background-image:url(./images/right-arrow-black-triangle.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" >';
 
                 // r += '<button type="submit" >find</button>';
 
             r += '</div>';
             r += '<div style="float:right;padding:10px 10px 10px 10px;" >';
-                r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:70px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
+                r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:40px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
             r += '</div>';
             r += '</form>';
         r += '</div>';
@@ -387,8 +387,8 @@ spotlight.prototype = {
                 o.setAttribute( 'child_id', child_id );
                 o.setAttribute( 'class', 'PALLETE_CHILD' );
                 // o.style.height          = '20px';
-                o.style.marginTop       = '1px';
-                o.style.marginLeft      = '1px';
+                // o.style.marginTop       = '1px';
+                // o.style.marginLeft      = '1px';
                 o.style.float           = 'left';
 
                 // o.style.padding     = '4px';
@@ -482,8 +482,8 @@ spotlight.prototype = {
                                 c.setAttribute('child_type',  child_type );
                                 c.setAttribute('child_grade', child_grade );
                                 // c.setAttribute("draggable",   "true");
-                                c.style.marginTop       = '1px';
-                                c.style.marginLeft      = '0px';
+                                // c.style.marginTop       = '1px';
+                                // c.style.marginLeft      = '0px';
                                 c.style.height          = '50px';
                                 c.style.float           = 'left';
                                 r = '';

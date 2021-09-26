@@ -459,7 +459,7 @@ INPUT[type=password]:focus{
 }
 #CHILDFINDER_FRAME{
 	visibility:			hidden;
-	width:				150px;
+	width:				140px;
 	height:				100%;
 	padding-right:		42px;
 /*	
@@ -497,10 +497,9 @@ INPUT[type=password]:focus{
 	display:				flex;
 	flex-wrap: 				wrap;
 	justify-content: 		flex-start;
-	padding:            	4px 4px 4px 4px;
+	padding:            	0px 0px 0px 0px;
 	margin-bottom:       	0px;
 	clear:              	both;
-
 }
 
 
@@ -511,10 +510,9 @@ INPUT[type=password]:focus{
 	display:				flex;
 	flex-wrap: 				wrap;
 	justify-content: 		flex-start;
-	padding:        		4px 4px 4px 4px;
+	padding:        		0px 0px 0px 0px;
 	margin-bottom:   		0px;
 	clear:           		both;
-
 }
 
 #TXT_KEYWORD{
