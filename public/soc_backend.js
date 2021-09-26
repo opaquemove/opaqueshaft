@@ -216,8 +216,8 @@ function reportWhiteboard(){
 //
 function showTile(){
 
-    if ( oTile.opened())    oTile.close();
-        else                oTile.open();
+    if ( oTile.opened( 'menu' ))    oTile.close( 'menu' );
+        else                oTile.open( 'menu' );
 
 }
 

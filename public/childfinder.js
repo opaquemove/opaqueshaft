@@ -2,8 +2,13 @@
 //  spotlight表示制御
 //
 function ctlSpotlight(){
-    if ( oSpotlight.opened() )      oSpotlight.close();
-        else                        oSpotlight.open();
+    if ( oSpotlight.opened() ) {
+        oSpotlight.close();
+        oTile.close('childfinder');
+    } else{
+        oSpotlight.open();
+        oTile.open('childfinder');
+    } 
 }
 
 function spotlight( resize ){

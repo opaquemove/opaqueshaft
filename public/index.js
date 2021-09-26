@@ -721,23 +721,57 @@ Tile.prototype = {
 		new Button( 'MODAL_TILE_CLOSE',   function(){ closeWhiteboard(); oTile.close(); } ).play();
 		new Button( 'MODAL_TILE_REPORT',  function(){ reportWhiteboard(); oTile.close(); } ).play();
 
+		var tiles = document.getElementById( 'ID_TILES' );
+		tiles.style.display	= 'none';
+		var icf2 = document.getElementById( 'ID_CHILDFINDER2' );
+		icf2.style.display	= 'none';
 	},
-	open : function(){
+	open : function( target ){
 		this.frame.style.visibility = 'visible';
+		switch ( target ){
+			case 'menu':
+				var tiles =document.getElementById('ID_TILES');
+				tiles.style.display = '';
+				break;
+			case 'childfinder':
+				var icf2 =document.getElementById('ID_CHILDFINDER2');
+				icf2.style.display = '';
+				break;
+		}
 		this.day( dayWhiteboard );
 
 		var tile2 = document.getElementById('MODAL_TILE_SIGN');
 		tile2.innerText = 'sign ' + isSignId();
 	},
-	close : function(){
-		this.frame.style.visibility = 'hidden';
+	close : function( target ){
+		// this.frame.style.visibility = 'hidden';
+		switch ( target ){
+			case 'menu':
+				var tiles =document.getElementById('ID_TILES');
+				tiles.style.display = 'none';
+				break;
+			case 'childfinder':
+				var icf2 =document.getElementById('ID_CHILDFINDER2');
+				icf2.style.display = 'none';
+				break;
+			}
 		var mt1 = document.getElementById('MODAL_TILE_DAY');
 		mt1.innerHTML = '';
 		// var mt3 = document.getElementById('MODAL_TILE_SIGN');
 		// mt3.innerHTML = '';
 	},
-	opened : function(){
-		return ( this.frame.style.visibility == 'visible' );
+	opened : function( target ){
+		// return ( this.frame.style.visibility == 'visible' );
+		switch (target){
+			case 'menu':
+				var tiles = document.getElementById('ID_TILES');
+				return ( tiles.style.display == '' );
+				break;
+			case 'childfinder':
+				var icf2 =document.getElementById('ID_CHILDFINDER2');
+				return ( icf2.style.display == '' );
+				break;
+			}
 	},
 	day : function( day ){
 		var mt1 = document.getElementById('MODAL_TILE_DAY');
