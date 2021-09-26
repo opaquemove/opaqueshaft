@@ -1324,7 +1324,7 @@ INPUT[type=password]:focus{
 	background-color:		red;
 	background-image:		url(images/arrow-black-triangle-up.png), url(images/arrow-black-triangle-down.png);
 	background-size:		6px, 6px;
-	background-position: 	top right, bottom right;
+	background-position: 	top 4px right 4px , bottom 4px right 4px;
 	background-repeat: 		no-repeat, no-repeat;
 	border-top:				1px solid red;
 	padding-left:			16px;

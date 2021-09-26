@@ -712,35 +712,35 @@ Tile.prototype = {
 				 this.close();
 			} ).bind( this ), false );
 
-		new Button( 'MODAL_TILE2', function(){ propertyAccount(); oTile.close();} ).play();
-		new Button( 'MODAL_TILE4', function(){ saveWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE5', function(){ signoutForm(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE6', function(){ clearWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE7', function(){ absentWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE8', function(){ openWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE9', function(){ closeWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE10', function(){ reportWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE_SIGN',    function(){ propertyAccount(); oTile.close();} ).play();
+		new Button( 'MODAL_TILE_SAVE',    function(){ saveWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE_SIGNOUT', function(){ signoutForm(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE_CLEAR',   function(){ clearWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE_ABSENT',  function(){ absentWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE_OPEN',    function(){ openWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE_CLOSE',   function(){ closeWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE_REPORT',  function(){ reportWhiteboard(); oTile.close(); } ).play();
 
 	},
 	open : function(){
 		this.frame.style.visibility = 'visible';
 		this.day( dayWhiteboard );
 
-		var tile2 = document.getElementById('MODAL_TILE2');
+		var tile2 = document.getElementById('MODAL_TILE_SIGN');
 		tile2.innerText = 'sign ' + isSignId();
 	},
 	close : function(){
 		this.frame.style.visibility = 'hidden';
-		var mt1 = document.getElementById('MODAL_TILE1');
+		var mt1 = document.getElementById('MODAL_TILE_DAY');
 		mt1.innerHTML = '';
-		// var mt3 = document.getElementById('MODAL_TILE3');
+		// var mt3 = document.getElementById('MODAL_TILE_SIGN');
 		// mt3.innerHTML = '';
 	},
 	opened : function(){
 		return ( this.frame.style.visibility == 'visible' );
 	},
 	day : function( day ){
-		var mt1 = document.getElementById('MODAL_TILE1');
+		var mt1 = document.getElementById('MODAL_TILE_DAY');
 		var d = document.createElement('DIV');
 		d.innerText			= day;
 		mt1.appendChild( d );
