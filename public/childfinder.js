@@ -404,7 +404,7 @@ spotlight.prototype = {
                     else
                     r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/dry-clean.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                 if ( checkout )
-                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/check.png);background-size:14px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/check-3.png);background-size:14px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                     else
                     r += '<div style="float:right;padding-left:8px;width:20px;">&nbsp;</div>';
                 r += '<div style="float:right;" >' + estimate   + '</div>';

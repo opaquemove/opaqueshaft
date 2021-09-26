@@ -1511,7 +1511,7 @@ function checkoutChild( c, operator, co_time, direction ){
     // document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText =
     //     'checkout:' + checkout_time;
     var cf = c.getElementsByClassName('CHECKOUT_FLG')[0];
-    cf.style.backgroundImage    = 'url(./images/check.png)';
+    cf.style.backgroundImage    = 'url(./images/check-3.png)';
     cf.style.backgroundPosition = 'center center';
     cf.style.backgroundRepeat   = 'no-repeat';
     cf.style.backgroundSize     = '14px';
