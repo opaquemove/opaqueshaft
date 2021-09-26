@@ -1645,6 +1645,7 @@ function checkoutWhiteboardChildHelper(){
         //alert( '[' + document.forms['directions'].elements['child_' + id].value + ']' );
         var direction = document.forms['directions'].elements['child_' + id].value;
         checkoutChild( children[i], null, null, direction );
+        unmarkChild( children[i] );
     }
 
     commonProc();
@@ -1750,6 +1751,7 @@ function checkoutClearWhiteboardChildHelper(){
         checkoutClearChild( children[i] );
         var child_name = children[i].getElementsByClassName('CHILD_NAME')[0].innerText;
         oLog.log( null, child_name + ' : チェックアウトクリア.' );
+        unmarkChild( children[i] );
     }
     oLog.open( 3 );
     showWhiteboardChildCount();
