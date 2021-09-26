@@ -260,7 +260,7 @@ spotlight.prototype = {
             o.setAttribute('id', 'FOLDER_FIND_WHITEBOARD');
             o.style.height              = '29px';
             o.style.color               = 'gray';
-            o.style.backgroundColor     = 'transparent';
+            o.style.backgroundColor     = 'rgb(241, 241, 241)';
             o.style.fontSize            = '12px';
             o.style.borderBottom        = '1px solid lightgrey';
             o.style.padding             = '2px';
@@ -268,7 +268,7 @@ spotlight.prototype = {
             o.style.clear               = 'both';
             var r = '';
             r += '<div id="BTN_FOLDER1" style="float:left;width:24px;height:32px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-            r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;padding-top:8px;border-left:10px solid red;" >Whiteboard...</div>';
+            r += '<div style="float:left;width:80px;color:red;background-color:padding-left:4px;padding-top:8px;border-left:10px solid red;" >Whiteboard...</div>';
             o.innerHTML = r;
             var ffw = this.main.appendChild( o );
 
@@ -297,7 +297,7 @@ spotlight.prototype = {
             o.setAttribute( 'id', 'FOLDER_FIND_CHILDREN_TABLE' );
             o.style.height              = '29px';
             o.style.color               = 'gray';
-            o.style.backgroundColor     = 'transparent';
+            o.style.backgroundColor     = 'rgb(241, 241, 241)';
             o.style.fontSize            = '12px';
             o.style.borderBottom        = '1px solid lightgrey';
             o.style.padding             = '2px';
@@ -305,7 +305,7 @@ spotlight.prototype = {
             o.style.clear               = 'both';
             r = '';
             r += '<div id="BTN_FOLDER2" style="float:left;width:24px;height:32px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-            r += '<div style="float:left;width:80px;color:red;background-color:;padding-left:4px;padding-top:8px;border-left:10px solid red;" >Cloud...</div>';
+            r += '<div style="float:left;width:80px;color:red;background-color:rgb(241, 241, 241);padding-left:4px;padding-top:8px;border-left:10px solid red;" >Cloud...</div>';
             o.innerHTML = r;
             var ffct = this.main.appendChild( o );
 
