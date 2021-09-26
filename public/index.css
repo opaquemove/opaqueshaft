@@ -98,7 +98,7 @@ INPUT[type=password]:focus{
 	left:				0px;
 	width:				100%;
 	height:				100%;
-	background-color:	black;
+	background-color:	transparent;
 	overflow:			hidden;
 }
 #BOTTOM_FRAME{
@@ -109,7 +109,7 @@ INPUT[type=password]:focus{
 	width:				100%;
 	height:				100%;
 	/* border:				1px solid white; */
-	background-color:	black;
+	background-color:	lightgray;
 	background-image:	url(./images/maki.jpg);
 	background-position: center center;
 	background-size: 	contain;
@@ -123,7 +123,7 @@ INPUT[type=password]:focus{
 	width:					118px;
 	height:					54px;
 	color:					white;
-	text-shadow: 			2px 2px 2px black;
+	text-shadow: 			2px 2px 2px gray;
 	background-color:		transparent;
 	opacity: 				0.7;
 	font-size:				16px;
@@ -475,7 +475,7 @@ INPUT[type=password]:focus{
 	text-align: 			center;
 	pointer-events: 		auto;
 	background-color:		darkgrey;
-	border-radius: 			4px;
+	border-radius: 			0px;
 	overflow:				hidden;
 
 }
@@ -487,7 +487,7 @@ INPUT[type=password]:focus{
 	background-color: 		transparent;
 	/* background-color:		rgb(241, 241, 241); */
 	overflow:				scroll;
-	border-radius: 			0px 0px 4px 4px;
+	border-radius: 			0px 0px 0px 0px;
 }
 
 #FOLDER_FIND_WHITEBOARD2{
@@ -528,7 +528,7 @@ INPUT[type=password]:focus{
 	width:					40px;
 	height:					72px;
 	text-align:				center;
-	text-shadow: 			2px 2px 2px black;
+	text-shadow: 			2px 2px 2px gray;
 	float:					right;
 	font-size:				12px;
 	color:					snow;
@@ -812,7 +812,7 @@ INPUT[type=password]:focus{
 	width:				84px;
 	height:				598px;		/* 600 pixel Per Hour */
 	color:				white;
-	text-shadow: 		2px 2px 2px black;
+	text-shadow: 		1px 1px 1px gray;
 	/* background-color:	darkgray; */
 	font-size:			18px;
 	font-weight:		bold;
@@ -831,9 +831,9 @@ INPUT[type=password]:focus{
 	width:				84px;
 	/* margin:				0 auto; */
 	height:				84px;
-	color:				rgb(255, 123, 0);
+	color:				snow;
 	writing-mode: vertical-lr;
-	text-shadow: 		2px 2px 2px black;
+	text-shadow: 		2px 2px 2px gray;
 	/* background-color:	darkgray; */
 	font-size:			20px;
 	/* font-weight:		bold; */
@@ -871,7 +871,7 @@ INPUT[type=password]:focus{
 	/* margin:				0 auto; */
 	height:				24px;
 	color:				white;
-	text-shadow: 		2px 2px 2px black;
+	text-shadow: 		2px 2px 2px gray;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
 	z-index:			6000;
@@ -884,7 +884,7 @@ INPUT[type=password]:focus{
 	/* margin:				0 auto; */
 	height:				24px;
 	color:				white;
-	text-shadow: 		2px 2px 2px black;
+	text-shadow: 		2px 2px 2px gray;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
 	z-index:			6000;
@@ -897,7 +897,7 @@ INPUT[type=password]:focus{
 	/* margin:				0 auto; */
 	height:				24px;
 	color:				white;
-	text-shadow: 		2px 2px 2px black;
+	text-shadow: 		2px 2px 2px gray;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
 	z-index:			6000;
@@ -922,10 +922,10 @@ INPUT[type=password]:focus{
 	width:					100%;
 	height:					42px;
 	color:					darkgray;
-	background-image:		url(./images/down-arrow.png);
+	/* background-image:		url(./images/down-arrow.png);
 	background-size:		20px;
 	background-position:	right center;
-	background-repeat: 		no-repeat;
+	background-repeat: 		no-repeat; */
 	margin:					0px auto;
 }
 #REPORT_CONTENT{
@@ -1307,9 +1307,8 @@ INPUT[type=password]:focus{
 	writing-mode: 			vertical-lr;		
 	background-color:		lightgrey;
 	color:					white;
-	text-shadow: 			1px 1px 1px black;
 	overflow:				hidden;
-	border-radius: 			2px;
+	border-radius: 			0px;
 	opacity:				0.9;
 }
 
@@ -1318,13 +1317,17 @@ INPUT[type=password]:focus{
 	margin-top:				0px;
 	top:					342px;
 	left:					0px;
-	width:					30px;
+	width:					26px;
 	height:					41px;
-	font-size:				12px;
+	font-size:				10px;
 	color:					white;
 	background-color:		red;
+	background-image:		url(images/arrow-black-triangle-up.png), url(images/arrow-black-triangle-down.png);
+	background-size:		6px, 6px;
+	background-position: 	top right, bottom right;
+	background-repeat: 		no-repeat, no-repeat;
 	border-top:				1px solid red;
-	padding-left:			12px;
+	padding-left:			16px;
 	text-align:				center;
 	writing-mode: 			vertical-lr;		
 }

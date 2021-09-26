@@ -247,11 +247,11 @@ spotlight.prototype = {
     ctlMain : function(){
         var keyword = this.keyword.value;
         if ( this.keyword.value == '' ){
-            this.header.style.borderRadius  = '4px';
+            this.header.style.borderRadius  = '0px';
             this.main.style.visibility    = 'hidden';
             return;
         } else{
-            this.header.style.borderRadius  = '4px 4px 0px 0px';
+            this.header.style.borderRadius  = '0px 0px 0px 0px';
             this.main.style.visibility    = 'visible';
         }
     
@@ -267,8 +267,8 @@ spotlight.prototype = {
             o.style.marginBottom        = '0px';
             o.style.clear               = 'both';
             var r = '';
-            r += '<div id="BTN_FOLDER1" style="float:left;width:24px;height:32px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-            r += '<div style="float:left;width:80px;color:red;background-color:padding-left:4px;padding-top:8px;border-left:10px solid red;" >Whiteboard...</div>';
+            r += '<div id="BTN_FOLDER1" style="float:left;width:24px;height:32px;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            r += '<div style="float:left;width:80px;color:red;background-color:padding-left:4px;padding-top:8px;" >Whiteboard...</div>';
             o.innerHTML = r;
             var ffw = this.main.appendChild( o );
 
@@ -283,12 +283,12 @@ spotlight.prototype = {
                     switch ( ffw2.style.display ){
                         case 'none':
                             ffw2.style.display = 'inline';
-                            e.target.style.backgroundImage = 'url(./images/up-arrow.png)';
+                            e.target.style.backgroundImage = 'url(./images/arrow-black-triangle-up.png)';
                             break;
                         case 'inline':
                         default:
                             ffw2.style.display = 'none';
-                            e.target.style.backgroundImage = 'url(./images/down-arrow.png)';
+                            e.target.style.backgroundImage = 'url(./images/arrow-black-triangle-down.png)';
                             break;
                     }
                 } ).bind(this), false );
@@ -304,8 +304,8 @@ spotlight.prototype = {
             o.style.marginBottom        = '0px';
             o.style.clear               = 'both';
             r = '';
-            r += '<div id="BTN_FOLDER2" style="float:left;width:24px;height:32px;background-image:url(./images/up-arrow.png);background-size:16px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-            r += '<div style="float:left;width:80px;color:red;background-color:rgb(241, 241, 241);padding-left:4px;padding-top:8px;border-left:10px solid red;" >Cloud...</div>';
+            r += '<div id="BTN_FOLDER2" style="float:left;width:24px;height:32px;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
+            r += '<div style="float:left;width:80px;color:red;background-color:rgb(241, 241, 241);padding-left:4px;padding-top:8px;" >Cloud...</div>';
             o.innerHTML = r;
             var ffct = this.main.appendChild( o );
 
@@ -319,12 +319,12 @@ spotlight.prototype = {
                     switch ( ffct2.style.display ){
                         case 'none':
                             ffct2.style.display = 'inline';
-                            e.target.style.backgroundImage = 'url(./images/up-arrow.png)';
+                            e.target.style.backgroundImage = 'url(./images/arrow-black-triangle-up.png)';
                             break;
                         case 'inline':
                         default:
                             ffct2.style.display = 'none';
-                            e.target.style.backgroundImage = 'url(./images/down-arrow.png)';
+                            e.target.style.backgroundImage = 'url(./images/arrow-black-triangle-down.png)';
                             break;
                     }
                 } ).bind(this), false);

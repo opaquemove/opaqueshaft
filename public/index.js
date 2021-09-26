@@ -208,7 +208,7 @@ function init()
 	//	タイル初期化
 	//
 	oTile = new Tile( null );
-	oTile.play();
+	oTile.init();
 
 	// チャイルドパレットのチャイルドリスト作成
 	if ( !checkSign() ){			//サインアウトしている
@@ -688,7 +688,7 @@ function Tile( func ){
 	this.evtEnd			= null;
 }
 Tile.prototype = {
-	play : function(){
+	init : function(){
 		this.frame			= document.getElementById('MODAL_OVERLAY_TILE');
 		this.touchdevice	= ( 'ontouchend' in document );
 
@@ -713,7 +713,6 @@ Tile.prototype = {
 			} ).bind( this ), false );
 
 		new Button( 'MODAL_TILE2', function(){ propertyAccount(); oTile.close();} ).play();
-		// new Button( 'MODAL_TILE3', showTile     ).play();
 		new Button( 'MODAL_TILE4', function(){ saveWhiteboard(); oTile.close(); } ).play();
 		new Button( 'MODAL_TILE5', function(){ signoutForm(); oTile.close(); } ).play();
 		new Button( 'MODAL_TILE6', function(){ clearWhiteboard(); oTile.close(); } ).play();
