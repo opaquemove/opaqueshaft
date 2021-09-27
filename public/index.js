@@ -1036,11 +1036,11 @@ function openWhiteboard(){
 			r += '<div style="width:50%;float:left;" >';
 				r += '<input type="text" id="whiteboard_day" name="day" style="width:100%;font-size:24px;" value="' + ymd + '" />';
 			r += '</div>';
-			r += '<div style="float:right;width:48%;" >';
+			r += '<div style="float:left;width:30px;" >';
 				// r += '<button id="BTN_ADD_DATE"   style="background-color:transparent;border:none;" ><img width="12px" src="./images/add.png" /></button>';
 				// r += '<button id="BTN_MINUS_DATE" style="background-color:transparent;border:none;" ><img width="12px" src="./images/minus-2.png" /></button>';
-				r += '<img id="BTN_ADD_DATE"   width="22px" style="padding-right:3px;" src="./images/up-arrow.png" />';
-				r += '<img id="BTN_MINUS_DATE" width="22px" src="./images/down-arrow.png" />';
+				r += '<img id="BTN_ADD_DATE"        width="6px" src="./images/arrow-black-triangle-up.png" />';
+				r += '<br/><img id="BTN_MINUS_DATE" width="6px" src="./images/arrow-black-triangle-down.png" />';
 			r += '</div>';
 		r += '</div>';
 		// r += '<div id="WHITEBOARD_LIST" style="clear:both;margin-top:10px;height:120px;display:flex;font-size:12px;padding:4px;overflow-y:scroll;border:0px solid lightgrey;" >';
@@ -2233,7 +2233,7 @@ function signoutForm(){
 	var r = "";	
 	r += "<div style='width:350px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
 		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign out</div>";
-		r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
+		// r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
 		r += "<div style='margin:10px auto;width:210px;' >";
 		r += "</div>";
 	r += "</div>";

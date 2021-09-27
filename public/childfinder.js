@@ -281,19 +281,20 @@ spotlight.prototype = {
             oo.setAttribute('id', 'FOLDER_FIND_WHITEBOARD2');
             oo.innerText                = 'dummy';
             this.folder1 = this.main.appendChild( oo );
-            document.getElementById('BTN_FOLDER1').addEventListener('click',
+            document.getElementById('FOLDER_FIND_WHITEBOARD').addEventListener('click',
                 ( function(e){
                     console.log('hohoho');
                     var ffw2 = document.getElementById('FOLDER_FIND_WHITEBOARD2');
+                    var bf1 = document.getElementById('BTN_FOLDER1');
                     switch ( ffw2.style.display ){
                         case 'none':
                             ffw2.style.display = 'inline';
-                            e.target.style.backgroundImage = 'url(./images/arrow-black-triangle-up.png)';
+                            bf1.style.backgroundImage = 'url(./images/arrow-black-triangle-up.png)';
                             break;
                         case 'inline':
                         default:
                             ffw2.style.display = 'none';
-                            e.target.style.backgroundImage = 'url(./images/arrow-black-triangle-down.png)';
+                            bf1.style.backgroundImage = 'url(./images/arrow-black-triangle-down.png)';
                             break;
                     }
                 } ).bind(this), false );
@@ -318,18 +319,19 @@ spotlight.prototype = {
             oo.setAttribute('id', 'FOLDER_FIND_CHILDREN_TABLE2');
             oo.innerText = 'Dummy';        
             this.folder2 = this.main.appendChild( oo );
-            document.getElementById('BTN_FOLDER2').addEventListener('click',
+            document.getElementById('FOLDER_FIND_CHILDREN_TABLE').addEventListener('click',
                 ( function(e){
                     var ffct2 = document.getElementById('FOLDER_FIND_CHILDREN_TABLE2');
+                    var bf2 = document.getElementById('BTN_FOLDER2');
                     switch ( ffct2.style.display ){
                         case 'none':
                             ffct2.style.display = 'inline';
-                            e.target.style.backgroundImage = 'url(./images/arrow-black-triangle-up.png)';
+                            bf2.style.backgroundImage = 'url(./images/arrow-black-triangle-up.png)';
                             break;
                         case 'inline':
                         default:
                             ffct2.style.display = 'none';
-                            e.target.style.backgroundImage = 'url(./images/arrow-black-triangle-down.png)';
+                            bf2.style.backgroundImage = 'url(./images/arrow-black-triangle-down.png)';
                             break;
                     }
                 } ).bind(this), false);

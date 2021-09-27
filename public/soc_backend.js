@@ -343,7 +343,7 @@ function reportWhiteboardDetail(){
             var r = '';
             r += '<div style="clear:both;font-size:12px;padding:0px;" >';
                 r += '<div style="float:left;"  >';
-                    if ( checkout != '---' ) r += '<img width="10px" src="./images/checked-symbol.png" />';
+                    if ( checkout != '---' ) r += '<img width="10px" src="./images/check-3.png" />';
                     r += child_name;
                 r += '</div>';
                 r += '<div style="float:right;width:26px;" >' + direction   + '</div>';
