@@ -420,10 +420,10 @@ INPUT[type=password]:focus{
 }
 .nav_icon2{
 	float:					left;
-	width:					40px;
-	height:					40px;
+	width:					62px;
+	height:					62px;
 	background-color:		red;
-	border-radius: 8px;
+	border-radius: 			8px;
 	margin:					1px;
 }
 

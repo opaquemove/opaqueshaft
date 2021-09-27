@@ -1846,11 +1846,11 @@ function Nav( func ){
 	m.style.top 			= ( ( h / 2 ) - ( 126 / 2 ) ) + 'px';
 	// m.style.left			= ( ( w / 2 ) - this.size )+ 'px';
 	m.style.left			= '0px';
-	m.style.width			= '126px';
-	m.style.height			= '126px';
+	m.style.width			= '192px';
+	m.style.height			= '196px';
 	m.style.color			= 'snow';
 	m.style.backgroundColor	= 'transparent';
-	m.style.fontSize		= '6px';
+	m.style.fontSize		= '14px';
 	// m.style.pointerEvents	= 'none';
 	m.style.zIndex			= 65000;
 	m.style.visibility		= 'hidden';
@@ -1859,32 +1859,36 @@ function Nav( func ){
 	// 	r += '&nbsp;';
 	// r += '</div>';
 	r += '<div marked="yes" target="escort"        class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:84px;left:42px;background-image:url(./images/family.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';
+	r += ' style="text-align:center;position:absolute;top:128px;left:64px;background-image:url(./images/family.png);background-size:20px;background-position:center center;background-repeat:no-repeat;" >';
 		r += 'escort';
 	r += '</div>';
 	r += '<div marked="yes" target="delete"        class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:0px;left:42px;background-image:url(./images/minus-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';	// Delete Mark Child
+	r += ' style="text-align:center;position:absolute;top:0px;left:64px;background-image:url(./images/minus-2.png);background-size:20px;background-position:center center;background-repeat:no-repeat;" >';	// Delete Mark Child
 		r += 'delete';
 	r += '</div>';
 	r += '<div marked="yes" target="checkout"      class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:21px;left:84px;background-image:url(./images/check-3.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
+	r += ' style="text-align:center;position:absolute;top:32px;left:128px;background-image:url(./images/check-3.png);background-size:20px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
 		r += 'chk out';
 	r += '</div>';
 	r += '<div marked="yes" target="checkoutclear" class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:63px;left:84px;background-image:url(./images/dry-clean.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Clear Mark Child
+	r += ' style="text-align:center;position:absolute;top:96px;left:128px;background-image:url(./images/dry-clean.png);background-size:20px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Clear Mark Child
 		r += 'chk clr';
 	r += '</div>';
 	r += '<div marked="yes" target="property"      class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:21px;left:0px;background-image:url(./images/hexagon.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
+	r += ' style="text-align:center;position:absolute;top:32px;left:0px;background-image:url(./images/hexagon.png);background-size:20px;background-position:center center;background-repeat:no-repeat;" >';	// Checkout Mark Child
 		r += 'property';
 	r += '</div>';
 	r += '<div marked="yes" target="absent" class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:63px;left:0px;background-image:url(./images/sleep-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';	// Absent Child
+	r += ' style="text-align:center;position:absolute;top:96px;left:0px;background-image:url(./images/sleep-2.png);background-size:20px;background-position:center center;background-repeat:no-repeat;" >';	// Absent Child
 		r += 'absent';
 	r += '</div>';
 	r += '<div target="exchange"   class="vh-center nav_icon2" ';
-	r += ' style="position:absolute;top:105px;left:84px;height:21px;background-image:url(./images/exchange.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';
+	r += ' style="position:absolute;top:160px;left:128px;height:21px;background-image:url(./images/exchange.png);background-size:12px;background-position:center center;background-repeat:no-repeat;" >';
 		r += 'socket';
+	r += '</div>';
+	r += '<div marked="yes" target="close" class="nav_icon2" ';
+	r += ' style="text-align:center;position:absolute;top:64px;left:64px;background-image:url(./images/compass.png);background-size:20px;background-position:center center;background-repeat:no-repeat;" >';	// Absent Child
+		r += '&nbsp';
 	r += '</div>';
 
 	m.innerHTML				= r;
