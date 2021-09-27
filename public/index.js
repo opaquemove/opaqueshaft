@@ -2545,7 +2545,8 @@ function signForm()
 	ctlToolbar();
 	// hiddenWhiteboard();
 	oNav.close();
-	oTile.close();
+	oTile.close('menu');
+	oTile.close('childfinder');
 	oSpotlight.close();
 	// if ( flagChildrenPallete ) foldingChildrenPallete();
 
