@@ -2999,6 +2999,8 @@ function mMove( e ){
 	var drag = curChild;
 
 	if ( drag == null ) return;
+	//	マークしていないとムーブしないよ
+	if ( !isMarkedChild( drag ) ) return; 
 
 	curChildMoved   = true;
 
@@ -3028,8 +3030,8 @@ function mMove( e ){
 	wb_height -= drag.offsetHeight / 2;
 	wb_width  -= drag.offsetWidth  / 2;
 	//マウスが動いた場所に要素を動かす
-	if ( e.type == 'touchmove' 
-		|| (( e.buttons & 1 ) && e.type == 'mousemove' ) ){
+	if ( e.type == 'touchmove' ||
+		 (( e.buttons & 1 ) && e.type == 'mousemove' ) ){
 		var old_top  = drag.offsetTop;
 		var old_left = drag.offsetLeft;
 		if ( ( event.pageY - y ) < 0 || ( event.pageX - x ) < 0 ) return;
