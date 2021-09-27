@@ -749,14 +749,14 @@ Tile.prototype = {
 			case 'menu':
 				var tiles =document.getElementById('ID_TILES');
 				tiles.style.display = 'none';
+				var mt1 = document.getElementById('MODAL_TILE_DAY');
+				mt1.innerHTML = '';
 				break;
 			case 'childfinder':
 				var icf2 =document.getElementById('ID_CHILDFINDER2');
 				icf2.style.display = 'none';
 				break;
 			}
-		var mt1 = document.getElementById('MODAL_TILE_DAY');
-		mt1.innerHTML = '';
 		// var mt3 = document.getElementById('MODAL_TILE_SIGN');
 		// mt3.innerHTML = '';
 	},
@@ -775,6 +775,7 @@ Tile.prototype = {
 	},
 	day : function( day ){
 		var mt1 = document.getElementById('MODAL_TILE_DAY');
+		mt1.innerHTML = '';
 		var d = document.createElement('DIV');
 		d.innerText			= day;
 		mt1.appendChild( d );
