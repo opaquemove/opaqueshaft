@@ -458,7 +458,8 @@ function attendChildHelper( c ){
     c.style.backgroundSize      = '';
     c.style.backgroundPosition  = '';
     c.style.backgroundRepeat    = '';
-    c.style.transformOrigin     = ''
+    c.style.borderColor         = '';
+    c.style.transformOrigin     = '';
     c.style.transform           = '';
     c.removeAttribute('absent');
 
@@ -1708,11 +1709,12 @@ function absentChildHelper( c ){
     var abs = document.getElementById('WHITEBOARD_CHECKOUT');
     
     c.style.backgroundImage     = 'url(./images/remove.png)';
-    c.style.backgroundSize      = '16px';
-    c.style.backgroundPosition  = 'right center';
+    c.style.backgroundSize      = '10px';
+    c.style.backgroundPosition  = 'right 2px bottom 2px';
     c.style.backgroundRepeat    = 'no-repeat';
     c.style.transformOrigin     = 'top left';
     c.style.transform           = 'rotate(-45deg)';
+    c.style.borderColor         = 'limegreen';
 
     c.setAttribute('absent', 'yes');
 
