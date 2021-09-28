@@ -244,30 +244,9 @@
 	/* border-radius: 		20px; */
 	/* clear:				both; */
 }
-#MODAL_TILE_ABSENT{
-	float:				left;
-	clear:				left;
-	pointer-events: 	auto;
-	width:				42px;
-	height:				38px;
-	text-align:			center;
-	color:				snow;
-	background-color:	red;
-	background-image:	url(./images/sleep-2.png);
-	background-position: center center;
-	background-size: 	12px;
-	background-repeat: 	no-repeat;
-	opacity: 			0.9;
-	/* font-size:			16px; */
-	padding-top:		4px;
-	margin-right:		1px;
-	margin-bottom: 		1px;
-	/* border-radius: 		20px; */
-	/* clear:				both; */
-}
 #MODAL_TILE_OPEN{
 	float:				left;
-	/* clear:				left; */
+	clear:				left;
 	pointer-events: 	auto;
 	width:				42px;
 	height:				38px;
@@ -288,7 +267,7 @@
 }
 #MODAL_TILE_CLOSE{
 	float:				left;
-	clear:				left;
+	/* clear:				left; */
 	pointer-events: 	auto;
 	width:				42px;
 	height:				38px;
@@ -309,7 +288,7 @@
 }
 #MODAL_TILE_REPORT{
 	float:				left;
-	/* clear:				left; */
+	clear:				left;
 	pointer-events: 	auto;
 	width:				42px;
 	height:				38px;
@@ -321,6 +300,27 @@
 	background-size: 	16px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
+	/* font-size:			14px; */
+	padding-top:		4px;
+	margin-right:		1px;
+	margin-bottom: 		1px;
+	/* border-radius: 		20px; */
+	/* clear:				both; */
+}
+#MODAL_TILE_LOG{
+	float:					left;
+	/* clear:					left; */
+	pointer-events: 		auto;
+	width:					42px;
+	height:					38px;
+	text-align:				center;
+	color:					snow;
+	background-color:		red;
+	background-image:		url(./images/list.png);
+	background-position: 	center center;
+	background-size: 		16px;
+	background-repeat: 		no-repeat;
+	opacity: 				0.9;
 	/* font-size:			14px; */
 	padding-top:		4px;
 	margin-right:		1px;

@@ -111,6 +111,7 @@ spotlight.prototype = {
         document.getElementById('BTN_ALIGN_SPOTLIGHT').addEventListener( 'click',
             ( function(e) {
                 this.close();
+                oTile.close('childfinder');
             }).bind( this ), false );
         // document.getElementById('BTN_CLOSE_SPOTLIGHT').addEventListener( 'click',
         // ( function(e) {

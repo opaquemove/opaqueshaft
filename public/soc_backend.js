@@ -411,129 +411,6 @@ function reportWhiteboardDetail(){
 
 }
 
-//
-//  アブセント管理
-//
-function absentWhiteboard(){
-    var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
-		// r += 'absent  ' + dayWhiteboard;
-    r += '</div>';
-    r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
-        r += 'Summary:'
-    r += '</div>';
-    r += '<div id="ABSENT_SUMMARY" style="width:90%;height:;;clear:both;margin:0 auto;" >';
-    r += '</div>';
-
-    r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
-        r += 'Detail:'
-    r += '</div>';
-    r += '<div id="ABSENT_HDR"  style="width:90%;height:20px;clear:both;color:red;background-color:lightgray;margin:0 auto;border:1px solid lightgrey;" >';
-        r += '<div style="float:left;" >Name</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Direction</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckOut</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Estimate</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >CheckIn</div>';
-        r += '<div style="float:right;width:40px;height:100%;border-left:1px solid grey;" >Escort</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Type</div>';
-        r += '<div style="float:right;width:50px;height:100%;border-left:1px solid grey;" >Grade</div>';
-    r += '</div>';
-
-    r += '<div id="ABSENT_LIST" style="width:90%;height:140px;clear:both;margin:0 auto;border:1px solid lightgrey;overflow:scroll;" >';
-    r += '</div>';
-    // r += '<div style="width:90%;height:;font-size:16px;clear:both;margin:0 auto;" >';
-    //     r += '<button onclick="attendChild();" style="width:180px;height:40px;border:none;background-color:transparent;font-size:24px;background-image:url(./images/entry.png);background-size:30px;background-repeat:no-repeat;background-position:left center;" >Attend</button>';
-    // r += '</div>';
-
-    openModalDialog( 'absent ' + dayWhiteboard, r, 'OK_CANCEL',
-        function(){
-            attendChild();
-            closeModalDialog();
-        }, null );
-    absentWhiteboardSummary();
-    absentWhiteboardDetail();
-}
-
-//
-//
-//
-function absentWhiteboardSummary(){
-    var lst_area = document.getElementById('ABSENT_SUMMARY');
-    // var wba = document.getElementById('WHITEBOARD_ABSENT');
-    var cnt = countAbsentWhiteboard();
-    var r = '';
-    r += '<div style="padding-left:4px;" >children:' + cnt + '</div>';
-    lst_area.innerHTML = r;
-
-}
-
-//
-//  アブセント詳細
-//
-function absentWhiteboardDetail(){
-    var lst_area = document.getElementById('ABSENT_LIST');
-    var wba = document.getElementById('WHITEBOARD_CHECKOUT');
-    for ( var j=0; j<wba.childNodes.length; j++ ){
-        var c = wba.childNodes[j];
-        if ( ! c.hasAttribute('absent')) continue;
-
-        var cc = document.createElement('DIV');
-        var child_id    = c.getAttribute('child_id');
-        var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
-        var child_type  = c.getAttribute('child_type');
-        var child_grade = c.getAttribute('child_grade');
-        var checkin     = c.getAttribute('checkin');
-        var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
-        var checkout    = c.getAttribute('checkout');
-            checkout    = ( checkout != null )? checkout : '---';
-        var direction   = ( direction != null )? direction : '---';
-        var escort      = ( c.hasAttribute('escort') )?'yes':'no';
-        var r = '';
-        r += '<div style="clear:both;" >';
-            r += '<div style="float:left;"  >' + child_name +'(' + child_id + ')' + '</div>';
-            r += '<div style="float:right;width:50px;" >' + direction   + '</div>';
-            r += '<div style="float:right;width:50px;" >' + checkout    + '</div>';
-            r += '<div style="float:right;width:50px;" >' + estimate    + '</div>';
-            r += '<div style="float:right;width:50px;" >' + checkin     + '</div>';
-            r += '<div style="float:right;width:50px;" >' + escort      + '</div>';
-            r += '<div style="float:right;width:50px;" >' + child_type  + '</div>';
-            r += '<div style="float:right;width:50px;" >' + child_grade + '</div>';
-        r += '</div>';
-        cc.setAttribute( 'child_id', child_id );
-        cc.style.height = '20px';
-        cc.innerHTML = r;
-        lst_area.appendChild( cc );
-    }
-    lst_area.addEventListener( 'mouseup',
-    function (e){
-        console.log(e.type);
-        var o = e.target;
-        while( true ){
-            if ( o == lst_area ){
-                for ( var i=0; i<lst_area.childNodes.length; i++ ){
-                    var o = lst_area.childNodes[i];
-                    if ( o.hasAttribute('marked')){
-                        o.style.backgroundColor = '';
-                        o.removeAttribute('marked');
-                    }
-                }
-                return;
-            }
-            if ( o.hasAttribute('child_id' ) ) break;
-            o = o.parentNode;
-        }
-        if ( o.hasAttribute('marked')){
-            console.log('un mark:' + o.getAttribute('child_id'));
-            o.style.backgroundColor = '';
-            o.removeAttribute('marked');
-        } else {
-            console.log('mark:' + o.getAttribute('child_id'));
-            o.style.backgroundColor = 'lightgrey';
-            o.setAttribute('marked', 'yes');
-        }
-    }, false );
-
-}
 
 
 //
@@ -1511,6 +1388,7 @@ function checkoutChild( c, operator, co_time, direction ){
     c.setAttribute('checkout', checkout_time );
     c.setAttribute('direction', direction );
     c.setAttribute('operator',  operator );
+    c.style.borderColor = 'limegreen';
     // console.log( c.getAttribute('child_id') );
     // document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText =
     //     'checkout:' + checkout_time;
@@ -1769,6 +1647,7 @@ function checkoutClearChild( c ){
     if ( c == null ) return;
     c.removeAttribute( 'checkout' );
     c.removeAttribute( 'direction' );
+    c.style.borderColor = '';
     // document.getElementById( 'CHECKOUT_' + c.getAttribute('child_id') ).innerText = 'checkout:';
     var cf = c.getElementsByClassName('CHECKOUT_FLG')[0];
     cf.style.backgroundImage    = '';

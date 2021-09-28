@@ -187,7 +187,6 @@ function init()
 	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
 	// new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
 	// new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
-	new Button( 'ID_NAV_LOG',               ctlMessageLog ).play();
 	new Button( 'ID_NAV_CHILDFINDER',       ctlSpotlight ).play();
 	new Button( 'ID_NAV_ACCOUNT',           function(){ propertyAccount(); oTile.close();} ).play();
 
@@ -333,6 +332,7 @@ function modeWhiteboard( e ){
 			wb.style.zIndex		= 3;
 			wb.style.opacity	= 1;
 			wbe.style.zIndex	= 2;
+
 			wbe.style.opacity	= 0.5;
 			wba.style.zIndex	= 1;
 			wba.style.opacity	= 0.5;
@@ -343,7 +343,9 @@ function modeWhiteboard( e ){
 			imne.classList.remove( 'mode_on' );
 			wbe.style.zIndex	= 3;
 			wbe.style.opacity	= 1;
+			wbe.style.backgroundColor	= '';
 			wb.style.zIndex		= 2;
+
 			wb.style.opacity	= 0.5;
 			wba.style.zIndex	= 1;
 			wba.style.opacity	= 0.5;
@@ -716,10 +718,11 @@ Tile.prototype = {
 		new Button( 'MODAL_TILE_SAVE',    function(){ saveWhiteboard(); oTile.close(); } ).play();
 		new Button( 'MODAL_TILE_SIGNOUT', function(){ signoutForm(); oTile.close(); } ).play();
 		new Button( 'MODAL_TILE_CLEAR',   function(){ clearWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE_ABSENT',  function(){ absentWhiteboard(); oTile.close(); } ).play();
+		// new Button( 'MODAL_TILE_ABSENT',  function(){ absentWhiteboard(); oTile.close(); } ).play();
 		new Button( 'MODAL_TILE_OPEN',    function(){ openWhiteboard(); oTile.close(); } ).play();
 		new Button( 'MODAL_TILE_CLOSE',   function(){ closeWhiteboard(); oTile.close(); } ).play();
 		new Button( 'MODAL_TILE_REPORT',  function(){ reportWhiteboard(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE_LOG',  	  function(){ ctlMessageLog(); oTile.close(); } ).play();
 
 		var tiles = document.getElementById( 'ID_TILES' );
 		tiles.style.display	= 'none';
