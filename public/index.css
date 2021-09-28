@@ -978,7 +978,7 @@ INPUT[type=password]:focus{
 .CHILD{
 	position:			absolute;
 	width:				142px;
-	height:				40px;
+	height:				50px; /* 40 to 50 */
 	color:				gray;
 	background-color:	rgb(247, 247, 247);
 	padding:			0px;
@@ -986,7 +986,7 @@ INPUT[type=password]:focus{
 	border-left:		1px solid black;
 	border-right:		1px solid black;
 	border-bottom:		1px solid black;
-	border-radius: 		8px;
+	/* border-radius: 		8px; */
 	font-size:			14px;
 	overflow:			visible;
 	-webkit-user-select: none;
@@ -1302,7 +1302,7 @@ INPUT[type=password]:focus{
 	margin-top:				0px;
 	top:					342px;
 	left:					18px;
-	width:					4px;
+	width:					6px;
 	height:					162px;
 	writing-mode: 			vertical-lr;		
 	background-color:		lightgrey;
@@ -1328,6 +1328,7 @@ INPUT[type=password]:focus{
 	background-repeat: 		no-repeat, no-repeat;
 	border-top:				1px solid red;
 	padding-left:			16px;
+	margin:					0px 0px 0px 0px;
 	text-align:				center;
 	writing-mode: 			vertical-lr;		
 }

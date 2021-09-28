@@ -666,9 +666,9 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     var r = '';
  //   r += '<div style="width:4px;height:100%;float:left;background-color:' + arChildGradeColor[child_grade] + ';" ></div>';
     r += '<div style="padding:2px;" >';
-        r += '<div style="width:100%;height:20px;font-size:14px;" >';
-            r += '<div class="CHILD_NAME"    style="height:20px;float:left;text-overflow:ellipsis;" >' + child_name + '</div>';
-            r += '<div class="ESTIMATE_TIME" style="height:20px;padding-left:1px;float:right;text-align:right;" >';
+        r += '<div style="width:100%;height:18px;font-size:12px;" >';
+            r += '<div class="CHILD_NAME"    style="width:77%;height:18px;float:left;overflow:hidden;text-overflow:ellipsis;" >' + child_name + '</div>';
+            r += '<div class="ESTIMATE_TIME" style="height:18px;padding-left:1px;float:right;text-align:right;" >';
             // r += hm;
             r += '</div>';
         r += '</div>';
