@@ -668,20 +668,24 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
     r += '<div style="padding:2px;" >';
         r += '<div style="width:100%;height:18px;font-size:12px;" >';
             r += '<div class="CHILD_NAME"    style="width:77%;height:18px;float:left;overflow:hidden;text-overflow:ellipsis;" >' + child_name + '</div>';
-            r += '<div class="ESTIMATE_TIME" style="height:18px;padding-left:1px;float:right;text-align:right;" >';
+            r += '<div class="ESTIMATE_TIME" style="height:18px;padding-left:0px;float:right;text-align:right;" >';
             // r += hm;
             r += '</div>';
         r += '</div>';
         r += '<div>';
-            r += '<div class="DIRECTION_FLG" style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
-            r += '</div>';
-            r += '<div class="CHECKOUT_FLG" style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
-            r += '</div>';
-            r += '<div class="ESCORT_FLG"   style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
-            r += '</div>';
-            r += '<div class="TYPE_GRADE" style="float:right;font-size:10px;text-align:right;" >';
+            if ( imagefile != '' && imagefile != null ){
+                r += '<div style="float:left;width:30px;height:30px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+                r += '</div>';
+            }
+            r += '<div class="TYPE_GRADE vh-center"  style="height:20px;float:right;font-size:12px;text-align:right;" >';
                 r += child_type;
                 r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';" >●</span>'
+            r += '</div>';
+            r += '<div class="DIRECTION_FLG"         style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
+            r += '</div>';
+            r += '<div class="CHECKOUT_FLG"          style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
+            r += '</div>';
+            r += '<div class="ESCORT_FLG"            style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
             r += '</div>';
         r += '</div>';
     r += '</div>';
