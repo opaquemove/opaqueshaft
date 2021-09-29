@@ -1391,7 +1391,7 @@ function saveWhiteboard(){
 		r += '</div>';
 		r += '<div>Report:</div>';
 		r += '<div style="clear:both;font-size:12px;width:100%;height:60px;border:0px solid gray;" >';
-		r += '<textarea id="WB_REPORT" name="report" style="width:100%;" >' + wb_report + '</textarea>';
+		r += '<textarea id="WB_REPORT" name="report" style="width:100%;height:64px;" >' + wb_report + '</textarea>';
 		r += '</div>';
 		r += '</form>';
 
