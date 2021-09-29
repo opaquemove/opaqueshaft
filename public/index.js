@@ -333,9 +333,9 @@ function modeWhiteboard( e ){
 			wb.style.opacity	= 1;
 			wbe.style.zIndex	= 2;
 
-			wbe.style.opacity	= 0.5;
+			wbe.style.opacity	= 0.6;
 			wba.style.zIndex	= 1;
-			wba.style.opacity	= 0.5;
+			wba.style.opacity	= 0.6;
 			curWhiteboard		= 'WHITEBOARD';
 			break;
 		case 'ID_MODE_CHECKOUT':
@@ -346,9 +346,9 @@ function modeWhiteboard( e ){
 			wbe.style.backgroundColor	= '';
 			wb.style.zIndex		= 2;
 
-			wb.style.opacity	= 0.5;
+			wb.style.opacity	= 0.6;
 			wba.style.zIndex	= 1;
-			wba.style.opacity	= 0.5;
+			wba.style.opacity	= 0.6;
 			curWhiteboard		= 'WHITEBOARD_CHECKOUT';
 			break;
 		}
