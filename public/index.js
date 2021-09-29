@@ -2572,8 +2572,8 @@ function signForm()
 			r += "<div>ID:</div>";
 			r += "<div><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
 			r += "<div style='padding-top:20px;' >Password:</div>";
-			r += "<div><input style='width:200px;height:18px;' type='password' name='pwd' tabindex=2 /></div>";
-			r += "<div style=';padding-top:40px;text-align:center;' >";
+			r += "<div><input style='width:200px;' type='password' name='pwd' tabindex=2 /></div>";
+			r += "<div style='padding-top:40px;text-align:center;' >";
 				r += "<button style='background-color:transparent;border:none;' onclick='sign()' ><img width='26px;' src='/images/arrow-right.png' /></button>";
 			r += "</div>";
 			r += "</form>";

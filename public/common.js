@@ -102,7 +102,7 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 		case 'OPENWHITEBOARD':
 			mframe.style.width	= '350px';
 			mframe.style.height	= '';
-			mo.style.opacity	= 0.7;
+			mo.style.opacity	= 0.9;
 			break;
 		case 'CHECK':
 			mframe.style.width	= '370px';
@@ -121,8 +121,8 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 			mo.style.opacity	= 1;
 			break;
 		default:
-			mframe.style.height = '400px';
-			mframe.style.width	= '';
+			mframe.style.width	= '300px';
+			mframe.style.height = '';
 			mm.style.height		= '327px';
 			mo.style.opacity	= 1;
 			break;
