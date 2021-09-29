@@ -416,35 +416,36 @@ function reportWhiteboardDetail(){
 //
 //  指定したアブセントチャイルドリストをアテンド（出席）にする
 //
-function attendChild(){
-    var lst_area = document.getElementById('ABSENT_LIST');
-    var attend_list = [];
-    for ( var i=0; i<lst_area.childNodes.length; i++ ){
-        var c = lst_area.childNodes[i];
-        if ( c.hasAttribute('marked')){
-            attend_list.push( c.getAttribute('child_id') );
-        }
-    }
-    console.log( 'attend_lst:' + attend_list );
-    for ( var i=0; i<attend_list.length; i++ ){
-        var c = scanAbsentChild( attend_list[i] );
-        if ( c != null )
-            attendChildHelper( c );
-    }
-    closeModalDialog();
-    showWhiteboardChildCount();
-
-}
+// function attendChild(){
+//     var lst_area = document.getElementById('ABSENT_LIST');
+//     var attend_list = [];
+//     for ( var i=0; i<lst_area.childNodes.length; i++ ){
+//         var c = lst_area.childNodes[i];
+//         if ( c.hasAttribute('marked')){
+//             attend_list.push( c.getAttribute('child_id') );
+//         }
+//     }
+//     console.log( 'attend_lst:' + attend_list );
+//     for ( var i=0; i<attend_list.length; i++ ){
+//         var c = scanAbsentChild( attend_list[i] );
+//         if ( c != null )
+//             attendChildHelper( c );
+//     }
+//     closeModalDialog();
+//     showWhiteboardChildCount();
+// }
 
 //
 //  アブセントチャイルドからchild_idを指定して検索する
 //
 function scanAbsentChild( child_id ){
-    var wba = document.getElementById('WHITEBOARD_ABSENT');
-    for ( var i=0; i<wba.childNodes.length; i++ ){
-        c = wba.childNodes[i];
-        if ( c.getAttribute('child_id') == child_id )
-            return c;
+    var wbco = document.getElementById('WHITEBOARD_CHECKOUT');
+    for ( var i=0; i<wbco.childNodes.length; i++ ){
+        c = wbco.childNodes[i];
+        if ( c.hasAttribute('absent')){
+            if ( c.getAttribute('child_id') == child_id )
+                return c;
+        }
     }
     return null;
 }
@@ -1685,7 +1686,6 @@ function absentWhiteboardChild(){
 //
 function absentChild(){
     var children = getMarkedChild();
-    // var abs = document.getElementById('WHITEBOARD_ABSENT');
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         unmarkChild( c );

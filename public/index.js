@@ -2066,6 +2066,14 @@ function fitting(){
 		document.getElementById('WHITEBOARD_DAY_FRAME').style.display = 'inline';
 	}
 
+	if ( h <= 300 ){
+		itba.style.visibility	= 'hidden';
+		itb.style.visibility	= 'hidden';
+	} else{
+		itba.style.visibility	= 'visible';
+		itb.style.visibility	= 'visible';
+	}
+
 
 }
 

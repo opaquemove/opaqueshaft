@@ -191,7 +191,7 @@ INPUT[type=password]:focus{
 	background-size:		14px;
 	background-repeat:		no-repeat;
 	background-position:	center center;
-	border:					1px solid rgb(255, 123, 0);
+	border:					1px solid rgb(255, 179, 64);
 	overflow:				hidden;
 }
 	
@@ -854,7 +854,7 @@ INPUT[type=password]:focus{
 	width:				24px;
 	/* margin:				0 auto; */
 	height:				24px;
-	color:				white;
+	color:				rgb(255, 123, 0);
 	text-shadow: 		2px 2px 2px gray;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
@@ -867,10 +867,10 @@ INPUT[type=password]:focus{
 	width:				24px;
 	/* margin:				0 auto; */
 	height:				24px;
-	color:				white;
+	color:				darkgrey;
 	text-shadow: 		2px 2px 2px gray;
 	background-color:	transparent;
-	border-left:		1px dashed lightgrey;
+	border-left:		1px dashed #CCCCCC;
 	z-index:			6000;
 }
 .timeline_45minute_class{
@@ -880,7 +880,7 @@ INPUT[type=password]:focus{
 	width:				24px;
 	/* margin:				0 auto; */
 	height:				24px;
-	color:				white;
+	color:				rgb(255, 123, 0);
 	text-shadow: 		2px 2px 2px gray;
 	background-color:	transparent;
 	border-left:		1px dashed lightgrey;
