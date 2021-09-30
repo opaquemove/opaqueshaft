@@ -3303,6 +3303,7 @@ function resetChildMark(){
 //
 function ReserveLeft(){
 	this.frame	= null;
+	this.tid	= null;
 
 	this.frame	= document.getElementById('WHITEBOARD_RESERVE_LEFT');
 
@@ -3353,17 +3354,17 @@ ReserveLeft.prototype = {
 					var event = e.changedTouches[0];
 				}
 				 if ( !this.frame.hasAttribute('down') ) return;
-				 if ( !this.frame.hasAttribute('anim') ) return;
+				 if ( this.frame.hasAttribute('anim') ) return;
 				var new_top  = event.pageY - parseInt( this.frame.getAttribute('coor_y') );
 				var new_left = event.pageX - parseInt( this.frame.getAttribute('coor_x') );
 				console.log('new_top:' + new_top );
+				console.log( 'this.frame.offsetLeft:' + this.frame.offsetLeft );
 				console.log('new_left:' + new_left );
-				//  if ( this.frame.offsetLeft < new_left ){
-				// 	this.frame.setAttribute('anim', 'yes');
-				// 	 locateReserveLeftHelper();
-				//  }
-					// wbrl.style.left = ( new_left ) + 'px';
-				break;
+				 if ( this.frame.offsetLeft < new_left ){
+					this.frame.setAttribute('anim', 'yes');
+					this.tid = setInterval( ( this.swipeHelper ).bind( this ), 5 );
+				 }
+				 break;
 			case 'mouseleave':
 			case 'mouseup':
 			case 'touchend':
@@ -3373,7 +3374,15 @@ ReserveLeft.prototype = {
 				this.frame.removeAttribute('coor_x');
 				break;
 		}
-	
+		
+	},
+	swipeHelper : function(){
+		this.frame.style.left = ( this.frame.offsetLeft + 1 ) + 'px';
+		if ( this.frame.offsetLeft >= 0 ){
+			clearInterval( this.tid );
+			this.frame.removeAttribute('anim');
+		}
+						
 	}
 }
 

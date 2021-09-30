@@ -742,7 +742,7 @@ INPUT[type=password]:focus{
 	pointer-events: 	auto;
 	position: 			absolute;
 	top:				0px;
-	left:				-125px;
+	left:				-120px;
 	width:				128px;
 	height:				100%;			/* 600 * 12hours */
 	background-color:	black;
