@@ -81,7 +81,8 @@ function init()
 	//	ホワイトボードサイズ初期化
 	initWhiteboardSize();
 
-
+	// WHITEBOARD_RESERVE_LEFT
+	initWhiteboardReserveLeft();
 	//	ログエリアの初期化
 	oLog = new messageLog();
 
@@ -188,7 +189,7 @@ function init()
 	// new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
 	// new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
 	new Button( 'ID_NAV_CHILDFINDER',       ctlSpotlight ).play();
-	new Button( 'ID_NAV_ACCOUNT',           function(){ propertyAccount(); oTile.close();} ).play();
+	// new Button( 'ID_NAV_ACCOUNT',           function(){ propertyAccount(); oTile.close();} ).play();
 
 
 	//	モーダルダイアログの外側をクリックしたらクローズ
@@ -486,7 +487,7 @@ function makeTimelineIndicator(){
 		guide.setAttribute('class', 'timeline1_class' );
 		guide.style.top				= ( ( i + 0 ) * pixelPerHour - 1 )+ 'px';
 		guide.style.pointerEvents	= 'auto';
-		guide.innerHTML = '<div style="margin-left:42px;background-color:#EDEDED;border:1px solid lightgrey;border-radius:8px;" >' + arTL[i] + ':00' + '</div>';
+		guide.innerHTML = '<div style="margin:2px 0px 0px 42px;background-color:#EDEDED;border:1px solid lightgrey;border-radius:8px;" >' + arTL[i] + ':00' + '</div>';
 		wbf.appendChild( guide ).addEventListener('click',
 			function (e ){
 				alert( e.target.innerText);
@@ -1037,13 +1038,13 @@ function openWhiteboard(){
 		r += '<div>Date:</div>';
 		r += '<div style="height:40px;padding-bottom:10px;" >';
 			r += '<div style="width:50%;float:left;" >';
-				r += '<input type="text" id="whiteboard_day" name="day" style="width:100%;font-size:24px;" value="' + ymd + '" />';
+				r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:24px;" value="' + ymd + '" />';
 			r += '</div>';
 			r += '<div style="float:left;width:30px;" >';
-				// r += '<button id="BTN_ADD_DATE"   style="background-color:transparent;border:none;" ><img width="12px" src="./images/add.png" /></button>';
-				// r += '<button id="BTN_MINUS_DATE" style="background-color:transparent;border:none;" ><img width="12px" src="./images/minus-2.png" /></button>';
-				r += '<img id="BTN_ADD_DATE"        width="6px" src="./images/arrow-black-triangle-up.png" />';
-				r += '<br/><img id="BTN_MINUS_DATE" width="6px" src="./images/arrow-black-triangle-down.png" />';
+				r += '<button id="BTN_ADD_DATE"   style="width:18px;height:14px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" ></button>';
+				r += '<button id="BTN_MINUS_DATE" style="width:18px;height:14px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" ></button>';
+				// r += '<img id="BTN_ADD_DATE"        width="6px" src="./images/arrow-black-triangle-up.png" />';
+				// r += '<br/><img id="BTN_MINUS_DATE" width="6px" src="./images/arrow-black-triangle-down.png" />';
 			r += '</div>';
 		r += '</div>';
 		// r += '<div id="WHITEBOARD_LIST" style="clear:both;margin-top:10px;height:120px;display:flex;font-size:12px;padding:4px;overflow-y:scroll;border:0px solid lightgrey;" >';
@@ -2047,8 +2048,6 @@ function fitting(){
 	itba.style.left	= ( w - itba.offsetWidth ) + 'px';
 	itb.style.left	= ( w - itb.offsetWidth  ) + 'px';
 
-	// var ia  = document.getElementById('ID_NAV_ACCOUNT');
-	// ia.style.left	= ( w - ia.offsetWidth ) + 'px';
 	var icf = document.getElementById('ID_NAV_CHILDFINDER');
 	icf.style.left	= ( w - icf.offsetWidth ) + 'px';
 	var iprog = document.getElementById('ID_PROGRESS');
@@ -3294,4 +3293,82 @@ function resetChildMark(){
 		unmarkChild( children[i] );
 	}
 
+}
+
+//
+//	WHITEBOARD_RESERVE_LEFT
+//
+function initWhiteboardReserveLeft(){
+	var touchdevice = ( 'ontouchend' in document );
+	switch ( touchdevice ){
+		case true:		// touch device( iPad/iPhone/Android/Tablet )
+			var evtStart	= 'touchstart';
+			var evtMove	    = 'touchmove';
+			var evtEnd		= 'touchend';
+			break;
+		case false:	// pc
+			var evtStart	= 'mousedown';
+			var evtMove	    = 'mousemove';
+			var evtEnd		= 'mouseup';
+			break;
+	}
+
+	var wbrl = document.getElementById('WHITEBOARD_RESERVE_LEFT');
+
+	wbrl.addEventListener( evtStart,    	locateReserveLeft, { passive : false } );
+	wbrl.addEventListener( evtMove,     	locateReserveLeft, { passive : false } );
+	wbrl.addEventListener( evtEnd,      	locateReserveLeft, { passive : false } );
+	// wbrl.addEventListener( 'mouseleave', 	locateReserveLeft, { passive : false } );
+
+	// wbrl.addEventListener('click',
+	// 	function (e){
+	// 		console.log( e.target.style.left );
+	// 		if ( e.target.style.left == '0px')
+	// 			e.target.style.left	= '';
+	// 			else
+	// 			e.target.style.left	= '0px';
+	// 	}, { passive : false }
+	// );
+}
+
+function locateReserveLeft( e ){
+	e.preventDefault();
+
+	var wbrl = document.getElementById('WHITEBOARD_RESERVE_LEFT');
+	switch ( e.type ){
+		case 'touchstart':
+		case 'mousedown':
+			if( e.type == "mousedown" ) {
+				var event = e;
+			} else {
+				var event = e.changedTouches[0];
+			}
+			wbrl.setAttribute('coor_y', event.pageY - event.target.offsetTop );
+			wbrl.setAttribute('coor_x', event.pageX - event.target.offsetLeft );
+
+			wbrl.setAttribute('down', 'yes');
+			break;
+		case 'touchmove':
+		case 'mousemove':
+			if( e.type == "mousemove" ) {
+				var event = e;
+			} else {
+				var event = e.changedTouches[0];
+			}
+			// if ( !wbrl.hasAttribute('down') ) return;
+			var new_top  = event.pageY - parseInt( wbrl.getAttribute('coor_y') );
+            var new_left = event.pageX - parseInt( wbrl.getAttribute('coor_x') );
+			console.log('new_top:' + new_top );
+			console.log('new_left:' + new_left );
+			// if ( wbrl.offsetLeft < new_left )
+				wbrl.style.left = ( new_left ) + 'px';
+            break;
+		case 'mouseleave':
+		case 'mouseup':
+		case 'touchend':
+			wbrl.removeAttribute('down');
+			wbrl.removeAttribute('coor_y');
+			wbrl.removeAttribute('coor_x');
+			break;
+	}
 }

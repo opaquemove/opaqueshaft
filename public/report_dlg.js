@@ -10,7 +10,7 @@ function report_dlg(){
     this.content    = null;
     this.footer     = null;
     this.tid        = null;
-    this.top        = 84;
+    this.top        = 0;       //  TOOLBAR Top margin 84 to 0 
     this.height     = null;
     this.counter    = -1;
 

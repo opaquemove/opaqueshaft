@@ -200,15 +200,15 @@ INPUT[type=password]:focus{
 	/* position:				absolute;
 	top:					84px;
 	left:					18px; */
-	width:					40px;
-	height:					40px;
+	width:					42px;
+	height:					42px;
 	color:					snow;
 	background-color:		rgb(255, 123, 0);
 	background-image:		url(./images/plus3.png);
 	background-size:		14px;
 	background-repeat:		no-repeat;
 	background-position:	center center;
-	border:					1px solid rgb(255, 123, 0);
+	/* border:					1px solid rgb(255, 123, 0); */
 	margin-top:				0px;
 	overflow:				hidden;
 }
@@ -738,6 +738,21 @@ INPUT[type=password]:focus{
 	overflow:			scroll;
 	z-index:			0;
 }
+#WHITEBOARD_RESERVE_LEFT{
+	pointer-events: 	auto;
+	position: 			absolute;
+	top:				0px;
+	left:				-120px;
+	width:				128px;
+	height:				100%;			/* 600 * 12hours */
+	background-color:	black;
+	/* float:				left; */
+	border:				0px dotted snow;
+	padding:			0px 0px 0px 0px;
+	visibility: 		visible;
+	z-index:			3;
+	opacity: 0.7;
+}
 #WHITEBOARD_TIMELINE{
 	position: 			absolute;
 	top:				0px;
@@ -802,9 +817,9 @@ INPUT[type=password]:focus{
 	font-weight:		bold;
 	text-align:			center;
 	padding:			0px;
-	border-top:			1px dashed white;
+	border-top:			1px dashed lightgrey;
 	/* border-right:		1px solid lightgrey; */
-	border-bottom:		1px dashed white;
+	border-bottom:		1px dashed lightgrey;
 	z-index:			6000;
 	opacity:			0.7;
 	/* writing-mode: 		vertical-lr; */
@@ -859,6 +874,7 @@ INPUT[type=password]:focus{
 	text-shadow: 		1px 1px 1px gray;
 	background-color:	#EDEDED;
 	border-left:		1px dashed #CCCCCC;
+	border-radius: 		2px;
 	z-index:			6000;
 	opacity: 			0.9;
 }
@@ -874,6 +890,7 @@ INPUT[type=password]:focus{
 	text-shadow: 		1px 1px 1px gray;
 	background-color:	#EDEDED;
 	border-left:		1px dashed #CCCCCC;
+	border-radius: 		2px;
 	z-index:			6000;
 	opacity: 			0.9;
 }
@@ -889,6 +906,7 @@ INPUT[type=password]:focus{
 	text-shadow: 		1px 1px 1px gray;
 	background-color:	#EDEDED;
 	border-left:		1px dashed #CCCCCC;
+	border-radius: 		2px;
 	z-index:			6000;
 	opacity: 			0.9;
 }
@@ -897,7 +915,7 @@ INPUT[type=password]:focus{
 	position:				absolute;
 	top:					10000px;
 	left:					0px;
-	width:					calc(100% - 42px);
+	width:					calc(100% - 0px);
 	height:					100%;	/* dummy fitting */
 	color:					darkgray;
 	background-color:		snow;
@@ -977,7 +995,7 @@ INPUT[type=password]:focus{
 	border-right:		1px solid rgb(255, 123, 0);
 	border-bottom:		1px solid rgb(255, 123, 0);
 	/* border-radius: 		8px; */
-	box-shadow:			2px 2px 2px gray;
+	box-shadow:			1px 1px 2px lightgrey;
 	font-size:			14px;
 	overflow:			visible;
 	-webkit-user-select: none;
@@ -1277,7 +1295,7 @@ INPUT[type=password]:focus{
 	/*	pointer-events: 		none;	*/
 		position:				absolute;
 		margin-top:				0px;
-		top:					258px;
+		top:					214px;
 		left:					18px;
 		width:					38px;
 		height:					38px;
@@ -1291,7 +1309,7 @@ INPUT[type=password]:focus{
 	pointer-events: 		none;
 	position:				absolute;
 	margin-top:				0px;
-	top:					300px;
+	top:					256px;
 	left:					18px;
 	width:					6px;
 	height:					162px;
@@ -1306,7 +1324,7 @@ INPUT[type=password]:focus{
 #ID_TIMELINE_BAR{
 	position:				absolute;
 	margin-top:				0px;
-	top:					300px;
+	top:					256px;
 	left:					0px;
 	width:					26px;
 	height:					41px;
