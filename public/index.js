@@ -54,6 +54,7 @@ var palleteTimeSelector = null;
 var oTile				= null;
 var oLog				= null;
 var oReportDlg			= null;
+var oResvLeft			= null;
 
 window.onload = init;
 window.onresize = fitting;
@@ -82,7 +83,9 @@ function init()
 	initWhiteboardSize();
 
 	// WHITEBOARD_RESERVE_LEFT
-	initWhiteboardReserveLeft();
+	//initWhiteboardReserveLeft();
+	oRsvLeft = new ReserveLeft();
+
 	//	ログエリアの初期化
 	oLog = new messageLog();
 
@@ -3298,27 +3301,84 @@ function resetChildMark(){
 //
 //	WHITEBOARD_RESERVE_LEFT
 //
-function initWhiteboardReserveLeft(){
-	var touchdevice = ( 'ontouchend' in document );
-	switch ( touchdevice ){
-		case true:		// touch device( iPad/iPhone/Android/Tablet )
-			var evtStart	= 'touchstart';
-			var evtMove	    = 'touchmove';
-			var evtEnd		= 'touchend';
-			break;
-		case false:	// pc
-			var evtStart	= 'mousedown';
-			var evtMove	    = 'mousemove';
-			var evtEnd		= 'mouseup';
-			break;
+function ReserveLeft(){
+	this.frame	= null;
+
+	this.frame	= document.getElementById('WHITEBOARD_RESERVE_LEFT');
+
+	this.init();
+}
+
+ReserveLeft.prototype = {
+	init : function(){
+		var touchdevice = ( 'ontouchend' in document );
+		switch ( touchdevice ){
+			case true:		// touch device( iPad/iPhone/Android/Tablet )
+				var evtStart	= 'touchstart';
+				var evtMove	    = 'touchmove';
+				var evtEnd		= 'touchend';
+				break;
+			case false:	// pc
+				var evtStart	= 'mousedown';
+				var evtMove	    = 'mousemove';
+				var evtEnd		= 'mouseup';
+				break;
+		}
+		this.frame.addEventListener( evtStart,    	( this.swipe ).bind( this ), { passive : false } );
+		this.frame.addEventListener( evtMove,     	( this.swipe ).bind( this ), { passive : false } );
+		this.frame.addEventListener( evtEnd,      	( this.swipe ).bind( this ), { passive : false } );
+		this.frame.addEventListener( 'mouseleave', 	( this.swipe ).bind( this ), { passive : false } );
+	},
+	swipe : function( e ){
+		e.preventDefault();
+	
+		switch ( e.type ){
+			case 'touchstart':
+			case 'mousedown':
+				if( e.type == "mousedown" ) {
+					var event = e;
+				} else {
+					var event = e.changedTouches[0];
+				}
+				this.frame.setAttribute('coor_y', event.pageY - event.target.offsetTop );
+				this.frame.setAttribute('coor_x', event.pageX - event.target.offsetLeft );
+	
+				this.frame.setAttribute('down', 'yes');
+				break;
+			case 'touchmove':
+			case 'mousemove':
+				if( e.type == "mousemove" ) {
+					var event = e;
+				} else {
+					var event = e.changedTouches[0];
+				}
+				 if ( !this.frame.hasAttribute('down') ) return;
+				 if ( !this.frame.hasAttribute('anim') ) return;
+				var new_top  = event.pageY - parseInt( this.frame.getAttribute('coor_y') );
+				var new_left = event.pageX - parseInt( this.frame.getAttribute('coor_x') );
+				console.log('new_top:' + new_top );
+				console.log('new_left:' + new_left );
+				//  if ( this.frame.offsetLeft < new_left ){
+				// 	this.frame.setAttribute('anim', 'yes');
+				// 	 locateReserveLeftHelper();
+				//  }
+					// wbrl.style.left = ( new_left ) + 'px';
+				break;
+			case 'mouseleave':
+			case 'mouseup':
+			case 'touchend':
+				console.log('out!' + e.type );
+				this.frame.removeAttribute('down');
+				this.frame.removeAttribute('coor_y');
+				this.frame.removeAttribute('coor_x');
+				break;
+		}
+	
 	}
+}
 
-	var wbrl = document.getElementById('WHITEBOARD_RESERVE_LEFT');
+function initWhiteboardReserveLeft(){
 
-	wbrl.addEventListener( evtStart,    	locateReserveLeft, { passive : false } );
-	wbrl.addEventListener( evtMove,     	locateReserveLeft, { passive : false } );
-	wbrl.addEventListener( evtEnd,      	locateReserveLeft, { passive : false } );
-	wbrl.addEventListener( 'mouseleave', 	locateReserveLeft, { passive : false } );
 
 	// wbrl.addEventListener('click',
 	// 	function (e){
@@ -3332,44 +3392,8 @@ function initWhiteboardReserveLeft(){
 }
 
 function locateReserveLeft( e ){
-	e.preventDefault();
+}
 
-	var wbrl = document.getElementById('WHITEBOARD_RESERVE_LEFT');
-	switch ( e.type ){
-		case 'touchstart':
-		case 'mousedown':
-			if( e.type == "mousedown" ) {
-				var event = e;
-			} else {
-				var event = e.changedTouches[0];
-			}
-			wbrl.setAttribute('coor_y', event.pageY - event.target.offsetTop );
-			wbrl.setAttribute('coor_x', event.pageX - event.target.offsetLeft );
-
-			wbrl.setAttribute('down', 'yes');
-			break;
-		case 'touchmove':
-		case 'mousemove':
-			if( e.type == "mousemove" ) {
-				var event = e;
-			} else {
-				var event = e.changedTouches[0];
-			}
-			 if ( !wbrl.hasAttribute('down') ) return;
-			var new_top  = event.pageY - parseInt( wbrl.getAttribute('coor_y') );
-            var new_left = event.pageX - parseInt( wbrl.getAttribute('coor_x') );
-			console.log('new_top:' + new_top );
-			console.log('new_left:' + new_left );
-			// if ( wbrl.offsetLeft < new_left )
-				wbrl.style.left = ( new_left ) + 'px';
-            break;
-		case 'mouseleave':
-		case 'mouseup':
-		case 'touchend':
-			console.log('out!' + e.type );
-			wbrl.removeAttribute('down');
-			wbrl.removeAttribute('coor_y');
-			wbrl.removeAttribute('coor_x');
-			break;
-	}
+function locateReserveLeftHelper(){
+	// setInterval
 }
