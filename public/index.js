@@ -3318,7 +3318,7 @@ function initWhiteboardReserveLeft(){
 	wbrl.addEventListener( evtStart,    	locateReserveLeft, { passive : false } );
 	wbrl.addEventListener( evtMove,     	locateReserveLeft, { passive : false } );
 	wbrl.addEventListener( evtEnd,      	locateReserveLeft, { passive : false } );
-	// wbrl.addEventListener( 'mouseleave', 	locateReserveLeft, { passive : false } );
+	wbrl.addEventListener( 'mouseleave', 	locateReserveLeft, { passive : false } );
 
 	// wbrl.addEventListener('click',
 	// 	function (e){
@@ -3355,7 +3355,7 @@ function locateReserveLeft( e ){
 			} else {
 				var event = e.changedTouches[0];
 			}
-			// if ( !wbrl.hasAttribute('down') ) return;
+			 if ( !wbrl.hasAttribute('down') ) return;
 			var new_top  = event.pageY - parseInt( wbrl.getAttribute('coor_y') );
             var new_left = event.pageX - parseInt( wbrl.getAttribute('coor_x') );
 			console.log('new_top:' + new_top );
@@ -3366,6 +3366,7 @@ function locateReserveLeft( e ){
 		case 'mouseleave':
 		case 'mouseup':
 		case 'touchend':
+			console.log('out!' + e.type );
 			wbrl.removeAttribute('down');
 			wbrl.removeAttribute('coor_y');
 			wbrl.removeAttribute('coor_x');
