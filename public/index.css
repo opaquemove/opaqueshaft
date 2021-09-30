@@ -751,8 +751,13 @@ INPUT[type=password]:focus{
 	padding:			0px 0px 0px 0px;
 	visibility: 		visible;
 	z-index:			3;
-	opacity: 0.7;
+	opacity: 			0.7;
+	transition: 		left 30ms 0ms ease;
 }
+#WHITEBOARD_RESERVE_LEFT:hover{
+	left:				0px;
+}
+
 #WHITEBOARD_TIMELINE{
 	position: 			absolute;
 	top:				0px;

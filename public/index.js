@@ -3325,10 +3325,20 @@ ReserveLeft.prototype = {
 				var evtEnd		= 'mouseup';
 				break;
 		}
-		this.frame.addEventListener( evtStart,    	( this.swipe ).bind( this ), { passive : false } );
-		this.frame.addEventListener( evtMove,     	( this.swipe ).bind( this ), { passive : false } );
-		this.frame.addEventListener( evtEnd,      	( this.swipe ).bind( this ), { passive : false } );
-		this.frame.addEventListener( 'mouseleave', 	( this.swipe ).bind( this ), { passive : false } );
+		// this.frame.addEventListener( evtStart,    	( this.swipe ).bind( this ), { passive : false } );
+		// this.frame.addEventListener( evtMove,     	( this.swipe ).bind( this ), { passive : false } );
+		// this.frame.addEventListener( evtEnd,      	( this.swipe ).bind( this ), { passive : false } );
+		// this.frame.addEventListener( 'mouseleave', 	( this.swipe ).bind( this ), { passive : false } );
+		this.frame.addEventListener( 'click',
+			(function () {
+				this.frame.classList.add( 'OpenRsvLeft');
+				console.log('add OpenRsvLeft class');
+			} ).bind( this ), { passive : false } );
+		this.frame.addEventListener( 'transitionend',
+			function(){
+				console.log( 'transition end' );
+			}, false );
+		;
 	},
 	swipe : function( e ){
 		e.preventDefault();
@@ -3341,10 +3351,10 @@ ReserveLeft.prototype = {
 				} else {
 					var event = e.changedTouches[0];
 				}
-				this.frame.setAttribute('coor_y', event.pageY - event.target.offsetTop );
-				this.frame.setAttribute('coor_x', event.pageX - event.target.offsetLeft );
+				// this.frame.setAttribute('coor_y', event.pageY - event.target.offsetTop );
+				// this.frame.setAttribute('coor_x', event.pageX - event.target.offsetLeft );
 	
-				this.frame.setAttribute('down', 'yes');
+				// this.frame.setAttribute('down', 'yes');
 				break;
 			case 'touchmove':
 			case 'mousemove':
@@ -3353,35 +3363,35 @@ ReserveLeft.prototype = {
 				} else {
 					var event = e.changedTouches[0];
 				}
-				 if ( !this.frame.hasAttribute('down') ) return;
-				 if ( this.frame.hasAttribute('anim') ) return;
-				var new_top  = event.pageY - parseInt( this.frame.getAttribute('coor_y') );
-				var new_left = event.pageX - parseInt( this.frame.getAttribute('coor_x') );
-				console.log('new_top:' + new_top );
-				console.log( 'this.frame.offsetLeft:' + this.frame.offsetLeft );
-				console.log('new_left:' + new_left );
-				 if ( this.frame.offsetLeft < new_left ){
-					this.frame.setAttribute('anim', 'yes');
-					this.tid = setInterval( ( this.swipeHelper ).bind( this ), 5 );
-				 }
+				//  if ( !this.frame.hasAttribute('down') ) return;
+				//  if ( this.frame.hasAttribute('anim') ) return;
+				// var new_top  = event.pageY - parseInt( this.frame.getAttribute('coor_y') );
+				// var new_left = event.pageX - parseInt( this.frame.getAttribute('coor_x') );
+				// console.log('new_top:' + new_top );
+				// console.log( 'this.frame.offsetLeft:' + this.frame.offsetLeft );
+				// console.log('new_left:' + new_left );
+				//  if ( this.frame.offsetLeft < new_left ){
+				// 	this.frame.setAttribute('anim', 'yes');
+				// 	this.tid = setInterval( ( this.swipeHelper ).bind( this ), 5 );
+				//  }
 				 break;
 			case 'mouseleave':
 			case 'mouseup':
 			case 'touchend':
-				console.log('out!' + e.type );
-				this.frame.removeAttribute('down');
-				this.frame.removeAttribute('coor_y');
-				this.frame.removeAttribute('coor_x');
+				// console.log('out!' + e.type );
+				// this.frame.removeAttribute('down');
+				// this.frame.removeAttribute('coor_y');
+				// this.frame.removeAttribute('coor_x');
 				break;
 		}
 		
 	},
 	swipeHelper : function(){
-		this.frame.style.left = ( this.frame.offsetLeft + 1 ) + 'px';
-		if ( this.frame.offsetLeft >= 0 ){
-			clearInterval( this.tid );
-			this.frame.removeAttribute('anim');
-		}
+		// this.frame.style.left = ( this.frame.offsetLeft + 1 ) + 'px';
+		// if ( this.frame.offsetLeft >= 0 ){
+		// 	clearInterval( this.tid );
+		// 	this.frame.removeAttribute('anim');
+		// }
 						
 	}
 }
