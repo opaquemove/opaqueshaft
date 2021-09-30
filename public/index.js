@@ -486,7 +486,7 @@ function makeTimelineIndicator(){
 		guide.setAttribute('class', 'timeline1_class' );
 		guide.style.top				= ( ( i + 0 ) * pixelPerHour - 1 )+ 'px';
 		guide.style.pointerEvents	= 'auto';
-		guide.innerHTML = '<div style="margin-left:42px;border:1px solid lightgrey;border-radius:8px;" >' + arTL[i] + ':00' + '</div>';
+		guide.innerHTML = '<div style="margin-left:42px;background-color:#EDEDED;border:1px solid lightgrey;border-radius:8px;" >' + arTL[i] + ':00' + '</div>';
 		wbf.appendChild( guide ).addEventListener('click',
 			function (e ){
 				alert( e.target.innerText);
