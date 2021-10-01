@@ -278,11 +278,9 @@ function init()
 function initWhiteboardSize(){
 	var wb = document.getElementById('WHITEBOARD');
 	var wbco = document.getElementById('WHITEBOARD_CHECKOUT');
-	var wbab = document.getElementById('WHITEBOARD_ABSENT');
 	var wbtl = document.getElementById('WHITEBOARD_TIMELINE');
 	wb.style.height	= ( pixelPerHour *  manageHourBand ) + 'px';
 	wbco.style.height	= wb.style.height;
-	wbab.style.height	= wb.style.height;
 	wbtl.style.height	= wb.style.height;
 }
 //
@@ -298,20 +296,17 @@ function initWhiteboardMode(){
 	// 	function(e){
 	// 		var wb  = document.getElementById('WHITEBOARD');
 	// 		var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
-	// 		var wba = document.getElementById('WHITEBOARD_ABSENT');
 	// 		switch ( wb.style.width ){
 	// 			case '50%':
 	// 				wb.style.width 	= '';
 	// 				wbe.style.left 	= '';
 	// 				wbe.style.width	= '';	
-	// 				wba.style.width	= '';		
 	// 				criteriaEscortPixel = document.body.clientWidth;	
 	// 				break;
 	// 			default:
 	// 				wb.style.width 	= '50%';
 	// 				wbe.style.left 	= '50%';
 	// 				wbe.style.width	= '50%';	
-	// 				wba.style.width	= '50%';	
 	// 				criteriaEscortPixel = document.body.clientWidth / 2;	
 	// 				break;
 	// 		}
@@ -326,7 +321,6 @@ function modeWhiteboard( e ){
 
 	var wb	= document.getElementById('WHITEBOARD');
 	var wbe	= document.getElementById('WHITEBOARD_CHECKOUT');
-	var wba	= document.getElementById('WHITEBOARD_ABSENT');
 
 	resetChildMark();
 	switch ( this.getAttribute('id')){
@@ -338,8 +332,6 @@ function modeWhiteboard( e ){
 			wbe.style.zIndex	= 2;
 
 			wbe.style.opacity	= 0.6;
-			wba.style.zIndex	= 1;
-			wba.style.opacity	= 0.6;
 			curWhiteboard		= 'WHITEBOARD';
 			break;
 		case 'ID_MODE_CHECKOUT':
@@ -351,8 +343,6 @@ function modeWhiteboard( e ){
 			wb.style.zIndex		= 2;
 
 			wb.style.opacity	= 0.6;
-			wba.style.zIndex	= 1;
-			wba.style.opacity	= 0.6;
 			curWhiteboard		= 'WHITEBOARD_CHECKOUT';
 			break;
 		}
@@ -802,7 +792,6 @@ function locateTimelinebar( e ){
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	var wb  = document.getElementById('WHITEBOARD');
 	var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
-	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	var itb = document.getElementById('ID_TIMELINE_BAR');
 	switch ( e.type ){
 		case 'touchstart':
@@ -896,7 +885,6 @@ function locateTimelinebar( e ){
 					var wbf = document.getElementById('WHITEBOARD_FRAME');
 					var wb  = document.getElementById('WHITEBOARD');
 					var wbt = document.getElementById('WHITEBOARD_TIMELINE');
-					var wba = document.getElementById('WHITEBOARD_ABSENT');
 					var bo  = document.getElementById('BOTTOM_OVERLAY');
 					var bf  = document.getElementById('BOTTOM_FRAME');
 					// if ( itb.offsetLeft == tlbOffsetLeft + 0 ){
@@ -905,7 +893,6 @@ function locateTimelinebar( e ){
 					// 	wb.style.border 		= '';
 					// 	wbt.style.border 		= '';
 					// 	wbt.style.transform		= '';
-					// 	wba.style.border 		= '';
 					// 	bo.style.perspective 	= '';
 					// 	bf.style.transform 		= '';
 					// } else {
@@ -1166,11 +1153,6 @@ function alreadyExistChildOnWhiteboard( id ){
 			return true;
 	}
 
-	var absents = document.getElementById('WHITEBOARD_ABSENT');
-	for ( var i=0; i<absents.length; i++ ){
-		if ( absents[i].getAttribute('child_id') == id )
-			return true;
-	}
 	return false;
 }
 
@@ -1222,9 +1204,6 @@ function loadWhiteboardHelper(){
 					var result = JSON.parse( xmlhttp.responseText );
 					if ( result.length > 0 ){		//	レコードが存在すれば
 						wb_description			= result[0].description;
-						// wb_report				= result[0].report;
-						// wb.innerHTML 		= result[0].whiteboard;
-						// wb_absent.innerHTML	= result[0].whiteboard_absent;
 
 					}
 
@@ -1255,12 +1234,6 @@ function loadWhiteboardChildren(){
 	//	ホワイトボード内のチルドレンを全削除
 	//
 	deleteWhiteboardChildren();
-	// var wb = document.getElementById('WHITEBOARD');
-	// var wbc = document.getElementById('WHITEBOARD_CHECKOUT');
-	// var wb_absent = document.getElementById('WHITEBOARD_ABSENT');
-	// wb.innerHTML 		= '';
-	// wbc.innerHTML		= '';
-	// wb_absent.innerHTML	= '';
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -1437,9 +1410,9 @@ function saveWhiteboardHelper(){
 
 	//	whiteboardレコードを更新
 	var rc = '';
-	var wb = document.getElementById('WHITEBOARD');
-	var wb_checkout	= document.getElementById('WHITEBOARD_CHECKOUT');
-	var wb_absent	= document.getElementById('WHITEBOARD_ABSENT');
+	// var wb = document.getElementById('WHITEBOARD');
+	// var wb_checkout	= document.getElementById('WHITEBOARD_CHECKOUT');
+	// var wb_absent	= document.getElementById('WHITEBOARD_ABSENT');
 
 	var desc =  document.getElementById('WB_DESC').value;
 	wb_description = desc;
@@ -1448,8 +1421,8 @@ function saveWhiteboardHelper(){
 	xmlhttp.open("POST", "/accounts/whiteboardupdate", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send( 'day=' + day + '&desc=' + encodeURIComponent( desc ) +
-				'&html=' + encodeURIComponent( wb.innerHTML ) +
-				'&html_absent=' + encodeURIComponent( wb_absent.innerHTML ) +
+				// '&html=' + encodeURIComponent( wb.innerHTML ) +
+				// '&html_absent=' + encodeURIComponent( wb_absent.innerHTML ) +
 				'&json_children=' + encodeURIComponent( JSON.stringify(json_children ) ) );
 	//	html,html_absentは意味はない
 
@@ -1529,37 +1502,6 @@ function getJSONChildren(){
 		var operator	= c.getAttribute('operator');
 		if ( operator == null ) operator = acc_id;
 		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
-		var direction	= c.getAttribute('direction');
-		if ( direction == null ) direction = '';
-		var remark 		= ( c.hasAttribute('remark') )? decodeURIComponent( c.getAttribute('remark') ) : '';
-		jsonChildren.push( {
-			 'child_id' 	: child_id,
-			 'checkin'		: checkin,
-			 'estimate'		: estimate,
-			 'checkout'		: checkout,
-			 'operator'		: operator,
-			 'direction'	: direction,
-			 'escort'		: escort,
-			 'coordi_top'	: coordi_top,
-			 'coordi_left'	: coordi_left,
-			 'remark'		: remark,
-			 'absent' 		: 0
-			 } );
-	}
-
-	var children = document.getElementById('WHITEBOARD_ABSENT').childNodes;
-	for ( var i=0; i<children.length; i++ ){
-		var c = children[i];
-		var child_id	= c.getAttribute('child_id');
-		var coordi_top	= c.offsetTop;
-		// var coordi_left	= c.offsetLeft;
-		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
-		var checkin		= c.getAttribute('checkin');
-		var estimate	= c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
-		var checkout	= c.getAttribute('checkout');
-		var operator	= c.getAttribute('operator');
-		if ( operator == null ) operator = acc_id;
-		var escort		= ( c.hasAttribute('escort') )? 1:0;		// 0: no escort, 1: escort
 		var absent		= ( c.hasAttribute('absent') )? 1:0;		// 0: attend, 1: absent
 		var direction	= c.getAttribute('direction');
 		if ( direction == null ) direction = '';
@@ -1567,7 +1509,7 @@ function getJSONChildren(){
 		jsonChildren.push( {
 			 'child_id' 	: child_id,
 			 'checkin'		: checkin,
-			 'estimate' 	: estimate,
+			 'estimate'		: estimate,
 			 'checkout'		: checkout,
 			 'operator'		: operator,
 			 'direction'	: direction,
@@ -1586,21 +1528,21 @@ function getJSONChildren(){
 //
 //  チャイルド履歴追加
 //
-function saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, absent ){
+// function saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, absent ){
 
-	var acc_id = signid();
-	var absentValue = ( absent )?1:0;
-    var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "/accounts/resultadd", false );
-	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send( 'acc_id=' + acc_id + '&day=' + day + '&child_id=' + child_id + '&checkin=' + checkin + '&estimate=' + estimate + '&checkout=' + checkout + '&escort=' + escort + '&direction=' + direction + '&absent=' + absentValue );
-	if ( xmlhttp.status == 200 ){
-        var result = JSON.parse( xmlhttp.responseText );
-        //alert( result.status + result.message );
-		return ( result != null )? result.status : 'error';	
-	} else return 'error status:' + xmlhttp.status;
+// 	var acc_id = signid();
+// 	var absentValue = ( absent )?1:0;
+//     var xmlhttp = new XMLHttpRequest();
+// 	xmlhttp.open("POST", "/accounts/resultadd", false );
+// 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+// 	xmlhttp.send( 'acc_id=' + acc_id + '&day=' + day + '&child_id=' + child_id + '&checkin=' + checkin + '&estimate=' + estimate + '&checkout=' + checkout + '&escort=' + escort + '&direction=' + direction + '&absent=' + absentValue );
+// 	if ( xmlhttp.status == 200 ){
+//         var result = JSON.parse( xmlhttp.responseText );
+//         //alert( result.status + result.message );
+// 		return ( result != null )? result.status : 'error';	
+// 	} else return 'error status:' + xmlhttp.status;
 
-}
+// }
 
 //
 //	JSON形式のデータをnode.jsサーバに送信する
@@ -1715,11 +1657,8 @@ function hiddenWhiteboard(){
 	openWhiteboardFlg = false;
 	var wb  = document.getElementById('WHITEBOARD');
 	var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
-	var wba = document.getElementById('WHITEBOARD_ABSENT');
 	wb.style.visibility = 'hidden';
 	wbe.style.visibility = 'hidden';
-	wba.style.visibility = 'hidden';
-
 }
 
 //
@@ -1729,10 +1668,10 @@ function visibleWhiteboard(){
 	openWhiteboardFlg = true;
 	var wb  = document.getElementById('WHITEBOARD');
 	var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
-	var wba = document.getElementById('WHITEBOARD_ABSENT');
+	// var wba = document.getElementById('WHITEBOARD_ABSENT');
 	wb.style.visibility = 'visible';
 	wbe.style.visibility = 'visible';
-	wba.style.visibility = 'visible';
+	// wba.style.visibility = 'visible';
 	// oNav.open();
 }
 
@@ -2304,26 +2243,20 @@ function signout(){
 	// signForm();
 }
 
-function showSignid(){
-	var id = signid();
-	oLog.log( null, 'signid:' + id );
-	oLog.open( 3 );
-	// alert( id );
-}
 //
-//	サインインしているIDを取得
+//	サインインしているIDをサーバから取得
 //
-function signid(){
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "/accounts/sign", false );
-	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send();
-	if ( xmlhttp.status == 200 ){
-		var result = JSON.parse( xmlhttp.responseText );
-		return ( result != null )? result.status:null;	
-	} else return null;
+// function signid(){
+// 	var xmlhttp = new XMLHttpRequest();
+// 	xmlhttp.open("POST", "/accounts/sign", false );
+// 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+// 	xmlhttp.send();
+// 	if ( xmlhttp.status == 200 ){
+// 		var result = JSON.parse( xmlhttp.responseText );
+// 		return ( result != null )? result.status:null;	
+// 	} else return null;
 
-}
+// }
 
 //
 //	サイン処理
@@ -2416,134 +2349,7 @@ function sign()
 }
 
 
-//
-//	ホワイトボードメニュー
-//
-/*
-function whiteboardMenu( e ){
-	console.log('whiteboardMenu:' + e.target.getAttribute('id'));
-	e.stopPropagation();
-	if ( document.getElementById('WHITEBOARD_SUBMENU') != null ){
-		// var p = document.getElementById('WHITEBOARD_DAY_FRAME');
-		var p = document.getElementById('OPAQUESHAFT_TITLE');
-		var c = document.getElementById('WHITEBOARD_SUBMENU');
-		p.removeChild( c );
-		return;
-	}
-	var o = document.createElement('DIV');
-	o.setAttribute( 'id', 'WHITEBOARD_SUBMENU');
-	o.style.position		= 'relative';
-	o.style.padding			= '4px';
-	o.style.top             = '26px';
-	o.style.left            = '0px';
-	o.style.width           = '200px';
-	o.style.height          = '300px';
-	o.style.color			= ' gray';
-	o.style.backgroundColor = '#EEEEEE';
-	o.style.textAlign		='left';
-	o.style.fontSize		= '18px';
-	o.style.zIndex			= 50000;
-	o.innerText = 'whiteboard menu...';
-	// var p = document.getElementById('WHITEBOARD_DAY_FRAME');
-	var p = document.getElementById('OPAQUESHAFT_TITLE');
-	var m = p.appendChild( o );
 
-	var id = signid();
-
-	var r = '';
-	r += '<div id="ID_LOAD_WHITEBOARD"   style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/cloud-computing.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >open whiteboard</div>';
-	r += '<div id="ID_SAVE_WHITEBOARD"   style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/upload.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >save whiteboard</div>';
-	r += '<div id="ID_CLOSE_WHITEBOARD"  style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/cancel.png);background-size:10px;background-position:left center;background-repeat:no-repeat;" >close</div>';
-	r += '<div id="ID_CLEAR_WHITEBOARD"  style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/eraser.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >clear whiteboard</div>';
-	r += '<div id="ID_REPORT_WHITEBOARD" style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/report.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >report...</div>';
-	r += '<div id="ID_ABSENT_WHITEBOARD" style="height:28px;padding-top:2px;padding-left:16px;background-image:url(./images/sleep-2.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >absent...</div>';
-	r += '<div id="ID_SIGN_OUT"          style="height:28px;padding-top:4px;padding-left:18px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
-	r += '<div id="ID_PROPERTY_ACCOUNT"  style="height:28px;padding-top:4px;padding-left:18px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
-	m.innerHTML = r;
-
-	new Button( 'ID_SAVE_WHITEBOARD',   saveWhiteboard         ).play();
-	new Button( 'ID_LOAD_WHITEBOARD',   openWhiteboard         ).play();
-	new Button( 'ID_CLOSE_WHITEBOARD',  closeWhiteboard        ).play();
-	new Button( 'ID_CLEAR_WHITEBOARD',  clearWhiteboard        ).play();
-	new Button( 'ID_REPORT_WHITEBOARD', reportWhiteboard       ).play();
-	new Button( 'ID_ABSENT_WHITEBOARD', absentWhiteboard       ).play();
-
-	new Button( 'ID_SIGN_OUT', signout ).play();
-	new Button( 'ID_PROPERTY_ACCOUNT', propertyAccount ).play();
-
-
-	p.addEventListener('mouseleave', function(e) {
-		var c = document.getElementById('WHITEBOARD_SUBMENU');
-		if ( c!= null ) p.removeChild( c );
-		console.log('out;' + e.relatedTarget.getAttribute('id') );
-
-	});
-	m.addEventListener('mouseleave', function(e) {
-		var p = document.getElementById('OPAQUESHAFT_TITLE');
-		// var p = document.getElementById('WHITEBOARD_DAY_FRAME');
-		var c = document.getElementById('WHITEBOARD_SUBMENU');
-		p.removeChild( c );
-
-	});
-	m.addEventListener('mouseup', function(e) {
-		e.stopPropagation();
-	});
-
-}
-*/
-
-//
-//	サインインメニュー(右上メニュー)
-//
-/*
-function signMenu( e ){
-	e.stopPropagation();
-	if ( document.getElementById('SIGN_SUBMENU') != null ){
-		var p = document.getElementById('SIGN_STATUS');
-		var c = document.getElementById('SIGN_SUBMENU');
-		p.removeChild( c );
-		return;
-	}
-	var o = document.createElement('DIV');
-	o.setAttribute( 'id', 'SIGN_SUBMENU');
-	o.style.position		= 'relative';
-	o.style.padding			= '4px';
-	o.style.top             = '8px';
-	o.style.left            = '-117px';
-	o.style.width           = '150px';
-	o.style.height          = '150px';
-	o.style.backgroundColor = '#EEEEEE';
-	o.style.textAlign		='left';
-	o.style.zIndex			= 50000;
-	o.innerText = 'sign menu...';
-	var p = document.getElementById('SIGN_STATUS');
-	var m = p.appendChild( o );
-	var r = '';
-	var id = signid();
-	// r += '<div id="ID_SIGN_OUT"         style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/exit.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >sign out</div>';
-	// r += '<div id="ID_PROPERTY_ACCOUNT" style="height:20px;padding-top:4px;padding-left:18px;background-image:url(./images/user.png);background-size:14px;background-position:left center;background-repeat:no-repeat;" >property...</div>';
-	// r += '<div id="ID_CURRENT_ACCOUNT"  style="height:20px;padding-top:4px;padding-left:18px;" >sign in ' + id + '</div>';
-	m.innerHTML = r;
-
-	// new Button( 'ID_SIGN_OUT', signout ).play();
-	// new Button( 'ID_PROPERTY_ACCOUNT', propertyAccount ).play();
-
-	p.addEventListener('mouseleave', function(e) {
-		var c = document.getElementById('SIGN_SUBMENU');
-		if ( c!= null ) p.removeChild( c );
-
-	});
-	m.addEventListener('mouseleave', function(e) {
-		var p = document.getElementById('SIGN_STATUS');
-		var c = document.getElementById('SIGN_SUBMENU');
-		p.removeChild( c );
-
-	});
-	m.addEventListener('mouseup', function(e) {
-		e.stopPropagation();
-	});
-}
-*/
 //
 //	サインインフォーム
 //

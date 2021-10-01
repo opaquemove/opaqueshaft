@@ -338,7 +338,7 @@ spotlight.prototype = {
                 } ).bind(this), false);
         }
         
-    //  WHITEBOARD / WHITEBOARD_ABSENT内を検索
+    //  WHITEBOARD / WHITEBOARD_CHECKOUT内を検索
         this.folder1.innerText = '';
         this.findWhiteboardChild( this.folder1, this.keyword.value );
     //  childrenテーブル検索
@@ -357,10 +357,10 @@ spotlight.prototype = {
         for ( var i=0; i<children.length; i++ ){
             if ( id == children[i].getAttribute('child_id')) return true;
         }
-        var children = document.getElementById('WHITEBOARD_ABSENT').childNodes;
-        for ( var i=0; i<children.length; i++ ){
-            if ( id == children[i].getAttribute('child_id')) return true;
-        }
+        // var children = document.getElementById('WHITEBOARD_ABSENT').childNodes;
+        // for ( var i=0; i<children.length; i++ ){
+        //     if ( id == children[i].getAttribute('child_id')) return true;
+        // }
         return false;
     },
 
@@ -370,13 +370,13 @@ spotlight.prototype = {
             var children = getChildrenByHour( i + 8 );
             this.findWhiteboardChildHelper( parent, keyword, children, false );
         }
-        
-        // WHITEBOARD_ABSENTを検索
-        var absents = document.getElementById('WHITEBOARD_ABSENT').childNodes;
-        this.findWhiteboardChildHelper( parent, keyword, absents, true );
-    
+            
     },
     
+    //
+    //  absentパラメータに注意
+    //  children配列からabsentを取得するように改良が必要
+    //
     findWhiteboardChildHelper : function ( parent, keyword, children, absent ){
         for ( var i=0; i<children.length; i++ ){
             var c = children[i];
@@ -754,17 +754,6 @@ spotlight.prototype = {
 
 // }
 
-//
-//  WHITEBOARD内のチャイルドの検索
-//
-// function findWhiteboardChild( parent, keyword ){
-//     var children = document.getElementById('WHITEBOARD').childNodes;
-//     findWhiteboardChildHelper( parent, keyword, children, false );
-
-//     var absents = document.getElementById('WHITEBOARD_ABSENT').childNodes;
-//     findWhiteboardChildHelper( parent, keyword, absents, true );
-
-// }
 
 // function findWhiteboardChildHelper( parent, keyword, children, absent ){
 //     for ( var i=0; i<children.length; i++ ){

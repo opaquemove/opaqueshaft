@@ -76,7 +76,6 @@ function locatePerspectivebar( e ){
                     var wb  = document.getElementById('WHITEBOARD');
                     var wbt = document.getElementById('WHITEBOARD_TIMELINE');
                     var wbck = document.getElementById('WHITEBOARD_CHECKOUT');
-                    // var wba = document.getElementById('WHITEBOARD_ABSENT');
                     var bo = document.getElementById('BOTTOM_OVERLAY');
                     var bf = document.getElementById('BOTTOM_FRAME');
                     var wb_width = wb.offsetWidth;

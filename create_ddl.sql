@@ -199,8 +199,6 @@ ALTER SEQUENCE public.results2_result_id_seq OWNED BY public.results.result_id;
 CREATE TABLE public.whiteboards (
     whiteboard_id integer NOT NULL,
     day date NOT NULL,
-    whiteboard text,
-    whiteboard_absent text,
     lastupdate timestamp without time zone,
     description text
 );
