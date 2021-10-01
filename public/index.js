@@ -189,10 +189,7 @@ function init()
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'ID_NAV_TILE',  			showTile ).play();
 	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
-	// new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
-	// new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
 	new Button( 'ID_NAV_CHILDFINDER',       ctlSpotlight ).play();
-	// new Button( 'ID_NAV_ACCOUNT',           function(){ accountPproperty(); oTile.close('menu');} ).play();
 
 
 	//	モーダルダイアログの外側をクリックしたらクローズ

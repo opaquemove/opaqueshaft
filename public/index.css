@@ -153,7 +153,7 @@ INPUT[type=password]:focus{
 	left:					42px;
 	width:					200px;		/* old 168px */
 	height:					49px;		/* old 42px */
-	color:					darkgray;
+	color:					white;
 	background-color:		transparent;
 	border-top:				1px solid rgb(253, 202, 154);
 	font-size:				6px;
@@ -1351,79 +1351,11 @@ INPUT[type=password]:focus{
 	background-repeat: 		no-repeat;
 	border-top:				1px solid black;
 }
-/*
-#CHILDREN_PALLETE_FRAME{
-	position:			absolute;
-	top:				84px;
-	left:				-212px;
-	width:				212px;
-	height:				90%;	
-	margin-left:		0px;
-	padding:			0px;
-	font-size:			12px;
-	overflow-y:			auto;
-	overflow-x:			visible;
-	z-index:			40000;
-	opacity:			0.9;
-}
 
-#CHILDREN_PALLETE_TAB{
-	position: 			relative;
-	width:				42px;
-	height:				41px;
-	float: 				left;
-	font-size:			18px;
-	color:				snow;
-	background-color:	red;
-	background-image: 	url(./images/godzilla.png);
-	background-size: 	22px;
-	background-position: center center;
-	background-repeat: no-repeat;
-	border-top:			1px solid white;
-	writing-mode: 		vertical-lr;
-	visibility: 		hidden;
+.tool_icon{
+	width:					42px;
+	height:					42px;
 }
-
-#CHILDREN_PALLETE_CONTENT_FRAME{
-	position:			relative;
-	top:				0px;
-	left:				0px;
-	width:				166px;
-	height:				100%;
-	float: 				left;
-	font-size:			12px;
-	color:				gray;
-	background-color: 	transparent;
-	padding:			0px 0px 0px 2px;
-}
-
-#CHILDREN_PALLETE_CONTENT_TOOLBAR{
-	position:			absolute;
-	top:				0px;
-	left:				0px;
-	width:				169px;
-	height:				27px;
-	background-color:	red;
-	border-bottom:		1px solid lightgrey;
-	overflow:			hidden;
-}
-
-#CHILDREN_PALLETE_CONTENT{
-	position:			absolute;
-	top:				0px;
-	height:				0px;
-	width:				169px;
-	height:				90%;		
-	float: 				left;
-	font-size:			12px;
-	color:				gray;
-	background-color:	transparent;
-	border-bottom:		1px solid red;
-	margin-top:			27px;
-	padding:			0px;
-	overflow-y:			scroll;
-}
-*/
 .not_select {
 	-moz-user-select:		none;
 	-webkit-user-select:	none;
@@ -1511,6 +1443,12 @@ INPUT[type=password]:focus{
 	color:					white;
 	background-color:		red;
 }
+
+.wink_blue_on{
+	color:					white;
+	background-color:		royalblue;
+}
+
 .already_checkin{
 	background-image: 		url(./images/check-3.png);
 	background-size: 		10px;

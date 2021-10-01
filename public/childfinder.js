@@ -91,19 +91,6 @@ spotlight.prototype = {
 
         o3.innerHTML = r;
         this.header     = this.frame.appendChild( o3 );
-        // document.getElementById('BTN_FOLDING_SPOTLIGHT').addEventListener( 'click',
-        //     ( function(e) {
-        //         // this.close();
-        //         if ( this.frame.style.width == '90%' ){
-        //             this.frame.style.width = '';
-        //             document.getElementById('BTN_FOLDING_SPOTLIGHT').style.backgroundImage= 'url(./images/prev.png)';
-        //             document.getElementById('BTN_FOLDING_SPOTLIGHT').innerText = 'large';
-        //         } else{
-        //             this.frame.style.width = '90%';
-        //             document.getElementById('BTN_FOLDING_SPOTLIGHT').style.backgroundImage= 'url(./images/next.png)';
-        //             document.getElementById('BTN_FOLDING_SPOTLIGHT').innerText = 'small';
-        //         }
-        //     }).bind( this ), false );
         document.getElementById('BTN_TIMESELECTOR').addEventListener( 'click',
             ( function(e) {
                 showTimelineSelector();
@@ -163,11 +150,15 @@ spotlight.prototype = {
                         // c.style.backgroundColor = '';
                         c.classList.remove( 'selected' );
                         c.removeAttribute( 'selected' );
+
                         break;
                     case false:
                         // c.style.backgroundColor = 'lightgrey';
                         c.classList.add( 'selected' );
                         c.setAttribute( 'selected', 'yes' );
+                        var tbar = document.getElementById('ID_TIMELINE_BAR_AREA');
+                        new winker( tbar, 7, 'wink_blue_on' ).play();
+                        console.log('winker:' + tbar);
                         break;
 
                 }
@@ -434,7 +425,7 @@ spotlight.prototype = {
                         var wbf = document.getElementById('WHITEBOARD_FRAME');
                         wbf.scrollTop = ( h - 8 ) * pixelPerHour;
                         if ( !c.hasAttribute('selected'))
-                            new winker( cc, 7 ).play();
+                            new winker( cc, 7, 'wink_on' ).play();
                         // var range = document.createRange();
                         // range.setStart( c, 0 );
                         // range.setEnd( c, 1 );
