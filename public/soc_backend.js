@@ -831,8 +831,8 @@ function propertyChildren(){
     frame.style.top                 = '0px';
     frame.style.left                = '0px';
     frame.style.width               = '100%';
-    frame.style.height              = 'calc(100% - 84px)';
-    frame.style.paddingTop          = '84px';
+    frame.style.height              = 'calc(100% - 0px)';
+    frame.style.paddingTop          = '0px';
     frame.style.overflow            = 'scroll';
     frame.style.display             = 'flex';
     frame.style.flexWrap            = 'wrap';
@@ -841,7 +841,7 @@ function propertyChildren(){
     frame.style.background          = 'rgba(0,0,0,0.5)';
     frame.style.backgroundImage     = 'url(./images/cancel-2.png)';
     frame.style.backgroundSize      = '42px';
-    frame.style.backgroundPosition  = 'top right';
+    frame.style.backgroundPosition  = 'top 4px right 4px';
     frame.style.backgroundRepeat    = 'no-repeat';
 
     // frame.style.filter          = 'blur(4px)';
@@ -883,7 +883,7 @@ function propertyChildren(){
 
         var r = '';
         r += '<div style="width:100%;height:;" >';
-            r += '<div style="width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:16px;font-weight:bold;border-bottom:1px solid lightgrey;" >';
+            r += '<div style="width:100%;height:20px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:16px;font-weight:bold;border-bottom:1px solid lightgrey;" >';
             r += child_name + '&nbsp;' + child_grade + child_type;
             r += '</div>';
             r += '<div style="clear:both;width:100%;overflow:hidden;display:inline;" >';
@@ -903,7 +903,7 @@ function propertyChildren(){
             r += '<div style="clear:both;font-size:14px;width:100%;border-bottom:1px solid lightgrey;" >';
                 r += 'Remark:'
             r += '</div>';
-            r += '<div style="width:97%;height:40px;" >';
+            r += '<div style="width:97%;height:38px;padding-top:2px;" >';
                 r += '<form name="childProp_' + id + '" onsubmit="return false;" >';
                     r += '<textarea id="child_remark_' + id + '" name="remark" style="width:97%;height:100%;" >' + remark + '</textarea>';
                 r += '</form>';
@@ -1761,7 +1761,7 @@ function checkoutTimelineWhiteboardChild( timeline ){
 //
 //  アカウントプロパティ
 //
-function propertyAccount(){
+function accountProperty(){
 
     var oAcc = getAccount( acc_id );
     var r = '';
@@ -1781,13 +1781,13 @@ function propertyAccount(){
         r += "<td>Account Name:</td>";
         r += "</tr>";
         r += "<tr>";
-        r += "<td><input style='width:200px;height:18px;' type='text' name='acc_name' tabindex=2 value='" + oAcc.acc_name + "' /></td>";
+        r += "<td><input style='width:200px;height:18px;' type='text' name='acc_name' tabindex=2 readonly value='" + oAcc.acc_name + "' /></td>";
         r += "</tr>";
         r += "<tr>";
         r += "<td>Range:</td>";
         r += "</tr>";
         r += "<tr>";
-        r += "<td><input style='width:200px;height:18px;' type='text' name='range_id' tabindex=2 value='" + oAcc.range_id + "' /></td>";
+        r += "<td><input style='width:200px;height:18px;' type='text' name='range_id' tabindex=2 readonly value='" + oAcc.range_id + "' /></td>";
         r += "</tr>";
         r += "<tr>";
         r += "<td><div style='width:128px;height:128px;border-radius:45%;background-image:url(./images/accounts/" + acc_id + ".jpeg);background-size:128px;background-position:center center;background-repeat:no_repeat;' ></div></td>";

@@ -74,13 +74,13 @@ router.post('/signin', function(req, res, next ){
     console.log( 'acc:' + id );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.any( {
-        text: 'SELECT acc_id FROM accounts WHERE acc_id = $1 AND password = $2',
+        text: 'SELECT acc_id, range_id FROM accounts WHERE acc_id = $1 AND password = $2',
         values: [id,pwd] } )
       .then( rows => {
           if ( rows.length > 0 ) {
               //res.json( rows );
               res.cookie( 'acc', id );
-              res.json( {cmd:'signin',status:'SUCCESS', acc_id:id } );
+              res.json( {cmd:'signin',status:'SUCCESS', acc_id:id, range_id:2020 } );
             } else{
                 res.json( {cmd:'signin',status:'FAIL'} );
           }
@@ -305,7 +305,7 @@ router.post('/whiteboardupdate', function(req, res, next ){
 });
 
 //
-//  ホワイトボードリスト取得
+//  ホワイトボードリスト取得（年度は気にしない）
 //
 router.post('/whiteboardlist', function(req, res, next ){
     res.header('Content-Type', 'application/json;charset=utf-8');

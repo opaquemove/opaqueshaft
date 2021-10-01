@@ -144,6 +144,7 @@
 	margin-bottom: 		1px;
 	/* border-radius: 		20px; */
 }
+
 #MODAL_TILE_SIGN{
 	float:				left;
 	clear:				left;
@@ -158,14 +159,12 @@
 	background-size: 	12px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
-	/* font-size:			16px; */
 	padding-top:		4px;
 	margin-right:		1px;
 	margin-bottom: 		1px;
-	/* border-radius: 		20px; */
-	/* clear:				both; */
 }
-#MODAL_TILE_SIGN{
+
+/* #MODAL_TILE_SIGN{
 	float:				left;
 	pointer-events: 	auto;
 	width:				42px;
@@ -178,12 +177,11 @@
 	background-size: 	12px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
-	/* font-size:			14px; */
 	margin-right:		1px;
 	margin-bottom: 		1px;
 	padding-top:		4px;
-	/* border-radius: 		20px; */
-}
+} */
+
 #MODAL_TILE_SAVE{
 	float:				left;
 	pointer-events: 	auto;

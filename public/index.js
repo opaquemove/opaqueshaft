@@ -192,7 +192,7 @@ function init()
 	// new Button( 'ID_NAV_CHILD',  			foldingChildrenPallete ).play();
 	// new Button( 'ID_NAV_SEARCH',            ctlSpotlight ).play();
 	new Button( 'ID_NAV_CHILDFINDER',       ctlSpotlight ).play();
-	// new Button( 'ID_NAV_ACCOUNT',           function(){ propertyAccount(); oTile.close();} ).play();
+	// new Button( 'ID_NAV_ACCOUNT',           function(){ accountPproperty(); oTile.close('menu');} ).play();
 
 
 	//	モーダルダイアログの外側をクリックしたらクローズ
@@ -480,12 +480,12 @@ function makeTimelineIndicator(){
 		guide.setAttribute('class', 'timeline1_class' );
 		guide.style.top				= ( ( i + 0 ) * pixelPerHour - 1 )+ 'px';
 		guide.style.pointerEvents	= 'auto';
-		guide.innerHTML = '<div style="margin:2px 0px 0px 42px;background-color:#EDEDED;border:1px solid lightgrey;border-radius:8px;" >' + arTL[i] + ':00' + '</div>';
-		// wbf.appendChild( guide ).addEventListener('click',
-		// 	function (e ){
-		// 		alert( e.target.innerText);
-		// 	}
-		// );
+		guide.innerHTML = '<div style="margin:2px 0px 0px 42px;background-color:#EDEDED;border:1px solid lightgrey;border-radius:2px;" >' + arTL[i] + ':00' + '</div>';
+		wbf.appendChild( guide ).addEventListener('click',
+			function (e ){
+				// alert( e.target.innerText);
+			}
+		);
 	}
 	for ( var i=0; i<arTL.length - 0; i++ ){
 		var guide = document.createElement('DIV');
@@ -708,15 +708,15 @@ Tile.prototype = {
 				 this.close();
 			} ).bind( this ), false );
 
-		new Button( 'MODAL_TILE_SIGN',    function(){ propertyAccount(); oTile.close();} ).play();
-		new Button( 'MODAL_TILE_SAVE',    function(){ saveWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE_SIGNOUT', function(){ signoutForm(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE_CLEAR',   function(){ clearWhiteboard(); oTile.close(); } ).play();
-		// new Button( 'MODAL_TILE_ABSENT',  function(){ absentWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE_OPEN',    function(){ openWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE_CLOSE',   function(){ closeWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE_REPORT',  function(){ reportWhiteboard(); oTile.close(); } ).play();
-		new Button( 'MODAL_TILE_LOG',  	  function(){ ctlMessageLog(); oTile.close(); } ).play();
+		new Button( 'MODAL_TILE_SIGN',    function(){ accountProperty(); oTile.close('menu');} ).play();
+		new Button( 'MODAL_TILE_SAVE',    function(){ saveWhiteboard(); oTile.close('menu'); } ).play();
+		new Button( 'MODAL_TILE_SIGNOUT', function(){ signoutForm(); oTile.close('menu'); } ).play();
+		new Button( 'MODAL_TILE_CLEAR',   function(){ clearWhiteboard(); oTile.close('menu'); } ).play();
+		// new Button( 'MODAL_TILE_ABSENT',  function(){ absentWhiteboard(); oTile.close('menu'); } ).play();
+		new Button( 'MODAL_TILE_OPEN',    function(){ openWhiteboard(); oTile.close('menu'); } ).play();
+		new Button( 'MODAL_TILE_CLOSE',   function(){ closeWhiteboard(); oTile.close('menu'); } ).play();
+		new Button( 'MODAL_TILE_REPORT',  function(){ reportWhiteboard(); oTile.close('menu'); } ).play();
+		new Button( 'MODAL_TILE_LOG',  	  function(){ ctlMessageLog(); oTile.close('menu'); } ).play();
 
 		var tiles = document.getElementById( 'ID_TILES' );
 		tiles.style.display	= 'none';
@@ -1518,24 +1518,6 @@ function getJSONChildren(){
 
 }
 
-//
-//  チャイルド履歴追加
-//
-// function saveChildResult( day, child_id, checkin, estimate, checkout, escort, direction, absent ){
-
-// 	var acc_id = signid();
-// 	var absentValue = ( absent )?1:0;
-//     var xmlhttp = new XMLHttpRequest();
-// 	xmlhttp.open("POST", "/accounts/resultadd", false );
-// 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-// 	xmlhttp.send( 'acc_id=' + acc_id + '&day=' + day + '&child_id=' + child_id + '&checkin=' + checkin + '&estimate=' + estimate + '&checkout=' + checkout + '&escort=' + escort + '&direction=' + direction + '&absent=' + absentValue );
-// 	if ( xmlhttp.status == 200 ){
-//         var result = JSON.parse( xmlhttp.responseText );
-//         //alert( result.status + result.message );
-// 		return ( result != null )? result.status : 'error';	
-// 	} else return 'error status:' + xmlhttp.status;
-
-// }
 
 //
 //	JSON形式のデータをnode.jsサーバに送信する
@@ -1728,6 +1710,8 @@ function locateWhiteboard( e ){
 				}
 			} else {
 			}
+			if ( oTile.opened('menu'))
+				oTile.close('menu');
 			wb_touch_move = false;
 			break;
 	}
@@ -1837,7 +1821,7 @@ function Nav( func ){
 		r += 'socket';
 	r += '</div>';
 	r += '<div marked="yes" target="close" class="nav_icon2" ';
-	r += ' style="text-align:center;position:absolute;top:64px;left:64px;background-image:url(./images/compass.png);background-size:20px;background-position:center center;background-repeat:no-repeat;" >';	// Absent Child
+	r += ' style="text-align:center;position:absolute;top:64px;left:64px;background-image:url(./images/compass.png);background-size:20px;background-position:center center;background-repeat:no-repeat;" >';	// ON_OFF
 		r += '&nbsp';
 	r += '</div>';
 
@@ -2678,18 +2662,6 @@ function newChildFormOld(){
 	
 }
 */
-
-
-//
-//	チャイルドプロパティフォーム
-//
-// function propertyChild2( id ){
-// 	var r = '';
-// 	var oChild = getChild( id );
-// 	r += makeChildForm( oChild );
-// 	openModalDialog( null, r, 'NORMAL', null, null );
-
-// }
 
 
 //

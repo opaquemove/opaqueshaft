@@ -364,20 +364,20 @@ spotlight.prototype = {
         // WHITEBOARD,WHITEBOARD_CHECKOUTを検索
         for ( var i=0; i<12; i++ ){
             var children = getChildrenByHour( i + 8 );
-            this.findWhiteboardChildHelper( parent, keyword, children, false );
+            this.findWhiteboardChildHelper( parent, keyword, children );
         }
             
     },
     
     //
-    //  absentパラメータに注意
-    //  children配列からabsentを取得するように改良が必要
     //
-    findWhiteboardChildHelper : function ( parent, keyword, children, absent ){
+    findWhiteboardChildHelper : function ( parent, keyword, children ){
         for ( var i=0; i<children.length; i++ ){
             var c = children[i];
             var child_id    = c.getAttribute('child_id');
             var checkout    = c.hasAttribute('checkout');
+            var absent      = c.hasAttribute('absent');
+            var imagefile   = c.getAttribute('imagefile');
             var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
             var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText
             //child_name      = child_name.toLowerCase();
@@ -390,21 +390,19 @@ spotlight.prototype = {
                 var o = document.createElement('DIV');
                 o.setAttribute( 'child_id', child_id );
                 o.setAttribute( 'class', 'PALLETE_CHILD' );
-                // o.style.height          = '20px';
-                // o.style.marginTop       = '1px';
-                // o.style.marginLeft      = '1px';
+                o.style.height          = '50px';
                 o.style.float           = 'left';
 
-                // o.style.padding     = '4px';
-                // o.style.fontSize    = '12px';
-                // o.style.height      = '20px';
-    
                 var r = '';
-                r += '<div class="CHILD_NAME" style="float:;"  >' + child_name;
+                r += '<div class="CHILD_NAME" style=""  >' + child_name;
                     // r += '(' + c.style.top + ',' + c.style.left + ')';
                 r += '</div>';
+                if ( imagefile != '' && imagefile != null ){
+                    r += '<div style="float:left;clear:left;width:30px;height:30px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+                    r += '</div>';
+                }
                 if ( absent )
-                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/sleep-2.png);background-size:16px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/remove.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                     else
                     r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/dry-clean.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                 if ( checkout )

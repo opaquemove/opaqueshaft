@@ -823,7 +823,7 @@ INPUT[type=password]:focus{
 	/* margin:				0 auto; */
 	height:				84px;
 	color:				snow;
-	writing-mode: vertical-lr;
+	writing-mode: 		vertical-lr;
 	text-shadow: 		1px 1px 1px gray;
 	/* background-color:	darkgray; */
 	font-size:			20px;
@@ -1449,7 +1449,8 @@ INPUT[type=password]:focus{
 
 .marked{
 	color:				white;
-	background-color:	rgb(32, 116, 243);
+	/* background-color:	rgb(32, 116, 243); */
+	background-color:	rgb(0, 132, 255);
 }
 
 .selected{
