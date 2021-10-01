@@ -1784,7 +1784,7 @@ function Nav( func ){
 	m.style.height			= '196px';
 	m.style.color			= 'snow';
 	m.style.backgroundColor	= 'transparent';
-	m.style.fontSize		= '14px';
+	m.style.fontSize		= '12px';
 	// m.style.pointerEvents	= 'none';
 	m.style.zIndex			= 65000;
 	m.style.visibility		= 'hidden';

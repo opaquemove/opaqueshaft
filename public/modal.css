@@ -155,7 +155,7 @@
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/user-2.png);
-	background-position: center center;
+	background-position: 	right 2px bottom 2px;
 	background-size: 	12px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
@@ -191,7 +191,7 @@
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/upload.png);
-	background-position: center center;
+	background-position: 	right 2px bottom 2px;
 	background-size: 	12px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
@@ -211,7 +211,7 @@
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/exit.png);
-	background-position: center center;
+	background-position: 	right 2px bottom 2px;
 	background-size: 	12px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
@@ -231,7 +231,7 @@
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/eraser.png);
-	background-position: center center;
+	background-position: 	right 2px bottom 2px;
 	background-size: 	12px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
@@ -252,7 +252,7 @@
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/cloud-computing.png);
-	background-position: center center;
+	background-position: 	right 2px bottom 2px;
 	background-size: 	12px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
@@ -273,7 +273,7 @@
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/cancel.png);
-	background-position: center center;
+	background-position: 	right 2px bottom 2px;
 	background-size: 	10px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
@@ -294,7 +294,7 @@
 	color:				snow;
 	background-color:	red;
 	background-image:	url(./images/report.png);
-	background-position: center center;
+	background-position: 	right 2px bottom 2px;
 	background-size: 	16px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
@@ -315,14 +315,14 @@
 	color:					snow;
 	background-color:		red;
 	background-image:		url(./images/list.png);
-	background-position: 	center center;
+	background-position: 	right 2px bottom 2px;
 	background-size: 		16px;
 	background-repeat: 		no-repeat;
 	opacity: 				0.9;
 	/* font-size:			14px; */
-	padding-top:		4px;
-	margin-right:		1px;
-	margin-bottom: 		1px;
+	padding-top:			4px;
+	margin-right:			1px;
+	margin-bottom: 			1px;
 	/* border-radius: 		20px; */
 	/* clear:				both; */
 }

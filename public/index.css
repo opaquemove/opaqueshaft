@@ -407,7 +407,7 @@ INPUT[type=password]:focus{
 	width:					62px;
 	height:					62px;
 	background-color:		red;
-	border-radius: 			8px;
+	border-radius: 			4px;
 	margin:					1px;
 }
 
