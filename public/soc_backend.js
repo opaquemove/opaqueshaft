@@ -119,15 +119,28 @@ function clearWhiteboard(){
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'clear whiteboard';
 	r += '</div>';
-	// r += '<div style="margin:0 auto;width:110px;">';
-	// 	r += '<button id="BTN_CLEARWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="clearWhiteboardHelper();closeModalDialog();" >Clear</button>';
-	// r += '</div>';
-    openModalDialog( 'clear whiteboard', r, 'OK_CANCEL',
-        function(){
-            clearWhiteboardHelper();
-            closeModalDialog();
-        } , null );
+
+    r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
+        r += '<button id="" type="button" ';
+        r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+        r += ' onclick="clearWhiteboardHelper();closeModalDialog();"   >';
+        r += '</button>';
+
+        r += '<button id="" type="button" ';
+        r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+        r += ' onclick="closeModalDialog();" >';
+        r += '</button>'
+    r += '</div>';
+
+    openModalDialog( 'clear whiteboard', r, 'NOBUTTON', null, null );
+    // openModalDialog( 'clear whiteboard', r, 'OK_CANCEL',
+    //     function(){
+    //         clearWhiteboardHelper();
+    //         closeModalDialog();
+    //     } , null );
+
 }
+
 function clearWhiteboardHelper(){
     deleteWhiteboardChildren();
     updateFlg   = true;
@@ -985,8 +998,7 @@ function deleteWhiteboardChild(){
         r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
         r += ' onclick="closeModalDialog();" >';
         r += '</button>'
-
-        r += '</div>';
+    r += '</div>';
     openModalDialog( 'delete child', r, 'NOBUTTON',
         null, 'DELETE' );
     // openModalDialog( 'delete child', r, 'OK_CANCEL',
@@ -1131,16 +1143,6 @@ function scanWhiteboardChild( child_id ){
             }
         }
     }
-
-    // var absents = document.getElementById('WHITEBOARD_ABSENT').childNodes;
-    // for ( var i=0; i<absents.length; i++){
-    //     var c = absents[i];
-    //     if ( c.hasAttribute('child_id') ){
-    //         if ( child_id == c.getAttribute('child_id') ){
-    //             return c;
-    //         }
-    //     }
-    // }
 
     return null;
 }
@@ -1792,9 +1794,18 @@ function propertyAccount(){
         r += "</tr>";
         r += "</table>";
     r += "</form>";
+
+    r += '<div style="text-align:center;padding-top:5px;" >';
+        r += '<button id="" ';
+            r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/check-3.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
+            r += ' onclick="closeModalDialog();" >';
+            r += '';
+        r += '</button>';
+    r += '</div>';
+
     r += "</div>";
 
-    openModalDialog( 'Account property', r, 'NORMAL', null, 'ACCOUNT' );
+    openModalDialog( 'Account property', r, 'NOBUTTON', null, 'ACCOUNT' );
 
 }
 

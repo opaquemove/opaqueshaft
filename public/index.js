@@ -481,11 +481,11 @@ function makeTimelineIndicator(){
 		guide.style.top				= ( ( i + 0 ) * pixelPerHour - 1 )+ 'px';
 		guide.style.pointerEvents	= 'auto';
 		guide.innerHTML = '<div style="margin:2px 0px 0px 42px;background-color:#EDEDED;border:1px solid lightgrey;border-radius:8px;" >' + arTL[i] + ':00' + '</div>';
-		wbf.appendChild( guide ).addEventListener('click',
-			function (e ){
-				alert( e.target.innerText);
-			}
-		);
+		// wbf.appendChild( guide ).addEventListener('click',
+		// 	function (e ){
+		// 		alert( e.target.innerText);
+		// 	}
+		// );
 	}
 	for ( var i=0; i<arTL.length - 0; i++ ){
 		var guide = document.createElement('DIV');
@@ -1044,12 +1044,11 @@ function openWhiteboard(){
 		r += '</div>';
 		r += '</form>';
 		r += '<div style="text-align:center;padding-top:5px;" >';
-		r += '<button id="BTN_OPENWHITEBOARD" ';
-		r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/arrow-right.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
-		r += ' onclick="createWhiteboard()" >';
-		// r += '<img width="50px;" src="./images/next.png" >';
-			r += '';
-		r += '</button>';
+			r += '<button id="BTN_OPENWHITEBOARD" ';
+				r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/arrow-right.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
+				r += ' onclick="createWhiteboard()" >';
+				r += '';
+			r += '</button>';
 		r += '</div>';
 	r += '</div>';
 
@@ -1410,9 +1409,6 @@ function saveWhiteboardHelper(){
 
 	//	whiteboardレコードを更新
 	var rc = '';
-	// var wb = document.getElementById('WHITEBOARD');
-	// var wb_checkout	= document.getElementById('WHITEBOARD_CHECKOUT');
-	// var wb_absent	= document.getElementById('WHITEBOARD_ABSENT');
 
 	var desc =  document.getElementById('WB_DESC').value;
 	wb_description = desc;
@@ -1421,10 +1417,7 @@ function saveWhiteboardHelper(){
 	xmlhttp.open("POST", "/accounts/whiteboardupdate", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send( 'day=' + day + '&desc=' + encodeURIComponent( desc ) +
-				// '&html=' + encodeURIComponent( wb.innerHTML ) +
-				// '&html_absent=' + encodeURIComponent( wb_absent.innerHTML ) +
 				'&json_children=' + encodeURIComponent( JSON.stringify(json_children ) ) );
-	//	html,html_absentは意味はない
 
 	// var progress = document.getElementById('SAVE_PROGRESS');
 	// var r = '';
@@ -1596,7 +1589,7 @@ function deleteChildResult( day ){
 }
 
 //
-//	ホワイトボードをクローズ
+//	ホワイトボードをクローズ(保存はしていない)
 //
 function closeWhiteboard(){
 	//	マーク状態をクリア
@@ -1613,16 +1606,27 @@ function closeWhiteboard(){
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" readonly value="' + dayWhiteboard + '" />';
 		r += '</div>';
 		r += '</form>';
-		// r += '<div>Progress:</div>';
-		// r += '<div id="CLOSE_PROGRESS" style="clear:both;width:100%;height:100px;border:1px solid gray;overflow:auto;" >';
-		// r += '</div>';
-		// r += '<button id="BTN_CLOSEWHITEBOARD" type="button"  style="width:100px;height:20px;font-size:12px;" onclick="closeWhiteboardHelper();" >Close</button>';
+
+		r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
+			r += '<button id="" type="button" ';
+			r += ' style="font-size:24px;width:40px;height:40px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+			r += ' onclick="closeModalDialog();closeWhiteboardHelper();"   >';
+			r += '</button>';
+
+			r += '<button id="" type="button" ';
+			r += ' style="font-size:20px;width:40px;height:40px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+			r += ' onclick="closeModalDialog();" >';
+			r += '</button>'
+		r += '</div>';
+
+
 	r += '</div>';
-	openModalDialog( 'close whiteboard', r, 'OK_CANCEL',
-		function(){
-			closeModalDialog();
-			closeWhiteboardHelper();
-		}, null );
+	openModalDialog( 'close whiteboard', r, 'NOBUTTON', null, null );
+	// openModalDialog( 'close whiteboard', r, 'OK_CANCEL',
+	// 	function(){
+	// 		closeModalDialog();
+	// 		closeWhiteboardHelper();
+	// 	}, null );
 
 }
 //	ホワイトボードクローズ処理
@@ -1632,7 +1636,8 @@ function closeWhiteboardHelper(){
 	updateFlg			= false;
 	ctlToolbar();
 	oNav.close();
-	oTile.close();
+	oTile.close('menu');
+	oTile.close('childfinder');
 	openWhiteboard();
 }
 
@@ -1668,10 +1673,8 @@ function visibleWhiteboard(){
 	openWhiteboardFlg = true;
 	var wb  = document.getElementById('WHITEBOARD');
 	var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
-	// var wba = document.getElementById('WHITEBOARD_ABSENT');
 	wb.style.visibility = 'visible';
 	wbe.style.visibility = 'visible';
-	// wba.style.visibility = 'visible';
 	// oNav.open();
 }
 
@@ -2051,7 +2054,9 @@ function ctlToolbar(){
 	} else {
 		hideToolbar();
 	}
-	oTile.close();
+	// oTile.close();
+	oTile.close('menu');
+	oTile.close('childfinder');
 	oSpotlight.close();
 	// if ( flagChildrenPallete ) foldingChildrenPallete();
 
@@ -2186,15 +2191,31 @@ function signoutForm(){
 	r += "<div style='width:350px;height:;margin:10px auto;background-color:white;overflow:hidden;' >";
 		r += "<div style='height:40px;padding-top:20px;text-align:center;font-size:20px;' >Sign out</div>";
 		// r += "<div id='SIGNIN_STATUS' style='height:20px;text-align:center;' >status</div>";
-		r += "<div style='margin:10px auto;width:210px;' >";
+		r += "<div style='margin:10px auto;width:210px;height:100px;' >";
 		r += "</div>";
+
+		r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
+			r += '<button id="" type="button" ';
+			r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+			r += ' onclick="closeModalDialog();signout();"   >';
+			r += '</button>';
+
+			r += '<button id="" type="button" ';
+			r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+			r += ' onclick="closeModalDialog();" >';
+			r += '</button>'
+
+		r += '</div>';
+
+
 	r += "</div>";
 
-	openModalDialog( 'sign out', r, 'OK_CANCEL',
-		function(){
-			closeModalDialog();
-			signout();
-		}, 'SIGNOUT' );
+	openModalDialog( 'sign out', r, 'NOBUTTON', null, 'SIGNOUT' );
+	// openModalDialog( 'sign out', r, 'OK_CANCEL',
+	// 	function(){
+	// 		closeModalDialog();
+	// 		signout();
+	// 	}, 'SIGNOUT' );
 
 }
 
