@@ -56,19 +56,19 @@ BUTTON IMG {
 */
 
 INPUT{
-	color:				gray;
-	border-radius: 		0px;
-	border-top:			none;
-	border-left:		none;
-	border-right:		none;
-	border-bottom:		1px solid lightgrey;
+	color:					gray;
+	border-radius: 			0px;
+	border-top:				none;
+	border-left:			none;
+	border-right:			none;
+	border-bottom:			1px solid lightgrey;
 }
 
 INPUT[type=radio]{
 	display:	none;
 }
 INPUT[type=radio]:checked + label{
-	border-bottom:		2px solid red;
+	border-bottom:			2px solid red;
 }
 /*
 INPUT[type=text]:focus{
@@ -77,59 +77,60 @@ INPUT[type=text]:focus{
 }
 */
 INPUT[type=password]:focus{
-	outline:			none;
-	background-color:	transparent;
-/*	border-bottom:		1px solid red; */
+	outline:				none;
+	background-color:		transparent;
+/*	border-bottom:			1px solid red; */
 }
 
 
 .circle_button{
-	font-size:			16px;
-	background-image:	url(./images/dry-clean.png);
-	background-position: center center;
-	background-size:	40px;
-	background-repeat: 	no-repeat;
+	font-size:				16px;
+	background-image:		url(./images/dry-clean.png);
+	background-position: 	center center;
+	background-size:		40px;
+	background-repeat: 		no-repeat;
 }
 
 #BOTTOM_OVERLAY{
-	position:			absolute;
+	position:				absolute;
 	/* perspective:			300px; */
-	top:				0px;
-	left:				0px;
-	width:				100%;
-	height:				100%;
-	background-color:	transparent;
-	overflow:			hidden;
+	top:					0px;
+	left:					0px;
+	width:					100%;
+	height:					100%;
+	background-color:		transparent;
+	overflow:				hidden;
 }
 #BOTTOM_FRAME{
-	position:			absolute;
+	position:				absolute;
 	/* transform:			translate3d( 0, 0, -100px) rotateY(10deg); */
-	top:				0px;
-	left:				0px;
-	width:				100%;
-	height:				100%;
+	top:					0px;
+	left:					0px;
+	width:					100%;
+	height:					100%;
 	/* border:				1px solid white; */
-	background-color:	#EEEEEE;
-	background-image:	url(./images/mina-2.png);
-	background-position: center center;
-	background-size: 	contain;
-	background-repeat: 	no-repeat;
-	overflow:			hidden;
+	background-color:		#EEEEEE;
+	background-image:		url(./images/mina-2.png);
+	background-position: 	center center;
+	background-size: 		contain;
+	background-repeat: 		no-repeat;
+	overflow:				hidden;
 }
 
 #OPAQUESHAFT_TITLE{
 	pointer-events:			auto;
 	float:					left;
-	width:					118px;
+	width:					178px;
 	height:					54px;
 	color:					white;
-	text-shadow: 			2px 2px 2px gray;
+	text-shadow: 			1px 1px 1px gray;
 	background-color:		transparent;
 	opacity: 				0.7;
 	font-size:				16px;
-	padding-top:			30px;
-	padding-left:			22px;
+	padding-top:			5px;
+	padding-left:			82px;
 	padding-right:			0px;
+	padding-bottom:			25px
 }
 #NAV_START_ICON{
 	position:				absolute;
@@ -180,7 +181,7 @@ INPUT[type=password]:focus{
 }
 
 #ID_NAV_ACCOUNT{
-	/* position:				absolute;
+	/* position:			absolute;
 	margin-top:				0px;
 	top:					84px;
 	left:					18px; */
@@ -741,7 +742,7 @@ INPUT[type=password]:focus{
 }
 #WHITEBOARD_RESERVE_LEFT{
 	pointer-events: 	auto;
-	position: 			absolute;
+	position: 			fixed;
 	top:				0px;
 	left:				-120px;
 	width:				128px;
@@ -865,7 +866,7 @@ INPUT[type=password]:focus{
 	color:				white;
 	writing-mode: 		vertical-lr;
 	text-shadow: 		1px 1px 1px gray;
-	background-color:	#EDEDED;
+	background-color:	#DDDDDD;
 	border-left:		1px dashed #CCCCCC;
 	border-radius: 		2px;
 	z-index:			6000;
@@ -881,7 +882,7 @@ INPUT[type=password]:focus{
 	color:				white;
 	writing-mode: 		vertical-lr;
 	text-shadow: 		1px 1px 1px gray;
-	background-color:	#EDEDED;
+	background-color:	#DDDDDD;
 	border-left:		1px dashed #CCCCCC;
 	border-radius: 		2px;
 	z-index:			6000;
@@ -897,7 +898,7 @@ INPUT[type=password]:focus{
 	color:				white;
 	writing-mode: 		vertical-lr;
 	text-shadow: 		1px 1px 1px gray;
-	background-color:	#EDEDED;
+	background-color:	#DDDDDD;
 	border-left:		1px dashed #CCCCCC;
 	border-radius: 		2px;
 	z-index:			6000;

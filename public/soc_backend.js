@@ -975,7 +975,8 @@ function propertyChildren(){
 //  
 function deleteWhiteboardChild(){
 
-    var children = document.getElementById( curWhiteboard).childNodes;
+    var children = getMarkedChild();
+    // var children = document.getElementById( curWhiteboard).childNodes;
     
     if ( ( children.length ) == 0){
         console.log('deleteWhiteboardChild:none' );
@@ -1449,6 +1450,10 @@ function checkoutChild( c, operator, co_time, direction ){
 //  チャイルドをチェックアウト
 //
 function checkoutWhiteboardChild(){
+
+    var children = getMarkedChild();
+    if ( children.length == 0 ) return;
+
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'checkout children';
@@ -1475,7 +1480,7 @@ function checkoutWhiteboardChild(){
 	r += '</div>';
     openModalDialog( 'checkout children', r, 'NOBUTTON', null, 'CHECK' );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
-    var children = getMarkedChild();
+    // var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         var id          = c.getAttribute('child_id');
@@ -1573,6 +1578,10 @@ function checkoutWhiteboardChildHelper(){
 //  チャイルドをチェックアウトクリア
 //
 function checkoutClearWhiteboardChild(){
+
+    var children = getMarkedChild();
+    if ( children.length == 0 ) return;
+
     var r = '';
 	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 		r += 'checkout clear children';
@@ -1599,7 +1608,7 @@ function checkoutClearWhiteboardChild(){
     //     closeModalDialog();
     // }, 'CHECK' );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
-    var children = getMarkedChild();
+    // var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         var id = c.getAttribute('child_id');

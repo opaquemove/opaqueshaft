@@ -74,7 +74,7 @@ report_dlg.prototype = {
                     this.frame.style.visibility     = 'hidden';
                     console.log('close');
                 }
-                this.counter = this.counter * 1.3;
+                this.counter = this.counter * 1.8;
             }).bind( this ) , 30 );
         
     },

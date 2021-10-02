@@ -190,6 +190,23 @@ function init()
 	new Button( 'ID_NAV_TILE',  			showTile ).play();
 	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
 	new Button( 'ID_NAV_CHILDFINDER',       ctlSpotlight ).play();
+	new Button( 'ID_NAV2_CHILDFINDER',      ctlSpotlight ).play();
+
+	//	NAV2
+	document.getElementById( 'ID_NAV2_CHECKIN').addEventListener(
+		'click',
+		function (e){
+			var o = document.getElementById('ID_MODE_CHECKIN');
+			o.dispatchEvent( new Event('click') );				
+		}
+	);
+	document.getElementById( 'ID_NAV2_CHECKOUT').addEventListener(
+		'click',
+		function (e){
+			var o = document.getElementById('ID_MODE_CHECKOUT');
+			o.dispatchEvent( new Event('click') );				
+		}
+	);
 
 
 	//	モーダルダイアログの外側をクリックしたらクローズ
@@ -477,7 +494,7 @@ function makeTimelineIndicator(){
 		guide.setAttribute('class', 'timeline1_class' );
 		guide.style.top				= ( ( i + 0 ) * pixelPerHour - 1 )+ 'px';
 		guide.style.pointerEvents	= 'auto';
-		guide.innerHTML = '<div style="margin:2px 0px 0px 42px;background-color:#EDEDED;border:1px solid lightgrey;border-radius:2px;" >' + arTL[i] + ':00' + '</div>';
+		guide.innerHTML = '<div style="margin:2px 0px 0px 42px;background-color:#DDDDDD;border:1px solid lightgrey;border-radius:2px;" >' + arTL[i] + ':00' + '</div>';
 		wbf.appendChild( guide ).addEventListener('click',
 			function (e ){
 				// alert( e.target.innerText);
