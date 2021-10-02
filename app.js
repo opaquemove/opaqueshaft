@@ -45,10 +45,10 @@ io.on( 'connection', ( socket ) => {
         }
     });
 
-    socket.on('opaqueshaft', (data) => {
-      console.log('opaqueshaft.data:' + data );
-      socket.emit( 'opaqueshaft', data );
-      socket.broadcast.emit( 'opaqueshaft', data );
+    socket.on('sync', (data) => {
+      console.log('sync.data:' + data );
+      // socket.emit( 'sync', data );            // local cast
+      socket.broadcast.emit( 'sync', data );  // broadcast
     });
   }
 )

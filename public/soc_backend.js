@@ -36,13 +36,39 @@ function getAccountList(){
     socket.emit( 'cmd', 'getaccountlist' );
 }
 
-socket.on( 'opaqueshaft', function( data ){
+//
+//  socket receiving
+//
+socket.on( 'sync', function( data ){
     console.log('socket.data:' + data );
 
     // var pac = eval( '(' + data + ')' );
-    var pac = JSON.parse( data );
+    var children = JSON.parse( data );
     // console.log('socket.cmd:'  + pac.cmd );
     // console.log('socket.data:' + pac.data );
+
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        if ( dayWhiteboard != c.day ) continue;
+
+        var sc = scanWhiteboardChild( c.child_id );
+        if ( sc != null ){
+            var p = sc.parentNode;
+            p.removeChild( sc );
+        }
+        console.log('sync:child_id:' + c.child_id );
+        var cc = addChild( c.coordi_top, c.coordi_left + '%',
+            c.child_id, c.child_name, c.kana,
+            c.child_type, c.child_grade, c.imagefile, c.remark, c.escort, ( c.absent == 1 )?true : false, false );
+        if ( c.checkout != '' && c.checkout != null )
+            checkoutChild( cc, c.acc_id, c.checkout, c.direction );
+    }
+    showWhiteboardChildCount();
+    // oLog.log( null, 'delete child : ' + i + ' children.' );
+    // oLog.open( 3 );
+    updateFlg   = true;
+
+
     return;
     switch( pac.cmd ){
         case 'addchild':
@@ -58,12 +84,12 @@ socket.on( 'opaqueshaft', function( data ){
 
 
 //
-//  socketサンプル
-//json
+//  socket sending
+//
 function exchange(){
     var json_children = getJSONChildren();
-    // socket.emit( 'opaqueshaft', '{ cmd:addchild, data:' + JSON.stringify( json_children ) + ' }' );
-    socket.emit( 'opaqueshaft', JSON.stringify( json_children ) );
+    socket.emit( 'sync', JSON.stringify( json_children ) );
+    // socket.emit( 'sync', '{ "data":{(' + JSON.stringify( json_children ) + ')} }' );
     return;
 
     var children = getMarkedChild();

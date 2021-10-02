@@ -34,20 +34,20 @@ var updateFlg			= false;
 //
 //	タイムライン・バー操作
 //
-var tlx = null;
-var tly = null;
-var tlbOffset 		= null;
-var tlbOffsetLeft	= null;
-var tl_drag = false;
+var tlx 				= null;
+var tly 				= null;
+var tlbOffset 			= null;
+var tlbOffsetLeft		= null;
+var tl_drag 			= false;
 
 
-var dndOffsetX = 0;
-var dndOffsetY = 0;
+var dndOffsetX 			= 0;
+var dndOffsetY 			= 0;
 
-var oldScrollPos = 0;
+var oldScrollPos 		= 0;
 // ホワイトボードが開いているかフラグ
-var openWhiteboardFlg = false;
-var dayWhiteboard  = null;
+var openWhiteboardFlg 	= false;
+var dayWhiteboard  		= null;
 
 var palleteTimeSelector = null;
 
@@ -1463,6 +1463,9 @@ function getJSONChildren(){
 		var child_id	= c.getAttribute('child_id');
 		var kana		= c.getAttribute('kana');
 		var child_name	= c.getElementsByClassName('CHILD_NAME')[0].innerText;
+		var child_type	= c.getAttribute('child_type');
+		var child_grade	= c.getAttribute('child_grade');
+		var imagefile	= c.getAttribute('imagefile');
 		var coordi_top	= c.offsetTop;
 		// var coordi_left	= c.offsetLeft;
 		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
@@ -1477,6 +1480,11 @@ function getJSONChildren(){
 		var remark 		= ( c.hasAttribute('remark') )? decodeURIComponent( c.getAttribute('remark') ) : '';
 		jsonChildren.push( {
 			 'child_id' 	: child_id,
+			 'child_name'	: child_name,
+			 'kana'			: kana,
+			 'child_type'	: child_type,
+			 'child_grade'	: child_grade,
+			 'imagefile'	: imagefile,
 			 'checkin'		: checkin,
 			 'estimate'		: estimate,
 			 'checkout'		: checkout,
@@ -1486,13 +1494,19 @@ function getJSONChildren(){
 			 'coordi_top'	: coordi_top,
 			 'coordi_left'	: coordi_left,
 			 'remark'		: remark,
-			 'absent' 		: 0
+			 'absent' 		: 0,
+			 'day'			: dayWhiteboard
 			 } );
 	}
 	var children = document.getElementById('WHITEBOARD_CHECKOUT').childNodes;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
 		var child_id	= c.getAttribute('child_id');
+		var kana		= c.getAttribute('kana');
+		var child_name	= c.getElementsByClassName('CHILD_NAME')[0].innerText;
+		var child_type	= c.getAttribute('child_type');
+		var child_grade	= c.getAttribute('child_grade');
+		var imagefile	= c.getAttribute('imagefile');
 		var coordi_top	= c.offsetTop;
 		// var coordi_left	= c.offsetLeft;
 		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
@@ -1508,6 +1522,11 @@ function getJSONChildren(){
 		var remark 		= ( c.hasAttribute('remark') )? decodeURIComponent( c.getAttribute('remark') ) : '';
 		jsonChildren.push( {
 			 'child_id' 	: child_id,
+			 'child_name'	: child_name,
+			 'kana'			: kana,
+			 'child_type'	: child_type,
+			 'child_grade'	: child_grade,
+			 'imagefile'	: imagefile,
 			 'checkin'		: checkin,
 			 'estimate'		: estimate,
 			 'checkout'		: checkout,
@@ -1517,7 +1536,8 @@ function getJSONChildren(){
 			 'coordi_top'	: coordi_top,
 			 'coordi_left'	: coordi_left,
 			 'remark'		: remark,
-			 'absent' 		: absent
+			 'absent' 		: absent,
+			 'day'			: dayWhiteboard
 			 } );
 	}
 
