@@ -38,9 +38,12 @@ function getAccountList(){
 
 socket.on( 'opaqueshaft', function( data ){
     console.log('socket.data:' + data );
-    var pac = eval( '(' + data + ')' );
-    console.log('socket.data.cmd:' + pac.cmd );
-    console.log('socket.data.estimate:' + pac.data.estimate );
+
+    // var pac = eval( '(' + data + ')' );
+    var pac = JSON.parse( data );
+    // console.log('socket.cmd:'  + pac.cmd );
+    // console.log('socket.data:' + pac.data );
+    return;
     switch( pac.cmd ){
         case 'addchild':
             arHM = pac.data.estimate.split(':');
@@ -56,14 +59,20 @@ socket.on( 'opaqueshaft', function( data ){
 
 //
 //  socketサンプル
-//
+//json
 function exchange(){
+    var json_children = getJSONChildren();
+    // socket.emit( 'opaqueshaft', '{ cmd:addchild, data:' + JSON.stringify( json_children ) + ' }' );
+    socket.emit( 'opaqueshaft', JSON.stringify( json_children ) );
+    return;
+
     var children = getMarkedChild();
     if ( children.length == 0 ) return;
     for ( var i=0; i<children.length; i++ ){
         var c = children[i];
         var child_id = c.getAttribute('child_id' );
-        socket.emit( 'opaqueshaft', '{ "cmd":"addchild", "data":{"child_id":' + child_id + ', "estimate":"17:00"} }' );
+        // socket.emit( 'opaqueshaft', '{ "cmd":"addchild", "data":{"child_id":' + child_id + ', "estimate":"17:00"} }' );
+        socket.emit( 'opaqueshaft', '{ cmd:addchild, data:' +  + ' }' );
     }
 }
 
