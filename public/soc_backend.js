@@ -37,10 +37,10 @@ function getAccountList(){
 }
 
 socket.on( 'opaqueshaft', function( data ){
-    alert( data );
+    console.log('socket.data:' + data );
     var pac = eval( '(' + data + ')' );
-    alert( pac.cmd );
-    alert( pac.data.estimate );
+    console.log('socket.data.cmd:' + pac.cmd );
+    console.log('socket.data.estimate:' + pac.data.estimate );
     switch( pac.cmd ){
         case 'addchild':
             arHM = pac.data.estimate.split(':');
@@ -55,11 +55,18 @@ socket.on( 'opaqueshaft', function( data ){
 
 
 //
-//
+//  socketサンプル
 //
 function exchange(){
-    socket.emit( 'opaqueshaft', '{ "cmd":"addchild", "data":{"child_id":1, "estimate":"17:00"} }' );
+    var children = getMarkedChild();
+    if ( children.length == 0 ) return;
+    for ( var i=0; i<children.length; i++ ){
+        var c = children[i];
+        var child_id = c.getAttribute('child_id' );
+        socket.emit( 'opaqueshaft', '{ "cmd":"addchild", "data":{"child_id":' + child_id + ', "estimate":"17:00"} }' );
+    }
 }
+
 //
 //  サーバからチャイルドリストを取得し、実体化
 //

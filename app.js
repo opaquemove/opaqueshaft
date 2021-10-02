@@ -26,8 +26,9 @@ app.use('/accounts', accounts );
 //  socket.io
 //
 io.on( 'connection', ( socket ) => {
+
   socket.on('cmd', ( msg ) => {
-    console.log( msg);
+    console.log( 'connection.cmd:' + msg);
     switch( msg ) {
       case 'getaccountlist':
         getAccountList( socket );
@@ -37,17 +38,20 @@ io.on( 'connection', ( socket ) => {
         break;
       case 'exchange':
         break;
-        default:
+      default:
           //socket.broadcast.emit( msg, 'hogehoge' );
-          socket.emit( msg, 'hogehoge' );
+          // socket.emit( msg, 'hogehoge' );
           break;
         }
-      });
-  socket.on('opaqueshaft', (data) => {
-    console.log('data:' + data );
-    socket.emit( 'opaqueshaft', data );
     });
-})
+
+    socket.on('opaqueshaft', (data) => {
+      console.log('opaqueshaft.data:' + data );
+      socket.emit( 'opaqueshaft', data );
+      socket.broadcast.emit( 'opaqueshaft', data );
+    });
+  }
+)
 
 //
 //  予備コード

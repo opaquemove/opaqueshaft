@@ -413,13 +413,6 @@ function dropHandler( e ){
 
 function test(){
 
-	// var jsonText = JSON.stringify( [ { data:'hogehoge'}, {data:'hoehoe'} ] );
-
-    // var xmlhttp = new XMLHttpRequest();
-	// xmlhttp.open("POST", "/accounts/jsonsend", false );
-	// xmlhttp.setRequestHeader( "Content-Type", "application/json" );
-	// xmlhttp.send( jsonText );
-
 	ctlReportDlg();
 
 }
