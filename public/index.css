@@ -215,6 +215,22 @@ INPUT[type=password]:focus{
 	overflow:				hidden;
 }
 
+#ID_NAV_SYNC{
+	/* position:				absolute;
+	top:					84px;
+	left:					0px; */
+	width:					42px;
+	height:					42px;
+	color:					snow;
+	background-color:		rgb(255, 123, 0);
+	background-image:		url(./images/recycle.png);
+	background-size:		16px;
+	background-repeat:		no-repeat;
+	background-position:	center center;
+/*	font-size:				14px;	*/
+	/* border-radius: 			8px; */
+}
+
 #ID_NAV_REPORT{
 	/* position:				absolute;
 	top:					84px;
@@ -1289,7 +1305,7 @@ INPUT[type=password]:focus{
 	/*	pointer-events: 		none;	*/
 		position:				absolute;
 		margin-top:				0px;
-		top:					214px;
+		top:					256px;
 		left:					18px;
 		width:					38px;
 		height:					38px;
@@ -1303,7 +1319,7 @@ INPUT[type=password]:focus{
 	pointer-events: 		none;
 	position:				absolute;
 	margin-top:				0px;
-	top:					256px;
+	top:					298px;
 	left:					18px;
 	width:					6px;
 	height:					162px;
@@ -1318,7 +1334,7 @@ INPUT[type=password]:focus{
 #ID_TIMELINE_BAR{
 	position:				absolute;
 	margin-top:				0px;
-	top:					256px;
+	top:					298px;
 	left:					0px;
 	width:					26px;
 	height:					41px;
