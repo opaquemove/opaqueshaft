@@ -461,7 +461,7 @@ INPUT[type=password]:focus{
 }
 #CHILDFINDER_FRAME{
 	visibility:			hidden;
-	width:				140px;
+	width:				142px;
 	height:				100%;
 	padding-right:		42px;
 /*	
@@ -1039,7 +1039,7 @@ INPUT[type=password]:focus{
 }
 
 .PALLETE_CHILD{
-	width:				140px;
+	width:				142px;
 	height:				34px;
 	color:				gray;
 	background-color:	white;
