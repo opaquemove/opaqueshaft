@@ -362,6 +362,7 @@ function reportWhiteboardDetail(){
             if ( children[j].hasAttribute('absent')) continue;
 
             var cc = document.createElement('DIV');
+            var child_id    = children[j].getAttribute('child_id');
             var child_name  = children[j].getElementsByClassName('CHILD_NAME')[0].innerText;
             var child_type  = children[j].getAttribute('child_type');
             var child_grade = children[j].getAttribute('child_grade');
@@ -409,7 +410,8 @@ function reportWhiteboardDetail(){
             r += '</div>';
             cc.style.height = '16px';
             cc.innerHTML    = r;
-            lst_area.appendChild( cc );
+            var ccc = lst_area.appendChild( cc );
+            ccc.setAttribute('child_id', child_id );
         }
     }
 
@@ -428,6 +430,7 @@ function reportWhiteboardDetail(){
     for ( var i=0; i<wba.childNodes.length; i++ ){
         var c = wba.childNodes[i];
         if ( !c.hasAttribute('absent')) continue;
+        var child_id    = c.getAttribute('child_id');
 
         var cc = document.createElement('DIV');
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
@@ -443,7 +446,7 @@ function reportWhiteboardDetail(){
         var remark      = ( c.hasAttribute('remark') )?
                             decodeURIComponent( c.getAttribute('remark') ) : '';
         var r = '';
-        r += '<div style="clear:both;font-size:12px;padding:2px;" >';
+        r += '<div child_id="' + child_id + '" style="clear:both;font-size:12px;padding:2px;" >';
             r += '<div style="float:left;"  >' + child_name + '</div>';
             r += '<div style="float:right;width:26px;" >' + direction   + '</div>';
             r += '<div style="float:right;width:41px;" >' + checkout    + '</div>';
@@ -457,11 +460,38 @@ function reportWhiteboardDetail(){
         // cc.style.backgroundColor = 'orange';
         cc.style.height = '16px';
         cc.innerHTML    = r;
-        lst_area.appendChild( cc );
+        var ccc = lst_area.appendChild( cc );
+        ccc.setAttribute('child_id', child_id );
     }
+
+    lst_area.addEventListener( 'click', selectReportChild );
 
 }
 
+//
+//  レポート内のチャイルドをクリック
+//
+function selectReportChild( e ){
+    var c = scanChild( e.target );
+    if ( c == null ){
+        return;
+    } 
+    
+    var cid = c.getAttribute( 'child_id');
+
+    var cc = scanWhiteboardChild( cid );
+    if ( cc == null ) { console.log( 'child_id:' + cid + ':null');return;}
+
+    var estimate   = cc.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
+    var h = estimate.substr(0, 2 );
+    var wbf = document.getElementById('WHITEBOARD_FRAME');
+    wbf.scrollTop = ( h - 8 ) * pixelPerHour;
+
+    oReportDlg.close();
+    new winker( cc, 7, 'wink_on' ).play();
+
+
+}
 
 
 //

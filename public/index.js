@@ -293,9 +293,12 @@ function initWhiteboardSize(){
 	var wb = document.getElementById('WHITEBOARD');
 	var wbco = document.getElementById('WHITEBOARD_CHECKOUT');
 	var wbtl = document.getElementById('WHITEBOARD_TIMELINE');
+	var wbbm = document.getElementById('WHITEBOARD_BOTTOM_MARGIN');
 	wb.style.height	= ( pixelPerHour *  manageHourBand ) + 'px';
 	wbco.style.height	= wb.style.height;
 	wbtl.style.height	= wb.style.height;
+	wbbm.style.top		= wb.style.height;
+	wbbm.style.height	= ( pixelPerHour / 2 ) + 'px';
 }
 //
 //	ホワイトボード表示制御機能の初期化
@@ -969,7 +972,8 @@ function locateTimelinebar( e ){
 //
 function setTimelinebarByScroll(){
 
-	var scroll_top = document.getElementById('WHITEBOARD_FRAME').scrollTop;
+	// +64 は早めに時間を切り替えるマージン
+	var scroll_top = document.getElementById('WHITEBOARD_FRAME').scrollTop + 64;
 	var h = Math.floor( scroll_top / pixelPerHour ) + 8;
 	var m = ( scroll_top % pixelPerHour )  / Math.floor( pixelPerHour / 5 );
 	var delta = ( h - 8 ) * 5;

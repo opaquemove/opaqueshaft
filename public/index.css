@@ -815,6 +815,20 @@ INPUT[type=password]:focus{
 	visibility: 		visible;
 	z-index:			2;
 }
+#WHITEBOARD_BOTTOM_MARGIN{
+	pointer-events:		none;
+	position: 			absolute;
+	top:				-10000px;			/* dummy */
+	left:				0px;
+	width:				100%;
+	height:				0px;			/* dummy */
+	/* float:				left; */
+	background-color: slategray;
+	border:				0px dotted snow;
+	padding:			0px 0px 0px 0px;
+	visibility: 		visible;
+	z-index:			2;
+}
 
 
 .timeline_class{
@@ -1472,6 +1486,10 @@ INPUT[type=password]:focus{
 	background-size: 		10px;
 	background-position: 	right bottom;
 	background-repeat: 		no-repeat;
+}
+
+.mode_right50per{
+	transform:				translateX(-50%);
 }
 /*
 http://kachibito.net/css/svg-circular-progress-css-animated-angle-gradient

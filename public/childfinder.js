@@ -67,30 +67,41 @@ spotlight.prototype = {
         o3.setAttribute( 'class', 'not_select' );
         r = '';
         r += '<div style="width:100%;height:42px;" >';
-            r += '<div id="BTN_ALIGN_SPOTLIGHT"   style="float:left;width:42px;height:42px;background-color:rgb(255, 123, 0);background-image:url(./images/searching.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >child</div>';
+            r += '<div id="BTN_ALIGN_SPOTLIGHT"   style="float:left;width:24px;height:42px;background-color:rgb(255, 123, 0);background-image:url(./images/searching.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" ></div>';
+            r += '<div id="BTN_FINDMODE"          style="float:left;width:24px;height:42px;background-color:;overflow:hidden;" >';
+                r += '<div id="ID_FINDMODE_STATUS" style="width:48px;height:100%;transition:0.3s ease-in-out;" >';
+                    r += '<div style="display:block;float:left;width:50%;height:100%;writing-mode:vertical-lr;" >white</div>';
+                    r += '<div style="display:block;float:left;width:50%;height:100%;writing-mode:vertical-lr;" >cloud</div>';
+                r += '</div>';
+            r += '</div>';
             // r += '<div id="BTN_CLOSE_SPOTLIGHT"   style="float:right;width:26px;height:42px;background-image:url(./images/cancel-2.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >close</div>';
             r += '<div id="BTN_TIMESELECTOR"      style="float:right;width:26px;height:42px;background-image:url(./images/time.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >time</div>';
             // r += '<div id="BTN_CHILD_PROPERTY"    style="float:right;width:26px;height:42px;background-image:url(./images/hexagon.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" ></div>';
             r += '<div id="BTN_CLEAR_LIST"        style="float:right;width:26px;height:42px;background-image:url(./images/eraser.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >clear</div>';
             r += '<div id="BTN_REFRESH_LIST"      style="float:right;width:26px;height:42px;background-image:url(./images/recycle.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >refrsh</div>';
-            // r += '<div id="BTN_FOLDING_SPOTLIGHT" style="float:right;width:26px;height:42px;background-image:url(./images/prev.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >large</div>';
         r += '</div>';
         r += '<div style="width:100%;height:42px;" >';
             r += '<form onsubmit="return false;" >';
-            r += '<div id="BTN_LISTALL"  style="float:right;width:26px;height:42px;background-image:url(./images/list.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >all</div>';
-            r += '<div id="BTN_FIND"     style="float:right;width:32px;height:42px;background-image:url(./images/right-arrow-black-triangle.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" >';
-
-                // r += '<button type="submit" >find</button>';
-
-            r += '</div>';
-            r += '<div style="float:right;padding:10px 10px 10px 10px;" >';
-                r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:40px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
+            r += '<div id="BTN_FIND_OPTION" style="float:right;width:20px;height:42px;background-image:url(./images/arrow-black-triangle-down.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></div>';
+            r += '<div id="BTN_LISTALL"     style="float:right;width:20px;height:42px;background-image:url(./images/list.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >all</div>';
+            r += '<div id="BTN_FIND"        style="float:right;width:20px;height:42px;background-image:url(./images/right-arrow-black-triangle.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" >';
+        r += '</div>';
+        r += '<div id=""  style="float:left;width:32px;height:42px;background-color:transparent;background-image:url(./images/searching.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" ></div>';
+            r += '<div        style="float:left;padding:10px 3px 10px 0px;" >';
+                r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:36px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
             r += '</div>';
             r += '</form>';
         r += '</div>';
 
         o3.innerHTML = r;
         this.header     = this.frame.appendChild( o3 );
+        document.getElementById('BTN_FINDMODE').addEventListener('click',
+            (
+              function(e){
+                var ifs = document.getElementById('ID_FINDMODE_STATUS');
+                ifs.classList.toggle('mode_right50per');
+              }
+            ).bind( this ), false );
         document.getElementById('BTN_TIMESELECTOR').addEventListener( 'click',
             ( function(e) {
                 showTimelineSelector();
@@ -265,7 +276,7 @@ spotlight.prototype = {
             o.style.clear               = 'both';
             var r = '';
             r += '<div id="BTN_FOLDER1" style="float:left;width:24px;height:32px;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-            r += '<div style="float:left;width:80px;color:red;background-color:padding-left:4px;padding-top:8px;" >Whiteboard...</div>';
+            r += '<div style="float:left;width:80px;color:darkgrey;background-color:padding-left:4px;padding-top:8px;" >Whiteboard...</div>';
             o.innerHTML = r;
             var ffw = this.main.appendChild( o );
 
@@ -303,7 +314,7 @@ spotlight.prototype = {
             o.style.clear               = 'both';
             r = '';
             r += '<div id="BTN_FOLDER2" style="float:left;width:24px;height:32px;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-            r += '<div style="float:left;width:80px;color:red;background-color:rgb(241, 241, 241);padding-left:4px;padding-top:8px;" >Cloud...</div>';
+            r += '<div style="float:left;width:80px;color:darkgrey;background-color:rgb(241, 241, 241);padding-left:4px;padding-top:8px;" >Cloud...</div>';
             o.innerHTML = r;
             var ffct = this.main.appendChild( o );
 
@@ -416,21 +427,14 @@ spotlight.prototype = {
                         // alert( cid );
                         var cc = scanWhiteboardChild( cid );
                         if ( cc == null ) { console.log( 'child_id:' + cid + ':null');return;}
-                        // alert( cc.innerHTML );
     
                         var child_name = cc.getElementsByClassName('CHILD_NAME')[0].innerText;
-                        // alert( child_name );
                         var estimate   = cc.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
                         var h = estimate.substr(0, 2 );
                         var wbf = document.getElementById('WHITEBOARD_FRAME');
                         wbf.scrollTop = ( h - 8 ) * pixelPerHour;
                         if ( !c.hasAttribute('selected'))
                             new winker( cc, 7, 'wink_on' ).play();
-                        // var range = document.createRange();
-                        // range.setStart( c, 0 );
-                        // range.setEnd( c, 1 );
-                        // var mark = document.createElement( 'mark' );
-                        // range.surroundContents( mark );
                     }).bind(this), false );
             }
         }
