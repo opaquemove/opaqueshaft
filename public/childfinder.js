@@ -153,7 +153,7 @@ spotlight.prototype = {
                         // this.folder2.childNodes[i].style.backgroundColor = '';
                         this.folder2.childNodes[i].classList.remove( 'selected' );
                         this.folder2.childNodes[i].removeAttribute('selected');
-                        this.folder2.childNodes[i].classList.remove('mode_scalex50per');
+                        // this.folder2.childNodes[i].classList.remove('mode_scalex50per');
                     }
                     return;
                 }
@@ -162,14 +162,14 @@ spotlight.prototype = {
                         // c.style.backgroundColor = '';
                         c.classList.remove( 'selected' );
                         c.removeAttribute( 'selected' );
-                        c.classList.remove('mode_scalex50per');
+                        // c.classList.remove('mode_scalex50per');
 
                         break;
                     case false:
                         // c.style.backgroundColor = 'lightgrey';
                         c.classList.add( 'selected' );
                         c.setAttribute( 'selected', 'yes' );
-                        c.classList.add( 'mode_scalex50per' );
+                        // c.classList.add( 'mode_scalex50per' );
                         var tbar = document.getElementById('ID_TIMELINE_BAR_AREA');
                         new winker( tbar, 7, 'wink_blue_on' ).play();
                         console.log('winker:' + tbar);
@@ -396,7 +396,7 @@ spotlight.prototype = {
                 var o = document.createElement('DIV');
                 o.setAttribute( 'child_id', child_id );
                 o.setAttribute( 'class', 'PALLETE_CHILD' );
-                o.style.transition      = '0.3s ease-in-out';
+                // o.style.transition      = '0.3s ease-in-out';
                 o.style.height          = '50px';
                 o.style.float           = 'left';
 
