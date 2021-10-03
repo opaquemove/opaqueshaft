@@ -1038,7 +1038,7 @@ INPUT[type=password]:focus{
 	border-right:		1px solid lightgrey; */
 	font-size:			12px;
 	border-radius: 		0px;
-/*	overflow:			hidden;*/
+	/* overflow:			hidden; */
 	-webkit-user-select: none;
 	/* transform: 				rotate(-40deg); */
 
@@ -1491,6 +1491,12 @@ INPUT[type=password]:focus{
 .mode_right50per{
 	transform:				translateX(-50%);
 }
+
+.mode_scalex50per{
+	transform:				scale(0.7, 1 );
+	transform-origin: left;
+}
+
 /*
 http://kachibito.net/css/svg-circular-progress-css-animated-angle-gradient
 */

@@ -153,6 +153,7 @@ spotlight.prototype = {
                         // this.folder2.childNodes[i].style.backgroundColor = '';
                         this.folder2.childNodes[i].classList.remove( 'selected' );
                         this.folder2.childNodes[i].removeAttribute('selected');
+                        this.folder2.childNodes[i].classList.remove('mode_scalex50per');
                     }
                     return;
                 }
@@ -161,12 +162,14 @@ spotlight.prototype = {
                         // c.style.backgroundColor = '';
                         c.classList.remove( 'selected' );
                         c.removeAttribute( 'selected' );
+                        c.classList.remove('mode_scalex50per');
 
                         break;
                     case false:
                         // c.style.backgroundColor = 'lightgrey';
                         c.classList.add( 'selected' );
                         c.setAttribute( 'selected', 'yes' );
+                        c.classList.add( 'mode_scalex50per' );
                         var tbar = document.getElementById('ID_TIMELINE_BAR_AREA');
                         new winker( tbar, 7, 'wink_blue_on' ).play();
                         console.log('winker:' + tbar);
@@ -276,12 +279,12 @@ spotlight.prototype = {
             o.style.clear               = 'both';
             var r = '';
             r += '<div id="BTN_FOLDER1" style="float:left;width:24px;height:32px;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-position:center center;background-repeat:no-repeat;" >&nbsp;</div>';
-            r += '<div style="float:left;width:80px;color:darkgrey;background-color:padding-left:4px;padding-top:8px;" >Whiteboard...</div>';
+            r += '<div                  style="float:left;width:80px;color:darkgrey;background-color:padding-left:4px;padding-top:8px;" >Whiteboard...</div>';
             o.innerHTML = r;
             var ffw = this.main.appendChild( o );
 
             var oo = document.createElement('DIV');
-            oo.setAttribute('id', 'FOLDER_FIND_WHITEBOARD2');
+            oo.setAttribute('id', 'FOLDER_FIND_WHITEBOARD2');   //  明細リストエリア
             oo.innerText                = 'dummy';
             this.folder1 = this.main.appendChild( oo );
             document.getElementById('FOLDER_FIND_WHITEBOARD').addEventListener('click',
@@ -372,6 +375,7 @@ spotlight.prototype = {
     },
     
     //
+    //  ホワイトボード上のチャイルドをリストアップ
     //
     findWhiteboardChildHelper : function ( parent, keyword, children ){
         for ( var i=0; i<children.length; i++ ){
@@ -392,6 +396,7 @@ spotlight.prototype = {
                 var o = document.createElement('DIV');
                 o.setAttribute( 'child_id', child_id );
                 o.setAttribute( 'class', 'PALLETE_CHILD' );
+                o.style.transition      = '0.3s ease-in-out';
                 o.style.height          = '50px';
                 o.style.float           = 'left';
 
