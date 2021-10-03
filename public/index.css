@@ -840,6 +840,7 @@ INPUT[type=password]:focus{
 	border:				0px dotted snow;
 	padding:			0px 0px 0px 0px;
 	visibility: 		visible;
+	opacity:			0.8;
 	z-index:			2;
 }
 
