@@ -84,9 +84,9 @@ spotlight.prototype = {
             r += '<form onsubmit="return false;" >';
             r += '<div id="BTN_FIND_OPTION" style="float:right;width:20px;height:42px;background-image:url(./images/arrow-black-triangle-down.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></div>';
             r += '<div id="BTN_LISTALL"     style="float:right;width:20px;height:42px;background-image:url(./images/list.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" >all</div>';
-            r += '<div id="BTN_FIND"        style="float:right;width:20px;height:42px;background-image:url(./images/right-arrow-black-triangle.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" >';
-        r += '</div>';
-        r += '<div id=""  style="float:left;width:32px;height:42px;background-color:transparent;background-image:url(./images/searching.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" ></div>';
+            // r += '<div id="BTN_FIND"        style="float:right;width:20px;height:42px;background-image:url(./images/right-arrow-black-triangle.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" >';
+            // r += '</div>';
+            r += '<div id=""  style="float:left;width:32px;height:42px;background-color:transparent;background-image:url(./images/searching.png);background-size:12px;background-repeat:no-repeat;background-position:center center;" ></div>';
             r += '<div        style="float:left;padding:10px 3px 10px 0px;" >';
                 r += '<input type="text" id="TXT_KEYWORD2" name="TXT_KEYWORD2" autocomplete="off" style="width:36px;font-size:16px;color:black;background-color:transparent;outline:none;" />';
             r += '</div>';
@@ -115,11 +115,11 @@ spotlight.prototype = {
         // ( function(e) {
         //     this.close();
         // }).bind( this ), false );
-        document.getElementById('BTN_FIND').addEventListener( 'click',
-            ( function(e) {
-                this.keyword.value = '';
-                this.ctlMain();
-            }).bind( this ), false );
+        // document.getElementById('BTN_FIND').addEventListener( 'click',
+        //     ( function(e) {
+        //         this.keyword.value = '';
+        //         this.ctlMain();
+        //     }).bind( this ), false );
         document.getElementById('BTN_LISTALL').addEventListener( 'click',
         ( function(e) {
             this.keyword.value = '*';
