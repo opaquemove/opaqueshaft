@@ -193,18 +193,42 @@ function init()
 	new Button( 'ID_NAV2_CHILDFINDER',      ctlSpotlight ).play();
 
 	//	NAV2
-	document.getElementById( 'ID_NAV2_CHECKIN').addEventListener(
+	document.getElementById( 'ID_NAV2_CHECKINOUT').addEventListener(
 		'click',
 		function (e){
-			var o = document.getElementById('ID_MODE_CHECKIN');
-			o.dispatchEvent( new Event('click') );				
+			switch ( curWhiteboard ){
+				case 'WHITEBOARD':
+					var o = document.getElementById('ID_MODE_CHECKOUT');
+					o.dispatchEvent( new Event('click') );				
+					break;
+				case 'WHITEBOARD_CHECKOUT':
+					var o = document.getElementById('ID_MODE_CHECKIN');
+					o.dispatchEvent( new Event('click') );				
+					break;
+				}
 		}
 	);
-	document.getElementById( 'ID_NAV2_CHECKOUT').addEventListener(
+	// document.getElementById( 'ID_NAV2_CHECKOUT').addEventListener(
+	// 	'click',
+	// 	function (e){
+	// 		var o = document.getElementById('ID_MODE_CHECKOUT');
+	// 		o.dispatchEvent( new Event('click') );				
+	// 	}
+	// );
+
+	document.getElementById( 'ID_NAV2_SEARCH' ).addEventListener(
 		'click',
-		function (e){
-			var o = document.getElementById('ID_MODE_CHECKOUT');
-			o.dispatchEvent( new Event('click') );				
+		function(e){
+			console.log('transform');
+			// e.target.style.transform = 'translateX(50%)';
+
+			var o = document.getElementById('ID_NAV2_SEARCH2');
+			// o.classList.toggle('mode_right50per');
+			if ( o.style.transform == '' )
+				o.style.transform = 'translateX(-50%)';
+				else
+				o.style.transform = '';
+
 		}
 	);
 
