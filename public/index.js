@@ -216,15 +216,18 @@ function init()
 	// 	}
 	// );
 
-	document.getElementById( 'ID_NAV2_SEARCH' ).addEventListener(
+	document.getElementById( 'ID_NAV2_SEARCH3' ).addEventListener(
 		'click',
 		function(e){
 			console.log('transform');
 			var o = document.getElementById('ID_NAV2_SEARCH');
-			if ( o.style.width == '')
+			if ( o.style.width == ''){
 				o.style.width = '126px';
-				else
+				ctlSpotlight();
+			} else{
 				o.style.width = '';
+				ctlSpotlight();
+			}
 
 			// var o = document.getElementById('ID_NAV2_SEARCH2');
 			// o.style.left = '0px';
