@@ -220,14 +220,19 @@ function init()
 		'click',
 		function(e){
 			console.log('transform');
-			// e.target.style.transform = 'translateX(50%)';
-
-			var o = document.getElementById('ID_NAV2_SEARCH2');
-			// o.classList.toggle('mode_right50per');
-			if ( o.style.transform == '' )
-				o.style.transform = 'translateX(-50%)';
+			var o = document.getElementById('ID_NAV2_SEARCH');
+			if ( o.style.width == '')
+				o.style.width = '126px';
 				else
-				o.style.transform = '';
+				o.style.width = '';
+
+			// var o = document.getElementById('ID_NAV2_SEARCH2');
+			// o.style.left = '0px';
+			// o.classList.toggle('mode_right50per');
+			// if ( o.style.transform == '' )
+			// 	o.style.transform = 'translateX(0)';
+			// 	else
+			// 	o.style.transform = '';
 
 		}
 	);

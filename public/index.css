@@ -152,7 +152,7 @@ INPUT[type=password]:focus{
 	position:				absolute;
 	top:					-42px;		/* dummy */ 
 	left:					42px;
-	width:					200px;		/* old 168px */
+	width:					300px;		/* old 168px */
 	height:					63px;		/* old 42px */
 	color:					white;
 	background-color:		transparent;
