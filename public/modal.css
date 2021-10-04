@@ -13,7 +13,7 @@
 
 
 #MODAL_OVERLAY{
-	z-index:			70000;
+	z-index:			40000;	/* 70000 to 40000 */
 	visibility:			hidden;
 	position:			fixed;
 	top:				0px;

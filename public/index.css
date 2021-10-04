@@ -951,7 +951,7 @@ INPUT[type=password]:focus{
 
 #REPORT_FRAME{
 	position:				absolute;
-	top:					10000px;
+	top:					80000px;
 	left:					0px;
 	width:					calc(100% - 0px);
 	height:					100%;	/* dummy fitting */
