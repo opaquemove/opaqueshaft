@@ -68,18 +68,7 @@ socket.on( 'sync', function( data ){
     // oLog.open( 3 );
     updateFlg   = true;
 
-
     return;
-    switch( pac.cmd ){
-        case 'addchild':
-            arHM = pac.data.estimate.split(':');
-            var top		= ( parseInt( arHM[0] ) - 8 ) * pixelPerHour;
-            var left	= ( parseInt( arHM[1] ) );
-            var child_id = pac.data.child_id;
-            var oChild  = getChild( child_id );
-            addChild( top, left, child_id, oChild.child_name, oChild.kana, oChild.child_type, oChild.child_grade, null, null, false, false, false );
-            break;
-    }
 })
 
 
@@ -92,37 +81,8 @@ function exchange(){
     // socket.emit( 'sync', '{ "data":{(' + JSON.stringify( json_children ) + ')} }' );
     return;
 
-    var children = getMarkedChild();
-    if ( children.length == 0 ) return;
-    for ( var i=0; i<children.length; i++ ){
-        var c = children[i];
-        var child_id = c.getAttribute('child_id' );
-        // socket.emit( 'opaqueshaft', '{ "cmd":"addchild", "data":{"child_id":' + child_id + ', "estimate":"17:00"} }' );
-        socket.emit( 'opaqueshaft', '{ cmd:addchild, data:' +  + ' }' );
-    }
 }
 
-//
-//  サーバからチャイルドリストを取得し、実体化
-//
-// socket.on( 'getchildrenlist', function ( msg ) {
-//     var r = "";
-//     var children = eval( msg );
-//     var o = document.getElementById('AREA');
-//     o.style.visibility = 'visible';
-//     for (var i=0; i<children.length; i++) {
-//         r += children[i].child_name + '<br/>'; 
-//         addChild( i * 20, i * 20, children[i].child_id,
-//              children[i].child_name, children[i].kana, children[i].child_type, children[i].child_grade, null, null, false, false, false );
-//     }
-//     r += '<br/>length:' + children.length;
-
-//     r += "<div>";
-//     r += "<button onclick='clearArea();' >OK</button>";
-//     r += "</div>";
-//     o.innerHTML = r;
-
-// })
 
 /*
 function loadChildrenForm(){

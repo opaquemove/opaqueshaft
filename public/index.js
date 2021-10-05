@@ -439,8 +439,6 @@ function dropHandler( e ){
 	var pxLeft  = ( e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left );
 	var perLeft = ( Math.floor( pxLeft / wb.offsetWidth * 10000 ) / 100 ) + '%';
 
-	//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
-//			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, null, false, false, false );
 	addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
 			// e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
 			perLeft,
@@ -1303,8 +1301,6 @@ function loadWhiteboardChildren(){
 
 						for ( var i=0; i<result.length; i++ ){
 							var c = result[i];
-							// var cc = addChild( c.coordi_top, ( w * ( c.coordi_left / 100 ) ),
-							// var cc = addChild( c.coordi_top, c.coordi_left,
 							var cc = addChild( c.coordi_top, c.coordi_left + '%',
 								c.child_id, c.child_name, c.kana,
 								c.child_type, c.child_grade, c.imagefile, c.remark, c.escort, ( c.absent == 1 )?true : false, false );
@@ -2554,119 +2550,8 @@ function addWhiteboardManage( oParent, Result ){
 
 }
 
-//
-//	チルドレンパレット関連
-//
-//
-//	チルドレンパレットリスト生成処理
-//
-/*
-function makeChildrenPalleteList()
-{
-	document.getElementById( 'CHILDREN_PALLETE_CONTENT' ).innerHTML = '';
-	if ( !checkSign()){
-		document.getElementById( 'CHILDREN_PALLETE_FRAME' ).style.visibility = 'hidden';
-		return;
-	}
-	document.getElementById( 'CHILDREN_PALLETE_FRAME' ).style.visibility = 'visible';
-	var r = "";
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		switch ( xmlhttp.readyState){
-			case 1://opened
-			case 2://header received
-			case 3://loading
-				var o = document.getElementById( 'CHILDREN_PALLETE_CONTENT' );
-				o.innerText = 'access...';
-				break;
-			case 4://done
-				r = "";
-				if ( xmlhttp.status == 200 ){
-					var result = JSON.parse( xmlhttp.responseText );
-					//r += xmlhttp.responseText;
-					var o = document.getElementById('CHILDREN_PALLETE_CONTENT');
-					o.innerText = '';
-					for ( var i=0; i<result.length; i++ ){
-						addChildManage( o, result[i] );
-					}
-					//o.innerHTML = r;
-				} else{
-					document.getElementById('CHILDREN_PALLETE_CONTENT').innerText = xmlhttp.status;
-				}
-				break;
-		}
-	}
-	try{
-		xmlhttp.open("POST", "/accounts/childlist", true );
-		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send();
 
-	} catch ( e ) {
-		oLog.log( null, 'makeChildrenPalleteList : ' + e );
-		// alert( e );
-	}
-}
-*/
 
-//
-//	チャイルド選択し、プロパティ表示
-//
-// function selectChild( e ){
-// 	var c = scanChild( e.target );
-// 	if ( c != null ){
-// 		var id = c.getAttribute('child_id');
-// 		console.log( c.getAttribute( id ));
-// 		propertyChild2( id );
-// 	}
-// }
-
-//
-//	パレット内のチャイルド選択
-//
-/*
-function markPalleteChild( e ){
-	var c = scanChild( e.target );
-	if ( c != null ){
-		var m = c.getAttribute('selected');
-		if ( m == null ){
-			c.style.color			= 'gray';
-			c.style.backgroundColor = '#EEEEEE';
-			c.setAttribute('selected', 'yes' );
-			palleteTimeSelector.open();
-			//ctlTimelineSelector( 'open', null );
-		} else {
-			c.style.color			= '';
-			c.style.backgroundColor = '';
-			c.removeAttribute('selected' );
-			var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
-			var c_selected = 0;
-			for ( var i=0; i<cpc.childNodes.length; i++ ){
-				if ( cpc.childNodes[i].hasAttribute('selected') )
-					c_selected++;
-			}
-			console.log('c_selected:' + c_selected );
-			if ( c_selected == 0 ){
-				palleteTimeSelector.close();
-				// ctlTimelineSelector('close', null );
-				}
-	
-		}
-		var id = c.getAttribute('child_id');
-	} else{
-		var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
-		for ( var i=0; i<cpc.childNodes.length; i++ ){
-			if ( cpc.childNodes[i].getAttribute('selected') != null ){
-				cpc.childNodes[i].style.color = '';
-				cpc.childNodes[i].style.backgroundColor = '';
-				cpc.childNodes[i].removeAttribute('selected');
-			}
-		}
-		palleteTimeSelector.close();
-		// ctlTimelineSelector('close', null );
-
-	}
-}
-*/
 
 //
 //	セレクトしたチャイルドをホワイトボードにチェックイン

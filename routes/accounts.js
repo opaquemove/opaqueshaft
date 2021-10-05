@@ -37,11 +37,6 @@ router.post('/', function(req, res, next ){
 router.get('/list', function(req, res, next ){
     db.any( 'SELECT * FROM accounts ' )
       .then( rows => {
-//          var list = [];
-//          for( var result of rows ){
-//              list.push( result );
-//          }
-//          res.json( list );
             res.json( rows );
       });
 });
@@ -285,6 +280,7 @@ router.post('/whiteboardupdate', function(req, res, next ){
           else    res.json( { status: 'FAILED', message: 'can not update whiteboard' });
     } else{
       
+      var cnt = 0;
       for ( var i=0; i<children.length; i++ ){
         var rslt = children[i];
         var acc_id      = rslt.operator;
@@ -307,6 +303,7 @@ router.post('/whiteboardupdate', function(req, res, next ){
           values: [ acc_id, day, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_top2, coordi_left, remark, child_id ] } )
         .then( function() {
           console.log( 'insert:child_id:' + child_id );
+          cnt++;
         })
         .catch( err => {
           console.log( err );
@@ -315,7 +312,7 @@ router.post('/whiteboardupdate', function(req, res, next ){
       }
 
       // res.json( { status: 'SUCCESS', message:  'update whiteboard' });
-      if ( rc ) res.json( { status: 'SUCCESS', message:  'update whiteboard' });
+      if ( rc ) res.json( { status: 'SUCCESS', message:  'update whiteboard', procs: cnt });
       else    res.json( { status: 'FAILED', message: 'can not update whiteboard' });
 
     }
