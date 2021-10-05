@@ -2542,7 +2542,7 @@ function addWhiteboardManage( oParent, Result ){
     	r += ymd;
     r += '</div>';
     r += '<div style="text-align:center;" >';
-    	r += c_children + '(' + c_resv_children + ')' + ' child';
+    	r += c_children + '(' + c_resv_children + ' rsrv)' + ' child';
     r += '</div>';
 	c.innerHTML = r;
     var cc = oParent.appendChild( c );
