@@ -1465,18 +1465,18 @@ function saveWhiteboardHelper(){
 	// var progress = document.getElementById('SAVE_PROGRESS');
 	// var r = '';
 	if ( xmlhttp.status == 200){
-		oLog.log( null, 'save whiteboard html data.' );
+		oLog.log( null, 'ホワイトボード(' + day + ')を保存しました.' );
 		// r += '<div>save whiteboard html data.</div>';
 	} else{
-		oLog.log( null, 'save whiteboard html data. FAILED' );
+		oLog.log( null, 'ホワイトボード(' + day + ')の保存に失敗しました.' );
 		// r += '<div>save whiteboard html data. FAILED</div>';
 	}
-	
+	oLog.log( null, xmlhttp.responseText );
 	//	Results削除
 	// rc = deleteChildResult( dayWhiteboard );
 	// oLog.log( null, 'delete child results...' );
 
-	oLog.log( null, 'save process completed.' );
+	// oLog.log( null, 'save process completed.' );
 	oLog.open( 5 );
 
 	updateFlg = false;

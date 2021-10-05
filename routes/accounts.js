@@ -243,9 +243,8 @@ router.post('/whiteboardload', function(req, res, next ){
 router.post('/whiteboardupdate', function(req, res, next ){
     var day           = req.body.day;
     var desc          = req.body.desc;
-    // var html          = req.body.html;
-    // var html_absent   = req.body.html_absent;
     var json_children = req.body.json_children;
+    var rc = true;
 
     var children      = JSON.parse( json_children );
     if ( children != null )
@@ -253,16 +252,18 @@ router.post('/whiteboardupdate', function(req, res, next ){
       else
       console.log( 'whiteboardupdate children.length:' + null );
 
+
     console.log('day:'    + day );
-    // console.log('alive:'  + html );
-    // console.log('absent:' + html_absent );
-    // console.log('json_children:' + json_children );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
         text: "UPDATE whiteboards SET description = $1, lastupdate = now() WHERE whiteboard_id = ( SELECT whiteboard_id FROM whiteboards WHERE day = $2)",
         values: [ desc, day ] } )
       .then( function() {
         // res.json( { status: 'SUCCESS', message:  'update whiteboard' });
+      })
+      .catch( err => {
+        console.log( err );
+        rc = false;
       });
 
     var sql = "delete from results where day = $1";
@@ -273,10 +274,15 @@ router.post('/whiteboardupdate', function(req, res, next ){
         values: [ day ] } )
       .then( function() {
         // res.json( { status: 'SUCCESS', message:  'delete child result' });
+      })
+      .catch( err => {
+        console.log( err );
+        rc = false;
       });
       
     if ( children == null ){
-        res.json( { status: 'SUCCESS', message:  'update whiteboard' });
+        if ( rc ) res.json( { status: 'SUCCESS', message:  'update whiteboard' });
+          else    res.json( { status: 'FAILED', message: 'can not update whiteboard' });
     } else{
       
       for ( var i=0; i<children.length; i++ ){
@@ -299,10 +305,17 @@ router.post('/whiteboardupdate', function(req, res, next ){
           text: inssql,
           values: [ acc_id, day, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_top2, coordi_left, remark, child_id ] } )
         .then( function() {
+        })
+        .catch( err => {
+          console.log( err );
+          rc = false;
         });
       }
 
-      res.json( { status: 'SUCCESS', message:  'update whiteboard' });
+      // res.json( { status: 'SUCCESS', message:  'update whiteboard' });
+      if ( rc ) res.json( { status: 'SUCCESS', message:  'update whiteboard' });
+      else    res.json( { status: 'FAILED', message: 'can not update whiteboard' });
+
     }
 });
 
