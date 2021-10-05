@@ -217,7 +217,7 @@ function reportWhiteboard(){
     }
     if ( oTile.opened('menu'))
         oTile.close('menu');
-        
+
     var t = '';
 	t += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
 		t += 'report  ' + dayWhiteboard;
@@ -615,7 +615,13 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
 
     console.log('before2 addChild(top,left)=' + top + ',' + left );
 
-    c.style.top         = top + 'px';
+    // c.style.top         = top + 'px';
+    if ( ( top + '' ).indexOf( '%', 0 ) > -1 )
+        c.style.top     = top;
+        else
+        c.style.top     = top + 'px';
+
+
     if ( ( left + '' ).indexOf( '%', 0 ) > -1 )
         c.style.left    = left;
         else

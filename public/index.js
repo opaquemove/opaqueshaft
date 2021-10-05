@@ -1491,6 +1491,7 @@ function getJSONChildren(){
 	// var w = document.body.clientWidth;
 
 	var w = document.getElementById('WHITEBOARD').offsetWidth;
+	var h = document.getElementById('WHITEBOARD').offsetHeight;
 
 	var jsonChildren = [];
 	var children = document.getElementById('WHITEBOARD').childNodes;
@@ -1503,6 +1504,7 @@ function getJSONChildren(){
 		var child_grade	= c.getAttribute('child_grade');
 		var imagefile	= c.getAttribute('imagefile');
 		var coordi_top	= c.offsetTop;
+		var coordi_top2 = Math.floor( c.offsetTop  / h * 10000 ) / 100;
 		// var coordi_left	= c.offsetLeft;
 		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
 		var checkin		= c.getAttribute('checkin');
@@ -1528,6 +1530,7 @@ function getJSONChildren(){
 			 'direction'	: direction,
 			 'escort'		: escort,
 			 'coordi_top'	: coordi_top,
+			 'coordi_top2'	: coordi_top2,
 			 'coordi_left'	: coordi_left,
 			 'remark'		: remark,
 			 'absent' 		: 0,
@@ -1544,6 +1547,7 @@ function getJSONChildren(){
 		var child_grade	= c.getAttribute('child_grade');
 		var imagefile	= c.getAttribute('imagefile');
 		var coordi_top	= c.offsetTop;
+		var coordi_top2 = Math.floor( c.offsetTop  / h * 10000 ) / 100;
 		// var coordi_left	= c.offsetLeft;
 		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
 		var checkin		= c.getAttribute('checkin');
@@ -1570,6 +1574,7 @@ function getJSONChildren(){
 			 'direction'	: direction,
 			 'escort'		: escort,
 			 'coordi_top'	: coordi_top,
+			 'coordi_top2'	: coordi_top2,
 			 'coordi_left'	: coordi_left,
 			 'remark'		: remark,
 			 'absent' 		: absent,
@@ -2817,9 +2822,13 @@ function mDown( e ) {
 
 	// var w = document.body.clientWidth;
 	var w = document.getElementById('WHITEBOARD').offsetWidth;
-	var ratioLeft = Math.floor( curChild.offsetLeft / w * 10000 ) / 100;
+	var h = document.getElementById('WHITEBOARD').offsetHeight;
+	var ratioLeft = Math.floor( curChild.offsetLeft   / w * 10000 ) / 100;
+	var ratioTop  = Math.floor( curChild.offsetTop    / h * 10000 ) / 100;
 
-	console.log('mDown:' + '(' + curChild.offsetLeft + '/' + w + ')' + ratioLeft );
+	console.log('mDown:top:'  + '(' + curChild.offsetTop  + '/' + h + ')' + ratioTop );
+	console.log('mDown:left:' + '(' + curChild.offsetLeft + '/' + w + ')' + ratioLeft );
+
 	//クラス名に .drag を追加
 	curChild.classList.add("drag");
 	curChildZIndex = curChild.style.zIndex;
@@ -2872,6 +2881,7 @@ function mMove( e ){
 	var touchdevice = ( 'ontouchend' in document );
 	// var w = document.body.clientWidth;
 	var w = document.getElementById('WHITEBOARD').offsetWidth;
+	var h = document.getElementById('WHITEBOARD').offsetHeight;
 
 	// console.log('mMove:' + e.type );
 	//ドラッグしている要素を取得
@@ -2920,6 +2930,8 @@ function mMove( e ){
 		//if ( !checkOtherChildCoordinate( drag, event.pageX - x, event.pageY - y ) ) return;
 		if ( !checkOtherChildCoordinate( drag, event.pageX - x - old_left, event.pageY - y - old_top ) ) return;
 		drag.style.top  = event.pageY - y + "px";
+		// drag.style.top  = ( Math.floor( ( event.pageY - y ) / h * 10000 ) / 100 ) + '%';
+
 		// drag.style.left = event.pageX - x + "px";
 		drag.style.left = ( Math.floor( ( event.pageX - x ) / w * 10000 ) / 100 ) + '%';
 
