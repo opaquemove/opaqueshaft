@@ -435,10 +435,15 @@ function dropHandler( e ){
 
 	var p = e.target.parentNode;
 
+	// leftを相対座標に変換
+	var pxLeft  = ( e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left );
+	var perLeft = ( Math.floor( pxLeft / wb.offsetWidth * 10000 ) / 100 ) + '%';
+
 	//var escort = document.getElementById('CPC_ESCORT_CHILD').getAttribute('flag');
 //			addChild( ( arHM[0] - 8 ) * 100, arHM[1] * 160, oChild.child_id, oChild.child_name, oChild.child_type,oChild.child_grade, null, false, false, false );
 	addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
-			e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
+			// e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
+			perLeft,
 			oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, oChild.imagefile, null, false, false, false );
 	dndOffsetX = 0;
 	dndOffsetY = 0;
