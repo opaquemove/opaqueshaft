@@ -305,6 +305,7 @@ router.post('/whiteboardupdate', function(req, res, next ){
           text: inssql,
           values: [ acc_id, day, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_top2, coordi_left, remark, child_id ] } )
         .then( function() {
+          console.log( 'insert:child_id:' + child_id );
         })
         .catch( err => {
           console.log( err );
