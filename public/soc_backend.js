@@ -607,7 +607,7 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
                 r += '<div style="float:left;width:28px;height:28px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
                 r += '</div>';
             }
-            r += '<div class="TYPE_GRADE vh-center"  style="height:20px;float:right;font-size:12px;text-align:right;" >';
+            r += '<div class="TYPE_GRADE vh-center"  style="font-weight:bold;height:20px;float:right;font-size:12px;text-align:right;" >';
                 r += child_grade + child_type;
                 // r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';" >●</span>'
             r += '</div>';
