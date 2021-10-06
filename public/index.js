@@ -1414,28 +1414,30 @@ function saveWhiteboard(){
 	r += '<div style="margin:0 auto;width:70%;font-size:18px;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
-		r += '<div style="padding-bottom:20px;" >';
+		r += '<div style="padding-bottom:10px;" >';
 		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;font-size:16px;" readonly value="' + dayWhiteboard + '" />';
 		r += '</div>';
 		r += '<div>Description:</div>';
-		r += '<div style="clear:both;font-size:12px;width:100%;height:60px;border:0px solid gray;" >';
+		r += '<div style="clear:both;font-size:12px;width:100%;height:40px;border:0px solid gray;" >';
 		r += '<textarea id="WB_DESC" name="desc" style="width:100%;" >' + wb_description + '</textarea>';
 		r += '</div>';
 		r += '<div>Report:</div>';
-		r += '<div style="clear:both;font-size:12px;width:100%;height:60px;border:0px solid gray;" >';
-		r += '<textarea id="WB_REPORT" name="report" style="width:100%;height:64px;" >' + wb_report + '</textarea>';
+		r += '<div style="clear:both;font-size:12px;width:100%;height:50px;border:0px solid gray;" >';
+		r += '<textarea id="WB_REPORT" name="report" style="width:100%;height:48px;" >' + wb_report + '</textarea>';
 		r += '</div>';
 		r += '</form>';
 
-		r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
-			r += '<button id="BTN_SAVEWHITEBOARD" type="button" ';
-			r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+		r += '<div style="margin:0 auto;width:100%;padding-top:20px;">';
+			r += '<button id="BTN_SAVEWHITEBOARD" class="accept_button" type="button" ';
+			// r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
 			r += ' onclick="saveWhiteboardHelper();closeModalDialog();"   >';
+			r += 'save whiteboard';
 			r += '</button>';
 
-			r += '<button id="" type="button" ';
-			r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+			r += '<button id="" type="button" class="cancel_button" ';
+			// r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
 			r += ' onclick="closeModalDialog();" >';
+			r += 'cancel';
 			r += '</button>'
 
         r += '</div>';

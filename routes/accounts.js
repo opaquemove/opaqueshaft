@@ -421,7 +421,7 @@ router.post('/resultwhiteboard', function(req, res, next ){
   var day    = req.body.day;
   res.header('Content-Type', 'application/json;charset=utf-8');
   db.any( {
-      text: 'SELECT r.*, c.kana, c.imagefile FROM results r INNER JOIN children c ON c.child_id = r.child_id WHERE r.day = $1',
+      text: 'SELECT r.*, c.kana, c.imagefile FROM results r INNER JOIN children c ON c.child_id = r.child_id WHERE r.day = $1 AND r.revision = ( SELECT revision FROM whiteboards WHERE day = $1 )',
       values: [ day ] } )
     .then( rows => {
           res.json( rows );
