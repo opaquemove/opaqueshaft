@@ -241,6 +241,9 @@ router.post('/whiteboardupdate', function(req, res, next ){
     var json_children = req.body.json_children;
     var rc = true;
 
+    var revision = new Date();
+    console.log( 'revision:' + revision.getTime() );
+
     var children      = JSON.parse( json_children );
     if ( children != null )
       console.log( 'whiteboardupdate children.length:' + children.length );
@@ -251,8 +254,8 @@ router.post('/whiteboardupdate', function(req, res, next ){
     console.log('day:'    + day );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
-        text: "UPDATE whiteboards SET description = $1, lastupdate = now() WHERE whiteboard_id = ( SELECT whiteboard_id FROM whiteboards WHERE day = $2)",
-        values: [ desc, day ] } )
+        text: "UPDATE whiteboards SET description = $1, lastupdate = now(), revision = $3 WHERE whiteboard_id = ( SELECT whiteboard_id FROM whiteboards WHERE day = $2)",
+        values: [ desc, day, revision.getTime() ] } )
       .then( function() {
         // res.json( { status: 'SUCCESS', message:  'update whiteboard' });
       })
@@ -261,12 +264,12 @@ router.post('/whiteboardupdate', function(req, res, next ){
         rc = false;
       });
 
-    var sql = "delete from results where day = $1";
+    var sql = "delete from results where day = $1 and revision <> $2";
     console.log( 'sql:' + sql );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
         text: sql,
-        values: [ day ] } )
+        values: [ day, revision.getTime() ] } )
       .then( function() {
         // res.json( { status: 'SUCCESS', message:  'delete child result' });
       })
@@ -295,11 +298,11 @@ router.post('/whiteboardupdate', function(req, res, next ){
         var coordi_left = rslt.coordi_left;
         var remark      = rslt.remark;
         console.log( 'debug.child_id:' + child_id );
-        var inssql = "insert into results( acc_id, day, child_id, child_name, child_grade, child_type, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_left, remark, lastupdate ) select $1 acc_id, $2, child_id,child_name,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, $8 absent, $9 coordi_top, $10 coordi_left, $11 remark, now() lastupdate from children where child_id = $12";
+        var inssql = "insert into results( acc_id, day, child_id, child_name, child_grade, child_type, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_left, remark, lastupdate, revision ) select $1 acc_id, $2, child_id,child_name,child_grade,child_type,$3 checkin, $4 estimate, $5 checkout, $6 escort, $7 direction, $8 absent, $9 coordi_top, $10 coordi_left, $11 remark, now() lastupdate, $12 revision from children where child_id = $13";
         console.log( 'sql:' + inssql );
         db.none( {
           text: inssql,
-          values: [ acc_id, day, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_left, remark, child_id ] } )
+          values: [ acc_id, day, checkin, estimate, checkout, escort, direction, absent, coordi_top, coordi_left, remark, revision.getTime(), child_id ] } )
         .then( function() {
           console.log( 'insert:child_id:' + child_id );
           cnt++;
