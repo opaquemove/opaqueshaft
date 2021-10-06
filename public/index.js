@@ -759,15 +759,15 @@ Tile.prototype = {
 				 this.close();
 			} ).bind( this ), false );
 
-		new Button( 'MODAL_TILE_SIGN',    function(){ accountProperty(); oTile.close('menu');} ).play();
-		new Button( 'MODAL_TILE_SAVE',    function(){ saveWhiteboard(); oTile.close('menu'); } ).play();
-		new Button( 'MODAL_TILE_SIGNOUT', function(){ signoutForm(); oTile.close('menu'); } ).play();
-		new Button( 'MODAL_TILE_CLEAR',   function(){ clearWhiteboard(); oTile.close('menu'); } ).play();
+		new Button( 'MODAL_TILE_SIGN',    function(){ accountProperty(); oTile.close('menu'); hideStartIcon();} ).play();
+		new Button( 'MODAL_TILE_SAVE',    function(){ saveWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
+		new Button( 'MODAL_TILE_SIGNOUT', function(){ signoutForm(); oTile.close('menu');hideStartIcon(); } ).play();
+		new Button( 'MODAL_TILE_CLEAR',   function(){ clearWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
 		// new Button( 'MODAL_TILE_ABSENT',  function(){ absentWhiteboard(); oTile.close('menu'); } ).play();
-		new Button( 'MODAL_TILE_OPEN',    function(){ openWhiteboard(); oTile.close('menu'); } ).play();
-		new Button( 'MODAL_TILE_CLOSE',   function(){ closeWhiteboard(); oTile.close('menu'); } ).play();
-		new Button( 'MODAL_TILE_REPORT',  function(){ reportWhiteboard(); oTile.close('menu'); } ).play();
-		new Button( 'MODAL_TILE_LOG',  	  function(){ ctlMessageLog(); oTile.close('menu'); } ).play();
+		new Button( 'MODAL_TILE_OPEN',    function(){ openWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
+		new Button( 'MODAL_TILE_CLOSE',   function(){ closeWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
+		new Button( 'MODAL_TILE_REPORT',  function(){ reportWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
+		new Button( 'MODAL_TILE_LOG',  	  function(){ ctlMessageLog(); oTile.close('menu');hideStartIcon(); } ).play();
 
 		var tiles = document.getElementById( 'ID_TILES' );
 		tiles.style.display	= 'none';
@@ -1905,7 +1905,7 @@ function Nav( func ){
 	r += '</div>';
 	r += '<div marked="yes" target="close" class="nav_icon2" ';
 	r += ' style="text-align:center;position:absolute;top:64px;left:64px;background-image:url(./images/compass.png);background-size:20px;background-position:center center;background-repeat:no-repeat;" >';	// ON_OFF
-		r += '&nbsp';
+		r += 'NAV';
 	r += '</div>';
 
 	m.innerHTML				= r;
@@ -2034,7 +2034,8 @@ function fitting(){
 
 	var nsi2 = document.getElementById('NAV_START_ICON2');
 	// nsi2.style.top = ( ( h / 2 ) - ( tb_height + ( nsi2.offsetHeight / 2 ) ) ) + 'px';
-	nsi2.style.top = ( h - nsi2.offsetHeight ) + 'px';
+	// nsi2.style.top = ( h - nsi2.offsetHeight ) + 'px';
+	nsi2.style.top = '42px';
 	// nsi2.style.left	= ( w - 42 ) + 'px';
 	nsi2.style.left	= ( ( w / 2 ) - ( nsi2.offsetWidth / 2 ) ) + 'px';
 

@@ -234,7 +234,10 @@ function reportWhiteboard(){
 function showTile(){
 
     if ( oTile.opened( 'menu' ))    oTile.close( 'menu' );
-        else                oTile.open( 'menu' );
+        else{
+            if ( oNav.opened() ) oNav.close();    
+            oTile.open( 'menu' );
+        }
 
 }
 
@@ -988,7 +991,7 @@ function propertyChildren(){
 			r += '<div style="width:100%;padding-top:4px;text-align:center;" >';
 				r += '<button id="BTN_UPDATE_CHILD_REMARK_' + id + '" class="accept_button" ';
                 // r += ' style="background-color:transparent;border:none;" ';
-                r += '>close';
+                r += '>update';
                 r += '</button>';
 			r += "</div>";
 
@@ -1829,29 +1832,29 @@ function accountProperty(){
 	// r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 	// 	r += 'Account property';
     // r += '</div>';
-    r += "<div style='width:80%;margin:10% auto;'  >";
+    r += "<div style='width:80%;margin:0 auto;'  >";
         r += "<form name='sign_form' onsubmit='return false;' >";
-            r += "<table align='center' >";
+            r += "<table align='center' width='100%' >";
             r += "<tr>";
             r += "<td>Account ID:</td>";
             r += "</tr>";
             r += "<tr>";
-            r += "<td><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 readonly value='" + acc_id + "'/></td>";
+            r += "<td><input style='width:100%;' type='text' id='acc_id' name='id' tabindex=1 readonly value='" + acc_id + "'/></td>";
             r += "</tr>";
             r += "<tr>";
             r += "<td>Account Name:</td>";
             r += "</tr>";
             r += "<tr>";
-            r += "<td><input style='width:200px;height:18px;' type='text' name='acc_name' tabindex=2 readonly value='" + oAcc.acc_name + "' /></td>";
+            r += "<td><input style='width:100%;height:18px;' type='text' name='acc_name' tabindex=2 readonly value='" + oAcc.acc_name + "' /></td>";
             r += "</tr>";
             r += "<tr>";
             r += "<td>Range:</td>";
             r += "</tr>";
             r += "<tr>";
-            r += "<td><input style='width:200px;height:18px;' type='text' name='range_id' tabindex=2 readonly value='" + oAcc.range_id + "' /></td>";
+            r += "<td><input style='width:100%;height:18px;' type='text' name='range_id' tabindex=2 readonly value='" + oAcc.range_id + "' /></td>";
             r += "</tr>";
             r += "<tr>";
-            r += "<td><div style='width:128px;height:128px;border-radius:45%;background-image:url(./images/accounts/" + acc_id + ".jpeg);background-size:128px;background-position:center center;background-repeat:no_repeat;' ></div></td>";
+            r += "<td><div style='width:96px;height:96px;border-radius:45%;background-image:url(./images/accounts/" + acc_id + ".jpeg);background-size:128px;background-position:center center;background-repeat:no_repeat;' ></div></td>";
             r += "</tr>";
             r += "</table>";
         r += "</form>";
