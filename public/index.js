@@ -435,11 +435,17 @@ function dropHandler( e ){
 
 	var p = e.target.parentNode;
 
+	// topを相対座標に変換
+	var pxTop 	= ( e.pageY - e.target.offsetTop  - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top );
+	var perTop	= ( Math.floor( pxTop / wb.offsetHeight * 10000 ) / 100 ) + '%';
+
 	// leftを相対座標に変換
 	var pxLeft  = ( e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left );
 	var perLeft = ( Math.floor( pxLeft / wb.offsetWidth * 10000 ) / 100 ) + '%';
 
-	addChild( e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
+	addChild(
+			//  e.pageY - e.target.offsetTop - dndOffsetY + wb.parentNode.scrollTop - wb.parentNode.offsetTop + child_top,
+			perTop,
 			// e.pageX - e.target.offsetLeft - p.offsetLeft - dndOffsetX + wb.parentNode.scrollLeft + child_left,
 			perLeft,
 			oChild.child_id, oChild.child_name, oChild.kana, oChild.child_type,oChild.child_grade, oChild.imagefile, null, false, false, false );
@@ -1024,13 +1030,18 @@ function setTimelinebarByScroll(){
 //	minuteパラメータはまだ対応検討中
 //
 function moveMarkedChildByTimelinebar( hour, minute ){
+	var h = document.getElementById('WHITEBOARD').offsetHeight;
 	var children = getMarkedChild();
 	if ( children.length == 0 ) return;
 	for ( var i=0; i<children.length; i++ ){
 		var c = children[i];
 		var top_delta = c.offsetTop % pixelPerHour;
 		// 座標変更
-		c.style.top = ( ( hour - 8 ) * pixelPerHour + top_delta ) + 'px';
+		var pxTop = ( ( hour - 8 ) * pixelPerHour + top_delta );
+		var perTop = ( Math.floor( pxTop / h * 10000 ) / 100 ) + '%';
+		// c.style.top = ( ( hour - 8 ) * pixelPerHour + top_delta ) + 'px';
+		c.style.top	= perTop;
+
 		// チェックアウト予定時刻変更
 		var et = c.getElementsByClassName('ESTIMATE_TIME');
 		if ( et != null ){
@@ -1301,7 +1312,7 @@ function loadWhiteboardChildren(){
 
 						for ( var i=0; i<result.length; i++ ){
 							var c = result[i];
-							var cc = addChild( c.coordi_top, c.coordi_left + '%',
+							var cc = addChild( c.coordi_top + '%', c.coordi_left + '%',
 								c.child_id, c.child_name, c.kana,
 								c.child_type, c.child_grade, c.imagefile, c.remark, c.escort, ( c.absent == 1 )?true : false, false );
 							if ( c.checkout != '' && c.checkout != null )
@@ -1370,6 +1381,7 @@ function loadWhiteboardReserveChildren( day ){
 							var child_grade = c.child_grade;
 							console.log( 'top:' + top );
 							console.log( 'child_id:' + c.child_id + ',' + c.sott + ',' + ar_hm[0] + ':' + ar_hm[1] );
+							// 将来削除なので修正はしない
 							addChild( top, left, child_id, child_name, kana, child_type,
 								child_grade, null, null, false, false, false );
 						} else {
@@ -1504,8 +1516,8 @@ function getJSONChildren(){
 		var child_type	= c.getAttribute('child_type');
 		var child_grade	= c.getAttribute('child_grade');
 		var imagefile	= c.getAttribute('imagefile');
-		var coordi_top	= c.offsetTop;
-		var coordi_top2 = Math.floor( c.offsetTop  / h * 10000 ) / 100;
+		// var coordi_top	= c.offsetTop;
+		var coordi_top  = Math.floor( c.offsetTop  / h * 10000 ) / 100;
 		// var coordi_left	= c.offsetLeft;
 		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
 		var checkin		= c.getAttribute('checkin');
@@ -1531,7 +1543,6 @@ function getJSONChildren(){
 			 'direction'	: direction,
 			 'escort'		: escort,
 			 'coordi_top'	: coordi_top,
-			 'coordi_top2'	: coordi_top2,
 			 'coordi_left'	: coordi_left,
 			 'remark'		: remark,
 			 'absent' 		: 0,
@@ -1547,8 +1558,8 @@ function getJSONChildren(){
 		var child_type	= c.getAttribute('child_type');
 		var child_grade	= c.getAttribute('child_grade');
 		var imagefile	= c.getAttribute('imagefile');
-		var coordi_top	= c.offsetTop;
-		var coordi_top2 = Math.floor( c.offsetTop  / h * 10000 ) / 100;
+		// var coordi_top	= c.offsetTop;
+		var coordi_top  = Math.floor( c.offsetTop  / h * 10000 ) / 100;
 		// var coordi_left	= c.offsetLeft;
 		var coordi_left = Math.floor( c.offsetLeft / w * 10000 ) / 100;
 		var checkin		= c.getAttribute('checkin');
@@ -1575,7 +1586,6 @@ function getJSONChildren(){
 			 'direction'	: direction,
 			 'escort'		: escort,
 			 'coordi_top'	: coordi_top,
-			 'coordi_top2'	: coordi_top2,
 			 'coordi_left'	: coordi_left,
 			 'remark'		: remark,
 			 'absent' 		: absent,
@@ -2570,6 +2580,8 @@ function checkinSelectedChild( hm ){
 	console.log( 'top:' + top + ' left:' + left );
 	var cursor	= 0;
 
+	var w = document.getElementById('WHITEBOARD').offsetWidth;
+	var h = document.getElementById('WHITEBOARD').offsetHeight;
 
 	// FOLDER_FIND_CHILDREN_TABLE2
 	if ( ffct2 != null ){
@@ -2590,7 +2602,13 @@ function checkinSelectedChild( hm ){
 					oLog.open( 3 );
 					continue;
 				} 
-				addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, null, false, false, false );
+
+				// 相対座標に変換
+				var perTop	= ( Math.floor( ( top  + ( cursor * 20 ) ) / h * 10000 ) / 100 ) + '%';
+				var perLeft	= ( Math.floor( ( left + ( cursor *  0 ) ) / w * 10000 ) / 100 ) + '%';
+
+				// addChild( top + ( cursor * 20 ), left + ( cursor * 0 ), id, child_name, kana, child_type, child_grade, null, null, false, false, false );
+				addChild( perTop, perLeft, id, child_name, kana, child_type, child_grade, null, null, false, false, false );
 				cursor++;
 				c.classList.remove('selected');
 				// c.style.color = '';
@@ -2819,9 +2837,12 @@ function mMove( e ){
 		if ( ( event.pageY - y ) >= wb_height || ( event.pageX - x  ) >= wb_width  ) return;
 		//if ( !checkOtherChildCoordinate( drag, event.pageX - x, event.pageY - y ) ) return;
 		if ( !checkOtherChildCoordinate( drag, event.pageX - x - old_left, event.pageY - y - old_top ) ) return;
-		drag.style.top  = event.pageY - y + "px";
-		// drag.style.top  = ( Math.floor( ( event.pageY - y ) / h * 10000 ) / 100 ) + '%';
+		
+		// topを相対座標で移動
+		// drag.style.top  = event.pageY - y + "px";
+		drag.style.top  = ( Math.floor( ( event.pageY - y ) / h * 10000 ) / 100 ) + '%';
 
+		// leftを相対座標で移動
 		// drag.style.left = event.pageX - x + "px";
 		drag.style.left = ( Math.floor( ( event.pageX - x ) / w * 10000 ) / 100 ) + '%';
 

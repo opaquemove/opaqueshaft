@@ -224,6 +224,7 @@ spotlight.prototype = {
         var arHM = hm.split(':');
         
         var w = document.getElementById('WHITEBOARD').offsetWidth;
+        var h = document.getElementById('WHITEBOARD').offsetHeight;
         var cursor	= 0;
         var top		= ( parseInt( arHM[0] ) - 8 ) * pixelPerHour;
         var left	= ( parseInt( arHM[1] ) );
@@ -243,8 +244,10 @@ spotlight.prototype = {
                 var kana        = c.getAttribute('kana');
                 var child_type  = c.getAttribute('child_type');
                 var child_grade = c.getAttribute('child_grade');
-                addChild( top + ( cursor * 20 ),
-                             ( Math.floor( ( left + ( cursor * 0 ) ) / w * 10000) / 100 ) + '%',
+                addChild(
+                            //  top + ( cursor * 20 ),
+                             ( Math.floor( ( top  + ( cursor * 20 ) ) / h * 10000 ) / 100 ) + '%',
+                             ( Math.floor( ( left + ( cursor *  0 ) ) / w * 10000 ) / 100 ) + '%',
                              child_id, child_name, kana, child_type, child_grade, null, null, false, false, true );
 
                 oLog.log( null, 'addChild');

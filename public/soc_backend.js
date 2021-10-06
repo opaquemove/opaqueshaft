@@ -57,7 +57,7 @@ socket.on( 'sync', function( data ){
             p.removeChild( sc );
         }
         console.log('sync:child_id:' + c.child_id );
-        var cc = addChild( c.coordi_top, c.coordi_left + '%',
+        var cc = addChild( c.coordi_top + '%', c.coordi_left + '%',
             c.child_id, c.child_name, c.kana,
             c.child_type, c.child_grade, c.imagefile, c.remark, c.escort, ( c.absent == 1 )?true : false, false );
         if ( c.checkout != '' && c.checkout != null )
