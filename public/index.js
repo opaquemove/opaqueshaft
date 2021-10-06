@@ -190,7 +190,7 @@ function init()
 	new Button( 'ID_NAV_TILE',  			showTile ).play();
 	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
 	new Button( 'ID_NAV_CHILDFINDER',       ctlSpotlight ).play();
-	new Button( 'ID_NAV2_CHILDFINDER',      ctlSpotlight ).play();
+	// new Button( 'ID_NAV2_CHILDFINDER',      ctlSpotlight ).play();
 
 	//	NAV2
 	document.getElementById( 'ID_NAV2_CHECKINOUT').addEventListener(
@@ -1144,7 +1144,7 @@ function openWhiteboard(){
 				o = o.parentNode;
 			}
 			o.style.color			= 'white';
-			o.style.backgroundColor = 'red';
+			o.style.backgroundColor = 'royalblue';
 		}, false );
 		document.getElementById('WHITEBOARD_LIST').addEventListener('mouseup',
 		function(e) {
@@ -2561,8 +2561,9 @@ function addWhiteboardManage( oParent, Result ){
     r += '<div style="text-align:center;"  >';
     	r += ymd;
     r += '</div>';
-    r += '<div style="text-align:center;" >';
-    	r += c_children + '(' + c_resv_children + ' rsrv)' + ' child';
+    r += '<div style="font-size:24px;text-align:center;padding-top:8px;" >';
+    	r += c_children
+		// r += '(' + c_resv_children + ' rsrv)' + ' child';
     r += '</div>';
 	c.innerHTML = r;
     var cc = oParent.appendChild( c );
