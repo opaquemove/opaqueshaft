@@ -123,14 +123,16 @@ function clearWhiteboard(){
 	r += '</div>';
 
     r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
-        r += '<button id="" type="button" ';
-        r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+        r += '<button id="" type="button" class="accept_button" ';
+        // r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
         r += ' onclick="clearWhiteboardHelper();closeModalDialog();"   >';
+            r += 'clear';
         r += '</button>';
 
-        r += '<button id="" type="button" ';
-        r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+        r += '<button id="" type="button" class="cancel_button" ';
+        // r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
         r += ' onclick="closeModalDialog();" >';
+            r += 'cancel';
         r += '</button>'
     r += '</div>';
 
@@ -208,10 +210,11 @@ function reportWhiteboard(){
     r += '</div>';
 
     var f = '';
-    f += '<div style="margin:0 auto;width:60%;height:100%;text-align:center;">';
-        f += '<button id="" type="button" ';
-        f += ' style="font-size:24px;width:42px;height:100%;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:18px;background-position:center center;background-repeat:no-repeat;" ';
+    f += '<div style="margin:0 auto;width:100%;height:100%;text-align:center;">';
+        f += '<button id="" type="button" class="accept_button" ';
+        // f += ' style="font-size:24px;width:42px;height:100%;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:18px;background-position:center center;background-repeat:no-repeat;" ';
         f += ' onclick="oReportDlg.close();"   >';
+            f += 'close';
         f += '</button>';
     f += '</div>';
 
@@ -983,7 +986,10 @@ function propertyChildren(){
             r += '</div>';
 
 			r += '<div style="width:100%;padding-top:4px;text-align:center;" >';
-				r += '<button id="BTN_UPDATE_CHILD_REMARK_' + id + '" style="background-color:transparent;border:none;"  ><img width="24px;" src="/images/check-3.png" ></button>';
+				r += '<button id="BTN_UPDATE_CHILD_REMARK_' + id + '" class="accept_button" ';
+                // r += ' style="background-color:transparent;border:none;" ';
+                r += '>close';
+                r += '</button>';
 			r += "</div>";
 
         r += '</div>';
@@ -1818,40 +1824,40 @@ function accountProperty(){
 	// r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 	// 	r += 'Account property';
     // r += '</div>';
-    r += "<div>";
-    r += "<form name='sign_form' onsubmit='return false;' >";
-        r += "<table align='center' >";
-        r += "<tr>";
-        r += "<td>Account ID:</td>";
-        r += "</tr>";
-        r += "<tr>";
-        r += "<td><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 readonly value='" + acc_id + "'/></td>";
-        r += "</tr>";
-        r += "<tr>";
-        r += "<td>Account Name:</td>";
-        r += "</tr>";
-        r += "<tr>";
-        r += "<td><input style='width:200px;height:18px;' type='text' name='acc_name' tabindex=2 readonly value='" + oAcc.acc_name + "' /></td>";
-        r += "</tr>";
-        r += "<tr>";
-        r += "<td>Range:</td>";
-        r += "</tr>";
-        r += "<tr>";
-        r += "<td><input style='width:200px;height:18px;' type='text' name='range_id' tabindex=2 readonly value='" + oAcc.range_id + "' /></td>";
-        r += "</tr>";
-        r += "<tr>";
-        r += "<td><div style='width:128px;height:128px;border-radius:45%;background-image:url(./images/accounts/" + acc_id + ".jpeg);background-size:128px;background-position:center center;background-repeat:no_repeat;' ></div></td>";
-        r += "</tr>";
-        r += "</table>";
-    r += "</form>";
+    r += "<div style='width:80%;margin:10% auto;'  >";
+        r += "<form name='sign_form' onsubmit='return false;' >";
+            r += "<table align='center' >";
+            r += "<tr>";
+            r += "<td>Account ID:</td>";
+            r += "</tr>";
+            r += "<tr>";
+            r += "<td><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 readonly value='" + acc_id + "'/></td>";
+            r += "</tr>";
+            r += "<tr>";
+            r += "<td>Account Name:</td>";
+            r += "</tr>";
+            r += "<tr>";
+            r += "<td><input style='width:200px;height:18px;' type='text' name='acc_name' tabindex=2 readonly value='" + oAcc.acc_name + "' /></td>";
+            r += "</tr>";
+            r += "<tr>";
+            r += "<td>Range:</td>";
+            r += "</tr>";
+            r += "<tr>";
+            r += "<td><input style='width:200px;height:18px;' type='text' name='range_id' tabindex=2 readonly value='" + oAcc.range_id + "' /></td>";
+            r += "</tr>";
+            r += "<tr>";
+            r += "<td><div style='width:128px;height:128px;border-radius:45%;background-image:url(./images/accounts/" + acc_id + ".jpeg);background-size:128px;background-position:center center;background-repeat:no_repeat;' ></div></td>";
+            r += "</tr>";
+            r += "</table>";
+        r += "</form>";
 
-    r += '<div style="text-align:center;padding-top:5px;" >';
-        r += '<button id="" ';
-            r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/check-3.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
-            r += ' onclick="closeModalDialog();" >';
-            r += '';
-        r += '</button>';
-    r += '</div>';
+        r += '<div style="width:100%;text-align:center;padding-top:5px;" >';
+            r += '<button id="" class="accept_button" ';
+                // r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/check-3.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
+                r += ' onclick="closeModalDialog();" >';
+                r += 'close';
+            r += '</button>';
+        r += '</div>';
 
     r += "</div>";
 

@@ -1101,10 +1101,10 @@ function openWhiteboard(){
 		r += '</div>';
 		r += '</form>';
 		r += '<div style="text-align:center;padding-top:5px;" >';
-			r += '<button id="BTN_OPENWHITEBOARD" ';
-				r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/arrow-right.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
+			r += '<button id="BTN_OPENWHITEBOARD" class="next_button" ';
+				// r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/arrow-right.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
 				r += ' onclick="createWhiteboard()" >';
-				r += '';
+				r += 'next';
 			r += '</button>';
 		r += '</div>';
 	r += '</div>';
@@ -1670,15 +1670,17 @@ function closeWhiteboard(){
 		r += '</div>';
 		r += '</form>';
 
-		r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
-			r += '<button id="" type="button" ';
-			r += ' style="font-size:24px;width:40px;height:40px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+		r += '<div style="margin:0 auto;width:100%;text-align:center;padding-top:4px;">';
+			r += '<button id="" type="button" class="accept_button" ';
+			// r += ' style="font-size:24px;width:40px;height:40px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
 			r += ' onclick="closeModalDialog();closeWhiteboardHelper();"   >';
+				r += 'close';
 			r += '</button>';
 
-			r += '<button id="" type="button" ';
-			r += ' style="font-size:20px;width:40px;height:40px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+			r += '<button id="" type="button" class="cancel_button" ';
+			// r += ' style="font-size:20px;width:40px;height:40px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
 			r += ' onclick="closeModalDialog();" >';
+				r += 'cancel';
 			r += '</button>'
 		r += '</div>';
 
@@ -2260,14 +2262,16 @@ function signoutForm(){
 		r += "</div>";
 
 		r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
-			r += '<button id="" type="button" ';
-			r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+			r += '<button id="" type="button" class="accept_button" ';
+			// r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
 			r += ' onclick="closeModalDialog();signout();"   >';
+				r += 'sign out';
 			r += '</button>';
 
-			r += '<button id="" type="button" ';
-			r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+			r += '<button id="" type="button" class="cancel_button" ';
+			// r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
 			r += ' onclick="closeModalDialog();" >';
+				r += 'cancel';
 			r += '</button>'
 
 		r += '</div>';
@@ -2468,7 +2472,10 @@ function signForm()
 			r += "<div style='padding-top:20px;' >Password:</div>";
 			r += "<div><input style='width:200px;' type='password' name='pwd' tabindex=2 /></div>";
 			r += "<div style='padding-top:40px;text-align:center;' >";
-				r += "<button style='background-color:transparent;border:none;' onclick='sign()' ><img width='26px;' src='/images/arrow-right.png' /></button>";
+				r += "<button class='next_button' ";
+				r += " style='border:none;' onclick='sign()' >";
+				r += "next";
+				r += "</button>";
 			r += "</div>";
 			r += "</form>";
 		r += "</div>";
