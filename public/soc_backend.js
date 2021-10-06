@@ -604,12 +604,12 @@ function addChild( top, left, child_id, child_name, kana, child_type, child_grad
         r += '</div>';
         r += '<div>';
             if ( imagefile != '' && imagefile != null ){
-                r += '<div style="float:left;width:30px;height:30px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+                r += '<div style="float:left;width:28px;height:28px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
                 r += '</div>';
             }
             r += '<div class="TYPE_GRADE vh-center"  style="height:20px;float:right;font-size:12px;text-align:right;" >';
-                r += child_type;
-                r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';" >●</span>'
+                r += child_grade + child_type;
+                // r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';" >●</span>'
             r += '</div>';
             r += '<div class="DIRECTION_FLG"         style="height:20px;padding-left:2px;float:right;width:17px;" >&nbsp;';
             r += '</div>';
@@ -932,7 +932,7 @@ function propertyChildren(){
             r += '</div>';
             r += '<div style="clear:both;width:100%;overflow:hidden;display:inline;" >';
                 if ( imagefile != '' ){
-                    r += '<div style="float:left;width:60px;height:60px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+                    r += '<div style="float:left;width:50px;height:50px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
                     r += '</div>';
                 }
                 r += '<div style="float:right;" >';
@@ -1036,15 +1036,17 @@ function deleteWhiteboardChild(){
 	r += '</div>';
     r += '<div id="CHILD_LST" style="margin:0 auto;width:80%;height:150px;font-size:14px;border:1px solid lightgrey;">';
 	r += '</div>';
-	r += '<div style="margin:0 auto;width:60%;text-align:center;padding-top:4px;">';
-        r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button" ';
-        r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
+	r += '<div style="margin:0 auto;width:80%;text-align:center;padding-top:4px;">';
+        r += '<button id="BTN_DELETEWHITEBOARDCHILD" type="button" class="accept_button" ';
+        // r += ' style="font-size:24px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-size:24px;background-position:center center;background-repeat:no-repeat;" ';
         r += ' onclick="deleteWhiteboardChildHelper();"   >';
+            r += 'delete';
         r += '</button>';
 
-        r += '<button id="" type="button" ';
-        r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+        r += '<button id="" type="button" class="cancel_button" ';
+        // r += ' style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
         r += ' onclick="closeModalDialog();" >';
+            r += 'cancel';
         r += '</button>'
     r += '</div>';
     openModalDialog( 'delete child', r, 'NOBUTTON',
@@ -1502,8 +1504,8 @@ function checkoutWhiteboardChild(){
     if ( children.length == 0 ) return;
 
     var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
-		r += 'checkout children';
+	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
+		r += 'checkout child';
     r += '</div>';
     r += '<div style="clear:both;margin:0 auto;width:90%;height:18px;font-size:12px;color:red;background-color:lightgrey;border:1px solid lightgrey;" >';
         r += '<div style="float:left;" >Name</div>';
@@ -1512,20 +1514,22 @@ function checkoutWhiteboardChild(){
         r += '<div style="float:right;width:58px;border-left:1px solid grey;" >Check</div>';
     r += '</div>';
     r += '<form name="directions" onsubmit="return false;" >';
-    r += '<div id="ID_MARKEDCHILDREN_LIST" style="clear:both;margin:0 auto;width:90%;height:270px;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '<div id="ID_MARKEDCHILDREN_LIST" style="clear:both;margin:0 auto;width:90%;height:150px;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
     r += '</form>';
-	r += '<div style="clear:both;margin:0 auto;width:97%;text-align:center;margin:0 auto;">';
-        r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
-        r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+	r += '<div style="clear:both;margin:0 auto;width:90%;text-align:center;margin:0 auto;padding-top:8px;">';
+        r += '<button id="BTN_CLEARWHITEBOARD" type="button" class="accept_button" ';
+        // r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
         r += 'onclick="checkoutWhiteboardChildHelper();closeModalDialog();" >';
+            r += 'checkout';
         r += '</button>';
-        r += '<button id="" type="button" ';
-        r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+        r += '<button id="" type="button" class="cancel_button" ';
+        // r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
         r += 'onclick="closeModalDialog();" >';
+            r += 'cancel';
         r += '</button>'
 	r += '</div>';
-    openModalDialog( 'checkout children', r, 'NOBUTTON', null, 'CHECK' );
+    openModalDialog( 'checkout child', r, 'NOBUTTON', null, 'CHECK' );
     var imcl = document.getElementById('ID_MARKEDCHILDREN_LIST');
     // var children = getMarkedChild();
     for ( var i=0; i<children.length; i++ ){
@@ -1536,7 +1540,7 @@ function checkoutWhiteboardChild(){
         var checkout    = c.hasAttribute('checkout');
         var o = document.createElement('DIV');
         o.style.width = '100%';
-        o.style.height = '40px';
+        o.style.height = '30px';
         o.style.clear = "both";
         o.style.borderBottom = '1px solid lightgrey';
         r = '';
@@ -1630,24 +1634,25 @@ function checkoutClearWhiteboardChild(){
     if ( children.length == 0 ) return;
 
     var r = '';
-	r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
-		r += 'checkout clear children';
+	r += '<div style="font-size:24px;text-align:center;padding-top:12px;padding-bottom:12px;" >';
+		r += 'checkout clear child';
     r += '</div>';
-    r += '<div id="ID_MARKEDCHILDREN_LIST" style="margin:0 auto;width:90%;height:270px;border:1px solid lightgrey;overflow:scroll;" >';
+    r += '<div id="ID_MARKEDCHILDREN_LIST" style="margin:0 auto;width:90%;height:180px;border:1px solid lightgrey;overflow:scroll;" >';
     r += '</div>';
-	r += '<div style="margin:0 auto;width:97%;text-align:center;">';
-        r += '<button id="BTN_CLEARWHITEBOARD" type="button" ';
-        r +=  'style="width:80px;height:80px;font-size:12px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+	r += '<div style="margin:0 auto;width:90%;text-align:center;padding-top:4px;">';
+        r += '<button id="BTN_CLEARWHITEBOARD" type="button" class="accept_button" ';
+        // r +=  'style="width:80px;height:80px;font-size:12px;border:none;background-color:transparent;background-image:url(./images/check-3.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
         r +=  'onclick="checkoutClearWhiteboardChildHelper();closeModalDialog();" >';
-        // r +=  '<img width="24px" src="./images/check-3.png" />';
+            r += 'clear';
         r += '</button>';
-        r += '<button id="" type="button" ';
-        r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
+        r += '<button id="" type="button" class="cancel_button" ';
+        // r += 'style="font-size:20px;width:80px;height:80px;border:none;background-color:transparent;background-image:url(./images/cancel-2.png);background-position:center center;background-size:24px;background-repeat:no-repeat;" ';
         r += 'onclick="closeModalDialog();" >';
+            r += 'cancel';
         r += '</button>'
 	r += '</div>';
 
-    openModalDialog( 'checkout clear children', r, 'NOBUTTON',
+    openModalDialog( 'checkout clear child', r, 'NOBUTTON',
         null, 'CHECK' );
     // openModalDialog( 'checkout clear children', r, 'OK_CANCEL',
     // function(){
@@ -1662,10 +1667,10 @@ function checkoutClearWhiteboardChild(){
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
 
         var o = document.createElement('DIV');
-        o.style.width = '100%';
-        o.style.height = '40px';
-        o.style.clear = "both";
-        o.style.padding        = '2px';
+        o.style.width       = '100%';
+        o.style.height      = '30px';
+        o.style.clear       = "both";
+        o.style.padding     = '2px';
         o.style.borderBottom = '1px solid lightgrey';
         r = '';
         r += '<div style="float:left;width:150px;font-size:14px;" >' + child_name + '</div>';

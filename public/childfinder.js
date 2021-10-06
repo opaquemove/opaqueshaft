@@ -387,6 +387,8 @@ spotlight.prototype = {
         for ( var i=0; i<children.length; i++ ){
             var c = children[i];
             var child_id    = c.getAttribute('child_id');
+            var child_type  = c.getAttribute('child_type');
+            var child_grade = c.getAttribute('child_grade');
             var checkout    = c.hasAttribute('checkout');
             var absent      = c.hasAttribute('absent');
             var imagefile   = c.getAttribute('imagefile');
@@ -407,22 +409,32 @@ spotlight.prototype = {
                 o.style.float           = 'left';
 
                 var r = '';
-                r += '<div class="CHILD_NAME" style=""  >' + child_name;
+                r += '<div class="CHILD_NAME" style="float:left;"  >' + child_name;
                     // r += '(' + c.style.top + ',' + c.style.left + ')';
                 r += '</div>';
+
+                r += '<div style="float:right;font-weight:bold;font-size:12px;text-align:right;padding-top:2px;" >';
+                    r += child_grade + child_type;
+                r += '</div>';
+
+
                 if ( imagefile != '' && imagefile != null ){
-                    r += '<div style="float:left;clear:left;width:30px;height:30px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+                    r += '<div style="float:left;clear:both;width:28px;height:28px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+                    r += '</div>';
+                }else {
+                    r += '<div style="float:left;clear:both;width:28px;height:28px;overflow:hidden;border-radius:45%;" >';
                     r += '</div>';
                 }
+
                 if ( absent )
-                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/remove.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    r += '<div style="float:right;padding-left:1px;width:20px;background-image:url(./images/remove.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                     else
-                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/dry-clean.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    r += '<div style="float:right;padding-left:1px;width:20px;background-image:url(./images/dry-clean.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                 if ( checkout )
-                    r += '<div style="float:right;padding-left:8px;width:20px;background-image:url(./images/check-3.png);background-size:14px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    r += '<div style="float:right;padding-left:1px;width:20px;background-image:url(./images/check-3.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                     else
-                    r += '<div style="float:right;padding-left:8px;width:20px;">&nbsp;</div>';
-                r += '<div style="float:right;" >' + estimate   + '</div>';
+                    r += '<div style="float:right;padding-left:1px;width:20px;">&nbsp;</div>';
+                r += '<div style="float:right;font-weight:bold;" >' + estimate   + '</div>';
     
                 o.innerHTML = r;
     
@@ -498,12 +510,12 @@ spotlight.prototype = {
                                 r += '<div class="CHILD_NAME" style="float:left;font-size:12px;height:20px;padding-left:2px;">';
                                     r += child_name;
                                 r += '</div>';
-                                r += '<div style="float:right;font-size:12px;text-align:right;padding-top:2px;" >';
-                                    r += child_type;
-                                    r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
+                                r += '<div style="float:right;font-weight:bold;font-size:12px;text-align:right;padding-top:2px;" >';
+                                    r += child_grade + child_type;
+                                    // r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
                                 r += '</div>';
                                 if ( imagefile != '' && imagefile != null ){
-                                    r += '<div style="float:left;clear:left;width:30px;height:30px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+                                    r += '<div style="float:left;clear:left;width:28px;height:28px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
                                     r += '</div>';
                                 }
                                         

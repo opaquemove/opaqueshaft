@@ -105,8 +105,8 @@ function openModalDialog( title, r , option, proc, dialog_size ){
 			mo.style.opacity	= 0.9;
 			break;
 		case 'CHECK':
-			mframe.style.width	= '370px';
-			mm.style.height		= '440px';
+			mframe.style.width	= '350px';
+			mm.style.height		= '327px';
 			mo.style.opacity	= 1;
 			break;
 		case 'DELETE':
