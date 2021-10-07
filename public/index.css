@@ -149,19 +149,20 @@ INPUT[type=password]:focus{
 	z-index:				65001;
 }
 #NAV_START_ICON2{
+	pointer-events: 		none;
 	position:				absolute;
 	top:					-42px;		/* dummy */ 
 	left:					42px;
 	width:					300px;		/* old 168px */
-	height:					63px;		/* old 42px */
+	height:					44px;		/* old 42px */
 	color:					white;
 	background-color:		transparent;
-	padding-bottom: 		48px;
-	border-top:				1px solid rgb(253, 202, 154);
+	padding-bottom: 		4px;
+	border-bottom:			0px solid rgb(253, 202, 154);
 	font-size:				6px;
 	display: 				flex;
 	align-items:			center;		/* old flex-end */
-	justify-content:		space-evenly;
+	justify-content:start;
 	z-index:				65001;
 }
 #ID_NAV_TILE{
@@ -421,6 +422,7 @@ INPUT[type=password]:focus{
 	background-color:		red;
 }
 .nav_icon2{
+	pointer-events: 		auto;
 	float:					left;
 	width:					62px;
 	height:					62px;

@@ -221,8 +221,9 @@ function init()
 		function(e){
 			console.log('transform');
 			var o = document.getElementById('ID_NAV2_SEARCH');
+			var w = document.getElementById('ID_NAV2_SEARCH2').offsetWidth;
 			if ( o.style.width == ''){
-				o.style.width = '126px';
+				o.style.width = w + 'px';
 				ctlSpotlight();
 			} else{
 				o.style.width = '';
@@ -1370,7 +1371,7 @@ function loadWhiteboardChildren(){
 					//	ホワイトボードを最初のチャイルドまでスクロール
 					var earlyChildHour = getEarlyChildHour();
 					if ( earlyChildHour > 0 ) scrollWhiteboard( earlyChildHour, 0 );
-					
+
 				} else{
 					oLog.log( null, 'loadWhiteboardChildren:' + xmlhttp.status );
 					oLog.open( 3 );
@@ -1898,6 +1899,7 @@ function Nav( func ){
 	var m = document.createElement('DIV');
 	m.setAttribute('id',    'NAVI2' );
 	m.setAttribute('class', 'not_select' );
+	m.style.pointerEvents	= 'none';
 	m.style.position		= 'absolute';
 	m.style.top 			= ( ( h / 2 ) - ( 126 / 2 ) ) + 'px';
 	// m.style.left			= ( ( w / 2 ) - this.size )+ 'px';
@@ -2074,7 +2076,7 @@ function fitting(){
 	var nsi2 = document.getElementById('NAV_START_ICON2');
 	// nsi2.style.top = ( ( h / 2 ) - ( tb_height + ( nsi2.offsetHeight / 2 ) ) ) + 'px';
 	// nsi2.style.top = ( h - nsi2.offsetHeight ) + 'px';
-	nsi2.style.top = '42px';
+	nsi2.style.top = '2px';
 	// nsi2.style.left	= ( w - 42 ) + 'px';
 	nsi2.style.left	= ( ( w / 2 ) - ( nsi2.offsetWidth / 2 ) ) + 'px';
 
