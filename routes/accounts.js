@@ -321,11 +321,28 @@ router.post('/whiteboardupdate', function(req, res, next ){
 });
 
 //
+//  レンジリストを取得
+//
+router.post('/rangelist', function(req, res, next ){
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.any( 'SELECT * FROM ranges ORDER BY sotd ASC' )
+    .then( rows => {
+          res.json( rows );
+    });
+});
+
+//
 //  ホワイトボードリスト取得（年度は気にしない）
 //
 router.post('/whiteboardlist', function(req, res, next ){
+    var range_id = parseInt( req.body.range_id );
+    var sotd    = range_id + '/4/1';
+    var eotd    = ( range_id + 1 ) + '/3/31';
+    console.log( 'range_id:' + range_id );
     res.header('Content-Type', 'application/json;charset=utf-8');
-    db.any( 'SELECT w.*, ( SELECT count(*) FROM results r WHERE r.day = w.day ) c_children, ( SELECT count(*) FROM reserves rsv WHERE rsv.day = w.day ) c_resv_children FROM whiteboards w ORDER BY w.day' )
+    db.any( {
+        text : 'SELECT w.*, ( SELECT count(*) FROM results r WHERE r.day = w.day ) c_children, ( SELECT count(*) FROM reserves rsv WHERE rsv.day = w.day ) c_resv_children FROM whiteboards w WHERE w.day BETWEEN $1 AND $2 ORDER BY w.day',
+        values : [ sotd, eotd ] } )
       .then( rows => {
             res.json( rows );
       });

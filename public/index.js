@@ -1080,21 +1080,24 @@ function openWhiteboard(){
 	r += '<div style="height:;font-size:24px;text-align:center;padding-top:10px;padding-bottom:10px;" >';
 		// r += 'open whiteboard';
 	r += '</div>';
-	r += '<div style="margin:0 auto;font-size:18px;width:80%;">';
+	r += '<div style="margin:0 auto;font-size:14px;width:80%;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
 		r += '<div style="height:40px;padding-bottom:10px;" >';
 			r += '<div style="width:50%;float:left;" >';
-				r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:24px;" value="' + ymd + '" />';
+				r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:;" value="' + ymd + '" />';
 			r += '</div>';
 			r += '<div style="float:left;width:30px;" >';
-				r += '<button id="BTN_ADD_DATE"   style="width:18px;height:14px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" ></button>';
-				r += '<button id="BTN_MINUS_DATE" style="width:18px;height:14px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" ></button>';
+				r += '<button id="BTN_ADD_DATE"   style="width:18px;height:12px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" ></button>';
+				r += '<button id="BTN_MINUS_DATE" style="width:18px;height:12px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" ></button>';
 				// r += '<img id="BTN_ADD_DATE"        width="6px" src="./images/arrow-black-triangle-up.png" />';
 				// r += '<br/><img id="BTN_MINUS_DATE" width="6px" src="./images/arrow-black-triangle-down.png" />';
 			r += '</div>';
 		r += '</div>';
 		// r += '<div id="WHITEBOARD_LIST" style="clear:both;margin-top:10px;height:120px;display:flex;font-size:12px;padding:4px;overflow-y:scroll;border:0px solid lightgrey;" >';
+		r += '<div>Ranges:</div>';
+		r += '<div id="RANGE_LIST" ></div>';
+		r += '<div style="padding-top:14px;" >Whiteboards:</div>';
 		r += '<div id="WHITEBOARD_LIST" >';
 		r += '</div>';
 		r += '<div style="clear:both;padding-bottom:5px;text-align:center;" >';
@@ -1113,7 +1116,38 @@ function openWhiteboard(){
 	 neverCloseDialog = ( children.length == 0 ) ? true : false;
 	// neverCloseDialog = true;
 	openModalDialog( 'open Whiteboard', r, 'NOBUTTON', null, 'OPENWHITEBOARD' );
-	makeWhiteboardList();
+
+
+	//	レンジリスト作成
+	makeRangeList();
+	document.getElementById('RANGE_LIST').addEventListener('mousedown',
+		function(e) {
+			var o = e.target;
+			if ( o == document.getElementById('RANGE_LIST')) return;
+			while ( o.parentNode != document.getElementById('RANGE_LIST') ){
+				o = o.parentNode;
+			}
+			o.style.color			= 'white';
+			o.style.backgroundColor = 'royalblue';
+		}, false );
+	document.getElementById('RANGE_LIST').addEventListener('mouseup',
+		function(e) {
+			var o = e.target;
+			if ( o == document.getElementById('RANGE_LIST')) return;
+			while ( o.parentNode != document.getElementById('RANGE_LIST') ){
+				o = o.parentNode;
+			}
+			o.style.color			= '';
+			o.style.backgroundColor = '';
+			var range_id = o.getAttribute('range_id' );
+			makeWhiteboardList( range_id );
+		}, false );
+
+
+
+
+	//	ホワイトボードリスト作成
+	// makeWhiteboardList( 2021 );
 	document.getElementById('BTN_OPENWHITEBOARD').focus();
 	document.getElementById('whiteboard_day').addEventListener('keydown',
 		function (e){
@@ -2403,36 +2437,6 @@ function sign()
 		xmlhttp.open("POST", "/accounts/signin", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( "acc=" + sign_id + "&pwd=" + sign_pwd );
-/*
-		r = "";
-		if ( xmlhttp.status == 200 ){
-			var result = JSON.parse( xmlhttp.responseText );
-			switch( result.cmd ){
-				case 'signin':
-					var o = document.getElementById('SIGNIN_STATUS');
-					if ( result.status == 'SUCCESS' ){
-						acc_id = result.acc_id;
-						if ( !openWhiteboardFlg ){
-							openWhiteboard();
-						}
-				
-					} else {
-						r += 'sign in error'
-					}
-					o.innerText = r;
-					break;
-				default:
-					oLog.log( null, 'sign:cmd:' + result );
-					oLog.open( 3 );
-					// alert( 'cmd:' + result );
-					break;
-			}
-		} else{
-			oLog.log( null, 'sign:status:' + xmlhttp.status );
-			oLog.open( 3 );
-			// alert( xmlhttp.status );
-		}
-*/
 	} catch ( e ) {
 		oLog.log( null, 'sign:e:' + e );
 		oLog.open( 3 );
@@ -2499,9 +2503,76 @@ function ctlNav(){
 }
 
 //
+//	レンジリスト生成処理
+//
+function makeRangeList()
+{
+	document.getElementById( 'RANGE_LIST' ).innerHTML = '';
+
+	var r = "";
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				var o = document.getElementById( 'RANGE_LIST' );
+				o.innerText = 'access...';
+				break;
+			case 4://done
+				r = "";
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					//r += xmlhttp.responseText;
+					var o = document.getElementById('RANGE_LIST');
+					o.innerText = '';
+					for ( var i=0; i<result.length; i++ ){
+						addRangeListHelper( o, result[i] );
+					}
+					//o.innerHTML = r;
+				} else{
+					document.getElementById('RANGE_LIST').innerText = xmlhttp.status;
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/rangelist", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send();
+	} catch ( e ) {
+		oLog.log( null, 'makeRangeList : ' + e );
+		oLog.open( 3 );
+		// alert( e );
+	}
+
+}
+
+//
+//	レンジリスト用DIV生成ヘルパー
+//
+function addRangeListHelper( oParent, Result ){
+
+	var c = document.createElement("DIV");
+	c.setAttribute("range_id",  Result.range_id );
+	c.setAttribute('class',     'range_box');
+
+	var range_id = Result.range_id;
+
+	var r = '';
+    r += '<div style="text-align:center;"  >';
+    	r += range_id;
+    r += '</div>';
+	c.innerHTML = r;
+    var cc = oParent.appendChild( c );
+
+}
+
+
+//
 //	ホワイトボードリスト生成処理
 //
-function makeWhiteboardList()
+function makeWhiteboardList( range_id )
 {
 	document.getElementById( 'WHITEBOARD_LIST' ).innerHTML = '';
 
@@ -2535,7 +2606,7 @@ function makeWhiteboardList()
 	try{
 		xmlhttp.open("POST", "/accounts/whiteboardlist", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send();
+		xmlhttp.send( 'range_id=' + range_id );
 	} catch ( e ) {
 		oLog.log( null, 'makeWhiteboardList : ' + e );
 		oLog.open( 3 );
