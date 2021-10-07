@@ -2076,7 +2076,7 @@ function fitting(){
 	var nsi2 = document.getElementById('NAV_START_ICON2');
 	// nsi2.style.top = ( ( h / 2 ) - ( tb_height + ( nsi2.offsetHeight / 2 ) ) ) + 'px';
 	// nsi2.style.top = ( h - nsi2.offsetHeight ) + 'px';
-	nsi2.style.top = '2px';
+	nsi2.style.top = '0px';
 	// nsi2.style.left	= ( w - 42 ) + 'px';
 	nsi2.style.left	= ( ( w / 2 ) - ( nsi2.offsetWidth / 2 ) ) + 'px';
 
