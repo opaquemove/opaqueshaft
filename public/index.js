@@ -217,13 +217,30 @@ function init()
 				}
 		}
 	);
-	// document.getElementById( 'ID_NAV2_CHECKOUT').addEventListener(
-	// 	'click',
-	// 	function (e){
-	// 		var o = document.getElementById('ID_MODE_CHECKOUT');
-	// 		o.dispatchEvent( new Event('click') );				
-	// 	}
-	// );
+
+	//
+	//
+	//
+	document.getElementById('NAV_LOCATED_CHILD_FRAME').addEventListener(
+		'click',
+		function(e){
+			var f = document.getElementById('NAV_LOCATED_CHILD_FRAME');
+			var h = document.getElementById('NAV_LOCATED_CHILD_HDR').offsetHeight;
+			var m = document.getElementById('NAV_LOCATED_CHILD_MAIN').offsetHeight;
+			f.style.top	= '0px';
+			f.style.height	= '100%';
+		}
+	);
+	document.getElementById('NAV_STORAGE_CHILD_FRAME').addEventListener(
+		'click',
+		function(e){
+			var f = document.getElementById('NAV_STORAGE_CHILD_FRAME');
+			var h = document.getElementById('NAV_STORAGE_CHILD_HDR').offsetHeight;
+			var m = document.getElementById('NAV_STORAGE_CHILD_MAIN').offsetHeight;
+			f.style.top	= '0px';
+			f.style.height	= '100%';
+		}
+	);
 
 	document.getElementById( 'ID_NAV2_SEARCH3' ).addEventListener(
 		'click',
