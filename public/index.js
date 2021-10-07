@@ -1366,6 +1366,11 @@ function loadWhiteboardChildren(){
 
 					// リザーブテーブルからロード
 					loadWhiteboardReserveChildren( day );
+
+					//	ホワイトボードを最初のチャイルドまでスクロール
+					var earlyChildHour = getEarlyChildHour();
+					if ( earlyChildHour > 0 ) scrollWhiteboard( earlyChildHour, 0 );
+					
 				} else{
 					oLog.log( null, 'loadWhiteboardChildren:' + xmlhttp.status );
 					oLog.open( 3 );

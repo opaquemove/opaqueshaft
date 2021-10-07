@@ -522,6 +522,17 @@ function attendChildHelper( c ){
 }
 
 //
+//  一番やはく帰宅するチャイルドの時間帯を取得
+//
+function getEarlyChildHour(){
+
+    for ( var i=0; i<12; i++ ){
+        var children = getChildrenByHour( i + 8 );
+        if ( children.length > 0 ) return ( i + 8 );
+    }
+    return 0;
+}
+//
 //  指定した時間帯のチャイルドリストを取得する
 //
 function getChildrenByHour( h ){
