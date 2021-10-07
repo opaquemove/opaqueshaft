@@ -335,6 +335,8 @@ function reportWhiteboardDetail(){
             var child_name  = children[j].getElementsByClassName('CHILD_NAME')[0].innerText;
             var child_type  = children[j].getAttribute('child_type');
             var child_grade = children[j].getAttribute('child_grade');
+            var imagefile   = children[j].getAttribute('imagefile');
+                imagefile   = ( imagefile != null )? imagefile : '';
             var checkin     = children[j].getAttribute('checkin');
             var estimate    = children[j].getElementsByClassName('ESTIMATE_TIME')[0].innerText;
             var checkout    = children[j].getAttribute('checkout');
@@ -364,6 +366,14 @@ function reportWhiteboardDetail(){
                                 decodeURIComponent( children[j].getAttribute('remark') ) : '';
             var r = '';
             r += '<div style="clear:both;font-size:12px;padding:0px;" >';
+                if ( imagefile != '' && imagefile != null ){
+                    r += '<div style="float:left;clear:both;width:28px;height:28px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+                    r += '</div>';
+                }else {
+                    r += '<div style="float:left;clear:both;width:28px;height:28px;overflow:hidden;border-radius:45%;" >';
+                    r += '</div>';
+                }
+            
                 r += '<div style="float:left;"  >';
                     if ( checkout != '---' ) r += '<img width="10px" src="./images/check-3.png" />';
                     r += child_name;
@@ -377,7 +387,7 @@ function reportWhiteboardDetail(){
                 r += '<div style="float:right;width:41px;" >' + child_grade + '</div>';
                 r += '<div style="float:right;width:121px;overflow:hidden;" >' + remark + '</div>';
             r += '</div>';
-            cc.style.height = '16px';
+            cc.style.height = '30px';
             cc.innerHTML    = r;
             var ccc = lst_area.appendChild( cc );
             ccc.setAttribute('child_id', child_id );
@@ -405,6 +415,8 @@ function reportWhiteboardDetail(){
         var child_name  = c.getElementsByClassName('CHILD_NAME')[0].innerText;
         var child_type  = c.getAttribute('child_type');
         var child_grade = c.getAttribute('child_grade');
+        var imagefile   = c.getAttribute('imagefile');
+            imagefile   = ( imagefile != null )? imagefile : '';
         var checkin     = c.getAttribute('checkin');
         var estimate    = c.getElementsByClassName('ESTIMATE_TIME')[0].innerText;
         var checkout    = c.getAttribute('checkout');
@@ -416,6 +428,13 @@ function reportWhiteboardDetail(){
                             decodeURIComponent( c.getAttribute('remark') ) : '';
         var r = '';
         r += '<div child_id="' + child_id + '" style="clear:both;font-size:12px;padding:2px;" >';
+            if ( imagefile != '' && imagefile != null ){
+                r += '<div style="float:left;clear:both;width:28px;height:28px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+                r += '</div>';
+            }else {
+                r += '<div style="float:left;clear:both;width:28px;height:28px;overflow:hidden;border-radius:45%;" >';
+                r += '</div>';
+            }
             r += '<div style="float:left;"  >' + child_name + '</div>';
             r += '<div style="float:right;width:26px;" >' + direction   + '</div>';
             r += '<div style="float:right;width:41px;" >' + checkout    + '</div>';
@@ -427,7 +446,7 @@ function reportWhiteboardDetail(){
             r += '<div style="float:right;width:121px;" >' + remark     + '</div>';
         r += '</div>';
         // cc.style.backgroundColor = 'orange';
-        cc.style.height = '16px';
+        cc.style.height = '30px';
         cc.innerHTML    = r;
         var ccc = lst_area.appendChild( cc );
         ccc.setAttribute('child_id', child_id );
