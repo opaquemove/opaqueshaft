@@ -74,8 +74,9 @@ router.post('/signin', function(req, res, next ){
       .then( rows => {
           if ( rows.length > 0 ) {
               //res.json( rows );
+              console.log( rows );
               res.cookie( 'acc', id );
-              res.json( {cmd:'signin',status:'SUCCESS', acc_id:id, range_id:2020 } );
+              res.json( {cmd:'signin',status:'SUCCESS', acc_id:id, range_id: rows.range_id } );
             } else{
                 res.json( {cmd:'signin',status:'FAIL'} );
           }

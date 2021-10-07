@@ -2993,34 +2993,25 @@ function checkOtherChildCoordinate( base_child, x, y ){
 //	マークしている他のチャイルドも移動
 //
 function moveOtherChild( base_child, x, y ){
+	var w = document.getElementById('WHITEBOARD').offsetWidth;
+	var h = document.getElementById('WHITEBOARD').offsetHeight;
 	var children = getMarkedChild();
 	if ( children.length == 0 ) return;
 	for ( var i=0; i<children.length; i++ ){
 		if ( base_child != children[i]){
-			// if ( ! children[i].hasAttribute('checkout')){
-				children[i].style.top  = children[i].offsetTop + y + 'px';
-				children[i].style.left = children[i].offsetLeft + x + 'px';
-				var et = children[i].getElementsByClassName('ESTIMATE_TIME');
-				if ( et != null ){
-					var hm = coordinateToTime( children[i].offsetTop, children[i].offsetLeft );
-					et[0].innerText = hm;
-					if ( children[i].hasAttribute('checkout') ) children[i].setAttribute('checkout', hm );
-
-				}
-
-				// var escort = coordinateToEscort( children[i].offsetTop , children[i].offsetLeft );
-				// switch ( escort ){
-				// 	case true:
-				// 		children[i].setAttribute('escort', 'yes');
-				// 		setEscortHelper( children[i], 'ON' );
-				// 		break;
-				// 	case false:
-				// 		children[i].removeAttribute('escort');
-				// 		setEscortHelper( children[i], 'OFF' );			
-				// 		break;
-				// }
+			var pxTop	= children[i].offsetTop + y;
+			var perTop	= ( Math.floor( pxTop / h * 10000 ) / 100 ) + '%';
+			var pxLeft	= children[i].offsetLeft + x;
+			var perLeft	= ( Math.floor( pxLeft / w * 10000 ) / 100 ) + '%';
 	
-			// }
+			children[i].style.top  = perTop;
+			children[i].style.left = perLeft;
+			var et = children[i].getElementsByClassName('ESTIMATE_TIME');
+			if ( et != null ){
+				var hm = coordinateToTime( children[i].offsetTop, children[i].offsetLeft );
+				et[0].innerText = hm;
+				if ( children[i].hasAttribute('checkout') ) children[i].setAttribute('checkout', hm );
+			}
 
 		}
 	}

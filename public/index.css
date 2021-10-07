@@ -1065,7 +1065,7 @@ INPUT[type=password]:focus{
 	border-right:		1px solid rgb(255, 123, 0);
 	border-bottom:		1px solid rgb(255, 123, 0);
 	/* border-radius: 		8px; */
-	box-shadow:			1px 1px 2px lightgrey;
+	/* box-shadow:			1px 1px 2px lightgrey; */
 	font-size:			14px;
 	overflow:			visible;
 	-webkit-user-select: none;
