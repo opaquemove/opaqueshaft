@@ -898,12 +898,12 @@ function locateTimelinebar( e ){
 			o.style.color			= 'white';
 			o.style.backgroundColor	= 'rgb(255, 123, 0)';
 			o.style.fontSize		= '24px';
-			o.style.width			= '4px';
-			o.style.height			= '24px';
+			o.style.width			= '2px';
+			o.style.height			= '32px';
 			o.style.zIndex			= 40001;
 
 			var minute = event.target.innerText.split(':')[1];
-			o.style.top		= '0px';
+			o.style.top		= '42px';
 			o.style.left	= ( parseInt( minute) / 60 * 100 ) + '%';
 			// o.innerText = o.style.left;
 

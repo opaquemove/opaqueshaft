@@ -882,6 +882,7 @@ INPUT[type=password]:focus{
 
 
 .timeline_class{
+	pointer-events: 	none;
 	width:				84px;
 	height:				598px;		/* 600 pixel Per Hour */
 	color:				white;
@@ -899,6 +900,7 @@ INPUT[type=password]:focus{
 	/* writing-mode: 		vertical-lr; */
 }
 .timeline1_class{
+	pointer-events: 	none;
 	position:			absolute;
 	left:				0px;
 	width:				84px;
@@ -917,6 +919,7 @@ INPUT[type=password]:focus{
 	opacity:			0.9;
 }
 .timeline2_class{
+	pointer-events: 	none;
 	position:			absolute;
 	left:				40%;
 	width:				20%;
@@ -927,6 +930,7 @@ INPUT[type=password]:focus{
 	z-index:			6000;
 }
 .timeline3_class{
+	pointer-events: 	none;
 	position:			absolute;
 	left:				calc(100% - 84px);
 	width:				84px;
@@ -937,8 +941,9 @@ INPUT[type=password]:focus{
 	z-index:			6000;
 }
 .timeline_15minute_class{
+	pointer-events: 	none;
 	position:			fixed;
-	top:				0px;
+	top:				43px;
 	left:				calc(25% - 0px);
 	width:				32px;
 	/* margin:				0 auto; */
@@ -953,8 +958,9 @@ INPUT[type=password]:focus{
 	opacity: 			0.9;
 }
 .timeline_30minute_class{
+	pointer-events: 	none;
 	position:			fixed;
-	top:				0px;
+	top:				43px;
 	left:				calc(50% - 0px);
 	width:				32px;
 	/* margin:				0 auto; */
@@ -969,8 +975,9 @@ INPUT[type=password]:focus{
 	opacity: 			0.9;
 }
 .timeline_45minute_class{
+	pointer-events: 	none;
 	position:			fixed;
-	top:				0px;
+	top:				43px;
 	left:				calc(75% - 0px);
 	width:				32px;
 	/* margin:				0 auto; */
@@ -1437,6 +1444,8 @@ INPUT[type=password]:focus{
 .tool_icon{
 	width:					42px;
 	height:					42px;
+	color:					white;
+	background-color:		lightgrey;
 }
 .not_select {
 	-moz-user-select:		none;
