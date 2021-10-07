@@ -152,11 +152,15 @@ function ctlToolbarHelper( flg ){
 	var toolbar			= document.getElementById('TOOLBAR');
 	var finder_frame	= document.getElementById('FINDER_FRAME');
 	var finder			= document.getElementById('FINDER_AREA');
+	var nlcf			= document.getElementById('NAV_LOCATED_CHILD_FRAME');
+	var nscf			= document.getElementById('NAV_STORAGE_CHILD_FRAME');
 
 	header.style.visibility				= flg;
 	toolbar.style.visibility			= flg;
 	finder_frame.style.visibility		= flg;
 	finder.style.visibility				= flg;
+	nlcf.style.visibility				= flg;
+	nscf.style.visibility				= flg;
 }
 
 //

@@ -197,7 +197,92 @@ INPUT[type=password]:focus{
 	border:					1px solid rgb(255, 123, 0);
 	overflow:				hidden;
 }
-	
+
+#NAV_LOCATED_CHILD_FRAME{
+	pointer-events: 		auto;
+	position:				absolute;
+	top:					-10000px;
+	left:					-10000px;
+	width:					142px;
+	height:					32px;
+	color:					gray;
+	background-color: 		transparent;
+	overflow:				hidden;
+	transition: 			all 0.3s ease-in-out;
+}
+#NAV_LOCATED_CHILD_HDR{
+	pointer-events: 		auto;
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					138px;
+	height:					28px;
+	color:					darkgrey;
+	background-color: 		lightgray;
+	padding:				2px;
+}
+#NAV_LOCATED_CHILD_MAIN{
+	pointer-events: 		auto;
+	position:				absolute;
+	top:					28px;
+	left:					0px;
+	width:					100%;
+	height:					calc(100% - 32px );
+	color:					gray;
+	background-color: 		rgb(241,241,241);
+}
+
+#NAV_STORAGE_CHILD_FRAME{
+	pointer-events: 		auto;
+	position:				absolute;
+	top:					-10000px;
+	left:					-10000px;
+	width:					142px;
+	height:					32px;
+	color:					gray;
+	background-color: 		transparent;
+	overflow:				hidden;
+	transition: 			all 0.3s ease-in-out;
+}
+#NAV_STORAGE_CHILD_HDR{
+	pointer-events: 		auto;
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					138px;
+	height:					28px;
+	color:					darkgray;
+	background-color: 		lightgray;
+	padding:				2px;
+}
+#NAV_STORAGE_CHILD_MAIN{
+	pointer-events: 		auto;
+	position:				absolute;
+	top:					28px;
+	left:					0px;
+	width:					100%;
+	height:					calc(100% - 32px );
+	color:					gray;
+	background-color: 		rgb(241,241,241);
+}
+
+.folder_close{
+	width:					24px;
+	height:					32px;
+	background-image:		url(./images/arrow-black-triangle-up.png);
+	background-size:		6px;
+	background-position:	center center;
+	background-repeat:		no-repeat;
+}
+.folder_open{
+	width:					24px;
+	height:					32px;
+	background-image:		url(./images/arrow-black-triangle-down.png);
+	background-size:		6px;
+	background-position:	center center;
+	background-repeat:		no-repeat;
+}
+
 #ID_NAV_CHILDFINDER{
 /*	pointer-events: 		none;	*/
 	/* position:				absolute;

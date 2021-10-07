@@ -2119,6 +2119,13 @@ function fitting(){
 	var tr = document.getElementById('TOOLBAR_RIGHT');
 	tr.style.left	= ( w - tr.offsetWidth ) + 'px';
 
+	var nlcf = document.getElementById('NAV_LOCATED_CHILD_FRAME');
+	nlcf.style.top	= ( wbf.offsetHeight - 34 ) + 'px';
+	nlcf.style.left	= ( w - ( nlcf.offsetWidth + 42 ) ) + 'px';
+	var nscf = document.getElementById('NAV_STORAGE_CHILD_FRAME');
+	nscf.style.top	= ( wbf.offsetHeight - 34 ) + 'px';
+	nscf.style.left	= ( w - ( nlcf.offsetWidth + nscf.offsetWidth + 42 + 1 ) ) + 'px';
+
 	// レポートダイアログのサイズ調整
 	oReportDlg.init();
 
@@ -2185,7 +2192,8 @@ function ctlToolbar(){
 //
 function showToolbar(){
 	var nsi 	= document.getElementById('NAV_START_ICON');
-	// var nsi2 	= document.getElementById('NAV_START_ICON2');
+	var nlcf	= document.getElementById('NAV_LOCATED_CHILD_FRAME');
+	var nscf	= document.getElementById('NAV_STORAGE_CHILD_FRAME');
 	var tb      = document.getElementById('TOOLBAR');
 	var tr  	= document.getElementById('TOOLBAR_RIGHT');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
@@ -2197,6 +2205,8 @@ function showToolbar(){
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
+	nlcf.style.visibility	= 'visible';
+	nscf.style.visibility	= 'visible';
 	tb.style.visibility     = 'visible';
 	tr.style.visibility		= 'visible';
 	wbf.style.visibility    = 'visible';
@@ -2217,6 +2227,8 @@ function showToolbar(){
 function hideToolbar(){
 	console.log('hideToolbar');
 	var nsi 	= document.getElementById('NAV_START_ICON');
+	var nlcf	= document.getElementById('NAV_LOCATED_CHILD_FRAME');
+	var nscf	= document.getElementById('NAV_STORAGE_CHILD_FRAME');
 	var tb      = document.getElementById('TOOLBAR');
 	var tr		= document.getElementById('TOOLBAR_RIGHT');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
@@ -2228,6 +2240,8 @@ function hideToolbar(){
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
+	nlcf.style.visibility	= 'hidden';
+	nscf.style.visibility	= 'hidden';
 	nsi.style.visibility	= 'hidden';
 	// nsi2.style.visibility	= 'hidden';
 	tb.style.visibility     = 'hidden';
