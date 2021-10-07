@@ -145,6 +145,15 @@ function init()
 
 
 	//
+	//
+	//
+	document.body.addEventListener( 'click',
+		function (e){
+			document.body.focus();
+			console.log( 'body reached');
+		}	
+	)
+	//
 	//	ドラッグオーバー時の処理
 	//
 	wb.addEventListener('dragover', 
