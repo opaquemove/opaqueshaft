@@ -84,6 +84,19 @@ INPUT[type=password]:focus{
 	background-repeat: 		no-repeat;
 }
 
+#LAYER{
+	pointer-events: 		none;
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	width:					100%;	/* fitting */
+	height:					100%;	/* fitting */
+	background-color:		white;
+	padding:				0px;
+	overflow:				scroll;
+	z-index:				-1;
+}
+
 #BOTTOM_OVERLAY{
 	position:				absolute;
 	top:					0px;
