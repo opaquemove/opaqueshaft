@@ -261,13 +261,24 @@ INPUT[type=password]:focus{
 	background-color: 		lightgray;
 	padding:				2px;
 }
-#NAV_STORAGE_CHILD_MAIN{
+#NAV_STORAGE_CHILD_OPTION{
 	pointer-events: 		auto;
 	position:				absolute;
 	top:					32px;
 	left:					0px;
+	width:					138px;
+	height:					28px;
+	color:					darkgray;
+	background-color: 		lightgray;
+	padding:				2px;
+}
+#NAV_STORAGE_CHILD_MAIN{
+	pointer-events: 		auto;
+	position:				absolute;
+	top:					64px;
+	left:					0px;
 	width:					100%;
-	height:					calc(100% - 32px );
+	height:					calc(100% - 64px );
 	color:					gray;
 	/* background-color: 		rgb(241,241,241); */
 	background-color: 		transparent;
