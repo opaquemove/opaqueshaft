@@ -413,9 +413,9 @@ spotlight.prototype = {
                     // r += '(' + c.style.top + ',' + c.style.left + ')';
                 r += '</div>';
 
-                r += '<div style="float:right;font-weight:bold;font-size:12px;text-align:right;padding-top:2px;" >';
-                    r += child_grade + child_type;
-                r += '</div>';
+                // r += '<div style="float:right;font-weight:bold;font-size:12px;text-align:right;padding-top:2px;" >';
+                //     r += child_grade + child_type;
+                // r += '</div>';
 
 
                 if ( imagefile != '' && imagefile != null ){
@@ -427,13 +427,13 @@ spotlight.prototype = {
                 }
 
                 if ( absent )
-                    r += '<div style="float:right;padding-left:1px;width:20px;background-image:url(./images/remove.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    r += '<div style="float:right;padding-left:1px;width:19px;background-image:url(./images/remove.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                     else
-                    r += '<div style="float:right;padding-left:1px;width:20px;background-image:url(./images/dry-clean.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    r += '<div style="float:right;padding-left:1px;width:19px;background-image:url(./images/dry-clean.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                 if ( checkout )
-                    r += '<div style="float:right;padding-left:1px;width:20px;background-image:url(./images/check-3.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
+                    r += '<div style="float:right;padding-left:1px;width:19px;background-image:url(./images/check-3.png);background-size:12px;background-position:center center;background-repeat:no-repeat;">&nbsp;</div>';
                     else
-                    r += '<div style="float:right;padding-left:1px;width:20px;">&nbsp;</div>';
+                    r += '<div style="float:right;padding-left:1px;width:19px;">&nbsp;</div>';
                 r += '<div style="float:right;font-weight:bold;" >' + estimate   + '</div>';
     
                 o.innerHTML = r;

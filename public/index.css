@@ -1187,7 +1187,7 @@ INPUT[type=password]:focus{
 }
 
 .PALLETE_CHILD{
-	width:				142px;
+	width:				138px;
 	height:				34px;
 	color:				gray;
 	background-color:	white;
@@ -1199,7 +1199,7 @@ INPUT[type=password]:focus{
 	border-right:		1px solid lightgrey; */
 	font-size:			12px;
 	border-radius: 		0px;
-	/* overflow:			hidden; */
+	overflow:			hidden;
 	-webkit-user-select: none;
 	/* transform: 				rotate(-40deg); */
 
