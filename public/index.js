@@ -2179,12 +2179,6 @@ function fitting(){
 
 	initNavLocatedChildFrame();
 	initNavStorageChildFrame();
-	// var nlcf = document.getElementById('NAV_LOCATED_CHILD_FRAME');
-	// nlcf.style.top	= ( wbf.offsetHeight - 34 ) + 'px';
-	// nlcf.style.left	= ( w - ( nlcf.offsetWidth + 42 ) ) + 'px';
-	// var nscf = document.getElementById('NAV_STORAGE_CHILD_FRAME');
-	// nscf.style.top	= ( wbf.offsetHeight - 34 ) + 'px';
-	// nscf.style.left	= ( w - ( nlcf.offsetWidth + nscf.offsetWidth + 42 + 1 ) ) + 'px';
 
 	// レポートダイアログのサイズ調整
 	oReportDlg.init();
@@ -2210,8 +2204,9 @@ function initNavLocatedChildFrame(){
 	var w = document.body.clientWidth;
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	var nlcf = document.getElementById('NAV_LOCATED_CHILD_FRAME');
+	var nscf = document.getElementById('NAV_STORAGE_CHILD_FRAME');
 	nlcf.style.top	= ( wbf.offsetHeight - 32 ) + 'px';
-	nlcf.style.left	= ( w - ( nlcf.offsetWidth + 42 ) ) + 'px';
+	nlcf.style.left	= ( w - ( nlcf.offsetWidth + nscf.offsetWidth + 42 + 1 ) ) + 'px';
 
 }
 function initNavStorageChildFrame(){
@@ -2220,7 +2215,7 @@ function initNavStorageChildFrame(){
 	var nlcf = document.getElementById('NAV_LOCATED_CHILD_FRAME');
 	var nscf = document.getElementById('NAV_STORAGE_CHILD_FRAME');
 	nscf.style.top	= ( wbf.offsetHeight - 32 ) + 'px';
-	nscf.style.left	= ( w - ( nlcf.offsetWidth + nscf.offsetWidth + 42 + 1 ) ) + 'px';
+	nscf.style.left	= ( w - ( nlcf.offsetWidth + 42 + 0 ) ) + 'px';
 }
 
 //
