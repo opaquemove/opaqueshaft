@@ -1,6 +1,7 @@
 HTML{
-	width:	100%;
-	height:	100%;
+	width:				100%;
+	height:				100%;
+	background-color:	white;
 }
 BODY{
 	position: 			fixed;
@@ -16,7 +17,7 @@ BODY{
                         Meiryo,
                         sans-serif;
 	font-size:			10px;
-	background-color:	black;
+	background-color:	white;
 
 	/* background-image:	url(./images/IMG_1739.JPG);
 	background-position: center center;
@@ -46,14 +47,6 @@ TEXTAREA:focus{
 	outline:			none;
 }
 
-/*
-MARK{
-	background-color:	red;
-}
-BUTTON IMG {
-	display:			block;
-}
-*/
 
 INPUT{
 	color:					gray;
@@ -93,7 +86,6 @@ INPUT[type=password]:focus{
 
 #BOTTOM_OVERLAY{
 	position:				absolute;
-	/* perspective:			300px; */
 	top:					0px;
 	left:					0px;
 	width:					100%;
@@ -109,7 +101,7 @@ INPUT[type=password]:focus{
 	width:					100%;
 	height:					100%;
 	/* border:				1px solid white; */
-	background-color:		#EEEEEE;
+	background-color:		white;
 	background-image:		url(./images/mina-2.png);
 	background-position: 	center center;
 	background-size: 		contain;
@@ -118,7 +110,7 @@ INPUT[type=password]:focus{
 }
 
 #OPAQUESHAFT_TITLE{
-	pointer-events:			auto;
+	pointer-events:			none;
 	float:					left;
 	width:					178px;
 	height:					54px;
@@ -530,7 +522,8 @@ INPUT[type=password]:focus{
 	float:					left;
 	width:					62px;
 	height:					62px;
-	background-color:		red;
+	color:					darkgrey;
+	background-color:		lightgray;
 	border-radius: 			4px;
 	margin:					1px;
 }
@@ -915,6 +908,7 @@ INPUT[type=password]:focus{
 }
 
 #WHITEBOARD_TIMELINE{
+	pointer-events: 	none;
 	position: 			absolute;
 	top:				0px;
 	left:				0px;
@@ -1054,6 +1048,8 @@ INPUT[type=password]:focus{
 	height:				32px;
 	color:				white;
 	writing-mode: 		vertical-lr;
+	font-size:			14px;
+	text-align: 		center;
 	text-shadow: 		1px 1px 1px gray;
 	background-color:	#DDDDDD;
 	border-left:		1px dashed #CCCCCC;
@@ -1071,6 +1067,8 @@ INPUT[type=password]:focus{
 	height:				32px;
 	color:				white;
 	writing-mode: 		vertical-lr;
+	font-size:			14px;
+	text-align: 		center;
 	text-shadow: 		1px 1px 1px gray;
 	background-color:	#DDDDDD;
 	border-left:		1px dashed #CCCCCC;
@@ -1088,6 +1086,8 @@ INPUT[type=password]:focus{
 	height:				32px;
 	color:				white;
 	writing-mode: 		vertical-lr;
+	font-size: 			14px;
+	text-align: 		center;
 	text-shadow: 		1px 1px 1px gray;
 	background-color:	#DDDDDD;
 	border-left:		1px dashed #CCCCCC;

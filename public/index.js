@@ -145,7 +145,7 @@ function init()
 
 
 	//
-	//
+	//	BODYオブジェクト
 	//
 	document.body.addEventListener( 'click',
 		function (e){
@@ -331,12 +331,6 @@ function init()
 		}
 	}
 	
-	//
-	//	チャイルドファインダー初期化
-	//
-	// var tk = document.getElementById('TXT_KEYWORD');
-	// tk.addEventListener('keyup', childFinder, false );
-
 	//
 	//	タイムラインガイド初期化
 	//
@@ -579,6 +573,7 @@ function makeTimelineIndicator(){
 	for ( var i=0; i<arTL.length; i++ ){
 		var o = document.createElement('DIV');
 		o.setAttribute('class', 'timeline_class vh-center' );
+		// o.style.pointerEvents		= 'none';
 		// o.innerHTML = '<div style="border-bottom:0px solid white;" >' + arTL[i] + ':00' + '</div>';
 		wbt.appendChild( o );
 	}
@@ -587,7 +582,7 @@ function makeTimelineIndicator(){
 		var guide = document.createElement('DIV');
 		guide.setAttribute('class', 'timeline1_class' );
 		guide.style.top				= ( ( i + 0 ) * pixelPerHour - 1 )+ 'px';
-		guide.style.pointerEvents	= 'auto';
+		// guide.style.pointerEvents	= 'none';
 		guide.innerHTML = '<div style="margin:2px 0px 0px 42px;background-color:#DDDDDD;border:1px solid lightgrey;border-radius:2px;" >' + arTL[i] + ':00' + '</div>';
 		wbf.appendChild( guide ).addEventListener('click',
 			function (e ){
@@ -599,7 +594,7 @@ function makeTimelineIndicator(){
 		var guide = document.createElement('DIV');
 		guide.setAttribute('class', 'timeline2_class' );
 		guide.style.top				= ( ( i + 1 ) * pixelPerHour - 1 )+ 'px';
-		guide.style.pointerEvents	= 'auto';
+		// guide.style.pointerEvents	= 'auto';
 		guide.innerHTML				= '&nbsp;';
 		wbf.appendChild( guide );
 	}
@@ -607,25 +602,25 @@ function makeTimelineIndicator(){
 		var guide = document.createElement('DIV');
 		guide.setAttribute('class', 'timeline3_class' );
 		guide.style.top				= ( ( i + 1 ) * pixelPerHour - 1 )+ 'px';
-		guide.style.pointerEvents	= 'auto';
+		// guide.style.pointerEvents	= 'auto';
 		guide.innerHTML				= '&nbsp;';
 		wbf.appendChild( guide );
 	}
 
 	guide = document.createElement('DIV');
 	guide.setAttribute('class', 'timeline_15minute_class' );
-	guide.style.pointerEvents	= 'auto';
-	guide.innerHTML				= '15min';
+	// guide.style.pointerEvents	= 'auto';
+	guide.innerHTML				= '15';
 	wbf.appendChild( guide );
 	guide = document.createElement('DIV');
 	guide.setAttribute('class', 'timeline_30minute_class' );
-	guide.style.pointerEvents	= 'auto';
-	guide.innerHTML				= '30min';
+	// guide.style.pointerEvents	= 'auto';
+	guide.innerHTML				= '30';
 	wbf.appendChild( guide );
 	guide = document.createElement('DIV');
 	guide.setAttribute('class', 'timeline_45minute_class' );
-	guide.style.pointerEvents	= 'auto';
-	guide.innerHTML				= '45min';
+	// guide.style.pointerEvents	= 'auto';
+	guide.innerHTML				= '45';
 	wbf.appendChild( guide );
 
 }
@@ -1965,7 +1960,6 @@ function Nav( func ){
 	m.style.color			= 'snow';
 	m.style.backgroundColor	= 'transparent';
 	m.style.fontSize		= '12px';
-	// m.style.pointerEvents	= 'none';
 	m.style.zIndex			= 65000;
 	m.style.visibility		= 'hidden';
 	var r = '';
@@ -2256,6 +2250,7 @@ function ctlToolbar(){
 //	ツールバーの表示制御
 //
 function showToolbar(){
+	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	var nlcf	= document.getElementById('NAV_LOCATED_CHILD_FRAME');
 	var nscf	= document.getElementById('NAV_STORAGE_CHILD_FRAME');
@@ -2270,6 +2265,7 @@ function showToolbar(){
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
+	bo.style.visibility		= 'visible';
 	nlcf.style.visibility	= 'visible';
 	nscf.style.visibility	= 'visible';
 	tb.style.visibility     = 'visible';
@@ -2291,6 +2287,7 @@ function showToolbar(){
 
 function hideToolbar(){
 	console.log('hideToolbar');
+	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	var nlcf	= document.getElementById('NAV_LOCATED_CHILD_FRAME');
 	var nscf	= document.getElementById('NAV_STORAGE_CHILD_FRAME');
@@ -2305,6 +2302,7 @@ function hideToolbar(){
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
+	bo.style.visibility		= 'hidden';
 	nlcf.style.visibility	= 'hidden';
 	nscf.style.visibility	= 'hidden';
 	nsi.style.visibility	= 'hidden';
