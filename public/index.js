@@ -1774,7 +1774,7 @@ function closeWhiteboard(){
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
 		r += '<div style="padding-bottom:20px;" >';
-		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;" readonly value="' + dayWhiteboard + '" />';
+		r += '<input type="text" id="whiteboard_day" name="day" style="width:96px;background-color:lightgrey;border:1px solid lightgrey;border-radius:3px;" readonly value="' + dayWhiteboard + '" />';
 		r += '</div>';
 		r += '</form>';
 
