@@ -199,6 +199,7 @@ function init()
 	new Button( 'ID_NAV_TILE',  			showTile ).play();
 	new Button( 'ID_NAV_REPORT',  			reportWhiteboard ).play();
 	new Button( 'ID_NAV_CHILDFINDER',       ctlSpotlight ).play();
+	new Button( 'NAV_STORAGE_CHILD_OPTION_SEARCH', xxx ).play();
 	// new Button( 'ID_NAV2_CHILDFINDER',      ctlSpotlight ).play();
 
 	//	NAV2
@@ -269,6 +270,15 @@ function init()
 				p.innerHTML	= '';
 				oSpotlight.findChildrenTable( p, '*' );
 			}
+		}
+	);
+	document.getElementById('TXT_KEYWORD4').addEventListener(
+		'keyup',
+		function( e ){
+			var p = document.getElementById('NAV_STORAGE_CHILD_MAIN');
+			var keyword = e.target.value;
+			if ( e.key == 'Enter' )
+				oSpotlight.findChildrenTable( p, ( keyword == '' )? '*' : keyword );
 		}
 	);
 
@@ -367,6 +377,13 @@ function init()
 	 initPerspectivebar( evtStart, evtMove, evtEnd );
 
 	makeToolbarCheckoutProgress( 0 );
+}
+
+function xxx( e ){
+	var keyword = document.getElementById('TXT_KEYWORD4').value;
+	var p = document.getElementById('NAV_STORAGE_CHILD_MAIN');
+	oSpotlight.findChildrenTable( p, ( keyword == '' )? '*' : keyword );
+
 }
 
 //
@@ -529,7 +546,7 @@ function makeToolbarCheckoutProgress( progress_ratio ){
 	// d.style.backgroundColor	= 'rgb(241,241,241)';
 	// d.style.border			= '1px solid lightgrey';
 	var ccl = p.appendChild( d );
-	var cp = new CircleProgress( ccl, 38, 38, progress_ratio, 'white', 14 );
+	var cp = new CircleProgress( ccl, 38, 38, progress_ratio, 'rgb(255,123,0)', 14 );
 	cp.play();
 
 }
@@ -2566,9 +2583,9 @@ function signForm()
 		r += "<div style='margin:10px auto;width:210px;' >";
 			r += "<form name='sign_form' onsubmit='return false;' >";
 			r += "<div>ID:</div>";
-			r += "<div><input style='width:200px;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
+			r += "<div><input style='width:200px;outline:none;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
 			r += "<div style='padding-top:20px;' >Password:</div>";
-			r += "<div><input style='width:200px;' type='password' name='pwd' tabindex=2 /></div>";
+			r += "<div><input style='width:200px;outline:none;' type='password' name='pwd' tabindex=2 /></div>";
 			r += "<div style='padding-top:40px;text-align:center;' >";
 				r += "<button class='next_button' ";
 				r += " style='border:none;' onclick='sign()' >";
@@ -3085,16 +3102,16 @@ function checkOtherChildCoordinate( base_child, x, y ){
 //
 //	マークしている他のチャイルドも移動
 //
-function moveOtherChild( base_child, x, y ){
+function moveOtherChild( base_child, delta_x, delta_y ){
 	var w = document.getElementById('WHITEBOARD').offsetWidth;
 	var h = document.getElementById('WHITEBOARD').offsetHeight;
 	var children = getMarkedChild();
 	if ( children.length == 0 ) return;
 	for ( var i=0; i<children.length; i++ ){
 		if ( base_child != children[i]){
-			var pxTop	= children[i].offsetTop + y;
+			var pxTop	= children[i].offsetTop + delta_y;
 			var perTop	= ( Math.floor( pxTop / h * 10000 ) / 100 ) + '%';
-			var pxLeft	= children[i].offsetLeft + x;
+			var pxLeft	= children[i].offsetLeft + delta_x;
 			var perLeft	= ( Math.floor( pxLeft / w * 10000 ) / 100 ) + '%';
 	
 			children[i].style.top  = perTop;
