@@ -221,24 +221,54 @@ function init()
 	//
 	//
 	//
-	document.getElementById('NAV_LOCATED_CHILD_FRAME').addEventListener(
+	document.getElementById('NAV_LOCATED_CHILD_HDR').addEventListener(
 		'click',
 		function(e){
 			var f = document.getElementById('NAV_LOCATED_CHILD_FRAME');
 			var h = document.getElementById('NAV_LOCATED_CHILD_HDR').offsetHeight;
 			var m = document.getElementById('NAV_LOCATED_CHILD_MAIN').offsetHeight;
-			f.style.top	= '0px';
-			f.style.height	= '100%';
+			var p = document.getElementById('NAV_LOCATED_CHILD_MAIN');
+			var icon	= document.getElementById('NAV_LOCATED_CHILD_ICON');
+			if ( icon.classList.contains('folder_open') ){
+				// close
+				icon.classList.remove('folder_open');
+				icon.classList.add('folder_close');
+				initNavLocatedChildFrame();
+				p.innerHTML	= '';
+			} else {
+				// open
+				icon.classList.remove('folder_close');
+				icon.classList.add('folder_open');
+				f.style.top	= '0px';
+				f.style.height	= '100%';
+				p.innerHTML	= '';
+				oSpotlight.findWhiteboardChild( p, '*' );
+			}
 		}
 	);
-	document.getElementById('NAV_STORAGE_CHILD_FRAME').addEventListener(
+	document.getElementById('NAV_STORAGE_CHILD_HDR').addEventListener(
 		'click',
 		function(e){
 			var f = document.getElementById('NAV_STORAGE_CHILD_FRAME');
 			var h = document.getElementById('NAV_STORAGE_CHILD_HDR').offsetHeight;
 			var m = document.getElementById('NAV_STORAGE_CHILD_MAIN').offsetHeight;
-			f.style.top	= '0px';
-			f.style.height	= '100%';
+			var p = document.getElementById('NAV_STORAGE_CHILD_MAIN');
+			var icon	= document.getElementById('NAV_STORAGE_CHILD_ICON');
+			if ( icon.classList.contains('folder_open') ){
+				// close
+				icon.classList.remove('folder_open');
+				icon.classList.add('folder_close');
+				initNavStorageChildFrame();
+				p.innerHTML	= '';
+			} else {
+				// open
+				icon.classList.remove('folder_close');
+				icon.classList.add('folder_open');
+				f.style.top	= '0px';
+				f.style.height	= '100%';
+				p.innerHTML	= '';
+				oSpotlight.findChildrenTable( p, '*' );
+			}
 		}
 	);
 
@@ -2136,12 +2166,14 @@ function fitting(){
 	var tr = document.getElementById('TOOLBAR_RIGHT');
 	tr.style.left	= ( w - tr.offsetWidth ) + 'px';
 
-	var nlcf = document.getElementById('NAV_LOCATED_CHILD_FRAME');
-	nlcf.style.top	= ( wbf.offsetHeight - 34 ) + 'px';
-	nlcf.style.left	= ( w - ( nlcf.offsetWidth + 42 ) ) + 'px';
-	var nscf = document.getElementById('NAV_STORAGE_CHILD_FRAME');
-	nscf.style.top	= ( wbf.offsetHeight - 34 ) + 'px';
-	nscf.style.left	= ( w - ( nlcf.offsetWidth + nscf.offsetWidth + 42 + 1 ) ) + 'px';
+	initNavLocatedChildFrame();
+	initNavStorageChildFrame();
+	// var nlcf = document.getElementById('NAV_LOCATED_CHILD_FRAME');
+	// nlcf.style.top	= ( wbf.offsetHeight - 34 ) + 'px';
+	// nlcf.style.left	= ( w - ( nlcf.offsetWidth + 42 ) ) + 'px';
+	// var nscf = document.getElementById('NAV_STORAGE_CHILD_FRAME');
+	// nscf.style.top	= ( wbf.offsetHeight - 34 ) + 'px';
+	// nscf.style.left	= ( w - ( nlcf.offsetWidth + nscf.offsetWidth + 42 + 1 ) ) + 'px';
 
 	// レポートダイアログのサイズ調整
 	oReportDlg.init();
@@ -2163,6 +2195,22 @@ function fitting(){
 
 }
 
+function initNavLocatedChildFrame(){
+	var w = document.body.clientWidth;
+	var wbf = document.getElementById('WHITEBOARD_FRAME');
+	var nlcf = document.getElementById('NAV_LOCATED_CHILD_FRAME');
+	nlcf.style.top	= ( wbf.offsetHeight - 34 ) + 'px';
+	nlcf.style.left	= ( w - ( nlcf.offsetWidth + 42 ) ) + 'px';
+
+}
+function initNavStorageChildFrame(){
+	var w = document.body.clientWidth;
+	var wbf = document.getElementById('WHITEBOARD_FRAME');
+	var nlcf = document.getElementById('NAV_LOCATED_CHILD_FRAME');
+	var nscf = document.getElementById('NAV_STORAGE_CHILD_FRAME');
+	nscf.style.top	= ( wbf.offsetHeight - 34 ) + 'px';
+	nscf.style.left	= ( w - ( nlcf.offsetWidth + nscf.offsetWidth + 42 + 1 ) ) + 'px';
+}
 
 //
 //	チルドレンパレットのフォールディング

@@ -226,12 +226,14 @@ INPUT[type=password]:focus{
 #NAV_LOCATED_CHILD_MAIN{
 	pointer-events: 		auto;
 	position:				absolute;
-	top:					28px;
+	top:					32px;
 	left:					0px;
 	width:					100%;
 	height:					calc(100% - 32px );
 	color:					gray;
-	background-color: 		rgb(241,241,241);
+	/* background-color: 		rgb(241,241,241); */
+	background-color:		transparent;
+	overflow:				scroll;
 }
 
 #NAV_STORAGE_CHILD_FRAME{
@@ -262,12 +264,14 @@ INPUT[type=password]:focus{
 #NAV_STORAGE_CHILD_MAIN{
 	pointer-events: 		auto;
 	position:				absolute;
-	top:					28px;
+	top:					32px;
 	left:					0px;
 	width:					100%;
 	height:					calc(100% - 32px );
 	color:					gray;
-	background-color: 		rgb(241,241,241);
+	/* background-color: 		rgb(241,241,241); */
+	background-color: 		transparent;
+	overflow:				scroll;
 }
 
 .folder_close{

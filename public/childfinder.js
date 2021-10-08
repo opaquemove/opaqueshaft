@@ -473,19 +473,15 @@ spotlight.prototype = {
                     case 1://opened
                     case 2://header received
                     case 3://loading
-                        //var fcl = document.getElementById( 'FIND_CHILD_LST' );
-                        //if ( fcl != null ) fcl.innerText = 'access...';
-                        this.folder2.innerText = 'access...'
+                        // this.folder2.innerText = 'access...';
+                        parent.innerText = 'access...';
                         break;
                     case 4://done
                         if ( xmlhttp.status == 200 ){
                             var result = JSON.parse( xmlhttp.responseText );
                             
-                            //r += xmlhttp.responseText;
-                            //var fcl = document.getElementById('FIND_CHILD_LST');
-                            //if ( fcl == null ) return;
-                            //fcl.innerHTML = '';
-                            this.folder2.innerText = '';
+                            // this.folder2.innerText = '';
+                            parent.innerText = '';
                             for ( var i=0; i<result.length; i++ ){
                                 var child_id    = result[i].child_id;
                                 var child_name  = result[i].child_name;
