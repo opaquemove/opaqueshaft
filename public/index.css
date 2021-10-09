@@ -85,16 +85,17 @@ INPUT[type=password]:focus{
 }
 
 #LAYER{
-	pointer-events: 		none;
+	pointer-events: 		auto;
 	position:				absolute;
 	top:					0px;
 	left:					0px;
 	width:					100%;	/* fitting */
 	height:					100%;	/* fitting */
-	background-color:		white;
+	background-color:		transparent;
 	padding:				0px;
-	overflow:				scroll;
-	z-index:				-1;
+	margin:					0px;
+	overflow:				hidden;
+	z-index:				0;
 }
 
 #BOTTOM_OVERLAY{
@@ -459,7 +460,6 @@ INPUT[type=password]:focus{
 	height:					82px;
 	color:					gray;
 	background-color:		transparent;
-/*	border-bottom:			1px solid lightgrey;*/
 	z-index:				40000;
 	overflow:				visible;
 	opacity: 				1;
@@ -878,6 +878,22 @@ INPUT[type=password]:focus{
 	overflow:			scroll;
 	z-index:			0;
 }
+#WHITEBOARD_TOOLBAR{
+	position:				absolute;
+	top:					0px;
+	left:					0px;
+	pointer-events: 		none;
+	padding-top:			0px;
+	padding-bottom:			2px;
+	width:					100%;
+	height:					82px;
+	color:					gray;
+	background-color:		transparent;
+	z-index:				3;
+	overflow:				visible;
+	opacity: 				1;
+}
+
 #WHITEBOARD_RESERVE_LEFT{
 	pointer-events: 	auto;
 	position: 			fixed;

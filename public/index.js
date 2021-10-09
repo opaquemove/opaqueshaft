@@ -2269,6 +2269,7 @@ function showToolbar(){
 	var tb      = document.getElementById('TOOLBAR');
 	var tr  	= document.getElementById('TOOLBAR_RIGHT');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
+	var wbt		= document.getElementById('WHITEBOARD_TOOLBAR');
 	// var ia		= document.getElementById('ID_NAV_ACCOUNT');
 	var icf		= document.getElementById('ID_NAV_CHILDFINDER');
 	var iprog	= document.getElementById('ID_PROGRESS');
@@ -2283,6 +2284,7 @@ function showToolbar(){
 	tb.style.visibility     = 'visible';
 	tr.style.visibility		= 'visible';
 	wbf.style.visibility    = 'visible';
+	wbt.style.visibility	= 'visible';
 	tlb.style.visibility	= 'visible';
 	tlba.style.visibility	= 'visible';
 	// psb.style.visibility	= 'visible';
@@ -2306,6 +2308,7 @@ function hideToolbar(){
 	var tb      = document.getElementById('TOOLBAR');
 	var tr		= document.getElementById('TOOLBAR_RIGHT');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
+	var wbt		= document.getElementById('WHITEBOARD_TOOLBAR');
 	// var ia		= document.getElementById('ID_NAV_ACCOUNT');
 	var icf		= document.getElementById('ID_NAV_CHILDFINDER');
 	var iprog	= document.getElementById('ID_PROGRESS');
@@ -2322,6 +2325,7 @@ function hideToolbar(){
 	tb.style.visibility     = 'hidden';
 	tr.style.visibility		= 'hidden';
 	wbf.style.visibility    = 'hidden';
+	wbt.style.visibility	= 'hidden';
 	tlb.style.visibility	= 'hidden';
 	tlba.style.visibility	= 'hidden';
 	psb.style.visibility	= 'hidden';
@@ -2578,9 +2582,9 @@ function signForm()
 		r += "<div style='margin:10px auto;width:210px;' >";
 			r += "<form name='sign_form' onsubmit='return false;' >";
 			r += "<div>ID:</div>";
-			r += "<div><input style='width:200px;outline:none;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
+			r += "<div><input style='width:200px;outline:none;border-radius:3px;padding:3px;background-color:lightgrey;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
 			r += "<div style='padding-top:20px;' >Password:</div>";
-			r += "<div><input style='width:200px;outline:none;' type='password' name='pwd' tabindex=2 /></div>";
+			r += "<div><input style='width:200px;outline:none;border-radius:3px;padding:3px;background-color:lightgrey;' type='password' name='pwd' tabindex=2 /></div>";
 			r += "<div style='padding-top:40px;text-align:center;' >";
 				r += "<button class='next_button' ";
 				r += " style='border:none;' onclick='sign()' >";
@@ -3046,17 +3050,6 @@ function mMove( e ){
 			if ( drag.hasAttribute('checkout') ) drag.setAttribute('checkout', hm );
 
 		}
-		// var escort = coordinateToEscort( drag.offsetTop, drag.offsetLeft );
-		// switch ( escort ){
-		// 	case true:
-		// 		drag.setAttribute('escort', 'yes');
-		// 		setEscortHelper( drag, 'ON' );
-		// 		break;
-		// 	case false:
-		// 		drag.removeAttribute('escort');
-		// 		setEscortHelper( drag, 'OFF' );	
-		// 		break;
-		// }
 	}
 
 	var icc = document.getElementById('ID_CHILD_COORDINATE');
