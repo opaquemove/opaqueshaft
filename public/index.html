@@ -48,11 +48,11 @@
 	</div>
 
 	<div id="TOOLBAR" class="not_select toolbar_hidden">
-		<div id="OPAQUESHAFT_NAV" >&nbsp;</div>
+		<!-- <div id="OPAQUESHAFT_NAV" >&nbsp;</div>
 		<div id="OPAQUESHAFT_TITLE">
 			&nbsp;OpaqueShaft
-		</div> 
-		<div style="float:left;padding-top:10px;padding-left: 10px;">
+		</div>  -->
+		<!-- <div style="float:left;padding-top:10px;padding-left: 10px;">
 			<div id="ID_CHILD_COORDINATE"                class="status_column" style="width:100px;display:none;" ></div>
 		</div>
 		<div id="ID_SYSMENU"  class="not_select" >
@@ -61,7 +61,7 @@
 		</div>
 		<div id="WHITEBOARD_DAY_FRAME" class="not_select">
 			<span id="CUR_WHITEBOARD_DAY" ></span>
-		</div>
+		</div> -->
 	</div>
 
 	<div id="NAV_LOCATED_CHILD_FRAME" class="not_select toolbar_hidden" >
@@ -90,7 +90,7 @@
 		</div>
 	</div>
 
-	<div id="TOOLBAR_RIGHT" class="not_select toolbar_hidden">
+	<!-- <div id="TOOLBAR_RIGHT" class="not_select toolbar_hidden">
 		<div id="ID_MODE_FRAME"		   class="not_select" >
 			<div id="ID_MODE_CHECKIN"  class="not_select toolbar_hidden vh-center mode_on" >
 				<img width="16px" style="margin-left:10px;" src="./images/dry-clean.png" />
@@ -103,10 +103,25 @@
 		</div>
 		<div id="ID_NAV_SYNC" 	   class="not_select" >sync</div>
 		<div id="ID_NAV_REPORT"    class="not_select" >report</div>
-	</div>
+	</div> -->
 	
 	<div ID="LAYER" >
-		<div id="WHITEBOARD_TOOLBAR" ></div>
+		<div id="WHITEBOARD_TOOLBAR" >
+			<div id="OPAQUESHAFT_NAV" >&nbsp;</div>
+			<div id="OPAQUESHAFT_TITLE">
+				&nbsp;OpaqueShaft
+			</div> 
+			<div style="float:left;padding-top:10px;padding-left: 10px;">
+				<div id="ID_CHILD_COORDINATE"                class="status_column" style="width:100px;display:none;" ></div>
+			</div>
+			<div id="ID_SYSMENU"  class="not_select" >
+				<div id="ID_NAV_TILE"         >menu</div>
+				<div id="ID_NAV_CHILDFINDER"  >&nbsp;</div>
+			</div>
+			<div id="WHITEBOARD_DAY_FRAME" class="not_select">
+				<span id="CUR_WHITEBOARD_DAY" ></span>
+			</div>
+		</div>
 		<div id="WHITEBOARD_FRAME" class="not_select toolbar_hidden">
 			<div id="WHITEBOARD" ></div>
 			<div id="WHITEBOARD_CHECKOUT" ></div>
@@ -115,11 +130,32 @@
 			<div id="WHITEBOARD_TOP_MARGIN" ></div>
 			<div id="WHITEBOARD_BOTTOM_MARGIN" class="vh-center" >out of whiteboard</div>
 		</div>
+
+		<div id="TOOLBAR_RIGHT" class="not_select toolbar_hidden">
+			<div id="ID_MODE_FRAME"		   class="not_select" >
+				<div id="ID_MODE_CHECKIN"  class="not_select toolbar_hidden vh-center mode_on" >
+					<img width="16px" style="margin-left:10px;" src="./images/dry-clean.png" />
+					<div id="C_CHECKIN" ></div>
+				</div>
+				<div id="ID_MODE_CHECKOUT" class="not_select toolbar_hidden vh-center" >
+					<img width="16px" style="margin-left:10px;" src="./images/check-3.png" />
+					<div id="C_CHECKOUT" ></div>
+				</div>		
+			</div>
+			<div id="ID_NAV_SYNC" 	   class="not_select" >sync</div>
+			<div id="ID_NAV_REPORT"    class="not_select" >report</div>
+		</div>
+	
 		<div id="REPORT_FRAME" class="not_select" >
 			<div id="REPORT_CONTENT" class="not_select" ></div>
 			<div id="REPORT_CONTENT_HANDLE" >&nbsp;</div>
 			<div id="REPORT_CONTENT_FOOTER" >&nbsp;</div>
 		</div>
+
+		<div id="ID_PROGRESS"           class="not_select toolbar_hidden" >&nbsp;</div>
+		<div id="ID_TIMELINE_BAR_AREA"  class="not_select toolbar_hidden" >&nbsp;</div>
+		<div id="ID_TIMELINE_BAR"       class="not_select toolbar_hidden" >08:00</div>
+	
 	</div>
 
 	<!-- <div id="REPORT_FRAME" class="not_select" >
@@ -128,9 +164,9 @@
 		<div id="REPORT_CONTENT_FOOTER" >&nbsp;</div>
 	</div> -->
 
-	<div id="ID_PROGRESS"           class="not_select toolbar_hidden" >&nbsp;</div>
+	<!-- <div id="ID_PROGRESS"           class="not_select toolbar_hidden" >&nbsp;</div>
 	<div id="ID_TIMELINE_BAR_AREA"  class="not_select toolbar_hidden" >&nbsp;</div>
-	<div id="ID_TIMELINE_BAR"       class="not_select toolbar_hidden" >08:00</div>
+	<div id="ID_TIMELINE_BAR"       class="not_select toolbar_hidden" >08:00</div> -->
 
 	<div id="ID_PERSPECTIVE_BAR"    class="not_select toolbar_hidden" >&nbsp;</div>
 	<div id="MODAL_OVERLAY_TIMESELECTOR" class="not_select">

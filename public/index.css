@@ -99,6 +99,7 @@ INPUT[type=password]:focus{
 	padding:				0px;
 	margin:					0px;
 	overflow:				hidden;
+	transition: 			transform 0.3s ease-in-out;
 	z-index:				0;
 }
 
@@ -126,7 +127,7 @@ INPUT[type=password]:focus{
 }
 
 #OPAQUESHAFT_TITLE{
-	pointer-events:			none;
+	pointer-events:			auto;
 	float:					left;
 	width:					178px;
 	height:					54px;

@@ -371,11 +371,14 @@ function init()
 	tmb.addEventListener( 'mouseleave', 	locateTimelinebar, { passive : false } );
 
 	// test code
-	document.getElementById('WHITEBOARD_TOOLBAR').addEventListener(
+	document.getElementById('OPAQUESHAFT_TITLE').addEventListener(
 		'click',
 		function(e){
 			var layer = document.getElementById('LAYER');
-			layer.style.transform = 'scale(0.5,0.5)';
+			if ( layer.style.transform == '' )
+				layer.style.transform = 'scale(0.7,0.7)';
+				else
+				layer.style.transform = '';
 			console.log('test');
 		}
 	);
@@ -2030,7 +2033,7 @@ function Nav( func ){
 	r += '</div>';
 
 	m.innerHTML				= r;
-	
+
 	// this.frame = document.body.appendChild( m );
 	this.frame	= document.getElementById('LAYER').appendChild( m );
 	this.frame.addEventListener( this.evtStart,
