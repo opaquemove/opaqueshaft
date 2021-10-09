@@ -374,11 +374,14 @@ function init()
 	document.getElementById('OPAQUESHAFT_TITLE').addEventListener(
 		'click',
 		function(e){
-			var layer = document.getElementById('LAYER');
-			if ( layer.style.transform == '' )
-				layer.style.transform = 'scale(0.7,0.7)';
-				else
+			var layer = document.getElementById('LAYER_FRAME');
+			if ( layer.style.transform == '' ){
+				layer.style.transform = 'scale(0.5,0.5)';
+				layer.style.transformOrigin	= 'left center';
+			}else{
 				layer.style.transform = '';
+				layer.style.transformOrigin	= '';
+			}
 			console.log('test');
 		}
 	);
@@ -2130,6 +2133,16 @@ Nav.prototype = {
 function fitting(){
 	var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
+
+	// w = document.getElementById('LAYER').offsetWidth;
+	// h = document.getElementById('LAYER').offsetHeight;
+
+	var layer = document.getElementById('LAYER');
+	var wbt	  = document.getElementById('WHITEBOARD_TOOLBAR');
+	layer.style.width = w + 'px';
+	layer.style.height = h + 'px';
+	wbt.style.width		= w + 'px';
+	
 
 	criteriaEscortPixel = w;
 
