@@ -594,7 +594,7 @@ function commonProc(){
 //
 function makeTimelineIndicator(){
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
-	var tb_height = document.getElementById('TOOLBAR').offsetHeight;
+	// var tb_height = document.getElementById('TOOLBAR').offsetHeight;
 	var wbt = document.getElementById('WHITEBOARD_TIMELINE');
 	var wbt_width = wbt.offsetWidth;
 
@@ -2133,7 +2133,7 @@ function fitting(){
 
 	criteriaEscortPixel = w;
 
-	var tb_height = document.getElementById('TOOLBAR').offsetHeight;
+	// var tb_height = document.getElementById('TOOLBAR').offsetHeight;
 	var tb_height = 0;
 	// var sts_height = document.getElementById('STATUS').offsetHeight;
 	var sts_height = 0;
@@ -2285,7 +2285,7 @@ function showToolbar(){
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	var nlcf	= document.getElementById('NAV_LOCATED_CHILD_FRAME');
 	var nscf	= document.getElementById('NAV_STORAGE_CHILD_FRAME');
-	var tb      = document.getElementById('TOOLBAR');
+	// var tb      = document.getElementById('TOOLBAR');
 	var tr  	= document.getElementById('TOOLBAR_RIGHT');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var wbt		= document.getElementById('WHITEBOARD_TOOLBAR');
@@ -2301,7 +2301,7 @@ function showToolbar(){
 	bo.style.visibility		= 'visible';
 	nlcf.style.visibility	= 'visible';
 	nscf.style.visibility	= 'visible';
-	tb.style.visibility     = 'visible';
+	// tb.style.visibility     = 'visible';
 	tr.style.visibility		= 'visible';
 	wbf.style.visibility    = 'visible';
 	wbt.style.visibility	= 'visible';
@@ -2326,7 +2326,7 @@ function hideToolbar(){
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	var nlcf	= document.getElementById('NAV_LOCATED_CHILD_FRAME');
 	var nscf	= document.getElementById('NAV_STORAGE_CHILD_FRAME');
-	var tb      = document.getElementById('TOOLBAR');
+	// var tb      = document.getElementById('TOOLBAR');
 	var tr		= document.getElementById('TOOLBAR_RIGHT');
 	var wbf     = document.getElementById('WHITEBOARD_FRAME');
 	var wbt		= document.getElementById('WHITEBOARD_TOOLBAR');
@@ -2344,7 +2344,7 @@ function hideToolbar(){
 	nscf.style.visibility	= 'hidden';
 	nsi.style.visibility	= 'hidden';
 	// nsi2.style.visibility	= 'hidden';
-	tb.style.visibility     = 'hidden';
+	// tb.style.visibility     = 'hidden';
 	tr.style.visibility		= 'hidden';
 	wbf.style.visibility    = 'hidden';
 	wbt.style.visibility	= 'hidden';

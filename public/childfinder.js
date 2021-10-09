@@ -32,7 +32,8 @@ spotlight.prototype = {
         o.setAttribute( 'id', 'CHILDFINDER_OVERLAY' );
         o.setAttribute( 'class', 'not_select' );
         o.style.visibility  = 'hidden';
-        this.overlay = document.body.appendChild( o );
+        // this.overlay = document.body.appendChild( o );
+        this.overlay    = document.getElementById('LAYER').appendChild( o );
     
         var o2 = document.createElement('DIV');
         o2.setAttribute( 'id',    'CHILDFINDER_FRAME' );
