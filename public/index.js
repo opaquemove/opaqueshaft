@@ -370,6 +370,15 @@ function init()
 	tmb.addEventListener( evtEnd,      		locateTimelinebar, { passive : false } );
 	tmb.addEventListener( 'mouseleave', 	locateTimelinebar, { passive : false } );
 
+	// test code
+	document.getElementById('WHITEBOARD_TOOLBAR').addEventListener(
+		'click',
+		function(e){
+			var layer = document.getElementById('LAYER');
+			layer.style.transform = 'scale(0.5,0.5)';
+			console.log('test');
+		}
+	);
 
 	//
 	//	パースペクティブバー初期化
@@ -956,7 +965,8 @@ function locateTimelinebar( e ){
 			o.style.left	= ( event.pageX - tlx - 100 ) + 'px';
 			o.innerText = event.target.innerText;
 
-			document.body.appendChild( o );
+			// document.body.appendChild( o );
+			document.getElementById('LAYER').appendChild( o );
 
 			//	タイムラインを分かりやすく表示するインジケータ
 			o = document.createElement('DIV');
@@ -973,9 +983,9 @@ function locateTimelinebar( e ){
 			var minute = event.target.innerText.split(':')[1];
 			o.style.top		= '42px';
 			o.style.left	= ( parseInt( minute) / 60 * 100 ) + '%';
-			// o.innerText = o.style.left;
 
-			document.body.appendChild( o );
+			// document.body.appendChild( o );
+			document.getElementById('LAYER').appendChild( o );
 
 
 
@@ -1067,11 +1077,14 @@ function locateTimelinebar( e ){
 
 			var o = document.getElementById('INDICATOR1');
 			if ( o != null ){
-				document.body.removeChild( o );
+				// document.body.removeChild( o );
+				o.parentNode.removeChild( o );
 			}
 			o = document.getElementById('INDICATOR2');
 			if ( o != null ){
-				document.body.removeChild( o );
+				// document.body.removeChild( o );
+				// document.getElementById('LAYER').removeChild( o );
+				o.parentNode.removeChild( o );
 			}
 			break;
 	}
@@ -2017,7 +2030,9 @@ function Nav( func ){
 	r += '</div>';
 
 	m.innerHTML				= r;
-	this.frame = document.body.appendChild( m );
+	
+	// this.frame = document.body.appendChild( m );
+	this.frame	= document.getElementById('LAYER').appendChild( m );
 	this.frame.addEventListener( this.evtStart,
 		( function(e){
 			var o = ( this.touchdevice )? e.changedTouches[0].target : e.target;
@@ -2262,6 +2277,7 @@ function ctlToolbar(){
 //	ツールバーの表示制御
 //
 function showToolbar(){
+	var layer	= document.getElementById('LAYER');
 	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	var nlcf	= document.getElementById('NAV_LOCATED_CHILD_FRAME');
@@ -2278,6 +2294,7 @@ function showToolbar(){
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
+	layer.style.visibility	= 'visible';
 	bo.style.visibility		= 'visible';
 	nlcf.style.visibility	= 'visible';
 	nscf.style.visibility	= 'visible';
@@ -2301,6 +2318,7 @@ function showToolbar(){
 
 function hideToolbar(){
 	console.log('hideToolbar');
+	var layer	= document.getElementById('LAYER');
 	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	var nlcf	= document.getElementById('NAV_LOCATED_CHILD_FRAME');
@@ -2317,6 +2335,7 @@ function hideToolbar(){
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
+	layer.style.visibility	= 'hidden';
 	bo.style.visibility		= 'hidden';
 	nlcf.style.visibility	= 'hidden';
 	nscf.style.visibility	= 'hidden';

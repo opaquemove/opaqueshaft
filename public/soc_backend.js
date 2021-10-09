@@ -923,11 +923,15 @@ function propertyChildren(){
 
     // frame.style.filter          = 'blur(4px)';
     //frame.style.opacity         = 0.5;
-    frame.style.zIndex          = 70000;
-    var oFrame = document.body.appendChild( frame );
+    frame.style.zIndex              = 70000;
+
+    // var oFrame = document.body.appendChild( frame );
+    var oFrame = document.getElementById('LAYER').appendChild( frame );
     oFrame.addEventListener( 'click',
         function(e){
-            if ( this == e.target ) document.body.removeChild( this );
+            if ( this == e.target )
+                // document.body.removeChild( this );
+                this.parentNode.removeChild( this );
         }, false );
 
     for ( var i=0; i<children.length; i++ ){
