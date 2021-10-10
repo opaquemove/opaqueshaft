@@ -25,7 +25,7 @@
 
 	<div id="BOTTOM_OVERLAY" class="not_select toolbar_hidden" >
 		<div id="BOTTOM_FRAME" class="not_select" style="color:dimgray;">
-			<div style="width:100%;height:380px;font-size:32px;border-bottom:1px solid lightgrey;text-align:center;padding:50px 10px 0px 10px;" >
+			<div style="width:100%;height:380px;font-size:26px;border-bottom:1px solid lightgrey;text-align:center;padding:30px 10px 0px 10px;" >
 				<div  style="margin:0 auto;position:relative;width:160px;height:100px;padding-bottom:40px;border:0px solid lightgrey;">
 					<div style="position:absolute;top:20px;left:10px;
 							width:60px;height:30px;
@@ -59,25 +59,30 @@
 
 				</div>
 				<div style="padding-bottom:40px;">Opaqueshaft</div>
-				<div style="width:200px;margin:0 auto;padding:20px;background-color:transparent;border-radius: 12px;">
-					<button id="WP_SIGNIN" style="width:60px;height:80px;border:1px;border-radius:4px;background-color:white;background-image:url(images/user-2.png);background-size:36px;background-repeat:no-repeat;background-position: center top 10px;"
+				<div style="width:300px;margin:0 auto;padding:20px;background-color:transparent;border-radius: 12px;">
+					<button id="WP_SIGNIN" style="width:60px;height:80px;border:1px;border-radius:4px;background-color:white;background-image:url(images/user-2.png);background-size:26px;background-repeat:no-repeat;background-position: center top 10px;"
 						onclick="signForm();" >
-						<br/><br/><br/>sign</button>
-					<button id="WP_SIGNOUT" style="width:60px;height:80px;border:1px;border-radius:4px;background-color:white;background-image:url(images/exit.png);background-size:36px;background-repeat:no-repeat;background-position: center top 10px;"
+						<br/><br/><br/>sign in</button>
+					<button id="WP_SIGNOUT" style="width:60px;height:80px;border:1px;border-radius:4px;background-color:white;background-image:url(images/exit.png);background-size:26px;background-repeat:no-repeat;background-position: center top 10px;"
 						onclick="signoutForm();" >
 						<br/><br/><br/>sign out</button>
-					<button style="width:60px;height:80px;border:2px groove gray;border-radius:4px;background-color:white;background-image:url(images/settings.png);background-size:36px;background-repeat:no-repeat;background-position: center top 10px;"
+					<button id="WP_CHILDREN" style="width:60px;height:80px;border:2px groove gray;border-radius:4px;background-color:white;background-image:url(images/management.png);background-size:26px;background-repeat:no-repeat;background-position: center top 10px;"
 						onclick=""  >
+						<br/><br/><br/>children
+					</button>
+					<button id="WP_SETTING" style="width:60px;height:80px;border:2px groove gray;border-radius:4px;background-color:white;background-image:url(images/settings.png);background-size:26px;background-repeat:no-repeat;background-position: center top 10px;"
+						onclick="accountProperty();"  >
 						<br/><br/><br/>settings
 					</button>
 				</div>
 			</div>
-			<div style="width:100%;height:160px;font-size:32px;border-bottom:gray;text-align:center;" >
+			<div style="width:100%;height:160px;font-size:26px;border-bottom:gray;text-align:center;" >
 				<div style="padding:40px 0px 40px 0px" >whiteboard</div>
 				<div>
-					<button style="width:40px;height:40px;border:none;background-color:transparent;background-image:url(images/document-editor.png);background-size:36px;background-repeat:no-repeat;background-position: center center;" 
-						onclick="openWhiteboard();"
-					></button>
+					<button id="WP_OPENWHITEBOARD" style="width:40px;height:40px;border:none;background-color:transparent;background-image:url(images/document-editor.png);background-size:36px;background-repeat:no-repeat;background-position: center center;" 
+						onclick="openWhiteboard();" >
+						<br/><br/><br/>open
+					</button>
 				</div>
 			</div>
 		</div>
@@ -187,7 +192,6 @@
 				<div id="WHITEBOARD" ></div>
 				<div id="WHITEBOARD_CHECKOUT" ></div>
 				<div id="WHITEBOARD_TIMELINE" ></div>
-				<div id="WHITEBOARD_RESERVE_LEFT" ></div>
 				<div id="WHITEBOARD_TOP_MARGIN" ></div>
 				<div id="WHITEBOARD_BOTTOM_MARGIN" class="vh-center" >out of whiteboard</div>
 			</div>
@@ -267,7 +271,7 @@
 				<div id="ID_TILES" class="not_select" style="font-size:10px;padding-right:42px;" >
 					<div id="MODAL_TILE_DAY"      class="not_select vh-center" ></div>
 					<div id="MODAL_TILE_SIGN"     class="not_select" ></div>
-					<div id="MODAL_TILE_SIGNOUT"  class="not_select" >sign out</div>
+					<!-- <div id="MODAL_TILE_SIGNOUT"  class="not_select" >sign out</div> -->
 					<div id="MODAL_TILE_SAVE"     class="not_select" >save...</div>
 					<div id="MODAL_TILE_CLOSE"    class="not_select" >close...</div>
 					<!-- <div id="MODAL_TILE_ABSENT"   class="not_select" >absent...</div> -->

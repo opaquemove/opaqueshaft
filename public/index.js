@@ -54,7 +54,6 @@ var palleteTimeSelector = null;
 var oTile				= null;
 var oLog				= null;
 var oReportDlg			= null;
-var oResvLeft			= null;
 
 window.onload = init;
 window.onresize = fitting;
@@ -404,10 +403,6 @@ function initWhiteboard(){
 
 	//	ホワイトボードサイズ初期化
 	initWhiteboardSize();
-
-	// WHITEBOARD_RESERVE_LEFT
-	//initWhiteboardReserveLeft();
-	oRsvLeft = new ReserveLeft();
 
 		//	レポートダイアログの初期化
 	oReportDlg = new report_dlg();
@@ -865,7 +860,7 @@ Tile.prototype = {
 
 		new Button( 'MODAL_TILE_SIGN',    function(){ accountProperty(); oTile.close('menu'); hideStartIcon();} ).play();
 		new Button( 'MODAL_TILE_SAVE',    function(){ saveWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
-		new Button( 'MODAL_TILE_SIGNOUT', function(){ signoutForm(); oTile.close('menu');hideStartIcon(); } ).play();
+		// new Button( 'MODAL_TILE_SIGNOUT', function(){ signoutForm(); oTile.close('menu');hideStartIcon(); } ).play();
 		new Button( 'MODAL_TILE_CLEAR',   function(){ clearWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
 		// new Button( 'MODAL_TILE_ABSENT',  function(){ absentWhiteboard(); oTile.close('menu'); } ).play();
 		new Button( 'MODAL_TILE_OPEN',    function(){ openWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
@@ -1185,19 +1180,19 @@ function openWhiteboard(){
 	var ymd = y + '/' + m + '/' + d;
 
 	var r = '';
-	r += '<div style="height:;font-size:24px;text-align:center;padding-top:10px;padding-bottom:10px;" >';
+	r += '<div style="height:;font-size:24px;text-align:center;padding-top:2px;padding-bottom:2px;" >';
 		// r += 'open whiteboard';
 	r += '</div>';
 	r += '<div style="margin:0 auto;font-size:14px;width:80%;">';
 		r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 		r += '<div>Date:</div>';
-		r += '<div style="height:40px;padding-bottom:10px;" >';
+		r += '<div style="height:30px;padding-bottom:2px;" >';
 			r += '<div style="width:50%;float:left;" >';
 				r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:;" value="' + ymd + '" />';
 			r += '</div>';
 			r += '<div style="float:left;width:30px;" >';
-				r += '<button id="BTN_ADD_DATE"   style="width:18px;height:12px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" ></button>';
-				r += '<button id="BTN_MINUS_DATE" style="width:18px;height:12px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:10px;background-repeat:no-repeat;background-position:center center;" ></button>';
+				r += '<button id="BTN_ADD_DATE"   style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
+				r += '<button id="BTN_MINUS_DATE" style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
 				// r += '<img id="BTN_ADD_DATE"        width="6px" src="./images/arrow-black-triangle-up.png" />';
 				// r += '<br/><img id="BTN_MINUS_DATE" width="6px" src="./images/arrow-black-triangle-down.png" />';
 			r += '</div>';
@@ -1217,11 +1212,16 @@ function openWhiteboard(){
 				r += ' onclick="createWhiteboard()" >';
 				r += 'next';
 			r += '</button>';
+			r += '<button id="BTN_OPENWHITEBOARD" class="cancel_button" ';
+				// r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/arrow-right.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
+				r += ' onclick="closeModalDialog()" >';
+				r += 'cancel';
+			r += '</button>';
 		r += '</div>';
 	r += '</div>';
 
 	 var children = document.getElementById('WHITEBOARD').childNodes;
-	 neverCloseDialog = ( children.length == 0 ) ? true : false;
+	//  neverCloseDialog = ( children.length == 0 ) ? true : false;
 	// neverCloseDialog = true;
 	openModalDialog( 'open Whiteboard', r, 'NOBUTTON', null, 'OPENWHITEBOARD' );
 
@@ -1850,7 +1850,7 @@ function closeWhiteboardHelper(){
 	oNav.close();
 	oTile.close('menu');
 	oTile.close('childfinder');
-	openWhiteboard();
+	// openWhiteboard();
 }
 
 //
@@ -2313,11 +2313,31 @@ function ctlToolbar(){
 //		ワークプレイス（統合メニュー）を表示
 //
 function showWorkPlace(){
+
+	closeModalDialog();
+
 	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	bo.style.visibility		= 'visible';
-	var wp_siginin	= document.getElementById('WP_SIGNIN');
-	if ( checkSign() )
-		wp_siginin.setAttribute( 'disabled', 'true' );
+
+	var wp_signin	= document.getElementById('WP_SIGNIN');
+	var wp_siginout	= document.getElementById('WP_SIGNOUT');
+	var wp_open		= document.getElementById('WP_OPENWHITEBOARD');
+
+	if ( checkSign() ){
+		// signed
+		wp_signin.setAttribute( 'disabled', 'true' );
+		wp_siginout.removeAttribute( 'disabled' );
+		wp_signin.style.opacity		= 0.3;
+		wp_siginout.style.opacity	= 1;
+		wp_open.style.opacity		= 1;
+	} else {
+		// not sign
+		wp_signin.removeAttribute( 'disabled' );
+		wp_siginout.setAttribute( 'disabled', 'true' );
+		wp_signin.style.opacity		= 1;
+		wp_siginout.style.opacity	= 0.3;
+		wp_open.style.opacity		= 0.3;
+	}
 
 }
 //
@@ -2587,6 +2607,7 @@ function sign()
 								oLog.log( null, 'sign in ok.' );
 								oLog.open( 3 );
 								acc_id = result.acc_id;
+								showWorkPlace();
 								// ホワイトボードをオープン
 								// if ( !openWhiteboardFlg ){
 								// 	openWhiteboard();
@@ -2650,20 +2671,24 @@ function signForm()
 		r += "<div style='margin:10px auto;width:210px;' >";
 			r += "<form name='sign_form' onsubmit='return false;' >";
 			r += "<div>ID:</div>";
-			r += "<div><input style='width:200px;outline:none;border-radius:3px;padding:3px;background-color:lightgrey;background-image:url(./images/user-2.png);background-size:10px;background-repeat:no-repeat;background-position:right 4px center;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
+			r += "<div><input style='width:200px;padding:2px;outline:none;border-radius:3px;padding:3px;background-color:lightgrey;background-image:url(./images/user-2.png);background-size:10px;background-repeat:no-repeat;background-position:right 4px center;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
 			r += "<div style='padding-top:20px;' >Password:</div>";
-			r += "<div><input style='width:200px;outline:none;border-radius:3px;padding:3px;background-color:lightgrey;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;' type='password' name='pwd' tabindex=2 /></div>";
+			r += "<div><input style='width:200px;padding:2px;outline:none;border-radius:3px;padding:3px;background-color:lightgrey;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;' type='password' name='pwd' tabindex=2 /></div>";
 			r += "<div style='padding-top:40px;text-align:center;' >";
 				r += "<button class='next_button' ";
 				r += " style='border:none;' onclick='sign()' >";
 				r += "next";
+				r += "</button>";
+				r += "<button class='cancel_button' ";
+				r += " style='border:none;' onclick='closeModalDialog()' >";
+				r += "cancel";
 				r += "</button>";
 			r += "</div>";
 			r += "</form>";
 		r += "</div>";
 	r += "</div>";
 
-	neverCloseDialog = true;
+	neverCloseDialog = false;
 	openModalDialog( 'sign in to your account', r, 'NOBUTTON', null, 'SIGNIN' );
 	o = document.getElementById( 'acc_id' );
 	o.focus();
@@ -3322,121 +3347,5 @@ function resetChildMark(){
 
 }
 
-//
-//	WHITEBOARD_RESERVE_LEFT
-//
-function ReserveLeft(){
-	this.frame	= null;
-	this.tid	= null;
-
-	this.frame	= document.getElementById('WHITEBOARD_RESERVE_LEFT');
-
-	this.init();
-}
-
-ReserveLeft.prototype = {
-	init : function(){
-		var touchdevice = ( 'ontouchend' in document );
-		switch ( touchdevice ){
-			case true:		// touch device( iPad/iPhone/Android/Tablet )
-				var evtStart	= 'touchstart';
-				var evtMove	    = 'touchmove';
-				var evtEnd		= 'touchend';
-				break;
-			case false:	// pc
-				var evtStart	= 'mousedown';
-				var evtMove	    = 'mousemove';
-				var evtEnd		= 'mouseup';
-				break;
-		}
-		// this.frame.addEventListener( evtStart,    	( this.swipe ).bind( this ), { passive : false } );
-		// this.frame.addEventListener( evtMove,     	( this.swipe ).bind( this ), { passive : false } );
-		// this.frame.addEventListener( evtEnd,      	( this.swipe ).bind( this ), { passive : false } );
-		// this.frame.addEventListener( 'mouseleave', 	( this.swipe ).bind( this ), { passive : false } );
-		this.frame.addEventListener( 'click',
-			(function () {
-				this.frame.classList.add( 'OpenRsvLeft');
-				console.log('add OpenRsvLeft class');
-			} ).bind( this ), { passive : false } );
-		this.frame.addEventListener( 'transitionend',
-			function(){
-				console.log( 'transition end' );
-			}, false );
-		;
-	},
-	swipe : function( e ){
-		e.preventDefault();
-	
-		switch ( e.type ){
-			case 'touchstart':
-			case 'mousedown':
-				if( e.type == "mousedown" ) {
-					var event = e;
-				} else {
-					var event = e.changedTouches[0];
-				}
-				// this.frame.setAttribute('coor_y', event.pageY - event.target.offsetTop );
-				// this.frame.setAttribute('coor_x', event.pageX - event.target.offsetLeft );
-	
-				// this.frame.setAttribute('down', 'yes');
-				break;
-			case 'touchmove':
-			case 'mousemove':
-				if( e.type == "mousemove" ) {
-					var event = e;
-				} else {
-					var event = e.changedTouches[0];
-				}
-				//  if ( !this.frame.hasAttribute('down') ) return;
-				//  if ( this.frame.hasAttribute('anim') ) return;
-				// var new_top  = event.pageY - parseInt( this.frame.getAttribute('coor_y') );
-				// var new_left = event.pageX - parseInt( this.frame.getAttribute('coor_x') );
-				// console.log('new_top:' + new_top );
-				// console.log( 'this.frame.offsetLeft:' + this.frame.offsetLeft );
-				// console.log('new_left:' + new_left );
-				//  if ( this.frame.offsetLeft < new_left ){
-				// 	this.frame.setAttribute('anim', 'yes');
-				// 	this.tid = setInterval( ( this.swipeHelper ).bind( this ), 5 );
-				//  }
-				 break;
-			case 'mouseleave':
-			case 'mouseup':
-			case 'touchend':
-				// console.log('out!' + e.type );
-				// this.frame.removeAttribute('down');
-				// this.frame.removeAttribute('coor_y');
-				// this.frame.removeAttribute('coor_x');
-				break;
-		}
-		
-	},
-	swipeHelper : function(){
-		// this.frame.style.left = ( this.frame.offsetLeft + 1 ) + 'px';
-		// if ( this.frame.offsetLeft >= 0 ){
-		// 	clearInterval( this.tid );
-		// 	this.frame.removeAttribute('anim');
-		// }
-						
-	}
-}
-
-function initWhiteboardReserveLeft(){
 
 
-	// wbrl.addEventListener('click',
-	// 	function (e){
-	// 		console.log( e.target.style.left );
-	// 		if ( e.target.style.left == '0px')
-	// 			e.target.style.left	= '';
-	// 			else
-	// 			e.target.style.left	= '0px';
-	// 	}, { passive : false }
-	// );
-}
-
-function locateReserveLeft( e ){
-}
-
-function locateReserveLeftHelper(){
-	// setInterval
-}

@@ -29,9 +29,13 @@ BODY{
 
 BUTTON{
 	color:				black;
+	margin-bottom:		1px;
 }
 BUTTON:focus{
 	outline:			none;
+}
+BUTTON:hover{
+	/* color: 		red; */
 }
 
 TEXTAREA{
@@ -943,25 +947,6 @@ INPUT[type=password]:focus{
 	opacity: 				1;
 }
 
-#WHITEBOARD_RESERVE_LEFT{
-	pointer-events: 	auto;
-	position: 			fixed;
-	top:				0px;
-	left:				-124px;
-	width:				128px;
-	height:				100%;			/* 600 * 12hours */
-	background-color:	black;
-	/* float:				left; */
-	border:				0px dotted snow;
-	padding:			0px 0px 0px 0px;
-	visibility: 		visible;
-	z-index:			3;
-	opacity: 			0.7;
-	transition: 		left 30ms 0ms ease;
-}
-#WHITEBOARD_RESERVE_LEFT:hover{
-	left:				0px;
-}
 
 #WHITEBOARD_TIMELINE{
 	pointer-events: 	none;
