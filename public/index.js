@@ -377,7 +377,7 @@ function init()
 			var layer = document.getElementById('LAYER_FRAME');
 			if ( layer.style.transform == '' ){
 				layer.style.transform = 'scale(0.5,0.5)';
-				layer.style.transformOrigin	= 'left center';
+				layer.style.transformOrigin	= 'left bottom';
 			}else{
 				layer.style.transform = '';
 				layer.style.transformOrigin	= '';
