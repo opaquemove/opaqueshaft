@@ -2617,9 +2617,9 @@ function signForm()
 		r += "<div style='margin:10px auto;width:210px;' >";
 			r += "<form name='sign_form' onsubmit='return false;' >";
 			r += "<div>ID:</div>";
-			r += "<div><input style='width:200px;outline:none;border-radius:3px;padding:3px;background-color:lightgrey;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
+			r += "<div><input style='width:200px;outline:none;border-radius:3px;padding:3px;background-color:lightgrey;background-image:url(./images/user-2.png);background-size:10px;background-repeat:no-repeat;background-position:right 4px center;' type='text' id='acc_id' name='id' tabindex=1 autocomplete='off' /></div>";
 			r += "<div style='padding-top:20px;' >Password:</div>";
-			r += "<div><input style='width:200px;outline:none;border-radius:3px;padding:3px;background-color:lightgrey;' type='password' name='pwd' tabindex=2 /></div>";
+			r += "<div><input style='width:200px;outline:none;border-radius:3px;padding:3px;background-color:lightgrey;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;' type='password' name='pwd' tabindex=2 /></div>";
 			r += "<div style='padding-top:40px;text-align:center;' >";
 				r += "<button class='next_button' ";
 				r += " style='border:none;' onclick='sign()' >";
