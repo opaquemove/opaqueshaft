@@ -79,28 +79,17 @@ function init()
 			break;
 	}
 
-	//	ホワイトボードサイズ初期化
-	initWhiteboardSize();
+	//	ホワイトボードの初期化
+	initWhiteboard();
 
-	// WHITEBOARD_RESERVE_LEFT
-	//initWhiteboardReserveLeft();
-	oRsvLeft = new ReserveLeft();
 
 	//	ログエリアの初期化
 	oLog = new messageLog();
 
-	//	レポートダイアログの初期化
-	oReportDlg = new report_dlg();
-
-	// TIMELINE_BARの初期座標を記憶する
-	tlbOffset 		= document.getElementById('ID_TIMELINE_BAR').offsetTop;
-	tlbOffsetLeft	= document.getElementById('ID_TIMELINE_BAR').offsetLeft;
 
 	//モーダルダイアログ初期化
 	initModalDialog();
 
-	// 横軸でエスコート判断はしないように基準値を最大幅にしておく
-	criteriaEscortPixel = document.body.clientWidth;
 
 	document.oncontextmenu = function(e) { return false; }
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
@@ -326,6 +315,12 @@ function init()
 	oTile = new Tile( null );
 	oTile.init();
 
+	// ホワイトボード関連のツールバーを非表示
+	hideToolbar();
+
+	//	ワークプレイス表示
+	showWorkPlace();
+/*
 	// チャイルドパレットのチャイルドリスト作成
 	if ( !checkSign() ){			//サインアウトしている
 		// ツールバーの表示制御(サインイン、サインアウトによる制御)
@@ -340,7 +335,8 @@ function init()
 			openWhiteboard();
 		}
 	}
-	
+*/
+
 	//
 	//	タイムラインガイド初期化
 	//
@@ -398,6 +394,30 @@ function xxx( e ){
 	var keyword = document.getElementById('TXT_KEYWORD4').value;
 	var p = document.getElementById('NAV_STORAGE_CHILD_MAIN');
 	oSpotlight.findChildrenTable( p, ( keyword == '' )? '*' : keyword );
+
+}
+
+//
+//		ホワイトボードの初期化
+//
+function initWhiteboard(){
+
+	//	ホワイトボードサイズ初期化
+	initWhiteboardSize();
+
+	// WHITEBOARD_RESERVE_LEFT
+	//initWhiteboardReserveLeft();
+	oRsvLeft = new ReserveLeft();
+
+		//	レポートダイアログの初期化
+	oReportDlg = new report_dlg();
+
+	// TIMELINE_BARの初期座標を記憶する
+	tlbOffset 		= document.getElementById('ID_TIMELINE_BAR').offsetTop;
+	tlbOffsetLeft	= document.getElementById('ID_TIMELINE_BAR').offsetLeft;
+
+	// 横軸でエスコート判断はしないように基準値を最大幅にしておく
+	criteriaEscortPixel = document.body.clientWidth;
 
 }
 
@@ -2290,11 +2310,22 @@ function ctlToolbar(){
 }
 
 //
+//		ワークプレイス（統合メニュー）を表示
+//
+function showWorkPlace(){
+	var bo		= document.getElementById('BOTTOM_OVERLAY');
+	bo.style.visibility		= 'visible';
+	var wp_siginin	= document.getElementById('WP_SIGNIN');
+	if ( checkSign() )
+		wp_siginin.setAttribute( 'disabled', 'true' );
+
+}
+//
 //	ツールバーの表示制御
 //
 function showToolbar(){
+	var lf		= document.getElementById('LAYER_FRAME');
 	var layer	= document.getElementById('LAYER');
-	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	var nlcf	= document.getElementById('NAV_LOCATED_CHILD_FRAME');
 	var nscf	= document.getElementById('NAV_STORAGE_CHILD_FRAME');
@@ -2310,8 +2341,8 @@ function showToolbar(){
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
+	lf.style.visibility		= 'visible';
 	layer.style.visibility	= 'visible';
-	bo.style.visibility		= 'visible';
 	nlcf.style.visibility	= 'visible';
 	nscf.style.visibility	= 'visible';
 	// tb.style.visibility     = 'visible';
@@ -2334,8 +2365,8 @@ function showToolbar(){
 
 function hideToolbar(){
 	console.log('hideToolbar');
+	var lf		= document.getElementById('LAYER_FRAME');
 	var layer	= document.getElementById('LAYER');
-	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	var nsi 	= document.getElementById('NAV_START_ICON');
 	var nlcf	= document.getElementById('NAV_LOCATED_CHILD_FRAME');
 	var nscf	= document.getElementById('NAV_STORAGE_CHILD_FRAME');
@@ -2351,8 +2382,8 @@ function hideToolbar(){
 	var psb		= document.getElementById('ID_PERSPECTIVE_BAR');
 	var imne 	= document.getElementById('ID_MODE_CHECKIN');
 	var ime  	= document.getElementById('ID_MODE_CHECKOUT');
+	lf.style.visibility		= 'hidden';
 	layer.style.visibility	= 'hidden';
-	bo.style.visibility		= 'hidden';
 	nlcf.style.visibility	= 'hidden';
 	nscf.style.visibility	= 'hidden';
 	nsi.style.visibility	= 'hidden';
@@ -2494,7 +2525,8 @@ function signout(){
 								oLog.log( null, 'signout...ok.' );
 								oLog.open( 1 );
 								acc_id = null;
-								signForm();
+								// signForm();
+								showWorkPlace();
 								break;
 							default:
 								break;
@@ -2555,9 +2587,10 @@ function sign()
 								oLog.log( null, 'sign in ok.' );
 								oLog.open( 3 );
 								acc_id = result.acc_id;
-								if ( !openWhiteboardFlg ){
-									openWhiteboard();
-								}
+								// ホワイトボードをオープン
+								// if ( !openWhiteboardFlg ){
+								// 	openWhiteboard();
+								// }
 							} else {
 								oLog.log( null, 'sign in error.' );
 								oLog.open( 3 );
