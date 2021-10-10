@@ -1198,7 +1198,7 @@ function openWhiteboard(){
 			r += '</div>';
 		r += '</div>';
 		// r += '<div id="WHITEBOARD_LIST" style="clear:both;margin-top:10px;height:120px;display:flex;font-size:12px;padding:4px;overflow-y:scroll;border:0px solid lightgrey;" >';
-		r += '<div>Ranges:</div>';
+		r += '<div style="clear:both;" >Ranges:</div>';
 		r += '<div id="RANGE_LIST" ></div>';
 		r += '<div style="padding-top:14px;" >Whiteboards:</div>';
 		r += '<div id="WHITEBOARD_LIST" >';
@@ -2316,6 +2316,8 @@ function showWorkPlace(){
 
 	closeModalDialog();
 
+	var opaqueshaft_title = document.getElementById('OPAQUESHAFT_TITLE');
+	opaqueshaft_title.style.visibility = ( openWhiteboardFlg )? 'visible' : 'hidden';
 	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	bo.style.visibility		= 'visible';
 

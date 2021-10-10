@@ -171,7 +171,7 @@ INPUT[type=password]:focus{
 	background-position: 	center center;
 	background-size: 		contain;
 	background-repeat: 		no-repeat; */
-	overflow:				hidden;
+	overflow:				auto;
 }
 
 #OPAQUESHAFT_TITLE{
