@@ -2348,6 +2348,7 @@ function showWorkPlace(){
 	if ( checkSign() ){
 		// signed
 		wp_signin.setAttribute( 'disabled', 'true' );
+		wp_open.removeAttribute( 'disabled' );
 		wp_siginout.removeAttribute( 'disabled' );
 		wp_signin.style.opacity		= 0.3;
 		wp_siginout.style.opacity	= 1;
@@ -2356,6 +2357,7 @@ function showWorkPlace(){
 		// not sign
 		wp_signin.removeAttribute( 'disabled' );
 		wp_siginout.setAttribute( 'disabled', 'true' );
+		wp_open.setAttribute( 'disabled', 'true' );
 		wp_signin.style.opacity		= 1;
 		wp_siginout.style.opacity	= 0.3;
 		wp_open.style.opacity		= 0.3;
