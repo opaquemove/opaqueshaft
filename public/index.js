@@ -253,7 +253,8 @@ function initWhiteboard(){
 	wbf.addEventListener( evtStart,    		locateWhiteboard, { passive : false } );
 	wbf.addEventListener( evtMove,     		locateWhiteboard, { passive : false } );
 	wbf.addEventListener( evtEnd,      		locateWhiteboard, { passive : false } );
-	document.addEventListener('keydown',	keyWhiteboard );
+	// document.getElementById('LAYER').addEventListener('keydown',	keyWhiteboard );
+	document.body.addEventListener('keydown',	keyWhiteboard );
 
 
 	//
@@ -1969,6 +1970,7 @@ function locateWhiteboard( e ){
 //
 function keyWhiteboard(e){
 	//e.preventDefault();
+	if ( !openWhiteboardFlg ) return;
 	var icc = document.getElementById('ID_CHILD_COORDINATE' );
 	icc.innerText = 'Ky:' + e.keyCode + ' tg:' + e.target.tagName;
 	switch ( e.keyCode ){
