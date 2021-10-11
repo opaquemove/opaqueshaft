@@ -218,6 +218,9 @@ function workplaceWhiteboard(){
 
 }
 
+//
+//		ワークプレイス
+//
 function workplaceChildren(){
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
@@ -235,6 +238,21 @@ function workplaceChildren(){
 
 	children.style.height = '306px';
 	wb.style.height = '0px';
+
+}
+
+//
+//
+function wp_find(){
+	var wph = document.getElementById('WORKPLACE_HDR');
+	wph.style.height = '0px';
+	wph.style.padding = '0px';
+}
+function closeWorkplaceChildren(){
+	workplaceReset();
+	var wph = document.getElementById('WORKPLACE_HDR');
+	wph.style.height = '';
+	wph.style.padding = '';
 
 }
 

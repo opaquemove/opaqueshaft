@@ -11,6 +11,7 @@
 <script type="text/javascript" src="./common.js"></script>
 <script type="text/javascript" src="./index.js"></script>
 <script type="text/javascript" src="./util.js" ></script>
+<script type="text/javascript" src="./workplace.js" ></script>
 <script type="text/javascript" src="./childfinder.js" ></script>
 <script type="text/javascript" src="./circleprogress.js" ></script>
 <script type="text/javascript" src="./perspectivebar.js" ></script>
@@ -25,7 +26,7 @@
 
 	<div id="BOTTOM_OVERLAY" class="not_select toolbar_hidden" >
 		<div id="BOTTOM_FRAME" class="not_select" style="color:dimgray;">
-			<div style="width:100%;font-size:26px;border-bottom:1px solid lightgrey;text-align:center;padding:30px 0px 10px 0px;" >
+			<div id="WORKPLACE_HDR" style="width:100%;overflow:auto;font-size:26px;border-bottom:1px solid lightgrey;text-align:center;padding:30px 0px 10px 0px;transition:height 0.3s ease-in-out;" >
 				<div ID="WORKPLACE_ICON" style="margin:0 auto;position:relative;width:160px;height:160px;overflow:hidden;padding-bottom:0px;border:0px solid lightgrey;">
 					<div style="position:absolute;top:20px;left:10px;
 							width:60px;height:30px;
@@ -80,8 +81,8 @@
 					</button>
 				</div>
 			</div>
-			<div id="WORKPLACE_WHITEBOARD" style="width:100%;height:0px;overflow:hidden;font-size:26px;border-bottom:gray;text-align:center;transition:all 0.3s ease-in-out;" >
-				<div style="padding:40px 0px 40px 0px" >whiteboard</div>
+			<div id="WORKPLACE_WHITEBOARD" style="width:100%;height:0px;overflow:hidden;font-size:16px;border-bottom:gray;text-align:center;transition:all 0.3s ease-in-out;" >
+				<div style="font-size:26px;padding:40px 0px 40px 0px" >whiteboard</div>
 				<div>
 					<button id="WP_CREATEWHITEBOARD" style="width:60px;height:80px;border:none;background-color:transparent;background-image:url(images/plus3.png);background-size:22px;background-repeat:no-repeat;background-position: center center;" 
 						onclick="" >
@@ -94,8 +95,11 @@
 				</div>
 			</div>
 
-			<div id="WORKPLACE_CHILDREN" style="width:100%;height:0px;overflow:hidden;font-size:16px;border-bottom:gray;text-align:center;transition:all 0.3s ease-in-out;" >
-				<div style="padding:40px 0px 40px 0px" >children</div>
+			<div id="WORKPLACE_CHILDREN" style="width:100%;height:80%;overflow:hidden;font-size:16px;border-bottom:gray;text-align:center;transition:all 0.3s ease-in-out;" >
+				<div id="WORKPLACE_CHILDREN_HDR" 
+					onclick="closeWorkplaceChildren();"
+					style="margin:0 auto;width:250px;font-size:26px;padding:40px 0px 40px 0px;background-image: url(./images/arrow-black-triangle-down.png);background-size:10px;background-repeat: no-repeat;background-position: left center;" >
+					children</div>
 				<div style="margin:0 auto;width:250px;height:140px;" >
 					<div style="float:left;height:80px;" >
 						<button id="" style="width:60px;height:80px;border:none;background-color:transparent;background-image:url(images/plus3.png);background-size:22px;background-repeat:no-repeat;background-position: center center;" 
@@ -104,17 +108,17 @@
 						</button>
 					</div>
 					<div style="float:left;height:60px;padding-top:20px;" >
-						<form onsubmit="return false;" >
-							<input type="text" name="eee" autocomplete="off" style="width:150px;height:24px;font-size:14px;background-color:white;border:1px solid gray;box-sizing: border-box;padding:2px 4px 2px 4px;border-radius: 8px;outline:none;" />
+						<form  onsubmit="return false;" >
+							<input type="text" id="WP_KEYWORD" name="WP_KEYWORD" autocomplete="off" style="width:150px;height:24px;font-size:14px;background-color:white;border:1px solid gray;box-sizing: border-box;padding:2px 4px 2px 4px;border-radius: 8px;outline:none;" />
 						</form>
 					</div>
 					<div style="float:left;height:80px;" >
 						<button id="" style="width:30px;height:80px;border:none;background-color:transparent;background-image:url(images/right-arrow-black-triangle.png);background-size:16px;background-repeat:no-repeat;background-position: center center;" 
-							onclick="" >
+							onclick="finder();" >
 						</button>
 					</div>
 				</div>
-				<div style="margin:0 auto;width:250px;height:20px;" >details...</div>
+				<div id="WORKPLACE_CHILDREN_MAIN" style="margin:0 auto;width:250px;height:80%;overflow:auto;" >details...</div>
 			</div>
 
 		</div>
