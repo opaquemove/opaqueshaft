@@ -165,6 +165,8 @@ function init()
 		function(e){
 			var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 			var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
+			var children= document.getElementById('WORKPLACE_CHILDREN');
+
 			if ( sysmenu.style.height == '0px'){
 				sysmenu.style.height = sysmenu.getAttribute('orgHeight');
 				sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
@@ -174,6 +176,7 @@ function init()
 				sysmenu.style.height = '0px';
 				sysmenu.style.padding = '0px';
 			}
+
 			if ( wb.style.height == '0px'){
 				wb.style.height = wb.getAttribute('orgHeight');
 				wb.style.padding = wb.getAttribute('orgPadding');	
@@ -182,6 +185,13 @@ function init()
 				wb.setAttribute('orgPadding', wb.style.padding );
 				wb.style.height = '0px';
 				wb.style.padding = '0px';
+			}
+
+			if ( children.style.height == '0px'){
+				children.style.height = '196px';
+			} else {
+				children.setAttribute('orgHeight', children.style.height );
+				children.style.height = '0px';
 			}
 		}	
 	);
