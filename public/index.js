@@ -236,7 +236,8 @@ function workplaceChildren(){
 		sysmenu.style.padding = '0px';
 	}
 
-	children.style.height = '306px';
+	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
+	children.style.height = ( h - 252 ) + 'px';
 	wb.style.height = '0px';
 
 }
@@ -248,12 +249,17 @@ function wp_find(){
 	wph.style.height = '0px';
 	wph.style.padding = '0px';
 }
+function closeWorkplaceWhiteboard(){
+	workplaceReset();
+	var wph = document.getElementById('WORKPLACE_HDR');
+	wph.style.height = '';
+	wph.style.padding = '';
+}
 function closeWorkplaceChildren(){
 	workplaceReset();
 	var wph = document.getElementById('WORKPLACE_HDR');
 	wph.style.height = '';
 	wph.style.padding = '';
-
 }
 
 //
