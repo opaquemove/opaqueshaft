@@ -89,8 +89,132 @@ function init()
 	//モーダルダイアログ初期化
 	initModalDialog();
 
-
+	// コンテキストメニューはオフ
 	document.oncontextmenu = function(e) { return false; }
+
+	// fitting();
+
+
+	//	モーダルダイアログの外側をクリックしたらクローズ
+	var mo = document.getElementById('MODAL_OVERLAY');
+	mo.addEventListener('click', function(e){
+		if ( e.target == this ) closeModalDialog();
+		});
+
+
+	// ホワイトボード関連のツールバーを非表示
+	hideToolbar();
+
+	//	ワークプレイス表示
+	showWorkPlace();
+/*
+	// チャイルドパレットのチャイルドリスト作成
+	if ( !checkSign() ){			//サインアウトしている
+		// ツールバーの表示制御(サインイン、サインアウトによる制御)
+		// ctlToolbar();
+		// hiddenWhiteboard();
+		signForm();					// サインインUIを表示
+	} else {						//サインインしている
+		if ( !openWhiteboardFlg ){		// ホワイトボードが開いてなければの対応
+			// ツールバーの表示制御(サインイン、サインアウトによる制御)
+			ctlToolbar();
+			// hiddenWhiteboard();
+			openWhiteboard();
+		}
+	}
+*/
+
+	//
+	//	タイムラインガイド初期化
+	//
+
+	//
+	//	タイムラインインジケータの生成
+	//
+	makeTimelineIndicator();
+
+	//
+	//	エスコートエリアの位置マーカーの生成（もう使わないのよ）
+	//
+	// var eam = document.getElementById('ESCORT_AREA_MARKER');
+	// eam.style.left   = ( criteriaEscortPixel + 42 ) + 'px';
+
+	//
+	//	ホワイトボード表示制御機能の初期化
+	//
+	initWhiteboardMode();
+
+	//
+	//	タイムラインバー初期化
+	//
+	var tmb = document.getElementById('ID_TIMELINE_BAR');
+	tmb.addEventListener( evtStart,    		locateTimelinebar, { passive : false } );
+	tmb.addEventListener( evtMove,     		locateTimelinebar, { passive : false } );
+	tmb.addEventListener( evtEnd,      		locateTimelinebar, { passive : false } );
+	tmb.addEventListener( 'mouseleave', 	locateTimelinebar, { passive : false } );
+
+	// test code
+	document.getElementById('OPAQUESHAFT_TITLE').addEventListener(
+		'click',
+		function(e){
+			var layer = document.getElementById('LAYER_FRAME');
+			if ( layer.style.transform == '' ){
+				layer.style.transform = 'scale(0.5,0.5)';
+				layer.style.transformOrigin	= 'left bottom';
+			}else{
+				layer.style.transform = '';
+				layer.style.transformOrigin	= '';
+			}
+			console.log('test');
+		}
+	);
+
+	//
+	//	パースペクティブバー初期化
+	//
+	 initPerspectivebar( evtStart, evtMove, evtEnd );
+
+	makeToolbarCheckoutProgress( 0 );
+}
+
+function xxx( e ){
+	var keyword = document.getElementById('TXT_KEYWORD4').value;
+	var p = document.getElementById('NAV_STORAGE_CHILD_MAIN');
+	oSpotlight.findChildrenTable( p, ( keyword == '' )? '*' : keyword );
+
+}
+
+//
+//		ホワイトボードの初期化
+//
+function initWhiteboard(){
+	var touchdevice = ( 'ontouchend' in document );
+	switch ( touchdevice ){
+		case true:		// touch device( iPad/iPhone/Android/Tablet )
+			var evtStart	= 'touchstart';
+			var evtMove	    = 'touchmove';
+			var evtEnd		= 'touchend';
+			break;
+		case false:	// pc
+			var evtStart	= 'mousedown';
+			var evtMove	    = 'mousemove';
+			var evtEnd		= 'mouseup';
+			break;
+	}
+
+	//	ホワイトボードサイズ初期化
+	initWhiteboardSize();
+
+		//	レポートダイアログの初期化
+	oReportDlg = new report_dlg();
+
+	// TIMELINE_BARの初期座標を記憶する
+	tlbOffset 		= document.getElementById('ID_TIMELINE_BAR').offsetTop;
+	tlbOffsetLeft	= document.getElementById('ID_TIMELINE_BAR').offsetLeft;
+
+	// 横軸でエスコート判断はしないように基準値を最大幅にしておく
+	criteriaEscortPixel = document.body.clientWidth;
+
 	var wbf = document.getElementById('WHITEBOARD_FRAME');
 	wbf.addEventListener('scroll',
 		function(e){
@@ -133,12 +257,14 @@ function init()
 
 
 	//
-	//	BODYオブジェクト
+	//	LAYERオブジェクト
 	//
-	document.body.addEventListener( 'click',
+	// document.body.addEventListener( 'click',
+	document.getElementById('LAYER').addEventListener( 'click',
 		function (e){
-			document.body.focus();
-			console.log( 'body reached');
+			// document.body.focus();
+			this.focus();
+			console.log( 'layer body reached');
 		}	
 	)
 	//
@@ -167,21 +293,11 @@ function init()
 	//
 	wb.addEventListener('drop', dropHandler, false );
 
-	//
-	//	チルドレンパレットのイベント登録
-	//	
-	// var cpc = document.getElementById('CHILDREN_PALLETE_CONTENT');
-	// cpc.addEventListener('dblclick',  selectChild );
-
-	//	パレット上のチャイルドリストをクリックした時の動作
-	// cpc.addEventListener('mouseup',   markPalleteChild );
-
 	//	チャイルドファインダー（スポットライト）初期化
 	oNav = new Nav( null );
 	oSpotlight = new spotlight( fitting );
 	oSpotlight.play();
 
-	fitting();
 	new Button( 'WHITEBOARD_DAY_FRAME',     saveWhiteboard ).play();
 	new Button( 'NAV_START_ICON',			ctlNav         ).play();
 	new Button( 'ID_NAV_TILE',  			showTile ).play();
@@ -295,13 +411,6 @@ function init()
 		}
 	);
 
-
-	//	モーダルダイアログの外側をクリックしたらクローズ
-	var mo = document.getElementById('MODAL_OVERLAY');
-	mo.addEventListener('click', function(e){
-		if ( e.target == this ) closeModalDialog();
-		});
-
 	//
 	//	タイムセレクタ初期化
 	//
@@ -313,106 +422,6 @@ function init()
 	//
 	oTile = new Tile( null );
 	oTile.init();
-
-	// ホワイトボード関連のツールバーを非表示
-	hideToolbar();
-
-	//	ワークプレイス表示
-	showWorkPlace();
-/*
-	// チャイルドパレットのチャイルドリスト作成
-	if ( !checkSign() ){			//サインアウトしている
-		// ツールバーの表示制御(サインイン、サインアウトによる制御)
-		// ctlToolbar();
-		// hiddenWhiteboard();
-		signForm();					// サインインUIを表示
-	} else {						//サインインしている
-		if ( !openWhiteboardFlg ){		// ホワイトボードが開いてなければの対応
-			// ツールバーの表示制御(サインイン、サインアウトによる制御)
-			ctlToolbar();
-			// hiddenWhiteboard();
-			openWhiteboard();
-		}
-	}
-*/
-
-	//
-	//	タイムラインガイド初期化
-	//
-
-	//
-	//	タイムラインインジケータの生成
-	//
-	makeTimelineIndicator();
-
-	//
-	//	エスコートエリアの位置マーカーの生成（もう使わないのよ）
-	//
-	// var eam = document.getElementById('ESCORT_AREA_MARKER');
-	// eam.style.left   = ( criteriaEscortPixel + 42 ) + 'px';
-
-	//
-	//	ホワイトボード表示制御機能の初期化
-	//
-	initWhiteboardMode();
-
-	//
-	//	タイムラインバー初期化
-	//
-	var tmb = document.getElementById('ID_TIMELINE_BAR');
-	tmb.addEventListener( evtStart,    		locateTimelinebar, { passive : false } );
-	tmb.addEventListener( evtMove,     		locateTimelinebar, { passive : false } );
-	tmb.addEventListener( evtEnd,      		locateTimelinebar, { passive : false } );
-	tmb.addEventListener( 'mouseleave', 	locateTimelinebar, { passive : false } );
-
-	// test code
-	document.getElementById('OPAQUESHAFT_TITLE').addEventListener(
-		'click',
-		function(e){
-			var layer = document.getElementById('LAYER_FRAME');
-			if ( layer.style.transform == '' ){
-				layer.style.transform = 'scale(0.5,0.5)';
-				layer.style.transformOrigin	= 'left bottom';
-			}else{
-				layer.style.transform = '';
-				layer.style.transformOrigin	= '';
-			}
-			console.log('test');
-		}
-	);
-
-	//
-	//	パースペクティブバー初期化
-	//
-	 initPerspectivebar( evtStart, evtMove, evtEnd );
-
-	makeToolbarCheckoutProgress( 0 );
-}
-
-function xxx( e ){
-	var keyword = document.getElementById('TXT_KEYWORD4').value;
-	var p = document.getElementById('NAV_STORAGE_CHILD_MAIN');
-	oSpotlight.findChildrenTable( p, ( keyword == '' )? '*' : keyword );
-
-}
-
-//
-//		ホワイトボードの初期化
-//
-function initWhiteboard(){
-
-	//	ホワイトボードサイズ初期化
-	initWhiteboardSize();
-
-		//	レポートダイアログの初期化
-	oReportDlg = new report_dlg();
-
-	// TIMELINE_BARの初期座標を記憶する
-	tlbOffset 		= document.getElementById('ID_TIMELINE_BAR').offsetTop;
-	tlbOffsetLeft	= document.getElementById('ID_TIMELINE_BAR').offsetLeft;
-
-	// 横軸でエスコート判断はしないように基準値を最大幅にしておく
-	criteriaEscortPixel = document.body.clientWidth;
 
 }
 
@@ -858,7 +867,7 @@ Tile.prototype = {
 				 this.close();
 			} ).bind( this ), false );
 
-		new Button( 'MODAL_TILE_SIGN',    function(){ accountProperty(); oTile.close('menu'); hideStartIcon();} ).play();
+		// new Button( 'MODAL_TILE_SIGN',    function(){ accountProperty(); oTile.close('menu'); hideStartIcon();} ).play();
 		new Button( 'MODAL_TILE_SAVE',    function(){ saveWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
 		// new Button( 'MODAL_TILE_SIGNOUT', function(){ signoutForm(); oTile.close('menu');hideStartIcon(); } ).play();
 		new Button( 'MODAL_TILE_CLEAR',   function(){ clearWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
@@ -887,8 +896,8 @@ Tile.prototype = {
 		}
 		this.day( dayWhiteboard );
 
-		var tile2 = document.getElementById('MODAL_TILE_SIGN');
-		tile2.innerText = 'sign ' + isSignId();
+		// var tile2 = document.getElementById('MODAL_TILE_SIGN');
+		// tile2.innerText = 'sign ' + isSignId();
 	},
 	close : function( target ){
 		// this.frame.style.visibility = 'hidden';
@@ -1316,9 +1325,16 @@ function createWhiteboard(){
 	updateFlg		= false;
 	//createWhiteboardHelper( dayWhiteboard );
 	neverCloseDialog = false;
+	
 	closeModalDialog();
 	visibleWhiteboard();
 	loadWhiteboard();
+	fitting();
+
+	//	OPAQUESHAFT_TITLE表示制御
+	var opaqueshaft_title = document.getElementById('OPAQUESHAFT_TITLE');
+	opaqueshaft_title.style.visibility = ( openWhiteboardFlg )? 'visible' : 'hidden';
+
 
 	ctlToolbar();
 	// clearWhiteboard();
@@ -1850,6 +1866,7 @@ function closeWhiteboardHelper(){
 	oNav.close();
 	oTile.close('menu');
 	oTile.close('childfinder');
+	showWorkPlace();
 	// openWhiteboard();
 }
 
@@ -2151,6 +2168,7 @@ Nav.prototype = {
 //	ホワイトボードエリアのフィッティング処理
 //
 function fitting(){
+	if ( !openWhiteboardFlg ) return;
 	var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 
@@ -2316,8 +2334,10 @@ function showWorkPlace(){
 
 	closeModalDialog();
 
+	//	OPAQUESHAFT_TITLE表示制御
 	var opaqueshaft_title = document.getElementById('OPAQUESHAFT_TITLE');
 	opaqueshaft_title.style.visibility = ( openWhiteboardFlg )? 'visible' : 'hidden';
+
 	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	bo.style.visibility		= 'visible';
 
