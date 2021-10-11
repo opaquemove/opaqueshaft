@@ -233,7 +233,7 @@ function workplaceChildren(){
 		sysmenu.style.padding = '0px';
 	}
 
-	children.style.height = '196px';
+	children.style.height = '306px';
 	wb.style.height = '0px';
 
 }
