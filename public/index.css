@@ -179,7 +179,7 @@ INPUT[type=password]:focus{
 	float:					left;
 	width:					120px;
 	height:					24px;
-	color:					black;
+	color:					dimgray;
 	text-align: 			center;
 	/* text-shadow: 			1px 1px 1px gray; */
 	background-color:		white;

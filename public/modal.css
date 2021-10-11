@@ -33,7 +33,7 @@
 #MODAL_MESSAGE_HEADER{
 	width:				100%;
 	height:				29px;
-	background-color:	black;
+	background-color:	dimgray;
 	border-bottom:		1px solid lightgray;
 	/* border-radius: 		8px 8px 0px 0px; */
 	padding:			0px;
@@ -203,6 +203,7 @@
 }
 #MODAL_TILE_CLEAR{
 	float:				left;
+	clear:				left;
 	pointer-events: 	auto;
 	width:				42px;
 	height:				38px;
@@ -221,7 +222,8 @@
 	/* border-radius: 		20px; */
 	/* clear:				both; */
 }
-#MODAL_TILE_OPEN{
+
+/* #MODAL_TILE_OPEN{
 	float:				left;
 	clear:				left;
 	pointer-events: 	auto;
@@ -235,13 +237,11 @@
 	background-size: 	12px;
 	background-repeat: 	no-repeat;
 	opacity: 			0.9;
-	/* font-size:			16px; */
 	padding-top:		4px;
 	margin-right:		1px;
 	margin-bottom: 		1px;
-	/* border-radius: 		20px; */
-	/* clear:				both; */
-}
+} */
+
 #MODAL_TILE_CLOSE{
 	float:				left;
 	/* clear:				left; */
@@ -265,7 +265,6 @@
 }
 #MODAL_TILE_REPORT{
 	float:				left;
-	clear:				left;
 	pointer-events: 	auto;
 	width:				42px;
 	height:				38px;
@@ -286,7 +285,7 @@
 }
 #MODAL_TILE_LOG{
 	float:					left;
-	/* clear:					left; */
+	clear:					left;
 	pointer-events: 		auto;
 	width:					42px;
 	height:					38px;

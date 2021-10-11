@@ -144,14 +144,6 @@ function init()
 	//
 	initWhiteboardMode();
 
-	//
-	//	タイムラインバー初期化
-	//
-	var tmb = document.getElementById('ID_TIMELINE_BAR');
-	tmb.addEventListener( evtStart,    		locateTimelinebar, { passive : false } );
-	tmb.addEventListener( evtMove,     		locateTimelinebar, { passive : false } );
-	tmb.addEventListener( evtEnd,      		locateTimelinebar, { passive : false } );
-	tmb.addEventListener( 'mouseleave', 	locateTimelinebar, { passive : false } );
 
 	// test code
 	document.getElementById('OPAQUESHAFT_TITLE').addEventListener(
@@ -167,6 +159,31 @@ function init()
 			}
 			console.log('test');
 		}
+	);
+	document.getElementById('WORKPLACE_ICON').addEventListener(
+		'click',
+		function(e){
+			var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
+			var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
+			if ( sysmenu.style.height == '0px'){
+				sysmenu.style.height = sysmenu.getAttribute('orgHeight');
+				sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
+			} else {
+				sysmenu.setAttribute('orgHeight', sysmenu.style.height );
+				sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
+				sysmenu.style.height = '0px';
+				sysmenu.style.padding = '0px';
+			}
+			if ( wb.style.height == '0px'){
+				wb.style.height = wb.getAttribute('orgHeight');
+				wb.style.padding = wb.getAttribute('orgPadding');	
+			} else {
+				wb.setAttribute('orgHeight', wb.style.height );
+				wb.setAttribute('orgPadding', wb.style.padding );
+				wb.style.height = '0px';
+				wb.style.padding = '0px';
+			}
+		}	
 	);
 
 	//
@@ -424,6 +441,15 @@ function initWhiteboard(){
 	oTile = new Tile( null );
 	oTile.init();
 
+	//
+	//	タイムラインバー初期化
+	//
+	var tmb = document.getElementById('ID_TIMELINE_BAR');
+	tmb.addEventListener( evtStart,    		locateTimelinebar, { passive : false } );
+	tmb.addEventListener( evtMove,     		locateTimelinebar, { passive : false } );
+	tmb.addEventListener( evtEnd,      		locateTimelinebar, { passive : false } );
+	tmb.addEventListener( 'mouseleave', 	locateTimelinebar, { passive : false } );
+
 }
 
 //
@@ -449,26 +475,6 @@ function initWhiteboardMode(){
 	imne.addEventListener( 'click', modeWhiteboard, false );
 	ime.addEventListener( 'click', modeWhiteboard, false );
 	imne.dispatchEvent( new Event('click') );
-	// document.getElementById('ID_MODE_FRAME').addEventListener( 'dblclick',
-	// 	function(e){
-	// 		var wb  = document.getElementById('WHITEBOARD');
-	// 		var wbe = document.getElementById('WHITEBOARD_CHECKOUT');
-	// 		switch ( wb.style.width ){
-	// 			case '50%':
-	// 				wb.style.width 	= '';
-	// 				wbe.style.left 	= '';
-	// 				wbe.style.width	= '';	
-	// 				criteriaEscortPixel = document.body.clientWidth;	
-	// 				break;
-	// 			default:
-	// 				wb.style.width 	= '50%';
-	// 				wbe.style.left 	= '50%';
-	// 				wbe.style.width	= '50%';	
-	// 				criteriaEscortPixel = document.body.clientWidth / 2;	
-	// 				break;
-	// 		}
-	// 	}, false );
-
 }
 
 function modeWhiteboard( e ){
@@ -873,7 +879,7 @@ Tile.prototype = {
 		// new Button( 'MODAL_TILE_SIGNOUT', function(){ signoutForm(); oTile.close('menu');hideStartIcon(); } ).play();
 		new Button( 'MODAL_TILE_CLEAR',   function(){ clearWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
 		// new Button( 'MODAL_TILE_ABSENT',  function(){ absentWhiteboard(); oTile.close('menu'); } ).play();
-		new Button( 'MODAL_TILE_OPEN',    function(){ openWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
+		// new Button( 'MODAL_TILE_OPEN',    function(){ openWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
 		new Button( 'MODAL_TILE_CLOSE',   function(){ closeWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
 		new Button( 'MODAL_TILE_REPORT',  function(){ reportWhiteboard(); oTile.close('menu');hideStartIcon(); } ).play();
 		new Button( 'MODAL_TILE_LOG',  	  function(){ ctlMessageLog(); oTile.close('menu');hideStartIcon(); } ).play();
