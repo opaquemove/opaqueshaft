@@ -106,6 +106,7 @@ function init()
 	hideToolbar();
 
 	//	ワークプレイス表示
+	initWorkplace();
 	showWorkPlace();
 /*
 	// チャイルドパレットのチャイルドリスト作成
@@ -2420,22 +2421,37 @@ function showWorkPlace(){
 	var wp_signin	= document.getElementById('WP_SIGNIN');
 	var wp_siginout	= document.getElementById('WP_SIGNOUT');
 	var wp_open		= document.getElementById('WP_OPENWHITEBOARD');
+	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
+	var wp_children		= document.getElementById('WP_CHILDREN');
+	var wp_setting		= document.getElementById('WP_SETTING');
 
 	if ( checkSign() ){
 		// signed
 		wp_signin.setAttribute( 'disabled', 'true' );
+		wp_whiteboard.removeAttribute( 'disabled' );
+		wp_children.removeAttribute( 'disabled' );
+		wp_setting.removeAttribute( 'disabled' );
 		wp_open.removeAttribute( 'disabled' );
 		wp_siginout.removeAttribute( 'disabled' );
 		wp_signin.style.opacity		= 0.3;
 		wp_siginout.style.opacity	= 1;
+		wp_whiteboard.style.opacity	= 1;
+		wp_children.style.opacity	= 1;
+		wp_setting.style.opacity	= 1;
 		wp_open.style.opacity		= 1;
 	} else {
 		// not sign
 		wp_signin.removeAttribute( 'disabled' );
 		wp_siginout.setAttribute( 'disabled', 'true' );
+		wp_whiteboard.setAttribute( 'disabled', 'true' );
+		wp_children.setAttribute( 'disabled', 'true' );
+		wp_setting.setAttribute( 'disabled', 'true' );
 		wp_open.setAttribute( 'disabled', 'true' );
 		wp_signin.style.opacity		= 1;
 		wp_siginout.style.opacity	= 0.3;
+		wp_whiteboard.style.opacity	= 0.3;
+		wp_children.style.opacity	= 0.3;
+		wp_setting.style.opacity	= 0.3;
 		wp_open.style.opacity		= 0.3;
 	}
 

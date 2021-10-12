@@ -1,3 +1,14 @@
+function initWorkplace(){
+    document.getElementById('WP_KEYWORD').addEventListener(
+		'keyup',
+		function( e ){
+			if ( e.key == 'Enter' )
+            finder();
+		}
+	);
+
+}
+
 function finder(){
     var wph = document.getElementById('WORKPLACE_HDR');
 	wph.style.height = '0px';
@@ -21,7 +32,7 @@ function finderHelper( keyword ){
 				case 2://header received
 					break;
 				case 3://loading
-					// fa.innerText = 'access...'
+					list.innerHTML = 'access...'
 					break;
 				case 4://done
 					console.log('status:' + xmlhttp.status );
@@ -33,6 +44,7 @@ function finderHelper( keyword ){
 						list.innerHTML = '';
 						
 						for ( var i=0; i<result.length; i++ ){
+                            // var duration = (Math.floor(Math.random() * 1000 / 100 ) + " " ).slice( 1,2 ) + 's';
 							var child_id    = result[i].child_id;
 							var child_name  = result[i].child_name;
 							var kana        = result[i].kana;
@@ -51,7 +63,8 @@ function finderHelper( keyword ){
 							c.setAttribute('kana',        kana );
 							c.setAttribute('child_type',  child_type );
 							c.setAttribute('child_grade', child_grade );
-							c.style.float           = 'left';
+                            // c.style.animationDuration   = duration;
+							// c.style.float           = 'left';
 							var cc = list.appendChild( c );
 							var cc_width = cc.offsetWidth;
 
@@ -80,7 +93,7 @@ function finderHelper( keyword ){
 							
 						}
 					} else{
-						console.log( null, 'findChildrenTable:' + xmlhttp.status );
+						console.log( null, 'finder:' + xmlhttp.status );
 					}
 					break;
 			}

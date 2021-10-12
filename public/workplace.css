@@ -120,16 +120,16 @@
 #WORKPLACE_CHILDREN_MAIN{
     margin:0 auto;
     width:100%;
-	display:				flex;
-	flex-wrap:				wrap;
-	justify-content: 		center;
-	align-items:            center;
-	align-content:space-between;
     overflow:scroll;
 } 
 #WORKPLACE_CHILDREN_MAIN_LIST{
     width:100%;
     background-color: lightgrey;
+	display:				flex;
+	flex-wrap:				wrap;
+	justify-content: 		center;
+	align-items:flex-start;
+	align-content:space-between;
     overflow:auto;
 } 
 
@@ -173,8 +173,12 @@
 	padding:				2px;
 	margin:					1px 1px 1px 1px;
 	font-size:				12px;
+
+    animation-name:             fadein;
+    animation-duration:         3s;
+    animation-iteration-count:  1;
 	/* border-radius: 			4px; */
-	-webkit-user-select: 	none;
+	-webkit-user-select: 	    none;
 }
 .onProfeel{
 	background-image:		url(./images/up-arrow.png);
@@ -188,5 +192,22 @@
 	background-repeat: 		no-repeat;
 	background-size: 		10px;
 }
+.child_header{
+	font-size:				16px;
+	font-weight: 			bold;
+	border-bottom:			1px solid lightgrey;
+	padding:				2px 0px 2px 0px;
+}
 
+@keyframes fadein {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    
+}
 
