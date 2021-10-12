@@ -346,12 +346,12 @@ function initWhiteboard(){
 	//
 	//	LAYERオブジェクト
 	//
-	// document.body.addEventListener( 'click',
-	document.getElementById('LAYER').addEventListener( 'click',
+	document.body.addEventListener( 'click',
+	// document.getElementById('LAYER').addEventListener( 'click',
 		function (e){
 			// document.body.focus();
 			this.focus();
-			console.log( 'layer body reached');
+			console.log( 'layer / body reached');
 		}	
 	)
 	//

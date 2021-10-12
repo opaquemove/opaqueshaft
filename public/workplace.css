@@ -68,7 +68,7 @@
     font-size:16px;
     border-bottom:gray;
     text-align:center;
-    transition:all 0.3s ease-in-out;
+    transition:all 0.7s ease-in-out;
 }
 #WORKPLACE_WHITEBOARD_HDR{
     margin:0 auto;
@@ -124,13 +124,13 @@
 } 
 #WORKPLACE_CHILDREN_MAIN_LIST{
     width:100%;
-    background-color: lightgrey;
+    background-color:       lightgrey;
 	display:				flex;
 	flex-wrap:				wrap;
 	justify-content: 		center;
-	align-items:flex-start;
-	align-content:space-between;
-    overflow:auto;
+	align-items:            flex-start;
+	align-content:          space-between;
+    overflow:               auto;
 } 
 
 #WP_CREATECHILD{
