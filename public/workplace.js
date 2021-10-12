@@ -46,7 +46,7 @@ function finderHelper( keyword ){
 							var c = document.createElement('DIV');
 							c.setAttribute("child_id",    child_id );
 							c.setAttribute("id",          "c_1");
-							c.classList.add( "PALLETE_CHILD" );
+							c.classList.add( "WP_PALLETE_CHILD" );
 							c.classList.add( "offProfeel" );
 							c.setAttribute('kana',        kana );
 							c.setAttribute('child_type',  child_type );

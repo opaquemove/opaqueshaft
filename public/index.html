@@ -20,14 +20,15 @@
 <script type="text/javascript" src="./report_dlg.js" ></script>
 <link rel="stylesheet" type="text/css" href="./index.css" />
 <link rel="stylesheet" type="text/css" href="./modal.css" />
+<link rel="stylesheet" type="text/css" href="./workplace.css" />
 </head>
 <body>
 	<script type="text/javascript" src="./soc_backend.js"></script>
 
 	<div id="BOTTOM_OVERLAY" class="not_select toolbar_hidden" >
 		<div id="BOTTOM_FRAME" class="not_select" style="color:dimgray;">
-			<div id="WORKPLACE_HDR" style="width:100%;overflow:auto;font-size:26px;border-bottom:1px solid lightgrey;text-align:center;padding:30px 0px 10px 0px;transition:height 0.3s ease-in-out;" >
-				<div ID="WORKPLACE_ICON" style="margin:0 auto;position:relative;width:160px;height:160px;overflow:hidden;padding-bottom:0px;border:0px solid lightgrey;">
+			<div id="WORKPLACE_HDR" >
+				<div ID="WORKPLACE_ICON" >
 					<div style="position:absolute;top:20px;left:10px;
 							width:60px;height:30px;
 							background-color:lightgrey;border-radius: 10px;
@@ -59,58 +60,59 @@
 							transform:rotate(-133deg);" ></div>
 
 				</div>
-				<div id="WORKPLACE_TITLE"   style="padding-bottom:40px;">OpaqueShaft</div>
-				<div id="WORKPLACE_SYSMENU" style="width:100%;height:124px;margin:0 auto;padding:20px;overflow:hidden;background-color:transparent;border-radius: 12px;transition:all 0.3s ease-in-out;">
-					<button id="WP_SIGNIN" style="width:60px;height:80px;border:1px;border-radius:4px;background-color:white;background-image:url(images/user-2.png);background-size:26px;background-repeat:no-repeat;background-position: center top 10px;"
+				<div id="WORKPLACE_TITLE"   >OpaqueShaft</div>
+				<div id="WORKPLACE_SYSMENU" >
+					<button id="WP_SIGNIN" class="workplace_button"
 						onclick="signForm();" >
 						<br/><br/><br/>sign in</button>
-					<button id="WP_SIGNOUT" style="width:60px;height:80px;border:1px;border-radius:4px;background-color:white;background-image:url(images/exit.png);background-size:26px;background-repeat:no-repeat;background-position: center top 10px;"
+					<button id="WP_SIGNOUT" class="workplace_button" 
 						onclick="signoutForm();" >
 						<br/><br/><br/>sign out</button>
-					<button id="WP_WHITEBOARD" style="width:60px;height:80px;border:0px groove gray;border-radius:4px;background-color:white;background-image:url(images/management.png);background-size:26px;background-repeat:no-repeat;background-position: center top 10px;"
+					<button id="WP_WHITEBOARD" class="workplace_button"
 						onclick="workplaceWhiteboard();"  >
 						<br/><br/>white<br/>board
 					</button>
-					<button id="WP_CHILDREN" style="width:60px;height:80px;border:0px groove gray;border-radius:4px;background-color:white;background-image:url(images/management.png);background-size:26px;background-repeat:no-repeat;background-position: center top 10px;"
+					<button id="WP_CHILDREN" class="workplace_button"
 						onclick="workplaceChildren();"  >
 						<br/><br/><br/>children
 					</button>
-					<button id="WP_SETTING" style="width:60px;height:80px;border:2px groove gray;border-radius:4px;background-color:white;background-image:url(images/settings.png);background-size:26px;background-repeat:no-repeat;background-position: center top 10px;"
+					<button id="WP_SETTING" class="workplace_button"
+						style="border:2px groove gray;"
 						onclick="accountProperty();"  >
 						<br/><br/><br/>settings
 					</button>
 				</div>
 			</div>
-			<div id="WORKPLACE_WHITEBOARD" style="width:100%;height:0px;overflow:hidden;font-size:16px;border-bottom:gray;text-align:center;transition:all 0.3s ease-in-out;" >
+			<div id="WORKPLACE_WHITEBOARD" >
 				<div id="WORKPLACE_WHITEBOARD_HDR"
-					onclick="closeWorkplaceWhiteboard();"
-					style="margin:0 auto;width:250px;font-size:26px;padding:40px 0px 40px 0px;background-image: url(./images/arrow-black-triangle-down.png);background-size:10px;background-repeat: no-repeat;background-position: left center;" >
-					whiteboard</div>
+					onclick="closeWorkplaceWhiteboard();" >
+					whiteboard
+				</div>
 				<div>
-					<button id="WP_CREATEWHITEBOARD" style="width:60px;height:80px;border:none;background-color:transparent;background-image:url(images/plus3.png);background-size:22px;background-repeat:no-repeat;background-position: center center;" 
+					<button id="WP_CREATEWHITEBOARD" class="workplace_button"
 						onclick="" >
 						<br/><br/><br/>add
 					</button>
-					<button id="WP_OPENWHITEBOARD" style="width:60px;height:80px;border:none;background-color:transparent;background-image:url(images/document-editor.png);background-size:36px;background-repeat:no-repeat;background-position: center center;" 
+					<button id="WP_OPENWHITEBOARD" class="workplace_button"
 						onclick="openWhiteboard();" >
 						<br/><br/><br/>open
 					</button>
 				</div>
 			</div>
 
-			<div id="WORKPLACE_CHILDREN" style="width:100%;height:0px;overflow:hidden;font-size:16px;border-bottom:gray;text-align:center;transition:all 0.3s ease-in-out;" >
+			<div id="WORKPLACE_CHILDREN" >
 				<div id="WORKPLACE_CHILDREN_HDR" 
-					onclick="closeWorkplaceChildren();"
-					style="margin:0 auto;width:250px;font-size:26px;padding:40px 0px 40px 0px;background-image: url(./images/arrow-black-triangle-down.png);background-size:10px;background-repeat: no-repeat;background-position: left center;" >
-					children</div>
-				<div style="margin:0 auto;width:250px;height:140px;" >
+					onclick="closeWorkplaceChildren();" >
+					children
+				</div>
+				<div id="WORKPLACE_CHILDREN_HDR2" >
 					<div style="float:left;height:80px;" >
-						<button id="" style="width:60px;height:80px;border:none;background-color:transparent;background-image:url(images/plus3.png);background-size:22px;background-repeat:no-repeat;background-position: center center;" 
+						<button id="WP_CREATECHILD" class="workplace_button"
 							onclick="" >
 							<br/><br/><br/>add
 						</button>
 					</div>
-					<div style="float:left;height:60px;padding-top:20px;" >
+					<div style="float:left;height:52px;padding-top:28px;" >
 						<form  onsubmit="return false;" >
 							<input type="text" id="WP_KEYWORD" name="WP_KEYWORD" autocomplete="off" style="width:150px;height:24px;font-size:14px;background-color:white;border:1px solid gray;box-sizing: border-box;padding:2px 4px 2px 4px;border-radius: 8px;outline:none;" />
 						</form>
@@ -121,7 +123,8 @@
 						</button>
 					</div>
 				</div>
-				<div id="WORKPLACE_CHILDREN_MAIN" style="margin:0 auto;width:350px;height:80%;overflow:auto;" >details...</div>
+				<div id="WORKPLACE_CHILDREN_MAIN" >
+				</div>
 			</div>
 
 		</div>

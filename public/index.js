@@ -225,6 +225,8 @@ function workplaceChildren(){
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
+	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
+
 
 	if ( sysmenu.style.height == '0px'){
 		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
@@ -237,7 +239,9 @@ function workplaceChildren(){
 	}
 
 	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
-	children.style.height = ( h - 252 ) + 'px';
+	console.log( 'h:' + children.offsetHeight );
+	children.style.height = ( h - 0 ) + 'px';
+	wcm.style.height = ( h - 252 ) + 'px';
 	wb.style.height = '0px';
 
 }

@@ -1,0 +1,183 @@
+#WORKPLACE_HDR{
+    width:100%;
+    overflow:auto;
+    font-size:26px;
+    border-bottom:1px solid lightgrey;
+    text-align:center;
+    padding:30px 0px 10px 0px;
+    transition:height 0.3s ease-in-out;
+}
+
+#WORKPLACE_ICON{
+    margin:0 auto;
+    position:relative;
+    width:160px;
+    height:160px;
+    overflow:hidden;
+    padding-bottom:0px;
+    border:0px solid lightgrey;
+}
+
+#WORKPLACE_TITLE{
+    padding-bottom:40px;
+}
+#WORKPLACE_SYSMENU{
+    width:100%;
+    height:124px;
+    margin:0 auto;
+    padding:20px;
+    overflow:hidden;
+    background-color:transparent;
+    border-radius: 12px;
+    transition:all 0.3s ease-in-out;
+}
+#WP_SIGNIN{
+    background-image:url(images/user-2.png);
+    background-size:26px;
+    background-repeat:no-repeat;
+    background-position: center top 10px;
+}
+#WP_SIGNOUT{
+    background-image:url(images/exit.png);
+    background-size:26px;
+    background-repeat:no-repeat;
+    background-position: center top 10px;
+}
+#WP_WHITEBOARD{
+    background-image:url(images/management.png);
+    background-size:26px;
+    background-repeat:no-repeat;
+    background-position: center top 10px;
+}
+#WP_CHILDREN{
+    background-image:url(images/management.png);
+    background-size:26px;
+    background-repeat:no-repeat;
+    background-position: center top 10px;
+}
+#WP_SETTING{
+    background-image:url(images/settings.png);
+    background-size:26px;
+    background-repeat:no-repeat;
+    background-position: center top 10px;
+} 
+#WORKPLACE_WHITEBOARD{
+    width:100%;
+    height:0px;
+    overflow:hidden;
+    font-size:16px;
+    border-bottom:gray;
+    text-align:center;
+    transition:all 0.3s ease-in-out;
+}
+#WORKPLACE_WHITEBOARD_HDR{
+    margin:0 auto;
+    width:250px;
+    font-size:26px;
+    padding:40px 0px 40px 0px;
+    background-image: url(./images/arrow-black-triangle-down.png);
+    background-size:10px;
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+#WP_CREATEWHITEBOARD{
+    background-image:url(images/plus3.png);
+    background-size:22px;
+    background-repeat:no-repeat;
+    background-position: center center;
+}
+#WP_OPENWHITEBOARD{
+    background-image:url(images/document-editor.png);
+    background-size:36px;
+    background-repeat:no-repeat;
+    background-position: center center;
+}
+
+#WORKPLACE_CHILDREN{
+    width:100%;
+    height:0px;
+    overflow:hidden;
+    font-size:16px;
+    border-bottom:gray;
+    text-align:center;
+    transition:all 0.3s ease-in-out;
+}
+#WORKPLACE_CHILDREN_HDR{
+    margin:0 auto;
+    width:250px;
+    font-size:26px;
+    padding:40px 0px 40px 0px;
+    background-image: url(./images/arrow-black-triangle-down.png);
+    background-size:10px;
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+#WORKPLACE_CHILDREN_HDR2{
+    margin:0 auto;
+    width:250px;
+    height:140px;
+}
+#WORKPLACE_CHILDREN_MAIN{
+    margin:0 auto;
+    width:100%;
+    /* height:80%; */
+    overflow:scroll;
+} 
+
+#WP_CREATECHILD{
+    background-image:url(images/plus3.png);
+    background-size:22px;
+    background-repeat:no-repeat;
+    background-position: center center;
+}
+
+
+
+
+
+
+.workplace_button{
+    width:60px;
+    height:80px;
+    border:1px;
+    border-radius:4px;
+    background-color:white;
+    background-image:url(images/user-2.png);
+    background-size:26px;
+    background-repeat:no-repeat;
+    background-position: center top 10px;
+}
+
+
+.WP_PALLETE_CHILD{
+	width:					180px;
+	height:					144px;
+	/* display:				flex;
+	flex-direction: 		row;
+	justify-content: 		center;
+	align-items: 			center; */
+
+	color:					gray;
+	overflow-x:				none;
+	background-color:		white;
+	overflow: 				hidden;
+	padding:				2px;
+	margin:					1px 0px 0px 0px;
+	font-size:				12px;
+	/* border-radius: 			4px; */
+	-webkit-user-select: 	none;
+}
+.onProfeel{
+	background-image:		url(./images/up-arrow.png);
+	background-position: 	right top;
+	background-repeat: 		no-repeat;
+	background-size: 		10px;
+}
+.offProfeel{
+	background-image:		url(./images/down-arrow.png);
+	background-position: 	right top;
+	background-repeat: 		no-repeat;
+	background-size: 		10px;
+}
+
+
