@@ -8,8 +8,8 @@ function finder(){
 }
 function finderHelper( keyword ){
 	console.log( 'keyword:' + keyword );
-	var wpcm = document.getElementById('WORKPLACE_CHILDREN_MAIN');
-	wpcm.innerHTML = '';
+	var list = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
+	list.innerHTML = '';
 
 	var r = '';
 	var xmlhttp = new XMLHttpRequest();
@@ -30,7 +30,7 @@ function finderHelper( keyword ){
 						
 						var result = JSON.parse( xmlhttp.responseText );
 						
-						wpcm.innerHTML = '';
+						list.innerHTML = '';
 						
 						for ( var i=0; i<result.length; i++ ){
 							var child_id    = result[i].child_id;
@@ -52,7 +52,7 @@ function finderHelper( keyword ){
 							c.setAttribute('child_type',  child_type );
 							c.setAttribute('child_grade', child_grade );
 							c.style.float           = 'left';
-							var cc = wpcm.appendChild( c );
+							var cc = list.appendChild( c );
 							var cc_width = cc.offsetWidth;
 
 
