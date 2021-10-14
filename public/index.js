@@ -2246,7 +2246,10 @@ Nav.prototype = {
 //	ホワイトボードエリアのフィッティング処理
 //
 function fitting(){
-	if ( !openWhiteboardFlg ) return;
+	if ( !openWhiteboardFlg ){
+		resizeWorkplace();
+		return;
+	}
 	var w = document.body.clientWidth;
 	var h = ( document.body.clientHeight > window.innerHeight )?window.innerHeight : document.body.clientHeight;
 

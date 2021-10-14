@@ -124,7 +124,7 @@
 } 
 #WORKPLACE_CHILDREN_MAIN_LIST{
     width:100%;
-    background-color:       lightgrey;
+    background-color:       transparent;
 	display:				flex;
 	flex-wrap:				wrap;
 	justify-content: 		center;
@@ -195,6 +195,7 @@
 .child_header{
 	font-size:				16px;
 	font-weight: 			bold;
+    background-color:       #EDEDED;
 	border-bottom:			1px solid lightgrey;
 	padding:				2px 0px 2px 0px;
 }

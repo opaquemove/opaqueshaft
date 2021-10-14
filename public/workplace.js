@@ -6,9 +6,13 @@ function initWorkplace(){
             finder();
 		}
 	);
-	document.getElementById('BOTTOM_FRAME').addEventListener(
-		'resize', resizeWorkplace );
-
+	// document.getElementById('BOTTOM_FRAME').addEventListener(
+	// 	'resize', resizeWorkplace );
+	// var bf = document.getElementById('BOTTOM_FRAME');
+	// var observer = new MutationObserver( records => {
+	// 	resizeWorkplace();
+	// });
+	// observer.observe( bf, { attributes: true });
 
 }
 
