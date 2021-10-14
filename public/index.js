@@ -2506,6 +2506,7 @@ function signout(){
 								oLog.open( 1 );
 								acc_id = null;
 								// signForm();
+								document.cookie = 'acc=; max-age=0';
 								showWorkPlace();
 								break;
 							default:
