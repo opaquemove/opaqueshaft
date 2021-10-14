@@ -6,6 +6,22 @@ function initWorkplace(){
             finder();
 		}
 	);
+	document.getElementById('BOTTOM_FRAME').addEventListener(
+		'resize', resizeWorkplace );
+
+
+}
+
+function resizeWorkplace(){
+	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
+	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
+	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
+	var children= document.getElementById('WORKPLACE_CHILDREN');
+	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
+	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
+	console.log( 'resizeWorkplace' );
+	children.style.height = ( h - 0 ) + 'px';
+	wpcm.style.height = ( h - 252 ) + 'px';
 
 }
 

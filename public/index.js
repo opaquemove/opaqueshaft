@@ -240,10 +240,11 @@ function workplaceChildren(){
 		sysmenu.style.padding = '0px';
 	}
 
-	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
-	console.log( 'h:' + children.offsetHeight );
-	children.style.height = ( h - 0 ) + 'px';
-	wpcm.style.height = ( h - 252 ) + 'px';
+	resizeWorkplace();
+	// var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
+	// console.log( 'h:' + children.offsetHeight );
+	// children.style.height = ( h - 0 ) + 'px';
+	// wpcm.style.height = ( h - 252 ) + 'px';
 	wb.style.height = '0px';
 
 	list.innerHTML = '';
