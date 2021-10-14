@@ -25,6 +25,10 @@ function initWorkplace(){
             finder();
 		}
 	);
+
+	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
+		'click', selectChildren );
+
 	// document.getElementById('BOTTOM_FRAME').addEventListener(
 	// 	'resize', resizeWorkplace );
 	// var bf = document.getElementById('BOTTOM_FRAME');
@@ -97,6 +101,8 @@ function showWorkPlace(){
 		// wp_setting.style.opacity	= 0.3;
 		// wp_open.style.opacity		= 0.3;
 	}
+
+	resizeWorkplace();
 
 }
 
@@ -172,6 +178,15 @@ function workplaceChildren(){
 
 }
 
+function selectChildren( e ){
+	var c = e.target;
+	while ( true ){
+		if ( c == this ) return;
+		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
+		c = c.parentNode;
+	}
+	c.classList.toggle( 'left100' );
+}
 //
 //
 function wp_find(){
@@ -192,7 +207,9 @@ function closeWorkplaceChildren(){
 	wph.style.padding = '';
 }
 
-
+//
+//	リサイズ処理
+//
 function resizeWorkplace(){
 	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
@@ -203,7 +220,9 @@ function resizeWorkplace(){
 	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
 	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 	console.log( 'resizeWorkplace' );
-	children.style.height = ( h - 0 ) + 'px';
+	// if ( children.offsetHeight != 0 && wb.offsetHeight != 0 ){
+		children.style.height = ( h - 0 ) + 'px';
+	// }
 	wpcm.style.height = ( h - ( chr + chr2 ) ) + 'px';	// offset 252
 
 }

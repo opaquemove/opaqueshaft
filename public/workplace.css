@@ -174,9 +174,10 @@
 	margin:					1px 1px 1px 1px;
 	font-size:				12px;
 
-    animation-name:             fadein;
+    transition: all 0.3s ease-in-out;
+    /* animation-name:             fadein;
     animation-duration:         3s;
-    animation-iteration-count:  1;
+    animation-iteration-count:  1; */
 	/* border-radius: 			4px; */
 	-webkit-user-select: 	    none;
 }
@@ -198,6 +199,10 @@
     background-color:       #EDEDED;
 	border-bottom:			1px solid lightgrey;
 	padding:				2px 0px 2px 0px;
+}
+
+.left100{
+    transform:    translateX(-100px);
 }
 
 @keyframes fadein {
