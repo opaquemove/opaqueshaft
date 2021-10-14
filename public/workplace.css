@@ -157,8 +157,20 @@
     background-position: center top 10px;
 }
 
+.workplace_delete_button{
+    width:60px;
+    height:80px;
+    border:1px;
+    border-radius:4px;
+    background-color:red;
+    background-image:url(images/minus-2.png);
+    background-size:26px;
+    background-repeat:no-repeat;
+    background-position: center top 10px;
+}
 
 .WP_PALLETE_CHILD{
+    position:               relative;
 	width:					100%;       /* 180px; */
 	height:					144px;
 	/* display:				flex;
@@ -169,7 +181,7 @@
 	color:					gray;
 	overflow-x:				none;
 	background-color:		white;
-	overflow: 				hidden;
+	overflow:visible;
 	padding:				2px;
 	margin:					1px 1px 1px 1px;
 	font-size:				12px;
@@ -199,6 +211,9 @@
     background-color:       #EDEDED;
 	border-bottom:			1px solid lightgrey;
 	padding:				2px 0px 2px 0px;
+}
+.opChild{
+    background-color: lightgrey;
 }
 
 .left100{

@@ -186,6 +186,24 @@ function selectChildren( e ){
 		c = c.parentNode;
 	}
 	c.classList.toggle( 'left100' );
+	if ( c.classList.contains( 'left100' )){
+		if ( c.getElementsByClassName( 'opChild').length != 0 ) return;
+		var o = document.createElement('DIV');
+		o.classList.add('opChild');
+		o.classList.add('vh-center');
+		o.style.position 	= 'absolute';
+		o.style.top			= '2px';
+		o.style.left		= ( c.offsetWidth + 1 ) + 'px';
+		o.style.width		= '100px';
+		o.style.height		= c.offsetHeight + 'px';
+		var oo = c.appendChild( o );
+		var r = '';
+		r += '<button class="workplace_delete_button" onclick="alert()" >delete</delete>';
+		oo.innerHTML = r;
+	} else {
+		// c.removeChild( c.getElementsByClassName( 'opChild')[0] );
+	}
+
 }
 //
 //
