@@ -146,23 +146,6 @@ function init()
 	initWhiteboardMode();
 
 
-	// test code
-	document.getElementById('OPAQUESHAFT_TITLE').addEventListener(
-		'click',
-		function(e){
-			var layer = document.getElementById('LAYER_FRAME');
-			if ( layer.style.transform == '' ){
-				layer.style.transform = 'scale(0.5,0.5)';
-				layer.style.transformOrigin	= 'left bottom';
-			}else{
-				layer.style.transform = '';
-				layer.style.transformOrigin	= '';
-			}
-			console.log('test');
-		}
-	);
-	document.getElementById('WORKPLACE_ICON').addEventListener(
-		'click', workplaceReset );
 	
 	//
 	//	パースペクティブバー初期化
@@ -179,97 +162,6 @@ function xxx( e ){
 
 }
 
-function workplaceReset(){
-	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
-	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
-	var children= document.getElementById('WORKPLACE_CHILDREN');
-
-	if ( sysmenu.style.height == '0px'){
-		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
-		sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
-	} else {
-		sysmenu.setAttribute('orgHeight', sysmenu.style.height );
-		sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
-		sysmenu.style.height = '0px';
-		sysmenu.style.padding = '0px';
-	}
-
-	wb.style.height = '0px';
-	children.style.height = '0px';
-
-}
-
-function workplaceWhiteboard(){
-	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
-	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
-	var children= document.getElementById('WORKPLACE_CHILDREN');
-
-	if ( sysmenu.style.height == '0px'){
-		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
-		sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
-	} else {
-		sysmenu.setAttribute('orgHeight', sysmenu.style.height );
-		sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
-		sysmenu.style.height = '0px';
-		sysmenu.style.padding = '0px';
-	}
-
-	wb.style.height = '196px';
-	children.style.height = '0px';
-
-}
-
-//
-//		ワークプレイス
-//
-function workplaceChildren(){
-	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
-	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
-	var children= document.getElementById('WORKPLACE_CHILDREN');
-	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
-	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
-
-
-	if ( sysmenu.style.height == '0px'){
-		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
-		sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
-	} else {
-		sysmenu.setAttribute('orgHeight', sysmenu.style.height );
-		sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
-		sysmenu.style.height = '0px';
-		sysmenu.style.padding = '0px';
-	}
-
-	resizeWorkplace();
-	// var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
-	// console.log( 'h:' + children.offsetHeight );
-	// children.style.height = ( h - 0 ) + 'px';
-	// wpcm.style.height = ( h - 252 ) + 'px';
-	wb.style.height = '0px';
-
-	list.innerHTML = '';
-
-}
-
-//
-//
-function wp_find(){
-	var wph = document.getElementById('WORKPLACE_HDR');
-	wph.style.height = '0px';
-	wph.style.padding = '0px';
-}
-function closeWorkplaceWhiteboard(){
-	workplaceReset();
-	var wph = document.getElementById('WORKPLACE_HDR');
-	wph.style.height = '';
-	wph.style.padding = '';
-}
-function closeWorkplaceChildren(){
-	workplaceReset();
-	var wph = document.getElementById('WORKPLACE_HDR');
-	wph.style.height = '';
-	wph.style.padding = '';
-}
 
 //
 //		ホワイトボードの初期化
@@ -2408,58 +2300,6 @@ function ctlToolbar(){
 
 }
 
-//
-//		ワークプレイス（統合メニュー）を表示
-//
-function showWorkPlace(){
-
-	closeModalDialog();
-
-	//	OPAQUESHAFT_TITLE表示制御
-	var opaqueshaft_title = document.getElementById('OPAQUESHAFT_TITLE');
-	opaqueshaft_title.style.visibility = ( openWhiteboardFlg )? 'visible' : 'hidden';
-
-	var bo		= document.getElementById('BOTTOM_OVERLAY');
-	bo.style.visibility		= 'visible';
-
-	var wp_signin	= document.getElementById('WP_SIGNIN');
-	var wp_siginout	= document.getElementById('WP_SIGNOUT');
-	var wp_open		= document.getElementById('WP_OPENWHITEBOARD');
-	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
-	var wp_children		= document.getElementById('WP_CHILDREN');
-	var wp_setting		= document.getElementById('WP_SETTING');
-
-	if ( checkSign() ){
-		// signed
-		wp_signin.setAttribute( 'disabled', 'true' );
-		wp_whiteboard.removeAttribute( 'disabled' );
-		wp_children.removeAttribute( 'disabled' );
-		wp_setting.removeAttribute( 'disabled' );
-		wp_open.removeAttribute( 'disabled' );
-		wp_siginout.removeAttribute( 'disabled' );
-		wp_signin.style.opacity		= 0.3;
-		wp_siginout.style.opacity	= 1;
-		wp_whiteboard.style.opacity	= 1;
-		wp_children.style.opacity	= 1;
-		wp_setting.style.opacity	= 1;
-		wp_open.style.opacity		= 1;
-	} else {
-		// not sign
-		wp_signin.removeAttribute( 'disabled' );
-		wp_siginout.setAttribute( 'disabled', 'true' );
-		wp_whiteboard.setAttribute( 'disabled', 'true' );
-		wp_children.setAttribute( 'disabled', 'true' );
-		wp_setting.setAttribute( 'disabled', 'true' );
-		wp_open.setAttribute( 'disabled', 'true' );
-		wp_signin.style.opacity		= 1;
-		wp_siginout.style.opacity	= 0.3;
-		wp_whiteboard.style.opacity	= 0.3;
-		wp_children.style.opacity	= 0.3;
-		wp_setting.style.opacity	= 0.3;
-		wp_open.style.opacity		= 0.3;
-	}
-
-}
 //
 //	ツールバーの表示制御
 //

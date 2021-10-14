@@ -25,7 +25,7 @@
     width:100%;
     height:124px;
     margin:0 auto;
-    padding:20px;
+    /* padding:20px; */
     overflow:hidden;
     background-color:transparent;
     border-radius: 12px;
@@ -106,7 +106,7 @@
     margin:0 auto;
     width:250px;
     font-size:26px;
-    padding:40px 0px 40px 0px;
+    padding:10px 0px 4px 0px;
     background-image: url(./images/arrow-black-triangle-down.png);
     background-size:10px;
     background-repeat: no-repeat;
@@ -115,7 +115,7 @@
 #WORKPLACE_CHILDREN_HDR2{
     margin:0 auto;
     width:250px;
-    height:140px;
+    height:100px;
 }
 #WORKPLACE_CHILDREN_MAIN{
     margin:0 auto;
@@ -159,7 +159,7 @@
 
 
 .WP_PALLETE_CHILD{
-	width:					180px;
+	width:					100%;       /* 180px; */
 	height:					144px;
 	/* display:				flex;
 	flex-direction: 		row;
