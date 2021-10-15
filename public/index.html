@@ -27,47 +27,43 @@
 
 	<div id="BOTTOM_OVERLAY" class="not_select toolbar_hidden" >
 		<div id="BOTTOM_FRAME" class="not_select" style="color:dimgray;">
+			<div ID="WORKPLACE_ICON" >
+				<div style="position:absolute;top:20px;left:10px;
+						width:60px;height:30px;
+						background-color:lightgrey;border-radius: 10px;
+						transform:rotate(0deg);" ></div>
+				<div style="position:absolute;top:52px;left:10px;
+						width:60px;height:30px;
+						background-color:lightgrey;border-radius: 10px;
+						transform:rotate(0deg);" ></div>
+				<div style="position:absolute;top:84px;left:10px;
+						width:60px;height:30px;
+						background-color:lightgrey;border-radius: 10px;
+						transform:rotate(0deg);" ></div>
+				<div style="position:absolute;top:52px;left:10px;
+						width:60px;height:30px;
+						background-color:red;border-radius: 10px;
+						transform:rotate(90deg);" ></div>
+
+				<div style="position:absolute;top:30px;left:90px;
+						width:60px;height:30px;
+						background-color:lightgrey;border-radius: 10px;
+						transform:rotate(-40deg);" ></div>
+				<div style="position:absolute;top:72px;left:94px;
+						width:60px;height:30px;
+						background-color:lightgrey;border-radius: 10px;
+						transform:rotate(-40deg);" ></div>
+				<div style="position:absolute;top:51px;left:92px;
+						width:60px;height:30px;
+						background-color:red;border-radius: 10px;
+						transform:rotate(-133deg);" ></div>
+
+			</div>
+
+
 			<div id="WORKPLACE_HDR" >
-				<div ID="WORKPLACE_ICON" >
-					<div style="position:absolute;top:20px;left:10px;
-							width:60px;height:30px;
-							background-color:lightgrey;border-radius: 10px;
-							transform:rotate(0deg);" ></div>
-					<div style="position:absolute;top:52px;left:10px;
-							width:60px;height:30px;
-							background-color:lightgrey;border-radius: 10px;
-							transform:rotate(0deg);" ></div>
-					<div style="position:absolute;top:84px;left:10px;
-							width:60px;height:30px;
-							background-color:lightgrey;border-radius: 10px;
-							transform:rotate(0deg);" ></div>
-					<div style="position:absolute;top:52px;left:10px;
-							width:60px;height:30px;
-							background-color:red;border-radius: 10px;
-							transform:rotate(90deg);" ></div>
-
-					<div style="position:absolute;top:30px;left:90px;
-							width:60px;height:30px;
-							background-color:lightgrey;border-radius: 10px;
-							transform:rotate(-40deg);" ></div>
-					<div style="position:absolute;top:72px;left:94px;
-							width:60px;height:30px;
-							background-color:lightgrey;border-radius: 10px;
-							transform:rotate(-40deg);" ></div>
-					<div style="position:absolute;top:51px;left:92px;
-							width:60px;height:30px;
-							background-color:red;border-radius: 10px;
-							transform:rotate(-133deg);" ></div>
-
-				</div>
 				<div id="WORKPLACE_TITLE"   >OpaqueShaft</div>
 				<div id="WORKPLACE_SYSMENU" >
-					<button id="WP_SIGNIN" class="workplace_button"
-						onclick="signForm();" >
-						<br/><br/><br/>sign in</button>
-					<button id="WP_SIGNOUT" class="workplace_button" 
-						onclick="signoutForm();" >
-						<br/><br/><br/>sign out</button>
 					<button id="WP_WHITEBOARD" class="workplace_button"
 						onclick="workplaceWhiteboard();"  >
 						<br/><br/>white<br/>board
@@ -77,10 +73,16 @@
 						<br/><br/><br/>children
 					</button>
 					<button id="WP_SETTING" class="workplace_button"
-						style="border:2px groove gray;"
+						style="border:0px groove gray;"
 						onclick="accountProperty();"  >
 						<br/><br/><br/>settings
 					</button>
+					<button id="WP_SIGNIN" class="workplace_button"
+						onclick="signForm();" >
+						<br/><br/><br/>sign in</button>
+					<button id="WP_SIGNOUT" class="workplace_button" 
+						onclick="signoutForm();" >
+						<br/><br/><br/>sign out</button>
 				</div>
 			</div>
 			<div id="WORKPLACE_WHITEBOARD" >

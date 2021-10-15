@@ -1,3 +1,5 @@
+var workplace_id = null;
+
 function initWorkplace(){
 
 	// test code
@@ -74,12 +76,6 @@ function showWorkPlace(){
 		wp_children.style.display	= 'inline';
 		wp_setting.style.display	= 'inline';
 		wp_open.style.display		= 'inline';
-		// wp_signin.style.opacity		= 0.3;
-		// wp_siginout.style.opacity	= 1;
-		// wp_whiteboard.style.opacity	= 1;
-		// wp_children.style.opacity	= 1;
-		// wp_setting.style.opacity	= 1;
-		// wp_open.style.opacity		= 1;
 	} else {
 		// not sign
 		wp_signin.removeAttribute( 'disabled' );
@@ -94,19 +90,18 @@ function showWorkPlace(){
 		wp_children.style.display	= 'none';
 		wp_setting.style.display	= 'none';
 		wp_open.style.display		= 'none';
-		// wp_signin.style.opacity		= 1;
-		// wp_siginout.style.opacity	= 0.3;
-		// wp_whiteboard.style.opacity	= 0.3;
-		// wp_children.style.opacity	= 0.3;
-		// wp_setting.style.opacity	= 0.3;
-		// wp_open.style.opacity		= 0.3;
 	}
 
 	resizeWorkplace();
 
 }
 
+//
+//	ワークプレイス
+//
 function workplaceReset(){
+
+	workplace_id = null;
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
@@ -126,7 +121,11 @@ function workplaceReset(){
 
 }
 
+//
+//	ホワイトボードメニュー
+//
 function workplaceWhiteboard(){
+	workplace_id = 'WHITEBOARD';
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
@@ -147,9 +146,10 @@ function workplaceWhiteboard(){
 }
 
 //
-//		ワークプレイス
+//		チルドレン
 //
 function workplaceChildren(){
+	workplace_id = 'CHILDREN';
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
@@ -238,9 +238,14 @@ function resizeWorkplace(){
 	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
 	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 	console.log( 'resizeWorkplace' );
-	// if ( children.offsetHeight != 0 && wb.offsetHeight != 0 ){
-		children.style.height = ( h - 0 ) + 'px';
-	// }
+
+	switch ( workplace_id ){
+		case 'WHITEBOARD':
+			break;
+		case 'CHILDREN':
+			children.style.height = ( h - 0 ) + 'px';
+			break;
+	}
 	wpcm.style.height = ( h - ( chr + chr2 ) ) + 'px';	// offset 252
 
 }

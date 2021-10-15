@@ -1,24 +1,25 @@
-#WORKPLACE_HDR{
-    width:100%;
-    overflow:auto;
-    font-size:26px;
-    border-bottom:1px solid lightgrey;
-    text-align:center;
-    padding:30px 0px 10px 0px;
-    transition:height 0.3s ease-in-out;
-}
-
 #WORKPLACE_ICON{
     margin:0 auto;
     position:relative;
     width:160px;
-    height:160px;
+    height:140px;
     overflow:hidden;
     padding-bottom:0px;
     border:0px solid lightgrey;
 }
 
+#WORKPLACE_HDR{
+    width:100%;
+    overflow:auto;
+    /* border-bottom:1px solid lightgrey; */
+    text-align:center;
+    padding:10px 0px 10px 0px;
+    transition:height 0.3s ease-in-out;
+}
+
+
 #WORKPLACE_TITLE{
+    font-size:16px;
     padding-bottom:40px;
 }
 #WORKPLACE_SYSMENU{
@@ -66,7 +67,7 @@
     height:0px;
     overflow:hidden;
     font-size:16px;
-    border-bottom:gray;
+    /* border-bottom:gray; */
     text-align:center;
     transition:all 0.7s ease-in-out;
 }
@@ -74,7 +75,7 @@
     margin:0 auto;
     width:250px;
     font-size:26px;
-    padding:40px 0px 40px 0px;
+    padding:10px 0px 4px 0px;
     background-image: url(./images/arrow-black-triangle-down.png);
     background-size:10px;
     background-repeat: no-repeat;
@@ -208,7 +209,7 @@
 .child_header{
 	font-size:				16px;
 	font-weight: 			bold;
-    background-color:       #EDEDED;
+    /* background-color:       #EDEDED; */
 	border-bottom:			1px solid lightgrey;
 	padding:				2px 0px 2px 0px;
 }
