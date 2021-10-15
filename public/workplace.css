@@ -6,6 +6,7 @@
     overflow:hidden;
     padding-bottom:0px;
     border:0px solid lightgrey;
+    transition:height 0.3s ease-in-out;
 }
 
 #WORKPLACE_TAB{
@@ -16,6 +17,7 @@
     width:42px;
     height:100%;
     background-color: transparent;
+    opacity: 0.8;
 }
 #TAB_OPAQUESHAFT{
     width:100%;
@@ -51,8 +53,8 @@
 
 
 #WORKPLACE_TITLE{
-    font-size:16px;
-    padding-bottom:40px;
+    font-size:12px;
+    padding-bottom:10px;
 }
 #WORKPLACE_SYSMENU{
     width:100%;
@@ -103,7 +105,7 @@
     text-align:center;
     transition:all 0.7s ease-in-out;
 }
-#WORKPLACE_WHITEBOARD_HDR{
+/* #WORKPLACE_WHITEBOARD_HDR{
     margin:0 auto;
     width:250px;
     font-size:26px;
@@ -112,10 +114,10 @@
     background-size:10px;
     background-repeat: no-repeat;
     background-position: left center;
-}
+} */
 #WP_CREATEWHITEBOARD{
     background-image:url(images/plus3.png);
-    background-size:22px;
+    background-size:16px;
     background-repeat:no-repeat;
     background-position: center center;
 }
@@ -135,20 +137,10 @@
     text-align:center;
     transition:all 0.3s ease-in-out;
 }
-/* #WORKPLACE_CHILDREN_HDR{
+#WORKPLACE_CHILDREN_HDR{
     margin:0 auto;
     width:250px;
-    font-size:26px;
-    padding:10px 0px 4px 0px;
-    background-image: url(./images/arrow-black-triangle-down.png);
-    background-size:10px;
-    background-repeat: no-repeat;
-    background-position: left center;
-} */
-#WORKPLACE_CHILDREN_HDR2{
-    margin:0 auto;
-    width:250px;
-    height:100px;
+    height:90px;
 }
 #WORKPLACE_CHILDREN_MAIN{
     margin:0 auto;
@@ -168,7 +160,7 @@
 
 #WP_CREATECHILD{
     background-image:url(images/plus3.png);
-    background-size:22px;
+    background-size:16px;
     background-repeat:no-repeat;
     background-position: center center;
 }
@@ -181,6 +173,17 @@
 .workplace_button{
     width:60px;
     height:80px;
+    border:1px;
+    border-radius:4px;
+    background-color:white;
+    background-image:url(images/user-2.png);
+    background-size:26px;
+    background-repeat:no-repeat;
+    background-position: center top 10px;
+}
+.workplace_button_small{
+    width:30px;
+    height:40px;
     border:1px;
     border-radius:4px;
     background-color:white;

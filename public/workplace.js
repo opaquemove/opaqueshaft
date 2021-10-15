@@ -104,16 +104,20 @@ function showWorkPlace(){
 function workplaceReset(){
 
 	workplace_id = null;
+	var icon	= document.getElementById('WORKPLACE_ICON');
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 
 	if ( sysmenu.style.height == '0px'){
+		icon.style.height = icon.getAttribute('orgHeight');
 		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
 		sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
 	} else {
+		icon.setAttribute('orgHeight', icon.style.height );
 		sysmenu.setAttribute('orgHeight', sysmenu.style.height );
 		sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
+		icon.style.height	= '0px';
 		sysmenu.style.height = '0px';
 		sysmenu.style.padding = '0px';
 	}
@@ -134,6 +138,7 @@ function workplaceReset(){
 //
 function workplaceWhiteboard(){
 	workplace_id = 'WHITEBOARD';
+	var icon	= document.getElementById('WORKPLACE_ICON');
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
@@ -146,11 +151,14 @@ function workplaceWhiteboard(){
 	current.innerText = 'whiteboard';
 	
 	if ( sysmenu.style.height == '0px'){
+		icon.style.height	= icon.getAttribute('orgHeight');
 		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
 		sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
 	} else {
+		icon.setAttribute('orgHeight', icon.style.height );
 		sysmenu.setAttribute('orgHeight', sysmenu.style.height );
 		sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
+		icon.style.height = '0px';
 		sysmenu.style.height = '0px';
 		sysmenu.style.padding = '0px';
 	}
@@ -165,6 +173,7 @@ function workplaceWhiteboard(){
 //
 function workplaceChildren(){
 	workplace_id = 'CHILDREN';
+	var icon	= document.getElementById('WORKPLACE_ICON');
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
@@ -179,11 +188,14 @@ function workplaceChildren(){
 	current.innerText = 'children';
 
 	if ( sysmenu.style.height == '0px'){
+		icon.style.height	= icon.getAttribute('orgHeight');
 		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
 		sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
 	} else {
+		icon.setAttribute('orgHeight', icon.style.height );
 		sysmenu.setAttribute('orgHeight', sysmenu.style.height );
 		sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
+		icon.style.height = '0px';
 		sysmenu.style.height = '0px';
 		sysmenu.style.padding = '0px';
 	}
@@ -254,8 +266,7 @@ function resizeWorkplace(){
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
-	// var chr		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
-	var chr2	= document.getElementById('WORKPLACE_CHILDREN_HDR2').offsetHeight;
+	var chr2	= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
 	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
 	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 	console.log( 'resizeWorkplace' );
