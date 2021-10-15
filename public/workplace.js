@@ -17,9 +17,11 @@ function initWorkplace(){
 			console.log('test');
 		}
 	);
+	document.getElementById('TAB_OPAQUESHAFT').addEventListener(
+		'click', workplaceReset );
 	document.getElementById('WORKPLACE_ICON').addEventListener(
 		'click', workplaceReset );
-	
+		
     document.getElementById('WP_KEYWORD').addEventListener(
 		'keyup',
 		function( e ){
@@ -119,6 +121,12 @@ function workplaceReset(){
 	wb.style.height = '0px';
 	children.style.height = '0px';
 
+	//	TAB
+	var tab = document.getElementById('TAB_OPAQUESHAFT');
+	var current = document.getElementById('TAB_CURRENT');
+	tab.style.visibility = 'hidden';
+	current.style.visibility = 'hidden';
+
 }
 
 //
@@ -130,6 +138,13 @@ function workplaceWhiteboard(){
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 
+	//	TAB
+	var tab = document.getElementById('TAB_OPAQUESHAFT');
+	var current = document.getElementById('TAB_CURRENT');
+	tab.style.visibility = 'visible';
+	current.style.visibility = 'visible';
+	current.innerText = 'whiteboard';
+	
 	if ( sysmenu.style.height == '0px'){
 		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
 		sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
@@ -156,6 +171,12 @@ function workplaceChildren(){
 	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
 	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 
+	//	TAB
+	var tab = document.getElementById('TAB_OPAQUESHAFT');
+	var current = document.getElementById('TAB_CURRENT');
+	tab.style.visibility = 'visible';
+	current.style.visibility = 'visible';
+	current.innerText = 'children';
 
 	if ( sysmenu.style.height == '0px'){
 		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
@@ -233,7 +254,7 @@ function resizeWorkplace(){
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
-	var chr		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
+	// var chr		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
 	var chr2	= document.getElementById('WORKPLACE_CHILDREN_HDR2').offsetHeight;
 	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
 	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
@@ -246,7 +267,7 @@ function resizeWorkplace(){
 			children.style.height = ( h - 0 ) + 'px';
 			break;
 	}
-	wpcm.style.height = ( h - ( chr + chr2 ) ) + 'px';	// offset 252
+	wpcm.style.height = ( h - ( 0 + chr2 ) ) + 'px';	// offset 252
 
 }
 
