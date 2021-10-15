@@ -245,18 +245,19 @@ function wp_find(){
 	wph.style.height = '0px';
 	wph.style.padding = '0px';
 }
-function closeWorkplaceWhiteboard(){
-	workplaceReset();
-	var wph = document.getElementById('WORKPLACE_HDR');
-	wph.style.height = '';
-	wph.style.padding = '';
-}
-function closeWorkplaceChildren(){
-	workplaceReset();
-	var wph = document.getElementById('WORKPLACE_HDR');
-	wph.style.height = '';
-	wph.style.padding = '';
-}
+
+// function closeWorkplaceWhiteboard(){
+// 	workplaceReset();
+// 	var wph = document.getElementById('WORKPLACE_HDR');
+// 	wph.style.height = '';
+// 	wph.style.padding = '';
+// }
+// function closeWorkplaceChildren(){
+// 	workplaceReset();
+// 	var wph = document.getElementById('WORKPLACE_HDR');
+// 	wph.style.height = '';
+// 	wph.style.padding = '';
+// }
 
 //
 //	リサイズ処理
