@@ -105,11 +105,13 @@ function workplaceReset(){
 
 	workplace_id = null;
 	var icon	= document.getElementById('WORKPLACE_ICON');
+	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 
-	if ( sysmenu.style.height == '0px'){
+	if ( icon.style.height == '0px'){
+		hdr.style.height = hdr.getAttribute('orgHeight');
 		icon.style.height = icon.getAttribute('orgHeight');
 		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
 		sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
@@ -117,9 +119,9 @@ function workplaceReset(){
 		icon.setAttribute('orgHeight', icon.style.height );
 		sysmenu.setAttribute('orgHeight', sysmenu.style.height );
 		sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
-		icon.style.height	= '0px';
-		sysmenu.style.height = '0px';
-		sysmenu.style.padding = '0px';
+		// icon.style.height	= '0px';
+		// sysmenu.style.height = '0px';
+		// sysmenu.style.padding = '0px';
 	}
 
 	wb.style.height = '0px';
@@ -174,6 +176,7 @@ function workplaceWhiteboard(){
 function workplaceChildren(){
 	workplace_id = 'CHILDREN';
 	var icon	= document.getElementById('WORKPLACE_ICON');
+	// var title	= document.getElementById('WORKPLACE_TITLE');
 	var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
@@ -187,17 +190,22 @@ function workplaceChildren(){
 	current.style.visibility = 'visible';
 	current.innerText = 'children';
 
-	if ( sysmenu.style.height == '0px'){
-		icon.style.height	= icon.getAttribute('orgHeight');
-		sysmenu.style.height = sysmenu.getAttribute('orgHeight');
-		sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
+	if ( icon.style.height == '0px'){
+		icon.style.height		= icon.getAttribute('orgHeight');
+		// title.style.height		= title.getAttribute('orgHeight');
+		// title.style.paddingBottom	= title.getAttribute('orgPaddingBottom');
+		sysmenu.style.height	= sysmenu.getAttribute('orgHeight');
+		sysmenu.style.padding	= sysmenu.getAttribute('orgPadding');	
 	} else {
 		icon.setAttribute('orgHeight', icon.style.height );
+		// title.setAttribute('orgHeight', title.style.height );
+		// title.setAttribute('orgPaddingBottom', title.style.paddingBottom );
 		sysmenu.setAttribute('orgHeight', sysmenu.style.height );
 		sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
-		icon.style.height = '0px';
-		sysmenu.style.height = '0px';
-		sysmenu.style.padding = '0px';
+		icon.style.height		= '0px';
+		// title.style.height		= '0px';
+		sysmenu.style.height	= '0px';
+		sysmenu.style.padding	= '0px';
 	}
 
 	resizeWorkplace();
@@ -242,6 +250,7 @@ function selectChildren( e ){
 //
 function wp_find(){
 	var wph = document.getElementById('WORKPLACE_HDR');
+	wph.setAttribute( 'orgHeight', wph.style.height );
 	wph.style.height = '0px';
 	wph.style.padding = '0px';
 }
@@ -285,6 +294,7 @@ function resizeWorkplace(){
 
 function finder(){
     var wph = document.getElementById('WORKPLACE_HDR');
+	wph.setAttribute( 'orgHeight', wph.style.height );
 	wph.style.height = '0px';
 	wph.style.padding = '0px';
 
