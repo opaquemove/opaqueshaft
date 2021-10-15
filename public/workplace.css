@@ -140,7 +140,7 @@
 #WORKPLACE_CHILDREN_HDR{
     margin:0 auto;
     width:250px;
-    height:90px;
+    height:80px;
 }
 #WORKPLACE_CHILDREN_MAIN{
     margin:0 auto;
@@ -183,7 +183,7 @@
 }
 .workplace_button_small{
     width:30px;
-    height:40px;
+    height:36px;
     border:1px;
     border-radius:4px;
     background-color:white;
