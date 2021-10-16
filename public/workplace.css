@@ -309,6 +309,10 @@
     transform:    translateX(-100px);
     /* opacity: 0.8; */
 }
+.height320{
+    height:320px;
+    /* opacity: 0.8; */
+}
 
 @keyframes fadein {
     from {

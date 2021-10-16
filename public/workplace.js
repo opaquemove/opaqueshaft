@@ -260,7 +260,15 @@ function selectChildren( e ){
 	e.stopPropagation();
 	var c = e.target;
 	while ( true ){
-		if ( c == this ) return;
+		if ( c == this ){
+			for ( var i=0; i<this.childNodes.length; i++ ){
+				var o = this.childNodes[i];
+				if ( o.classList.contains('left100')){
+					o.classList.remove( 'left100');
+				}
+			}
+			return;
+		}
 		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
 		c = c.parentNode;
 	}
@@ -268,7 +276,6 @@ function selectChildren( e ){
 	if ( ! c.classList.contains( 'left100' )) return;
 	
 	c.setAttribute( 'selected', 'yes' );
-	// if ( c.getElementsByClassName( 'opChild').length != 0 ) return;
 	var o = document.createElement('DIV');
 	o.classList.add('opChild');
 	o.classList.add('vh-center');
@@ -318,7 +325,14 @@ function selectChildrenTransitionEnd( e ){
 
 function wp_editChildren(e){
 	e.stopPropagation();
-	alert();
+	var c = e.target;
+	while ( true ){
+		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
+		c = c.parentNode;
+	}
+	c.classList.toggle('height320');
+	// alert( c.getAttribute('child_id'));
+
 }
 
 function wp_purgeChildren(e){
