@@ -61,9 +61,9 @@
 			</div>
 
 
-			<div id="WORKPLACE_HDR" >
+			<div id="WORKPLACE_HDR" >	<!--  100% -->
 				<!-- <div id="WORKPLACE_TITLE"   >OpaqueShaft</div> -->
-				<div id="WORKPLACE_SYSMENU" >
+				<div id="WORKPLACE_SYSMENU" >	<!-- 100% * 124px -->
 					<button id="WP_WHITEBOARD" class="workplace_button"
 						onclick="workplaceWhiteboard();"  >
 						<br/><br/>white<br/>board
@@ -87,8 +87,8 @@
 			</div>
 
 
-			<div id="WORKPLACE_WHITEBOARD" >
-				<div>
+			<div id="WORKPLACE_WHITEBOARD" >	<!-- 100% * 0px -->
+				<div id="WORKPLACE_WHITEBOARD_HDR" >
 					<button id="WP_CREATEWHITEBOARD" class="workplace_button_small"
 						onclick="" >
 						<br/><br/><br/>add
@@ -98,9 +98,14 @@
 						<br/><br/><br/>open
 					</button>
 				</div>
+				<div id="WORKPLACE_WHITEBOARD_MAIN" >
+					<div id="WORKPLACE_WHITEBOARD_MAIN_LIST" >
+					</div>
+				</div>
+
 			</div>
 
-			<div id="WORKPLACE_CHILDREN" >
+			<div id="WORKPLACE_CHILDREN" >		<!--  100% * 0px -->
 				<div id="WORKPLACE_CHILDREN_HDR" >
 					<div style="float:left;height:50px;" >
 						<button id="WP_CREATECHILD" class="workplace_button_small"
@@ -113,9 +118,10 @@
 							<input type="text" id="WP_KEYWORD" name="WP_KEYWORD" autocomplete="off" style="width:150px;height:24px;font-size:14px;background-color:white;border:1px solid lightgrey;box-sizing: border-box;padding:2px 4px 2px 4px;border-radius: 8px;outline:none;" />
 						</form>
 					</div>
-					<div style="float:left;height:50px;" >
+					<div style="float:left;height:48px;padding-top:2px;" >
 						<button id="" style="width:30px;height:36px;border:none;background-color:transparent;background-image:url(images/right-arrow-black-triangle.png);background-size:14px;background-repeat:no-repeat;background-position: center center;" 
 							onclick="finder();" >
+							<br/><br/><br/>find
 						</button>
 					</div>
 				</div>

@@ -32,7 +32,9 @@ function initWorkplace(){
 
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
 		'click', selectChildren );
-
+	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
+		'transitionend', selectChildrenTransitionEnd );
+	
 	// document.getElementById('BOTTOM_FRAME').addEventListener(
 	// 	'resize', resizeWorkplace );
 	// var bf = document.getElementById('BOTTOM_FRAME');
@@ -239,13 +241,28 @@ function selectChildren( e ){
 		o.style.height		= c.offsetHeight + 'px';
 		var oo = c.appendChild( o );
 		var r = '';
-		r += '<button class="workplace_delete_button" onclick="alert()" >delete</delete>';
+		r += '<button class="workplace_edit_button" onclick="alert()" >edit</delete>';
+		r += '<button class="workplace_delete_button" onclick="alert()" >purge</delete>';
 		oo.innerHTML = r;
 	} else {
 		// c.removeChild( c.getElementsByClassName( 'opChild')[0] );
 	}
 
 }
+
+function selectChildrenTransitionEnd( e ){
+	var c = e.target;
+	while ( true ){
+		if ( c == this ) return;
+		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
+		c = c.parentNode;
+	}
+	if ( !c.classList.contains( 'left100' )){
+		c.removeChild( c.getElementsByClassName( 'opChild')[0] );
+	}
+
+}
+
 //
 //
 function wp_find(){
