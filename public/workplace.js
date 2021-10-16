@@ -2,6 +2,9 @@ var workplace_id = null;
 
 function initWorkplace(){
 
+	var hdr = document.getElementById('WORKPLACE_HDR');
+	hdr.setAttribute( 'orgHeight', hdr.offsetHeight + 'px' );
+
 	// test code
 	document.getElementById('OPAQUESHAFT_TITLE').addEventListener(
 		'click',
@@ -112,20 +115,14 @@ function workplaceReset(){
 	workplace_id = null;
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
-	// var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 
 	if ( icon.style.height == '0px'){
-		hdr.style.height = hdr.getAttribute('orgHeight');
 		icon.style.height = icon.getAttribute('orgHeight');
-		// sysmenu.style.height = sysmenu.getAttribute('orgHeight');
-		// sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
+		hdr.style.height = hdr.getAttribute('orgHeight');
 	} else {
 		icon.setAttribute('orgHeight', icon.style.height );
-		hdr.setAttribute('orgHeight', hdr.style.height );
-		// sysmenu.setAttribute('orgHeight', sysmenu.style.height );
-		// sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
 	}
 
 	wb.style.height = '0px';
@@ -146,7 +143,6 @@ function workplaceWhiteboard(){
 	workplace_id = 'WHITEBOARD';
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
-	// var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 	var wpwm	= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
@@ -162,21 +158,13 @@ function workplaceWhiteboard(){
 	if ( icon.style.height == '0px'){
 		icon.style.height	= icon.getAttribute('orgHeight');
 		hdr.style.height	= hdr.getAttribute('orgHeight');
-		// sysmenu.style.height = sysmenu.getAttribute('orgHeight');
-		// sysmenu.style.padding = sysmenu.getAttribute('orgPadding');	
 	} else {
 		icon.setAttribute('orgHeight', icon.style.height );
-		hdr.setAttribute('orgHeight', hdr.style.height );
-		// sysmenu.setAttribute('orgHeight', sysmenu.style.height );
-		// sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
-		icon.style.height = '0px';
-		hdr.style.height = '0px';
-		// sysmenu.style.height = '0px';
-		// sysmenu.style.padding = '0px';
+		icon.style.height	= '0px';
+		hdr.style.height	= '0px';
 	}
 
 	resizeWorkplace();
-	// wb.style.height = '196px';
 	children.style.height = '0px';
 	list.innerHTML = '';
 
@@ -236,7 +224,6 @@ function workplaceChildren(){
 	workplace_id = 'CHILDREN';
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
-	// var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
@@ -252,17 +239,10 @@ function workplaceChildren(){
 	if ( icon.style.height == '0px'){
 		icon.style.height		= icon.getAttribute('orgHeight');
 		hdr.style.height		= hdr.getAttribute('orgHeight');
-		// sysmenu.style.height	= sysmenu.getAttribute('orgHeight');
-		// sysmenu.style.padding	= sysmenu.getAttribute('orgPadding');	
 	} else {
 		icon.setAttribute('orgHeight', icon.style.height );
-		hdr.setAttribute('orgHeight', hdr.style.height );
-		// sysmenu.setAttribute('orgHeight', sysmenu.style.height );
-		// sysmenu.setAttribute('orgPadding', sysmenu.style.padding );
 		icon.style.height		= '0px';
 		hdr.style.height		= '0px';
-		// sysmenu.style.height	= '0px';
-		// sysmenu.style.padding	= '0px';
 	}
 
 	resizeWorkplace();
@@ -350,7 +330,6 @@ function wp_purgeChildren(e){
 //
 function wp_find(){
 	var wph = document.getElementById('WORKPLACE_HDR');
-	wph.setAttribute( 'orgHeight', wph.style.height );
 	wph.style.height = '0px';
 	wph.style.padding = '0px';
 }
@@ -392,7 +371,6 @@ function resizeWorkplace(){
 //
 function finder(){
     var wph = document.getElementById('WORKPLACE_HDR');
-	wph.setAttribute( 'orgHeight', wph.style.height );
 	wph.style.height = '0px';
 	wph.style.padding = '0px';
 
