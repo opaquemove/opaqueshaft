@@ -48,7 +48,7 @@
     overflow:auto;
     /* border-bottom:1px solid lightgrey; */
     text-align:center;
-    padding:10px 0px 10px 0px;
+    padding:0px 0px 0px 0px;
     transition:height 0.3s ease-in-out;
 }
 #WORKPLACE_SUMMARY{
@@ -70,7 +70,7 @@
     font-size:12px;
     color:dimgray;
     text-align: right;
-    margin:4px;
+    margin:4px 4px 4px 4px;
     padding:2px;
 }
 
@@ -78,45 +78,44 @@
     font-size:12px;
     padding-bottom:10px;
 }
-#WORKPLACE_SYSMENU{
+/* #WORKPLACE_SYSMENU{
     width:100%;
     height:124px;
     margin:0 auto;
-    /* padding:20px; */
     overflow:hidden;
     background-color:transparent;
     border-radius: 12px;
     transition:all 0.3s ease-in-out;
-}
+} */
 #WP_SIGNIN{
     background-image:url(images/user-2.png);
     background-size:26px;
     background-repeat:no-repeat;
-    background-position: center top 10px;
+    background-position: center center;
 }
 #WP_SIGNOUT{
     background-image:url(images/exit.png);
-    background-size:26px;
+    background-size:16px;
     background-repeat:no-repeat;
-    background-position: center top 10px;
+    background-position: center center;
 }
 #WP_WHITEBOARD{
     background-image:url(images/management.png);
     background-size:26px;
     background-repeat:no-repeat;
-    background-position: center top 10px;
+    background-position: center center;
 }
 #WP_CHILDREN{
     background-image:url(images/management.png);
     background-size:26px;
     background-repeat:no-repeat;
-    background-position: center top 10px;
+    background-position: center center;
 }
 #WP_SETTING{
     background-image:url(images/settings.png);
-    background-size:26px;
+    background-size:16px;
     background-repeat:no-repeat;
-    background-position: center top 10px;
+    background-position: center center;
 } 
 #WORKPLACE_WHITEBOARD{
     width:100%;
@@ -179,7 +178,8 @@
 }
 #WORKPLACE_CHILDREN_MAIN{
     margin:0 auto;
-    width:90%;
+    width:100%;
+    background-color:#EDEDED;
     overflow:scroll;
 } 
 #WORKPLACE_CHILDREN_MAIN_LIST{

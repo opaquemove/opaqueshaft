@@ -30,6 +30,13 @@ function initWorkplace(){
 		}
 	);
 
+
+	new Button( 'WP_WHITEBOARD',  workplaceWhiteboard ).play();
+	new Button( 'WP_CHILDREN',    workplaceChildren ).play();
+	new Button( 'WP_SETTING',     accountProperty ).play();
+	new Button( 'WP_SIGNIN',      signForm ).play();
+	new Button( 'WP_SIGNOUT',     signoutForm ).play();
+
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
 		'click', selectChildren );
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
@@ -61,7 +68,6 @@ function showWorkPlace(){
 
 	var wp_signin	= document.getElementById('WP_SIGNIN');
 	var wp_siginout	= document.getElementById('WP_SIGNOUT');
-	var wp_open		= document.getElementById('WP_OPENWHITEBOARD');
 	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
 	var wp_children		= document.getElementById('WP_CHILDREN');
 	var wp_setting		= document.getElementById('WP_SETTING');
@@ -72,14 +78,13 @@ function showWorkPlace(){
 		wp_whiteboard.removeAttribute( 'disabled' );
 		wp_children.removeAttribute( 'disabled' );
 		wp_setting.removeAttribute( 'disabled' );
-		wp_open.removeAttribute( 'disabled' );
+		// wp_open.removeAttribute( 'disabled' );
 		wp_siginout.removeAttribute( 'disabled' );
-		wp_signin.style.display		= 'none';
-		wp_siginout.style.display	= 'inline';
-		wp_whiteboard.style.display	= 'inline';
-		wp_children.style.display	= 'inline';
-		wp_setting.style.display	= 'inline';
-		wp_open.style.display		= 'inline';
+		wp_signin.style.visibility		= 'hidden';
+		wp_siginout.style.visibility	= 'visible';
+		wp_whiteboard.style.visibility	= 'visible';
+		wp_children.style.visibility	= 'visible';
+		wp_setting.style.visibility	= 'visible';
 	} else {
 		// not sign
 		wp_signin.removeAttribute( 'disabled' );
@@ -87,13 +92,12 @@ function showWorkPlace(){
 		wp_whiteboard.setAttribute( 'disabled', 'true' );
 		wp_children.setAttribute( 'disabled', 'true' );
 		wp_setting.setAttribute( 'disabled', 'true' );
-		wp_open.setAttribute( 'disabled', 'true' );
-		wp_signin.style.display		= 'inline';
-		wp_siginout.style.display	= 'none';
-		wp_whiteboard.style.display	= 'none';
-		wp_children.style.display	= 'none';
-		wp_setting.style.display	= 'none';
-		wp_open.style.display		= 'none';
+		// wp_open.setAttribute( 'disabled', 'true' );
+		wp_signin.style.visibility		= 'visible';
+		wp_siginout.style.visibility	= 'hidden';
+		wp_whiteboard.style.visibility	= 'hidden';
+		wp_children.style.visibility	= 'hidden';
+		wp_setting.style.visibility	= 'hidden';
 	}
 
 	resizeWorkplace();
