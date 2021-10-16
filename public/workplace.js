@@ -229,23 +229,39 @@ function selectChildren( e ){
 		c = c.parentNode;
 	}
 	c.classList.toggle( 'left100' );
-	if ( c.classList.contains( 'left100' )){
-		if ( c.getElementsByClassName( 'opChild').length != 0 ) return;
-		var o = document.createElement('DIV');
-		o.classList.add('opChild');
-		o.classList.add('vh-center');
-		o.style.position 	= 'absolute';
-		o.style.top			= '2px';
-		o.style.left		= ( c.offsetWidth + 1 ) + 'px';
-		o.style.width		= '100px';
-		o.style.height		= c.offsetHeight + 'px';
-		var oo = c.appendChild( o );
-		var r = '';
-		r += '<button class="workplace_edit_button" onclick="alert()" >edit</delete>';
-		r += '<button class="workplace_delete_button" onclick="alert()" >purge</delete>';
-		oo.innerHTML = r;
-	} else {
-		// c.removeChild( c.getElementsByClassName( 'opChild')[0] );
+	if ( ! c.classList.contains( 'left100' )) return;
+	
+	c.setAttribute( 'selected', 'yes' );
+	// if ( c.getElementsByClassName( 'opChild').length != 0 ) return;
+	var o = document.createElement('DIV');
+	o.classList.add('opChild');
+	o.classList.add('vh-center');
+	o.style.position 	= 'absolute';
+	o.style.top			= '2px';
+	o.style.left		= ( c.offsetWidth + 1 ) + 'px';
+	o.style.width		= '100px';
+	o.style.height		= c.offsetHeight + 'px';
+	var oo = c.appendChild( o );
+	var r = '';
+	r += '<button class="workplace_edit_button" onclick="wp_editChildren(e)" >edit</delete>';
+	r += '<button class="workplace_delete_button" onclick="wp_purgeChildren(e)" >purge</delete>';
+	oo.innerHTML = r;
+	oo.getElementsByClassName('workplace_edit_button')[0].addEventListener(
+		'click', wp_editChildren );
+	oo.getElementsByClassName('workplace_delete_button')[0].addEventListener(
+		'click', wp_purgeChildren );
+
+	var nodes = this.childNodes;
+	console.log('nodes:' + nodes.length );
+	for ( var i=0; i<nodes.length; i++ ){
+		var o = nodes[i];
+		if ( c != o){
+			if ( o.classList.contains('left100')){
+				console.log('close opChild');
+				o.classList.remove( 'left100');
+				// o.removeAttribute('selected');
+			}
+		}
 	}
 
 }
@@ -258,9 +274,20 @@ function selectChildrenTransitionEnd( e ){
 		c = c.parentNode;
 	}
 	if ( !c.classList.contains( 'left100' )){
+		c.removeAttribute('selected');
 		c.removeChild( c.getElementsByClassName( 'opChild')[0] );
 	}
 
+}
+
+function wp_editChildren(e){
+	// e.stopPropagation();
+	alert();
+}
+
+function wp_purgeChildren(e){
+	// e.stopPropagation();
+	alert();
 }
 
 //
