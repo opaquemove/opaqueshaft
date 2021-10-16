@@ -222,6 +222,7 @@ function workplaceChildren(){
 }
 
 function selectChildren( e ){
+	e.stopPropagation();
 	var c = e.target;
 	while ( true ){
 		if ( c == this ) return;
@@ -243,8 +244,8 @@ function selectChildren( e ){
 	o.style.height		= c.offsetHeight + 'px';
 	var oo = c.appendChild( o );
 	var r = '';
-	r += '<button class="workplace_edit_button" onclick="wp_editChildren(e)" >edit</delete>';
-	r += '<button class="workplace_delete_button" onclick="wp_purgeChildren(e)" >purge</delete>';
+	r += '<button class="workplace_edit_button"  >edit</delete>';
+	r += '<button class="workplace_delete_button"  >purge</delete>';
 	oo.innerHTML = r;
 	oo.getElementsByClassName('workplace_edit_button')[0].addEventListener(
 		'click', wp_editChildren );
@@ -281,12 +282,12 @@ function selectChildrenTransitionEnd( e ){
 }
 
 function wp_editChildren(e){
-	// e.stopPropagation();
+	e.stopPropagation();
 	alert();
 }
 
 function wp_purgeChildren(e){
-	// e.stopPropagation();
+	e.stopPropagation();
 	alert();
 }
 
