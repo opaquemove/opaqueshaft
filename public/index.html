@@ -62,7 +62,6 @@
 
 
 			<div id="WORKPLACE_HDR" >	<!--  100% -->
-				<!-- <div id="WORKPLACE_TITLE"   >OpaqueShaft</div> -->
 				<div id="WORKPLACE_SYSMENU" >	<!-- 100% * 124px -->
 					<button id="WP_WHITEBOARD" class="workplace_button"
 						onclick="workplaceWhiteboard();"  >
@@ -84,13 +83,19 @@
 						onclick="signoutForm();" >
 						<br/><br/><br/>sign out</button>
 				</div>
+				<div id="WORKPLACE_SUMMARY" >
+					<div class="summary_box" >Children</div>
+					<div class="summary_box" >Whiteboards</div>
+					<div class="summary_box" >Ranges</div>
+
+				</div>
 			</div>
 
 
 			<div id="WORKPLACE_WHITEBOARD" >	<!-- 100% * 0px -->
 				<div id="WORKPLACE_WHITEBOARD_HDR" >
 					<button id="WP_CREATEWHITEBOARD" class="workplace_button_small"
-						onclick="" >
+						onclick="addWorkplaceWhiteboard()" >
 						<br/><br/><br/>add
 					</button>
 					<button id="WP_OPENWHITEBOARD" class="workplace_button_small"

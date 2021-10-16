@@ -176,6 +176,53 @@ function workplaceWhiteboard(){
 
 }
 
+function addWorkplaceWhiteboard(){
+	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+
+	var today = new Date();
+	var y = today.getFullYear();
+	var m = ('00' + (today.getMonth() + 1 ) ).slice(-2);
+	var d = ('00' + today.getDate() ).slice(-2);
+	var ymd = y + '/' + m + '/' + d;
+
+	var r = '';
+	r += '<div style="margin:0 auto;font-size:14px;width:30%;">';
+	r += '<form name="workplace_whiteboard_form" onsubmit="return false;" >';
+	r += '<div>Date:</div>';
+	r += '<div style="height:30px;padding-bottom:2px;" >';
+		r += '<div style="width:50%;float:left;" >';
+			r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:;" value="' + ymd + '" />';
+		r += '</div>';
+		r += '<div style="float:left;width:30px;" >';
+			r += '<button id="BTN_ADD_DATE"   style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
+			r += '<button id="BTN_MINUS_DATE" style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
+		r += '</div>';
+	r += '</div>';
+	r += '</form>';
+
+	p.innerHTML = r;
+
+	document.getElementById('BTN_ADD_DATE').addEventListener('click',
+	function(e){
+		var d = workplace_whiteboard_form.day.value;
+		var dd = new Date( d );
+		dd.setDate( dd.getDate() + 1 );
+		workplace_whiteboard_form.day.value =
+			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+	}, false );
+	document.getElementById('BTN_MINUS_DATE').addEventListener('click',
+	function(e){
+		var d = workplace_whiteboard_form.day.value;
+		var dd = new Date( d );
+		dd.setDate( dd.getDate() - 1 );
+		workplace_whiteboard_form.day.value =
+			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+	}, false );
+
+
+}
+
+
 //
 //		チルドレン
 //
@@ -298,18 +345,6 @@ function wp_find(){
 	wph.style.padding = '0px';
 }
 
-// function closeWorkplaceWhiteboard(){
-// 	workplaceReset();
-// 	var wph = document.getElementById('WORKPLACE_HDR');
-// 	wph.style.height = '';
-// 	wph.style.padding = '';
-// }
-// function closeWorkplaceChildren(){
-// 	workplaceReset();
-// 	var wph = document.getElementById('WORKPLACE_HDR');
-// 	wph.style.height = '';
-// 	wph.style.padding = '';
-// }
 
 //
 //	リサイズ処理
@@ -342,6 +377,9 @@ function resizeWorkplace(){
 
 }
 
+//
+//	チャイルドファインダ
+//
 function finder(){
     var wph = document.getElementById('WORKPLACE_HDR');
 	wph.setAttribute( 'orgHeight', wph.style.height );

@@ -50,7 +50,26 @@
     padding:10px 0px 10px 0px;
     transition:height 0.3s ease-in-out;
 }
+#WORKPLACE_SUMMARY{
+    width:100%;
+    overflow:auto;
+	display:				flex;
+	flex-wrap:				wrap;
+	justify-content: 		center;
+	align-items:            flex-start;
+	align-content:          space-between;
+    overflow:               auto;
 
+}
+.summary_box{
+    width:96px;
+    height:96px;
+    border:1px solid lightgrey;
+    border-radius: 0px;
+    font-size:14px;
+    color:dimgray;
+    margin:2px;
+}
 
 #WORKPLACE_TITLE{
     font-size:12px;
@@ -113,6 +132,7 @@
 #WORKPLACE_WHITEBOARD_MAIN{
     margin:0 auto;
     width:100%;
+    text-align: left;
     overflow:scroll;
 } 
 #WORKPLACE_WHITEBOARD_MAIN_LIST{
