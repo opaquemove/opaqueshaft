@@ -173,13 +173,13 @@
 }
 #WORKPLACE_CHILDREN_HDR{
     margin:0 auto;
-    width:250px;
+    width:350px;
     height:80px;
 }
 #WORKPLACE_CHILDREN_MAIN{
     margin:0 auto;
     width:100%;
-    background-color:#EDEDED;
+    background-color:transparent;
     overflow:scroll;
 } 
 #WORKPLACE_CHILDREN_MAIN_LIST{
@@ -310,7 +310,7 @@
     /* opacity: 0.8; */
 }
 .height320{
-    height:320px;
+    height:480px;
     /* opacity: 0.8; */
 }
 

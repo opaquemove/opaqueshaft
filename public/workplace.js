@@ -180,8 +180,8 @@ function addWorkplaceWhiteboard(){
 	var ymd = y + '/' + m + '/' + d;
 
 	var r = '';
-	r += '<div style="margin:0 auto;font-size:14px;width:30%;">';
-	r += '<form name="workplace_whiteboard_form" onsubmit="return false;" >';
+	r += '<div style="margin:0 auto;font-size:14px;width:50%;">';
+	r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 	r += '<div>Date:</div>';
 	r += '<div style="height:30px;padding-bottom:2px;" >';
 		r += '<div style="width:50%;float:left;" >';
@@ -193,12 +193,22 @@ function addWorkplaceWhiteboard(){
 		r += '</div>';
 	r += '</div>';
 	r += '</form>';
+	r += '<div style="clear:both;" >Ranges:</div>';
+	r += '<div id="RANGE_LIST" ></div>';
+	r += '<div style="padding-top:14px;" >Whiteboards:</div>';
+	r += '<div id="WHITEBOARD_LIST" >';
+	r += '</div>';
+
 
 	p.innerHTML = r;
 
+	//	レンジリスト作成
+	makeRangeList();
+
+
 	document.getElementById('BTN_ADD_DATE').addEventListener('click',
 	function(e){
-		var d = workplace_whiteboard_form.day.value;
+		var d = guidedance_whiteboard_form.day.value;
 		var dd = new Date( d );
 		dd.setDate( dd.getDate() + 1 );
 		workplace_whiteboard_form.day.value =
@@ -206,11 +216,56 @@ function addWorkplaceWhiteboard(){
 	}, false );
 	document.getElementById('BTN_MINUS_DATE').addEventListener('click',
 	function(e){
-		var d = workplace_whiteboard_form.day.value;
+		var d = guidedance_whiteboard_form.day.value;
 		var dd = new Date( d );
 		dd.setDate( dd.getDate() - 1 );
-		workplace_whiteboard_form.day.value =
+		guidedance_whiteboard_form.day.value =
 			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+	}, false );
+
+	document.getElementById('RANGE_LIST').addEventListener('mousedown',
+		function(e) {
+			var o = e.target;
+			if ( o == document.getElementById('RANGE_LIST')) return;
+			while ( o.parentNode != document.getElementById('RANGE_LIST') ){
+				o = o.parentNode;
+			}
+			o.style.color			= 'white';
+			o.style.backgroundColor = 'royalblue';
+		}, false );
+	document.getElementById('RANGE_LIST').addEventListener('mouseup',
+		function(e) {
+			var o = e.target;
+			if ( o == document.getElementById('RANGE_LIST')) return;
+			while ( o.parentNode != document.getElementById('RANGE_LIST') ){
+				o = o.parentNode;
+			}
+			o.style.color			= '';
+			o.style.backgroundColor = '';
+			var range_id = o.getAttribute('range_id' );
+			makeWhiteboardList( range_id );
+		}, false );
+	document.getElementById('WHITEBOARD_LIST').addEventListener('mousedown',
+	function(e) {
+		var o = e.target;
+		if ( o == document.getElementById('WHITEBOARD_LIST')) return;
+		while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
+			o = o.parentNode;
+		}
+		o.style.color			= 'white';
+		o.style.backgroundColor = 'royalblue';
+	}, false );
+	document.getElementById('WHITEBOARD_LIST').addEventListener('mouseup',
+	function(e) {
+		var o = e.target;
+		if ( o == document.getElementById('WHITEBOARD_LIST')) return;
+		while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
+			o = o.parentNode;
+		}
+		o.style.color			= '';
+		o.style.backgroundColor = '';
+		guidedance_whiteboard_form.day.value = o.firstChild.innerText;
+		createWhiteboard();
 	}, false );
 
 
@@ -266,6 +321,9 @@ function selectChildren( e ){
 				if ( o.classList.contains('left100')){
 					o.classList.remove( 'left100');
 				}
+				if ( o.classList.contains('height320')){
+					o.classList.remove( 'height320');
+				}
 			}
 			return;
 		}
@@ -273,7 +331,11 @@ function selectChildren( e ){
 		c = c.parentNode;
 	}
 	c.classList.toggle( 'left100' );
-	if ( ! c.classList.contains( 'left100' )) return;
+	if ( ! c.classList.contains( 'left100' )){
+		if ( c.classList.contains( 'height320') )
+			c.classList.remove('height320');
+		return;
+	} 
 	
 	c.setAttribute( 'selected', 'yes' );
 	var o = document.createElement('DIV');
@@ -300,10 +362,10 @@ function selectChildren( e ){
 		var o = nodes[i];
 		if ( c != o){
 			if ( o.classList.contains('left100')){
-				console.log('close opChild');
 				o.classList.remove( 'left100');
-				// o.removeAttribute('selected');
 			}
+			if ( o.classList.contains( 'height320') )
+				o.classList.remove('height320');
 		}
 	}
 
@@ -390,6 +452,7 @@ function finder(){
 
 	var keyword = document.getElementById('WP_KEYWORD').value;
 	finderHelper( keyword );
+	document.body.focus();	// タブレットでのキーボードを消去する
 }
 function finderHelper( keyword ){
 	console.log( 'keyword:' + keyword );

@@ -66,7 +66,7 @@
 					<div                    class="summary_box" style="width:25%;height:25%;" ></div>
 					<div                    class="summary_box" style="width:25%;height:25%;" ></div>
 					<div                    class="summary_box" style="width:25%;height:25%;font-weight:bold;" >CONTENTS</div>
-					<div id="WP_WHITEBOARD" class="summary_box" style="width:25%;height:25%;font-weight:bold;font-size:10px;" >WHITEBOARD</div>					
+					<div id="WP_WHITEBOARD" class="summary_box" style="width:25%;height:25%;font-weight:bold;font-size:12px;" >WHITEBOARD</div>					
 					<div id="WP_CHILDREN"   class="summary_box" style="width:25%;height:25%;font-weight:bold;" >CHILDREN</div>
 					<div                    class="summary_box" style="width:25%;height:25%;" ></div>
 					<div id="WP_SETTING"    class="summary_box" style="width:25%;height:25%;font-weight:bold;" >SETTINGS</div>
@@ -79,19 +79,23 @@
 
 			<div id="WORKPLACE_WHITEBOARD" >	<!-- 100% * 0px -->
 				<div id="WORKPLACE_WHITEBOARD_HDR" >
-					<div style="float: left;width:80px;height: 100%;" >
+					<!-- <div style="float: left;width:80px;height: 100%;" >
 						<div style="width:60px;height:60px;border:1px solid lightgrey;" ></div>
-					</div>
+					</div> -->
 					<div style="float: left;height:100%;" >
 						<button id="WP_CREATEWHITEBOARD" class="workplace_button_small"
 							onclick="addWorkplaceWhiteboard()" >
-							<br/><br/><br/>add
 						</button>
-						<button id="WP_OPENWHITEBOARD" class="workplace_button_small"
+						<!-- <button id="WP_OPENWHITEBOARD" class="workplace_button_small"
 							onclick="openWhiteboard();" >
-							<br/><br/><br/>open
-						</button>
+						</button> -->
 					</div>
+					<div style="float:left;height:52px;padding-top:8px;" >
+						<form  onsubmit="return false;" >
+							<input type="text" id="" name="" autocomplete="off" style="width:150px;height:24px;font-size:14px;background-color:white;border:1px solid lightgrey;box-sizing: border-box;padding:2px 4px 2px 18px;border-radius: 8px;outline:none;background-image:url(./images/calendar.png);background-size:10px;background-repeat: no-repeat;background-position: left 4px center;"" />
+						</form>
+					</div>
+
 				</div>
 				<div id="WORKPLACE_WHITEBOARD_MAIN" >
 					<div id="WORKPLACE_WHITEBOARD_MAIN_LIST" >
@@ -102,23 +106,26 @@
 
 			<div id="WORKPLACE_CHILDREN" >		<!--  100% * 0px -->
 				<div id="WORKPLACE_CHILDREN_HDR" >
+					<div style="float: left;width:80px;height: 100%;" >
+						<div style="width:60px;height:60px;border:0px solid lightgrey;" ></div>
+					</div>
 					<div style="float:left;height:80px;" >
-						<button id="WP_CREATECHILD" class="workplace_button_small"
+						<!-- <button id="WP_CREATECHILD" class="workplace_button_small"
 							onclick="" >
 							<br/><br/><br/>add
-						</button>
+						</button> -->
 					</div>
 					<div style="float:left;height:52px;padding-top:8px;" >
 						<form  onsubmit="return false;" >
-							<input type="text" id="WP_KEYWORD" name="WP_KEYWORD" autocomplete="off" style="width:150px;height:24px;font-size:14px;background-color:white;border:1px solid lightgrey;box-sizing: border-box;padding:2px 4px 2px 4px;border-radius: 8px;outline:none;" />
+							<input type="text" id="WP_KEYWORD" name="WP_KEYWORD" autocomplete="off" style="width:150px;height:24px;font-size:14px;background-color:white;border:1px solid lightgrey;box-sizing: border-box;padding:2px 4px 2px 18px;border-radius: 8px;outline:none;background-image:url(./images/searching.png);background-size:10px;background-repeat: no-repeat;background-position: left 4px center;"" />
 						</form>
 					</div>
-					<div style="float:left;height:78px;padding-top:2px;" >
+					<!-- <div style="float:left;height:78px;padding-top:2px;" >
 						<button id="" style="width:30px;height:36px;border:none;background-color:transparent;background-image:url(images/right-arrow-black-triangle.png);background-size:14px;background-repeat:no-repeat;background-position: center center;" 
 							onclick="finder();" >
 							<br/><br/><br/>find
 						</button>
-					</div>
+					</div> -->
 				</div>
 				<div id="WORKPLACE_CHILDREN_MAIN" >
 					<div id="WORKPLACE_CHILDREN_MAIN_LIST" >
