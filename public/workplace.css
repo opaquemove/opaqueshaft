@@ -128,7 +128,7 @@
 }
 #WORKPLACE_WHITEBOARD_HDR{
     margin:0 auto;
-    width:300px;
+    width:400px;
     height:80px
 }
 #WORKPLACE_WHITEBOARD_MAIN{
@@ -158,6 +158,12 @@
 #WP_OPENWHITEBOARD{
     background-image:url(images/document-editor.png);
     background-size:18px;
+    background-repeat:no-repeat;
+    background-position: center center;
+}
+#WP_FINDCHILDREN{
+    background-image:url(images/bleach2.png);
+    background-size:12px;
     background-repeat:no-repeat;
     background-position: center center;
 }

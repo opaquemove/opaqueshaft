@@ -199,6 +199,9 @@ function workplaceWhiteboard(){
 	children.style.height = '0px';
 	list.innerHTML = '';
 
+		//	レンジリスト作成
+		makeRangeList();
+
 }
 
 function addWorkplaceWhiteboard(){
@@ -224,8 +227,9 @@ function addWorkplaceWhiteboard(){
 	// 	r += '</div>';
 	// r += '</div>';
 	// r += '</form>';
-	r += '<div style="clear:both;" >Ranges:</div>';
-	r += '<div id="RANGE_LIST" ></div>';
+
+	// r += '<div style="clear:both;" >Ranges:</div>';
+	// r += '<div id="RANGE_LIST" ></div>';
 	r += '<div style="padding-top:14px;" >Whiteboards:</div>';
 	r += '<div id="WHITEBOARD_LIST" >';
 	r += '</div>';
