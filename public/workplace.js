@@ -201,6 +201,7 @@ function workplaceWhiteboard(){
 
 		//	レンジリスト作成
 		makeRangeList();
+		addWorkplaceWhiteboard();
 
 }
 
@@ -353,6 +354,7 @@ function workplaceChildren(){
 	// wpcm.style.height = ( h - 252 ) + 'px';
 	wb.style.height = '0px';
 
+	document.getElementById('WP_KEYWORD').value = '';
 	list.innerHTML = '';
 
 }
