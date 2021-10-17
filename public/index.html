@@ -79,21 +79,31 @@
 
 			<div id="WORKPLACE_WHITEBOARD" >	<!-- 100% * 0px -->
 				<div id="WORKPLACE_WHITEBOARD_HDR" >
-					<!-- <div style="float: left;width:80px;height: 100%;" >
-						<div style="width:60px;height:60px;border:1px solid lightgrey;" ></div>
-					</div> -->
 					<div style="float: left;height:100%;" >
-						<button id="WP_CREATEWHITEBOARD" class="workplace_button_small"
-							onclick="addWorkplaceWhiteboard()" >
-						</button>
-						<!-- <button id="WP_OPENWHITEBOARD" class="workplace_button_small"
-							onclick="openWhiteboard();" >
-						</button> -->
+						<div style="padding-top:8px;">
+							<button  class="workplace_button_small"
+								onclick="todayWhiteboard()"
+								style="width:50px;font-size:10px;" >Today
+							</button>
+						</div>
 					</div>
-					<div style="float:left;height:52px;padding-top:8px;" >
-						<form  onsubmit="return false;" >
-							<input type="text" id="" name="" autocomplete="off" style="width:150px;height:24px;font-size:14px;background-color:white;border:1px solid lightgrey;box-sizing: border-box;padding:2px 4px 2px 18px;border-radius: 8px;outline:none;background-image:url(./images/calendar.png);background-size:10px;background-repeat: no-repeat;background-position: left 4px center;"" />
-						</form>
+					<div style="float:left;height:52px;padding-top:8px;padding-left:4px;" >
+						<div style="float:left;padding-top:6px;" >
+							<form name="guidedance_whiteboard_form" onsubmit="return false;" >
+								<input type="text" readonly id="" name="day" autocomplete="off" style="width:150px;height:24px;font-size:14px;background-color:white;border:1px solid lightgrey;box-sizing: border-box;padding:2px 4px 2px 18px;border-radius: 8px;outline:none;background-image:url(./images/calendar.png);background-size:10px;background-repeat: no-repeat;background-position: left 4px center;"" />
+							</form>
+						</div>
+						<div style="float:left;width:20px;" >
+							<button id="BTN_ADD_DATE"   style="width:18px;height:12px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:8px;background-repeat:no-repeat;background-position:center center;" ></button>
+							<button id="BTN_MINUS_DATE" style="width:18px;height:12px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:8px;background-repeat:no-repeat;background-position:center center;" ></button>
+						</div>
+					</div>
+					<div style="float: left;height:100%;" >
+						<div style="padding-top:8px;">
+							<button id="WP_OPENWHITEBOARD" class="workplace_button_small"
+								onclick="addWorkplaceWhiteboard()" >
+							</button>
+						</div>
 					</div>
 
 				</div>

@@ -1286,13 +1286,16 @@ function openWhiteboard(){
 //
 function createWhiteboard(){
 	var target_day = guidedance_whiteboard_form.day.value;
+	if ( target_day == ''){
+		oLog.log( null, 'date expected.' )
+		oLog.open(3);
+		return;
+	}
 	var cwd = document.getElementById('CUR_WHITEBOARD_DAY');
 	var itba = document.getElementById('ID_TIMELINE_BAR_AREA');
 	dayWhiteboard 	= target_day;
 	cwd.innerText 	= target_day;
-	// itba.innerText	= target_day;
 	updateFlg		= false;
-	//createWhiteboardHelper( dayWhiteboard );
 	neverCloseDialog = false;
 	
 	closeModalDialog();
@@ -1303,7 +1306,6 @@ function createWhiteboard(){
 	//	OPAQUESHAFT_TITLE表示制御
 	var opaqueshaft_title = document.getElementById('OPAQUESHAFT_TITLE');
 	opaqueshaft_title.style.visibility = ( openWhiteboardFlg )? 'visible' : 'hidden';
-
 
 	ctlToolbar();
 	// clearWhiteboard();

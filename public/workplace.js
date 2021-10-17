@@ -33,6 +33,27 @@ function initWorkplace(){
 		}
 	);
 
+	document.getElementById('BTN_ADD_DATE').addEventListener('click',
+	function(e){
+		var d = guidedance_whiteboard_form.day.value;
+		var dd = null;
+		if ( d == '' )	dd = new Date();
+		 else			dd = new Date( d );
+		dd.setDate( dd.getDate() + 1 );
+		guidedance_whiteboard_form.day.value =
+			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+	}, false );
+	document.getElementById('BTN_MINUS_DATE').addEventListener('click',
+	function(e){
+		var d = guidedance_whiteboard_form.day.value;
+		var dd = null;
+		if ( d == '' )	dd = new Date();
+		 else			dd = new Date( d );
+		dd.setDate( dd.getDate() - 1 );
+		guidedance_whiteboard_form.day.value =
+			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+	}, false );
+
 
 	new Button( 'WP_WHITEBOARD',  workplaceWhiteboard ).play();
 	new Button( 'WP_CHILDREN',    workplaceChildren ).play();
@@ -141,6 +162,16 @@ function workplaceReset(){
 //
 function workplaceWhiteboard(){
 	workplace_id = 'WHITEBOARD';
+
+	// var today = new Date();
+	// var y = today.getFullYear();
+	// var m = ('00' + (today.getMonth() + 1 ) ).slice(-2);
+	// var d = ('00' + today.getDate() ).slice(-2);
+	// var ymd = y + '/' + m + '/' + d;
+	// guidedance_whiteboard_form.day.value = ymd;
+	guidedance_whiteboard_form.day.value = '';
+
+
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
@@ -173,30 +204,36 @@ function workplaceWhiteboard(){
 function addWorkplaceWhiteboard(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
-	var today = new Date();
-	var y = today.getFullYear();
-	var m = ('00' + (today.getMonth() + 1 ) ).slice(-2);
-	var d = ('00' + today.getDate() ).slice(-2);
-	var ymd = y + '/' + m + '/' + d;
+	// var today = new Date();
+	// var y = today.getFullYear();
+	// var m = ('00' + (today.getMonth() + 1 ) ).slice(-2);
+	// var d = ('00' + today.getDate() ).slice(-2);
+	// var ymd = y + '/' + m + '/' + d;
 
 	var r = '';
 	r += '<div style="margin:0 auto;font-size:14px;width:50%;">';
-	r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
-	r += '<div>Date:</div>';
-	r += '<div style="height:30px;padding-bottom:2px;" >';
-		r += '<div style="width:50%;float:left;" >';
-			r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:;" value="' + ymd + '" />';
-		r += '</div>';
-		r += '<div style="float:left;width:30px;" >';
-			r += '<button id="BTN_ADD_DATE"   style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
-			r += '<button id="BTN_MINUS_DATE" style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
-		r += '</div>';
-	r += '</div>';
-	r += '</form>';
+	// r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
+	// r += '<div>Date:</div>';
+	// r += '<div style="height:30px;padding-bottom:2px;" >';
+	// 	r += '<div style="width:50%;float:left;" >';
+	// 		r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:;" value="' + ymd + '" />';
+	// 	r += '</div>';
+	// 	r += '<div style="float:left;width:30px;" >';
+	// 		r += '<button id="BTN_ADD_DATE"   style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
+	// 		r += '<button id="BTN_MINUS_DATE" style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
+	// 	r += '</div>';
+	// r += '</div>';
+	// r += '</form>';
 	r += '<div style="clear:both;" >Ranges:</div>';
 	r += '<div id="RANGE_LIST" ></div>';
 	r += '<div style="padding-top:14px;" >Whiteboards:</div>';
 	r += '<div id="WHITEBOARD_LIST" >';
+	r += '</div>';
+	r += '<div style="text-align:center;padding-top:5px;" >';
+	r += '<button id="BTN_OPENWHITEBOARD" class="next_button" ';
+		r += ' onclick="createWhiteboard()" >';
+		r += 'next';
+	r += '</button>';
 	r += '</div>';
 
 
@@ -206,66 +243,71 @@ function addWorkplaceWhiteboard(){
 	makeRangeList();
 
 
-	document.getElementById('BTN_ADD_DATE').addEventListener('click',
-	function(e){
-		var d = guidedance_whiteboard_form.day.value;
-		var dd = new Date( d );
-		dd.setDate( dd.getDate() + 1 );
-		workplace_whiteboard_form.day.value =
-			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
-	}, false );
-	document.getElementById('BTN_MINUS_DATE').addEventListener('click',
-	function(e){
-		var d = guidedance_whiteboard_form.day.value;
-		var dd = new Date( d );
-		dd.setDate( dd.getDate() - 1 );
-		guidedance_whiteboard_form.day.value =
-			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
-	}, false );
 
-	document.getElementById('RANGE_LIST').addEventListener('mousedown',
+	// document.getElementById('RANGE_LIST').addEventListener('mousedown',
+	// 	function(e) {
+	// 		var o = e.target;
+	// 		if ( o == document.getElementById('RANGE_LIST')) return;
+	// 		while ( o.parentNode != document.getElementById('RANGE_LIST') ){
+	// 			o = o.parentNode;
+	// 		}
+	// 		o.style.color			= 'white';
+	// 		o.style.backgroundColor = 'royalblue';
+	// 	}, false );
+	document.getElementById('RANGE_LIST').addEventListener('click',
 		function(e) {
 			var o = e.target;
 			if ( o == document.getElementById('RANGE_LIST')) return;
 			while ( o.parentNode != document.getElementById('RANGE_LIST') ){
 				o = o.parentNode;
+			}
+			for ( var i=0; i<this.childNodes.length; i++ ){
+				var c = this.childNodes[i];
+				if ( c.hasAttribute('selected') ){
+					c.removeAttribute( 'selected' );
+					c.style.color			= '';
+					c.style.backgroundColor = '';
+				}
 			}
 			o.style.color			= 'white';
 			o.style.backgroundColor = 'royalblue';
-		}, false );
-	document.getElementById('RANGE_LIST').addEventListener('mouseup',
-		function(e) {
-			var o = e.target;
-			if ( o == document.getElementById('RANGE_LIST')) return;
-			while ( o.parentNode != document.getElementById('RANGE_LIST') ){
-				o = o.parentNode;
-			}
-			o.style.color			= '';
-			o.style.backgroundColor = '';
+			o.setAttribute( 'selected', 'true' );
 			var range_id = o.getAttribute('range_id' );
 			makeWhiteboardList( range_id );
+			guidedance_whiteboard_form.day.value = '';
+
 		}, false );
-	document.getElementById('WHITEBOARD_LIST').addEventListener('mousedown',
+	// document.getElementById('WHITEBOARD_LIST').addEventListener('mousedown',
+	// function(e) {
+	// 	var o = e.target;
+	// 	if ( o == document.getElementById('WHITEBOARD_LIST')) return;
+	// 	while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
+	// 		o = o.parentNode;
+	// 	}
+	// 	o.style.color			= 'white';
+	// 	o.style.backgroundColor = 'royalblue';
+	// }, false );
+	document.getElementById('WHITEBOARD_LIST').addEventListener('click',
 	function(e) {
 		var o = e.target;
 		if ( o == document.getElementById('WHITEBOARD_LIST')) return;
 		while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
 			o = o.parentNode;
 		}
+		for ( var i=0; i<this.childNodes.length; i++ ){
+			var c = this.childNodes[i];
+			if ( c.hasAttribute('selected') ){
+				c.removeAttribute( 'selected' );
+				c.style.color			= '';
+				c.style.backgroundColor = '';
+			}
+		}
+
 		o.style.color			= 'white';
 		o.style.backgroundColor = 'royalblue';
-	}, false );
-	document.getElementById('WHITEBOARD_LIST').addEventListener('mouseup',
-	function(e) {
-		var o = e.target;
-		if ( o == document.getElementById('WHITEBOARD_LIST')) return;
-		while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
-			o = o.parentNode;
-		}
-		o.style.color			= '';
-		o.style.backgroundColor = '';
+		o.setAttribute( 'selected', 'true' );
 		guidedance_whiteboard_form.day.value = o.firstChild.innerText;
-		createWhiteboard();
+		// createWhiteboard();
 	}, false );
 
 
@@ -309,6 +351,17 @@ function workplaceChildren(){
 
 	list.innerHTML = '';
 
+}
+
+function todayWhiteboard(){
+	
+	var today = new Date();
+	var y = today.getFullYear();
+	var m = ('00' + (today.getMonth() + 1 ) ).slice(-2);
+	var d = ('00' + today.getDate() ).slice(-2);
+	var ymd = y + '/' + m + '/' + d;
+	guidedance_whiteboard_form.day.value = ymd;
+	createWhiteboard();
 }
 
 function selectChildren( e ){
