@@ -287,16 +287,6 @@ function addWorkplaceWhiteboard(){
 			guidedance_whiteboard_form.day.value = '';
 
 		}, false );
-	// document.getElementById('WHITEBOARD_LIST').addEventListener('mousedown',
-	// function(e) {
-	// 	var o = e.target;
-	// 	if ( o == document.getElementById('WHITEBOARD_LIST')) return;
-	// 	while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
-	// 		o = o.parentNode;
-	// 	}
-	// 	o.style.color			= 'white';
-	// 	o.style.backgroundColor = 'royalblue';
-	// }, false );
 	document.getElementById('WHITEBOARD_LIST').addEventListener('click',
 	function(e) {
 		var o = e.target;
@@ -339,6 +329,12 @@ function addWorkplaceWhiteboard(){
 		o.style.color			= 'white';
 		o.style.backgroundColor = 'royalblue';
 		o.setAttribute( 'selected', 'true' );
+
+		var sotd = o.getAttribute('sotd');
+		var eotd = o.getAttribute('eotd');
+		var p = document.getElementById('CALENDAR_DETAIL');
+		makeWhiteboardListScope( p, sotd, eotd );
+		// p.innerHTML = 'sotd:' + o.getAttribute('sotd') + ' eotd:' + o.getAttribute('eotd');
 	}, false );
 
 
@@ -346,21 +342,88 @@ function addWorkplaceWhiteboard(){
 
 function makeCalendar( range_id ){
 	var p = document.getElementById('CALENDAR_LIST');
+	p.innerHTML = '';
 	var monthname = [ 'January', 'february', 'march', 'april', 'may', 'june', 'july','august','september','october', 'november','december']
 	var ym = new Date( range_id + '/4/1' );
-	var r = '';
 	// r += 'range_id:' + range_id + '<br/>';
 	for ( var i=0; i<12; i++ ){
-		var ym2 = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
-		ym2.setMonth( ym.getMonth() + i);
-		r += '<div style="width:76px;height:76px;padding:2px;border:1px solid lightgrey;" >';
-			r += '<div style="padding:2px;">'  + ym2.getFullYear() + '</div>';
-			r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + ( ym2.getMonth() + 1 ) + '</div>';
-			r += '<div style="width:100%;text-align:right;" >'  + monthname[ ym2.getMonth() ] + '</div>';
-		r += '</div>';
+		var sotd = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
+		sotd.setMonth( ym.getMonth() + i );
+		var eotd = new Date( sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
+		eotd.setMonth( eotd.getMonth() + 1 );
+		eotd.setDate( eotd.getDate() - 1 );
+		var c = document.createElement('DIV');
+		c.setAttribute( 'sotd', sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
+		c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( eotd.getMonth() + 1 ) + '/' + eotd.getDate() );
+		c.style.width	= '76px';
+		c.style.height	= '76px';
+		c.style.padding	= '2px';
+		c.style.border	= '1px solid lightgrey';
+		var r = '';
+			r += '<div style="padding:2px;">'  + sotd.getFullYear() + '</div>';
+			r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
+			r += '<div style="width:100%;text-align:right;" >'  + monthname[ sotd.getMonth() ] + '</div>';
+		c.innerHTML = r;
+		p.appendChild( c );
 	}
-	p.innerHTML = r;
+
 }
+
+//
+//	ホワイトボードリスト生成処理
+//
+function makeWhiteboardListScope( p, sotd, eotd )
+{
+	p.innerHTML = '';
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				// var o = document.getElementById( 'WHITEBOARD_LIST' );
+				p.innerText = 'access...';
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					// var o = document.getElementById('WHITEBOARD_LIST');
+					p.innerText = '';
+					for ( var i=0; i<result.length; i++ ){
+						var o = document.createElement('DIV');
+						o.style.width	= '76px';
+						o.style.height	= '76px';
+						o.style.padding = '2px';
+						o.style.border	= '1px solid lightgrey';
+
+						var day = new Date( result[i].day );
+						// var c_children		= Result.c_children;
+						// var c_resv_children	= Result.c_resv_children;
+						var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDate() ).slice(-2);
+					
+						o.innerText = ymd;
+						p.appendChild( o );
+					}
+					//o.innerHTML = r;
+				} else{
+					p.innerText = xmlhttp.status;
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/whiteboardlist2", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'sotd=' + sotd + '&eotd=' + eotd );
+	} catch ( e ) {
+		oLog.log( null, 'makeWhiteboardListScope : ' + e );
+		oLog.open( 3 );
+		// alert( e );
+	}
+
+}
+
 
 //
 //		チルドレン
