@@ -215,7 +215,7 @@ function addWorkplaceWhiteboard(){
 	// var ymd = y + '/' + m + '/' + d;
 
 	var r = '';
-	r += '<div style="margin:0 auto;font-size:14px;width:50%;">';
+	r += '<div style="margin:0 auto;font-size:14px;width:70%;">';
 	// r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
 	// r += '<div>Date:</div>';
 	// r += '<div style="height:30px;padding-bottom:2px;" >';
@@ -243,8 +243,8 @@ function addWorkplaceWhiteboard(){
 	r += '<div>';
 		// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
 		// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
-		r += '<div id="CALENDAR_LIST"   style="float:;width:100%;height: 84px;display:flex;overflow:scroll;" ></div>';
-		r += '<div id="CALENDAR_DETAIL" style="float:;width:100%;height:140px;display:flex;overflow:scroll;" ></div>';
+		r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:100%;height: 84px;overflow:scroll;" ></div>';
+		r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:100%;height:140px;overflow:scroll;" ></div>';
 	r += '</div>';
 
 
@@ -312,11 +312,14 @@ function addWorkplaceWhiteboard(){
 		// createWhiteboard();
 	}, false );
 
-	document.getElementById('CALENDAR_LIST').addEventListener('scroll',
+	document.getElementById('CALENDAR_LIST').addEventListener('gesturestart',
 	function(e){
-		e.stopPropagation();
-	}
-	);
+		e.stopPropagation();	// スクロールジェスチャ抑制
+	} );
+	document.getElementById('CALENDAR_LIST').addEventListener('gestureend',
+	function(e){
+		e.stopPropagation();	// スクロールジェスチャ抑制
+	} );
 	document.getElementById('CALENDAR_LIST').addEventListener('click',
 	function(e) {
 		var o = e.target;
@@ -350,7 +353,8 @@ function addWorkplaceWhiteboard(){
 function makeCalendar( range_id ){
 	var p = document.getElementById('CALENDAR_LIST');
 	p.innerHTML = '';
-	var monthname = [ 'January', 'february', 'march', 'april', 'may', 'june', 'july','august','september','october', 'november','december']
+	
+	var monthname = [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL','AUG','SEP','OCT', 'NOV','DEC']
 	var ym = new Date( range_id + '/4/1' );
 	// r += 'range_id:' + range_id + '<br/>';
 	for ( var i=0; i<12; i++ ){
@@ -362,10 +366,13 @@ function makeCalendar( range_id ){
 		var c = document.createElement('DIV');
 		c.setAttribute( 'sotd', sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
 		c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( eotd.getMonth() + 1 ) + '/' + eotd.getDate() );
-		c.style.width	= '76px';
-		c.style.height	= '76px';
-		c.style.padding	= '2px';
-		c.style.border	= '1px solid lightgrey';
+		c.style.width		= '76px';
+		c.style.height		= '76px';
+		c.style.position	= 'absolute';
+		c.style.top			= '0px';
+		c.style.left		= ( 84 * i ) + 'px';
+		c.style.padding		= '2px';
+		c.style.border		= '1px solid lightgrey';
 		var r = '';
 			r += '<div style="padding:2px;">'  + sotd.getFullYear() + '</div>';
 			r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
