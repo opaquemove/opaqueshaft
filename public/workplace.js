@@ -208,44 +208,23 @@ function workplaceWhiteboard(){
 function addWorkplaceWhiteboard(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
-	// var today = new Date();
-	// var y = today.getFullYear();
-	// var m = ('00' + (today.getMonth() + 1 ) ).slice(-2);
-	// var d = ('00' + today.getDate() ).slice(-2);
-	// var ymd = y + '/' + m + '/' + d;
-
 	var r = '';
 	r += '<div style="margin:0 auto;font-size:14px;width:70%;">';
-	// r += '<form name="guidedance_whiteboard_form" onsubmit="return false;" >';
-	// r += '<div>Date:</div>';
-	// r += '<div style="height:30px;padding-bottom:2px;" >';
-	// 	r += '<div style="width:50%;float:left;" >';
-	// 		r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:;" value="' + ymd + '" />';
-	// 	r += '</div>';
-	// 	r += '<div style="float:left;width:30px;" >';
-	// 		r += '<button id="BTN_ADD_DATE"   style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
-	// 		r += '<button id="BTN_MINUS_DATE" style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
-	// 	r += '</div>';
-	// r += '</div>';
-	// r += '</form>';
-
-	// r += '<div style="clear:both;" >Ranges:</div>';
-	// r += '<div id="RANGE_LIST" ></div>';
-	r += '<div style="padding-top:14px;" >Whiteboards:</div>';
-	r += '<div id="WHITEBOARD_LIST" >';
-	r += '</div>';
-	r += '<div style="text-align:center;padding-top:5px;" >';
-	r += '<button id="BTN_OPENWHITEBOARD" class="next_button" ';
-		r += ' onclick="createWhiteboard()" >';
-		r += 'next';
-	r += '</button>';
-	r += '</div>';
+		// r += '<div style="padding-top:14px;" >Whiteboards:</div>';
+		// r += '<div id="WHITEBOARD_LIST" >';
+		// r += '</div>';
+		r += '<div style="text-align:center;padding-top:5px;" >';
+			r += '<button id="BTN_OPENWHITEBOARD" class="next_button" ';
+				r += ' onclick="createWhiteboard()" >';
+				r += 'next';
+			r += '</button>';
+		r += '</div>';
 	r += '<div>';
-		// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
-		// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
-		r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:100%;height: 84px;overflow:scroll;" ></div>';
-		r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:100%;height:240px;overflow:scroll;" ></div>';
-	r += '</div>';
+	// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
+	// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
+	r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:100%;height: 84px;overflow:scroll;" ></div>';
+	r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:100%;height:300px;overflow:scroll;" ></div>';
+	// r += '</div>';
 
 
 	p.innerHTML = r;
@@ -285,32 +264,31 @@ function addWorkplaceWhiteboard(){
 			o.setAttribute( 'selected', 'true' );
 			var range_id = o.getAttribute('range_id' );
 			makeCalendar( range_id );
-			makeWhiteboardList( range_id );
+			// makeWhiteboardList( range_id );
 			guidedance_whiteboard_form.day.value = '';
 
 		}, false );
-	document.getElementById('WHITEBOARD_LIST').addEventListener('click',
-	function(e) {
-		var o = e.target;
-		if ( o == document.getElementById('WHITEBOARD_LIST')) return;
-		while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
-			o = o.parentNode;
-		}
-		for ( var i=0; i<this.childNodes.length; i++ ){
-			var c = this.childNodes[i];
-			if ( c.hasAttribute('selected') ){
-				c.removeAttribute( 'selected' );
-				c.style.color			= '';
-				c.style.backgroundColor = '';
-			}
-		}
+	// document.getElementById('WHITEBOARD_LIST').addEventListener('click',
+	// function(e) {
+	// 	var o = e.target;
+	// 	if ( o == document.getElementById('WHITEBOARD_LIST')) return;
+	// 	while ( o.parentNode != document.getElementById('WHITEBOARD_LIST') ){
+	// 		o = o.parentNode;
+	// 	}
+	// 	for ( var i=0; i<this.childNodes.length; i++ ){
+	// 		var c = this.childNodes[i];
+	// 		if ( c.hasAttribute('selected') ){
+	// 			c.removeAttribute( 'selected' );
+	// 			c.style.color			= '';
+	// 			c.style.backgroundColor = '';
+	// 		}
+	// 	}
 
-		o.style.color			= 'white';
-		o.style.backgroundColor = 'royalblue';
-		o.setAttribute( 'selected', 'true' );
-		guidedance_whiteboard_form.day.value = o.firstChild.innerText;
-		// createWhiteboard();
-	}, false );
+	// 	o.style.color			= 'white';
+	// 	o.style.backgroundColor = 'royalblue';
+	// 	o.setAttribute( 'selected', 'true' );
+	// 	guidedance_whiteboard_form.day.value = o.firstChild.innerText;
+	// }, false );
 
 	document.getElementById('CALENDAR_LIST').addEventListener('gesturestart',
 	function(e){
@@ -347,6 +325,31 @@ function addWorkplaceWhiteboard(){
 		// p.innerHTML = 'sotd:' + o.getAttribute('sotd') + ' eotd:' + o.getAttribute('eotd');
 	}, false );
 
+	document.getElementById('CALENDAR_DETAIL').addEventListener('click',
+	function(e) {
+		var o = e.target;
+		if ( o == this ) return;
+		while ( o.parentNode != document.getElementById('CALENDAR_DETAIL') ){
+			o = o.parentNode;
+		}
+		for ( var i=0; i<this.childNodes.length; i++ ){
+			var c = this.childNodes[i];
+			if ( c.hasAttribute('selected') ){
+				c.removeAttribute( 'selected' );
+				c.style.color			= '';
+				c.style.backgroundColor = '';
+			}
+		}
+
+		o.style.color			= 'white';
+		o.style.backgroundColor = 'royalblue';
+		o.setAttribute( 'selected', 'true' );
+
+		var day = o.getAttribute('day');
+		guidedance_whiteboard_form.day.value = day;
+		// var p = document.getElementById('CALENDAR_DETAIL');
+	}, false );
+
 
 }
 
@@ -374,7 +377,7 @@ function makeCalendar( range_id ){
 		c.style.padding		= '2px';
 		c.style.border		= '1px solid lightgrey';
 		var r = '';
-			r += '<div style="padding:2px;">'  + sotd.getFullYear() + '</div>';
+			r += '<div style="padding:2px;">&nbsp;</div>';
 			r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
 			r += '<div style="width:100%;text-align:right;" >'  + monthname[ sotd.getMonth() ] + '</div>';
 		c.innerHTML = r;
@@ -410,6 +413,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					while ( true){
 						var o = document.createElement('DIV');
 						o.classList.add( 'day_' + day.getDate() );
+						o.setAttribute( 'day', day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate() );
 						o.style.width	= '76px';
 						o.style.height	= '76px';
 						o.style.padding = '2px';
@@ -426,11 +430,6 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					}
 
 					for ( var i=0; i<result.length; i++ ){
-						// var o = document.createElement('DIV');
-						// o.style.width	= '76px';
-						// o.style.height	= '76px';
-						// o.style.padding = '2px';
-						// o.style.border	= '1px solid lightgrey';
 
 						var day = new Date( result[i].day );
 						var dd = p.getElementsByClassName( 'day_' + day.getDate() );
