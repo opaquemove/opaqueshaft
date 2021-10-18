@@ -241,8 +241,10 @@ function addWorkplaceWhiteboard(){
 	r += '</button>';
 	r += '</div>';
 	r += '<div>';
-		r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
-		r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
+		// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
+		// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
+		r += '<div id="CALENDAR_LIST"   style="float:;width:100%;height: 84px;display:flex;overflow:scroll;" ></div>';
+		r += '<div id="CALENDAR_DETAIL" style="float:;width:100%;height:140px;display:flex;overflow:scroll;" ></div>';
 	r += '</div>';
 
 
@@ -310,6 +312,11 @@ function addWorkplaceWhiteboard(){
 		// createWhiteboard();
 	}, false );
 
+	document.getElementById('CALENDAR_LIST').addEventListener('scroll',
+	function(e){
+		e.stopPropagation();
+	}
+	);
 	document.getElementById('CALENDAR_LIST').addEventListener('click',
 	function(e) {
 		var o = e.target;
