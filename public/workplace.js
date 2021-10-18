@@ -244,7 +244,7 @@ function addWorkplaceWhiteboard(){
 		// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
 		// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
 		r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:100%;height: 84px;overflow:scroll;" ></div>';
-		r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:100%;height:140px;overflow:scroll;" ></div>';
+		r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:100%;height:240px;overflow:scroll;" ></div>';
 	r += '</div>';
 
 
@@ -402,22 +402,53 @@ function makeWhiteboardListScope( p, sotd, eotd )
 			case 4://done
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
+					var weekname = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI','SAT'];
 					// var o = document.getElementById('WHITEBOARD_LIST');
 					p.innerText = '';
-					for ( var i=0; i<result.length; i++ ){
+					var day = new Date( sotd );
+					m = day.getMonth();
+					while ( true){
 						var o = document.createElement('DIV');
+						o.classList.add( 'day_' + day.getDate() );
 						o.style.width	= '76px';
 						o.style.height	= '76px';
 						o.style.padding = '2px';
 						o.style.border	= '1px solid lightgrey';
+						var r = '';
+						r += '<div style="padding:2px;">&nbsp;</div>';
+						r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
+						r += '<div style="width:100%;text-align:right;" >'  + weekname[ day.getDay() ] + '</div>';
+						o.innerHTML = r;
+						p.appendChild( o );
+						day.setDate( day.getDate() + 1 );
+						if ( m != day.getMonth() ) break;
+
+					}
+
+					for ( var i=0; i<result.length; i++ ){
+						// var o = document.createElement('DIV');
+						// o.style.width	= '76px';
+						// o.style.height	= '76px';
+						// o.style.padding = '2px';
+						// o.style.border	= '1px solid lightgrey';
 
 						var day = new Date( result[i].day );
+						var dd = p.getElementsByClassName( 'day_' + day.getDate() );
+						if ( dd.length != 0 ){
+							dd[0].style.backgroundImage 	= 'url(./images/document.png)';
+							dd[0].style.backgroundSize		= '18px';
+							dd[0].style.backgroundRepeat	= 'no-repeat';
+							dd[0].style.backgroundPosition	= 'top 2px left 2px';
+						}
 						// var c_children		= Result.c_children;
 						// var c_resv_children	= Result.c_resv_children;
-						var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDate() ).slice(-2);
-					
-						o.innerText = ymd;
-						p.appendChild( o );
+						// var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDate() ).slice(-2);
+						// var r = '';
+						// r += '<div style="padding:2px;">&nbsp;</div>';
+						// r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
+						// r += '<div style="width:100%;text-align:right;" >'  + weekname[ day.getDay() ] + '</div>';
+						// o.innerHTML = r;
+						// p.appendChild( o );
 					}
 					//o.innerHTML = r;
 				} else{
