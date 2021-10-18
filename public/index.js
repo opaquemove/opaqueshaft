@@ -2720,6 +2720,8 @@ function addRangeListHelper( oParent, Result ){
 
 	var c = document.createElement("DIV");
 	c.setAttribute("range_id",  Result.range_id );
+	c.setAttribute("sotd", 		Result.sotd );
+	c.setAttribute("eotd", 		Result.eotd );
 	c.setAttribute('class',     'range_box');
 
 	var range_id = Result.range_id;

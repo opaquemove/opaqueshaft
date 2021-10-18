@@ -240,6 +240,10 @@ function addWorkplaceWhiteboard(){
 		r += 'next';
 	r += '</button>';
 	r += '</div>';
+	r += '<div>';
+		r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
+		r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
+	r += '</div>';
 
 
 	p.innerHTML = r;
@@ -278,6 +282,7 @@ function addWorkplaceWhiteboard(){
 			o.style.backgroundColor = 'royalblue';
 			o.setAttribute( 'selected', 'true' );
 			var range_id = o.getAttribute('range_id' );
+			makeCalendar( range_id );
 			makeWhiteboardList( range_id );
 			guidedance_whiteboard_form.day.value = '';
 
@@ -315,9 +320,47 @@ function addWorkplaceWhiteboard(){
 		// createWhiteboard();
 	}, false );
 
+	document.getElementById('CALENDAR_LIST').addEventListener('click',
+	function(e) {
+		var o = e.target;
+		if ( o == this ) return;
+		while ( o.parentNode != document.getElementById('CALENDAR_LIST') ){
+			o = o.parentNode;
+		}
+		for ( var i=0; i<this.childNodes.length; i++ ){
+			var c = this.childNodes[i];
+			if ( c.hasAttribute('selected') ){
+				c.removeAttribute( 'selected' );
+				c.style.color			= '';
+				c.style.backgroundColor = '';
+			}
+		}
+
+		o.style.color			= 'white';
+		o.style.backgroundColor = 'royalblue';
+		o.setAttribute( 'selected', 'true' );
+	}, false );
+
 
 }
 
+function makeCalendar( range_id ){
+	var p = document.getElementById('CALENDAR_LIST');
+	var monthname = [ 'January', 'february', 'march', 'april', 'may', 'june', 'july','august','september','october', 'november','december']
+	var ym = new Date( range_id + '/4/1' );
+	var r = '';
+	// r += 'range_id:' + range_id + '<br/>';
+	for ( var i=0; i<12; i++ ){
+		var ym2 = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
+		ym2.setMonth( ym.getMonth() + i);
+		r += '<div style="width:76px;height:76px;padding:2px;border:1px solid lightgrey;" >';
+			r += '<div style="padding:2px;">'  + ym2.getFullYear() + '</div>';
+			r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + ( ym2.getMonth() + 1 ) + '</div>';
+			r += '<div style="width:100%;text-align:right;" >'  + monthname[ ym2.getMonth() ] + '</div>';
+		r += '</div>';
+	}
+	p.innerHTML = r;
+}
 
 //
 //		チルドレン
