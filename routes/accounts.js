@@ -360,7 +360,7 @@ router.post('/whiteboardlist2', function(req, res, next ){
 
   res.header('Content-Type', 'application/json;charset=utf-8');
   db.any( {
-      text : 'SELECT w.*, ( SELECT count(*) FROM results r WHERE r.day = w.day ) c_children, ( SELECT count(*) FROM reserves rsv WHERE rsv.day = w.day ) c_resv_children FROM whiteboards w WHERE w.day BETWEEN $1 AND $2 ORDER BY w.day',
+      text : 'SELECT w.*, ( SELECT count(*) FROM results r WHERE r.day = w.day ) c_children, ( SELECT count(*) FROM results r  WHERE r.day = w.day AND r.checkout is not null ) c_checkout, ( SELECT count(*) FROM reserves rsv WHERE rsv.day = w.day ) c_resv_children FROM whiteboards w WHERE w.day BETWEEN $1 AND $2 ORDER BY w.day',
       values : [ sotd, eotd ] } )
     .then( rows => {
           res.json( rows );

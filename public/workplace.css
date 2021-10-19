@@ -312,6 +312,10 @@
     background-color: transparent;
 }
 
+.right56{
+    transform:    translateX(56px);
+    /* opacity: 0.8; */
+}
 .left100{
     transform:    translateX(-100px);
     /* opacity: 0.8; */
