@@ -222,7 +222,7 @@ function addWorkplaceWhiteboard(){
 		// r += '</div>';
 		// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
 		// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
-		r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:100%;height: 54px;overflow:scroll;" ></div>';
+		r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:calc(100% - 4px);height: 58px;background-color:#EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 		r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:100%;height:300px;overflow:scroll;" ></div>';
 	r += '</div>';
 
@@ -371,12 +371,14 @@ function makeCalendar( range_id ){
 		c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( eotd.getMonth() + 1 ) + '/' + eotd.getDate() );
 		c.style.width		= '48px';
 		c.style.height		= '48px';
+		c.style.backgroundColor	= 'white';
 		c.style.position	= 'absolute';
 		c.style.top			= '0px';
 		c.style.left		= ( 55 * i ) + 'px';
 		c.style.padding		= '2px';
 		c.style.border		= '1px solid lightgrey';
-		c.style.borderRadius	= '3px';
+		c.style.borderRadius	= '4px';
+		c.style.margin		= '4px';
 		var r = '';
 			// r += '<div style="padding:1px;">&nbsp;</div>';
 			r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
