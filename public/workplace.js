@@ -219,12 +219,12 @@ function addWorkplaceWhiteboard(){
 				r += 'next';
 			r += '</button>';
 		r += '</div>';
-	r += '<div>';
-	// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
-	// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
-	r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:100%;height: 84px;overflow:scroll;" ></div>';
-	r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:100%;height:300px;overflow:scroll;" ></div>';
-	// r += '</div>';
+		// r += '</div>';
+		// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
+		// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
+		r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:100%;height: 84px;overflow:scroll;" ></div>';
+		r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:100%;height:300px;overflow:scroll;" ></div>';
+	r += '</div>';
 
 
 	p.innerHTML = r;
@@ -379,7 +379,7 @@ function makeCalendar( range_id ){
 		var r = '';
 			r += '<div style="padding:2px;">&nbsp;</div>';
 			r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
-			r += '<div style="width:100%;text-align:right;" >'  + monthname[ sotd.getMonth() ] + '</div>';
+			r += '<div style="width:100%;text-align:center;" >'  + monthname[ sotd.getMonth() ] + '</div>';
 		c.innerHTML = r;
 		p.appendChild( c );
 	}
@@ -414,14 +414,18 @@ function makeWhiteboardListScope( p, sotd, eotd )
 						var o = document.createElement('DIV');
 						o.classList.add( 'day_' + day.getDate() );
 						o.setAttribute( 'day', day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate() );
-						o.style.width	= '76px';
-						o.style.height	= '76px';
-						o.style.padding = '2px';
-						o.style.border	= '1px solid lightgrey';
+						o.style.width	= '100%';
+						o.style.height	= '82px';
+						o.style.marginBottom = '1px';
 						var r = '';
-						r += '<div style="padding:2px;">&nbsp;</div>';
-						r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
-						r += '<div style="width:100%;text-align:right;" >'  + weekname[ day.getDay() ] + '</div>';
+						r += '<div style="float:left;width:76px;height:76px;padding:2px;border:1px solid lightgrey;" >';
+							r += '<div style="padding:2px;">&nbsp;</div>';
+							r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
+							r += '<div style="width:100%;text-align:center;" >'  + weekname[ day.getDay() ] + '</div>';
+						r += '</div>';
+						r += '<div class="detail" style="float:left;width:calc(100% - 90px);height:76px;padding:2px;border:1px solid lightgrey;" >';
+							r += '';
+						r += '</div>';
 						o.innerHTML = r;
 						p.appendChild( o );
 						day.setDate( day.getDate() + 1 );
@@ -438,8 +442,10 @@ function makeWhiteboardListScope( p, sotd, eotd )
 							dd[0].style.backgroundSize		= '18px';
 							dd[0].style.backgroundRepeat	= 'no-repeat';
 							dd[0].style.backgroundPosition	= 'top 2px left 2px';
+							var c_children		= result[i].c_children;
+							var detail = dd[0].getElementsByClassName( 'detail' )[0];
+							detail.innerHTML = 'Children:' + c_children;
 						}
-						// var c_children		= Result.c_children;
 						// var c_resv_children	= Result.c_resv_children;
 						// var ymd = day.getFullYear() + '/' + ( '00' + (day.getMonth() + 1 ) ).slice(-2) + '/' + ( '00' + day.getDate() ).slice(-2);
 						// var r = '';

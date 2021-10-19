@@ -317,14 +317,14 @@
 	background-color: 	transparent;
 	display:			flex;
 	justify-content: 	center;
-	align-items: 		flex-end;
+	align-items: 		center; /* old flex-end */
 }
 #MESSAGELOG_FRAME{
 	position:			relative;
 	top:				0px;
 	left:				0p;
 	width:				400px;
-	height:				32px;
+	height:				42px;
 	background-color:	transparent;
 	padding-bottom:		42px;
 	/* border:				1px solid gray; */
@@ -345,12 +345,14 @@
 	top:				0px;
 	left:				0px;
 	width:				394px;
-	height:				34px;
+	height:				42px;
 	font-size:			12px;
 	color:				rgb(32, 32, 32);
-	background-color: 	#CCCCCC;
+	background-color: 	#EDEDED;
 	padding:			2px 2px 2px 2px;
-	/* border:				1px solid lightgrey;  */
+	border:				1px solid royalblue; 
+	border-radius: 8px;
 	/* margin-top:			-20px; */
 	overflow:			scroll;
+	opacity: 0.8;
 }
