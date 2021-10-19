@@ -222,7 +222,7 @@ function addWorkplaceWhiteboard(){
 		// r += '</div>';
 		// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
 		// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
-		r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:100%;height: 84px;overflow:scroll;" ></div>';
+		r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:100%;height: 54px;overflow:scroll;" ></div>';
 		r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:100%;height:300px;overflow:scroll;" ></div>';
 	r += '</div>';
 
@@ -369,17 +369,18 @@ function makeCalendar( range_id ){
 		var c = document.createElement('DIV');
 		c.setAttribute( 'sotd', sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
 		c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( eotd.getMonth() + 1 ) + '/' + eotd.getDate() );
-		c.style.width		= '76px';
-		c.style.height		= '76px';
+		c.style.width		= '48px';
+		c.style.height		= '48px';
 		c.style.position	= 'absolute';
 		c.style.top			= '0px';
-		c.style.left		= ( 84 * i ) + 'px';
+		c.style.left		= ( 55 * i ) + 'px';
 		c.style.padding		= '2px';
 		c.style.border		= '1px solid lightgrey';
+		c.style.borderRadius	= '3px';
 		var r = '';
-			r += '<div style="padding:2px;">&nbsp;</div>';
-			r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
-			r += '<div style="width:100%;text-align:center;" >'  + monthname[ sotd.getMonth() ] + '</div>';
+			// r += '<div style="padding:1px;">&nbsp;</div>';
+			r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
+			r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + monthname[ sotd.getMonth() ] + '</div>';
 		c.innerHTML = r;
 		p.appendChild( c );
 	}
@@ -415,15 +416,16 @@ function makeWhiteboardListScope( p, sotd, eotd )
 						o.classList.add( 'day_' + day.getDate() );
 						o.setAttribute( 'day', day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate() );
 						o.style.width	= '100%';
-						o.style.height	= '82px';
+						o.style.height	= '54px';
+						o.style.marginTop = '1px';
 						o.style.marginBottom = '1px';
 						var r = '';
-						r += '<div style="float:left;width:76px;height:76px;padding:2px;border:1px solid lightgrey;" >';
-							r += '<div style="padding:2px;">&nbsp;</div>';
-							r += '<div style="font-size:30px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
-							r += '<div style="width:100%;text-align:center;" >'  + weekname[ day.getDay() ] + '</div>';
+						r += '<div style="float:left;width:48px;height:48px;padding:2px;border:1px solid lightgrey;" >';
+							// r += '<div style="padding:2px;">&nbsp;</div>';
+							r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
+							r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + weekname[ day.getDay() ] + '</div>';
 						r += '</div>';
-						r += '<div class="detail" style="float:left;width:calc(100% - 90px);height:76px;padding:2px;border:1px solid lightgrey;" >';
+						r += '<div class="detail" style="float:left;width:calc(100% - 64px);height:48px;padding:2px;border:1px solid lightgrey;" >';
 							r += '';
 						r += '</div>';
 						o.innerHTML = r;
