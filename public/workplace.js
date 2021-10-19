@@ -223,7 +223,8 @@ function addWorkplaceWhiteboard(){
 		// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
 		// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
 		r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:calc(100% - 4px);height: 58px;background-color:#EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
-		r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:100%;height:300px;overflow:scroll;" ></div>';
+		r += '<div style="font-size:12px;font-weight:bold;color:gray;" >DETAIL:</div>';
+		r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:calc(100% - 4px);height:300px;background-color:#EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 	r += '</div>';
 
 
@@ -336,18 +337,39 @@ function addWorkplaceWhiteboard(){
 			var c = this.childNodes[i];
 			if ( c.hasAttribute('selected') ){
 				c.removeAttribute( 'selected' );
-				c.style.color			= '';
-				c.style.backgroundColor = '';
+				// c.style.color			= '';
+				// c.style.backgroundColor = '';
 			}
 		}
 
-		o.style.color			= 'white';
-		o.style.backgroundColor = 'royalblue';
+		o.style.animationName			= 'scale-in-out';
+    	o.style.animationDuration		= '0.3s';
+    	o.style.animationIterationCount = 1;
+
+		// o.classList.toggle( 'left100');
+
+		// o.style.color			= 'white';
+		// o.style.backgroundColor = 'royalblue';
 		o.setAttribute( 'selected', 'true' );
 
 		var day = o.getAttribute('day');
 		guidedance_whiteboard_form.day.value = day;
 		// var p = document.getElementById('CALENDAR_DETAIL');
+	}, false );
+	document.getElementById('CALENDAR_DETAIL').addEventListener('animationend',
+	function (e){
+		switch ( e.target.style.animationName ){
+			case 'scale-in-out':
+				e.target.style.animationName = 'shift-frame';
+				e.target.style.animationDuration		= '0.3s';
+				e.target.style.animationIterationCount = 1;
+					break;
+			case 'shift-frame':
+				e.target.style.animationName = '';
+				e.target.style.animationDuration		= '0.6';
+				e.target.style.animationIterationCount = 1;
+				break;
+		}
 	}, false );
 
 
@@ -421,13 +443,14 @@ function makeWhiteboardListScope( p, sotd, eotd )
 						o.style.height	= '54px';
 						o.style.marginTop = '1px';
 						o.style.marginBottom = '1px';
+						o.style.transition		= 'all 0.5s ease-in-out';
 						var r = '';
-						r += '<div style="float:left;width:48px;height:48px;padding:2px;border:1px solid lightgrey;" >';
+						r += '<div style="float:left;width:48px;height:48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
 							// r += '<div style="padding:2px;">&nbsp;</div>';
 							r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
 							r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + weekname[ day.getDay() ] + '</div>';
 						r += '</div>';
-						r += '<div class="detail" style="float:left;width:calc(100% - 64px);height:48px;padding:2px;border:1px solid lightgrey;" >';
+						r += '<div class="detail" style="float:left;width:calc(100% - 64px);height:48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;margin-left:2px;" >';
 							r += '';
 						r += '</div>';
 						o.innerHTML = r;
