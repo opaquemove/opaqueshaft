@@ -163,14 +163,7 @@ function workplaceReset(){
 function workplaceWhiteboard(){
 	workplace_id = 'WHITEBOARD';
 
-	// var today = new Date();
-	// var y = today.getFullYear();
-	// var m = ('00' + (today.getMonth() + 1 ) ).slice(-2);
-	// var d = ('00' + today.getDate() ).slice(-2);
-	// var ymd = y + '/' + m + '/' + d;
-	// guidedance_whiteboard_form.day.value = ymd;
 	guidedance_whiteboard_form.day.value = '';
-
 
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
@@ -182,9 +175,9 @@ function workplaceWhiteboard(){
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
 	var current = document.getElementById('TAB_CURRENT');
-	tab.style.visibility = 'visible';
-	current.style.visibility = 'visible';
-	current.innerText = 'whiteboard';
+	tab.style.visibility		= 'visible';
+	current.style.visibility	= 'visible';
+	current.innerText			= 'whiteboard';
 	
 	if ( icon.style.height == '0px'){
 		icon.style.height	= icon.getAttribute('orgHeight');
@@ -218,12 +211,9 @@ function addWorkplaceWhiteboard(){
 			r += 'next';
 		r += '</button>';
 	r += '</div>';
-	// r += '</div>';
-	// r += '<div id="CALENDAR_LIST"   style="float:left;width:84px;" ></div>';
-	// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
 	r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:calc(100% - 4px);height: 58px;background-color:#EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 	r += '<div style="font-size:12px;font-weight:bold;color:gray;" >DETAIL:</div>';
-	r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:calc(100% - 6px);height:calc(100% - 123px);background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
+	r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:calc(100% - 6px);height:calc(100% - 150px);background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 
 
 	p.innerHTML = r;
@@ -275,13 +265,15 @@ function addWorkplaceWhiteboard(){
 			var c = this.childNodes[i];
 			if ( c.hasAttribute('selected') ){
 				c.removeAttribute( 'selected' );
-				c.style.color			= '';
-				c.style.backgroundColor = '';
+				c.classList.remove('selected');
+				// c.style.color			= '';
+				// c.style.backgroundColor = '';
 			}
 		}
 
-		o.style.color			= 'white';
-		o.style.backgroundColor = 'royalblue';
+		o.classList.add('selected');
+		// o.style.color			= 'white';
+		// o.style.backgroundColor = 'royalblue';
 		o.setAttribute( 'selected', 'true' );
 
 		var sotd = o.getAttribute('sotd');
@@ -334,13 +326,8 @@ function addWorkplaceWhiteboard(){
 	function (e){
 		switch ( e.target.style.animationName ){
 			case 'scale-in-out':
-				e.target.style.animationName = 'shift-frame';
+				e.target.style.animationName = '';	// old shift-frame
 				e.target.style.animationDuration		= '0.3s';
-				e.target.style.animationIterationCount = 1;
-					break;
-			case 'shift-frame':
-				e.target.style.animationName = '';
-				e.target.style.animationDuration		= '0.6';
 				e.target.style.animationIterationCount = 1;
 				if ( e.target.hasAttribute('selected')){
 					e.target.classList.add('right56');
@@ -365,8 +352,13 @@ function addWorkplaceWhiteboard(){
 					if ( ar.length > 0 )
 					e.target.removeChild( ar[0] );
 				}
-				// e.target.classList.toggle( 'right56' );
-				// if ( e.target.classList.contains('right56')){
+				break;
+			case 'shift-frame':
+				e.target.style.animationName = '';
+				e.target.style.animationDuration		= '0.6';
+				e.target.style.animationIterationCount = 1;
+				// if ( e.target.hasAttribute('selected')){
+				// 	e.target.classList.add('right56');
 				// 	var o = document.createElement('DIV');
 				// 	o.classList.add( 'edit' );
 				// 	o.style.position		= 'absolute';
@@ -382,8 +374,8 @@ function addWorkplaceWhiteboard(){
 				// 	r += '<button class="workplace_edit_button" onclick="createWhiteboard()" >edit</button>';
 				// 	o.innerHTML				= r;
 				// 	e.target.appendChild( o );
-
 				// } else {
+				// 	e.target.classList.remove('right56');
 				// 	var ar = e.target.getElementsByClassName('edit');
 				// 	if ( ar.length > 0 )
 				// 	e.target.removeChild( ar[0] );
@@ -426,9 +418,10 @@ function makeCalendar( range_id ){
 		var c = document.createElement('DIV');
 		c.setAttribute( 'sotd', sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
 		c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( eotd.getMonth() + 1 ) + '/' + eotd.getDate() );
+		c.classList.add('unselected');
 		c.style.width			= '48px';
 		c.style.height			= '48px';
-		c.style.backgroundColor	= 'white';
+		// c.style.backgroundColor	= 'white';
 		c.style.position		= 'absolute';
 		c.style.top				= '0px';
 		c.style.left			= ( 55 * i ) + 'px';
@@ -507,8 +500,9 @@ function makeWhiteboardListScope( p, sotd, eotd )
 							dd[0].style.backgroundPosition	= 'top 2px left 2px';
 							var c_children		= result[i].c_children;
 							var c_checkout		= result[i].c_checkout;
+							var description		= result[i].description;
 							var detail = dd[0].getElementsByClassName( 'detail' )[0];
-							detail.innerHTML = 'Children:' + c_children + ' checkouts:' + c_checkout;
+							detail.innerHTML = 'Description:' + description + '<br/>Children:' + c_children + '<br/>checkouts:' + c_checkout;
 						}
 					}
 					//o.innerHTML = r;
