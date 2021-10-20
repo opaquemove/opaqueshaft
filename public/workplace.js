@@ -223,7 +223,7 @@ function addWorkplaceWhiteboard(){
 	// r += '<div id="CALENDAR_DETAIL" style="float:left;width:140px;" ></div>';
 	r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:calc(100% - 4px);height: 58px;background-color:#EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 	r += '<div style="font-size:12px;font-weight:bold;color:gray;" >DETAIL:</div>';
-	r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:calc(100% - 4px);height:calc(100% - 120px);background-color:#EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
+	r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:calc(100% - 6px);height:calc(100% - 123px);background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 
 
 	p.innerHTML = r;
