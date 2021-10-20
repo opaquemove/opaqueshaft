@@ -293,27 +293,38 @@ function addWorkplaceWhiteboard(){
 
 	document.getElementById('CALENDAR_DETAIL').addEventListener('click',
 	function(e) {
+
 		var o = e.target;
-		if ( o == this ) return;
-		while ( o.parentNode != document.getElementById('CALENDAR_DETAIL') ){
+		while ( true ){
+			if ( o == this ){
+				for ( var i=0; i<this.childNodes.length; i++ ){
+					 var o = this.childNodes[i];
+					 if ( o.hasAttribute('selected')){
+						o.removeAttribute('selected');
+						o.classList.remove('right56');
+					}
+				}
+				return;
+			}
 			o = o.parentNode;
+			if ( o.hasAttribute('day')) break;
 		}
+	
 		for ( var i=0; i<this.childNodes.length; i++ ){
 			var c = this.childNodes[i];
-			if ( c.hasAttribute('selected') ){
-				c.style.animationName			= 'scale-in-out';
-				c.style.animationDuration		= '0.3s';
-				c.style.animationIterationCount = 1;
-				// c.removeAttribute( 'selected' );
+			if ( o != c && c.hasAttribute('selected') ){
+				c.removeAttribute( 'selected' );
+				c.classList.remove('right56');
 			}
 		}
 
+		if ( !o.hasAttribute( 'selected' ) ) o.setAttribute( 'selected', 'true' );
+			else o.removeAttribute( 'selected' );
 		o.style.animationName			= 'scale-in-out';
     	o.style.animationDuration		= '0.3s';
     	o.style.animationIterationCount = 1;
 
 
-		o.setAttribute( 'selected', 'true' );
 
 		var day = o.getAttribute('day');
 		guidedance_whiteboard_form.day.value = day;
@@ -331,8 +342,8 @@ function addWorkplaceWhiteboard(){
 				e.target.style.animationName = '';
 				e.target.style.animationDuration		= '0.6';
 				e.target.style.animationIterationCount = 1;
-				e.target.classList.toggle( 'right56' );
-				if ( e.target.classList.contains('right56')){
+				if ( e.target.hasAttribute('selected')){
+					e.target.classList.add('right56');
 					var o = document.createElement('DIV');
 					o.classList.add( 'edit' );
 					o.style.position		= 'absolute';
@@ -348,12 +359,35 @@ function addWorkplaceWhiteboard(){
 					r += '<button class="workplace_edit_button" onclick="createWhiteboard()" >edit</button>';
 					o.innerHTML				= r;
 					e.target.appendChild( o );
-
 				} else {
+					e.target.classList.remove('right56');
 					var ar = e.target.getElementsByClassName('edit');
 					if ( ar.length > 0 )
 					e.target.removeChild( ar[0] );
 				}
+				// e.target.classList.toggle( 'right56' );
+				// if ( e.target.classList.contains('right56')){
+				// 	var o = document.createElement('DIV');
+				// 	o.classList.add( 'edit' );
+				// 	o.style.position		= 'absolute';
+				// 	o.style.top				= '0px';
+				// 	o.style.left			= '-55px';
+				// 	o.style.width 			= '48px';
+				// 	o.style.height 			= '48px';
+				// 	o.style.backgroundColor = ':white';
+				// 	o.style.padding 		= '2px';
+				// 	o.style.border 			= '1px solid lightgrey';
+				// 	o.style.borderRadius	= '3px';
+				// 	var r = '';
+				// 	r += '<button class="workplace_edit_button" onclick="createWhiteboard()" >edit</button>';
+				// 	o.innerHTML				= r;
+				// 	e.target.appendChild( o );
+
+				// } else {
+				// 	var ar = e.target.getElementsByClassName('edit');
+				// 	if ( ar.length > 0 )
+				// 	e.target.removeChild( ar[0] );
+				// }
 				break;
 		}
 	}, false );
@@ -366,7 +400,7 @@ function addWorkplaceWhiteboard(){
 			c = c.parentNode;
 		}
 		if ( c.classList.contains( 'right56' )){
-			c.removeAttribute('selected');
+			// c.removeAttribute('selected');
 			// c.removeChild( c.getElementsByClassName( 'opChild')[0] );
 		}
 	
