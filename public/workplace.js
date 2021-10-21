@@ -343,9 +343,9 @@ function addWorkplaceWhiteboard(){
 					o.style.border 			= '1px solid lightgrey';
 					o.style.borderRadius	= '3px';
 					var r = '';
-					r += '<button class="workplace_edit_button" onclick="createWhiteboard()" >edit</button>';
+					r += '<button class="workplace_edit_button"  >edit</button>';
 					o.innerHTML				= r;
-					e.target.appendChild( o );
+					e.target.appendChild( o ).getElementsByClassName('workplace_edit_button')[0].addEventListener('click', editWhiteboard, false);
 				} else {
 					e.target.classList.remove('right56');
 					var ar = e.target.getElementsByClassName('edit');
@@ -399,6 +399,23 @@ function addWorkplaceWhiteboard(){
 	}, false );
 
 
+}
+
+function editWhiteboard(e){
+	e.stopPropagation();
+
+	var details = document.getElementById('CALENDAR_DETAIL').childNodes;
+	for ( var i=0; i<details.length; i++){
+		var c = details[i];
+		if ( c.hasAttribute('selected')){
+			c.classList.toggle('calendar_detail_visible_set');
+		}
+		else{
+			// c.classList.remove('calendar_detail_visible');
+			c.classList.toggle('calendar_detail_invisible');
+		}
+	}
+	// createWhiteboard();
 }
 
 function makeCalendar( range_id ){
@@ -463,16 +480,20 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					p.innerText = '';
 					var day = new Date( sotd );
 					m = day.getMonth();
+					var cnt = 0;
 					while ( true){
 						var o = document.createElement('DIV');
+						o.classList.add('calendar_detail_visible');
 						o.classList.add( 'day_' + day.getDate() );
 						o.setAttribute( 'day', day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate() );
-						o.style.position		= 'relative';
-						o.style.width			= '100%';
-						o.style.height			= '54px';
-						o.style.marginTop 		= '1px';
-						o.style.marginBottom	= '1px';
-						o.style.transition		= 'all 0.5s ease-in-out';
+						o.style.top		= ( 57 * cnt )+ 'px';
+						o.style.left	= '0px';
+						// o.style.position		= 'relative';
+						// o.style.width			= '100%';
+						// o.style.height			= '54px';
+						// o.style.marginTop 		= '1px';
+						// o.style.marginBottom	= '1px';
+						// o.style.transition		= 'all 0.5s ease-in-out';
 						var r = '';
 						r += '<div style="float:left;width:48px;height:48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
 							// r += '<div style="padding:2px;">&nbsp;</div>';
@@ -486,6 +507,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 						p.appendChild( o );
 						day.setDate( day.getDate() + 1 );
 						if ( m != day.getMonth() ) break;
+						cnt++;
 
 					}
 
