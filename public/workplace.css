@@ -345,6 +345,16 @@
 .calendar_detail_visible_set{
     /* transform:translateY(0%); */
 }
+.calendar_detail_property{
+    position:       'relative';
+    width:          100%;
+    height:         calc(100% - 62px);
+    margin-top:     1px;
+    margin-bottom:  1px;
+    font-size:      10px;
+    /* display:        none; */
+
+}
 
 @keyframes fadein {
     from {

@@ -414,6 +414,7 @@ function editWhiteboard(e){
 	var details = p.childNodes;
 	for ( var i=0; i<details.length; i++){
 		var c = details[i];
+		if ( !c.hasAttribute('day')) continue;
 		if ( c.hasAttribute('selected')){
 			c.style.left	= '10px';
 			console.log('goto top');
@@ -424,16 +425,20 @@ function editWhiteboard(e){
 			c.classList.toggle('calendar_detail_invisible');
 		}
 	}
+	
+	var cdp = p.getElementsByClassName('calendar_detail_property');
+	console.log( 'cdp length: ' + cdp.length );
+	// [0].style.display = 'inline';
 
-	var o = document.createElement('DIV');
-	o.style.width	= '100%';
-	o.style.height	= '200px';
-	o.style.overflow= 'hidden';
+	// var o = document.createElement('DIV');
+	// o.style.width	= '100%';
+	// o.style.height	= '200px';
+	// o.style.overflow= 'hidden';
 
-	var r = '';
-	r += '<div style="width:100%;height:100%;background-color:white;border-radius:4px;" >child list</div>';
+	// var r = '';
+	// r += '<div style="width:100%;height:100%;background-color:white;border-radius:4px;" >child list</div>';
 
-	p.appendChild( o );
+	// p.appendChild( o );
 
 	// createWhiteboard();
 }
@@ -514,7 +519,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 							r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
 							r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + weekname[ day.getDay() ] + '</div>';
 						r += '</div>';
-						r += '<div class="detail" style="float:left;font-size:12px;width:calc(100% - 64px);height:48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;margin-left:2px;" >';
+						r += '<div class="detail" style="float:left;font-size:12px;width:calc(100% - 62px);height:48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;margin-left:2px;" >';
 							r += '';
 						r += '</div>';
 						o.innerHTML = r;
@@ -541,6 +546,21 @@ function makeWhiteboardListScope( p, sotd, eotd )
 							detail.innerHTML = 'Description:' + description + '<br/>Children:' + c_children + '<br/>checkouts:' + c_checkout;
 						}
 					}
+
+					//
+					//	calendar detail property area
+					//
+					var o = document.createElement('DIV');
+					o.classList.add('calendar_detail_property');
+					var r = '';
+					r += '<div style="width:calc(100% - 6px);height:100%;48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
+						r += 'Property Area';
+					r += '</div>';
+					o.innerHTML = r;
+					p.appendChild( o );
+
+
+
 					//o.innerHTML = r;
 				} else{
 					p.innerText = xmlhttp.status;
