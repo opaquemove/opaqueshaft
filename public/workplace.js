@@ -411,13 +411,14 @@ function editWhiteboard(e){
 	e.stopPropagation();
 
 	var p = document.getElementById('CALENDAR_DETAIL');
+	var o = null;
 	var details = p.childNodes;
 	for ( var i=0; i<details.length; i++){
 		var c = details[i];
 		if ( !c.hasAttribute('day')) continue;
 		if ( c.hasAttribute('selected')){
 			c.style.left	= '10px';
-			console.log('goto top');
+			day = c.getAttribute( 'day' );
 			// c.classList.toggle('calendar_detail_visible_set');
 		}
 		else{
@@ -428,19 +429,69 @@ function editWhiteboard(e){
 	
 	var cdp = p.getElementsByClassName('calendar_detail_property');
 	console.log( 'cdp length: ' + cdp.length );
-	// [0].style.display = 'inline';
+	cdp[0].style.display = 'inline';
 
-	// var o = document.createElement('DIV');
-	// o.style.width	= '100%';
-	// o.style.height	= '200px';
-	// o.style.overflow= 'hidden';
+	listChildren( cdp[0].firstChild, day );
+	document.getElementById('CALENDAR_DETAIL').scrollTop = 0;
 
-	// var r = '';
-	// r += '<div style="width:100%;height:100%;background-color:white;border-radius:4px;" >child list</div>';
+}
 
-	// p.appendChild( o );
+function listChildren( p, day ){
 
-	// createWhiteboard();
+	p.innerHTML = '';
+
+	var r = '';
+	r += 'day:' + day;
+	p.innerHTML = r;
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+				break;
+			case 2://header received
+				break;
+			case 3://loading
+				oLog.log( null, 'access Whiteboard children...' );
+				oLog.open( 3 );
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					if ( result.length > 0 ){		//	レコードが存在すれば
+			
+						for ( var i=0; i<result.length; i++ ){
+							var c = result[i];
+							var o = document.createElement('DIV');
+							var r = '';
+							r += 'child_name:' + c.child_name + '<br/>';
+							r += 'kana:'       + c.kana       + '<br/>';
+							r += 'type:'       + c.child_type + '<br/>';
+							r += 'grade:'      + c.grade      + '<br/>';
+							r += 'estimate:'   + c.estimate   + '<br/>';
+							o.innerHTML = r;
+							p.appendChild( o );
+						}
+
+					} else{							// レコードが存在しなければ
+						// p.innerHTML 		= '';
+						// p_absent.innerHTML	= '';
+					}
+
+
+				} else{
+					oLog.log( null, 'listChildren:' + xmlhttp.status );
+					oLog.open( 3 );
+				} 
+				break;
+		}
+	};
+
+	xmlhttp.open("POST", "/accounts/resultwhiteboard", true );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'day=' + day );
+
+
 }
 
 function makeCalendar( range_id ){
@@ -553,8 +604,8 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					var o = document.createElement('DIV');
 					o.classList.add('calendar_detail_property');
 					var r = '';
-					r += '<div style="width:calc(100% - 6px);height:100%;48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
-						r += 'Property Area';
+					r += '<div  style="width:calc(100% - 6px);height:100%;48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
+						r += '';
 					r += '</div>';
 					o.innerHTML = r;
 					p.appendChild( o );
