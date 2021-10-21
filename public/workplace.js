@@ -295,6 +295,9 @@ function addWorkplaceWhiteboard(){
 						o.removeAttribute('selected');
 						o.classList.remove('right56');
 					}
+					if ( o.classList.contains('calendar_detail_invisible')){
+						o.classList.remove('calendar_detail_invisible');
+					}
 				}
 				return;
 			}
@@ -307,6 +310,9 @@ function addWorkplaceWhiteboard(){
 			if ( o != c && c.hasAttribute('selected') ){
 				c.removeAttribute( 'selected' );
 				c.classList.remove('right56');
+			}
+			if ( c.classList.contains('calendar_detail_invisible')){
+				c.classList.remove('calendar_detail_invisible');
 			}
 		}
 
@@ -404,17 +410,31 @@ function addWorkplaceWhiteboard(){
 function editWhiteboard(e){
 	e.stopPropagation();
 
-	var details = document.getElementById('CALENDAR_DETAIL').childNodes;
+	var p = document.getElementById('CALENDAR_DETAIL');
+	var details = p.childNodes;
 	for ( var i=0; i<details.length; i++){
 		var c = details[i];
 		if ( c.hasAttribute('selected')){
-			c.classList.toggle('calendar_detail_visible_set');
+			c.style.left	= '10px';
+			console.log('goto top');
+			// c.classList.toggle('calendar_detail_visible_set');
 		}
 		else{
 			// c.classList.remove('calendar_detail_visible');
 			c.classList.toggle('calendar_detail_invisible');
 		}
 	}
+
+	var o = document.createElement('DIV');
+	o.style.width	= '100%';
+	o.style.height	= '200px';
+	o.style.overflow= 'hidden';
+
+	var r = '';
+	r += '<div style="width:100%;height:100%;background-color:white;border-radius:4px;" >child list</div>';
+
+	p.appendChild( o );
+
 	// createWhiteboard();
 }
 
@@ -480,20 +500,14 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					p.innerText = '';
 					var day = new Date( sotd );
 					m = day.getMonth();
-					var cnt = 0;
+					// var cnt = 0;
 					while ( true){
 						var o = document.createElement('DIV');
 						o.classList.add('calendar_detail_visible');
 						o.classList.add( 'day_' + day.getDate() );
 						o.setAttribute( 'day', day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate() );
-						o.style.top		= ( 57 * cnt )+ 'px';
-						o.style.left	= '0px';
-						// o.style.position		= 'relative';
-						// o.style.width			= '100%';
-						// o.style.height			= '54px';
-						// o.style.marginTop 		= '1px';
-						// o.style.marginBottom	= '1px';
-						// o.style.transition		= 'all 0.5s ease-in-out';
+						// o.style.top		= ( 57 * cnt )+ 'px';
+						// o.style.left	= '0px';
 						var r = '';
 						r += '<div style="float:left;width:48px;height:48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
 							// r += '<div style="padding:2px;">&nbsp;</div>';
@@ -507,7 +521,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 						p.appendChild( o );
 						day.setDate( day.getDate() + 1 );
 						if ( m != day.getMonth() ) break;
-						cnt++;
+						// cnt++;
 
 					}
 

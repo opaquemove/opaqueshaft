@@ -325,7 +325,7 @@
     /* opacity: 0.8; */
 }
 .calendar_detail_visible{
-    position		:'absolute';
+    position		:'relative';
     width			: 100%;
     height			: 54px;
     margin-top 		: 1px;
@@ -334,7 +334,7 @@
 
 }
 .calendar_detail_invisible{
-    transform: translateX(-1000px);
+    display:        none;
 ;    /* position		:'relative';
     width			: 100%;
     height			: 0px;
