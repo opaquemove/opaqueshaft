@@ -440,9 +440,6 @@ function listChildren( p, day ){
 
 	p.innerHTML = '';
 
-	var r = '';
-	r += 'day:' + day;
-	p.innerHTML = r;
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -463,12 +460,26 @@ function listChildren( p, day ){
 						for ( var i=0; i<result.length; i++ ){
 							var c = result[i];
 							var o = document.createElement('DIV');
+							o.style.height		= '64px';
+							o.style.border		= '1px solid lightgrey';
+							o.style.padding		= '2px';
+							o.style.marginTop 	= '2px';
+							o.style.overflow	= 'hidden';
 							var r = '';
-							r += 'child_name:' + c.child_name + '<br/>';
-							r += 'kana:'       + c.kana       + '<br/>';
-							r += 'type:'       + c.child_type + '<br/>';
-							r += 'grade:'      + c.grade      + '<br/>';
-							r += 'estimate:'   + c.estimate   + '<br/>';
+							r += '<div style="float:left;width:32px;height:100%;" class="vh-center" >';
+								if ( c.imagefile != '' && c.imagefile != null ){
+									r += '<div style="width:28px;height:28px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + c.imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+									r += '</div>';
+								}else {
+									r += '<div style="float:left;clear:both;width:28px;height:28px;overflow:hidden;border-radius:45%;" >';
+									r += '</div>';
+								}
+							r += '</div>';
+							r += '<div style="float:left;width:auto;height:100%;font-weight:bold;" >';
+								r += '<div>' + c.child_name + '(' + c.kana + ')' + c.child_type + c.child_grade	+ '</div>';
+								r += '<div>'   + c.estimate + ' / ' + c.checkout  	+ '</div>';
+							r += '</div>';
+	
 							o.innerHTML = r;
 							p.appendChild( o );
 						}
