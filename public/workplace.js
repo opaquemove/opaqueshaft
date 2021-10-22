@@ -211,7 +211,7 @@ function addWorkplaceWhiteboard(){
 			r += 'next';
 		r += '</button>';
 	r += '</div>';
-	r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:calc(100% - 4px);height: 58px;background-color:#EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
+	r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:calc(100% - 4px);height: 58px;background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 	r += '<div style="font-size:12px;font-weight:bold;color:gray;" >DETAIL:</div>';
 	r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:calc(100% - 6px);height:calc(100% - 150px);background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 
@@ -440,7 +440,6 @@ function listChildren( p, day ){
 
 	p.innerHTML = '';
 
-
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		switch ( xmlhttp.readyState){
@@ -449,8 +448,8 @@ function listChildren( p, day ){
 			case 2://header received
 				break;
 			case 3://loading
-				oLog.log( null, 'access Whiteboard children...' );
-				oLog.open( 3 );
+				// oLog.log( null, 'access Whiteboard children...' );
+				// oLog.open( 3 );
 				break;
 			case 4://done
 				if ( xmlhttp.status == 200 ){
@@ -506,6 +505,7 @@ function listChildren( p, day ){
 }
 
 function makeCalendar( range_id ){
+	console.log( 'range_id:' + range_id );
 	var p = document.getElementById('CALENDAR_LIST');
 	p.innerHTML = '';
 	document.getElementById('CALENDAR_DETAIL').innerHTML = '';
@@ -520,8 +520,8 @@ function makeCalendar( range_id ){
 		eotd.setMonth( eotd.getMonth() + 1 );
 		eotd.setDate( eotd.getDate() - 1 );
 		var c = document.createElement('DIV');
-		c.setAttribute( 'sotd', sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
-		c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( eotd.getMonth() + 1 ) + '/' + eotd.getDate() );
+		c.setAttribute( 'sotd', sotd.getFullYear() + '/' + ( '00' + ( sotd.getMonth() + 1 ) ).slice(-2) + '/' + sotd.getDate() );
+		c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( '00' + ( eotd.getMonth() + 1 ) ).slice(-2) + '/' + eotd.getDate() );
 		c.classList.add('unselected');
 		c.style.width			= '48px';
 		c.style.height			= '48px';
@@ -541,8 +541,65 @@ function makeCalendar( range_id ){
 		p.appendChild( c );
 	}
 
+	var ym = new Date( range_id + '/4/1' );
+	var sotd = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
+	var eotd = new Date( sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
+	eotd.setFullYear( eotd.getFullYear() + 1 );
+	eotd.setDate( eotd.getDate() - 1 );
+	console.log( 'sotd:' + getYYYYMMDD( sotd ) + ' eotd:' + getYYYYMMDD(eotd) );
+
+	makeCalendarHelper( p, getYYYYMMDD(sotd), getYYYYMMDD(eotd) );
+
 }
 
+function makeCalendarHelper( p, sotd, eotd ){
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				// p.innerText = 'access...';
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					console.log( result );
+
+					for ( var i=0; i<result.length; i++ ){
+						var o = result[i];
+						console.log( 'ym:', o.ym );
+						console.log( 'days:' + o.days );
+						for ( var j=0; j<p.childNodes.length; j++ ){
+							var calen = p.childNodes[j];
+							if ( calen.getAttribute('sotd').indexOf( o.ym ) > -1 ){
+								calen.classList.add('checked');
+							}
+						}
+					}
+					//o.innerHTML = r;
+				} else{
+					console.log( 'makeCalendarHelper:' + xmlhttp.status );
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/countresultbymonth", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'sotd=' + sotd + '&eotd=' + eotd );
+	} catch ( e ) {
+		oLog.log( null, 'makeCalendarHelper : ' + e );
+		oLog.open( 3 );
+		// alert( e );
+	}
+
+}
+
+function getYYYYMMDD( d ){
+	return d.getFullYear() + '/' + ( d.getMonth() + 1 ) + '/' + d.getDate();
+}
 //
 //	ホワイトボードリスト生成処理
 //
@@ -619,9 +676,11 @@ function makeWhiteboardListScope( p, sotd, eotd )
 						r += '';
 					r += '</div>';
 					o.innerHTML = r;
-					p.appendChild( o );
-
-
+					p.appendChild( o ).addEventListener( 'click',
+						function ( e ){
+							e.stopPropagation();
+						}
+					);
 
 					//o.innerHTML = r;
 				} else{

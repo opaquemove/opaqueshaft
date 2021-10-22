@@ -287,6 +287,14 @@
 	/* border-radius: 			4px; */
 	-webkit-user-select: 	    none;
 }
+
+.checked{
+	background-image:		url(./images/check-3.png);
+	background-position: 	right 2px bottom 4px;
+	background-repeat: 		no-repeat;
+	background-size: 		8px;
+}
+
 .onProfeel{
 	background-image:		url(./images/up-arrow.png);
 	background-position: 	right 2px top 4px;

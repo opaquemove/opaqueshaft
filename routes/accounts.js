@@ -465,6 +465,26 @@ router.post('/resultwhiteboard', function(req, res, next ){
 });
 
 //
+//  月別履歴数集計
+//
+router.post('/countresultbymonth', function(req, res, next ){
+  var sotd  = req.body.sotd;
+  var eotd  = req.body.eotd;
+  console.log( 'sotd:' + sotd );
+  console.log( 'eotd:' + eotd );
+  var sql = "SELECT to_char( day, 'YYYY/MM' ) ym, count(*) days FROM whiteboards WHERE day BETWEEN $1 AND $2 GROUP BY day ORDER BY to_char( day, 'YYYY/MM' ) ";
+  console.log( 'sql:' + sql );
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.any( {
+      text: sql,
+      values: [ sotd, eotd ] } )
+    .then( rows => {
+          res.json( rows );
+    });
+});
+
+
+//
 //  リザーブ関連
 //
 
