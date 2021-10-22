@@ -151,9 +151,11 @@ function workplaceReset(){
 
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
-	var current = document.getElementById('TAB_CURRENT');
-	tab.style.visibility = 'hidden';
-	current.style.visibility = 'hidden';
+	var current  = document.getElementById('TAB_CURRENT');
+	var current2 = document.getElementById('TAB_CURRENT2');
+	tab.style.visibility		= 'hidden';
+	current.style.visibility	= 'hidden';
+	current2.style.visibility	= 'hidden';
 
 }
 
@@ -174,10 +176,12 @@ function workplaceWhiteboard(){
 
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
-	var current = document.getElementById('TAB_CURRENT');
+	var current 	= document.getElementById('TAB_CURRENT');
+	var current2 	= document.getElementById('TAB_CURRENT2');
 	tab.style.visibility		= 'visible';
 	current.style.visibility	= 'visible';
 	current.innerText			= 'whiteboard';
+	current2.style.visibility	= 'visible';
 	
 	if ( icon.style.height == '0px'){
 		icon.style.height	= icon.getAttribute('orgHeight');
@@ -205,18 +209,26 @@ function addWorkplaceWhiteboard(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
 	var r = '';
-	r += '<div style="padding-top:5px;" >';
+	r += '<div id="CALENDAR_TOOLBAR" >';
 		r += '<button id="BTN_OPENWHITEBOARD" class="next_button"  ';
 			r += ' onclick="createWhiteboard()" >';
 			r += 'next';
 		r += '</button>';
 	r += '</div>';
-	r += '<div id="CALENDAR_LIST"   style="float:;position:relative;width:calc(100% - 4px);height: 58px;background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
-	r += '<div style="font-size:12px;font-weight:bold;color:gray;" >DETAIL:</div>';
-	r += '<div id="CALENDAR_DETAIL" style="float:;position:relative;width:calc(100% - 6px);height:calc(100% - 150px);background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
+	r += '<div id="CALENDAR_LIST"       style="float:;position:relative;width:calc(100% - 6px);height: 58px;background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
+	r += '<div id="CALENDAR_DETAIL_HDR" style="font-size:12px;font-weight:bold;color:gray;" >DETAIL:</div>';
+	r += '<div id="CALENDAR_DETAIL"     style="float:;position:relative;width:calc(100% - 6px);height:calc(100% - 150px);background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 
 
 	p.innerHTML = r;
+
+	var ct_height = document.getElementById('CALENDAR_TOOLBAR').offsetHeight;
+	var cl_height = document.getElementById('CALENDAR_LIST').offsetHeight + 6;
+	var cdh_height = document.getElementById('CALENDAR_DETAIL_HDR').offsetHeight + 4;
+	var offset = ct_height + cl_height + cdh_height;
+	var calen_detail = document.getElementById('CALENDAR_DETAIL');
+	calen_detail.style.height = 'calc(100% - ' + offset + 'px)';
+
 
 	//	レンジリスト作成
 	makeRangeList();
@@ -322,6 +334,9 @@ function addWorkplaceWhiteboard(){
     	o.style.animationDuration		= '0.3s';
     	o.style.animationIterationCount = 1;
 
+		//property area hidden
+		var cdp = p.getElementsByClassName('calendar_detail_property');
+		cdp[0].style.display = 'none';
 
 
 		var day = o.getAttribute('day');
@@ -432,6 +447,24 @@ function editWhiteboard(e){
 	cdp[0].style.display = 'inline';
 
 	listChildren( cdp[0].firstChild, day );
+	cdp[0].addEventListener( 'click',
+		function (e){
+			e.stopPropagation();
+			var c = e.target;
+			while ( true ){
+				if ( c == this ) return;
+				if ( c.classList.contains('calendar_list_children')) break;
+				c = c.parentNode;
+			}
+			if ( c.hasAttribute( 'selected' )){
+				c.classList.remove('selected');
+				c.removeAttribute('selected');
+			} else {
+				c.classList.add('selected');
+				c.setAttribute('selected', 'yes');
+			}
+
+		}, false );
 	document.getElementById('CALENDAR_DETAIL').scrollTop = 0;
 
 }
@@ -459,11 +492,7 @@ function listChildren( p, day ){
 						for ( var i=0; i<result.length; i++ ){
 							var c = result[i];
 							var o = document.createElement('DIV');
-							o.style.height		= '64px';
-							o.style.border		= '1px solid lightgrey';
-							o.style.padding		= '2px';
-							o.style.marginTop 	= '2px';
-							o.style.overflow	= 'hidden';
+							o.classList.add('calendar_list_children');
 							var r = '';
 							r += '<div style="float:left;width:32px;height:100%;" class="vh-center" >';
 								if ( c.imagefile != '' && c.imagefile != null ){
@@ -672,7 +701,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					var o = document.createElement('DIV');
 					o.classList.add('calendar_detail_property');
 					var r = '';
-					r += '<div  style="width:calc(100% - 6px);height:100%;48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
+					r += '<div  style="width:calc(100% - 6px);height:calc(100% - 60px);background-color:transparent;padding:2px;border:1px solid lightgrey;border-radius:3px;overflow:scroll;" >';
 						r += '';
 					r += '</div>';
 					o.innerHTML = r;
@@ -715,11 +744,13 @@ function workplaceChildren(){
 	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 
 	//	TAB
-	var tab = document.getElementById('TAB_OPAQUESHAFT');
-	var current = document.getElementById('TAB_CURRENT');
-	tab.style.visibility = 'visible';
-	current.style.visibility = 'visible';
-	current.innerText = 'children';
+	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
+	var current 	= document.getElementById('TAB_CURRENT');
+	var current2	= document.getElementById('TAB_CURRENT2');
+	tab.style.visibility 		= 'visible';
+	current.style.visibility 	= 'visible';
+	current.innerText 			= 'children';
+	current2.style.visibility	= 'visible';
 
 	if ( icon.style.height == '0px'){
 		icon.style.height		= icon.getAttribute('orgHeight');

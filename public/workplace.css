@@ -22,7 +22,7 @@
 #TAB_OPAQUESHAFT{
     width:100%;
     height:64px;
-    background-color:transparent;
+    background-color:white;
     background-image:url(./images/opaqueshaft_icon_portrait.png);
     background-size: 20px;
     background-repeat: no-repeat;
@@ -30,6 +30,18 @@
     visibility: hidden;
 }
 #TAB_CURRENT{
+    width:calc(100% - 12px);
+    height:96px;
+    color:dimgray;
+    background-color:lightgrey;
+    font-size:14px;
+    font-weight: bold;
+    text-align: center;
+    padding-left:12px;
+    writing-mode: vertical-lr;
+    visibility: hidden;
+}
+#TAB_CURRENT2{
     width:calc(100% - 12px);
     height:96px;
     color:dimgray;
@@ -129,7 +141,7 @@
 #WORKPLACE_WHITEBOARD_HDR{
     margin:0 auto;
     width:400px;
-    height:80px
+    height:60px
 }
 #WORKPLACE_WHITEBOARD_MAIN{
     margin:0 auto;
@@ -141,11 +153,11 @@
     width:70%;          /* height is fitting */
     height:100%;
     background-color:       transparent;
-	display:				flex;
+	/* display:				flex;
 	flex-wrap:				wrap;
 	justify-content: 		center;
 	align-items:            flex-start;
-	align-content:          space-between;
+	align-content:          space-between; */
     overflow:               auto;
 } 
 
@@ -363,6 +375,16 @@
     display:        none;
 
 }
+.calendar_list_children{
+    height:             64px;
+    background-color:   white;
+    border:             1px solid lightgrey;
+    border-radius:      4px;
+    padding:            2px;
+    margin-top:         2px;
+    overflow:           hidden;
+}
+
 
 @keyframes fadein {
     from {
