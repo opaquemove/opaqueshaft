@@ -208,6 +208,12 @@ function workplaceWhiteboard(){
 function addWorkplaceWhiteboard(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
+	if ( p.hasChildNodes() ){
+		//	レンジリスト作成
+		makeRangeList();
+		return;
+	}
+
 	var r = '';
 	r += '<div id="CALENDAR_TOOLBAR" >';
 		r += '<button id="BTN_OPENWHITEBOARD" class="next_button"  ';
@@ -468,6 +474,7 @@ function editWhiteboard(e){
 
 			for ( var i=0; i<this.childNodes.length; i++ ){
 				var o = this.childNodes[i];
+				if ( c == o ) continue;
 				if ( o.hasAttribute('selected')){
 					o.classList.remove('selected');
 					o.removeAttribute('selected');	
@@ -719,7 +726,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					var o = document.createElement('DIV');
 					o.classList.add('calendar_detail_property');
 					var r = '';
-					r += '<div  style="width:calc(100% - 6px);height:calc(100% - 60px);background-color:transparent;padding:2px;border:1px solid lightgrey;border-radius:3px;overflow:scroll;" >';
+					r += '<div  style="width:calc(100% - 2px);height:calc(100% - 60px);background-color:transparent;padding:1px;border:0px solid #EDEDED;border-radius:3px;overflow:scroll;" >';
 						r += '';
 					r += '</div>';
 					o.innerHTML = r;
