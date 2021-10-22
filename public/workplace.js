@@ -447,15 +447,33 @@ function editWhiteboard(e){
 	cdp[0].style.display = 'inline';
 
 	listChildren( cdp[0].firstChild, day );
-	cdp[0].addEventListener( 'click',
+	cdp[0].firstChild.addEventListener( 'click',
 		function (e){
 			e.stopPropagation();
 			var c = e.target;
 			while ( true ){
-				if ( c == this ) return;
+				if ( c == this ){
+					for ( var i=0; i<this.childNodes.length; i++ ){
+						var o = this.childNodes[i];
+						if ( o.hasAttribute('selected')){
+							o.classList.remove('selected');
+							o.removeAttribute('selected');	
+						}
+					}		
+					return;
+				}
 				if ( c.classList.contains('calendar_list_children')) break;
 				c = c.parentNode;
 			}
+
+			for ( var i=0; i<this.childNodes.length; i++ ){
+				var o = this.childNodes[i];
+				if ( o.hasAttribute('selected')){
+					o.classList.remove('selected');
+					o.removeAttribute('selected');	
+				}
+			}
+
 			if ( c.hasAttribute( 'selected' )){
 				c.classList.remove('selected');
 				c.removeAttribute('selected');
@@ -493,6 +511,7 @@ function listChildren( p, day ){
 							var c = result[i];
 							var o = document.createElement('DIV');
 							o.classList.add('calendar_list_children');
+							o.classList.add('unselected');
 							var r = '';
 							r += '<div style="float:left;width:32px;height:100%;" class="vh-center" >';
 								if ( c.imagefile != '' && c.imagefile != null ){
@@ -554,7 +573,6 @@ function makeCalendar( range_id ){
 		c.classList.add('unselected');
 		c.style.width			= '48px';
 		c.style.height			= '48px';
-		// c.style.backgroundColor	= 'white';
 		c.style.position		= 'absolute';
 		c.style.top				= '0px';
 		c.style.left			= ( 55 * i ) + 'px';
