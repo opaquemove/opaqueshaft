@@ -1059,7 +1059,7 @@ function finderHelper( keyword ){
 								r += '</div>';
 							r += '</div>';
 
-							r += '<div class="appendix" style="float:left;width:' + ( cc_width - 6 ) + 'px;display:none;" >';
+							r += '<div class="appendix" style="float:left;width:calc(100% - 6px);display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
 								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;" >Profeel:</div>';
 								r += '<div style="width:97%;height:auto;padding:1px;text-align:left;" >';
@@ -1075,7 +1075,7 @@ function finderHelper( keyword ){
 										r += 'Remark:<br/>';
 										r += '<textarea name="remark" style="width:90%;height:40px;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" >' + remark + '</textarea>';
 									r += '</div>';
-									r += '<div  style="clear:both;width:100%;text-align:left;padding:4px 0px 4px 0px;" >';
+									r += '<div  style="clear:both;width:100%;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
 										switch ( child_type){
 											case 'A':
 												var a = ' checked ';
@@ -1087,26 +1087,26 @@ function finderHelper( keyword ){
 												break;
 										}
 										r += '<div>Type:</div>';
-										r += '<div style="padding:4px;background-color:#EDEDED;border-radius:4px;" >';
+										r += '<div style="width:100px;height:32px;padding:4px;text-align:center;background-color:#EDEDED;border-radius:4px;" >';
 											r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
-											r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:40px;height:21px;font-size:10px;padding:8px 4px 1px 5px;" >A</label>';
+											r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:8px 4px 1px 5px;" >A</label>';
 											r += '&nbsp;'
 											r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
-											r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:40px;height:21px;font-size:10px;padding:8px 4px 1px 5px;" >B</label>';
-										r += '<div>';
+											r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:8px 4px 1px 5px;" >B</label>';
+										r += '</div>';
 
 										// r += '<img width="14px" src="./images/minus-3.png" />';
 									r += '</div>';
 
-									r += '<div  style="clear:both;width:100%;text-align:left;padding:4px 0px 4px 0px;" >';
+									r += '<div  style="clear:both;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
 
 										var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
 										grades[ child_grade - 1 ] = ' checked ';
 										r += '<div>Grade:</div>';
-										r += '<div style="padding:4px;background-color:#EDEDED;border-radius:4px;" >';
+										r += '<div style="width:300px;height:32px;padding:4px;background-color:#EDEDED;border-radius:4px;" >';
 											for ( var g=0; g<grades.length; g++ ){
 												r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
-												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:40px;height:21px;padding:7px 4px 2px 8px;" >' + ( g+1 ) + '</label>';
+												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:21px;padding:8px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
 											}
 										r += '</div>';
 	
