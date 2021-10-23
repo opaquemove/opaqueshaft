@@ -1888,14 +1888,13 @@ function accountProperty(){
             r += "<td><input style='width:100%;height:18px;background-color:lightgrey;border:1px solid lightgrey;border-radius:3px;' type='text' name='range_id' tabindex=2 readonly value='" + oAcc.range_id + "' /></td>";
             r += "</tr>";
             r += "<tr>";
-            r += "<td><div style='width:96px;height:96px;border-radius:45%;background-image:url(./images/accounts/" + acc_id + ".jpeg);background-size:128px;background-position:center center;background-repeat:no_repeat;' ></div></td>";
+            r += "<td><div style='width:64px;height:64px;border-radius:50%;background-image:url(./images/accounts/" + acc_id + ".jpeg);background-size:cover;background-position:center center;background-repeat:no_repeat;' ></div></td>";
             r += "</tr>";
             r += "</table>";
         r += "</form>";
 
         r += '<div style="width:100%;text-align:center;padding-top:5px;" >';
             r += '<button id="" class="accept_button" ';
-                // r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/check-3.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
                 r += ' onclick="closeModalDialog();" >';
                 r += 'close';
             r += '</button>';

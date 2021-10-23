@@ -57,6 +57,7 @@ function initWorkplace(){
 
 	new Button( 'WP_WHITEBOARD',  workplaceWhiteboard ).play();
 	new Button( 'WP_CHILDREN',    workplaceChildren ).play();
+	new Button( 'WP_RANGE',       workplaceRange ).play();
 	new Button( 'WP_SETTING',     accountProperty ).play();
 	new Button( 'WP_SIGNIN',      signForm ).play();
 	new Button( 'WP_SIGNOUT',     signoutForm ).play();
@@ -94,6 +95,7 @@ function showWorkPlace(){
 	var wp_siginout	= document.getElementById('WP_SIGNOUT');
 	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
 	var wp_children		= document.getElementById('WP_CHILDREN');
+	var wp_range		= document.getElementById('WP_RANGE');
 	var wp_setting		= document.getElementById('WP_SETTING');
 
 	if ( checkSign() ){
@@ -101,6 +103,7 @@ function showWorkPlace(){
 		wp_signin.setAttribute( 'disabled', 'true' );
 		wp_whiteboard.removeAttribute( 'disabled' );
 		wp_children.removeAttribute( 'disabled' );
+		wp_range.removeAttribute( 'disabled' );
 		wp_setting.removeAttribute( 'disabled' );
 		// wp_open.removeAttribute( 'disabled' );
 		wp_siginout.removeAttribute( 'disabled' );
@@ -108,6 +111,7 @@ function showWorkPlace(){
 		wp_siginout.style.visibility	= 'visible';
 		wp_whiteboard.style.visibility	= 'visible';
 		wp_children.style.visibility	= 'visible';
+		wp_range.style.visibility	= 'visible';
 		wp_setting.style.visibility	= 'visible';
 	} else {
 		// not sign
@@ -115,12 +119,14 @@ function showWorkPlace(){
 		wp_siginout.setAttribute( 'disabled', 'true' );
 		wp_whiteboard.setAttribute( 'disabled', 'true' );
 		wp_children.setAttribute( 'disabled', 'true' );
+		wp_range.setAttribute( 'disabled', 'true' );
 		wp_setting.setAttribute( 'disabled', 'true' );
 		// wp_open.setAttribute( 'disabled', 'true' );
 		wp_signin.style.visibility		= 'visible';
 		wp_siginout.style.visibility	= 'hidden';
 		wp_whiteboard.style.visibility	= 'hidden';
 		wp_children.style.visibility	= 'hidden';
+		wp_range.style.visibility	= 'hidden';
 		wp_setting.style.visibility	= 'hidden';
 	}
 
@@ -138,6 +144,7 @@ function workplaceReset(){
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
+	var range	= document.getElementById('WORKPLACE_RANGE');
 
 	if ( icon.style.height == '0px'){
 		icon.style.height = icon.getAttribute('orgHeight');
@@ -146,8 +153,9 @@ function workplaceReset(){
 		icon.setAttribute('orgHeight', icon.style.height );
 	}
 
-	wb.style.height = '0px';
-	children.style.height = '0px';
+	wb.style.height			= '0px';
+	children.style.height	= '0px';
+	range.style.height		= '0px';
 
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
@@ -197,7 +205,7 @@ function workplaceWhiteboard(){
 	if ( !list.hasChildNodes() ) list.innerHTML = '';
 
 	//	レンジリスト作成
-	makeRangeList();
+	makeRangeList( 'RANGE_LIST' );
 	addWorkplaceWhiteboard();
 
 }
@@ -209,7 +217,7 @@ function addWorkplaceWhiteboard(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
 	if ( p.hasChildNodes() ){
-	// 	makeRangeList();
+	// 	makeRangeList( 'RANGE_LIST' );
 		return;
 	}
 
@@ -236,7 +244,7 @@ function addWorkplaceWhiteboard(){
 
 
 	//	レンジリスト作成
-	makeRangeList();
+	makeRangeList( 'RANGE_LIST' );
 
 	document.getElementById('RANGE_LIST').addEventListener('click',
 		function(e) {
@@ -797,6 +805,40 @@ function workplaceChildren(){
 
 }
 
+//
+//		レンジ
+//
+function workplaceRange(){
+	workplace_id = 'RANGE';
+	var icon	= document.getElementById('WORKPLACE_ICON');
+	var hdr		= document.getElementById('WORKPLACE_HDR');
+
+	//	TAB
+	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
+	var current 	= document.getElementById('TAB_CURRENT');
+	var current2	= document.getElementById('TAB_CURRENT2');
+	tab.style.visibility 		= 'visible';
+	current.style.visibility 	= 'visible';
+	current.innerText 			= 'range';
+	current2.style.visibility	= 'visible';
+
+	if ( icon.style.height == '0px'){
+		icon.style.height		= icon.getAttribute('orgHeight');
+		hdr.style.height		= hdr.getAttribute('orgHeight');
+	} else {
+		icon.setAttribute('orgHeight', icon.style.height );
+		icon.style.height		= '0px';
+		hdr.style.height		= '0px';
+	}
+
+	resizeWorkplace();
+
+	//	レンジリスト作成
+	makeRangeList( 'RANGE_LIST2' );
+
+}
+
+
 function todayWhiteboard(){
 	
 	var today = new Date();
@@ -808,10 +850,14 @@ function todayWhiteboard(){
 	createWhiteboard();
 }
 
+//
+//	チルドレンをクリック
+//
 function selectChildren( e ){
 	e.stopPropagation();
 	var c = e.target;
 	while ( true ){
+		//	エリア外をクリックしたらリセットする.
 		if ( c == this ){
 			for ( var i=0; i<this.childNodes.length; i++ ){
 				var o = this.childNodes[i];
@@ -920,6 +966,10 @@ function wp_editChildren(e){
 		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
 		c = c.parentNode;
 	}
+	var m = document.getElementById( 'WORKPLACE_CHILDREN_MAIN');
+	m.scrollTop = c.offsetTop - 80;
+
+	c.classList.remove('left100');
 	c.classList.toggle('height320');
 	var flg = c.classList.contains('height320');
 	var apdxs = c.getElementsByClassName('appendix');
@@ -928,6 +978,7 @@ function wp_editChildren(e){
 		if ( flg ) 	apdxs[i].addEventListener('click', function(e){ e.stopPropagation();}, false );
 			else	apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
 	}
+
 
 }
 
@@ -961,6 +1012,11 @@ function resizeWorkplace(){
 	var wpch		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
 	var wpcm		= document.getElementById('WORKPLACE_CHILDREN_MAIN');
 	var clist		= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
+
+	var range		= document.getElementById('WORKPLACE_RANGE');
+	var wprh		= document.getElementById('WORKPLACE_RANGE_HDR').offsetHeight;
+
+
 	console.log( 'resizeWorkplace' );
 
 	switch ( workplace_id ){
@@ -971,6 +1027,9 @@ function resizeWorkplace(){
 		case 'CHILDREN':
 			children.style.height = ( h - 0 ) + 'px';
 			wpcm.style.height = ( h - wpch ) + 'px';	// offset 252
+			break;
+		case 'RANGE':
+			range.style.height = ( h - 0 ) + 'px';
 			break;
 	}
 
@@ -1087,12 +1146,12 @@ function finderHelper( keyword ){
 												break;
 										}
 										r += '<div>Type:</div>';
-										r += '<div style="width:100px;height:32px;padding:4px;text-align:center;background-color:#EDEDED;border-radius:4px;" >';
+										r += '<div style="width:96px;height:28px;padding:4px;text-align:center;background-color:#EDEDED;border-radius:4px;" >';
 											r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
-											r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:8px 4px 1px 5px;" >A</label>';
+											r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
 											r += '&nbsp;'
 											r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
-											r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:8px 4px 1px 5px;" >B</label>';
+											r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
 										r += '</div>';
 
 										// r += '<img width="14px" src="./images/minus-3.png" />';
@@ -1103,10 +1162,10 @@ function finderHelper( keyword ){
 										var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
 										grades[ child_grade - 1 ] = ' checked ';
 										r += '<div>Grade:</div>';
-										r += '<div style="width:300px;height:32px;padding:4px;background-color:#EDEDED;border-radius:4px;" >';
+										r += '<div style="width:280px;height:28px;padding:4px;background-color:#EDEDED;border-radius:4px;" >';
 											for ( var g=0; g<grades.length; g++ ){
 												r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
-												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:21px;padding:8px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
+												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
 											}
 										r += '</div>';
 	
@@ -1131,6 +1190,24 @@ function finderHelper( keyword ){
 							cc.innerHTML = r;
 							
 						}
+
+						// bottom padding
+						var c = document.createElement('DIV');
+						c.classList.add( "WP_PALLETE_CHILD" );
+						c.style.color		= 'red';
+						c.style.fontSize 	= '12px';
+						c.style.border		= 'none';
+						c.style.backgroundImage	= 'url(./images/restriction.png)';
+						c.style.backgroundSize	= '14px';
+						c.style.backgroundRepeat = 'no-repeat';
+						c.style.backgroundPosition	= 'top 40px  center';
+
+						c.style.pointerEvents = 'none';
+						c.style.height = ( list.parentNode.offsetHeight - 20 ) + 'px';
+						c.innerHTML = 'bottom margin';
+						var cc = list.appendChild( c );
+
+
 					} else{
 						console.log( null, 'finder:' + xmlhttp.status );
 					}

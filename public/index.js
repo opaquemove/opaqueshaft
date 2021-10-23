@@ -1205,7 +1205,7 @@ function openWhiteboard(){
 
 
 	//	レンジリスト作成
-	makeRangeList();
+	makeRangeList( 'RANGE_LIST' );
 	document.getElementById('RANGE_LIST').addEventListener('mousedown',
 		function(e) {
 			var o = e.target;
@@ -2670,9 +2670,10 @@ function ctlNav(){
 //
 //	レンジリスト生成処理
 //
-function makeRangeList()
+function makeRangeList( id )
 {
-	var p = document.getElementById( 'RANGE_LIST' );
+	console.log('makeRangeList:' + id );
+	var p = document.getElementById( id );
 	if ( p.hasChildNodes() ) return;
 	p.innerHTML = '';
 
@@ -2683,7 +2684,7 @@ function makeRangeList()
 			case 1://opened
 			case 2://header received
 			case 3://loading
-				var o = document.getElementById( 'RANGE_LIST' );
+				var o = document.getElementById( id );
 				o.innerText = 'access...';
 				break;
 			case 4://done
@@ -2691,14 +2692,14 @@ function makeRangeList()
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
 					//r += xmlhttp.responseText;
-					var o = document.getElementById('RANGE_LIST');
+					var o = document.getElementById( id );
 					o.innerText = '';
 					for ( var i=0; i<result.length; i++ ){
 						addRangeListHelper( o, result[i] );
 					}
 					//o.innerHTML = r;
 				} else{
-					document.getElementById('RANGE_LIST').innerText = xmlhttp.status;
+					document.getElementById( id ).innerText = xmlhttp.status;
 				}
 				break;
 		}

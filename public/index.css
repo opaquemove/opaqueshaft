@@ -718,6 +718,23 @@ INPUT[type=password]:focus{
 	border:					0px solid gray;	
 	border-radius: 			8px;
 }
+
+#RANGE_LIST2{
+	clear:					both;
+	margin-top:				10px;
+	height:					24px;
+	background-color:		#EDEDED;
+	display:				flex;
+	flex-wrap:				nowrap;
+	flex-direction: 		row-reverse;
+	justify-content: 		space-between;
+	font-size:				14px;
+	padding:				4px;
+	overflow:				scroll;
+	border:					0px solid gray;	
+	border-radius: 			8px;
+}
+
 .range_box{
 	float:					left;
 	width:					80px;
