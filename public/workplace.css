@@ -276,7 +276,7 @@
 
 .WP_PALLETE_CHILD{
     position:               relative;
-	width:					calc( 60% - 4px );       /* 180px; */
+	width:					calc( 50% - 4px );       /* 180px; */
 	height:					80px;
 	/* display:				flex;
 	flex-direction: 		row;
