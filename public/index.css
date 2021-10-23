@@ -65,7 +65,20 @@ INPUT[type=radio]{
 	display:	none;
 }
 INPUT[type=radio]:checked + label{
-	border-bottom:			2px solid red;
+	margin:					0px 2px 0px 4px;
+	text-align:				center;
+	color:					white;
+	background-color: 		royalblue;
+	/* border:					2px solid red; */
+	border-radius: 			8px;
+}
+INPUT[type=radio] + label{
+	margin:					0px 2px 0px 4px;
+	text-align:				center;
+	color:					gray;
+	background-color: 		white;
+	/* border:					2px solid red; */
+	border-radius: 			8px;
 }
 /*
 INPUT[type=text]:focus{

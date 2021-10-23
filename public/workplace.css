@@ -276,8 +276,8 @@
 
 .WP_PALLETE_CHILD{
     position:               relative;
-	width:					calc( 35% - 4px );       /* 180px; */
-	height:					144px;
+	width:					calc( 60% - 4px );       /* 180px; */
+	height:					80px;
 	/* display:				flex;
 	flex-direction: 		row;
 	justify-content: 		center;
@@ -321,10 +321,10 @@
 }
 .child_header{
     text-align: left;
-	font-size:				16px;
+	font-size:				12px;
 	font-weight: 			bold;
     /* background-color:       #EDEDED; */
-	border-bottom:			1px solid lightgrey;
+	border-bottom:			0px solid lightgrey;
 	padding:				2px 0px 2px 0px;
 }
 .opChild{

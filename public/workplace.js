@@ -820,6 +820,11 @@ function selectChildren( e ){
 				}
 				if ( o.classList.contains('height320')){
 					o.classList.remove( 'height320');
+					var apdxs = o.getElementsByClassName('appendix');
+					for ( var i=0; i<apdxs.length; i++ ){
+						apdxs[i].style.display = 'none';
+						apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
+					}	
 				}
 			}
 			return;
@@ -827,10 +832,34 @@ function selectChildren( e ){
 		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
 		c = c.parentNode;
 	}
+
+	for ( var i=0; i<this.childNodes.length; i++ ){
+		var o = this.childNodes[i];
+		if ( c == o ) continue;
+		if ( o.classList.contains('left100')){
+			o.classList.remove( 'left100');
+		}
+		if ( o.classList.contains('height320')){
+			o.classList.remove( 'height320');
+			var apdxs = o.getElementsByClassName('appendix');
+			for ( var i=0; i<apdxs.length; i++ ){
+				apdxs[i].style.display = 'none';
+				apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
+			}
+		}
+}
+
 	c.classList.toggle( 'left100' );
 	if ( ! c.classList.contains( 'left100' )){
-		if ( c.classList.contains( 'height320') )
+		if ( c.classList.contains( 'height320') ){
 			c.classList.remove('height320');
+			var apdxs = c.getElementsByClassName('appendix');
+			for ( var i=0; i<apdxs.length; i++ ){
+				apdxs[i].style.display = 'none';
+				apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
+			}
+
+		}
 		return;
 	} 
 	
@@ -1010,21 +1039,21 @@ function finderHelper( keyword ){
 
 
 							r = '';
-							r += '<div profeel="yes" class="child_header" style="" >';
-								r += child_name + '&nbsp;&nbsp;' + child_grade + child_type;
-								r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
-							r += '</div>';
-							r += '<div profeel="yes" style="float:left;width:' + cc_width + 'px;height:80px;overflow:hidden;" >';
+							r += '<div profeel="yes" style="width:' + cc_width + 'px;height:80px;overflow:hidden;" >';
 								if ( imagefile != ''){
-									r += '<div style="float:left;width:60px;height:60px;color:dimgrey;font-size:8px;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="float:left;width:40px;height:40px;color:dimgrey;font-size:8px;margin-top:14px;padding:4px;overflow:hidden;border-radius:50%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp;';
 									r += '</div>';
 								} else{
-									r += '<div style="float:left;width:60px;height:60px;color:black;font-size:8px;opacity:0.3;margin:4px;padding:4px;overflow:hidden;border-radius:45%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="float:left;width:40px;height:40px;color:black;font-size:8px;opacity:0.3;margin-top:14px;padding:4px;overflow:hidden;border-radius:50%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp';
 									r += '</div>';
 								}
-								r += '<div style="float:right;width:100px;height:80px;" >';
+								r += '<div style="float:left;width:auto;height:80px;text-align:left;padding-left:12px;" >';
+									r += '<div class="child_header" style="" >';
+										r += child_name + '&nbsp;&nbsp;' + child_grade + child_type;
+										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
+									r += '</div>';
 									r += '<div style="padding:1px;" >' + kana + '</div>';
 									r += '<div style="padding:1px;" >id/Range:' + child_id + '/' + range_id + '</div>';
 								r += '</div>';
@@ -1033,17 +1062,20 @@ function finderHelper( keyword ){
 							r += '<div class="appendix" style="float:left;width:' + ( cc_width - 6 ) + 'px;display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
 								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;" >Profeel:</div>';
-								r += '<div style="width:97%;height:144px;padding:1px;" >';
-									r += '<div style="width:100%;height:24px;padding:4px 0px 2px 0px;" >';
-										r += '<input type="text" name="kana"  style="width:98%;"  value="' + kana        + '" />';
+								r += '<div style="width:97%;height:auto;padding:1px;text-align:left;" >';
+									r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+										r += 'Kana:<br/>';
+										r += '<input type="text" name="kana"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + kana        + '" />';
 									r += '</div>';
-									r += '<div style="width:100%;height:24px;padding:2px 0px 2px 0px;" >';
-										r += '<input type="text" name="child_name" style="width:98%;" value="' + child_name  + '" />';
+									r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+										r += 'Name:<br/>';
+										r += '<input type="text" name="child_name" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + child_name  + '" />';
 									r += '</div>';
-									r += '<div style="clear:both;width:100%;" >';
-										r += '<textarea name="remark" style="width:90%;" autocomplete="off" >' + remark + '</textarea>';
+									r += '<div style="clear:both;width:100%;padding:4px 0px 4px 0px;" >';
+										r += 'Remark:<br/>';
+										r += '<textarea name="remark" style="width:90%;height:40px;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" >' + remark + '</textarea>';
 									r += '</div>';
-									r += '<div class="vh-center" style="clear:both;width:100%;text-align:center;" >';
+									r += '<div  style="clear:both;width:100%;text-align:left;padding:4px 0px 4px 0px;" >';
 										switch ( child_type){
 											case 'A':
 												var a = ' checked ';
@@ -1054,20 +1086,29 @@ function finderHelper( keyword ){
 												var b = ' checked ';
 												break;
 										}
-										r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
-										r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:15px;height:21px;font-size:10px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 1px 5px;" >A</label>';
-										r += '&nbsp;'
-										r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
-										r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:15px;height:21px;font-size:10px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 1px 5px;" >B</label>';
+										r += '<div>Type:</div>';
+										r += '<div style="padding:4px;background-color:#EDEDED;border-radius:4px;" >';
+											r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
+											r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:40px;height:21px;font-size:10px;padding:8px 4px 1px 5px;" >A</label>';
+											r += '&nbsp;'
+											r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
+											r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:40px;height:21px;font-size:10px;padding:8px 4px 1px 5px;" >B</label>';
+										r += '<div>';
 
-										r += '<img width="14px" src="./images/minus-3.png" />';
+										// r += '<img width="14px" src="./images/minus-3.png" />';
+									r += '</div>';
+
+									r += '<div  style="clear:both;width:100%;text-align:left;padding:4px 0px 4px 0px;" >';
 
 										var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
 										grades[ child_grade - 1 ] = ' checked ';
-										for ( var g=0; g<grades.length; g++ ){
-											r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
-											r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:12px;height:21px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:7px 4px 2px 8px;" >' + ( g+1 ) + '</label>';
-										}
+										r += '<div>Grade:</div>';
+										r += '<div style="padding:4px;background-color:#EDEDED;border-radius:4px;" >';
+											for ( var g=0; g<grades.length; g++ ){
+												r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
+												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:40px;height:21px;padding:7px 4px 2px 8px;" >' + ( g+1 ) + '</label>';
+											}
+										r += '</div>';
 	
 									r += '</div>';
 									r += '<div style="clear:both;width:100%;" >';
@@ -1076,7 +1117,7 @@ function finderHelper( keyword ){
 								r += '</div>';
 							r += '</div>';
 
-							r += '<div class="appendix vh-center" style="padding:10px 1px 1px 1px;width:100%;display:none;" >';
+							r += '<div class="appendix vh-center" style="padding:20px 1px 1px 1px;width:100%;display:none;" >';
 								r += '<button class="BTN_COMMIT_CHILD" style="border:none;background-color:transparent;" >';
 									r += '<img width="24px" src="./images/check-3.png" />';
 								r += '</button>';
