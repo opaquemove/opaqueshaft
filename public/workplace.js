@@ -194,7 +194,7 @@ function workplaceWhiteboard(){
 
 	resizeWorkplace();
 	children.style.height = '0px';
-	list.innerHTML = '';
+	if ( !list.hasChildNodes() ) list.innerHTML = '';
 
 	//	レンジリスト作成
 	makeRangeList();
@@ -209,8 +209,7 @@ function addWorkplaceWhiteboard(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
 	if ( p.hasChildNodes() ){
-		//	レンジリスト作成
-		makeRangeList();
+	// 	makeRangeList();
 		return;
 	}
 
@@ -878,7 +877,9 @@ function selectChildrenTransitionEnd( e ){
 	}
 	if ( !c.classList.contains( 'left100' )){
 		c.removeAttribute('selected');
-		c.removeChild( c.getElementsByClassName( 'opChild')[0] );
+		var op = c.getElementsByClassName( 'opChild');
+		if ( op.length > 0)
+			op[0].parentNode.removeChild( op[0] );
 	}
 
 }
@@ -891,7 +892,13 @@ function wp_editChildren(e){
 		c = c.parentNode;
 	}
 	c.classList.toggle('height320');
-	// alert( c.getAttribute('child_id'));
+	var flg = c.classList.contains('height320');
+	var apdxs = c.getElementsByClassName('appendix');
+	for ( var i=0; i<apdxs.length; i++ ){
+		apdxs[i].style.display = ( flg )?'inline':'none';
+		if ( flg ) 	apdxs[i].addEventListener('click', function(e){ e.stopPropagation();}, false );
+			else	apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
+	}
 
 }
 
@@ -1022,6 +1029,54 @@ function finderHelper( keyword ){
 									r += '<div style="padding:1px;" >id/Range:' + child_id + '/' + range_id + '</div>';
 								r += '</div>';
 							r += '</div>';
+
+							r += '<div class="appendix" style="float:left;width:' + ( cc_width - 6 ) + 'px;display:none;" >';
+								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
+								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;" >Profeel:</div>';
+								r += '<div style="width:97%;height:144px;padding:1px;" >';
+									r += '<div style="width:100%;height:24px;padding:4px 0px 2px 0px;" >';
+										r += '<input type="text" name="kana"  style="width:98%;"  value="' + kana        + '" />';
+									r += '</div>';
+									r += '<div style="width:100%;height:24px;padding:2px 0px 2px 0px;" >';
+										r += '<input type="text" name="child_name" style="width:98%;" value="' + child_name  + '" />';
+									r += '</div>';
+									r += '<div style="clear:both;width:100%;" >';
+										r += '<textarea name="remark" style="width:90%;" autocomplete="off" >' + remark + '</textarea>';
+									r += '</div>';
+									r += '<div class="vh-center" style="clear:both;width:100%;text-align:center;" >';
+										switch ( child_type){
+											case 'A':
+												var a = ' checked ';
+												var b = ' ';
+												break;
+											default:
+												var a = '  ';
+												var b = ' checked ';
+												break;
+										}
+										r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
+										r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:15px;height:21px;font-size:10px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 1px 5px;" >A</label>';
+										r += '&nbsp;'
+										r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
+										r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:15px;height:21px;font-size:10px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:8px 4px 1px 5px;" >B</label>';
+
+										r += '<img width="14px" src="./images/minus-3.png" />';
+
+										var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
+										grades[ child_grade - 1 ] = ' checked ';
+										for ( var g=0; g<grades.length; g++ ){
+											r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
+											r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:12px;height:21px;background-image:url(./images/dry-clean.png);background-position:center center;background-size:20px;background-repeat:no-repeat;padding:7px 4px 2px 8px;" >' + ( g+1 ) + '</label>';
+										}
+	
+									r += '</div>';
+									r += '<div style="clear:both;width:100%;" >';
+										r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
+									r += '</div>';
+								r += '</div>';
+							r += '</div>';
+
+
 							cc.innerHTML = r;
 							
 						}

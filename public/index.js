@@ -2672,7 +2672,9 @@ function ctlNav(){
 //
 function makeRangeList()
 {
-	document.getElementById( 'RANGE_LIST' ).innerHTML = '';
+	var p = document.getElementById( 'RANGE_LIST' );
+	if ( p.hasChildNodes() ) return;
+	p.innerHTML = '';
 
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
