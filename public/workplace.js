@@ -1076,6 +1076,16 @@ function finderHelper( keyword ){
 								r += '</div>';
 							r += '</div>';
 
+							r += '<div class="appendix vh-center" style="padding:10px 1px 1px 1px;width:100%;display:none;" >';
+								r += '<button class="BTN_COMMIT_CHILD" style="border:none;background-color:transparent;" >';
+									r += '<img width="24px" src="./images/check-3.png" />';
+								r += '</button>';
+								r += '<button class="BTN_CANCEL_CHILD" style="border:none;background-color:transparent;" >';
+									r += '<img   width="24px" src="./images/cancel-2.png" />';
+								r += '</button>';
+							r += '</div>';
+
+							r += '</form>';
 
 							cc.innerHTML = r;
 							
