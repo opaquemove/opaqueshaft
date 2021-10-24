@@ -140,19 +140,28 @@
 
 				</div>
 				<div id="WORKPLACE_CHILDREN_MAIN" >
-					<div id="WORKPLACE_CHILDREN_MAIN_LIST" >
-					</div>
+					<div id="WORKPLACE_CHILDREN_MAIN_LIST" ></div>
 				</div>
 			</div>
 
 			<div id="WORKPLACE_RANGE" >		<!--  100% * 0px -->
 				<div id="WORKPLACE_RANGE_HDR" >
-					<div style="float:left;">Range:</div>
-					<div style="float: left;width:190px;height:100%;" >
-						<div style="padding-top:1px;width:100%;overflow:scroll;">
-							<div id="RANGE_LIST2" ></div>
+					<div style="float:left;padding-top:20px;padding-right:10px;font-size:12px;">Range</div>
+					<div style="float:left;height:48px;padding-top:14px;" >
+						<form  onsubmit="return false;" >
+							<input type="text" id="WP_RANGE_ID" name="WP_RANGE_ID" autocomplete="off" style="width:120px;height:24px;font-size:14px;background-color:white;border:1px solid lightgrey;box-sizing: border-box;padding:2px 4px 2px 18px;border-radius: 8px;outline:none;background-image:url(./images/annual-calendar-page.png);background-size:10px;background-repeat: no-repeat;background-position: left 4px center;"" />
+						</form>
+					</div>
+					<div style="float: left;height:100%;" >
+						<div style="padding-top:8px;">
+							<button id="WP_CREATERANGE" class="workplace_button_small"
+								onclick="" >
+							</button>
 						</div>
 					</div>
+				</div>
+				<div id="WORKPLACE_RANGE_MAIN" >
+					<div id="WORKPLACE_RANGE_MAIN_LIST" ></div>
 				</div>
 			</div>
 

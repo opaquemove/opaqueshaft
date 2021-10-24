@@ -812,6 +812,7 @@ function workplaceRange(){
 	workplace_id = 'RANGE';
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
+	var list	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
@@ -833,8 +834,108 @@ function workplaceRange(){
 
 	resizeWorkplace();
 
-	//	レンジリスト作成
-	makeRangeList( 'RANGE_LIST2' );
+	workplaceRangeHelper( list );
+
+	list.addEventListener('click',
+		function (e){
+			var o = e.target;
+			while( true ){
+				if ( o == this ){
+					for ( var i=0; i<this.childNodes.length; i++ ){
+						var c = this.childNodes[i];
+						if ( c.hasAttribute('selected')){
+							c.removeAttribute('selected');
+							c.classList.remove('selected');
+							c.classList.remove('left40');
+							c.removeChild( c.getElementsByClassName('op')[0] );
+						}	
+					}
+					return;
+				} 
+				if ( o.classList.contains('range')) break;
+				o = o.parentNode;
+			}
+
+			for ( var i=0; i<this.childNodes.length; i++ ){
+				var c = this.childNodes[i];
+				if ( c == o ) continue;
+				if ( c.hasAttribute('selected')){
+					c.removeAttribute('selected');
+					c.classList.remove('selected');
+					c.classList.remove('left40');
+					c.removeChild( c.getElementsByClassName('op')[0] );
+				}	
+			}
+
+			if ( o.hasAttribute('selected')){
+				o.removeAttribute('selected');
+				o.classList.remove('selected');
+				o.classList.remove('left40');
+				o.removeChild( o.getElementsByClassName('op')[0] );
+			} else{
+				o.setAttribute('selected', 'true');
+				o.classList.add('selected');
+				o.classList.add('left40');
+				var op = document.createElement('DIV');
+				op.classList.add('op');
+				op.classList.add('delete_range');
+				op.style.position			= 'absolute';
+				op.style.top				= '0px';
+				op.style.left				= ( o.offsetWidth + 4 ) + 'px';
+				op.style.width				= '30px';
+				op.style.height				= '38px';
+				op.style.backgroundColor	= '';
+				o.appendChild( op ).addEventListener('click',
+				function(e){
+					e.stopPropagation();
+					console.log('delete range');
+				}, false );
+			}
+
+		}
+	, false);
+
+}
+function workplaceRangeHelper( p ){
+	p.innerHTML = '';
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				// var o = document.getElementById( 'WHITEBOARD_LIST' );
+				p.innerText = 'access...';
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					p.innerText = '';
+
+					for ( var i=0; i<result.length; i++ ){
+						var o = document.createElement('DIV');
+						o.classList.add( 'range' );
+						o.classList.add( 'unselected' );
+						o.innerHTML				= result[i].range_id;
+						p.appendChild( o );
+
+					}
+
+				} else{
+					p.innerText = xmlhttp.status;
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/rangelist", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send(  );
+	} catch ( e ) {
+		oLog.log( null, 'workplaceRangeHelper : ' + e );
+		oLog.open( 3 );
+	}
 
 }
 
@@ -1015,21 +1116,24 @@ function resizeWorkplace(){
 
 	var range		= document.getElementById('WORKPLACE_RANGE');
 	var wprh		= document.getElementById('WORKPLACE_RANGE_HDR').offsetHeight;
+	var wprm		= document.getElementById('WORKPLACE_RANGE_MAIN');
+	var rlist		= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
 
 
 	console.log( 'resizeWorkplace' );
 
 	switch ( workplace_id ){
 		case 'WHITEBOARD':
-			workplace.style.height = ( h - 0 ) + 'px';
-			wpwm.style.height = ( h - wpwh ) + 'px';
+			workplace.style.height	= ( h - 0 ) + 'px';
+			wpwm.style.height 		= ( h - wpwh ) + 'px';
 			break;
 		case 'CHILDREN':
-			children.style.height = ( h - 0 ) + 'px';
-			wpcm.style.height = ( h - wpch ) + 'px';	// offset 252
+			children.style.height 	= ( h - 0 ) + 'px';
+			wpcm.style.height 		= ( h - wpch ) + 'px';	// offset 252
 			break;
 		case 'RANGE':
-			range.style.height = ( h - 0 ) + 'px';
+			range.style.height 		= ( h - 0 ) + 'px';
+			wprm.style.height 		= ( h - wprh ) + 'px';	// offset 252
 			break;
 	}
 
