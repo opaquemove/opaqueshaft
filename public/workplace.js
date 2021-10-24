@@ -58,7 +58,8 @@ function initWorkplace(){
 	new Button( 'WP_WHITEBOARD',  workplaceWhiteboard ).play();
 	new Button( 'WP_CHILDREN',    workplaceChildren ).play();
 	new Button( 'WP_RANGE',       workplaceRange ).play();
-	new Button( 'WP_SETTING',     accountProperty ).play();
+	new Button( 'WP_ACCOUNT',     workplaceAccount ).play();
+	// new Button( 'WP_ACCOUNT',     accountProperty ).play();
 	new Button( 'WP_SIGNIN',      signForm ).play();
 	new Button( 'WP_SIGNOUT',     signoutForm ).play();
 
@@ -96,7 +97,8 @@ function showWorkPlace(){
 	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
 	var wp_children		= document.getElementById('WP_CHILDREN');
 	var wp_range		= document.getElementById('WP_RANGE');
-	var wp_setting		= document.getElementById('WP_SETTING');
+	// var wp_setting		= document.getElementById('WP_SETTING');
+	var wp_account		= document.getElementById('WP_ACCOUNT');
 
 	if ( checkSign() ){
 		// signed
@@ -104,7 +106,8 @@ function showWorkPlace(){
 		wp_whiteboard.removeAttribute( 'disabled' );
 		wp_children.removeAttribute( 'disabled' );
 		wp_range.removeAttribute( 'disabled' );
-		wp_setting.removeAttribute( 'disabled' );
+		wp_account.removeAttribute( 'disabled' );
+		// wp_setting.removeAttribute( 'disabled' );
 		// wp_open.removeAttribute( 'disabled' );
 		wp_siginout.removeAttribute( 'disabled' );
 		wp_signin.style.visibility		= 'hidden';
@@ -112,7 +115,8 @@ function showWorkPlace(){
 		wp_whiteboard.style.visibility	= 'visible';
 		wp_children.style.visibility	= 'visible';
 		wp_range.style.visibility	= 'visible';
-		wp_setting.style.visibility	= 'visible';
+		// wp_setting.style.visibility	= 'visible';
+		wp_account.style.visibility	= 'visible';
 	} else {
 		// not sign
 		wp_signin.removeAttribute( 'disabled' );
@@ -120,14 +124,16 @@ function showWorkPlace(){
 		wp_whiteboard.setAttribute( 'disabled', 'true' );
 		wp_children.setAttribute( 'disabled', 'true' );
 		wp_range.setAttribute( 'disabled', 'true' );
-		wp_setting.setAttribute( 'disabled', 'true' );
+		wp_account.setAttribute( 'disabled', 'true' );
+		// wp_setting.setAttribute( 'disabled', 'true' );
 		// wp_open.setAttribute( 'disabled', 'true' );
 		wp_signin.style.visibility		= 'visible';
 		wp_siginout.style.visibility	= 'hidden';
 		wp_whiteboard.style.visibility	= 'hidden';
 		wp_children.style.visibility	= 'hidden';
 		wp_range.style.visibility	= 'hidden';
-		wp_setting.style.visibility	= 'hidden';
+		// wp_setting.style.visibility	= 'hidden';
+		wp_account.style.visibility	= 'hidden';
 	}
 
 	resizeWorkplace();
@@ -834,7 +840,7 @@ function workplaceRange(){
 
 	resizeWorkplace();
 
-	workplaceRangeHelper( list );
+	workplaceRangeHelper( );
 
 	list.addEventListener('click',
 		function (e){
@@ -888,7 +894,9 @@ function workplaceRange(){
 				o.appendChild( op ).addEventListener('click',
 				function(e){
 					e.stopPropagation();
-					console.log('delete range');
+					var range_id = this.parentNode.getAttribute('range_id');
+					console.log('delete range_id:' + range_id );
+					deleteRange( this.parentNode, range_id );
 				}, false );
 			}
 
@@ -896,7 +904,10 @@ function workplaceRange(){
 	, false);
 
 }
-function workplaceRangeHelper( p ){
+function workplaceRangeHelper(){
+
+	var p	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
+
 	p.innerHTML = '';
 
 	var xmlhttp = new XMLHttpRequest();
@@ -917,6 +928,7 @@ function workplaceRangeHelper( p ){
 						var o = document.createElement('DIV');
 						o.classList.add( 'range' );
 						o.classList.add( 'unselected' );
+						o.setAttribute('range_id', result[i].range_id );
 						o.innerHTML				= result[i].range_id;
 						p.appendChild( o );
 
@@ -936,7 +948,68 @@ function workplaceRangeHelper( p ){
 		oLog.log( null, 'workplaceRangeHelper : ' + e );
 		oLog.open( 3 );
 	}
+}
+//
+//
+//
+function addRange(  ){
+	var range_id = document.getElementById('WP_RANGE_ID').value;
 
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					console.log('addRange success');
+					workplaceRangeHelper();
+				} else{
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/rangeadd", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'range_id=' + range_id );
+	} catch ( e ) {
+		oLog.log( null, 'deleteRange : ' + e );
+		oLog.open( 3 );
+	}
+}
+//
+//
+//
+function deleteRange( obj, range_id ){
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					obj.parentNode.removeChild( obj );
+					console.log('deleteRange success');
+				} else{
+					// p.innerText = xmlhttp.status;
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/rangedelete", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'range_id=' + range_id );
+	} catch ( e ) {
+		oLog.log( null, 'deleteRange : ' + e );
+		oLog.open( 3 );
+	}
 }
 
 
@@ -949,6 +1022,37 @@ function todayWhiteboard(){
 	var ymd = y + '/' + m + '/' + d;
 	guidedance_whiteboard_form.day.value = ymd;
 	createWhiteboard();
+}
+
+
+//
+//		レンジ
+//
+function workplaceAccount(){
+	workplace_id = 'ACCOUNT';
+	var icon	= document.getElementById('WORKPLACE_ICON');
+	var hdr		= document.getElementById('WORKPLACE_HDR');
+	var list	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
+
+	//	TAB
+	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
+	var current 	= document.getElementById('TAB_CURRENT');
+	var current2	= document.getElementById('TAB_CURRENT2');
+	tab.style.visibility 		= 'visible';
+	current.style.visibility 	= 'visible';
+	current.innerText 			= 'account';
+	current2.style.visibility	= 'visible';
+
+	if ( icon.style.height == '0px'){
+		icon.style.height		= icon.getAttribute('orgHeight');
+		hdr.style.height		= hdr.getAttribute('orgHeight');
+	} else {
+		icon.setAttribute('orgHeight', icon.style.height );
+		icon.style.height		= '0px';
+		hdr.style.height		= '0px';
+	}
+
+	resizeWorkplace();
 }
 
 //

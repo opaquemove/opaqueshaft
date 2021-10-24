@@ -326,9 +326,53 @@ router.post('/whiteboardupdate', function(req, res, next ){
 //
 router.post('/rangelist', function(req, res, next ){
   res.header('Content-Type', 'application/json;charset=utf-8');
-  db.any( 'SELECT * FROM ranges ORDER BY sotd ASC' )
+  db.any( 'SELECT * FROM ranges ORDER BY range_id ASC' )
     .then( rows => {
           res.json( rows );
+    });
+});
+//
+//  レンジを追加
+//
+router.post('/rangeadd', function(req, res, next ){
+  var range_id = req.body.range_id;
+  var sotd = new Date( range_id + '/4/1' );
+  var eotd = new Date( range_id + '/4/1' );
+  eotd.setFullYear( eotd.getFullYear() + 1 );
+  eotd.setDate( eotd.getDate() - 1 );
+
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.none(
+     {
+      text: 'INSERT INTO ranges VALUES( $1, $2, $3 )',
+      values: [ range_id, sotd, eotd ]
+      } )
+    .then( function(){ 
+      res.json( {status: 'SUCCESS', message:  'add range:' + range_id });
+      console.log( {status: 'SUCCESS', message:  'add range:' + range_id });
+    } )
+    .catch ( err => {
+      console.log( err );
+    });
+});
+//
+//  レンジを削除
+//
+router.post('/rangedelete', function(req, res, next ){
+  var range_id = req.body.range_id;
+
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.none(
+     {
+      text: 'DELETE FROM ranges WHERE range_id = $1',
+      values: [ range_id ]
+      } )
+    .then( function(){ 
+      res.json( {status: 'SUCCESS', message:  'delete range:' + range_id });
+      console.log( {status: 'SUCCESS', message:  'delete range:' + range_id });
+    } )
+    .catch ( err => {
+      console.log( err );
     });
 });
 

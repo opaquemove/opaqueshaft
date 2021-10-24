@@ -69,7 +69,7 @@
 					<div id="WP_WHITEBOARD" class="summary_box" style="width:25%;height:25%;font-weight:bold;font-size:12px;" >WHITEBOARD</div>					
 					<div id="WP_CHILDREN"   class="summary_box" style="width:25%;height:25%;font-weight:bold;" >CHILDREN</div>
 					<div id="WP_RANGE"      class="summary_box" style="width:25%;height:25%;font-weight:bold;" >RANGE</div>
-					<div id="WP_SETTING"    class="summary_box" style="width:25%;height:25%;font-weight:bold;" >SETTINGS</div>
+					<div id="WP_ACCOUNT"    class="summary_box" style="width:25%;height:25%;font-weight:bold;" >ACCOUNT</div>
 					<div id="WP_SIGNIN"     class="summary_box" style="width:25%;height:25%;font-weight:bold"  >SIGN IN</div>
 					<div id="WP_SIGNOUT"    class="summary_box" style="width:25%;height:25%;font-weight:bold;" >SIGN OUT</div>
 
@@ -155,11 +155,17 @@
 					<div style="float: left;height:100%;" >
 						<div style="padding-top:8px;">
 							<button id="WP_CREATERANGE" class="workplace_button_small"
-								onclick="" >
+								onclick="addRange()" >
 							</button>
 						</div>
 					</div>
-				</div>
+					<div style="float: left;height:100%;" >
+						<div style="padding-top:8px;">
+							<button id="WP_REFRESHRANGE" class="workplace_button_small"
+								onclick="workplaceRangeHelper()" >
+							</button>
+						</div>
+					</div>
 				<div id="WORKPLACE_RANGE_MAIN" >
 					<div id="WORKPLACE_RANGE_MAIN_LIST" ></div>
 				</div>
