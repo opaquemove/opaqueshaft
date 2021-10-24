@@ -151,6 +151,7 @@ function workplaceReset(){
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 	var range	= document.getElementById('WORKPLACE_RANGE');
+	var account	= document.getElementById('WORKPLACE_ACCOUNT');
 
 	if ( icon.style.height == '0px'){
 		icon.style.height = icon.getAttribute('orgHeight');
@@ -162,6 +163,7 @@ function workplaceReset(){
 	wb.style.height			= '0px';
 	children.style.height	= '0px';
 	range.style.height		= '0px';
+	account.style.height	= '0px';
 
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
@@ -1026,13 +1028,13 @@ function todayWhiteboard(){
 
 
 //
-//		レンジ
+//		アカウント
 //
 function workplaceAccount(){
 	workplace_id = 'ACCOUNT';
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
-	var list	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
+	var list	= document.getElementById('WORKPLACE_ACCUNT_MAIN_LIST');
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
@@ -1223,6 +1225,10 @@ function resizeWorkplace(){
 	var wprm		= document.getElementById('WORKPLACE_RANGE_MAIN');
 	var rlist		= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
 
+	var account		= document.getElementById('WORKPLACE_ACCOUNT');
+	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
+	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
+	var alist		= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
 	console.log( 'resizeWorkplace' );
 
@@ -1239,7 +1245,11 @@ function resizeWorkplace(){
 			range.style.height 		= ( h - 0 ) + 'px';
 			wprm.style.height 		= ( h - wprh ) + 'px';	// offset 252
 			break;
-	}
+		case 'ACCOUNT':
+			account.style.height 	= ( h - 0 ) + 'px';
+			wpam.style.height 		= ( h - wpah ) + 'px';	// offset 252
+			break;
+		}
 
 }
 

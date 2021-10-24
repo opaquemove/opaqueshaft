@@ -124,8 +124,8 @@
     background-position: center center;
 }
 #WP_RANGE{
-    background-image:url(images/management.png);
-    background-size:26px;
+    background-image:url(images/annual-calendar-page.png);
+    background-size:16px;
     background-repeat:no-repeat;
     background-position: center center;
 }
@@ -308,6 +308,38 @@
     transition:     all 0.3s ease-in-out;
 
 }
+
+#WORKPLACE_ACCOUNT{
+    width:100%;
+    height:0px;
+    overflow:hidden;
+    font-size:16px;
+    border-bottom:gray;
+    text-align:center;
+    transition:all 0.3s ease-in-out;
+}
+#WORKPLACE_ACCOUNT_HDR{
+    margin:0 auto;
+    width:350px;
+    height:80px;
+}
+#WORKPLACE_ACCOUNT_MAIN{
+    margin:0 auto;
+    width:100%;
+    background-color:transparent;
+    overflow:scroll;
+} 
+#WORKPLACE_ACCOUNT_MAIN_LIST{
+    width:100%;
+    background-color:       transparent;
+	display:				flex;
+	flex-wrap:				wrap;
+	justify-content: 		center;
+	align-items:            flex-start;
+	align-content:          space-between;
+    overflow:               auto;
+} 
+
 
 
 .workplace_button{
