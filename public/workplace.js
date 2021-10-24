@@ -886,7 +886,7 @@ function workplaceRange(){
 				o.classList.add('left40');
 				var op = document.createElement('DIV');
 				op.classList.add('op');
-				op.classList.add('delete_range');
+				op.classList.add('delete_object');
 				op.style.position			= 'absolute';
 				op.style.top				= '0px';
 				op.style.left				= ( o.offsetWidth + 4 ) + 'px';
@@ -1034,7 +1034,7 @@ function workplaceAccount(){
 	workplace_id = 'ACCOUNT';
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
-	var list	= document.getElementById('WORKPLACE_ACCUNT_MAIN_LIST');
+	var list	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
@@ -1055,7 +1055,186 @@ function workplaceAccount(){
 	}
 
 	resizeWorkplace();
+	workplaceAccountHelper();
+
+	list.addEventListener( 'click',
+		function(e){
+			var o = e.target;
+			while( true ){
+				if ( o == this ){
+					for ( var i=0; i<this.childNodes.length; i++ ){
+						var c = this.childNodes[i];
+						if ( c.hasAttribute('selected')){
+							c.removeAttribute('selected');
+							c.classList.remove('selected');
+							c.classList.remove('left40');
+							c.removeChild( c.getElementsByClassName('op')[0] );
+						}	
+					}
+					return;
+				} 
+				if ( o.classList.contains('account')) break;
+				o = o.parentNode;
+			}
+
+			for ( var i=0; i<this.childNodes.length; i++ ){
+				var c = this.childNodes[i];
+				if ( c == o ) continue;
+				if ( c.hasAttribute('selected')){
+					c.removeAttribute('selected');
+					c.classList.remove('selected');
+					c.classList.remove('left40');
+					c.removeChild( c.getElementsByClassName('op')[0] );
+				}	
+			}
+
+			if ( o.hasAttribute('selected')){
+				o.removeAttribute('selected');
+				o.classList.remove('selected');
+				o.classList.remove('left40');
+				o.removeChild( o.getElementsByClassName('op')[0] );
+			} else{
+				o.setAttribute('selected', 'true');
+				o.classList.add('selected');
+				o.classList.add('left40');
+				var op = document.createElement('DIV');
+				op.classList.add('op');
+				op.classList.add('delete_object');
+				op.style.position			= 'absolute';
+				op.style.top				= '0px';
+				op.style.left				= ( o.offsetWidth + 4 ) + 'px';
+				op.style.width				= '30px';
+				op.style.height				= '38px';
+				op.style.backgroundColor	= '';
+				var r = '';
+				r += '<button class="workplace_edit_button_small" cmd="edit" ></button>';
+				r += '<button class="workplace_delete_button_small" cmd="delete" ></button>';
+				op.innerHTML = r;
+				o.appendChild( op ).addEventListener('click',
+				function(e){
+					e.stopPropagation();
+					var o = e.target;
+					var cmd = '';
+					while(true){
+						if ( o == this ) return;
+						if ( o.hasAttribute('cmd')){
+							cmd = o.getAttribute('cmd');
+							break;
+						}
+					}
+					var acc_id = this.parentNode.getAttribute('acc_id');
+					switch ( cmd ){
+						case 'edit':
+							break;
+						case 'delete':
+							break;
+					}
+					console.log( cmd + ' acc_id:' + acc_id );
+					// deleteRange( this.parentNode, acc_id );
+				}, false );
+			}
+		}, false );
+
+	
 }
+
+function workplaceAccountHelper(){
+
+	var p	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+
+	p.innerHTML = '';
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				// var o = document.getElementById( 'WHITEBOARD_LIST' );
+				p.innerText = 'access...';
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					p.innerText = '';
+
+					for ( var i=0; i<result.length; i++ ){
+						var acc_id = result[i].acc_id;
+						var acc_name = result[i].acc_name;
+						var priv	 = result[i].priv;
+						var imagefile= result[i].imagefile;
+						if ( imagefile == null || imagefile == '')
+							imagefile = '';
+
+						var o = document.createElement('DIV');
+						o.classList.add( 'account' );
+						o.classList.add( 'unselected' );
+						o.setAttribute('acc_id', acc_id );
+						var r = '';
+						r += '<div style="float:left;width:80px;height:100%;" class="vh-center" >';
+							if ( imagefile != '' ){
+								r += '<div style="width:42px;height:42px;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no_repeat;" >';
+								r += '</div>';
+							} else {
+								r += '<div style="width:42px;height:42px;border-radius:50%;background-image:url(./images/user-2.png);background-size:cover;background-position:center center;background-repeat:no_repeat;" >';
+								r += '</div>';
+							}
+						r += '</div>';
+						r += '<div style="float:left;width:auto;height:100%;"  >';
+							r += '<div style="padding:2px;font-weight:bold;" >' + acc_id + '</div>';
+							r += '<div style="padding:2px;" >' + acc_name  + '</div>';
+							r += '<div style="padding:2px;" >' + priv      + '</div>';
+						r += '</div>';
+
+						r += '<div class="appendix" style="clear:both;width:auto;height:auto;display:none;" >';
+							r += '<form onsubmit="return false;" >';
+							var privs = [ 'admin', 'editor', 'guest' ];
+							for ( var j=0; j<privs.length; j++ ){
+								var checked = ( priv == privs[j] ) ? ' checked ' : '';
+								r += '<input type="radio" id="acc_priv_' + acc_id + '_' + j + '" name="acc_priv_" ' + privs[j] + ' value="' + privs[j] + '"  ' + checked + '  />';
+								r += '<label for="acc_priv_' + acc_id + '_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
+							}
+							r += '</form>';
+						r += '</div>';
+
+						o.innerHTML		= r;
+						p.appendChild( o );
+					}
+
+					// bottom padding
+					var c = document.createElement('DIV');
+					c.classList.add( "account" );
+					c.style.color				= 'red';
+					c.style.fontSize 			= '12px';
+					c.style.border				= 'none';
+					c.style.backgroundImage		= 'url(./images/restriction.png)';
+					c.style.backgroundSize		= '14px';
+					c.style.backgroundRepeat 	= 'no-repeat';
+					c.style.backgroundPosition	= 'top 40px  center';
+
+					c.style.pointerEvents = 'none';
+					c.style.height = ( p.parentNode.offsetHeight - 20 ) + 'px';
+					c.innerHTML = 'bottom margin';
+					var cc = p.appendChild( c );
+					
+
+				} else{
+					p.innerText = xmlhttp.status;
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/list", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send(  );
+	} catch ( e ) {
+		oLog.log( null, 'workplaceAccountHelper : ' + e );
+		oLog.open( 3 );
+	}
+
+}
+
 
 //
 //	チルドレンをクリック

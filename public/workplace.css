@@ -273,7 +273,13 @@
     background-repeat:no-repeat;
     background-position: center center;
 }
-.delete_range{
+.edit_object{
+    background-image:url(images/document-editor.png);
+    background-size:14px;
+    background-repeat:no-repeat;
+    background-position: center center;
+}
+.delete_object{
     background-image:url(images/minus-2.png);
     background-size:14px;
     background-repeat:no-repeat;
@@ -339,7 +345,33 @@
 	align-content:          space-between;
     overflow:               auto;
 } 
+#WP_FINDACCOUNT{
+    background-image:url(images/bleach2.png);
+    background-size:12px;
+    background-repeat:no-repeat;
+    background-position: center center;
+}
+#WP_REFRESHACCOUNT{
+    background-image:url(images/recycle.png);
+    background-size:14px;
+    background-repeat:no-repeat;
+    background-position: center center;
+}
 
+.account{
+    position:               relative;
+	width:			        calc( 50% - 4px );       /* 180px; */
+    height:			        80px;
+	font-size:		        12px;
+	color:					gray;
+	background-color:		white;
+    border:			        1px solid lightgrey;
+    padding:	            2px;
+	margin:					1px 1px 1px 1px;
+    border-radius:	        4px;
+    overflow:               visible;
+    transition:             all 0.3s ease-in-out;
+}
 
 
 .workplace_button{
@@ -355,41 +387,67 @@
 }
 .workplace_button_small{
     width:30px;
-    height:36px;
-    border:1px;
-    border-radius:4px;
-    background-color:white;
-    background-image:url();
-    background-size:26px;
-    background-repeat:no-repeat;
-    background-position: center top 10px;
+    height:                 36px;
+    border:                 1px;
+    border-radius:          4px;
+    background-color:       white;
+    background-image:       url();
+    background-size:        26px;
+    background-repeat:      no-repeat;
+    background-position:    center top 10px;
 }
 
 .workplace_edit_button{
-    width:42px;
-    height:42px;
-    color:snow;
-    font-size:12px;
-    border:1px;
+    width:                  42px;
+    height:                 42px;
+    color:                  snow;
+    font-size:              12px;
+    border:                 1px;
+    border-radius:          4px;
+    background-color:       rgb(92, 126, 230);
+    background-image:       url(images/document-editor.png);
+    background-size:        12px;
+    background-repeat:      no-repeat;
+    background-position:    right 4px bottom 4px;
+}
+.workplace_edit_button_small{
+    width:                  36px;
+    height:                 36px;
+    color:                  snow;
+    font-size:              12px;
+    border:                 1px solid lightgrey;
     border-radius:4px;
-    background-color:rgb(92, 126, 230);
-    background-image:url(images/document-editor.png);
-    background-size:12px;
-    background-repeat:no-repeat;
-    background-position: right 4px bottom 4px;
+    background-color:       white;
+    background-image:       url(images/document-editor.png);
+    background-size:        12px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
 }
 .workplace_delete_button{
-    width:42px;
-    height:42px;
-    color:snow;
-    font-size:12px;
-    border:1px;
-    border-radius:4px;
-    background-color:rgb(231, 78, 78);
-    background-image:url(images/minus-2.png);
-    background-size:12px;
-    background-repeat:no-repeat;
-    background-position: right 4px bottom 4px;
+    width:                  42px;
+    height:                 42px;
+    color:                  snow;
+    font-size:              12px;
+    border:                 1px;
+    border-radius:          4px;
+    background-color:       rgb(231, 78, 78);
+    background-image:       url(images/minus-2.png);
+    background-size:        12px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
+}
+.workplace_delete_button_small{
+    width:                  36px;
+    height:                 36px;
+    color:                  snow;
+    font-size:              12px;
+    border:                 1px solid lightgrey;
+    border-radius:          4px;
+    /* background-color:rgb(231, 78, 78); */
+    background-image:       url(images/minus-2.png);
+    background-size:        12px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
 }
 
 .WP_PALLETE_CHILD{

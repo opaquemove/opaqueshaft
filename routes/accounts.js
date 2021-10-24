@@ -34,12 +34,28 @@ router.post('/', function(req, res, next ){
 //
 //  アカウントリスト取得
 //
-router.get('/list', function(req, res, next ){
-    db.any( 'SELECT * FROM accounts ' )
-      .then( rows => {
-            res.json( rows );
-      });
+// router.get('/list', function(req, res, next ){
+//     db.any( 'SELECT * FROM accounts ' )
+//       .then( rows => {
+//             res.json( rows );
+//       });
+// });
+
+//
+//  アカウントリスト取得
+//
+router.post('/list', function(req, res, next ){
+  // var keyword = req.body.keyword;
+  // var id  = req.cookies.acc;
+  // console.log('childfind:' + keyword );
+
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.any( "SELECT * FROM accounts ORDER BY acc_id ASC" )
+    .then( rows => {
+          res.json( rows );
+    });
 });
+
 
 //
 //  アカウントプロパティ取得
