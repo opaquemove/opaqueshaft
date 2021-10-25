@@ -1069,6 +1069,7 @@ function workplaceAccount(){
 							c.classList.remove('selected');
 							c.classList.remove('left40');
 							c.classList.remove('height160');
+							wp_editAccount( c );
 							c.removeChild( c.getElementsByClassName('op')[0] );
 						}	
 					}
@@ -1086,6 +1087,7 @@ function workplaceAccount(){
 					c.classList.remove('selected');
 					c.classList.remove('left40');
 					c.classList.remove('height160');
+					wp_editAccount( c );
 					c.removeChild( c.getElementsByClassName('op')[0] );
 				}	
 			}
@@ -1095,6 +1097,7 @@ function workplaceAccount(){
 				o.classList.remove('selected');
 				o.classList.remove('left40');
 				o.classList.remove('height160');
+				wp_editAccount( o );
 				o.removeChild( o.getElementsByClassName('op')[0] );
 			} else{
 				o.setAttribute('selected', 'true');
