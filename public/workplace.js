@@ -1175,8 +1175,9 @@ function workplaceAccountHelper(){
 						o.classList.add( 'account' );
 						o.classList.add( 'unselected' );
 						o.setAttribute('acc_id', acc_id );
+						o.style.textAlign = 'left';
 						var r = '';
-						r += '<div style="float:left;width:80px;height:100%;" class="vh-center" >';
+						r += '<div style="float:left;width:80px;height:80px;" class="vh-center" >';
 							if ( imagefile != '' ){
 								r += '<div style="width:42px;height:42px;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no_repeat;" >';
 								r += '</div>';
@@ -1185,7 +1186,7 @@ function workplaceAccountHelper(){
 								r += '</div>';
 							}
 						r += '</div>';
-						r += '<div style="float:left;width:auto;height:100%;"  >';
+						r += '<div style="float:left;width:calc(100% - 80px);height:80px;"  >';
 							r += '<div style="padding:2px;font-weight:bold;" >' + acc_id + '</div>';
 							r += '<div style="padding:2px;" >' + acc_name  + '</div>';
 							r += '<div style="padding:2px;" >' + priv      + '</div>';
@@ -1193,12 +1194,15 @@ function workplaceAccountHelper(){
 
 						r += '<div class="appendix" style="float:none;width:auto;height:auto;display:none;" >';
 							r += '<form onsubmit="return false;" >';
+							r += '<div>Profeel</div>';
 							var privs = [ 'admin', 'editor', 'guest' ];
+							r += '<div style="width:160px;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;" >';
 							for ( var j=0; j<privs.length; j++ ){
 								var checked = ( priv == privs[j] ) ? ' checked ' : '';
 								r += '<input type="radio" id="acc_priv_' + acc_id + '_' + j + '" name="acc_priv_" ' + privs[j] + ' value="' + privs[j] + '"  ' + checked + '  />';
 								r += '<label for="acc_priv_' + acc_id + '_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
 							}
+							r += '</div>';
 							r += '</form>';
 						r += '</div>';
 
@@ -1245,6 +1249,7 @@ function wp_editAccount( p ){
 	var apdxs = p.getElementsByClassName('appendix');
 	for ( var i=0; i<apdxs.length; i++ ){
 		apdxs[i].style.display = ( flg ) ? 'inline' : 'none';
+		apdxs[i].style.pointerEvents = 'none';
 	}
 }
 
