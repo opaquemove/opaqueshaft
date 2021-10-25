@@ -1068,6 +1068,7 @@ function workplaceAccount(){
 							c.removeAttribute('selected');
 							c.classList.remove('selected');
 							c.classList.remove('left40');
+							c.classList.remove('height160');
 							c.removeChild( c.getElementsByClassName('op')[0] );
 						}	
 					}
@@ -1084,6 +1085,7 @@ function workplaceAccount(){
 					c.removeAttribute('selected');
 					c.classList.remove('selected');
 					c.classList.remove('left40');
+					c.classList.remove('height160');
 					c.removeChild( c.getElementsByClassName('op')[0] );
 				}	
 			}
@@ -1092,6 +1094,7 @@ function workplaceAccount(){
 				o.removeAttribute('selected');
 				o.classList.remove('selected');
 				o.classList.remove('left40');
+				o.classList.remove('height160');
 				o.removeChild( o.getElementsByClassName('op')[0] );
 			} else{
 				o.setAttribute('selected', 'true');
@@ -1125,6 +1128,8 @@ function workplaceAccount(){
 					var acc_id = this.parentNode.getAttribute('acc_id');
 					switch ( cmd ){
 						case 'edit':
+							this.parentNode.classList.toggle('height160');
+							wp_editAccount( this.parentNode );
 							break;
 						case 'delete':
 							break;
@@ -1186,7 +1191,7 @@ function workplaceAccountHelper(){
 							r += '<div style="padding:2px;" >' + priv      + '</div>';
 						r += '</div>';
 
-						r += '<div class="appendix" style="clear:both;width:auto;height:auto;display:none;" >';
+						r += '<div class="appendix" style="float:none;width:auto;height:auto;display:none;" >';
 							r += '<form onsubmit="return false;" >';
 							var privs = [ 'admin', 'editor', 'guest' ];
 							for ( var j=0; j<privs.length; j++ ){
@@ -1235,6 +1240,13 @@ function workplaceAccountHelper(){
 
 }
 
+function wp_editAccount( p ){
+	var flg = p.classList.contains('height160');
+	var apdxs = p.getElementsByClassName('appendix');
+	for ( var i=0; i<apdxs.length; i++ ){
+		apdxs[i].style.display = ( flg ) ? 'inline' : 'none';
+	}
+}
 
 //
 //	チルドレンをクリック

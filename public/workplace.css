@@ -524,6 +524,10 @@
     height:480px;
     /* opacity: 0.8; */
 }
+.height160{
+    height:160px;
+    /* opacity: 0.8; */
+}
 .calendar_detail_visible{
     position		:'relative';
     width			: 100%;
