@@ -1135,6 +1135,7 @@ function workplaceAccount(){
 							wp_editAccount( this.parentNode );
 							break;
 						case 'delete':
+							wp_deleteAccount( this.parentNode );
 							break;
 					}
 					console.log( cmd + ' acc_id:' + acc_id );
@@ -1247,6 +1248,38 @@ function workplaceAccountHelper(){
 
 }
 
+function addAccount(){
+	var p	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+	var o = document.createElement('DIV');
+	o.classList.add('account');
+	o.style.textAlign	= 'left';
+	o.style.height 		= '200px';
+	var r = '';
+	r += '<div>add account...</div>';
+	r += '<form onsubmit="return false;" >';
+		r += '<div>acc_id:</div>';
+		r += '<div>';
+			r += '<input type="text" name="acc_id"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+		r += '</div>';
+		r += '<div>acc_name:</div>';
+		r += '<div>';
+			r += '<input type="text" name="acc_name"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+		r += '</div>';
+		var privs = [ 'admin', 'editor', 'guest' ];
+		r += '<div>priveledge:</div>';
+		r += '<div style="width:160px;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;" >';
+		for ( var j=0; j<privs.length; j++ ){
+			r += '<input type="radio" id="acc_priv_' + j + '" name="acc_priv_" ' + privs[j] + ' value="' + privs[j] + '"   />';
+			r += '<label for="acc_priv_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
+		}
+		r += '</div>';
+
+	r += '</form>';
+	o.innerHTML = r;
+
+	p.prepend( o )
+}
+
 function wp_editAccount( p ){
 	var flg = p.classList.contains('height160');
 	var apdxs = p.getElementsByClassName('appendix');
@@ -1254,6 +1287,9 @@ function wp_editAccount( p ){
 		apdxs[i].style.display = ( flg ) ? 'inline' : 'none';
 		apdxs[i].style.pointerEvents = 'none';
 	}
+}
+function wp_deleteAccount( p ){
+	p.parentNode.removeChild( p );
 }
 
 //

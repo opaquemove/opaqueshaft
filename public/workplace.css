@@ -351,6 +351,13 @@
     background-repeat:no-repeat;
     background-position: center center;
 }
+#WP_CREATEACCOUNT{
+    background-image:url(images/plus3.png);
+    background-size:14px;
+    background-repeat:no-repeat;
+    background-position: center center;
+}
+
 #WP_REFRESHACCOUNT{
     background-image:url(images/recycle.png);
     background-size:14px;
