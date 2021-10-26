@@ -85,19 +85,21 @@ router.post('/existaccount', function(req, res, next ){
 //  アカウント登録
 //
 router.post('/registaccount', function(req, res, next ){
-  var acc_id    = req.body.acc_id;
-  var acc_name  = req.body.acc_name;
-  var acc_priv  = req.body.acc_priv;
+  var acc_id        = req.body.acc_id;
+  var acc_name      = req.body.acc_name;
+  var acc_priv      = req.body.acc_priv;
+  var acc_imagefile = req.body.acc_imagefile;
 
   console.log( 'acc_id:'   + acc_id );
   console.log( 'acc_name:' + acc_name );
   console.log( 'acc_priv:' + acc_priv );
+  console.log( 'acc_imagefile:' + acc_imagefile );
 
   res.header('Content-Type', 'application/json;charset=utf-8');
 
   db.none( {
     text: 'INSERT INTO accounts (acc_id, acc_name, password, range_id, priv, imagefile ) VALUES($1,$2,$3,$4,$5,$6)',
-    values: [ acc_id,acc_name, 'password', 2021, acc_priv, null ] } )
+    values: [ acc_id,acc_name, 'password', 2021, acc_priv, acc_imagefile ] } )
   .then( function() {
     res.json( {status: 'SUCCESS', message:  'regist account'});
   })
