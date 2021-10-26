@@ -365,6 +365,20 @@
     background-position: center center;
 }
 
+.add_account{
+    position:               relative;
+	width:			        calc( 50% - 4px );       /* 180px; */
+    height:			        370px;
+	font-size:		        12px;
+	color:					gray;
+	background-color:		white;
+    border:			        1px solid lightgrey;
+    padding:	            2px;
+	margin:					1px 1px 1px 1px;
+    border-radius:	        4px;
+    overflow:               visible;
+    transition:             all 0.3s ease-in-out;
+}
 .account{
     position:               relative;
 	width:			        calc( 50% - 4px );       /* 180px; */

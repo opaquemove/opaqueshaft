@@ -45,12 +45,14 @@ router.post('/', function(req, res, next ){
 //  アカウントリスト取得
 //
 router.post('/list', function(req, res, next ){
-  // var keyword = req.body.keyword;
+  var keyword = req.body.keyword;
   // var id  = req.cookies.acc;
   // console.log('childfind:' + keyword );
 
   res.header('Content-Type', 'application/json;charset=utf-8');
-  db.any( "SELECT * FROM accounts ORDER BY acc_id ASC" )
+  db.any( {
+        text : "SELECT * FROM accounts WHERE ( acc_id ILIKE '" + keyword + "%' OR acc_name ILIKE '" + keyword + "%' ) ORDER BY acc_id ASC",
+        values : [] } )
     .then( rows => {
           res.json( rows );
     });
@@ -58,22 +60,90 @@ router.post('/list', function(req, res, next ){
 
 
 //
+//  アカウント存在チェック１
+//
+router.post('/existaccount', function(req, res, next ){
+    var acc_id = req.body.acc_id;
+    console.log( 'acc_id:' + acc_id );
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    if ( acc_id == null || acc_id == '' ){
+        res.json( { status : 'FAILED', message : 'acc_id(' + acc_id + ') がnull.' } );
+    }else {
+        db.one( {
+            text: 'SELECT acc_id FROM accounts WHERE acc_id = $1 ',
+            values: [acc_id] } )
+          .then( rows => {
+                res.json( { status : 'EXIST', message : 'acc_id はすでに存在.' } );
+          })
+          .catch( err => {
+                res.json( { status : 'NOENTRY', message : 'acc_id は登録されていない.' } )
+          });
+    }
+});
+
+//
+//  アカウント登録
+//
+router.post('/registaccount', function(req, res, next ){
+  var acc_id    = req.body.acc_id;
+  var acc_name  = req.body.acc_name;
+  var acc_priv  = req.body.acc_priv;
+
+  console.log( 'acc_id:'   + acc_id );
+  console.log( 'acc_name:' + acc_name );
+  console.log( 'acc_priv:' + acc_priv );
+
+  res.header('Content-Type', 'application/json;charset=utf-8');
+
+  db.none( {
+    text: 'INSERT INTO accounts (acc_id, acc_name, password, range_id, priv, imagefile ) VALUES($1,$2,$3,$4,$5,$6)',
+    values: [ acc_id,acc_name, 'password', 2021, acc_priv, null ] } )
+  .then( function() {
+    res.json( {status: 'SUCCESS', message:  'regist account'});
+  })
+  .catch( err => {
+    res.json( {status: 'FAILED', message:  err });
+  });
+});
+
+//
+//  アカウント削除
+//
+router.post('/deleteaccount', function(req, res, next ){
+  var acc_id    = req.body.acc_id;
+
+  console.log( 'acc_id:'   + acc_id );
+
+  res.header('Content-Type', 'application/json;charset=utf-8');
+
+  db.none( {
+    text: 'DELETE FROM accounts WHERE acc_id = $1',
+    values: [ acc_id ] } )
+  .then( function() {
+    res.json( {status: 'SUCCESS', message:  'delete account'});
+  })
+  .catch( err => {
+    res.json( {status: 'FAILED', message:  err });
+  });
+});
+
+//
 //  アカウントプロパティ取得
 //
 router.post('/property', function(req, res, next ){
-    var id = req.body.acc;
-    console.log( 'acc:' + id );
-    res.header('Content-Type', 'application/json;charset=utf-8');
-    if ( id == null ){
-        res.json( null );
-    }else {
-        db.one( {
-            text: 'SELECT acc_id, acc_name, range_id FROM accounts WHERE acc_id = $1 ',
-            values: [id] } )
-          .then( rows => {
-                res.json( rows );
-          });
-    }
+  var id = req.body.acc;
+  console.log( 'acc:' + id );
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  if ( id == null ){
+      res.json( null );
+  }else {
+      db.one( {
+          text: 'SELECT acc_id, acc_name, range_id FROM accounts WHERE acc_id = $1 ',
+          values: [id] } )
+        .then( rows => {
+              res.json( rows );
+        });
+  }
 });
 
 //

@@ -1055,7 +1055,7 @@ function workplaceAccount(){
 	}
 
 	resizeWorkplace();
-	workplaceAccountHelper();
+//	workplaceAccountHelper();
 
 	list.addEventListener( 'click',
 		function(e){
@@ -1151,6 +1151,10 @@ function workplaceAccountHelper(){
 
 	var p	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
+	var keyword = document.getElementById( 'WP_ACCOUNT_ID' ).value;
+	if ( keyword == '' )
+		keyword = '%';
+
 	p.innerHTML = '';
 
 	var xmlhttp = new XMLHttpRequest();
@@ -1183,10 +1187,10 @@ function workplaceAccountHelper(){
 						var r = '';
 						r += '<div style="float:left;width:80px;height:80px;" class="vh-center" >';
 							if ( imagefile != '' ){
-								r += '<div style="width:42px;height:42px;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no_repeat;" >';
+								r += '<div style="width:42px;height:42px;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
 								r += '</div>';
 							} else {
-								r += '<div style="width:42px;height:42px;border-radius:50%;background-image:url(./images/user-2.png);background-size:cover;background-position:center center;background-repeat:no_repeat;" >';
+								r += '<div style="width:42px;height:42px;border-radius:50%;background-image:url(./images/user-2.png);background-size:14px;background-position:center center;background-repeat:no-repeat;" >';
 								r += '</div>';
 							}
 						r += '</div>';
@@ -1240,7 +1244,7 @@ function workplaceAccountHelper(){
 	try{
 		xmlhttp.open("POST", "/accounts/list", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send(  );
+		xmlhttp.send( 'keyword=' + keyword );
 	} catch ( e ) {
 		oLog.log( null, 'workplaceAccountHelper : ' + e );
 		oLog.open( 3 );
@@ -1250,34 +1254,191 @@ function workplaceAccountHelper(){
 
 function addAccount(){
 	var p	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+	if ( p.getElementsByClassName('add_account').length > 0 ) return;
 	var o = document.createElement('DIV');
-	o.classList.add('account');
+	o.classList.add('add_account');
 	o.style.textAlign	= 'left';
-	o.style.height 		= '200px';
 	var r = '';
-	r += '<div>add account...</div>';
-	r += '<form onsubmit="return false;" >';
+	r += '<form name="accountForm" onsubmit="return false;" >';
 		r += '<div>acc_id:</div>';
-		r += '<div>';
-			r += '<input type="text" name="acc_id"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+		r += '<div style="padding-top:4px;" >';
+			r += '<input type="text" name="acc_id" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
 		r += '</div>';
-		r += '<div>acc_name:</div>';
-		r += '<div>';
-			r += '<input type="text" name="acc_name"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+		r += '<div style="padding-top:4px;" >acc_name:</div>';
+		r += '<div style="padding-top:4px;" >';
+			r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
 		r += '</div>';
 		var privs = [ 'admin', 'editor', 'guest' ];
-		r += '<div>priveledge:</div>';
+		r += '<div style="padding-top:4px;" >priveledge:</div>';
 		r += '<div style="width:160px;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;" >';
-		for ( var j=0; j<privs.length; j++ ){
-			r += '<input type="radio" id="acc_priv_' + j + '" name="acc_priv_" ' + privs[j] + ' value="' + privs[j] + '"   />';
-			r += '<label for="acc_priv_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
-		}
+			for ( var j=0; j<privs.length; j++ ){
+				r += '<input type="radio" id="acc_priv_' + j + '" name="acc_priv"  value="' + privs[j] + '"   />';
+				r += '<label for="acc_priv_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
+			}
+		r += '</div>';
+		r += '<div style="padding-top:4px;" >image file:</div>';
+		r += '<div style="padding-top:4px;" >';
+			r += '<input type="text" name="acc_imagefile" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+		r += '</div>';
+
+
+		r += '<div style="margin:0 auto;width:100%;text-align:center;padding-top:40px;">';
+			r += '<button id="" type="button" class="accept_button" ';
+			r += ' onclick=""   >';
+				r += 'add';
+			r += '</button>';
+
+			r += '<button id="" type="button" class="cancel_button" ';
+			r += '  >';
+				r += 'cancel';
+			r += '</button>'
+
 		r += '</div>';
 
 	r += '</form>';
 	o.innerHTML = r;
 
-	p.prepend( o )
+	p.prepend( o );
+	var accept = p.getElementsByClassName('accept_button');
+	accept[0].addEventListener('click',
+		function(e){
+			e.stopPropagation();
+			acceptAddAccount();
+		}, false );
+	var cancel = p.getElementsByClassName('cancel_button');
+	cancel[0].addEventListener('click',
+		function(e){
+			e.stopPropagation();
+			cancelAddAccount();
+		}, false );
+	
+}
+
+function acceptAddAccount(){
+	var acc_id   = accountForm.acc_id.value;
+	var acc_name = accountForm.acc_name.value;
+	var acc_priv = accountForm.acc_priv.value;
+	if ( acc_id == '' ){
+		accountForm.acc_id.focus();
+		oLog.log( null, 'acc_id を入力してください.' );
+		oLog.open(3);
+		return;
+	}
+	if ( acc_name == '' ){
+		accountForm.acc_name.focus();
+		oLog.log( null, 'acc_name を入力してください.' );
+		oLog.open(3);
+		return;
+	}
+	if ( acc_priv == '' ){
+		accountForm.acc_priv[0].focus();
+		oLog.log( null, 'priveledge を入力してください.' );
+		oLog.open(3);
+		return;
+	}
+
+	acceptAddAccountHelper( acc_id, acc_name, acc_priv );
+
+}
+
+function acceptAddAccountHelper( acc_id, acc_name, acc_priv ){
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						
+						var result = JSON.parse( xmlhttp.responseText );
+						console.log( result );
+						switch ( result.status ){
+							case 'EXIST':
+								oLog.log( null, 'acc_id はすでに登録されています.' );
+								oLog.open(5);
+								break;
+							case 'FAILED':
+								oLog.log( null, 'acc_id がnull あるいは空白.' );
+								oLog.open(5);
+								break;
+							case 'NOENTRY':
+								registAccount( acc_id, acc_name, acc_priv);
+								break;
+							}						
+
+
+					} else{
+						console.log( null, 'checkAcc_id:' + xmlhttp.status );
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/existaccount", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'acc_id=' + acc_id );
+
+
+}
+
+function registAccount( acc_id, acc_name, acc_priv ){
+	console.log('registAccount');
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						
+						var result = JSON.parse( xmlhttp.responseText );
+						console.log( result );
+						switch ( result.status ){
+							case 'SUCCESS':
+								oLog.log(null, 'アカウントを登録しました.' );
+								oLog.open(3);
+								break;
+							case 'FAILED':
+								oLog.log(null, 'アカウントの登録に失敗しました.' );
+								oLog.open(3);
+								break;
+						}						
+
+					} else{
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/registaccount", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'acc_id=' + acc_id + '&acc_name=' + acc_name + '&acc_priv=' + acc_priv );
+
+}
+
+function cancelAddAccount(){
+	var p	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+	var accform = p.getElementsByClassName('add_account');
+	if ( accform.length > 0 )
+		accform[0].parentNode.removeChild( accform[0] );
 }
 
 function wp_editAccount( p ){
@@ -1290,6 +1451,48 @@ function wp_editAccount( p ){
 }
 function wp_deleteAccount( p ){
 	p.parentNode.removeChild( p );
+	var acc_id = p.getAttribute('acc_id');
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						
+						var result = JSON.parse( xmlhttp.responseText );
+						console.log( result );
+						switch ( result.status ){
+							case 'SUCCESS':
+								oLog.log(null, 'アカウントを削除しました.' );
+								oLog.open(3);
+								break;
+							case 'FAILED':
+								oLog.log(null, 'アカウントの削除に失敗しました.' );
+								oLog.open(3);
+								break;
+						}						
+
+					} else{
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/deleteaccount", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'acc_id=' + acc_id );
+
+
 }
 
 //
