@@ -45,7 +45,9 @@ CREATE TABLE public.accounts (
     acc_name character varying(64),
     password character varying(64),
     range_id integer,
-    imagefile character varying(64)
+    imagefile character varying(64),
+    priv character varying(8),
+    delete_flag int
 );
 
 

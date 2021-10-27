@@ -1180,6 +1180,7 @@ function workplaceAccount(){
 				op.style.width				= '30px';
 				op.style.height				= '38px';
 				op.style.backgroundColor	= '';
+				op.style.transition			= 'width 0.5s ease-in-out';
 				var r = '';
 				r += '<button class="workplace_edit_button_small"   cmd="edit" ></button>';
 				r += '<button class="workplace_delete_button_small" cmd="delete" ></button>';
@@ -1203,7 +1204,12 @@ function workplaceAccount(){
 							wp_editAccount( this.parentNode );
 							break;
 						case 'delete':
-							wp_deleteAccount( this.parentNode );
+							if ( o.innerText == 'Ok?' ){
+								wp_deleteAccount( this.parentNode );
+								break;
+							}
+							o.style.width = '100px';
+							o.innerText = 'Ok?';
 							break;
 					}
 					console.log( cmd + ' acc_id:' + acc_id );
@@ -1643,20 +1649,20 @@ function selectChildren( e ){
 	c.setAttribute( 'selected', 'yes' );
 	var o = document.createElement('DIV');
 	o.classList.add('opChild');
-	o.classList.add('vh-center');
+	// o.classList.add('vh-center');
 	o.style.position 	= 'absolute';
 	o.style.top			= '2px';
 	o.style.left		= ( c.offsetWidth + 1 ) + 'px';
-	o.style.width		= '100px';
+	// o.style.width		= '50px';
 	o.style.height		= c.offsetHeight + 'px';
 	var oo = c.appendChild( o );
 	var r = '';
-	r += '<button class="workplace_edit_button"  >edit</button>';
-	r += '<button class="workplace_delete_button"  >purge</button>';
+	r += '<button class="workplace_edit_button_small"    cmd="edit"   ></button>';
+	r += '<button class="workplace_delete_button_small"  cmd="delete" ></button>';
 	oo.innerHTML = r;
-	oo.getElementsByClassName('workplace_edit_button')[0].addEventListener(
+	oo.getElementsByClassName('workplace_edit_button_small')[0].addEventListener(
 		'click', wp_editChildren );
-	oo.getElementsByClassName('workplace_delete_button')[0].addEventListener(
+	oo.getElementsByClassName('workplace_delete_button_small')[0].addEventListener(
 		'click', wp_purgeChildren );
 
 	var nodes = this.childNodes;

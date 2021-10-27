@@ -51,7 +51,7 @@ router.post('/list', function(req, res, next ){
 
   res.header('Content-Type', 'application/json;charset=utf-8');
   db.any( {
-        text : "SELECT * FROM accounts WHERE ( acc_id ILIKE '" + keyword + "%' OR acc_name ILIKE '" + keyword + "%' ) ORDER BY acc_id ASC",
+        text : "SELECT * FROM accounts WHERE ( acc_id ILIKE '" + keyword + "%' OR acc_name ILIKE '" + keyword + "%' ) AND delete_flag = 0 ORDER BY acc_id ASC",
         values : [] } )
     .then( rows => {
           res.json( rows );
@@ -98,8 +98,8 @@ router.post('/registaccount', function(req, res, next ){
   res.header('Content-Type', 'application/json;charset=utf-8');
 
   db.none( {
-    text: 'INSERT INTO accounts (acc_id, acc_name, password, range_id, priv, imagefile ) VALUES($1,$2,$3,$4,$5,$6)',
-    values: [ acc_id,acc_name, 'password', 2021, acc_priv, acc_imagefile ] } )
+    text: 'INSERT INTO accounts (acc_id, acc_name, password, range_id, priv, imagefile, delete_flag ) VALUES($1,$2,$3,$4,$5,$6,$7)',
+    values: [ acc_id, acc_name, 'password', 2021, acc_priv, acc_imagefile, 0 ] } )
   .then( function() {
     res.json( {status: 'SUCCESS', message:  'regist account'});
   })
@@ -119,7 +119,7 @@ router.post('/deleteaccount', function(req, res, next ){
   res.header('Content-Type', 'application/json;charset=utf-8');
 
   db.none( {
-    text: 'DELETE FROM accounts WHERE acc_id = $1',
+    text: 'UPDATE accounts SET delete_flag = 1 WHERE acc_id = $1',
     values: [ acc_id ] } )
   .then( function() {
     res.json( {status: 'SUCCESS', message:  'delete account'});
