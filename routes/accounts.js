@@ -206,7 +206,8 @@ router.post('/childfind', function(req, res, next ){
     var id  = req.cookies.acc;
     console.log('childfind:' + keyword );
     res.header('Content-Type', 'application/json;charset=utf-8');
-    db.any( "SELECT * FROM children WHERE ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) AND range_id = ( SELECT range_id FROM accounts WHERE acc_id = '" + id + "') ORDER BY child_grade ASC" )
+    db.any( 
+      "SELECT * FROM children WHERE delete_flag = 0 AND ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) AND range_id = ( SELECT range_id FROM accounts WHERE acc_id = '" + id + "') ORDER BY kana ASC" )
       .then( rows => {
             res.json( rows );
       });
@@ -217,7 +218,7 @@ router.post('/childfind', function(req, res, next ){
 //
 router.post('/childlist', function(req, res, next ){
     res.header('Content-Type', 'application/json;charset=utf-8');
-    db.any( 'SELECT * FROM children ORDER BY child_grade ASC' )
+    db.any( 'SELECT * FROM children WHERE delete_flag = 0 ORDER BY kana ASC' )
       .then( rows => {
             res.json( rows );
       });
@@ -280,6 +281,21 @@ router.post('/childupdate', function(req, res, next ){
     });
 });
 
+//
+//  チャイルド削除
+//
+router.post('/childdelete', function(req, res, next ){
+  var child_id    = req.body.child_id;
+
+  console.log('child delete:' + child_id );
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.none( {
+      text: 'UPDATE children SET delete_flag = 1 WHERE child_id = $1',
+      values: [ child_id ] } )
+    .then( function() {
+      res.json( {status: 'SUCCESS', message:  'delete child:' + child_id });
+    });
+});
 
 //
 //  ホワイトボード関連

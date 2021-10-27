@@ -912,29 +912,16 @@ function workplaceRange(){
 
 	workplaceRangeHelper( );
 
-	list.addEventListener('click',
-		function (e){
-			var o = e.target;
-			while( true ){
-				if ( o == this ){
-					for ( var i=0; i<this.childNodes.length; i++ ){
-						var c = this.childNodes[i];
-						if ( c.hasAttribute('selected')){
-							c.removeAttribute('selected');
-							c.classList.remove('selected');
-							c.classList.remove('left40');
-							c.removeChild( c.getElementsByClassName('op')[0] );
-						}	
-					}
-					return;
-				} 
-				if ( o.classList.contains('range')) break;
-				o = o.parentNode;
-			}
+	list.addEventListener('click', selectRange, false );
 
+}
+
+function selectRange(e){
+	var o = e.target;
+	while( true ){
+		if ( o == this ){
 			for ( var i=0; i<this.childNodes.length; i++ ){
 				var c = this.childNodes[i];
-				if ( c == o ) continue;
 				if ( c.hasAttribute('selected')){
 					c.removeAttribute('selected');
 					c.classList.remove('selected');
@@ -942,38 +929,51 @@ function workplaceRange(){
 					c.removeChild( c.getElementsByClassName('op')[0] );
 				}	
 			}
+			return;
+		} 
+		if ( o.classList.contains('range')) break;
+		o = o.parentNode;
+	}
 
-			if ( o.hasAttribute('selected')){
-				o.removeAttribute('selected');
-				o.classList.remove('selected');
-				o.classList.remove('left40');
-				o.removeChild( o.getElementsByClassName('op')[0] );
-			} else{
-				o.setAttribute('selected', 'true');
-				o.classList.add('selected');
-				o.classList.add('left40');
-				var op = document.createElement('DIV');
-				op.classList.add('op');
-				op.classList.add('delete_object');
-				op.style.position			= 'absolute';
-				op.style.top				= '0px';
-				op.style.left				= ( o.offsetWidth + 4 ) + 'px';
-				op.style.width				= '30px';
-				op.style.height				= '38px';
-				op.style.backgroundColor	= '';
-				o.appendChild( op ).addEventListener('click',
-				function(e){
-					e.stopPropagation();
-					var range_id = this.parentNode.getAttribute('range_id');
-					console.log('delete range_id:' + range_id );
-					deleteRange( this.parentNode, range_id );
-				}, false );
-			}
+	for ( var i=0; i<this.childNodes.length; i++ ){
+		var c = this.childNodes[i];
+		if ( c == o ) continue;
+		if ( c.hasAttribute('selected')){
+			c.removeAttribute('selected');
+			c.classList.remove('selected');
+			c.classList.remove('left40');
+			c.removeChild( c.getElementsByClassName('op')[0] );
+		}	
+	}
 
-		}
-	, false);
-
+	if ( o.hasAttribute('selected')){
+		o.removeAttribute('selected');
+		o.classList.remove('selected');
+		o.classList.remove('left40');
+		o.removeChild( o.getElementsByClassName('op')[0] );
+	} else{
+		o.setAttribute('selected', 'true');
+		o.classList.add('selected');
+		o.classList.add('left40');
+		var op = document.createElement('DIV');
+		op.classList.add('op');
+		op.classList.add('delete_object');
+		op.style.position			= 'absolute';
+		op.style.top				= '0px';
+		op.style.left				= ( o.offsetWidth + 4 ) + 'px';
+		op.style.width				= '30px';
+		op.style.height				= '38px';
+		op.style.backgroundColor	= '';
+		o.appendChild( op ).addEventListener('click',
+		function(e){
+			e.stopPropagation();
+			var range_id = this.parentNode.getAttribute('range_id');
+			console.log('delete range_id:' + range_id );
+			deleteRange( this.parentNode, range_id );
+		}, false );
+	}
 }
+
 function workplaceRangeHelper(){
 
 	var p	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
@@ -1616,6 +1616,7 @@ function selectChildren( e ){
 		c = c.parentNode;
 	}
 
+	// 他のチャイルドのメニューを閉じる
 	for ( var i=0; i<this.childNodes.length; i++ ){
 		var o = this.childNodes[i];
 		if ( c == o ) continue;
@@ -1630,8 +1631,9 @@ function selectChildren( e ){
 				apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
 			}
 		}
-}
+	}
 
+	// メニューを開く
 	c.classList.toggle( 'left100' );
 	if ( ! c.classList.contains( 'left100' )){
 		if ( c.classList.contains( 'height320') ){
@@ -1649,21 +1651,52 @@ function selectChildren( e ){
 	c.setAttribute( 'selected', 'yes' );
 	var o = document.createElement('DIV');
 	o.classList.add('opChild');
-	// o.classList.add('vh-center');
 	o.style.position 	= 'absolute';
 	o.style.top			= '2px';
 	o.style.left		= ( c.offsetWidth + 1 ) + 'px';
-	// o.style.width		= '50px';
 	o.style.height		= c.offsetHeight + 'px';
-	var oo = c.appendChild( o );
 	var r = '';
 	r += '<button class="workplace_edit_button_small"    cmd="edit"   ></button>';
 	r += '<button class="workplace_delete_button_small"  cmd="delete" ></button>';
-	oo.innerHTML = r;
-	oo.getElementsByClassName('workplace_edit_button_small')[0].addEventListener(
-		'click', wp_editChildren );
-	oo.getElementsByClassName('workplace_delete_button_small')[0].addEventListener(
-		'click', wp_purgeChildren );
+	o.innerHTML = r;
+
+	c.appendChild( o ).addEventListener('click',
+		function(e){
+			e.stopPropagation();
+			var o = e.target;
+			var cmd = '';
+			while(true){
+				if ( o == this ) return;
+				if ( o.hasAttribute('cmd')){
+					cmd = o.getAttribute('cmd');
+					break;
+				}
+				o = o.parentNode;
+			}
+
+			switch ( cmd ){
+				case 'edit':
+					wp_editChildren( o );
+					break;
+				case 'delete':
+					// wp_deleteChildren( o );
+					if ( o.innerText == 'Ok?' ){
+						wp_deleteChildren( o );
+						break;
+					}
+					o.style.width = '100px';
+					o.innerText = 'Ok?';
+
+					break;
+			}
+
+		}, false );
+
+
+	// oo.getElementsByClassName('workplace_edit_button_small')[0].addEventListener(
+	// 	'click', wp_editChildren );
+	// oo.getElementsByClassName('workplace_delete_button_small')[0].addEventListener(
+	// 	'click', wp_purgeChildren );
 
 	var nodes = this.childNodes;
 	console.log('nodes:' + nodes.length );
@@ -1679,6 +1712,7 @@ function selectChildren( e ){
 	}
 
 }
+
 
 function selectChildrenTransitionEnd( e ){
 	var c = e.target;
@@ -1696,9 +1730,7 @@ function selectChildrenTransitionEnd( e ){
 
 }
 
-function wp_editChildren(e){
-	e.stopPropagation();
-	var c = e.target;
+function wp_editChildren( c ){
 	while ( true ){
 		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
 		c = c.parentNode;
@@ -1719,9 +1751,54 @@ function wp_editChildren(e){
 
 }
 
-function wp_purgeChildren(e){
-	e.stopPropagation();
-	alert();
+function wp_deleteChildren( c ){
+	var o = c;
+	while ( true ){
+		if ( o.classList.contains('WP_PALLETE_CHILD')) break;
+		o = o.parentNode;
+	}
+	var child_id = o.getAttribute('child_id');
+
+	o.parentNode.removeChild( o );
+	console.log( 'delete childid:' + child_id );
+
+	wp_deleteChildrenHelper( child_id );
+
+}
+
+function wp_deleteChildrenHelper( child_id ){
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					// list.innerHTML = 'access...'
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						var result = JSON.parse( xmlhttp.responseText );
+						oLog.log( null, 'チャイルドを削除しました.' );
+						oLog.open(3);
+												
+					} else{
+						console.log( null, 'deletechild:' + xmlhttp.status );
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/childdelete", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'child_id=' + child_id );
+
 }
 
 //
@@ -1848,11 +1925,11 @@ function finderHelper( keyword ){
 							r = '';
 							r += '<div profeel="yes" style="width:' + cc_width + 'px;height:80px;overflow:hidden;" >';
 								if ( imagefile != ''){
-									r += '<div style="float:left;width:40px;height:40px;color:dimgrey;font-size:8px;margin-top:14px;padding:4px;overflow:hidden;border-radius:50%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="float:left;width:30px;height:30px;color:dimgrey;font-size:8px;margin-top:14px;padding:4px;overflow:hidden;border-radius:50%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp;';
 									r += '</div>';
 								} else{
-									r += '<div style="float:left;width:40px;height:40px;color:black;font-size:8px;opacity:0.3;margin-top:14px;padding:4px;overflow:hidden;border-radius:50%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="float:left;width:30px;height:30px;color:black;font-size:8px;opacity:0.3;margin-top:14px;padding:4px;overflow:hidden;border-radius:50%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp';
 									r += '</div>';
 								}
