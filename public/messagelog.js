@@ -62,6 +62,7 @@ messageLog.prototype = {
         this.overlay.style.visibility   = 'hidden';
         this.frame.style.visibility     = 'hidden';
         this.latest.style.visibility    = 'hidden';
+        this.history.style.visibility   = 'hidden';
 		this.latest.style.animationName			= '';
     	this.latest.style.animationDuration		= '';
     	this.latest.style.animationIterationCount = '';

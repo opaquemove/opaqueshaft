@@ -72,8 +72,10 @@ function initWorkplace(){
 	document.getElementById('WP_TEST').addEventListener(
 		'click', rotateMenu );
 	document.getElementById('WP_TEST').addEventListener(
-		'transitionend', rotateMenu2 );
-	
+		'transitionstart', openingRotation );
+	document.getElementById('WP_TEST').addEventListener(
+		'transitionend', closingRotation );
+		
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
 		'click', selectChildren );
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
@@ -89,15 +91,16 @@ function initWorkplace(){
 
 }
 
+//	Left90 transsition start/end invoke
 function rotateMenu(e){
 	e.stopPropagation();
 	this.classList.toggle( 'rotate1' );
 	console.log( this.classList.contains('rotate1') );
 }
-function rotateMenu2(e){
+// Left90 transition process in transition opening
+function openingRotation(e){
 	var opt = this.getElementsByClassName('option');
-	console.log( opt.length );
-	if ( opt.length == 0 ){
+	if ( opt.length == 0 ){		//	opening transition
 		this.style.zIndex = 1;
 		var o = document.createElement('DIV');
 		o.classList.add('option');
@@ -116,35 +119,64 @@ function rotateMenu2(e){
 		o.style.opacity			= 0;
 		o.style.transition		= 'all 0.5s ease-in-out';
 		var r = '';
-		r += '<div style="float:right;padding:4px;writing-mode:vertical-lr" >setting...</div>';
-		r += '<div style="float:right;padding:4px;writing-mode:vertical-lr" >range...</div>';
+		r += '<div style="float:right;padding:4px;writing-mode:vertical-lr" cmd="log" >log history...</div>';
+		r += '<div style="float:right;padding:4px;writing-mode:vertical-lr" cmd="profeel" >profeel...</div>';
 		o.innerHTML = r;
 
 		var oo = this.appendChild( o );
+		oo.addEventListener( 'click',
+			function ( e ){
+				var c = e.target;
+				while ( true ){
+					if ( c == this ) return;
+					if ( c.hasAttribute('cmd')) break;
+					c = c.parentNode;
+				}
+				console.log( c.getAttribute('cmd'));
+				switch ( c.getAttribute('cmd')){
+					case 'log':
+						// e.stopPropagation();
+						oLog.showHistory(10);
+						break;
+					case 'profeel':
+						accountProperty();
+						break;
+					default:
+						break;
+				}
+
+			}
+		, false);
+
 		setTimeout(() => {
 			oo.style.left = 'calc(-100% - 7px)';
 			oo.style.opacity = 1;
 		}, 50 );
-	} else {
+	} else {	// closing animation
 		if ( this == e.target ){
-			this.style.zIndex = '';
-			opt[0].parentNode.removeChild( opt[0]);
-			// e.target.style.left = '0px';
+			opt[0].style.left = '-5px';
+			opt[0].style.opacity = 0;
+			// this.style.zIndex = '';
+			// opt[0].parentNode.removeChild( opt[0]);
 		}
 	}
 	
-	// opt = this.getElementsByClassName('option');
-
-	// if ( this.getElementsByClassName('rotate1').length == 0){
-	// 	// opt[0].style.left = '0px';
-	// 	// opt[0].style.opacity = 0.2;
-
-	// } else{
-	// 	opt[0].style.left = '-100%';
-	// 	opt[0].style.opacity = 1;
-	// }
 }
 
+// Left90 transition process in transition closing
+function closingRotation(e){
+	var opt = this.getElementsByClassName('option');
+	if ( opt.length > 0 ){
+		console.log( 'offsetLeft' + opt[0].offsetLeft );
+		if ( opt[00].offsetLeft >= -5 ){
+			this.style.zIndex = '';
+			opt[0].style.left = '';
+			opt[0].style.opacity = 0;
+			opt[0].parentNode.removeChild( opt[0]);
+		}
+
+	}
+}
 
 //
 //		ワークプレイス（統合メニュー）を表示
