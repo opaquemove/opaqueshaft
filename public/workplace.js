@@ -908,6 +908,31 @@ function workplaceChildren(){
 	// wpcm.style.height = ( h - 252 ) + 'px';
 	wb.style.height = '0px';
 
+	//	レンジリスト作成
+	makeRangeList( 'RANGE_LIST2' );
+	document.getElementById('RANGE_LIST2').addEventListener('click',
+		function(e) {
+			var o = e.target;
+			if ( o == this ) return;
+			while ( o.parentNode != this ){
+				o = o.parentNode;
+			}
+			for ( var i=0; i<this.childNodes.length; i++ ){
+				var c = this.childNodes[i];
+				if ( c.hasAttribute('selected') ){
+					c.removeAttribute( 'selected' );
+					c.style.color			= '';
+					c.style.backgroundColor = '';
+				}
+			}
+			o.style.color			= 'white';
+			o.style.backgroundColor = 'royalblue';
+			o.setAttribute( 'selected', 'true' );
+
+		}, false );
+
+
+
 	document.getElementById('WP_KEYWORD').value = '';
 	list.innerHTML = '';
 
@@ -1281,6 +1306,7 @@ function workplaceAccountHelper(){
 						var acc_id = result[i].acc_id;
 						var acc_name = result[i].acc_name;
 						var priv	 = result[i].priv;
+						var range_id = result[i].range_id;
 						var imagefile= result[i].imagefile;
 						if ( imagefile == null || imagefile == '')
 							imagefile = '';
@@ -1309,13 +1335,14 @@ function workplaceAccountHelper(){
 						r += '<div class="appendix" style="float:none;width:auto;height:auto;padding-bottom:20px;display:none;" >';
 							r += '<form onsubmit="return false;" >';
 							// r += '<div>Profeel</div>';
-							r += '<div>acc_id:</div>';
-							r += '<div style="padding-top:4px;" >';
-								r += '<input type="text" name="acc_id" maxlength="64" readonly autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + acc_id + '" />';
-							r += '</div>';
+							r += '<input type="hidden" name="acc_id" value="' + acc_id + '" />';
 							r += '<div style="padding-top:4px;" >acc_name:</div>';
 							r += '<div style="padding-top:4px;" >';
 								r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + acc_name + '" />';
+							r += '</div>';
+							r += '<div style="padding-top:4px;" >range_id:</div>';
+							r += '<div style="padding-top:4px;" >';
+								r += '<input type="text" name="range_id" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + range_id + '" />';
 							r += '</div>';
 					
 							var privs = [ 'admin', 'editor', 'guest' ];
@@ -1323,18 +1350,18 @@ function workplaceAccountHelper(){
 							r += '<div style="width:160px;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;" >';
 							for ( var j=0; j<privs.length; j++ ){
 								var checked = ( priv == privs[j] ) ? ' checked ' : '';
-								r += '<input type="radio" id="acc_priv_' + acc_id + '_' + j + '" name="acc_priv_" ' + privs[j] + ' value="' + privs[j] + '"  ' + checked + '  />';
+								r += '<input type="radio" id="acc_priv_' + acc_id + '_' + j + '" name="acc_priv"  value="' + privs[j] + '"  ' + checked + '  />';
 								r += '<label for="acc_priv_' + acc_id + '_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
 							}
 							r += '</div>';
 							r += '<div style="padding-top:4px;" >image file:</div>';
 							r += '<div style="padding-top:4px;" >';
-								r += '<input type="text" name="acc_imagefile" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+								r += '<input type="text" name="acc_imagefile" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + imagefile + '" />';
 							r += '</div>';
 
 							r += '<div class="operation" style="padding-top:4px;" >';
-								r += '<button class="workplace_commit_button" cmd="commit" >..</button>';
-								r += '<button class="workplace_cancel_button" cmd="cancel" >..</button>';
+								r += '<button class="workplace_commit_button" cmd="commit" >&nbsp;</button>';
+								r += '<button class="workplace_cancel_button" cmd="cancel" >&nbsp;</button>';
 							r += '</div>';
 
 							r += '</form>';
@@ -1351,14 +1378,30 @@ function workplaceAccountHelper(){
 									if ( x.hasAttribute('cmd')) break;
 									x = x.parentNode;
 								}
+								var acc = x;
+								while ( true ){
+									if ( acc.getAttribute( 'acc_id' )) break;
+									acc = acc.parentNode;
+								}
 								switch ( x.getAttribute('cmd') ){
+									case 'commit':
+										if ( x.innerText == 'commit?' ){
+											acc.classList.toggle('height360');
+											wp_editAccount( acc );
+											updateAccount( acc.getElementsByTagName( 'FORM')[0] );
+											x.innerText = ' ';
+											break;
+										}
+										x.innerText = 'commit?';
+										break;
 									case 'cancel':
+										if ( x.innerText == 'cancel?' ){
+											acc.classList.toggle('height360');
+											wp_editAccount( acc );
+											x.innerText = ' ';
+											break;
+										}
 										x.innerText = 'cancel?';
-										console.log('hoge');
-										// e.stopPropagation();
-										acc.classList.toggle('height360');
-										wp_editAccount( acc );
-										// acc.dispatchEvent( new Event('click') );
 										break;
 								}
 							}
@@ -1648,6 +1691,60 @@ function wp_deleteAccount( p ){
 
 }
 
+function updateAccount( frm ){
+	var acc_id 			= frm.acc_id.value;
+	var acc_name		= frm.acc_name.value;
+	var acc_priv		= frm.acc_priv.value;
+	var acc_imagefile	= frm.acc_imagefile.value;
+	var range_id		= frm.range_id.value;
+	console.log( 'acc_id:'     + acc_id );
+	console.log( 'acc_name:'   + acc_name );
+	console.log( 'priveledge:' + acc_priv );
+	console.log( 'imagefile:'  + acc_imagefile );
+	console.log( 'range_id:'   + range_id );
+
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						
+						var result = JSON.parse( xmlhttp.responseText );
+						console.log( result );
+						switch ( result.status ){
+							case 'SUCCESS':
+								oLog.log(null, 'アカウントを更新しました.' );
+								oLog.open(3);
+								break;
+							case 'FAILED':
+								oLog.log(null, 'アカウントの更新に失敗しました.' );
+								oLog.open(3);
+								break;
+						}						
+
+					} else{
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/updateaccount", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'acc_id=' + acc_id + '&acc_name=' + acc_name + '&acc_priv=' + acc_priv + '&acc_imagefile=' + acc_imagefile + '&range_id=' + range_id );
+
+}
+
 //
 //	チルドレンをクリック
 //
@@ -1925,15 +2022,32 @@ function resizeWorkplace(){
 //	チャイルドファインダ
 //
 function finder(){
+
+	var range_id = null;
+	var ranges = document.getElementById('RANGE_LIST2').childNodes;
+	for ( var i=0; i<ranges.length; i++ ){
+		if ( ranges[i].hasAttribute('selected')) {
+			range_id = ranges[i].getAttribute('range_id');
+			break;
+		}
+	}
+
+	if (range_id == null ){
+		oLog.log( null, 'レンジを指定してください.');
+		oLog.open(3);
+		return;
+	}
+
+
     var wph = document.getElementById('WORKPLACE_HDR');
 	wph.style.height = '0px';
 	wph.style.padding = '0px';
 
 	var keyword = document.getElementById('WP_KEYWORD').value;
-	finderHelper( keyword );
+	finderHelper( keyword, range_id );
 	document.body.focus();	// タブレットでのキーボードを消去する
 }
-function finderHelper( keyword ){
+function finderHelper( keyword, range_id ){
 	console.log( 'keyword:' + keyword );
 	var list = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 	list.innerHTML = '';
@@ -2101,7 +2215,7 @@ function finderHelper( keyword ){
 		xmlhttp.open("POST", "/accounts/childfind", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		if ( keyword == '*' ) keyword = '%';
-		xmlhttp.send( 'keyword=' + keyword );
+		xmlhttp.send( 'keyword=' + keyword + '&range_id=' + range_id );
 
 
 }

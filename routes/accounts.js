@@ -109,6 +109,34 @@ router.post('/registaccount', function(req, res, next ){
 });
 
 //
+//  アカウント更新
+//
+router.post('/updateaccount', function(req, res, next ){
+  var acc_id        = req.body.acc_id;
+  var acc_name      = req.body.acc_name;
+  var acc_priv      = req.body.acc_priv;
+  var acc_imagefile = req.body.acc_imagefile;
+  var range_id      = req.body.range_id;
+
+  console.log( 'acc_id:'   + acc_id );
+  console.log( 'acc_name:' + acc_name );
+  console.log( 'acc_priv:' + acc_priv );
+  console.log( 'acc_imagefile:' + acc_imagefile );
+
+  res.header('Content-Type', 'application/json;charset=utf-8');
+
+  db.none( {
+    text: 'UPDATE accounts SET acc_name = $2, priv = $3, imagefile = $4, range_id = $5 WHERE acc_id = $1',
+    values: [ acc_id, acc_name, acc_priv, acc_imagefile, range_id ] } )
+  .then( function() {
+    res.json( {status: 'SUCCESS', message:  'update account'});
+  })
+  .catch( err => {
+    res.json( {status: 'FAILED', message:  err });
+  });
+});
+
+//
 //  アカウント削除
 //
 router.post('/deleteaccount', function(req, res, next ){
@@ -203,11 +231,12 @@ router.post('/sign', function(req, res, next ){
 //
 router.post('/childfind', function(req, res, next ){
     var keyword = req.body.keyword;
+    var range_id = req.body.range_id;
     var id  = req.cookies.acc;
-    console.log('childfind:' + keyword );
+    console.log('childfind:' + keyword + ' range_id:' + range_id );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.any( 
-      "SELECT * FROM children WHERE delete_flag = 0 AND ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) AND range_id = ( SELECT range_id FROM accounts WHERE acc_id = '" + id + "') ORDER BY kana ASC" )
+      "SELECT * FROM children WHERE delete_flag = 0 AND range_id =  " + range_id + "  AND  ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) AND range_id = ( SELECT range_id FROM accounts WHERE acc_id = '" + id + "') ORDER BY kana ASC" )
       .then( rows => {
             res.json( rows );
       });

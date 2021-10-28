@@ -215,7 +215,7 @@
 }
 #WORKPLACE_CHILDREN_HDR{
     margin:0 auto;
-    width:350px;
+    width:400px;
     height:80px;
 }
 #WORKPLACE_CHILDREN_MAIN{
@@ -297,22 +297,6 @@
     background-position: center center;
 }
 
-/* #RANGE_LIST2{
-	clear:					both;
-	margin-top:				10px;
-	height:					24px;
-	background-color:		#EDEDED;
-	display:				flex;
-	flex-wrap:				nowrap;
-	flex-direction: 		row-reverse;
-	justify-content: 		space-between;
-	font-size:				14px;
-	padding:				4px;
-	overflow:				scroll;
-	border:					0px solid gray;	
-	border-radius: 			8px;
-
-} */
 .range{
     position:       relative;
     width:          100px;
@@ -430,7 +414,7 @@
 }
 
 .workplace_commit_button{
-    width:                  42px;
+    width:                  63px;
     height:                 42px;
     color:                  dimgray;
     background-color:       white;
@@ -444,7 +428,7 @@
     margin:                 0px 2px;
 }
 .workplace_cancel_button{
-    width:                  42px;
+    width:                  63px;
     height:                 42px;
     color:                  dimgray;
     background-color:       white;
