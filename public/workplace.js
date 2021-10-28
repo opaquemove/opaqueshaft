@@ -1306,16 +1306,16 @@ function workplaceAccountHelper(){
 							r += '<div style="padding:2px;" >' + priv      + '</div>';
 						r += '</div>';
 
-						r += '<div class="appendix" style="float:none;width:auto;height:auto;display:none;" >';
+						r += '<div class="appendix" style="float:none;width:auto;height:auto;padding-bottom:20px;display:none;" >';
 							r += '<form onsubmit="return false;" >';
-							r += '<div>Profeel</div>';
+							// r += '<div>Profeel</div>';
 							r += '<div>acc_id:</div>';
 							r += '<div style="padding-top:4px;" >';
-								r += '<input type="text" name="acc_id" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+								r += '<input type="text" name="acc_id" maxlength="64" readonly autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + acc_id + '" />';
 							r += '</div>';
 							r += '<div style="padding-top:4px;" >acc_name:</div>';
 							r += '<div style="padding-top:4px;" >';
-								r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+								r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + acc_name + '" />';
 							r += '</div>';
 					
 							var privs = [ 'admin', 'editor', 'guest' ];
@@ -1331,12 +1331,39 @@ function workplaceAccountHelper(){
 							r += '<div style="padding-top:4px;" >';
 								r += '<input type="text" name="acc_imagefile" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
 							r += '</div>';
-					
+
+							r += '<div class="operation" style="padding-top:4px;" >';
+								r += '<button class="workplace_commit_button" cmd="commit" >..</button>';
+								r += '<button class="workplace_cancel_button" cmd="cancel" >..</button>';
+							r += '</div>';
+
 							r += '</form>';
 						r += '</div>';
 
 						o.innerHTML		= r;
-						p.appendChild( o );
+						var acc = p.appendChild( o )
+						acc.getElementsByClassName('operation')[0].addEventListener(
+							'click',
+							function ( e ){
+								var x = e.target;
+								while ( true ){
+									if ( x == this ) return;
+									if ( x.hasAttribute('cmd')) break;
+									x = x.parentNode;
+								}
+								switch ( x.getAttribute('cmd') ){
+									case 'cancel':
+										x.innerText = 'cancel?';
+										console.log('hoge');
+										// e.stopPropagation();
+										acc.classList.toggle('height360');
+										wp_editAccount( acc );
+										// acc.dispatchEvent( new Event('click') );
+										break;
+								}
+							}
+						);
+
 					}
 
 					// bottom padding
@@ -1566,11 +1593,13 @@ function cancelAddAccount(){
 }
 
 function wp_editAccount( p ){
+	console.log( 'wp_editAccount');
 	var flg = p.classList.contains('height360');
 	var apdxs = p.getElementsByClassName('appendix');
 	for ( var i=0; i<apdxs.length; i++ ){
 		apdxs[i].style.display = ( flg ) ? 'inline' : 'none';
-		apdxs[i].style.pointerEvents = 'none';
+		if ( flg ) 	apdxs[i].addEventListener('click', function(e){ e.stopPropagation();}, false );
+			else	apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
 	}
 }
 function wp_deleteAccount( p ){
@@ -2033,13 +2062,9 @@ function finderHelper( keyword ){
 								r += '</div>';
 							r += '</div>';
 
-							r += '<div class="appendix vh-center" style="padding:20px 1px 1px 1px;width:100%;display:none;" >';
-								r += '<button class="BTN_COMMIT_CHILD" style="border:none;background-color:transparent;" >';
-									r += '<img width="24px" src="./images/check-3.png" />';
-								r += '</button>';
-								r += '<button class="BTN_CANCEL_CHILD" style="border:none;background-color:transparent;" >';
-									r += '<img   width="24px" src="./images/cancel-2.png" />';
-								r += '</button>';
+							r += '<div class="appendix" style="padding:20px 1px 1px 1px;width:100%;display:none;" >';
+								r += '<button class="workplace_commit_button"  ></button>';
+								r += '<button class="workplace_cancel_button"  ></button>';
 							r += '</div>';
 
 							r += '</form>';

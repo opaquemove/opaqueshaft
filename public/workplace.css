@@ -429,6 +429,35 @@
     background-position:    center top 10px;
 }
 
+.workplace_commit_button{
+    width:                  42px;
+    height:                 42px;
+    color:                  dimgray;
+    background-color:       white;
+    font-size:              12px;
+    border:                 1px solid lightgrey;
+    border-radius:          4px;
+    background-image:       url(images/check-3.png);
+    background-size:        10px;
+    background-repeat:      no-repeat;
+    background-position:    right 4px bottom 4px;
+    margin:                 0px 2px;
+}
+.workplace_cancel_button{
+    width:                  42px;
+    height:                 42px;
+    color:                  dimgray;
+    background-color:       white;
+    font-size:              12px;
+    border:                 1px solid lightgrey;
+    border-radius:          4px;
+    background-image:       url(images/cancel-2.png);
+    background-size:        10px;
+    background-repeat:      no-repeat;
+    background-position:    right 4px bottom 4px;
+    margin:                 0px 2px;
+}
+
 .workplace_edit_button{
     width:                  42px;
     height:                 42px;
