@@ -1347,7 +1347,7 @@ function workplaceAccountHelper(){
 					
 							var privs = [ 'admin', 'editor', 'guest' ];
 							r += '<div style="padding-top:4px;" >priveledge:</div>';
-							r += '<div style="width:160px;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;" >';
+							r += '<div style="width:160px;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;display:flex;" >';
 							for ( var j=0; j<privs.length; j++ ){
 								var checked = ( priv == privs[j] ) ? ' checked ' : '';
 								r += '<input type="radio" id="acc_priv_' + acc_id + '_' + j + '" name="acc_priv"  value="' + privs[j] + '"  ' + checked + '  />';
@@ -2146,7 +2146,7 @@ function finderHelper( keyword, range_id ){
 												break;
 										}
 										r += '<div>Type:</div>';
-										r += '<div style="width:96px;height:28px;padding:4px;text-align:center;background-color:#EDEDED;border-radius:4px;" >';
+										r += '<div style="width:96px;height:28px;padding:4px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 											r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
 											r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
 											r += '&nbsp;'
@@ -2162,7 +2162,7 @@ function finderHelper( keyword, range_id ){
 										var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
 										grades[ child_grade - 1 ] = ' checked ';
 										r += '<div>Grade:</div>';
-										r += '<div style="width:280px;height:28px;padding:4px;background-color:#EDEDED;border-radius:4px;" >';
+										r += '<div style="width:280px;height:28px;padding:4px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 											for ( var g=0; g<grades.length; g++ ){
 												r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
 												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
