@@ -80,7 +80,18 @@ function initWorkplace(){
 		'click', selectChildren );
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
 		'transitionend', selectChildrenTransitionEnd );
+
+	document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST').addEventListener(
+		'click', selectAccount );
+	document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST').addEventListener(
+		'transitionend', selectAccountTransitionEnd );
+			
+	document.getElementById('WORKPLACE_RANGE_MAIN_LIST').addEventListener(
+		'click', selectRange );
+	document.getElementById('WORKPLACE_RANGE_MAIN_LIST').addEventListener(
+		'transitionend', selectRangeTransitionEnd );
 	
+
 	// document.getElementById('BOTTOM_FRAME').addEventListener(
 	// 	'resize', resizeWorkplace );
 	// var bf = document.getElementById('BOTTOM_FRAME');
@@ -945,7 +956,7 @@ function workplaceRange(){
 	workplace_id = 'RANGE';
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
-	var list	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
+	// var list	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
@@ -969,7 +980,7 @@ function workplaceRange(){
 
 	workplaceRangeHelper( );
 
-	list.addEventListener('click', selectRange, false );
+	// list.addEventListener('click', selectRange, false );
 
 }
 
@@ -981,9 +992,9 @@ function selectRange(e){
 				var c = this.childNodes[i];
 				if ( c.hasAttribute('selected')){
 					c.removeAttribute('selected');
-					c.classList.remove('selected');
+					// c.classList.remove('selected');
 					c.classList.remove('left40');
-					c.removeChild( c.getElementsByClassName('op')[0] );
+					// c.removeChild( c.getElementsByClassName('op')[0] );
 				}	
 			}
 			return;
@@ -997,38 +1008,81 @@ function selectRange(e){
 		if ( c == o ) continue;
 		if ( c.hasAttribute('selected')){
 			c.removeAttribute('selected');
-			c.classList.remove('selected');
+			// c.classList.remove('selected');
 			c.classList.remove('left40');
-			c.removeChild( c.getElementsByClassName('op')[0] );
+			// c.removeChild( c.getElementsByClassName('op')[0] );
 		}	
 	}
 
 	if ( o.hasAttribute('selected')){
 		o.removeAttribute('selected');
-		o.classList.remove('selected');
+		// o.classList.remove('selected');
 		o.classList.remove('left40');
-		o.removeChild( o.getElementsByClassName('op')[0] );
+		// o.removeChild( o.getElementsByClassName('op')[0] );
 	} else{
 		o.setAttribute('selected', 'true');
-		o.classList.add('selected');
+		// o.classList.add('selected');
 		o.classList.add('left40');
 		var op = document.createElement('DIV');
 		op.classList.add('op');
 		op.classList.add('delete_object');
 		op.style.position			= 'absolute';
 		op.style.top				= '0px';
-		op.style.left				= ( o.offsetWidth + 4 ) + 'px';
+		op.style.left				= ( o.offsetWidth + 2 ) + 'px';
 		op.style.width				= '30px';
 		op.style.height				= '38px';
 		op.style.backgroundColor	= '';
+		var r = '';
+		r += '<button class="workplace_delete_button_small" cmd="delete" ></button>';
+		op.innerHTML = r;
 		o.appendChild( op ).addEventListener('click',
-		function(e){
-			e.stopPropagation();
-			var range_id = this.parentNode.getAttribute('range_id');
-			console.log('delete range_id:' + range_id );
-			deleteRange( this.parentNode, range_id );
-		}, false );
+			function(e){
+				e.stopPropagation();
+				var o = e.target;
+				var cmd = '';
+				while(true){
+					if ( o == this ) return;
+					if ( o.hasAttribute('cmd')){
+						cmd = o.getAttribute('cmd');
+						break;
+					}
+					o = o.parentNode;
+				}
+				switch ( cmd ){
+					case 'delete':
+						var range_id = this.parentNode.getAttribute('range_id');
+						console.log('delete range_id:' + range_id );
+						if ( o.innerText == 'Ok?' ){
+							deleteRange( this.parentNode, range_id );
+							break;
+						}
+						// o.style.width = '100px';
+						o.innerText = 'Ok?';
+
+						break;
+				}
+
+				// e.stopPropagation();
+				// var range_id = this.parentNode.getAttribute('range_id');
+				// console.log('delete range_id:' + range_id );
+				// deleteRange( this.parentNode, range_id );
+			}, false );
 	}
+}
+function selectRangeTransitionEnd( e ){
+	var c = e.target;
+	while ( true ){
+		if ( c == this ) return;
+		if ( c.classList.contains('range')) break;
+		c = c.parentNode;
+	}
+	if ( !c.classList.contains( 'left40' )){
+		c.removeAttribute('selected');
+		var op = c.getElementsByClassName( 'op');
+		if ( op.length > 0)
+			op[0].parentNode.removeChild( op[0] );
+	}
+
 }
 
 function workplaceRangeHelper(){
@@ -1159,7 +1213,7 @@ function workplaceAccount(){
 	workplace_id = 'ACCOUNT';
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
-	var list	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+	// var list	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
@@ -1182,101 +1236,121 @@ function workplaceAccount(){
 	resizeWorkplace();
 //	workplaceAccountHelper();
 
-	list.addEventListener( 'click',
-		function(e){
-			var o = e.target;
-			while( true ){
-				if ( o == this ){
-					for ( var i=0; i<this.childNodes.length; i++ ){
-						var c = this.childNodes[i];
-						if ( c.hasAttribute('selected')){
-							c.removeAttribute('selected');
-							c.classList.remove('selected');
-							c.classList.remove('left40');
-							c.classList.remove('height360');
-							wp_editAccount( c );
-							c.removeChild( c.getElementsByClassName('op')[0] );
-						}	
-					}
-					return;
-				} 
-				if ( o.classList.contains('account')) break;
-				o = o.parentNode;
-			}
+	// var list	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+	// list.addEventListener( 'click', selectAccount, false );
 
+	
+}
+
+function selectAccount( e ){
+	var o = e.target;
+	while( true ){
+		if ( o == this ){
 			for ( var i=0; i<this.childNodes.length; i++ ){
 				var c = this.childNodes[i];
-				if ( c == o ) continue;
 				if ( c.hasAttribute('selected')){
 					c.removeAttribute('selected');
 					c.classList.remove('selected');
 					c.classList.remove('left40');
 					c.classList.remove('height360');
 					wp_editAccount( c );
-					c.removeChild( c.getElementsByClassName('op')[0] );
+					// c.removeChild( c.getElementsByClassName('op')[0] );
 				}	
 			}
+			return;
+		} 
+		if ( o.classList.contains('account')) break;
+		o = o.parentNode;
+	}
 
-			if ( o.hasAttribute('selected')){
-				o.removeAttribute('selected');
-				o.classList.remove('selected');
-				o.classList.remove('left40');
-				o.classList.remove('height360');
-				wp_editAccount( o );
-				o.removeChild( o.getElementsByClassName('op')[0] );
-			} else{
-				o.setAttribute('selected', 'true');
-				o.classList.add('selected');
-				o.classList.add('left40');
-				var op = document.createElement('DIV');
-				op.classList.add('op');
-				op.classList.add('delete_object');
-				op.style.position			= 'absolute';
-				op.style.top				= '0px';
-				op.style.left				= ( o.offsetWidth + 4 ) + 'px';
-				op.style.width				= '30px';
-				op.style.height				= '38px';
-				op.style.backgroundColor	= '';
-				op.style.transition			= 'width 0.5s ease-in-out';
-				var r = '';
-				r += '<button class="workplace_edit_button_small"   cmd="edit" ></button>';
-				r += '<button class="workplace_delete_button_small" cmd="delete" ></button>';
-				op.innerHTML = r;
-				o.appendChild( op ).addEventListener('click',
-				function(e){
-					e.stopPropagation();
-					var o = e.target;
-					var cmd = '';
-					while(true){
-						if ( o == this ) return;
-						if ( o.hasAttribute('cmd')){
-							cmd = o.getAttribute('cmd');
-							break;
-						}
-					}
-					var acc_id = this.parentNode.getAttribute('acc_id');
-					switch ( cmd ){
-						case 'edit':
-							this.parentNode.classList.toggle('height360');
-							wp_editAccount( this.parentNode );
-							break;
-						case 'delete':
-							if ( o.innerText == 'Ok?' ){
-								wp_deleteAccount( this.parentNode );
-								break;
-							}
-							o.style.width = '100px';
-							o.innerText = 'Ok?';
-							break;
-					}
-					console.log( cmd + ' acc_id:' + acc_id );
-					// deleteRange( this.parentNode, acc_id );
-				}, false );
+	for ( var i=0; i<this.childNodes.length; i++ ){
+		var c = this.childNodes[i];
+		if ( c == o ) continue;
+		if ( c.hasAttribute('selected')){
+			c.removeAttribute('selected');
+			c.classList.remove('selected');
+			c.classList.remove('left40');
+			c.classList.remove('height360');
+			wp_editAccount( c );
+			// c.removeChild( c.getElementsByClassName('op')[0] );
+		}	
+	}
+
+	if ( o.hasAttribute('selected')){
+		o.removeAttribute('selected');
+		o.classList.remove('selected');
+		o.classList.remove('left40');
+		o.classList.remove('height360');
+		wp_editAccount( o );
+		// o.removeChild( o.getElementsByClassName('op')[0] );
+	} else{
+		o.setAttribute('selected', 'true');
+		o.classList.add('selected');
+		o.classList.add('left40');			// LEFT40 Moving
+		var op = document.createElement('DIV');
+		op.classList.add('op');
+		op.classList.add('delete_object');
+		op.style.position			= 'absolute';
+		op.style.top				= '0px';
+		op.style.left				= ( o.offsetWidth + 2 ) + 'px';
+		op.style.width				= '30px';
+		op.style.height				= '38px';
+		op.style.backgroundColor	= '';
+		op.style.zIndex				= -1;
+		op.style.transition			= 'width 0.5s ease-in-out';
+		var r = '';
+		r += '<button class="workplace_edit_button_small"   cmd="edit" ></button>';
+		r += '<button class="workplace_delete_button_small" cmd="delete" ></button>';
+		op.innerHTML = r;
+		o.appendChild( op ).addEventListener('click',
+		function(e){
+			e.stopPropagation();
+			var o = e.target;
+			var cmd = '';
+			while(true){
+				if ( o == this ) return;
+				if ( o.hasAttribute('cmd')){
+					cmd = o.getAttribute('cmd');
+					break;
+				}
 			}
+			var acc_id = this.parentNode.getAttribute('acc_id');
+			switch ( cmd ){
+				case 'edit':
+					this.parentNode.classList.toggle('height360');
+					wp_editAccount( this.parentNode );
+					break;
+				case 'delete':
+					if ( o.innerText == 'Ok?' ){
+						wp_deleteAccount( this.parentNode );
+						break;
+					}
+					o.style.width = '100px';
+					o.innerText = 'Ok?';
+					break;
+			}
+			console.log( cmd + ' acc_id:' + acc_id );
+			// deleteRange( this.parentNode, acc_id );
 		}, false );
+	}
 
-	
 }
+function selectAccountTransitionEnd( e ){
+	var c = e.target;
+	while ( true ){
+		if ( c == this ) return;
+		if ( c.classList.contains('account')) break;
+		c = c.parentNode;
+	}
+	if ( !c.classList.contains( 'left40' )){
+		c.removeAttribute('selected');
+		var op = c.getElementsByClassName( 'op');
+		if ( op.length > 0)
+			op[0].parentNode.removeChild( op[0] );
+	}
+
+}
+
 
 function workplaceAccountHelper(){
 
@@ -2095,7 +2169,8 @@ function finderHelper( keyword, range_id ){
 							c.setAttribute('child_type',  child_type );
 							c.setAttribute('child_grade', child_grade );
 							c.style.position	= 'relative';
-							c.style.top			= '-1000px';
+							c.style.top			= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
+							c.style.left		= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
 
 							var cc = list.appendChild( c );
 							var cc_width = cc.offsetWidth;
@@ -2213,6 +2288,7 @@ function finderHelper( keyword, range_id ){
 							var children = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
 							for ( var i=0; i<children.length; i++ ){
 								children[i].style.top = '0px';
+								children[i].style.left = '0px';
 							}
 						}, 50 );
 				
