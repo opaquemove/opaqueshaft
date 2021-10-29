@@ -2162,7 +2162,7 @@ function finderHelper( keyword, range_id ){
 										var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
 										grades[ child_grade - 1 ] = ' checked ';
 										r += '<div>Grade:</div>';
-										r += '<div style="width:280px;height:28px;padding:4px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+										r += '<div style="width:calc( 100%- 8px);height:28px;padding:4px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 											for ( var g=0; g<grades.length; g++ ){
 												r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
 												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
