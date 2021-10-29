@@ -2091,10 +2091,12 @@ function finderHelper( keyword, range_id ){
 							c.setAttribute("child_id",    child_id );
 							c.setAttribute("id",          "c_1");
 							c.classList.add( "WP_PALLETE_CHILD" );
-							c.classList.add( "offProfeel" );
 							c.setAttribute('kana',        kana );
 							c.setAttribute('child_type',  child_type );
 							c.setAttribute('child_grade', child_grade );
+							c.style.position	= 'relative';
+							c.style.top			= '-1000px';
+
 							var cc = list.appendChild( c );
 							var cc_width = cc.offsetWidth;
 
@@ -2192,9 +2194,11 @@ function finderHelper( keyword, range_id ){
 						// bottom padding
 						var c = document.createElement('DIV');
 						c.classList.add( "WP_PALLETE_CHILD" );
-						c.style.color		= 'red';
-						c.style.fontSize 	= '12px';
-						c.style.border		= 'none';
+						c.style.position		= 'relative';
+						c.style.top				= '-1000px';
+						c.style.color			= 'red';
+						c.style.fontSize 		= '12px';
+						c.style.border			= 'none';
 						c.style.backgroundImage	= 'url(./images/restriction.png)';
 						c.style.backgroundSize	= '14px';
 						c.style.backgroundRepeat = 'no-repeat';
@@ -2205,6 +2209,13 @@ function finderHelper( keyword, range_id ){
 						c.innerHTML = 'bottom margin';
 						var cc = list.appendChild( c );
 
+						setTimeout(() => {
+							var children = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
+							for ( var i=0; i<children.length; i++ ){
+								children[i].style.top = '0px';
+							}
+						}, 50 );
+				
 
 					} else{
 						console.log( null, 'finder:' + xmlhttp.status );

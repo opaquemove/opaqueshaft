@@ -615,6 +615,10 @@
     overflow:           hidden;
 }
 
+.originalTopLeft{
+    /* top:                0px; */
+    left:               0px;
+}
 
 @keyframes fadein {
     from {
