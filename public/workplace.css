@@ -215,7 +215,7 @@
 }
 #WORKPLACE_CHILDREN_HDR{
     margin:0 auto;
-    width:400px;
+    width:450px;
     height:80px;
 }
 #WORKPLACE_CHILDREN_MAIN{
@@ -235,9 +235,9 @@
     overflow:               auto;
 } 
 
-#WP_CREATECHILD{
+#WP_CREATECHILDREN{
     background-image:url(images/plus3.png);
-    background-size:16px;
+    background-size:12px;
     background-repeat:no-repeat;
     background-position: center center;
 }

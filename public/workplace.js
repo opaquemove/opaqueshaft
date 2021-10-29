@@ -1641,6 +1641,8 @@ function wp_editAccount( p ){
 	var apdxs = p.getElementsByClassName('appendix');
 	for ( var i=0; i<apdxs.length; i++ ){
 		apdxs[i].style.display = ( flg ) ? 'inline' : 'none';
+		apdxs[i].getElementsByClassName( 'workplace_commit_button' )[0].innerText = '';
+		apdxs[i].getElementsByClassName( 'workplace_cancel_button' )[0].innerText = '';
 		if ( flg ) 	apdxs[i].addEventListener('click', function(e){ e.stopPropagation();}, false );
 			else	apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
 	}
