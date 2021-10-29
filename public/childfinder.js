@@ -549,7 +549,11 @@ spotlight.prototype = {
             xmlhttp.open("POST", "/accounts/childfind", true );
             xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
             if ( keyword == '*' ) keyword = '%';
-            xmlhttp.send( 'keyword=' + keyword );
+            var d = new Date( dayWhiteboard );
+            var range_id = d.getFullYear();
+            if ( d.getMonth() >= 0 && d.getMonth() <= 2 )
+                range_id -= 1;
+                xmlhttp.send( 'keyword=' + keyword + '&range_id=' + range_id );
     
         } catch ( e ) { alert( e );}
     
