@@ -2199,7 +2199,7 @@ function finderHelper( keyword, range_id ){
 
 							r += '<div class="appendix" style="float:left;width:calc(100% - 6px);display:none;" >';
 								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
-								r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;" >Profeel:</div>';
+								// r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;" >Profeel:</div>';
 								r += '<div style="width:97%;height:auto;padding:1px;text-align:left;" >';
 									r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
 										r += 'Kana:<br/>';
@@ -2253,16 +2253,42 @@ function finderHelper( keyword, range_id ){
 										r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
 									r += '</div>';
 								r += '</div>';
-							r += '</div>';
 
-							r += '<div class="appendix" style="padding:20px 1px 1px 1px;width:100%;display:none;" >';
-								r += '<button class="workplace_commit_button"  ></button>';
-								r += '<button class="workplace_cancel_button"  ></button>';
-							r += '</div>';
+								r += '<div class="operation" style="padding:20px 1px 1px 1px;width:100%;" >';
+									r += '<button class="workplace_commit_button" cmd="commit" ></button>';
+									r += '<button class="workplace_cancel_button" cmd="cancel" ></button>';
+								r += '</div>';
 
-							r += '</form>';
+								r += '</form>';
+							r += '</div>';
 
 							cc.innerHTML = r;
+
+							cc.getElementsByClassName('operation')[0].addEventListener(
+								'click',
+								function ( e ){
+									var x = e.target;
+									while ( true ){
+										if ( x == this ) return;
+										if ( x.hasAttribute('cmd')) break;
+										x = x.parentNode;
+									}
+									var chd = x;
+									while ( true ){
+										if ( chd.hasAttribute( 'child_id' )) break;
+										chd = chd.parentNode;
+									}
+									switch ( x.getAttribute('cmd') ){
+										case 'commit':
+											console.log( 'commit:' + chd.getAttribute('child_id') );
+											break;
+										case 'cancel':
+											console.log( 'cancel:' + chd.getAttribute('child_id') );
+											break;
+									}
+								}
+							);
+	
 							
 						}
 
