@@ -92,6 +92,7 @@ function initWorkplace(){
 		'transitionend', selectRangeTransitionEnd );
 	
 
+	makeRangeList( 'TAB_CURRENT2', 'V' );
 	// document.getElementById('BOTTOM_FRAME').addEventListener(
 	// 	'resize', resizeWorkplace );
 	// var bf = document.getElementById('BOTTOM_FRAME');
@@ -324,7 +325,7 @@ function workplaceWhiteboard(){
 	if ( !list.hasChildNodes() ) list.innerHTML = '';
 
 	//	レンジリスト作成
-	makeRangeList( 'RANGE_LIST' );
+	makeRangeList( 'RANGE_LIST', 'H' );
 	addWorkplaceWhiteboard();
 
 }
@@ -336,7 +337,7 @@ function addWorkplaceWhiteboard(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
 	if ( p.hasChildNodes() ){
-	// 	makeRangeList( 'RANGE_LIST' );
+	// 	makeRangeList( 'RANGE_LIST', 'H' );
 		return;
 	}
 
@@ -363,7 +364,7 @@ function addWorkplaceWhiteboard(){
 
 
 	//	レンジリスト作成
-	makeRangeList( 'RANGE_LIST' );
+	makeRangeList( 'RANGE_LIST', 'H' );
 
 	document.getElementById('RANGE_LIST').addEventListener('click',
 		function(e) {
@@ -920,7 +921,7 @@ function workplaceChildren(){
 	wb.style.height = '0px';
 
 	//	レンジリスト作成
-	makeRangeList( 'RANGE_LIST2' );
+	makeRangeList( 'RANGE_LIST2', 'H' );
 	document.getElementById('RANGE_LIST2').addEventListener('click',
 		function(e) {
 			var o = e.target;

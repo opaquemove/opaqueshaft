@@ -1205,7 +1205,7 @@ function openWhiteboard(){
 
 
 	//	レンジリスト作成
-	makeRangeList( 'RANGE_LIST' );
+	makeRangeList( 'RANGE_LIST', 'H' );
 	document.getElementById('RANGE_LIST').addEventListener('mousedown',
 		function(e) {
 			var o = e.target;
@@ -2670,7 +2670,7 @@ function ctlNav(){
 //
 //	レンジリスト生成処理
 //
-function makeRangeList( id )
+function makeRangeList( id, direction )
 {
 	console.log('makeRangeList:' + id );
 	var p = document.getElementById( id );
@@ -2695,7 +2695,7 @@ function makeRangeList( id )
 					var o = document.getElementById( id );
 					o.innerText = '';
 					for ( var i=0; i<result.length; i++ ){
-						addRangeListHelper( o, result[i] );
+						addRangeListHelper( o, result[i], direction );
 					}
 					//o.innerHTML = r;
 				} else{
@@ -2719,13 +2719,22 @@ function makeRangeList( id )
 //
 //	レンジリスト用DIV生成ヘルパー
 //
-function addRangeListHelper( oParent, Result ){
+function addRangeListHelper( oParent, Result, direction ){
 
 	var c = document.createElement("DIV");
+	console.log( 'writing mode:' + oParent.style.writingMode );
+	switch ( direction ){
+		case 'H':
+			c.classList.add('range_box');
+			break;
+		case 'V':
+			c.classList.add('range_box_lr');
+			break;
+	}
+
 	c.setAttribute("range_id",  Result.range_id );
 	c.setAttribute("sotd", 		Result.sotd );
 	c.setAttribute("eotd", 		Result.eotd );
-	c.setAttribute('class',     'range_box');
 
 	var range_id = Result.range_id;
 

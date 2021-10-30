@@ -42,15 +42,18 @@
     visibility: hidden;
 }
 #TAB_CURRENT2{
-    width:calc(100% - 12px);
-    height:128px;
+    width:calc(100% - 8px);
+    height:192px;
     color:dimgray;
     background-color:#EDEDED;
     font-size:14px;
     font-weight: bold;
     text-align: center;
-    padding-left:12px;
-    writing-mode: vertical-lr;
+    padding-top:4px;
+    padding-left:8px;
+    /* writing-mode: vertical-lr; */
+    display:flex;
+    flex-direction: column;
     visibility: hidden;
 }
 
@@ -163,7 +166,7 @@
 }
 #WORKPLACE_WHITEBOARD_HDR{
     margin:0 auto;
-    width:400px;
+    width:450px;
     height:60px
 }
 #WORKPLACE_WHITEBOARD_MAIN{
@@ -272,7 +275,63 @@
 	align-items:            flex-start;
 	align-content:          space-between;
     overflow:               auto;
-} 
+}
+
+#RANGE_LIST{
+	clear:					both;
+	margin-top:				5px;
+	height:					34px;
+	background-color:		#EDEDED;
+	display:				flex;
+	flex-wrap:				nowrap;
+	flex-direction: 		row-reverse;
+    align-items:            center;
+	justify-content: 		space-between;
+	font-size:				14px;
+	padding:				4px;
+	overflow:				scroll;
+	border:					0px solid gray;	
+	border-radius: 			8px;
+}
+
+#RANGE_LIST2{
+	clear:					both;
+	margin-top:				5px;
+	height:					34px;
+	background-color:		#EDEDED;
+	display:				flex;
+	flex-wrap:				nowrap;
+	flex-direction: 		row-reverse;
+    align-items:            center;
+	justify-content: 		space-between;
+	font-size:				14px;
+	padding:				4px;
+	overflow:				scroll;
+	border:					0px solid gray;	
+	border-radius: 			8px;
+}
+
+.range_box{
+	float:					left;
+	width:					80px;
+	height:					24px;
+	background-color: 		white;
+	border:					1px solid lightgray;
+	margin:					1px;
+	border-radius: 			4px;
+}
+.range_box_lr{
+    float:none;
+	/* float:					left; */
+	width:					24px;
+	height:					40px;
+	background-color: 		white;
+	border:					1px solid lightgray;
+	margin:					1px;
+	border-radius: 			4px;
+    writing-mode: vertical-lr;
+}
+
 #WP_CREATERANGE{
     background-image:url(images/plus3.png);
     background-size:14px;
