@@ -43,9 +43,9 @@
 }
 #TAB_CURRENT2{
     width:calc(100% - 12px);
-    height:96px;
+    height:128px;
     color:dimgray;
-    background-color:lightgrey;
+    background-color:#EDEDED;
     font-size:14px;
     font-weight: bold;
     text-align: center;
@@ -390,20 +390,8 @@
     transition:             all 0.3s ease-in-out;
 }
 
-
-.workplace_button{
-    width:60px;
-    height:80px;
-    border:1px;
-    border-radius:4px;
-    background-color:white;
-    background-image:url(images/user-2.png);
-    background-size:26px;
-    background-repeat:no-repeat;
-    background-position: center top 10px;
-}
 .workplace_button_small{
-    width:30px;
+    width:                  30px;
     height:                 36px;
     border:                 1px;
     border-radius:          4px;
@@ -412,6 +400,18 @@
     background-size:        26px;
     background-repeat:      no-repeat;
     background-position:    center top 10px;
+}
+
+.workplace_button{
+    width:                  42px;
+    height:                 42px;
+    color:                  dimgray;
+    background-color:       white;
+    color:                  snow;
+    font-size:              12px;
+    border:                 1px solid lightgrey;
+    border-radius:          4px;
+
 }
 
 .workplace_commit_button{

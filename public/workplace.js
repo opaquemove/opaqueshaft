@@ -2368,11 +2368,11 @@ function finderHelper( keyword, range_id ){
 							r = '';
 							r += '<div profeel="yes" style="width:' + cc_width + 'px;height:80px;overflow:hidden;" >';
 								if ( imagefile != ''){
-									r += '<div style="float:left;width:30px;height:30px;color:dimgrey;font-size:8px;margin-top:14px;padding:4px;overflow:hidden;border-radius:50%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="float:left;width:30px;height:30px;color:dimgrey;font-size:8px;margin-top:18px;margin-left:10px;padding:4px;overflow:hidden;border-radius:50%;background-image:url(./images/children/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp;';
 									r += '</div>';
 								} else{
-									r += '<div style="float:left;width:30px;height:30px;color:black;font-size:8px;opacity:0.3;margin-top:14px;padding:4px;overflow:hidden;border-radius:50%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="float:left;width:30px;height:30px;color:black;font-size:8px;opacity:0.3;margin-top:18px;margin-left:10px;padding:4px;overflow:hidden;border-radius:50%;background-image:url(./images/user-2.png);background-size:30px;background-position:center center;background-repeat:no-repeat;" >';
 										r += '&nbsp';
 									r += '</div>';
 								}
