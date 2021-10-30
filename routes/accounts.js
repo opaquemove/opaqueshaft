@@ -277,15 +277,20 @@ router.post('/childadd', function(req, res, next ){
     var grade     = req.body.child_grade;
     var type      = req.body.child_type;
     var remark    = req.body.remark;
+    var imagefile = req.body.imagefile;
     var range_id  = req.body.range_id;
     console.log('childadd:' + name );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.none( {
-        text: 'INSERT INTO children (child_name,kana,child_grade,child_type,remark,range_id) VALUES($1,$2,$3,$4,$5,$6)',
-        values: [ name,kana,grade,type,remark,range_id ] } )
+        text: 'INSERT INTO children (child_name,kana,child_grade,child_type,remark,imagefile,range_id, delete_flag ) VALUES($1,$2,$3,$4,$5,$6,$7,$8)',
+        values: [ name,kana,grade,type,remark,imagefile,range_id,0 ] } )
       .then( function() {
         res.json( {status: 'SUCCESS', message:  'add child'});
-      });
+      })
+      .catch( err => {
+        res.json( { status : 'FAILED', message : 'add child failed.' } )
+  });
+
 });
 
 //

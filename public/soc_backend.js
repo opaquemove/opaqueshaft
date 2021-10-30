@@ -992,19 +992,19 @@ function propertyChildren(){
 
             r += '<div style="width:100%;padding-top:1px;text-align:center;" >';
                 if ( checkout != '---' )
-				    r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/check-3.png" ></button>';
+				    r += '<button type="button" style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/check-3.png" ></button>';
                 switch ( direction ){
                     case 'left':
-                        r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/arrow-left.png" ></button>';
+                        r += '<button type="button" style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/arrow-left.png" ></button>';
                         break;
                     case 'right':
-                        r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/arrow-right.png" ></button>';
+                        r += '<button type="button" style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/arrow-right.png" ></button>';
                         break;
                 }
                 if ( escort == 'yes' )
-				    r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/family.png" ></button>';
+				    r += '<button type="button" style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/family.png" ></button>';
                     else
-                    r += '<button style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/user-2.png" ></button>';
+                    r += '<button type="button" style="background-color:transparent;border:none;"  ><img width="20px;" src="/images/user-2.png" ></button>';
 			r += "</div>";
 
             r += '<div style="clear:both;font-size:14px;" >';
@@ -1023,7 +1023,7 @@ function propertyChildren(){
             r += '</div>';
 
 			r += '<div style="width:100%;padding-top:4px;text-align:center;" >';
-				r += '<button id="BTN_UPDATE_CHILD_REMARK_' + id + '" class="accept_button" ';
+				r += '<button type="button" id="BTN_UPDATE_CHILD_REMARK_' + id + '" class="accept_button" ';
                 // r += ' style="background-color:transparent;border:none;" ';
                 r += '>update';
                 r += '</button>';
@@ -1894,7 +1894,7 @@ function accountProperty(){
         r += "</form>";
 
         r += '<div style="width:100%;text-align:center;padding-top:5px;" >';
-            r += '<button id="" class="accept_button" ';
+            r += '<button type="button" id="" class="accept_button" ';
                 r += ' onclick="closeModalDialog();" >';
                 r += 'close';
             r += '</button>';

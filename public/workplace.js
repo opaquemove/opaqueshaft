@@ -342,7 +342,7 @@ function addWorkplaceWhiteboard(){
 
 	var r = '';
 	r += '<div id="CALENDAR_TOOLBAR" >';
-		r += '<button id="BTN_OPENWHITEBOARD" class="next_button"  ';
+		r += '<button type="button" id="BTN_OPENWHITEBOARD" class="next_button"  ';
 			r += ' onclick="createWhiteboard()" >';
 			r += 'next';
 		r += '</button>';
@@ -496,7 +496,7 @@ function addWorkplaceWhiteboard(){
 					o.style.border 			= '1px solid lightgrey';
 					o.style.borderRadius	= '3px';
 					var r = '';
-					r += '<button class="workplace_edit_button"  >edit</button>';
+					r += '<button type="button" class="workplace_edit_button"  >edit</button>';
 					o.innerHTML				= r;
 					e.target.appendChild( o ).getElementsByClassName('workplace_edit_button')[0].addEventListener('click', editWhiteboard, false);
 				} else {
@@ -1033,7 +1033,7 @@ function selectRange(e){
 		op.style.height				= '38px';
 		op.style.backgroundColor	= '';
 		var r = '';
-		r += '<button class="workplace_delete_button_small" cmd="delete" ></button>';
+		r += '<button type="button" class="workplace_delete_button_small" cmd="delete" ></button>';
 		op.innerHTML = r;
 		o.appendChild( op ).addEventListener('click',
 			function(e){
@@ -1299,8 +1299,8 @@ function selectAccount( e ){
 		op.style.zIndex				= -1;
 		op.style.transition			= 'width 0.5s ease-in-out';
 		var r = '';
-		r += '<button class="workplace_edit_button_small"   cmd="edit" ></button>';
-		r += '<button class="workplace_delete_button_small" cmd="delete" ></button>';
+		r += '<button type="button" class="workplace_edit_button_small"   cmd="edit" ></button>';
+		r += '<button type="button" class="workplace_delete_button_small" cmd="delete" ></button>';
 		op.innerHTML = r;
 		o.appendChild( op ).addEventListener('click',
 		function(e){
@@ -1434,8 +1434,8 @@ function workplaceAccountHelper(){
 							r += '</div>';
 
 							r += '<div class="operation" style="padding-top:4px;" >';
-								r += '<button class="workplace_commit_button" cmd="commit" >&nbsp;</button>';
-								r += '<button class="workplace_cancel_button" cmd="cancel" >&nbsp;</button>';
+								r += '<button type="button" class="workplace_commit_button" cmd="commit" >&nbsp;</button>';
+								r += '<button type="button" class="workplace_cancel_button" cmd="cancel" >&nbsp;</button>';
 							r += '</div>';
 
 							r += '</form>';
@@ -1546,31 +1546,27 @@ function addAccount(){
 			r += '<input type="text" name="acc_imagefile" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
 		r += '</div>';
 
-
 		r += '<div style="margin:0 auto;width:100%;text-align:center;padding-top:40px;">';
-			r += '<button id="" type="button" class="accept_button" ';
-			r += ' onclick=""   >';
-				r += 'add';
-			r += '</button>';
-
-			r += '<button id="" type="button" class="cancel_button" ';
-			r += '  >';
-				r += 'cancel';
-			r += '</button>'
-
+			r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
+			r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
 		r += '</div>';
 
 	r += '</form>';
 	o.innerHTML = r;
 
 	p.prepend( o );
-	var accept = p.getElementsByClassName('accept_button');
+	var accept = p.getElementsByClassName('workplace_commit_button');
 	accept[0].addEventListener('click',
 		function(e){
 			e.stopPropagation();
-			acceptAddAccount();
+			if ( !acceptAddAccount() ) return;
+			if ( this.innerText == 'Ok?'){
+				acceptAddAccountHelper();
+			} else {
+				this.innerText = 'Ok?';
+			}
 		}, false );
-	var cancel = p.getElementsByClassName('cancel_button');
+	var cancel = p.getElementsByClassName('workplace_cancel_button');
 	cancel[0].addEventListener('click',
 		function(e){
 			e.stopPropagation();
@@ -1580,35 +1576,40 @@ function addAccount(){
 }
 
 function acceptAddAccount(){
-	var acc_id   = accountForm.acc_id.value;
-	var acc_name = accountForm.acc_name.value;
-	var acc_priv = accountForm.acc_priv.value;
+	var acc_id   		= accountForm.acc_id.value;
+	var acc_name 		= accountForm.acc_name.value;
+	var acc_priv 		= accountForm.acc_priv.value;
 	var acc_imagefile	= accountForm.acc_imagefile.value;
 
 	if ( acc_id == '' ){
 		accountForm.acc_id.focus();
 		oLog.log( null, 'acc_id を入力してください.' );
 		oLog.open(3);
-		return;
+		return false;
 	}
 	if ( acc_name == '' ){
 		accountForm.acc_name.focus();
 		oLog.log( null, 'acc_name を入力してください.' );
 		oLog.open(3);
-		return;
+		return false;
 	}
 	if ( acc_priv == '' ){
 		accountForm.acc_priv[0].focus();
 		oLog.log( null, 'priveledge を入力してください.' );
 		oLog.open(3);
-		return;
+		return false;
 	}
 
-	acceptAddAccountHelper( acc_id, acc_name, acc_priv, acc_imagefile );
+	return true;
 
 }
 
-function acceptAddAccountHelper( acc_id, acc_name, acc_priv, acc_imagefile ){
+function acceptAddAccountHelper(){
+	var acc_id   		= accountForm.acc_id.value;
+	var acc_name 		= accountForm.acc_name.value;
+	var acc_priv 		= accountForm.acc_priv.value;
+	var acc_imagefile	= accountForm.acc_imagefile.value;
+
 	var r = '';
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.addEventListener('readystatechange', 
@@ -1890,8 +1891,8 @@ function selectChildren( e ){
 	o.style.left		= ( c.offsetWidth + 1 ) + 'px';
 	o.style.height		= c.offsetHeight + 'px';
 	var r = '';
-	r += '<button class="workplace_edit_button_small"    cmd="edit"   ></button>';
-	r += '<button class="workplace_delete_button_small"  cmd="delete" ></button>';
+	r += '<button type="button" class="workplace_edit_button_small"    cmd="edit"   ></button>';
+	r += '<button type="button" class="workplace_delete_button_small"  cmd="delete" ></button>';
 	o.innerHTML = r;
 
 	c.appendChild( o ).addEventListener('click',
@@ -1963,6 +1964,195 @@ function selectChildrenTransitionEnd( e ){
 	}
 
 }
+
+function addChildren(){
+	var p	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
+	if ( p.getElementsByClassName('add_children').length > 0 ) return;
+	var o = document.createElement('DIV');
+	o.classList.add('add_children');
+	o.style.textAlign	= 'left';
+	var r = '';
+	r += '<form name="childrenForm" onsubmit="return false;" >';
+		r += '<div style="width:97%;height:auto;padding:1px;text-align:left;" >';
+			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+				r += 'Kana:<br/>';
+				r += '<input type="text" name="kana" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+			r += '</div>';
+			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+				r += 'Name:<br/>';
+				r += '<input type="text" name="child_name" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="" />';
+			r += '</div>';
+			r += '<div style="clear:both;width:100%;padding:4px 0px 4px 0px;" >';
+				r += 'Remark:<br/>';
+				r += '<textarea name="remark" autocomplete="off" style="width:90%;height:40px;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" ></textarea>';
+			r += '</div>';
+			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+				r += 'Imagefile:<br/>';
+				r += '<input type="text" name="imagefile" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="" />';
+			r += '</div>';
+			r += '<div  style="clear:both;width:100%;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
+			r += '<div>Type:</div>';
+			r += '<div style="width:96px;height:28px;padding:4px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+				r += '<input type="radio" id="child_type_a" name="child_type" value="A" />';
+				r += '<label for="child_type_a"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
+				r += '&nbsp;'
+				r += '<input type="radio" id="child_type_b" name="child_type" value="B" />';
+				r += '<label for="child_type_b"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
+			r += '</div>';
+			r += '<div  style="clear:both;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
+				var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
+				r += '<div>Grade:</div>';
+				r += '<div style="width:calc( 100%- 8px);height:28px;padding:4px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+					for ( var g=0; g<grades.length; g++ ){
+						r += '<input type="radio" id="child_grade_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
+						r += '<label for="child_grade_' + g + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
+					}
+				r += '</div>';
+			r += '</div>';
+			r += '<div class="operation" style="padding:20px 1px 1px 1px;width:100%;" >';
+				r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
+				r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
+			r += '</div>';
+	
+		r += '</div>';
+
+	r += '</form>';
+
+	o.innerHTML = r;
+
+	p.prepend( o );
+	var accept = p.getElementsByClassName('workplace_commit_button');
+	accept[0].addEventListener('click',
+		function(e){
+			e.stopPropagation();
+			if ( !acceptAddChildren() ) return;
+			if ( this.innerText == 'Ok?'){
+				acceptAddChildrenHelper();
+			} else {
+				this.innerText = 'Ok?';
+			}
+		}, false );
+	var cancel = p.getElementsByClassName('workplace_cancel_button');
+	cancel[0].addEventListener('click',
+		function(e){
+			e.stopPropagation();
+			cancelAddChildren();
+		}, false );
+	
+}
+
+function acceptAddChildren(){
+	var kana	   		= childrenForm.kana.value;
+	var child_name 		= childrenForm.child_name.value;
+	// var remark	 		= childrenForm.remark.value;
+	// var imagefile		= childrenForm.imagefile.value;
+	var child_type		= childrenForm.child_type.value;
+	var child_grade		= childrenForm.child_grade.value;
+
+	if ( kana == '' ){
+		childrenForm.kana.focus();
+		oLog.log( null, 'Kana を入力してください.' );
+		oLog.open(3);
+		return false;
+	}
+	if ( child_name == '' ){
+		childrenForm.child_name.focus();
+		oLog.log( null, 'Name を入力してください.' );
+		oLog.open(3);
+		return false;
+	}
+	// if ( remark == '' ){
+	// 	childrenForm.remark.focus();
+	// 	oLog.log( null, 'Remark を入力してください.' );
+	// 	oLog.open(3);
+	// 	return false;
+	// }
+	// if ( imagefile == '' ){
+	// 	childrenForm.imagefile.focus();
+	// 	oLog.log( null, 'Imagefile を入力してください.' );
+	// 	oLog.open(3);
+	// 	return false;
+	// }
+	if ( child_type == '' ){
+		childrenForm.child_type[0].focus();
+		oLog.log( null, 'Type を入力してください.' );
+		oLog.open(3);
+		return false;
+	}
+	if ( child_grade == '' ){
+		childrenForm.child_grade[0].focus();
+		oLog.log( null, 'Grade を入力してください.' );
+		oLog.open(3);
+		return false;
+	}
+
+	return true;
+
+}
+
+function acceptAddChildrenHelper(){
+	var kana	   		= childrenForm.kana.value;
+	var child_name 		= childrenForm.child_name.value;
+	var remark	 		= childrenForm.remark.value;
+	var imagefile		= childrenForm.imagefile.value;
+	var child_type		= childrenForm.child_type.value;
+	var child_grade		= childrenForm.child_grade.value;
+	var range_id		= 2021;
+
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						
+						var result = JSON.parse( xmlhttp.responseText );
+						console.log( result );
+						switch ( result.status ){
+							case 'SUCCESS':
+								// workplaceChildren();
+								oLog.log( null, '登録しました.' );
+								oLog.open(5);
+								break;
+							case 'FAILED':
+								oLog.log( null, '登録に失敗しました.' );
+								oLog.open(5);
+								break;
+							}						
+
+
+					} else{
+						console.log( null, 'checkAcc_id:' + xmlhttp.status );
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/childadd", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'kana=' + kana + '&child_name=' + child_name + '&child_type=' + child_type + '&child_grade=' + child_grade + '&remark=' + remark + '&imagefile=' + imagefile + '&range_id=' + range_id );
+
+
+}
+
+function cancelAddChildren(){
+	var p	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
+	var chdform = p.getElementsByClassName('add_children');
+	if ( chdform.length > 0 )
+		chdform[0].parentNode.removeChild( chdform[0] );
+}
+	
+
 
 function wp_editChildren( c ){
 	while ( true ){
@@ -2150,7 +2340,6 @@ function finderHelper( keyword, range_id ){
 						list.innerHTML = '';
 						
 						for ( var i=0; i<result.length; i++ ){
-                            // var duration = (Math.floor(Math.random() * 1000 / 100 ) + " " ).slice( 1,2 ) + 's';
 							var child_id    = result[i].child_id;
 							var child_name  = result[i].child_name;
 							var kana        = result[i].kana;
@@ -2213,6 +2402,12 @@ function finderHelper( keyword, range_id ){
 										r += 'Remark:<br/>';
 										r += '<textarea name="remark" style="width:90%;height:40px;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" >' + remark + '</textarea>';
 									r += '</div>';
+									r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+										r += 'Imagefile:<br/>';
+										r += '<input type="text" name="imagefile" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + imagefile + '" />';
+									r += '</div>';
+														
+
 									r += '<div  style="clear:both;width:100%;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
 										switch ( child_type){
 											case 'A':
@@ -2225,7 +2420,7 @@ function finderHelper( keyword, range_id ){
 												break;
 										}
 										r += '<div>Type:</div>';
-										r += '<div style="width:96px;height:28px;padding:4px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+										r += '<div style="width:96px;height:27px;padding:4px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 											r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
 											r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
 											r += '&nbsp;'
@@ -2241,7 +2436,7 @@ function finderHelper( keyword, range_id ){
 										var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
 										grades[ child_grade - 1 ] = ' checked ';
 										r += '<div>Grade:</div>';
-										r += '<div style="width:calc( 100%- 8px);height:28px;padding:4px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+										r += '<div style="width:calc( 100%- 8px);height:27px;padding:4px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 											for ( var g=0; g<grades.length; g++ ){
 												r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
 												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
@@ -2255,8 +2450,8 @@ function finderHelper( keyword, range_id ){
 								r += '</div>';
 
 								r += '<div class="operation" style="padding:20px 1px 1px 1px;width:100%;" >';
-									r += '<button class="workplace_commit_button" cmd="commit" ></button>';
-									r += '<button class="workplace_cancel_button" cmd="cancel" ></button>';
+									r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
+									r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
 								r += '</div>';
 
 								r += '</form>';
@@ -2308,6 +2503,14 @@ function finderHelper( keyword, range_id ){
 						c.style.pointerEvents = 'none';
 						c.style.height = ( list.parentNode.offsetHeight - 20 ) + 'px';
 						c.innerHTML = 'bottom margin';
+						if ( xmlhttp.status == 200 ){
+							var r = '';
+							r += '<div style="color:gray;font-size:20px;" >';
+							r += result.length;
+							r += '</div>';
+							c.innerHTML += r;
+						}
+
 						var cc = list.appendChild( c );
 
 						setTimeout(() => {

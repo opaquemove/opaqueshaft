@@ -1169,8 +1169,8 @@ function openWhiteboard(){
 				r += '<input type="text" id="whiteboard_day" name="day" style="width:90%;font-size:;" value="' + ymd + '" />';
 			r += '</div>';
 			r += '<div style="float:left;width:30px;" >';
-				r += '<button id="BTN_ADD_DATE"   style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
-				r += '<button id="BTN_MINUS_DATE" style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
+				r += '<button type="button" id="BTN_ADD_DATE"   style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-up.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
+				r += '<button type="button" id="BTN_MINUS_DATE" style="width:18px;height:8px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:6px;background-repeat:no-repeat;background-position:center center;" ></button>';
 				// r += '<img id="BTN_ADD_DATE"        width="6px" src="./images/arrow-black-triangle-up.png" />';
 				// r += '<br/><img id="BTN_MINUS_DATE" width="6px" src="./images/arrow-black-triangle-down.png" />';
 			r += '</div>';
@@ -1185,12 +1185,12 @@ function openWhiteboard(){
 		r += '</div>';
 		r += '</form>';
 		r += '<div style="text-align:center;padding-top:5px;" >';
-			r += '<button id="BTN_OPENWHITEBOARD" class="next_button" ';
+			r += '<button type="button" id="BTN_OPENWHITEBOARD" class="next_button" ';
 				// r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/arrow-right.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
 				r += ' onclick="createWhiteboard()" >';
 				r += 'next';
 			r += '</button>';
-			r += '<button id="BTN_OPENWHITEBOARD" class="cancel_button" ';
+			r += '<button type="button" id="BTN_OPENWHITEBOARD" class="cancel_button" ';
 				// r += ' style="width:140px;height:60px;padding-left:20px;font-size:20px;background-color:transparent;border:none;background-image:url(./images/arrow-right.png);background-size:26px;background-repeat:no-repeat;background-position:center center;" ';
 				r += ' onclick="closeModalDialog()" >';
 				r += 'cancel';
@@ -2423,7 +2423,7 @@ function postWebBackend( area_id ){
 			r += "<pre>";
 			r += xmlhttp.responseText;
 			r += "</pre>";
-			r += "<button onclick='' >OK</button>";
+			r += "<button type='button' onclick='' >OK</button>";
 			o.innerHTML = r;
 		}
 	}
@@ -2638,11 +2638,11 @@ function signForm()
 			r += "<div style='font-size:12px;padding-top:20px;' >Password:</div>";
 			r += "<div><input style='width:200px;outline:none;border-radius:3px;padding:6px;background-color:lightgrey;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;' type='password' name='pwd' tabindex=2 /></div>";
 			r += "<div style='padding-top:40px;text-align:center;' >";
-				r += "<button class='next_button' ";
+				r += "<button type='button' class='next_button' ";
 				r += " style='border:none;' onclick='sign()' >";
 				r += "next";
 				r += "</button>";
-				r += "<button class='cancel_button' ";
+				r += "<button type='button' class='cancel_button' ";
 				r += " style='border:none;' onclick='closeModalDialog()' >";
 				r += "cancel";
 				r += "</button>";
