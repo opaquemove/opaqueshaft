@@ -2495,8 +2495,8 @@ function signout(){
 			case 2://header received
 				break;
 			case 3://loading
-				oLog.log( null, 'signout...' );
-				oLog.open( 3 );
+				// oLog.log( null, 'サインアウト処理中.' );
+				// oLog.open( 3 );
 				break;
 			case 4://done
 				if ( xmlhttp.status == 200 ){
@@ -2504,7 +2504,7 @@ function signout(){
 					if ( result != null ){
 						switch( result.cmd ){
 							case 'signout':
-								oLog.log( null, 'signout...ok.' );
+								oLog.log( null, 'サインアウトしました.' );
 								oLog.open( 1 );
 								acc_id = null;
 								// signForm();
@@ -2547,6 +2547,23 @@ function signout(){
 //
 function sign()
 {
+	var sign_id = sign_form.id.value;
+	var sign_pwd = sign_form.pwd.value;
+
+	if ( sign_id == '' ){
+		oLog.log( null, 'ID　を入力してください.' );
+		oLog.open( 3 );
+		sign_form.id.focus();
+		return;
+	}
+	if ( sign_pwd == '' ){
+		oLog.log( null, 'Password　を入力してください.' );
+		oLog.open( 3 );
+		sign_form.pwd.focus();
+		return;
+	}
+
+
 	var r = "";
 	var xmlhttp = new XMLHttpRequest();
 
@@ -2567,7 +2584,7 @@ function sign()
 					switch( result.cmd ){
 						case 'signin':
 							if ( result.status == 'SUCCESS' ){
-								oLog.log( null, 'sign in ok.' );
+								oLog.log( null, 'サインインしました.' );
 								oLog.open( 3 );
 								acc_id = result.acc_id;
 								showWorkPlace();
@@ -2576,7 +2593,7 @@ function sign()
 								// 	openWhiteboard();
 								// }
 							} else {
-								oLog.log( null, 'sign in error.' );
+								oLog.log( null, 'サインインエラー.' );
 								oLog.open( 3 );
 							}
 							break;
@@ -2593,8 +2610,6 @@ function sign()
 	}
 
 	try{
-		var sign_id = sign_form.id.value;
-		var sign_pwd = sign_form.pwd.value;
 		xmlhttp.open("POST", "/accounts/signin", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( "acc=" + sign_id + "&pwd=" + sign_pwd );

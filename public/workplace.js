@@ -144,7 +144,7 @@ function openingSigninMotion( e ){
 		// o.style.opacity			= 0;
 		o.style.transition		= 'all 0.5s ease-in-out';
 		var r = '';
-		r += '<form onsubmit="return false;" >';
+		r += '<form name="sign_form" onsubmit="return false;" >';
 			// r += '<div style="font-size:10px;padding-top:2px;" >ID:</div>';
 			r += '<div style="padding:2px 0px;" >';
 				r += '<input style="font-size:12px;width:120px;outline:none;border:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:#EDEDED;background-image:url(./images/user-2.png);background-size:10px;background-repeat:no-repeat;background-position:right 4px center;" type="text" id="acc_id" name="id" tabindex=1 autocomplete="off" placeholder="ID" />';
@@ -154,29 +154,35 @@ function openingSigninMotion( e ){
 				r += '<input style="font-size:12px;width:120px;outline:none;border:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:#EDEDED;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;" type="password" name="pwd" tabindex=2 autocomplete="off" placeholder="Password" />';
 			r += '</div>';
 
-			r += '<div class="operation" style="padding-top:1px;" >';
+			r += '<div class="operation" style="padding-top:2px;" >';
 				r += '<button tabindex="3" type="button" class="workplace_commit_button" ';
-				r += ' style="width:130px;height:24px;"  cmd="commit" >sign in</button>';
+				r += ' style="width:130px;height:24px;"  cmd="commit"  >sign in</button>';
 			r += '</div>';
 
 		r += '</form>';
 		o.innerHTML = r;
 
 		var oo = this.appendChild( o );
+		oo.getElementsByClassName('workplace_commit_button')[0].addEventListener(
+			'click', function(e){
+				sign();
+
+			}, false );
 	} else {	// closing animation
 		if ( this == e.target ){
 			opt[0].style.left = '-5px';
 			opt[0].style.opacity = 0;
-			// this.style.zIndex = '';
-			// opt[0].parentNode.removeChild( opt[0]);
 		}
 	}
 }
 //transition end
 function closingSigninMotion( e ){
 	var opt = this.getElementsByClassName('option');
-	if ( opt.length > 0 && ! this.classList.contains('signinMotion'))
+	if ( opt.length > 0 && ! this.classList.contains('signinMotion')) {
 		opt[0].parentNode.removeChild( opt[0] );
+		// sign_form.id.value 		= '';
+		// sign_form.pwd.value		= '';
+	}
 }
 
 function selectCurrentRangeId( e ){
@@ -334,8 +340,11 @@ function showWorkPlace(){
 	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	bo.style.visibility		= 'visible';
 
-	var wp_signin	= document.getElementById('WP_SIGNIN');
-	var wp_siginout	= document.getElementById('WP_SIGNOUT');
+	var wp_test			= document.getElementById('WP_TEST');
+	var wp_empty		= document.getElementById('WP_EMPTY');
+	var wp_content		= document.getElementById('WP_CONTENT');
+	var wp_signin		= document.getElementById('WP_SIGNIN');
+	var wp_siginout		= document.getElementById('WP_SIGNOUT');
 	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
 	var wp_children		= document.getElementById('WP_CHILDREN');
 	var wp_range		= document.getElementById('WP_RANGE');
@@ -352,13 +361,21 @@ function showWorkPlace(){
 		// wp_setting.removeAttribute( 'disabled' );
 		// wp_open.removeAttribute( 'disabled' );
 		wp_siginout.removeAttribute( 'disabled' );
+		wp_test.style.display			= 'inline';
+		wp_empty.style.display			= 'inline';
+		wp_content.style.display		= 'inline';
 		wp_signin.style.visibility		= 'hidden';
 		wp_siginout.style.visibility	= 'visible';
 		wp_whiteboard.style.visibility	= 'visible';
 		wp_children.style.visibility	= 'visible';
-		wp_range.style.visibility	= 'visible';
+		wp_range.style.visibility		= 'visible';
 		// wp_setting.style.visibility	= 'visible';
-		wp_account.style.visibility	= 'visible';
+		wp_account.style.visibility		= 'visible';
+
+		var opt = wp_signin.getElementsByClassName('option');
+		if ( opt.length > 0 ){
+			opt[0].parentNode.removeChild( opt[0] );
+		}
 	} else {
 		// not sign
 		wp_signin.removeAttribute( 'disabled' );
@@ -369,6 +386,9 @@ function showWorkPlace(){
 		wp_account.setAttribute( 'disabled', 'true' );
 		// wp_setting.setAttribute( 'disabled', 'true' );
 		// wp_open.setAttribute( 'disabled', 'true' );
+		wp_test.style.display			= 'none';
+		wp_empty.style.display			= 'none';
+		wp_content.style.display		= 'none';
 		wp_signin.style.visibility		= 'visible';
 		wp_siginout.style.visibility	= 'hidden';
 		wp_whiteboard.style.visibility	= 'hidden';

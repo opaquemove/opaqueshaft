@@ -81,11 +81,11 @@ messageLog.prototype = {
         var today = new Date();
         var o = document.createElement('DIV');
         hm = ( '00' + today.getHours() ).slice( -2 ) + ':' + ( '00' + today.getMinutes() ).slice(-2);
-        hm += ':' + ( '00' + today.getSeconds()).slice(-2);
-        o.innerHTML = hm + '&nbsp;:&nbsp;' + message;
+        // hm += ':' + ( '00' + today.getSeconds()).slice(-2);
+        o.innerHTML = hm + '&nbsp;:&nbsp;&nbsp;' + message;
 
         var o2 = document.createElement('DIV');
-        o2.innerHTML = hm + '&nbsp;:&nbsp;' + message;
+        o2.innerHTML = hm + '&nbsp;:&nbsp;&nbsp;' + message;
 
         this.latest.innerHTML = '';
         this.latest.appendChild( o );

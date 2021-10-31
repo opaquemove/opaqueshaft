@@ -110,9 +110,11 @@
     border-radius: 12px;
     transition:all 0.3s ease-in-out;
 } */
-#WP_TEST{
+#WP_TEST{}
+#WP_EMPTY{}
+#WP_CONTENT{}
 
-}
+
 #WP_SIGNIN{
     background-image:url(images/user-2.png);
     background-size:26px;
