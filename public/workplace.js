@@ -93,6 +93,9 @@ function initWorkplace(){
 	
 
 	makeRangeList( 'TAB_CURRENT2', 'V' );
+	document.getElementById( 'TAB_CURRENT2' ).addEventListener(
+		'click', selectCurrentRangeId, false );
+
 	// document.getElementById('BOTTOM_FRAME').addEventListener(
 	// 	'resize', resizeWorkplace );
 	// var bf = document.getElementById('BOTTOM_FRAME');
@@ -102,6 +105,60 @@ function initWorkplace(){
 	// observer.observe( bf, { attributes: true });
 
 }
+
+function selectCurrentRangeId( e ){
+	e.stopPropagation();
+	var o = e.target;
+	while( true ){
+		if ( o == this ) return;
+		if ( o.hasAttribute( 'range_id' ) ) break;
+		o = o.parentNode;
+	}
+	var ranges = this.childNodes;
+	for ( var i=0; i<ranges.length; i++ ){
+		if ( o == ranges[i] ) continue;
+		if ( ranges[i].hasAttribute( 'selected' ) ){
+			ranges[i].removeAttribute('selected');
+			ranges[i].classList.remove('selected');
+		}
+	}
+
+	if ( o.hasAttribute( 'selected' )){
+		o.removeAttribute( 'selected' );
+		o.classList.remove( 'selected' );
+	} else {
+		o.setAttribute( 'selected', 'yes' );
+		o.classList.add( 'selected' );
+	}
+
+	if ( getCurrentRangeId() == null ) return;
+	switch ( workplace_id ){
+		case 'WHITEBOARD':
+			makeCalendar( getCurrentRangeId() );
+			guidedance_whiteboard_form.day.value = '';
+			break;
+		case 'CHILDREN':
+			break;
+		case 'RANGE':
+			break;
+		case 'ACCOUNT':
+			break;
+	}
+
+}
+
+function getCurrentRangeId(){
+	var ranges = document.getElementById('TAB_CURRENT2').childNodes;
+	var range_id = null;
+	for ( var i=0; i<ranges.length; i++ ){
+		if ( ranges[i].hasAttribute('selected')){
+			range_id = ranges[i].getAttribute('range_id');
+			break;
+		}
+	}
+	return range_id;
+}
+
 
 //	Left90 transsition start/end invoke
 function rotateMenu(e){
@@ -325,7 +382,7 @@ function workplaceWhiteboard(){
 	if ( !list.hasChildNodes() ) list.innerHTML = '';
 
 	//	レンジリスト作成
-	makeRangeList( 'RANGE_LIST', 'H' );
+	// makeRangeList( 'RANGE_LIST', 'H' );
 	addWorkplaceWhiteboard();
 
 }
@@ -364,32 +421,32 @@ function addWorkplaceWhiteboard(){
 
 
 	//	レンジリスト作成
-	makeRangeList( 'RANGE_LIST', 'H' );
+	// makeRangeList( 'RANGE_LIST', 'H' );
 
-	document.getElementById('RANGE_LIST').addEventListener('click',
-		function(e) {
-			var o = e.target;
-			if ( o == document.getElementById('RANGE_LIST')) return;
-			while ( o.parentNode != document.getElementById('RANGE_LIST') ){
-				o = o.parentNode;
-			}
-			for ( var i=0; i<this.childNodes.length; i++ ){
-				var c = this.childNodes[i];
-				if ( c.hasAttribute('selected') ){
-					c.removeAttribute( 'selected' );
-					c.style.color			= '';
-					c.style.backgroundColor = '';
-				}
-			}
-			o.style.color			= 'white';
-			o.style.backgroundColor = 'royalblue';
-			o.setAttribute( 'selected', 'true' );
-			var range_id = o.getAttribute('range_id' );
-			makeCalendar( range_id );
-			// makeWhiteboardList( range_id );
-			guidedance_whiteboard_form.day.value = '';
+	// document.getElementById('RANGE_LIST').addEventListener('click',
+	// 	function(e) {
+	// 		var o = e.target;
+	// 		if ( o == document.getElementById('RANGE_LIST')) return;
+	// 		while ( o.parentNode != document.getElementById('RANGE_LIST') ){
+	// 			o = o.parentNode;
+	// 		}
+	// 		for ( var i=0; i<this.childNodes.length; i++ ){
+	// 			var c = this.childNodes[i];
+	// 			if ( c.hasAttribute('selected') ){
+	// 				c.removeAttribute( 'selected' );
+	// 				c.style.color			= '';
+	// 				c.style.backgroundColor = '';
+	// 			}
+	// 		}
+	// 		o.style.color			= 'white';
+	// 		o.style.backgroundColor = 'royalblue';
+	// 		o.setAttribute( 'selected', 'true' );
+	// 		var range_id = o.getAttribute('range_id' );
+	// 		makeCalendar( range_id );
+	// 		// makeWhiteboardList( range_id );
+	// 		guidedance_whiteboard_form.day.value = '';
 
-		}, false );
+	// 	}, false );
 
 	document.getElementById('CALENDAR_LIST').addEventListener('gesturestart',
 	function(e){
@@ -921,27 +978,27 @@ function workplaceChildren(){
 	wb.style.height = '0px';
 
 	//	レンジリスト作成
-	makeRangeList( 'RANGE_LIST2', 'H' );
-	document.getElementById('RANGE_LIST2').addEventListener('click',
-		function(e) {
-			var o = e.target;
-			if ( o == this ) return;
-			while ( o.parentNode != this ){
-				o = o.parentNode;
-			}
-			for ( var i=0; i<this.childNodes.length; i++ ){
-				var c = this.childNodes[i];
-				if ( c.hasAttribute('selected') ){
-					c.removeAttribute( 'selected' );
-					c.style.color			= '';
-					c.style.backgroundColor = '';
-				}
-			}
-			o.style.color			= 'white';
-			o.style.backgroundColor = 'royalblue';
-			o.setAttribute( 'selected', 'true' );
+	// makeRangeList( 'RANGE_LIST2', 'H' );
+	// document.getElementById('RANGE_LIST2').addEventListener('click',
+	// 	function(e) {
+	// 		var o = e.target;
+	// 		if ( o == this ) return;
+	// 		while ( o.parentNode != this ){
+	// 			o = o.parentNode;
+	// 		}
+	// 		for ( var i=0; i<this.childNodes.length; i++ ){
+	// 			var c = this.childNodes[i];
+	// 			if ( c.hasAttribute('selected') ){
+	// 				c.removeAttribute( 'selected' );
+	// 				c.style.color			= '';
+	// 				c.style.backgroundColor = '';
+	// 			}
+	// 		}
+	// 		o.style.color			= 'white';
+	// 		o.style.backgroundColor = 'royalblue';
+	// 		o.setAttribute( 'selected', 'true' );
 
-		}, false );
+	// 	}, false );
 
 
 
@@ -2291,13 +2348,15 @@ function resizeWorkplace(){
 function finder(){
 
 	var range_id = null;
-	var ranges = document.getElementById('RANGE_LIST2').childNodes;
-	for ( var i=0; i<ranges.length; i++ ){
-		if ( ranges[i].hasAttribute('selected')) {
-			range_id = ranges[i].getAttribute('range_id');
-			break;
-		}
-	}
+	range_id = getCurrentRangeId();
+
+	// var ranges = document.getElementById('RANGE_LIST2').childNodes;
+	// for ( var i=0; i<ranges.length; i++ ){
+	// 	if ( ranges[i].hasAttribute('selected')) {
+	// 		range_id = ranges[i].getAttribute('range_id');
+	// 		break;
+	// 	}
+	// }
 
 	if (range_id == null ){
 		oLog.log( null, 'レンジを指定してください.');

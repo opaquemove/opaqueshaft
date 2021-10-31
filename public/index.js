@@ -2731,6 +2731,7 @@ function addRangeListHelper( oParent, Result, direction ){
 			c.classList.add('range_box_lr');
 			break;
 	}
+	c.classList.add('unselected');
 
 	c.setAttribute("range_id",  Result.range_id );
 	c.setAttribute("sotd", 		Result.sotd );

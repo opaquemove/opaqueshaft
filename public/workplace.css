@@ -42,7 +42,7 @@
     visibility: hidden;
 }
 #TAB_CURRENT2{
-    width:calc(100% - 8px);
+    width:calc(100% - 4px);
     height:192px;
     color:dimgray;
     background-color:#EDEDED;
@@ -50,7 +50,7 @@
     font-weight: bold;
     text-align: center;
     padding-top:4px;
-    padding-left:8px;
+    padding-left:4px;
     /* writing-mode: vertical-lr; */
     display:flex;
     flex-direction: column;
@@ -165,9 +165,9 @@
     transition:all 0.7s ease-in-out;
 }
 #WORKPLACE_WHITEBOARD_HDR{
-    margin:0 auto;
-    width:450px;
-    height:60px
+    margin:                 0 auto;
+    width:                  250px;
+    height:                 60px
 }
 #WORKPLACE_WHITEBOARD_MAIN{
     margin:0 auto;
@@ -218,7 +218,7 @@
 }
 #WORKPLACE_CHILDREN_HDR{
     margin:0 auto;
-    width:470px;
+    width:350px;
     height:80px;
 }
 #WORKPLACE_CHILDREN_MAIN{
@@ -294,22 +294,6 @@
 	border-radius: 			8px;
 }
 
-#RANGE_LIST2{
-	clear:					both;
-	margin-top:				5px;
-	height:					34px;
-	background-color:		#EDEDED;
-	display:				flex;
-	flex-wrap:				nowrap;
-	flex-direction: 		row-reverse;
-    align-items:            center;
-	justify-content: 		space-between;
-	font-size:				14px;
-	padding:				4px;
-	overflow:				scroll;
-	border:					0px solid gray;	
-	border-radius: 			8px;
-}
 
 .range_box{
 	float:					left;
@@ -325,9 +309,10 @@
 	/* float:					left; */
 	width:					24px;
 	height:					40px;
-	background-color: 		white;
+	/* background-color: 		white; */
 	border:					1px solid lightgray;
 	margin:					1px;
+    padding-left:           6px;
 	border-radius: 			4px;
     writing-mode: vertical-lr;
 }
