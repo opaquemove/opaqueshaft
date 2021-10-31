@@ -131,7 +131,7 @@ function openingSigninMotion( e ){
 		o.style.top				= '-5px';
 		o.style.left			= ( this.offsetWidth + -4 ) + 'px';
 		o.style.height			= '100%';
-		o.style.width			= '156px';
+		o.style.width			= '164px';
 		o.style.height			= 'calc( 100% - 4px )';
 		o.style.textAlign		= 'left';
 		o.style.fontWeight		= 'normal';
@@ -150,11 +150,11 @@ function openingSigninMotion( e ){
 				r += '<input style="font-size:12px;width:120px;outline:none;border:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:#EDEDED;background-image:url(./images/user-2.png);background-size:10px;background-repeat:no-repeat;background-position:right 4px center;" type="text" id="acc_id" name="id" tabindex=1 autocomplete="off" placeholder="ID" />';
 			r += '</div>';
 			// r += '<div style="font-size:10px;padding-top:2px;" >Password:</div>';
-			r += '<div style="padding:2px 0px;" >';
+			r += '<div style="padding:4px 0px;" >';
 				r += '<input style="font-size:12px;width:120px;outline:none;border:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:#EDEDED;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;" type="password" name="pwd" tabindex=2 autocomplete="off" placeholder="Password" />';
 			r += '</div>';
 
-			r += '<div class="operation" style="padding-top:2px;" >';
+			r += '<div class="operation" style="padding-top:4px;" >';
 				r += '<button tabindex="3" type="button" class="workplace_commit_button" ';
 				r += ' style="width:130px;height:24px;"  cmd="commit"  >sign in</button>';
 			r += '</div>';
@@ -203,8 +203,8 @@ function selectCurrentRangeId( e ){
 	}
 
 	if ( o.hasAttribute( 'selected' )){
-		o.removeAttribute( 'selected' );
-		o.classList.remove( 'selected' );
+		// o.removeAttribute( 'selected' );
+		// o.classList.remove( 'selected' );
 	} else {
 		o.setAttribute( 'selected', 'yes' );
 		o.classList.add( 'selected' );
@@ -1572,7 +1572,7 @@ function workplaceAccountHelper(){
 					
 							var privs = [ 'admin', 'editor', 'guest' ];
 							r += '<div style="padding-top:4px;" >priveledge:</div>';
-							r += '<div style="width:160px;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;display:flex;" >';
+							r += '<div style="width:90%;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;display:flex;" >';
 							for ( var j=0; j<privs.length; j++ ){
 								var checked = ( priv == privs[j] ) ? ' checked ' : '';
 								r += '<input type="radio" id="acc_priv_' + acc_id + '_' + j + '" name="acc_priv"  value="' + privs[j] + '"  ' + checked + '  />';
@@ -1686,7 +1686,7 @@ function addAccount(){
 		r += '</div>';
 		var privs = [ 'admin', 'editor', 'guest' ];
 		r += '<div style="padding-top:4px;" >priveledge:</div>';
-		r += '<div style="width:160px;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;" >';
+		r += '<div style="width:90%;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;" >';
 			for ( var j=0; j<privs.length; j++ ){
 				r += '<input type="radio" id="acc_priv_' + j + '" name="acc_priv"  value="' + privs[j] + '"   />';
 				r += '<label for="acc_priv_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
@@ -2143,20 +2143,20 @@ function addChildren(){
 			r += '</div>';
 			r += '<div  style="clear:both;width:100%;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
 			r += '<div>Type:</div>';
-			r += '<div style="width:96px;height:28px;padding:4px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+			r += '<div style="width:72px;height:22px;padding:2px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 				r += '<input type="radio" id="child_type_a" name="child_type" value="A" />';
-				r += '<label for="child_type_a"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
+				r += '<label for="child_type_a"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
 				r += '&nbsp;'
 				r += '<input type="radio" id="child_type_b" name="child_type" value="B" />';
-				r += '<label for="child_type_b"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
+				r += '<label for="child_type_b"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
 			r += '</div>';
 			r += '<div  style="clear:both;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
 				var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
 				r += '<div>Grade:</div>';
-				r += '<div style="width:calc( 100%- 8px);height:28px;padding:4px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+				r += '<div style="width:90%;height:22px;padding:2px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 					for ( var g=0; g<grades.length; g++ ){
 						r += '<input type="radio" id="child_grade_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
-						r += '<label for="child_grade_' + g + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
+						r += '<label for="child_grade_' + g + '"  style="display:block;float:left;width:30px;height:14px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
 					}
 				r += '</div>';
 			r += '</div>';
@@ -2573,12 +2573,12 @@ function finderHelper( keyword, range_id ){
 												break;
 										}
 										r += '<div>Type:</div>';
-										r += '<div style="width:96px;height:27px;padding:4px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+										r += '<div style="width:72px;height:22px;padding:2px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 											r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
-											r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
+											r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
 											r += '&nbsp;'
 											r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
-											r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:30px;height:21px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
+											r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
 										r += '</div>';
 
 										// r += '<img width="14px" src="./images/minus-3.png" />';
@@ -2589,10 +2589,10 @@ function finderHelper( keyword, range_id ){
 										var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
 										grades[ child_grade - 1 ] = ' checked ';
 										r += '<div>Grade:</div>';
-										r += '<div style="width:calc( 100%- 8px);height:27px;padding:4px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+										r += '<div style="width:90%;height:22px;padding:2px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 											for ( var g=0; g<grades.length; g++ ){
 												r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
-												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
+												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:14px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
 											}
 										r += '</div>';
 	
