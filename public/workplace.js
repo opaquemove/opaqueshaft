@@ -146,17 +146,17 @@ function openingSigninMotion( e ){
 		var r = '';
 		r += '<form onsubmit="return false;" >';
 			// r += '<div style="font-size:10px;padding-top:2px;" >ID:</div>';
-			r += '<div style="padding:3px 0px;" >';
-				r += '<input style="font-size:12px;width:120px;outline:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:lightgrey;background-image:url(./images/user-2.png);background-size:10px;background-repeat:no-repeat;background-position:right 4px center;" type="text" id="acc_id" name="id" tabindex=1 autocomplete="off" placeholder="ID" />';
+			r += '<div style="padding:2px 0px;" >';
+				r += '<input style="font-size:12px;width:120px;outline:none;border:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:#EDEDED;background-image:url(./images/user-2.png);background-size:10px;background-repeat:no-repeat;background-position:right 4px center;" type="text" id="acc_id" name="id" tabindex=1 autocomplete="off" placeholder="ID" />';
 			r += '</div>';
 			// r += '<div style="font-size:10px;padding-top:2px;" >Password:</div>';
-			r += '<div style="padding:3px 0px;" >';
-				r += '<input style="font-size:12px;width:120px;outline:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:lightgrey;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;" type="password" name="pwd" tabindex=2 autocomplete="off" placeholder="Password" />';
+			r += '<div style="padding:2px 0px;" >';
+				r += '<input style="font-size:12px;width:120px;outline:none;border:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:#EDEDED;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;" type="password" name="pwd" tabindex=2 autocomplete="off" placeholder="Password" />';
 			r += '</div>';
 
-			r += '<div class="operation" style="padding-top:2px;" >';
+			r += '<div class="operation" style="padding-top:1px;" >';
 				r += '<button tabindex="3" type="button" class="workplace_commit_button" ';
-				r += ' style="width:120px;height:32px;"  cmd="commit" >sign in</button>';
+				r += ' style="width:130px;height:24px;"  cmd="commit" >sign in</button>';
 			r += '</div>';
 
 		r += '</form>';
