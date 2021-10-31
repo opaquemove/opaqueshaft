@@ -66,9 +66,17 @@ function initWorkplace(){
 	new Button( 'WP_CHILDREN',    workplaceChildren ).play();
 	new Button( 'WP_RANGE',       workplaceRange ).play();
 	new Button( 'WP_ACCOUNT',     workplaceAccount ).play();
-	// new Button( 'WP_ACCOUNT',     accountProperty ).play();
-	new Button( 'WP_SIGNIN',      signForm ).play();
+	// new Button( 'WP_SIGNIN',      signForm ).play();
 	new Button( 'WP_SIGNOUT',     signoutForm ).play();
+
+	document.getElementById('WP_SIGNIN').addEventListener(
+		'click', signinMotion );
+	document.getElementById('WP_SIGNIN').addEventListener(
+		'transitionstart', openingSigninMotion );
+	document.getElementById('WP_SIGNIN').addEventListener(
+		'transitionend', closingSigninMotion );
+	
+
 	document.getElementById('WP_TEST').addEventListener(
 		'click', rotateMenu );
 	document.getElementById('WP_TEST').addEventListener(
@@ -104,6 +112,71 @@ function initWorkplace(){
 	// });
 	// observer.observe( bf, { attributes: true });
 
+}
+
+function signinMotion( e ){
+	e.stopPropagation();
+	if ( e.target != this ) return;
+	this.classList.toggle( 'signinMotion' );
+}
+//transition start
+function openingSigninMotion( e ){
+	var opt = this.getElementsByClassName('option');
+	if ( opt.length == 0 ){		//	opening transition
+		this.style.zIndex = 1;
+		var o = document.createElement('DIV');
+		o.classList.add('option');
+		o.classList.add('signMotionOff');
+		o.style.position		='absolute';
+		o.style.top				= '-5px';
+		o.style.left			= ( this.offsetWidth + -4 ) + 'px';
+		o.style.height			= '100%';
+		o.style.width			= '156px';
+		o.style.height			= 'calc( 100% - 4px )';
+		o.style.textAlign		= 'left';
+		o.style.fontWeight		= 'normal';
+		o.style.color			= 'gray';
+		o.style.backgroundColor	= 'white';
+		o.style.border			= '1px solid lightgrey';
+		o.style.margin			= '4px';
+		o.style.padding			= '4px 2px 0px 14px';
+		o.style.overflow		= 'hidden';
+		// o.style.opacity			= 0;
+		o.style.transition		= 'all 0.5s ease-in-out';
+		var r = '';
+		r += '<form onsubmit="return false;" >';
+			// r += '<div style="font-size:10px;padding-top:2px;" >ID:</div>';
+			r += '<div style="padding:3px 0px;" >';
+				r += '<input style="font-size:12px;width:120px;outline:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:lightgrey;background-image:url(./images/user-2.png);background-size:10px;background-repeat:no-repeat;background-position:right 4px center;" type="text" id="acc_id" name="id" tabindex=1 autocomplete="off" placeholder="ID" />';
+			r += '</div>';
+			// r += '<div style="font-size:10px;padding-top:2px;" >Password:</div>';
+			r += '<div style="padding:3px 0px;" >';
+				r += '<input style="font-size:12px;width:120px;outline:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:lightgrey;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;" type="password" name="pwd" tabindex=2 autocomplete="off" placeholder="Password" />';
+			r += '</div>';
+
+			r += '<div class="operation" style="padding-top:2px;" >';
+				r += '<button tabindex="3" type="button" class="workplace_commit_button" ';
+				r += ' style="width:120px;height:32px;"  cmd="commit" >sign in</button>';
+			r += '</div>';
+
+		r += '</form>';
+		o.innerHTML = r;
+
+		var oo = this.appendChild( o );
+	} else {	// closing animation
+		if ( this == e.target ){
+			opt[0].style.left = '-5px';
+			opt[0].style.opacity = 0;
+			// this.style.zIndex = '';
+			// opt[0].parentNode.removeChild( opt[0]);
+		}
+	}
+}
+//transition end
+function closingSigninMotion( e ){
+	var opt = this.getElementsByClassName('option');
+	if ( opt.length > 0 && ! this.classList.contains('signinMotion'))
+		opt[0].parentNode.removeChild( opt[0] );
 }
 
 function selectCurrentRangeId( e ){

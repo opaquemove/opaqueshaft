@@ -616,6 +616,13 @@
     transform:    translateX(-50px);
     /* opacity: 0.8; */
 }
+.signinMotionOff{
+    opacity:        0;
+}
+.signinMotion{
+    transform:      translateX(-100px);
+    opacity:        1;
+}
 .height320{
     height:480px;
     /* opacity: 0.8; */
