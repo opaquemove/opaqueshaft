@@ -67,7 +67,7 @@ function initWorkplace(){
 	new Button( 'WP_RANGE',       workplaceRange ).play();
 	new Button( 'WP_ACCOUNT',     workplaceAccount ).play();
 	// new Button( 'WP_SIGNIN',      signForm ).play();
-	new Button( 'WP_SIGNOUT',     signoutForm ).play();
+	// new Button( 'WP_SIGNOUT',     signoutForm ).play();
 
 	document.getElementById('WP_SIGNIN').addEventListener(
 		'click', signinMotion );
@@ -75,6 +75,13 @@ function initWorkplace(){
 		'transitionstart', openingSigninMotion );
 	document.getElementById('WP_SIGNIN').addEventListener(
 		'transitionend', closingSigninMotion );
+
+	document.getElementById('WP_SIGNOUT').addEventListener(
+		'click', signoutMotion );
+	document.getElementById('WP_SIGNOUT').addEventListener(
+		'transitionstart', openingSignoutMotion );
+	document.getElementById('WP_SIGNOUT').addEventListener(
+		'transitionend', closingSignoutMotion );
 	
 
 	document.getElementById('WP_TEST').addEventListener(
@@ -126,7 +133,7 @@ function openingSigninMotion( e ){
 		this.style.zIndex = 1;
 		var o = document.createElement('DIV');
 		o.classList.add('option');
-		o.classList.add('signMotionOff');
+		// o.classList.add('signinMotionOff');
 		o.style.position		='absolute';
 		o.style.top				= '-5px';
 		o.style.left			= ( this.offsetWidth + -4 ) + 'px';
@@ -195,6 +202,63 @@ function closingSigninMotion( e ){
 		// sign_form.pwd.value		= '';
 	}
 }
+
+function signoutMotion( e ){
+	e.stopPropagation();
+	if ( e.target != this ) return;
+	this.classList.toggle( 'signoutMotion' );
+}
+//transition start
+function openingSignoutMotion( e ){
+	var opt = this.getElementsByClassName('option');
+	if ( opt.length == 0 ){		//	opening transition
+		this.style.zIndex = 1;
+		var o = document.createElement('DIV');
+		o.classList.add('option');
+		// o.classList.add('signMotionOff');
+		o.style.position		='absolute';
+		o.style.top				= '-5px';
+		o.style.left			= ( this.offsetWidth + -4 ) + 'px';
+		o.style.height			= '100%';
+		o.style.width			= ( this.offsetWidth - 16 ) + 'px';
+		o.style.height			= 'calc( 100% - 4px )';
+		o.style.textAlign		= 'left';
+		o.style.fontWeight		= 'normal';
+		o.style.color			= 'gray';
+		o.style.backgroundColor	= 'white';
+		o.style.border			= '1px solid lightgrey';
+		o.style.margin			= '4px';
+		o.style.padding			= '4px 2px 0px 14px';
+		o.style.overflow		= 'hidden';
+		// o.style.opacity			= 0;
+		o.style.transition		= 'all 0.5s ease-in-out';
+		var r = '';
+		r += '<button type="button" class="workplace_commit_button" ></button>';
+		o.innerHTML = r;
+
+		var oo = this.appendChild( o );
+		oo.getElementsByClassName( 'workplace_commit_button' )[0].addEventListener(
+			'click', function (e){
+				e.stopPropagation();
+				signout();
+			}, false );
+
+	} else {	// closing animation
+		if ( this == e.target ){
+			opt[0].style.left = '-5px';
+			opt[0].style.opacity = 0;
+		}
+	}
+}
+//transition end
+function closingSignoutMotion( e ){
+	var opt = this.getElementsByClassName('option');
+	if ( opt.length > 0 && ! this.classList.contains('signoutMotion')) {
+		opt[0].parentNode.removeChild( opt[0] );
+	}
+}
+
+
 
 function selectCurrentRangeId( e ){
 	e.stopPropagation();

@@ -625,6 +625,15 @@
     transform:      translateX(-100px);
     opacity:        1;
 }
+.signoutMotionOff{
+    opacity:        0;
+}
+.signoutMotion{
+    transform:      translateX(-100px);
+    opacity:        1;
+}
+
+
 .height320{
     height:480px;
     /* opacity: 0.8; */
