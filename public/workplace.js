@@ -359,7 +359,6 @@ function showWorkPlace(){
 	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
 	var wp_children		= document.getElementById('WP_CHILDREN');
 	var wp_range		= document.getElementById('WP_RANGE');
-	// var wp_setting		= document.getElementById('WP_SETTING');
 	var wp_account		= document.getElementById('WP_ACCOUNT');
 
 	if ( wp_signin.classList.contains('signinMotion'))
@@ -372,8 +371,6 @@ function showWorkPlace(){
 		wp_children.removeAttribute( 'disabled' );
 		wp_range.removeAttribute( 'disabled' );
 		wp_account.removeAttribute( 'disabled' );
-		// wp_setting.removeAttribute( 'disabled' );
-		// wp_open.removeAttribute( 'disabled' );
 		wp_siginout.removeAttribute( 'disabled' );
 		wp_test.style.display			= 'inline';
 		wp_empty.style.display			= 'inline';
@@ -383,7 +380,6 @@ function showWorkPlace(){
 		wp_whiteboard.style.visibility	= 'visible';
 		wp_children.style.visibility	= 'visible';
 		wp_range.style.visibility		= 'visible';
-		// wp_setting.style.visibility	= 'visible';
 		wp_account.style.visibility		= 'visible';
 
 		var opt = wp_signin.getElementsByClassName('option');
@@ -398,8 +394,6 @@ function showWorkPlace(){
 		wp_children.setAttribute( 'disabled', 'true' );
 		wp_range.setAttribute( 'disabled', 'true' );
 		wp_account.setAttribute( 'disabled', 'true' );
-		// wp_setting.setAttribute( 'disabled', 'true' );
-		// wp_open.setAttribute( 'disabled', 'true' );
 		wp_test.style.display			= 'none';
 		wp_empty.style.display			= 'none';
 		wp_content.style.display		= 'none';
@@ -407,9 +401,8 @@ function showWorkPlace(){
 		wp_siginout.style.visibility	= 'hidden';
 		wp_whiteboard.style.visibility	= 'hidden';
 		wp_children.style.visibility	= 'hidden';
-		wp_range.style.visibility	= 'hidden';
-		// wp_setting.style.visibility	= 'hidden';
-		wp_account.style.visibility	= 'hidden';
+		wp_range.style.visibility		= 'hidden';
+		wp_account.style.visibility		= 'hidden';
 	}
 
 	resizeWorkplace();
@@ -1662,10 +1655,17 @@ function workplaceAccountHelper(){
 					c.style.backgroundSize		= '14px';
 					c.style.backgroundRepeat 	= 'no-repeat';
 					c.style.backgroundPosition	= 'top 40px  center';
+					c.style.display				= 'flex';
+					c.style.justifyContent		= 'center';
 
 					c.style.pointerEvents = 'none';
 					c.style.height = ( p.parentNode.offsetHeight - 20 ) + 'px';
-					c.innerHTML = 'bottom margin';
+					// c.innerHTML = 'bottom margin';
+					var r = '';
+					r += '<div style="width:40px;height:32px;padding-top:8px;font-size:16px;color:white;background-color:limegreen;" >';
+					r += '+' + result.length;
+					r += '</div>';
+					c.innerHTML = r;
 					var cc = p.appendChild( c );
 					
 
@@ -1688,6 +1688,9 @@ function workplaceAccountHelper(){
 
 function addAccount(){
 	var p	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+	while ( p.firstChild ){
+		p.removeChild( p.firstChild );
+	}
 	if ( p.getElementsByClassName('add_account').length > 0 ) return;
 	var o = document.createElement('DIV');
 	o.classList.add('add_account');
@@ -2136,7 +2139,13 @@ function selectChildrenTransitionEnd( e ){
 
 function addChildren(){
 	var p	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
-	if ( p.getElementsByClassName('add_children').length > 0 ) return;
+	while ( p.firstChild){
+        p.removeChild( p.firstChild );
+    }
+
+	if ( p.getElementsByClassName('add_children').length > 0 ){
+		return;
+	}
 	var o = document.createElement('DIV');
 	o.classList.add('add_children');
 	o.style.textAlign	= 'left';
@@ -2266,7 +2275,7 @@ function acceptAddChildrenHelper(){
 	var imagefile		= childrenForm.imagefile.value;
 	var child_type		= childrenForm.child_type.value;
 	var child_grade		= childrenForm.child_grade.value;
-	var range_id		= 2021;
+	var range_id		= getCurrentRangeId();
 
 	var r = '';
 	var xmlhttp = new XMLHttpRequest();
@@ -2329,7 +2338,7 @@ function wp_editChildren( c ){
 		c = c.parentNode;
 	}
 	var m = document.getElementById( 'WORKPLACE_CHILDREN_MAIN');
-	m.scrollTop = c.offsetTop - 80;
+	// m.scrollTop = c.offsetTop - 80;
 
 	c.classList.remove('left100');
 	c.classList.toggle('height320');
@@ -2670,16 +2679,17 @@ function finderHelper( keyword, range_id ){
 						c.style.backgroundSize	= '14px';
 						c.style.backgroundRepeat = 'no-repeat';
 						c.style.backgroundPosition	= 'top 40px  center';
+						c.style.display				= 'flex';
+						c.style.justifyContent		= 'center';
 
 						c.style.pointerEvents = 'none';
 						c.style.height = ( list.parentNode.offsetHeight - 20 ) + 'px';
-						c.innerHTML = 'bottom margin';
 						if ( xmlhttp.status == 200 ){
 							var r = '';
-							r += '<div style="color:gray;font-size:20px;" >';
-							r += result.length;
+							r += '<div style="width:40px;height:32px;padding-top:8px;color:white;background-color:limegreen;font-size:20px;" >';
+							r += '+' + result.length;
 							r += '</div>';
-							c.innerHTML += r;
+							c.innerHTML = r;
 						}
 
 						var cc = list.appendChild( c );
