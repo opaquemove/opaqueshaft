@@ -75,7 +75,7 @@
 	flex-wrap:				wrap;
 	justify-content: 		center;
 	align-items:            flex-start;
-	align-content:          space-between;
+	align-content:          center;
     overflow:               auto;
 
 }

@@ -163,6 +163,17 @@ function openingSigninMotion( e ){
 		o.innerHTML = r;
 
 		var oo = this.appendChild( o );
+		sign_form.id.focus();
+		sign_form.id.addEventListener(
+			'keyup', function( e ){
+				if ( e.key == 'Enter' )
+					sign();
+			  }, false );
+		sign_form.pwd.addEventListener(
+		'keyup', function( e ){
+			if ( e.key == 'Enter' )
+				sign();
+			}, false );
 		oo.getElementsByClassName('workplace_commit_button')[0].addEventListener(
 			'click', function(e){
 				sign();
@@ -351,6 +362,9 @@ function showWorkPlace(){
 	// var wp_setting		= document.getElementById('WP_SETTING');
 	var wp_account		= document.getElementById('WP_ACCOUNT');
 
+	if ( wp_signin.classList.contains('signinMotion'))
+		wp_signin.classList.remove('signinMotion');
+
 	if ( checkSign() ){
 		// signed
 		wp_signin.setAttribute( 'disabled', 'true' );
@@ -414,6 +428,7 @@ function workplaceReset(){
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 	var range	= document.getElementById('WORKPLACE_RANGE');
 	var account	= document.getElementById('WORKPLACE_ACCOUNT');
+	var signin	= document.getElementById('WP_SIGNIN');
 
 	if ( icon.style.height == '0px'){
 		icon.style.height = icon.getAttribute('orgHeight');
@@ -434,6 +449,9 @@ function workplaceReset(){
 	tab.style.visibility		= 'hidden';
 	current.style.visibility	= 'hidden';
 	current2.style.visibility	= 'hidden';
+
+	if (signin.classList.contains('signinMotion'))
+		signin.classList.remove('signinMotion');
 
 }
 
