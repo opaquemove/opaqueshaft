@@ -233,7 +233,7 @@ function openingSignoutMotion( e ){
 		// o.style.opacity			= 0;
 		o.style.transition		= 'all 0.5s ease-in-out';
 		var r = '';
-		r += '<button type="button" class="workplace_commit_button" ></button>';
+		r += '<button type="button" class="workplace_commit_button" >sign out?</button>';
 		o.innerHTML = r;
 
 		var oo = this.appendChild( o );
@@ -419,7 +419,7 @@ function showWorkPlace(){
 	var wp_empty		= document.getElementById('WP_EMPTY');
 	var wp_content		= document.getElementById('WP_CONTENT');
 	var wp_signin		= document.getElementById('WP_SIGNIN');
-	var wp_siginout		= document.getElementById('WP_SIGNOUT');
+	var wp_signout		= document.getElementById('WP_SIGNOUT');
 	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
 	var wp_children		= document.getElementById('WP_CHILDREN');
 	var wp_range		= document.getElementById('WP_RANGE');
@@ -427,6 +427,8 @@ function showWorkPlace(){
 
 	if ( wp_signin.classList.contains('signinMotion'))
 		wp_signin.classList.remove('signinMotion');
+	if ( wp_signout.classList.contains('signoutMotion'))
+		wp_signout.classList.remove('signoutMotion');
 
 	if ( checkSign() ){
 		// signed
@@ -435,12 +437,12 @@ function showWorkPlace(){
 		wp_children.removeAttribute( 'disabled' );
 		wp_range.removeAttribute( 'disabled' );
 		wp_account.removeAttribute( 'disabled' );
-		wp_siginout.removeAttribute( 'disabled' );
+		wp_signout.removeAttribute( 'disabled' );
 		wp_test.style.display			= 'inline';
 		wp_empty.style.display			= 'inline';
 		wp_content.style.display		= 'inline';
 		wp_signin.style.visibility		= 'hidden';
-		wp_siginout.style.visibility	= 'visible';
+		wp_signout.style.visibility		= 'visible';
 		wp_whiteboard.style.visibility	= 'visible';
 		wp_children.style.visibility	= 'visible';
 		wp_range.style.visibility		= 'visible';
@@ -453,7 +455,7 @@ function showWorkPlace(){
 	} else {
 		// not sign
 		wp_signin.removeAttribute( 'disabled' );
-		wp_siginout.setAttribute( 'disabled', 'true' );
+		wp_signout.setAttribute( 'disabled', 'true' );
 		wp_whiteboard.setAttribute( 'disabled', 'true' );
 		wp_children.setAttribute( 'disabled', 'true' );
 		wp_range.setAttribute( 'disabled', 'true' );
@@ -462,7 +464,7 @@ function showWorkPlace(){
 		wp_empty.style.display			= 'none';
 		wp_content.style.display		= 'none';
 		wp_signin.style.visibility		= 'visible';
-		wp_siginout.style.visibility	= 'hidden';
+		wp_signout.style.visibility		= 'hidden';
 		wp_whiteboard.style.visibility	= 'hidden';
 		wp_children.style.visibility	= 'hidden';
 		wp_range.style.visibility		= 'hidden';
@@ -486,6 +488,7 @@ function workplaceReset(){
 	var range	= document.getElementById('WORKPLACE_RANGE');
 	var account	= document.getElementById('WORKPLACE_ACCOUNT');
 	var signin	= document.getElementById('WP_SIGNIN');
+	var signout	= document.getElementById('WP_SIGNOUT');
 
 	if ( icon.style.height == '0px'){
 		icon.style.height = icon.getAttribute('orgHeight');
@@ -509,6 +512,8 @@ function workplaceReset(){
 
 	if (signin.classList.contains('signinMotion'))
 		signin.classList.remove('signinMotion');
+	if (signout.classList.contains('signoutMotion'))
+		signout.classList.remove('signoutMotion');
 
 }
 
