@@ -62,12 +62,37 @@ function initWorkplace(){
 	}, false );
 
 
-	new Button( 'WP_WHITEBOARD',  workplaceWhiteboard ).play();
-	new Button( 'WP_CHILDREN',    workplaceChildren ).play();
-	new Button( 'WP_RANGE',       workplaceRange ).play();
-	new Button( 'WP_ACCOUNT',     workplaceAccount ).play();
-	// new Button( 'WP_SIGNIN',      signForm ).play();
-	// new Button( 'WP_SIGNOUT',     signoutForm ).play();
+	document.getElementById('WORKPLACE_HDR').addEventListener(
+		'click', function(e){
+			switch( e.target.id ){
+				case 'WP_WHITEBOARD':
+					workplaceWhiteboard();
+					break;
+				case 'WP_CHILDREN':
+					workplaceChildren();
+					break;
+				case 'WP_RANGE':
+					workplaceRange();
+					break;
+				case 'WP_ACCOUNT':
+					workplaceAccount();
+					break;
+				case 'WORKPLACE_HDR':
+				case 'WORKPLACE_SUMMARY':
+					var signin = document.getElementById('WP_SIGNIN');
+					var signout= document.getElementById('WP_SIGNOUT');
+					if (signin.classList.contains('signinMotion'))
+						signin.classList.remove('signinMotion');
+					if (signout.classList.contains('signoutMotion'))
+						signout.classList.remove('signoutMotion');
+					break;
+			}
+		}, false );
+	
+	// new Button( 'WP_WHITEBOARD',  workplaceWhiteboard ).play();
+	// new Button( 'WP_CHILDREN',    workplaceChildren ).play();
+	// new Button( 'WP_RANGE',       workplaceRange ).play();
+	// new Button( 'WP_ACCOUNT',     workplaceAccount ).play();
 
 	document.getElementById('WP_SIGNIN').addEventListener(
 		'click', signinMotion );
