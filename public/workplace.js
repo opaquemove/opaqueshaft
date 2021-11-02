@@ -251,14 +251,14 @@ function openingSignoutMotion( e ){
 		o.style.fontWeight		= 'normal';
 		o.style.color			= 'gray';
 		o.style.backgroundColor	= 'white';
-		o.style.border			= '1px solid lightgrey';
+		o.style.border			= '1px solid white';
 		o.style.margin			= '4px';
 		o.style.padding			= '4px 2px 0px 14px';
 		o.style.overflow		= 'hidden';
 		// o.style.opacity			= 0;
 		o.style.transition		= 'all 0.5s ease-in-out';
 		var r = '';
-		r += '<button type="button" class="workplace_commit_button" >sign out?</button>';
+		r += '<button type="button" style="color:red;" class="workplace_commit_button" >sign out?</button>';
 		o.innerHTML = r;
 
 		var oo = this.appendChild( o );
