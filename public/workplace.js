@@ -1725,13 +1725,13 @@ function workplaceAccountHelper(){
 										x.innerText = 'commit?';
 										break;
 									case 'cancel':
-										if ( x.innerText == 'cancel?' ){
+										// if ( x.innerText == 'cancel?' ){
 											acc.classList.toggle('height360');
 											wp_editAccount( acc );
-											x.innerText = ' ';
+											// x.innerText = ' ';
 											break;
-										}
-										x.innerText = 'cancel?';
+										// }
+										// x.innerText = 'cancel?';
 										break;
 								}
 							}
@@ -2753,6 +2753,7 @@ function finderHelper( keyword, range_id ){
 											break;
 										case 'cancel':
 											console.log( 'cancel:' + chd.getAttribute('child_id') );
+											list.dispatchEvent( new Event( 'click') );
 											break;
 									}
 								}
