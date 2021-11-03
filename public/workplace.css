@@ -230,6 +230,7 @@
     overflow:scroll;
 } 
 #WORKPLACE_CHILDREN_MAIN_LIST{
+    position:               relative;
     width:                  100%;
     background-color:       transparent;
 	display:				flex;
@@ -610,6 +611,10 @@
     transform:      translateX(56px);
     /* opacity: 0.8; */
 }
+.right100{
+    transform:    translateX(50px);
+
+}
 .left40{
     transform:    translateX(-40px);
     /* opacity: 0.8; */
@@ -721,3 +726,16 @@
     
 }
 
+.hiding{
+    animation:hiding 1s linear 0s;
+    animation-fill-mode: forwards;
+}
+@keyframes hiding{
+    0% {
+        opacity: 1;
+    }
+    100%{
+        opacity:0;
+        display:none;
+    }
+}

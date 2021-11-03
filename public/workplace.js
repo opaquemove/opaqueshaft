@@ -2099,8 +2099,8 @@ function selectChildren( e ){
 		if ( c == this ){
 			for ( var i=0; i<this.childNodes.length; i++ ){
 				var o = this.childNodes[i];
-				if ( o.classList.contains('left100')){
-					o.classList.remove( 'left100');
+				if ( o.classList.contains('right100')){
+					o.classList.remove( 'right100');
 				}
 				if ( o.classList.contains('height320')){
 					o.classList.remove( 'height320');
@@ -2121,8 +2121,8 @@ function selectChildren( e ){
 	for ( var i=0; i<this.childNodes.length; i++ ){
 		var o = this.childNodes[i];
 		if ( c == o ) continue;
-		if ( o.classList.contains('left100')){
-			o.classList.remove( 'left100');
+		if ( o.classList.contains('right100')){
+			o.classList.remove( 'right100');
 		}
 		if ( o.classList.contains('height320')){
 			o.classList.remove( 'height320');
@@ -2132,11 +2132,16 @@ function selectChildren( e ){
 				apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
 			}
 		}
+		o.classList.toggle('hiding');
 	}
 
+	// c.style.position = 'absolute';
+	// c.style.top	= c.offsetTop + 'px';
+	// c.style.left	= c.offsetLeft + 'px';
+
 	// メニューを開く
-	c.classList.toggle( 'left100' );
-	if ( ! c.classList.contains( 'left100' )){
+	c.classList.toggle( 'right100' );
+	if ( ! c.classList.contains( 'right100' )){
 		if ( c.classList.contains( 'height320') ){
 			c.classList.remove('height320');
 			var apdxs = c.getElementsByClassName('appendix');
@@ -2149,12 +2154,14 @@ function selectChildren( e ){
 		return;
 	} 
 	
+	console.log( 'top:' + c.offsetTop );
 	c.setAttribute( 'selected', 'yes' );
 	var o = document.createElement('DIV');
 	o.classList.add('opChild');
 	o.style.position 	= 'absolute';
 	o.style.top			= '2px';
-	o.style.left		= ( c.offsetWidth + 1 ) + 'px';
+	// o.style.left		= ( c.offsetWidth + 1 ) + 'px';
+	o.style.left		= '-50px';
 	o.style.height		= c.offsetHeight + 'px';
 	var r = '';
 	r += '<button type="button" class="workplace_edit_button_small"    cmd="edit"   ></button>';
@@ -2193,12 +2200,6 @@ function selectChildren( e ){
 
 		}, false );
 
-
-	// oo.getElementsByClassName('workplace_edit_button_small')[0].addEventListener(
-	// 	'click', wp_editChildren );
-	// oo.getElementsByClassName('workplace_delete_button_small')[0].addEventListener(
-	// 	'click', wp_purgeChildren );
-
 	var nodes = this.childNodes;
 	console.log('nodes:' + nodes.length );
 	for ( var i=0; i<nodes.length; i++ ){
@@ -2222,7 +2223,7 @@ function selectChildrenTransitionEnd( e ){
 		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
 		c = c.parentNode;
 	}
-	if ( !c.classList.contains( 'left100' )){
+	if ( !c.classList.contains( 'right100' )){
 		c.removeAttribute('selected');
 		var op = c.getElementsByClassName( 'opChild');
 		if ( op.length > 0)
