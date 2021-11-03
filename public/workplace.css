@@ -41,6 +41,17 @@
     writing-mode:           vertical-lr;
     visibility:             hidden;
 }
+#TAB_PLUS{
+    width:                  calc(100%);
+    height:                 42px;
+    color:                  dimgray;
+    background-color:       limegreen;
+    background-image:       url(./images/plus3.png);
+    background-size:        10px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
+    visibility:             hidden;
+}
 #TAB_CURRENT2{
     width:                  calc(100% - 4px);
     height:                 192px;
@@ -363,6 +374,7 @@
     height:0px;
     overflow:hidden;
     font-size:16px;
+    /* background-color: lightblue; */
     border-bottom:gray;
     text-align:center;
     transition:all 0.3s ease-in-out;
@@ -595,7 +607,7 @@
 }
 .child_header{
     text-align: left;
-	font-size:				12px;
+	font-size:				16px;
 	font-weight: 			bold;
     /* background-color:       #EDEDED; */
 	border-bottom:			0px solid lightgrey;

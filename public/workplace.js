@@ -146,6 +146,23 @@ function initWorkplace(){
 
 }
 
+function addObject(){
+	switch ( workplace_id ){
+		case 'WHITEBOARD':
+			createWhiteboard();
+			break;
+		case 'CHILDREN':
+			addChildren();
+			break;
+		case 'RANGE':
+			addRange();
+			break;
+		case 'ACCOUNT':
+			addAccount();
+			break;
+	}
+}
+
 function signinMotion( e ){
 	e.stopPropagation();
 	if ( e.target != this ) return;
@@ -530,9 +547,11 @@ function workplaceReset(){
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
 	var current  = document.getElementById('TAB_CURRENT');
+	var plus	 = document.getElementById('TAB_PLUS');
 	var current2 = document.getElementById('TAB_CURRENT2');
 	tab.style.visibility		= 'hidden';
 	current.style.visibility	= 'hidden';
+	plus.style.visibility		= 'hidden';
 	current2.style.visibility	= 'hidden';
 
 	if (signin.classList.contains('signinMotion'))
@@ -560,10 +579,12 @@ function workplaceWhiteboard(){
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
 	var current 	= document.getElementById('TAB_CURRENT');
+	var plus		= document.getElementById('TAB_PLUS');
 	var current2 	= document.getElementById('TAB_CURRENT2');
 	tab.style.visibility		= 'visible';
 	current.style.visibility	= 'visible';
 	current.innerText			= 'whiteboard';
+	plus.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 	
 	if ( icon.style.height == '0px'){
@@ -597,12 +618,12 @@ function addWorkplaceWhiteboard(){
 	}
 
 	var r = '';
-	r += '<div id="CALENDAR_TOOLBAR" >';
-		r += '<button type="button" id="BTN_OPENWHITEBOARD" class="next_button"  ';
-			r += ' onclick="createWhiteboard()" >';
-			r += 'next';
-		r += '</button>';
-	r += '</div>';
+	// r += '<div id="CALENDAR_TOOLBAR" >';
+	// 	r += '<button type="button" id="BTN_OPENWHITEBOARD" class="next_button"  ';
+	// 		r += ' onclick="createWhiteboard()" >';
+	// 		r += 'next';
+	// 	r += '</button>';
+	// r += '</div>';
 	r += '<div id="CALENDAR_LIST"       style="float:;position:relative;width:calc(100% - 6px);height: 58px;background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 	r += '<div id="CALENDAR_DETAIL_HDR" style="font-size:12px;font-weight:bold;color:gray;" >DETAIL:</div>';
 	r += '<div id="CALENDAR_DETAIL"     style="float:;position:relative;width:calc(100% - 6px);height:calc(100% - 150px);background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
@@ -610,10 +631,10 @@ function addWorkplaceWhiteboard(){
 
 	p.innerHTML = r;
 
-	var ct_height = document.getElementById('CALENDAR_TOOLBAR').offsetHeight;
+	// var ct_height = document.getElementById('CALENDAR_TOOLBAR').offsetHeight;
 	var cl_height = document.getElementById('CALENDAR_LIST').offsetHeight + 6;
 	var cdh_height = document.getElementById('CALENDAR_DETAIL_HDR').offsetHeight + 4;
-	var offset = ct_height + cl_height + cdh_height;
+	var offset = cl_height + cdh_height;
 	var calen_detail = document.getElementById('CALENDAR_DETAIL');
 	calen_detail.style.height = 'calc(100% - ' + offset + 'px)';
 
@@ -1153,10 +1174,12 @@ function workplaceChildren(){
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	var current 	= document.getElementById('TAB_CURRENT');
+	var plus 	 	= document.getElementById('TAB_PLUS');
 	var current2	= document.getElementById('TAB_CURRENT2');
 	tab.style.visibility 		= 'visible';
 	current.style.visibility 	= 'visible';
 	current.innerText 			= 'children';
+	plus.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 
 	if ( icon.style.height == '0px'){
@@ -1217,10 +1240,12 @@ function workplaceRange(){
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	var current 	= document.getElementById('TAB_CURRENT');
+	var plus		= document.getElementById('TAB_PLUS');
 	var current2	= document.getElementById('TAB_CURRENT2');
 	tab.style.visibility 		= 'visible';
 	current.style.visibility 	= 'visible';
 	current.innerText 			= 'range';
+	plus.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 
 	if ( icon.style.height == '0px'){
@@ -1474,10 +1499,12 @@ function workplaceAccount(){
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	var current 	= document.getElementById('TAB_CURRENT');
+	var plus		= document.getElementById('TAB_PLUS');
 	var current2	= document.getElementById('TAB_CURRENT2');
 	tab.style.visibility 		= 'visible';
 	current.style.visibility 	= 'visible';
 	current.innerText 			= 'account';
+	plus.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 
 	if ( icon.style.height == '0px'){
@@ -1658,7 +1685,7 @@ function workplaceAccountHelper(){
 						r += '</div>';
 						r += '<div style="float:left;width:calc(100% - 80px);height:80px;"  >';
 							r += '<div style="padding:2px;font-weight:bold;" >' + acc_id + '</div>';
-							r += '<div style="padding:2px;" >' + acc_name  + '</div>';
+							r += '<div style="padding:2px;font-weight:bold;font-size:18px;" >' + acc_name  + '</div>';
 							r += '<div style="padding:2px;" >' + priv      + '</div>';
 						r += '</div>';
 
@@ -1677,7 +1704,7 @@ function workplaceAccountHelper(){
 					
 							var privs = [ 'admin', 'editor', 'guest' ];
 							r += '<div style="padding-top:4px;" >priveledge:</div>';
-							r += '<div style="width:90%;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;display:flex;" >';
+							r += '<div style="width:90%;height:30px;padding:3px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 							for ( var j=0; j<privs.length; j++ ){
 								var checked = ( priv == privs[j] ) ? ' checked ' : '';
 								r += '<input type="radio" id="acc_priv_' + acc_id + '_' + j + '" name="acc_priv"  value="' + privs[j] + '"  ' + checked + '  />';
@@ -1801,7 +1828,7 @@ function addAccount(){
 		r += '</div>';
 		var privs = [ 'admin', 'editor', 'guest' ];
 		r += '<div style="padding-top:4px;" >priveledge:</div>';
-		r += '<div style="width:90%;height:30px;padding:3px;background-color:lightgrey;border-radius:4px;" >';
+		r += '<div style="width:90%;height:30px;padding:3px;background-color:#EDEDED;border-radius:4px;" >';
 			for ( var j=0; j<privs.length; j++ ){
 				r += '<input type="radio" id="acc_priv_' + j + '" name="acc_priv"  value="' + privs[j] + '"   />';
 				r += '<label for="acc_priv_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
@@ -2652,12 +2679,12 @@ function finderHelper( keyword, range_id ){
 									r += '</div>';
 								}
 								r += '<div style="float:left;width:auto;height:80px;text-align:left;padding-left:12px;" >';
+									r += '<div style="padding:1px;font-size:10px;font-weight:bold;" >' + kana + '</div>';
 									r += '<div class="child_header" style="" >';
 										r += child_name + '&nbsp;&nbsp;' + child_grade + child_type;
 										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
 									r += '</div>';
-									r += '<div style="padding:1px;" >' + kana + '</div>';
-									r += '<div style="padding:1px;" >id/Range:' + child_id + '/' + range_id + '</div>';
+									r += '<div style="padding:1px;" >id:' + child_id + '</div>';
 								r += '</div>';
 							r += '</div>';
 
