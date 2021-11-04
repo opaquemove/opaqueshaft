@@ -146,6 +146,24 @@ function initWorkplace(){
 
 }
 
+function refreshTab(){
+
+	switch( workplace_id ){
+		case 'WHITEBOARD':
+			// workplaceWhiteboard();
+			break;
+		case 'CHILDREN':
+			// workplaceChildren();
+			break;
+		case 'RANGE':
+			// workplaceRange();
+			break;
+		case 'ACCOUNT':
+			// workplaceAccount();
+			break;
+	}
+}
+
 function addObject(){
 	switch ( workplace_id ){
 		case 'WHITEBOARD':

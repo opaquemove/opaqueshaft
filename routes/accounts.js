@@ -236,7 +236,7 @@ router.post('/childfind', function(req, res, next ){
     console.log('childfind:' + keyword + ' range_id:' + range_id );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.any( 
-      "SELECT * FROM children WHERE delete_flag = 0 AND range_id =  " + range_id + "  AND  ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) ORDER BY kana ASC" )
+      "SELECT * FROM children WHERE delete_flag = 0 AND range_id =  " + range_id + "  AND  ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) ORDER BY kana ASC   " )
       .then( rows => {
             res.json( rows );
       });
