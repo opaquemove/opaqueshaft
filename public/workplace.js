@@ -23,7 +23,7 @@ function initWorkplace(){
 	document.getElementById('TAB_OPAQUESHAFT').addEventListener(
 		'click', workplaceReset );
 	document.getElementById('WORKPLACE_ICON').addEventListener(
-		'click', workplaceReset );
+		'click', birdsEyeView );
 		
     document.getElementById('WP_KEYWORD').addEventListener(
 		'keyup',
@@ -89,10 +89,6 @@ function initWorkplace(){
 			}
 		}, false );
 	
-	// new Button( 'WP_WHITEBOARD',  workplaceWhiteboard ).play();
-	// new Button( 'WP_CHILDREN',    workplaceChildren ).play();
-	// new Button( 'WP_RANGE',       workplaceRange ).play();
-	// new Button( 'WP_ACCOUNT',     workplaceAccount ).play();
 
 	document.getElementById('WP_SIGNIN').addEventListener(
 		'click', signinMotion );
@@ -146,7 +142,16 @@ function initWorkplace(){
 
 }
 
+function birdsEyeView(){
+
+	var bf = document.getElementById('BOTTOM_FRAME');
+	bf.style.transition	= 'all 0.5s ease-in-out';
+	bf.style.transform	= 'scale(0.7,0.7)';
+}
+
 function refreshTab(){
+	var bf = document.getElementById('BOTTOM_FRAME');
+	bf.style.transform	= ( bf.style.transform == 'scale(0.7,0.7)') ? '' :'scale(0.7,0.7)';
 
 	switch( workplace_id ){
 		case 'WHITEBOARD':
@@ -566,10 +571,12 @@ function workplaceReset(){
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
 	var current  = document.getElementById('TAB_CURRENT');
 	var plus	 = document.getElementById('TAB_PLUS');
+	var find	 = document.getElementById('TAB_FIND');
 	var current2 = document.getElementById('TAB_CURRENT2');
 	tab.style.visibility		= 'hidden';
 	current.style.visibility	= 'hidden';
 	plus.style.visibility		= 'hidden';
+	find.style.visibility		= 'hidden';
 	current2.style.visibility	= 'hidden';
 
 	if (signin.classList.contains('signinMotion'))
@@ -598,11 +605,13 @@ function workplaceWhiteboard(){
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
 	var current 	= document.getElementById('TAB_CURRENT');
 	var plus		= document.getElementById('TAB_PLUS');
+	var find		= document.getElementById('TAB_FIND');
 	var current2 	= document.getElementById('TAB_CURRENT2');
 	tab.style.visibility		= 'visible';
 	current.style.visibility	= 'visible';
 	current.innerText			= 'whiteboard';
 	plus.style.visibility		= 'visible';
+	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 	
 	if ( icon.style.height == '0px'){
@@ -615,7 +624,7 @@ function workplaceWhiteboard(){
 	}
 
 	resizeWorkplace();
-	children.style.height = '0px';
+	// children.style.height = '0px';
 	if ( !list.hasChildNodes() ) list.innerHTML = '';
 
 	//	レンジリスト作成
@@ -1193,11 +1202,13 @@ function workplaceChildren(){
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	var current 	= document.getElementById('TAB_CURRENT');
 	var plus 	 	= document.getElementById('TAB_PLUS');
+	var find		= document.getElementById('TAB_FIND');
 	var current2	= document.getElementById('TAB_CURRENT2');
 	tab.style.visibility 		= 'visible';
 	current.style.visibility 	= 'visible';
 	current.innerText 			= 'children';
 	plus.style.visibility		= 'visible';
+	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 
 	if ( icon.style.height == '0px'){
@@ -1210,36 +1221,7 @@ function workplaceChildren(){
 	}
 
 	resizeWorkplace();
-	// var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
-	// console.log( 'h:' + children.offsetHeight );
-	// children.style.height = ( h - 0 ) + 'px';
-	// wpcm.style.height = ( h - 252 ) + 'px';
-	wb.style.height = '0px';
-
-	//	レンジリスト作成
-	// makeRangeList( 'RANGE_LIST2', 'H' );
-	// document.getElementById('RANGE_LIST2').addEventListener('click',
-	// 	function(e) {
-	// 		var o = e.target;
-	// 		if ( o == this ) return;
-	// 		while ( o.parentNode != this ){
-	// 			o = o.parentNode;
-	// 		}
-	// 		for ( var i=0; i<this.childNodes.length; i++ ){
-	// 			var c = this.childNodes[i];
-	// 			if ( c.hasAttribute('selected') ){
-	// 				c.removeAttribute( 'selected' );
-	// 				c.style.color			= '';
-	// 				c.style.backgroundColor = '';
-	// 			}
-	// 		}
-	// 		o.style.color			= 'white';
-	// 		o.style.backgroundColor = 'royalblue';
-	// 		o.setAttribute( 'selected', 'true' );
-
-	// 	}, false );
-
-
+	// wb.style.height = '0px';
 
 	document.getElementById('WP_KEYWORD').value = '';
 	list.innerHTML = '';
@@ -1259,11 +1241,13 @@ function workplaceRange(){
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	var current 	= document.getElementById('TAB_CURRENT');
 	var plus		= document.getElementById('TAB_PLUS');
+	var find		= document.getElementById('TAB_FIND');
 	var current2	= document.getElementById('TAB_CURRENT2');
 	tab.style.visibility 		= 'visible';
 	current.style.visibility 	= 'visible';
 	current.innerText 			= 'range';
 	plus.style.visibility		= 'visible';
+	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 
 	if ( icon.style.height == '0px'){
@@ -1518,11 +1502,13 @@ function workplaceAccount(){
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	var current 	= document.getElementById('TAB_CURRENT');
 	var plus		= document.getElementById('TAB_PLUS');
+	var find		= document.getElementById('TAB_FIND');
 	var current2	= document.getElementById('TAB_CURRENT2');
 	tab.style.visibility 		= 'visible';
 	current.style.visibility 	= 'visible';
 	current.innerText 			= 'account';
 	plus.style.visibility		= 'visible';
+	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 
 	if ( icon.style.height == '0px'){
@@ -2204,16 +2190,19 @@ function selectChildren( e ){
 	var o = document.createElement('DIV');
 	o.classList.add('opChild');
 	o.style.position 	= 'absolute';
-	o.style.top			= '2px';
-	// o.style.left		= ( c.offsetWidth + 1 ) + 'px';
-	o.style.left		= '-50px';
-	o.style.height		= c.offsetHeight + 'px';
+	o.style.top			= c.offsetTop + 'px';	//'2px';
+	o.style.left		= '2px';
+	// o.style.left		= '-50px';
+	o.style.height		= ( c.offsetHeight * 2 ) + 'px';
+	// o.style.zIndex		= 1000;
+	// o.style.border		= '1px solid red';
 	var r = '';
-	r += '<button type="button" class="workplace_edit_button_small"    cmd="edit"   ></button>';
-	r += '<button type="button" class="workplace_delete_button_small"  cmd="delete" ></button>';
+	r += '<button type="button" class="workplace_edit_button_small"     cmd="edit"    ></button>';
+	r += '<button type="button" class="workplace_delete_button_small"   cmd="delete"  ></button>';
+	r += '<button type="button" class="workplace_history_button_small"  cmd="history" ></button>';
 	o.innerHTML = r;
-
-	c.appendChild( o ).addEventListener('click',
+	// c.appendChild( o ).addEventListener('click',
+	document.getElementById('WORKPLACE_CHILDREN_MAIN' ).appendChild(o).addEventListener('click',
 		function(e){
 			e.stopPropagation();
 			var o = e.target;
@@ -2229,7 +2218,7 @@ function selectChildren( e ){
 
 			switch ( cmd ){
 				case 'edit':
-					wp_editChildren( o );
+					wp_editChildren();
 					break;
 				case 'delete':
 					// wp_deleteChildren( o );
@@ -2239,7 +2228,9 @@ function selectChildren( e ){
 					}
 					o.style.width = '100px';
 					o.innerText = 'Ok?';
-
+					break;
+				case 'history':
+					console.log('history');
 					break;
 			}
 
@@ -2270,7 +2261,8 @@ function selectChildrenTransitionEnd( e ){
 	}
 	if ( !c.classList.contains( 'right100' )){
 		c.removeAttribute('selected');
-		var op = c.getElementsByClassName( 'opChild');
+		// var op = c.getElementsByClassName( 'opChild');
+		var op = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName( 'opChild');
 		if ( op.length > 0)
 			op[0].parentNode.removeChild( op[0] );
 	}
@@ -2291,7 +2283,12 @@ function addChildren(){
 	o.style.textAlign	= 'left';
 	var r = '';
 	r += '<form name="childrenForm" onsubmit="return false;" >';
-		r += '<div style="width:97%;height:auto;padding:1px;text-align:left;" >';
+		r += '<div style="width:100%;height:auto;padding:0px;text-align:left;" >';
+			r += '<div style="width:100%;height:50px;font-size:14px;color:white;background-color:royalblue;" >';
+				r += '<div style="padding:4px;" >';
+				r += 'add child';
+				r += '</div>';
+			r += '</div>';
 			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
 				r += 'Kana:<br/>';
 				r += '<input type="text" name="kana" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
@@ -2472,11 +2469,21 @@ function cancelAddChildren(){
 	
 
 
-function wp_editChildren( c ){
-	while ( true ){
-		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
-		c = c.parentNode;
+function wp_editChildren(){
+	var lists = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
+	
+	var c = null;
+	for ( var i=0; i<lists.length; i++ ){
+		if ( lists[i].hasAttribute('selected')){
+			c = lists[i];
+			break;
+		}
 	}
+	if ( c == null ) return;
+	// while ( true ){
+	// 	if ( c.classList.contains('WP_PALLETE_CHILD')) break;
+	// 	c = c.parentNode;
+	// }
 	var m = document.getElementById( 'WORKPLACE_CHILDREN_MAIN');
 	// m.scrollTop = c.offsetTop - 80;
 

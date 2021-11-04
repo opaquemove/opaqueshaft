@@ -87,7 +87,7 @@
 							</button>
 						</div>
 					</div>
-					<div style="float:left;height:52px;padding-top:2px;padding-left:4px;" >
+					<div style="float:left;height:50px;padding-top:2px;padding-left:4px;" >
 						<div style="float:left;padding-top:3px;" >
 							<form name="guidedance_whiteboard_form" onsubmit="return false;" >
 								<input type="text" readonly id="" name="day" autocomplete="off" style="width:120px;height:42px;font-size:16px;background-color:#EDEDED;border:1px solid #EDEDED;box-sizing: border-box;padding:2px 4px 2px 24px;border-radius: 24px;outline:none;background-image:url(./images/calendar.png);background-size:12px;background-repeat: no-repeat;background-position: left 6px center;"" />
@@ -98,14 +98,6 @@
 							<button id="BTN_MINUS_DATE" style="width:18px;height:12px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:8px;background-repeat:no-repeat;background-position:center center;" ></button>
 						</div>
 					</div>
-					<!-- <div style="float: left;height:100%;margin-left:8px;" >
-						<div style="padding-top:5px;margin-right:4px;">
-							<button id="WP_OPENWHITEBOARD" class="workplace_button"
-								onclick="createWhiteboard()" >
-							</button>
-						</div>
-					</div> -->
-
 				</div>
 				<div id="WORKPLACE_WHITEBOARD_MAIN" class="vh-center" >
 					<div id="WORKPLACE_WHITEBOARD_MAIN_LIST" ></div>
@@ -148,13 +140,6 @@
 			<div id="WORKPLACE_RANGE" >		<!--  100% * 0px -->
 				<div id="WORKPLACE_RANGE_HDR" >
 					<div style="float:left;padding-top:19px;padding-right:10px;font-size:12px;">Range</div>
-					<!-- <div style="float: left;height:100%;" >
-						<div style="padding-top:7px;">
-							<button id="WP_CREATERANGE" class="workplace_button_small"
-								onclick="addRange()" >
-							</button>
-						</div>
-					</div> -->
 					<div style="float:left;height:48px;padding-top:14px;" >
 						<form  onsubmit="return false;" >
 							<input type="text" id="WP_RANGE_ID" name="WP_RANGE_ID" autocomplete="off" style="width:120px;height:24px;font-size:14px;background-color:#EDEDED;border:1px solid #EDEDED;box-sizing: border-box;padding:2px 4px 2px 18px;border-radius: 8px;outline:none;background-image:url(./images/annual-calendar-page.png);background-size:10px;background-repeat: no-repeat;background-position: left 4px center;"" />
@@ -218,6 +203,7 @@
 			<div id="TAB_OPAQUESHAFT" ></div>
 			<div id="TAB_CURRENT" onclick="refreshTab();" ></div>
 			<div id="TAB_PLUS" onclick="addObject();" ></div>
+			<div id="TAB_FIND"  ></div>
 			<div id="TAB_CURRENT2" ></div>
 
 		</div>
