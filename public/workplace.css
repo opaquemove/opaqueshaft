@@ -13,8 +13,8 @@
     pointer-events:         all;
     position:               absolute;
     top:                    0px;
-    left:                   calc(100% - 42px);
-    width:                  42px;
+    left:                   calc(100% - 48px);
+    width:                  48px;
     height:                 100%;
     background-color:       transparent;
     opacity:                0.8;
@@ -43,7 +43,7 @@
 }
 #TAB_PLUS{
     width:                  calc(100%);
-    height:                 42px;
+    height:                 48px;
     color:                  dimgray;
     background-color:       limegreen;
     background-image:       url(./images/plus3.png);
@@ -54,7 +54,7 @@
 }
 #TAB_FIND{
     width:                  calc(100%);
-    height:                 42px;
+    height:                 48px;
     color:                  dimgray;
     background-color:       skyblue;
     background-image:       url(./images/bleach2.png);
@@ -71,7 +71,7 @@
     font-size:              14px;
     font-weight:            bold;
     text-align:             center;
-    padding-top:            4px;
+    padding-top:            1px;
     padding-left:           0px;
     /* writing-mode: vertical-lr; */
     display:                flex;
@@ -183,7 +183,7 @@
 #WORKPLACE_WHITEBOARD_HDR{
     /* margin:                 0 auto; */
     width:                  calc(100% - 42px);  /*540px;*/
-    height:                 64px
+    height:                 50px
 }
 #WORKPLACE_WHITEBOARD_MAIN{
     margin:                 0 auto;
@@ -201,11 +201,11 @@
 	float:                  left;
     position:               relative;
     width:                  calc(100% - 8px);      /* calc(100% - 212px) calc(100% - 6px);,300px */
-    height:                 58px;
+    height:                 48px;
     background-color:       #EDEDED;
     border:                 1px solid #EDEDED;
     border-radius:          3px;
-    padding:                2px;
+    padding:                1px;
     display:                flex;
     overflow:               scroll;
 }
@@ -348,9 +348,9 @@
 	border-radius: 			4px;
 }
 .range_box_lr{
-    float:none;
+    float:                  none;
 	/* float:					left; */
-	width:					28px;
+	width:					34px;
 	height:					40px;
 	/* background-color: 		white; */
 	border:					1px solid lightgray;
@@ -738,8 +738,8 @@
 }
 
 .month_box{
-    width:			34px;
-    height:			34px;
+    width:			43px;
+    height:			43px;
     /* position:		absolute;
      top:			0px;
     left:			0px; */
