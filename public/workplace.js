@@ -573,11 +573,13 @@ function workplaceReset(){
 	var plus	 = document.getElementById('TAB_PLUS');
 	var find	 = document.getElementById('TAB_FIND');
 	var current2 = document.getElementById('TAB_CURRENT2');
+	var option	 = document.getElementById('TAB_OPTION');
 	tab.style.visibility		= 'hidden';
 	current.style.visibility	= 'hidden';
 	plus.style.visibility		= 'hidden';
 	find.style.visibility		= 'hidden';
 	current2.style.visibility	= 'hidden';
+	option.style.visibility		= 'hidden';
 
 	if (signin.classList.contains('signinMotion'))
 		signin.classList.remove('signinMotion');
@@ -607,12 +609,14 @@ function workplaceWhiteboard(){
 	var plus		= document.getElementById('TAB_PLUS');
 	var find		= document.getElementById('TAB_FIND');
 	var current2 	= document.getElementById('TAB_CURRENT2');
+	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility		= 'visible';
 	current.style.visibility	= 'visible';
 	current.innerText			= 'whiteboard';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
+	option.style.visibility		= 'visible';
 	
 	if ( icon.style.height == '0px'){
 		icon.style.height	= icon.getAttribute('orgHeight');
@@ -643,10 +647,7 @@ function workplaceWhiteboardHelper(){
 	}
 
 	var r = '';
-	// r += '<div id="CALENDAR_LIST"       ></div>';
-	// r += '<div id="CALENDAR_DETAIL_HDR" >DETAIL:</div>';
-	r += '<div id="CALENDAR_DETAIL"     ></div>';
-
+	r += '<div id="CALENDAR_DETAIL"  ></div>';
 
 	p.innerHTML = r;
 
@@ -666,11 +667,11 @@ function workplaceWhiteboardHelper(){
 	function(e){
 		e.stopPropagation();	// スクロールジェスチャ抑制
 	} );
-	document.getElementById('CALENDAR_LIST').addEventListener('click',
+	document.getElementById('TAB_OPTION').addEventListener('click',
 	function(e) {
 		var o = e.target;
 		if ( o == this ) return;
-		while ( o.parentNode != document.getElementById('CALENDAR_LIST') ){
+		while ( o.parentNode != document.getElementById('TAB_OPTION') ){
 			o = o.parentNode;
 		}
 		for ( var i=0; i<this.childNodes.length; i++ ){
@@ -932,7 +933,7 @@ function listChildren( p, day ){
 
 function makeCalendar( range_id ){
 	console.log( 'range_id:' + range_id );
-	var p = document.getElementById('CALENDAR_LIST');
+	var p = document.getElementById('TAB_OPTION');
 	p.innerHTML = '';
 	document.getElementById('CALENDAR_DETAIL').innerHTML = '';
 	
@@ -1139,12 +1140,14 @@ function workplaceChildren(){
 	var plus 	 	= document.getElementById('TAB_PLUS');
 	var find		= document.getElementById('TAB_FIND');
 	var current2	= document.getElementById('TAB_CURRENT2');
+	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility 		= 'visible';
 	current.style.visibility 	= 'visible';
 	current.innerText 			= 'children';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
+	option.style.visibility		= 'visible';
 
 	if ( icon.style.height == '0px'){
 		icon.style.height		= icon.getAttribute('orgHeight');
@@ -1177,12 +1180,14 @@ function workplaceRange(){
 	var plus		= document.getElementById('TAB_PLUS');
 	var find		= document.getElementById('TAB_FIND');
 	var current2	= document.getElementById('TAB_CURRENT2');
+	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility 		= 'visible';
 	current.style.visibility 	= 'visible';
 	current.innerText 			= 'range';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
+	option.style.visibility		= 'visible';
 
 	if ( icon.style.height == '0px'){
 		icon.style.height		= icon.getAttribute('orgHeight');
@@ -1438,12 +1443,14 @@ function workplaceAccount(){
 	var plus		= document.getElementById('TAB_PLUS');
 	var find		= document.getElementById('TAB_FIND');
 	var current2	= document.getElementById('TAB_CURRENT2');
+	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility 		= 'visible';
 	current.style.visibility 	= 'visible';
 	current.innerText 			= 'account';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
+	option.style.visibility		= 'visible';
 
 	if ( icon.style.height == '0px'){
 		icon.style.height		= icon.getAttribute('orgHeight');
