@@ -643,17 +643,17 @@ function workplaceWhiteboardHelper(){
 	}
 
 	var r = '';
-	r += '<div id="CALENDAR_LIST"       style="float:;position:relative;width:calc(100% - 6px);height: 58px;background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
-	r += '<div id="CALENDAR_DETAIL_HDR" style="font-size:12px;font-weight:bold;color:gray;" >DETAIL:</div>';
-	r += '<div id="CALENDAR_DETAIL"     style="float:;position:relative;width:calc(100% - 6px);height:calc(100% - 150px);background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
+	// r += '<div id="CALENDAR_LIST"       ></div>';
+	// r += '<div id="CALENDAR_DETAIL_HDR" >DETAIL:</div>';
+	r += '<div id="CALENDAR_DETAIL"     ></div>';
 
 
 	p.innerHTML = r;
 
 	// var ct_height = document.getElementById('CALENDAR_TOOLBAR').offsetHeight;
 	var cl_height = document.getElementById('CALENDAR_LIST').offsetHeight + 6;
-	var cdh_height = document.getElementById('CALENDAR_DETAIL_HDR').offsetHeight + 4;
-	var offset = cl_height + cdh_height;
+	// var cdh_height = document.getElementById('CALENDAR_DETAIL_HDR').offsetHeight + 4;
+	var offset = cl_height ;
 	var calen_detail = document.getElementById('CALENDAR_DETAIL');
 	calen_detail.style.height = 'calc(100% - ' + offset + 'px)';
 
