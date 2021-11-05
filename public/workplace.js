@@ -627,16 +627,14 @@ function workplaceWhiteboard(){
 	// children.style.height = '0px';
 	if ( !list.hasChildNodes() ) list.innerHTML = '';
 
-	//	レンジリスト作成
-	// makeRangeList( 'RANGE_LIST', 'H' );
-	addWorkplaceWhiteboard();
+	workplaceWhiteboardHelper();
 
 }
 
 //
 //	ワークプレイスホワイトボード画面生成
 //
-function addWorkplaceWhiteboard(){
+function workplaceWhiteboardHelper(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
 	if ( p.hasChildNodes() ){
@@ -645,12 +643,6 @@ function addWorkplaceWhiteboard(){
 	}
 
 	var r = '';
-	// r += '<div id="CALENDAR_TOOLBAR" >';
-	// 	r += '<button type="button" id="BTN_OPENWHITEBOARD" class="next_button"  ';
-	// 		r += ' onclick="createWhiteboard()" >';
-	// 		r += 'next';
-	// 	r += '</button>';
-	// r += '</div>';
 	r += '<div id="CALENDAR_LIST"       style="float:;position:relative;width:calc(100% - 6px);height: 58px;background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
 	r += '<div id="CALENDAR_DETAIL_HDR" style="font-size:12px;font-weight:bold;color:gray;" >DETAIL:</div>';
 	r += '<div id="CALENDAR_DETAIL"     style="float:;position:relative;width:calc(100% - 6px);height:calc(100% - 150px);background-color:#EDEDED;border:1px solid #EDEDED;border-radius:3px;padding:2px;overflow:scroll;" ></div>';
@@ -665,34 +657,6 @@ function addWorkplaceWhiteboard(){
 	var calen_detail = document.getElementById('CALENDAR_DETAIL');
 	calen_detail.style.height = 'calc(100% - ' + offset + 'px)';
 
-
-	//	レンジリスト作成
-	// makeRangeList( 'RANGE_LIST', 'H' );
-
-	// document.getElementById('RANGE_LIST').addEventListener('click',
-	// 	function(e) {
-	// 		var o = e.target;
-	// 		if ( o == document.getElementById('RANGE_LIST')) return;
-	// 		while ( o.parentNode != document.getElementById('RANGE_LIST') ){
-	// 			o = o.parentNode;
-	// 		}
-	// 		for ( var i=0; i<this.childNodes.length; i++ ){
-	// 			var c = this.childNodes[i];
-	// 			if ( c.hasAttribute('selected') ){
-	// 				c.removeAttribute( 'selected' );
-	// 				c.style.color			= '';
-	// 				c.style.backgroundColor = '';
-	// 			}
-	// 		}
-	// 		o.style.color			= 'white';
-	// 		o.style.backgroundColor = 'royalblue';
-	// 		o.setAttribute( 'selected', 'true' );
-	// 		var range_id = o.getAttribute('range_id' );
-	// 		makeCalendar( range_id );
-	// 		// makeWhiteboardList( range_id );
-	// 		guidedance_whiteboard_form.day.value = '';
-
-	// 	}, false );
 
 	document.getElementById('CALENDAR_LIST').addEventListener('gesturestart',
 	function(e){
@@ -814,29 +778,6 @@ function addWorkplaceWhiteboard(){
 				e.target.style.animationName = '';
 				e.target.style.animationDuration		= '0.6';
 				e.target.style.animationIterationCount = 1;
-				// if ( e.target.hasAttribute('selected')){
-				// 	e.target.classList.add('right56');
-				// 	var o = document.createElement('DIV');
-				// 	o.classList.add( 'edit' );
-				// 	o.style.position		= 'absolute';
-				// 	o.style.top				= '0px';
-				// 	o.style.left			= '-55px';
-				// 	o.style.width 			= '48px';
-				// 	o.style.height 			= '48px';
-				// 	o.style.backgroundColor = ':white';
-				// 	o.style.padding 		= '2px';
-				// 	o.style.border 			= '1px solid lightgrey';
-				// 	o.style.borderRadius	= '3px';
-				// 	var r = '';
-				// 	r += '<button class="workplace_edit_button" onclick="createWhiteboard()" >edit</button>';
-				// 	o.innerHTML				= r;
-				// 	e.target.appendChild( o );
-				// } else {
-				// 	e.target.classList.remove('right56');
-				// 	var ar = e.target.getElementsByClassName('edit');
-				// 	if ( ar.length > 0 )
-				// 	e.target.removeChild( ar[0] );
-				// }
 				break;
 		}
 	}, false );
@@ -1221,10 +1162,9 @@ function workplaceChildren(){
 	}
 
 	resizeWorkplace();
-	// wb.style.height = '0px';
 
-	document.getElementById('WP_KEYWORD').value = '';
-	list.innerHTML = '';
+	// document.getElementById('WP_KEYWORD').value = '';
+	// list.innerHTML = '';
 
 }
 
@@ -2231,6 +2171,7 @@ function selectChildren( e ){
 					break;
 				case 'history':
 					console.log('history');
+					showChildrenHistory();
 					break;
 			}
 
@@ -2261,11 +2202,13 @@ function selectChildrenTransitionEnd( e ){
 	}
 	if ( !c.classList.contains( 'right100' )){
 		c.removeAttribute('selected');
-		// var op = c.getElementsByClassName( 'opChild');
 		var op = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName( 'opChild');
 		if ( op.length > 0)
 			op[0].parentNode.removeChild( op[0] );
-	}
+		var ch = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName( 'childrenHistory');
+		if ( ch.length > 0)
+			ch[0].parentNode.removeChild( ch[0] );
+		}
 
 }
 
@@ -2558,6 +2501,83 @@ function wp_find(){
 	wph.style.padding = '0px';
 }
 
+function showChildrenHistory(){
+	var lists = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
+	
+	var c = null;
+	for ( var i=0; i<lists.length; i++ ){
+		if ( lists[i].hasAttribute('selected')){
+			c = lists[i];
+			break;
+		}
+	}
+	if ( c == null ) return;
+
+	if ( c.getElementsByClassName('childrenHistory').length > 0 ) return;
+
+	var o = document.createElement('DIV');
+	o.classList.add('childrenHistory');
+	o.style.top			= ( c.offsetHeight + 0 ) + 'px';
+	o.style.left		= '-2px';
+	o.style.textAlign	= 'left';
+	var p = c.appendChild( o );
+	var child_id = c.getAttribute('child_id');
+	showChildrenHistoryHelper( p, child_id );
+
+}
+function showChildrenHistoryHelper( p, child_id ){
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					p.innerText = 'access...'
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+					if ( xmlhttp.status == 200 ){
+						var result = JSON.parse( xmlhttp.responseText );
+						
+						p.innerText = '';
+						for ( var i=0; i<result.length; i++ ){
+							var res = result[i];
+							var day 		= new Date(res.day);
+							var checkout	= new Date(res.checkout);
+							var estimate 	= res.estimate;
+							var remark		= res.remark;
+							var ymd = day.getFullYear() + '/' + (day.getMonth()+1) + '/' + day.getDate();
+							var o = document.createElement('DIV');
+							o.style.clear	= 'both';
+							o.style.width	= '100%';
+							o.style.height	= '16px';
+							o.style.padding	= '4px 0px';
+							r = '';
+							r += '<div class="day_data" >';
+								if ( checkout != null )
+									r += '<img width="10px" src="./images/checked-symbol.png" />';
+								r += ymd;
+							r += '</div>';
+							r += '<div class="estimate_data" >' + estimate.substr(0,5) + '</div>';
+							r += '<div class="remark_data" >'   + remark + '</div>';
+							o.innerHTML = r;
+							p.appendChild( o );
+							console.log( 'remark:' + remark );
+						}
+					}
+				break;
+			}
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/resultlist", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'child_id=' + child_id );
+
+}
 
 //
 //	リサイズ処理
