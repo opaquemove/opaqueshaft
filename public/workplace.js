@@ -185,6 +185,22 @@ function addObject(){
 			break;
 	}
 }
+function findObject(){
+	switch ( workplace_id ){
+		case 'WHITEBOARD':
+			
+			break;
+		case 'CHILDREN':
+			finder();
+			break;
+		case 'RANGE':
+			
+			break;
+		case 'ACCOUNT':
+			workplaceAccountHelper();
+			break;
+	}
+}
 
 function signinMotion( e ){
 	e.stopPropagation();
@@ -652,21 +668,21 @@ function workplaceWhiteboardHelper(){
 	p.innerHTML = r;
 
 	// var ct_height = document.getElementById('CALENDAR_TOOLBAR').offsetHeight;
-	var cl_height = document.getElementById('CALENDAR_LIST').offsetHeight + 6;
+	// var cl_height = document.getElementById('CALENDAR_LIST').offsetHeight + 6;
 	// var cdh_height = document.getElementById('CALENDAR_DETAIL_HDR').offsetHeight + 4;
-	var offset = cl_height ;
+	var offset = 0 ;
 	var calen_detail = document.getElementById('CALENDAR_DETAIL');
 	calen_detail.style.height = 'calc(100% - ' + offset + 'px)';
 
 
-	document.getElementById('CALENDAR_LIST').addEventListener('gesturestart',
-	function(e){
-		e.stopPropagation();	// スクロールジェスチャ抑制
-	} );
-	document.getElementById('CALENDAR_LIST').addEventListener('gestureend',
-	function(e){
-		e.stopPropagation();	// スクロールジェスチャ抑制
-	} );
+	// document.getElementById('CALENDAR_LIST').addEventListener('gesturestart',
+	// function(e){
+	// 	e.stopPropagation();	// スクロールジェスチャ抑制
+	// } );
+	// document.getElementById('CALENDAR_LIST').addEventListener('gestureend',
+	// function(e){
+	// 	e.stopPropagation();	// スクロールジェスチャ抑制
+	// } );
 	document.getElementById('TAB_OPTION').addEventListener('click',
 	function(e) {
 		var o = e.target;

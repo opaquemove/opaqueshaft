@@ -79,7 +79,10 @@
 
 			<div id="WORKPLACE_WHITEBOARD" >	<!-- 100% * 0px -->
 				<div id="WORKPLACE_WHITEBOARD_HDR" >
-					<div style="float: left;height:100%;display:none;" >
+					<div style="float: left;width:120px;height: 100%;" >
+						<div style="width:60px;height:60px;font-weight:bold;padding:14px 10px;" >WHITEBOARD</div>
+					</div>
+					<div style="float: left;height:100%;" >
 						<div style="padding:8px 4px 0px 0px;">
 							<button  class="workplace_button_small"
 								onclick="todayWhiteboard()"
@@ -87,7 +90,7 @@
 							</button>
 						</div>
 					</div>
-					<div style="float:left;height:50px;padding-top:2px;padding-left:4px;display:none;" >
+					<div style="float:left;height:50px;padding-top:2px;padding-left:4px;" >
 						<div style="float:left;padding-top:3px;" >
 							<form name="guidedance_whiteboard_form" onsubmit="return false;" >
 								<input type="text" readonly id="" name="day" autocomplete="off" style="width:120px;height:42px;font-size:16px;background-color:#EDEDED;border:1px solid #EDEDED;box-sizing: border-box;padding:2px 4px 2px 24px;border-radius: 24px;outline:none;background-image:url(./images/calendar.png);background-size:12px;background-repeat: no-repeat;background-position: left 6px center;"" />
@@ -98,7 +101,7 @@
 							<button id="BTN_MINUS_DATE" style="width:18px;height:12px;background-color:transparent;border:none;background-image:url(./images/arrow-black-triangle-down.png);background-size:8px;background-repeat:no-repeat;background-position:center center;" ></button>
 						</div>
 					</div>
-					<div id="CALENDAR_LIST" ></div>
+					<!-- <div id="CALENDAR_LIST" ></div> -->
 				</div>
 				<div id="WORKPLACE_WHITEBOARD_MAIN" class="vh-center" >
 					<div id="WORKPLACE_WHITEBOARD_MAIN_LIST" ></div>
@@ -108,8 +111,8 @@
 
 			<div id="WORKPLACE_CHILDREN" >		<!--  100% * 0px -->
 				<div id="WORKPLACE_CHILDREN_HDR" >
-					<div style="float: left;width:80px;height: 100%;" >
-						<div style="width:60px;height:60px;border:0px solid lightgrey;" ></div>
+					<div style="float: left;width:120px;height: 100%;" >
+						<div style="width:60px;height:60px;font-weight:bold;padding:14px 10px;" >CHILDREN</div>
 					</div>
 					<div style="float:left;height:80px;" >
 					</div>
@@ -133,7 +136,9 @@
 
 			<div id="WORKPLACE_RANGE" >		<!--  100% * 0px -->
 				<div id="WORKPLACE_RANGE_HDR" >
-					<div style="float:left;padding-top:19px;padding-right:10px;font-size:12px;">Range</div>
+					<div style="float: left;width:120px;height: 100%;" >
+						<div style="width:60px;height:60px;font-weight:bold;padding:14px 10px;" >RANGE</div>
+					</div>
 					<div style="float:left;height:48px;padding-top:14px;" >
 						<form  onsubmit="return false;" >
 							<input type="text" id="WP_RANGE_ID" name="WP_RANGE_ID" autocomplete="off" style="width:120px;height:24px;font-size:14px;background-color:#EDEDED;border:1px solid #EDEDED;box-sizing: border-box;padding:2px 4px 2px 18px;border-radius: 8px;outline:none;background-image:url(./images/annual-calendar-page.png);background-size:10px;background-repeat: no-repeat;background-position: left 4px center;"" />
@@ -154,9 +159,12 @@
 
 			<div id="WORKPLACE_ACCOUNT" >		<!--  100% * 0px -->
 				<div id="WORKPLACE_ACCOUNT_HDR" >
-					<div style="float: left;width:80px;height: 100%;" >
-						<div style="width:60px;height:60px;border:0px solid lightgrey;" ></div>
+					<div style="float: left;width:120px;height: 100%;" >
+						<div style="width:60px;height:60px;font-weight:bold;padding:14px 10px;" >ACCOUNT</div>
 					</div>
+					<!-- <div style="float: left;width:80px;height: 100%;" >
+						<div style="width:60px;height:60px;border:0px solid lightgrey;" ></div>
+					</div> -->
 					<div style="float:left;height:80px;" >
 					</div>
 					<!-- <div style="float: left;height:100%;" >
@@ -166,13 +174,13 @@
 							</button>
 						</div>
 					</div> -->
-					<div style="float:left;height:48px;padding:6px 4px;" >
+					<div style="float:left;height:48px;padding:4px 4px;" >
 						<form  onsubmit="return false;" >
-							<input type="text" id="WP_ACCOUNT_ID" name="WP_ACCOUNT_ID" autocomplete="off" style="width:120px;height:42px;font-size:18px;background-color:#EDEDED;border:1px solid #EDEDED;box-sizing: border-box;padding:2px 4px 2px 24px;border-radius: 20px;outline:none;background-image:url(./images/searching.png);background-size:18px;background-repeat: no-repeat;background-position: left 4px center;"" />
+							<input type="text" id="WP_ACCOUNT_ID" name="WP_ACCOUNT_ID" autocomplete="off" style="width:120px;height:40px;font-size:18px;background-color:#EDEDED;border:1px solid #EDEDED;box-sizing: border-box;padding:2px 4px 2px 24px;border-radius: 20px;outline:none;background-image:url(./images/searching.png);background-size:18px;background-repeat: no-repeat;background-position: left 4px center;"" />
 						</form>
 					</div>
 					<div style="float: left;height:100%;margin-right:2px;" >
-						<div style="padding-top:6px;">
+						<div style="padding-top:4px;">
 							<button id="WP_FINDACCOUNT" class="workplace_button"
 								onclick="workplaceAccountHelper()"
 							></button>
@@ -197,7 +205,7 @@
 			<div id="TAB_OPAQUESHAFT" ></div>
 			<div id="TAB_CURRENT" onclick="refreshTab();" ></div>
 			<div id="TAB_PLUS" onclick="addObject();" ></div>
-			<div id="TAB_FIND"  ></div>
+			<div id="TAB_FIND" onclick="findObject();" ></div>
 			<div id="TAB_CURRENT2" ></div>
 			<div id="TAB_OPTION" ></div>
 		</div>
