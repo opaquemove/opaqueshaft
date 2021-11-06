@@ -585,13 +585,13 @@ function workplaceReset(){
 
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
-	var current  = document.getElementById('TAB_CURRENT');
+	// var current  = document.getElementById('TAB_CURRENT');
 	var plus	 = document.getElementById('TAB_PLUS');
 	var find	 = document.getElementById('TAB_FIND');
 	var current2 = document.getElementById('TAB_CURRENT2');
 	var option	 = document.getElementById('TAB_OPTION');
 	tab.style.visibility		= 'hidden';
-	current.style.visibility	= 'hidden';
+	// current.style.visibility	= 'hidden';
 	plus.style.visibility		= 'hidden';
 	find.style.visibility		= 'hidden';
 	current2.style.visibility	= 'hidden';
@@ -621,14 +621,14 @@ function workplaceWhiteboard(){
 
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
-	var current 	= document.getElementById('TAB_CURRENT');
+	// var current 	= document.getElementById('TAB_CURRENT');
 	var plus		= document.getElementById('TAB_PLUS');
 	var find		= document.getElementById('TAB_FIND');
 	var current2 	= document.getElementById('TAB_CURRENT2');
 	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility		= 'visible';
-	current.style.visibility	= 'visible';
-	current.innerText			= 'whiteboard';
+	// current.style.visibility	= 'visible';
+	// current.innerText			= 'whiteboard';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
@@ -1152,14 +1152,14 @@ function workplaceChildren(){
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
-	var current 	= document.getElementById('TAB_CURRENT');
+	// var current 	= document.getElementById('TAB_CURRENT');
 	var plus 	 	= document.getElementById('TAB_PLUS');
 	var find		= document.getElementById('TAB_FIND');
 	var current2	= document.getElementById('TAB_CURRENT2');
 	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility 		= 'visible';
-	current.style.visibility 	= 'visible';
-	current.innerText 			= 'children';
+	// current.style.visibility 	= 'visible';
+	// current.innerText 			= 'children';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
@@ -1192,14 +1192,14 @@ function workplaceRange(){
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
-	var current 	= document.getElementById('TAB_CURRENT');
+	// var current 	= document.getElementById('TAB_CURRENT');
 	var plus		= document.getElementById('TAB_PLUS');
 	var find		= document.getElementById('TAB_FIND');
 	var current2	= document.getElementById('TAB_CURRENT2');
 	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility 		= 'visible';
-	current.style.visibility 	= 'visible';
-	current.innerText 			= 'range';
+	// current.style.visibility 	= 'visible';
+	// current.innerText 			= 'range';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
@@ -1455,14 +1455,14 @@ function workplaceAccount(){
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
-	var current 	= document.getElementById('TAB_CURRENT');
+	// var current 	= document.getElementById('TAB_CURRENT');
 	var plus		= document.getElementById('TAB_PLUS');
 	var find		= document.getElementById('TAB_FIND');
 	var current2	= document.getElementById('TAB_CURRENT2');
 	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility 		= 'visible';
-	current.style.visibility 	= 'visible';
-	current.innerText 			= 'account';
+	// current.style.visibility 	= 'visible';
+	// current.innerText 			= 'account';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';

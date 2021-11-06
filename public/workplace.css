@@ -29,7 +29,7 @@
     background-position:    center center;
     visibility:             hidden;
 }
-#TAB_CURRENT{
+/* #TAB_CURRENT{
     width:                  calc(100% - 12px);
     height:                 96px;
     color:                  dimgray;
@@ -40,7 +40,7 @@
     padding-left:           12px;
     writing-mode:           vertical-lr;
     visibility:             hidden;
-}
+} */
 #TAB_PLUS{
     width:                  calc(100%);
     height:                 48px;
@@ -80,7 +80,7 @@
 }
 #TAB_OPTION{
     width:                  calc(100% - 0px);
-    height:                 calc(100% - 372px);
+    height:                 calc(100% - 276px);
     color:                  dimgray;
     background-color:       #EDEDED;
     font-size:              14px;
