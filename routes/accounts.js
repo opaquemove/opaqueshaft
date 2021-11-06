@@ -236,10 +236,24 @@ router.post('/childfind', function(req, res, next ){
     console.log('childfind:' + keyword + ' range_id:' + range_id );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.any( 
-      "SELECT * FROM children WHERE delete_flag = 0 AND range_id =  " + range_id + "  AND  ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) ORDER BY kana ASC   " )
+      "SELECT children.*, ( SELECT count(*) FROM results r WHERE r.child_id = children.child_id ) n_result FROM children WHERE delete_flag = 0 AND range_id =  " + range_id + "  AND  ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) ORDER BY kana ASC   " )
       .then( rows => {
             res.json( rows );
       });
+});
+
+//
+//  チャイルド統計取得
+//
+router.post('/childstatis', function(req, res, next ){
+  var range_id = req.body.range_id;
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.any( {
+    text: 'SELECT count(*) n_children FROM children WHERE delete_flag = 0 AND range_id = $1',
+    values: [ range_id ] } )
+    .then( rows => {
+          res.json( rows );
+    });
 });
 
 //

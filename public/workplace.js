@@ -2714,6 +2714,8 @@ function finderHelper( keyword, range_id ){
 							var range_id	= result[i].range_id;
 							var imagefile	= result[i].imagefile;
 							if ( imagefile == null ) imagefile = '';
+							var n_result	= result[i].n_result;
+
 							var c = document.createElement('DIV');
 							c.setAttribute("child_id",    child_id );
 							c.setAttribute("id",          "c_1");
@@ -2747,6 +2749,9 @@ function finderHelper( keyword, range_id ){
 										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
 									r += '</div>';
 									r += '<div style="padding:1px;" >id:' + child_id + '</div>';
+								r += '</div>';
+								r += '<div class="vh-center" style="float:right;width:42px;height:100%;padding-right:8px;font-size:18px;" >';
+									r += '<div style="width:30px;height:30px;color:white;background-color:limegreen;" >+' + n_result + '</div>';
 								r += '</div>';
 							r += '</div>';
 
@@ -2871,13 +2876,18 @@ function finderHelper( keyword, range_id ){
 						c.style.height = ( list.parentNode.offsetHeight - 20 ) + 'px';
 						if ( xmlhttp.status == 200 ){
 							var r = '';
-							r += '<div style="width:40px;height:32px;padding-top:8px;color:white;background-color:limegreen;font-size:20px;" >';
+							r += '<div                 style="width:40px;height:32px;padding-top:8px;color:white;background-color:limegreen;font-size:20px;" >';
 							r += '+' + result.length;
+							r += '</div>';
+							r += '<div class="N_CHILDREN" style="width:40px;height:32px;padding-top:8px;color:white;background-color:lightpink;font-size:20px;" >';
+							r += '';
 							r += '</div>';
 							c.innerHTML = r;
 						}
 
 						var cc = list.appendChild( c );
+
+						finderHelperStatis( cc.getElementsByClassName('N_CHILDREN')[0], range_id );
 
 						setTimeout(() => {
 							var children = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
@@ -2902,4 +2912,40 @@ function finderHelper( keyword, range_id ){
 		xmlhttp.send( 'keyword=' + keyword + '&range_id=' + range_id );
 
 
+}
+
+function finderHelperStatis( p, range_id ){
+
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						
+						var result = JSON.parse( xmlhttp.responseText );
+						
+						p.innerHTML = '+' + result[0].n_children;
+
+					} else{
+						console.log( null, 'finder:' + xmlhttp.status );
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/childstatis", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'range_id=' + range_id );
+	
 }
