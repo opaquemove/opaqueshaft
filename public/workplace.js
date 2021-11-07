@@ -145,8 +145,16 @@ function initWorkplace(){
 function birdsEyeView(){
 
 	var bf = document.getElementById('BOTTOM_FRAME');
-	bf.style.transition	= 'all 0.5s ease-in-out';
-	bf.style.transform	= 'scale(0.7,0.7)';
+	console.log( 'transform:' + bf.style.transform);
+	if ( bf.hasAttribute('birdseye')){
+		bf.style.transition	= 'all 0.5s ease-in-out';
+		bf.style.transform	= 'scale(1,1)';
+		bf.removeAttribute('birdseye');
+	} else{
+		bf.style.transition	= 'all 0.5s ease-in-out';
+		bf.style.transform	= 'scale(0.7,0.7)';
+		bf.setAttribute('birdseye','yes');
+	}
 }
 
 function refreshTab(){
@@ -562,6 +570,7 @@ function showWorkPlace(){
 function workplaceReset(){
 
 	workplace_id = null;
+	var menu	= document.getElementById('WORKPLACE_MENU');
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
@@ -578,6 +587,7 @@ function workplaceReset(){
 		icon.setAttribute('orgHeight', icon.style.height );
 	}
 
+	menu.style.display		= 'inline';
 	wb.style.height			= '0px';
 	children.style.height	= '0px';
 	range.style.height		= '0px';
@@ -612,6 +622,7 @@ function workplaceWhiteboard(){
 
 	guidedance_whiteboard_form.day.value = '';
 
+	var menu	= document.getElementById('WORKPLACE_MENU');
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
@@ -627,20 +638,20 @@ function workplaceWhiteboard(){
 	var current2 	= document.getElementById('TAB_CURRENT2');
 	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility		= 'visible';
-	// current.style.visibility	= 'visible';
-	// current.innerText			= 'whiteboard';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
 	
 	if ( icon.style.height == '0px'){
-		icon.style.height	= icon.getAttribute('orgHeight');
-		hdr.style.height	= hdr.getAttribute('orgHeight');
+		// icon.style.height	= icon.getAttribute('orgHeight');
+		// hdr.style.height	= hdr.getAttribute('orgHeight');
+		menu.style.display	= 'inline';
 	} else {
 		icon.setAttribute('orgHeight', icon.style.height );
-		icon.style.height	= '0px';
-		hdr.style.height	= '0px';
+		// icon.style.height	= '0px';
+		// hdr.style.height	= '0px';
+		menu.style.display	= 'none';
 	}
 
 	resizeWorkplace();
@@ -1143,6 +1154,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 //
 function workplaceChildren(){
 	workplace_id = 'CHILDREN';
+	var menu	= document.getElementById('WORKPLACE_MENU');
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
@@ -1158,20 +1170,20 @@ function workplaceChildren(){
 	var current2	= document.getElementById('TAB_CURRENT2');
 	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility 		= 'visible';
-	// current.style.visibility 	= 'visible';
-	// current.innerText 			= 'children';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
 
 	if ( icon.style.height == '0px'){
-		icon.style.height		= icon.getAttribute('orgHeight');
-		hdr.style.height		= hdr.getAttribute('orgHeight');
+		// icon.style.height		= icon.getAttribute('orgHeight');
+		// hdr.style.height		= hdr.getAttribute('orgHeight');
+		menu.style.display		= 'inline';
 	} else {
-		icon.setAttribute('orgHeight', icon.style.height );
-		icon.style.height		= '0px';
-		hdr.style.height		= '0px';
+		// icon.setAttribute('orgHeight', icon.style.height );
+		// icon.style.height		= '0px';
+		// hdr.style.height		= '0px';
+		menu.style.display		= 'none';
 	}
 
 	resizeWorkplace();
@@ -1186,6 +1198,7 @@ function workplaceChildren(){
 //
 function workplaceRange(){
 	workplace_id = 'RANGE';
+	var menu	= document.getElementById('WORKPLACE_MENU');
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	// var list	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
@@ -1198,20 +1211,20 @@ function workplaceRange(){
 	var current2	= document.getElementById('TAB_CURRENT2');
 	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility 		= 'visible';
-	// current.style.visibility 	= 'visible';
-	// current.innerText 			= 'range';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
 
 	if ( icon.style.height == '0px'){
-		icon.style.height		= icon.getAttribute('orgHeight');
-		hdr.style.height		= hdr.getAttribute('orgHeight');
+		// icon.style.height		= icon.getAttribute('orgHeight');
+		// hdr.style.height		= hdr.getAttribute('orgHeight');
+		menu.style.display		= 'inline';
 	} else {
-		icon.setAttribute('orgHeight', icon.style.height );
-		icon.style.height		= '0px';
-		hdr.style.height		= '0px';
+		// icon.setAttribute('orgHeight', icon.style.height );
+		// icon.style.height		= '0px';
+		// hdr.style.height		= '0px';
+		menu.style.display		= 'none';
 	}
 
 	resizeWorkplace();
@@ -1449,6 +1462,7 @@ function todayWhiteboard(){
 //
 function workplaceAccount(){
 	workplace_id = 'ACCOUNT';
+	var menu	= document.getElementById('WORKPLACE_MENU');
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	// var list	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
@@ -1461,20 +1475,20 @@ function workplaceAccount(){
 	var current2	= document.getElementById('TAB_CURRENT2');
 	var option		= document.getElementById('TAB_OPTION');
 	tab.style.visibility 		= 'visible';
-	// current.style.visibility 	= 'visible';
-	// current.innerText 			= 'account';
 	plus.style.visibility		= 'visible';
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
 
 	if ( icon.style.height == '0px'){
-		icon.style.height		= icon.getAttribute('orgHeight');
-		hdr.style.height		= hdr.getAttribute('orgHeight');
+		// icon.style.height		= icon.getAttribute('orgHeight');
+		// hdr.style.height		= hdr.getAttribute('orgHeight');
+		menu.style.display		= 'inline';
 	} else {
-		icon.setAttribute('orgHeight', icon.style.height );
-		icon.style.height		= '0px';
-		hdr.style.height		= '0px';
+		// icon.setAttribute('orgHeight', icon.style.height );
+		// icon.style.height		= '0px';
+		// hdr.style.height		= '0px';
+		menu.style.display		= 'none';
 	}
 
 	resizeWorkplace();

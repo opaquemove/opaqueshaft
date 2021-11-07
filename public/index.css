@@ -163,23 +163,6 @@ INPUT[type=password]:focus{
 	z-index:				0;
 }
 
-#BOTTOM_OVERLAY{
-	position:				absolute;
-	top:					0px;
-	left:					0px;
-	width:					100%;
-	height:					100%;
-	background-color:		transparent;
-	overflow:				hidden;
-}
-#BOTTOM_FRAME{
-	position:				absolute;
-	top:					0px;
-	left:					0px;
-	width:					100%;
-	height:					100%;
-	overflow:				auto;
-}
 
 #OPAQUESHAFT_TITLE{
 	pointer-events:			auto;
