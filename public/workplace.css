@@ -867,6 +867,11 @@
     overflow:           hidden;
 }
 
+.scaleInOut{
+    animation-name:             scale-in-out;
+    animation-duration:         0.3s;
+    animation-iteration-count:  1;
+}
 
 @keyframes fadein {
     from {

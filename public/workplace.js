@@ -120,8 +120,10 @@ function initWorkplace(){
 	document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST').addEventListener(
 		'click', selectAccount );
 	document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST').addEventListener(
-		'transitionend', selectAccountTransitionEnd );
-			
+		'animationstart', selectAccountMotionStart );
+	document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST').addEventListener(
+		'animationend', selectAccountMotionEnd );
+				
 	document.getElementById('WORKPLACE_RANGE_MAIN_LIST').addEventListener(
 		'click', selectRange );
 	document.getElementById('WORKPLACE_RANGE_MAIN_LIST').addEventListener(
@@ -1509,8 +1511,13 @@ function selectAccount( e ){
 				if ( c.hasAttribute('selected')){
 					c.removeAttribute('selected');
 					c.classList.remove('selected');
-					c.classList.remove('left40');
+					c.style.animationName	 		= 'scale-in-out';
+					c.style.animationDuration		= '0.3s';
+					c.style.animationIterationCount = 1;
+				
+					// c.classList.remove('left40');
 					c.classList.remove('height360');
+			
 					wp_editAccount( c );
 					// c.removeChild( c.getElementsByClassName('op')[0] );
 				}	
@@ -1527,24 +1534,33 @@ function selectAccount( e ){
 		if ( c.hasAttribute('selected')){
 			c.removeAttribute('selected');
 			c.classList.remove('selected');
-			c.classList.remove('left40');
+			c.style.animationName	 		= 'scale-in-out';
+			c.style.animationDuration		= '0.3s';
+			c.style.animationIterationCount = 1;
+
+			// c.classList.remove('left40');
 			c.classList.remove('height360');
+	
 			wp_editAccount( c );
-			// c.removeChild( c.getElementsByClassName('op')[0] );
 		}	
 	}
 
 	if ( o.hasAttribute('selected')){
 		o.removeAttribute('selected');
 		o.classList.remove('selected');
-		o.classList.remove('left40');
+		// o.classList.remove('left40');
 		o.classList.remove('height360');
+		o.style.animationName	 		= 'scale-in-out';
+		o.style.animationDuration		= '0.3s';
+		o.style.animationIterationCount = 1;
+
 		wp_editAccount( o );
-		// o.removeChild( o.getElementsByClassName('op')[0] );
 	} else{
 		o.setAttribute('selected', 'true');
 		o.classList.add('selected');
-		o.classList.add('left40');			// LEFT40 Moving
+		// o.classList.add('left40');
+		// o.classList.add('scaleInOut');
+
 		var op = document.createElement('DIV');
 		op.classList.add('op');
 		op.classList.add('delete_object');
@@ -1554,12 +1570,11 @@ function selectAccount( e ){
 		op.style.width				= '30px';
 		op.style.height				= '38px';
 		op.style.backgroundColor	= '';
-		op.style.zIndex				= -1;
-		op.style.transition			= 'width 0.5s ease-in-out';
 		var r = '';
 		r += '<button type="button" class="workplace_edit_button_small"   cmd="edit" ></button>';
 		r += '<button type="button" class="workplace_delete_button_small" cmd="delete" ></button>';
 		op.innerHTML = r;
+
 		o.appendChild( op ).addEventListener('click',
 		function(e){
 			e.stopPropagation();
@@ -1588,20 +1603,29 @@ function selectAccount( e ){
 					break;
 			}
 			console.log( cmd + ' acc_id:' + acc_id );
-			// deleteRange( this.parentNode, acc_id );
 		}, false );
 	}
+	o.style.animationName	 		= 'scale-in-out';
+	o.style.animationDuration		= '0.3s';
+	o.style.animationIterationCount = 1;
 
 }
-function selectAccountTransitionEnd( e ){
+
+function selectAccountMotionStart( e ){
+	console.log('motion start');
+}
+function selectAccountMotionEnd( e ){
+	console.log('motion end');
 	var c = e.target;
+	c.style.animationName	= '';
+
 	while ( true ){
 		if ( c == this ) return;
 		if ( c.classList.contains('account')) break;
 		c = c.parentNode;
 	}
-	if ( !c.classList.contains( 'left40' )){
-		c.removeAttribute('selected');
+
+	if ( !c.hasAttribute( 'selected' )){
 		var op = c.getElementsByClassName( 'op');
 		if ( op.length > 0)
 			op[0].parentNode.removeChild( op[0] );
@@ -1664,40 +1688,7 @@ function workplaceAccountHelper(){
 							r += '<div style="padding:2px;" >' + priv      + '</div>';
 						r += '</div>';
 
-						r += '<div class="appendix" style="float:none;width:auto;height:auto;padding-bottom:20px;display:none;" >';
-							r += '<form onsubmit="return false;" >';
-							// r += '<div>Profeel</div>';
-							r += '<input type="hidden" name="acc_id" value="' + acc_id + '" />';
-							r += '<div style="padding-top:4px;" >acc_name:</div>';
-							r += '<div style="padding-top:4px;" >';
-								r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + acc_name + '" />';
-							r += '</div>';
-							r += '<div style="padding-top:4px;" >range_id:</div>';
-							r += '<div style="padding-top:4px;" >';
-								r += '<input type="text" name="range_id" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + range_id + '" />';
-							r += '</div>';
-					
-							var privs = [ 'admin', 'editor', 'guest' ];
-							r += '<div style="padding-top:4px;" >priveledge:</div>';
-							r += '<div style="width:90%;height:30px;padding:3px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
-							for ( var j=0; j<privs.length; j++ ){
-								var checked = ( priv == privs[j] ) ? ' checked ' : '';
-								r += '<input type="radio" id="acc_priv_' + acc_id + '_' + j + '" name="acc_priv"  value="' + privs[j] + '"  ' + checked + '  />';
-								r += '<label for="acc_priv_' + acc_id + '_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
-							}
-							r += '</div>';
-							r += '<div style="padding-top:4px;" >image file:</div>';
-							r += '<div style="padding-top:4px;" >';
-								r += '<input type="text" name="acc_imagefile" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + imagefile + '" />';
-							r += '</div>';
-
-							r += '<div class="operation" style="padding-top:4px;" >';
-								r += '<button type="button" class="workplace_commit_button" cmd="commit" >&nbsp;</button>';
-								r += '<button type="button" class="workplace_cancel_button" cmd="cancel" >&nbsp;</button>';
-							r += '</div>';
-
-							r += '</form>';
-						r += '</div>';
+						r += makeAccountEditTag( acc_id, acc_name, range_id, priv, imagefile );
 
 						o.innerHTML		= r;
 						var acc = p.appendChild( o )
@@ -1780,6 +1771,44 @@ function workplaceAccountHelper(){
 		oLog.open( 3 );
 	}
 
+}
+
+function makeAccountEditTag( acc_id, acc_name, range_id, priv, imagefile ){
+	var r = '';
+	r += '<div class="appendix" style="float:none;width:auto;height:auto;padding-bottom:20px;display:none;" >';
+		r += '<form onsubmit="return false;" >';
+		r += '<input type="hidden" name="acc_id" value="' + acc_id + '" />';
+		r += '<div style="padding-top:4px;" >acc_name:</div>';
+		r += '<div style="padding-top:4px;" >';
+			r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + acc_name + '" />';
+		r += '</div>';
+		r += '<div style="padding-top:4px;" >range_id:</div>';
+		r += '<div style="padding-top:4px;" >';
+			r += '<input type="text" name="range_id" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + range_id + '" />';
+		r += '</div>';
+
+		var privs = [ 'admin', 'editor', 'guest' ];
+		r += '<div style="padding-top:4px;" >priveledge:</div>';
+		r += '<div style="width:90%;height:30px;padding:3px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+		for ( var j=0; j<privs.length; j++ ){
+			var checked = ( priv == privs[j] ) ? ' checked ' : '';
+			r += '<input type="radio" id="acc_priv_' + acc_id + '_' + j + '" name="acc_priv"  value="' + privs[j] + '"  ' + checked + '  />';
+			r += '<label for="acc_priv_' + acc_id + '_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
+		}
+		r += '</div>';
+		r += '<div style="padding-top:4px;" >image file:</div>';
+		r += '<div style="padding-top:4px;" >';
+			r += '<input type="text" name="acc_imagefile" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + imagefile + '" />';
+		r += '</div>';
+
+		r += '<div class="operation" style="padding-top:4px;" >';
+			r += '<button type="button" class="workplace_commit_button" cmd="commit" >&nbsp;</button>';
+			r += '<button type="button" class="workplace_cancel_button" cmd="cancel" >&nbsp;</button>';
+		r += '</div>';
+
+		r += '</form>';
+	r += '</div>';
+	return r;
 }
 
 function addAccount(){
