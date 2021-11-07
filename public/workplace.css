@@ -228,7 +228,7 @@
     background-position:    center center;
 } 
 #WORKPLACE_WHITEBOARD{
-    width:                  calc(100% - 48px);
+    width:                  auto;   /* calc(100% - 48px); */
     height:                 0px;
     overflow:               hidden;
     font-size:              16px;
@@ -305,15 +305,13 @@
 }
 
 #WORKPLACE_CHILDREN{
-    width:                  calc(100% - 48px);
+    width:                  auto;   /*calc(100% - 48px); */
     height:                 0px;
     overflow:               hidden;
     font-size:              16px;
     background-color:       #EDEDED;
-    /* border:                 1px solid lightgrey; */
     border-radius:          14px;
     text-align:             center;
-    /* transition:             all 0.3s ease-in-out; */
 }
 #WORKPLACE_CHILDREN_HDR{
     margin:                 0 auto;
@@ -349,7 +347,7 @@
 }
 
 #WORKPLACE_RANGE{
-    width:                  100%;
+    width:                  auto;   /* 100%; */
     height:                 0px;
     overflow:               hidden;
     font-size:              16px;
@@ -459,13 +457,13 @@
 }
 
 #WORKPLACE_ACCOUNT{
-    width:100%;
-    height:0px;
-    overflow:hidden;
-    font-size:16px;
-    background-color:       #EDEDED;
-    border-bottom:gray;
-    text-align:center;
+    width:              auto;   /* 100%; */
+    height:             0px;
+    overflow:           hidden;
+    font-size:          16px;
+    background-color:   #EDEDED;
+    border-bottom:      gray;
+    text-align:         center;
     /* transition:all 0.3s ease-in-out; */
 }
 #WORKPLACE_ACCOUNT_HDR{
@@ -693,7 +691,8 @@
 	padding:				0px;
 	margin:					1px 1px 1px 1px;
 }
-.childrenHistory{
+.childrenOptionArea{
+    pointer-events:        auto;
     position:               absolute;
 	width:					100%;
 	height:					470px;
@@ -704,7 +703,24 @@
 	overflow:               visible;
 	padding:				0px;
 	margin:					1px 1px 1px 1px;
-
+}
+.childrenEdit{
+	width:					100%;
+	height:					470px;
+	font-size:				12px;
+	color:					gray;
+	background-color:		white;
+	overflow:               visible;
+	padding:				0px;
+}
+.childrenHistory{
+	width:					100%;
+	height:					470px;
+	font-size:				12px;
+	color:					gray;
+	background-color:		white;
+	overflow:               visible;
+	padding:				0px;
 }
 .day_data{
 	float:					left;

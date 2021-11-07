@@ -581,10 +581,12 @@ function workplaceReset(){
 	var signout	= document.getElementById('WP_SIGNOUT');
 
 	if ( icon.style.height == '0px'){
-		icon.style.height = icon.getAttribute('orgHeight');
-		hdr.style.height = hdr.getAttribute('orgHeight');
+		// icon.style.height = icon.getAttribute('orgHeight');
+		// hdr.style.height = hdr.getAttribute('orgHeight');
+		menu.style.display	= 'inline';
 	} else {
-		icon.setAttribute('orgHeight', icon.style.height );
+		// icon.setAttribute('orgHeight', icon.style.height );
+		menu.style.display	= 'none';
 	}
 
 	menu.style.display		= 'inline';
@@ -595,13 +597,11 @@ function workplaceReset(){
 
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
-	// var current  = document.getElementById('TAB_CURRENT');
 	var plus	 = document.getElementById('TAB_PLUS');
 	var find	 = document.getElementById('TAB_FIND');
 	var current2 = document.getElementById('TAB_CURRENT2');
 	var option	 = document.getElementById('TAB_OPTION');
 	tab.style.visibility		= 'hidden';
-	// current.style.visibility	= 'hidden';
 	plus.style.visibility		= 'hidden';
 	find.style.visibility		= 'hidden';
 	current2.style.visibility	= 'hidden';
@@ -2163,10 +2163,7 @@ function selectChildren( e ){
 	o.style.position 	= 'absolute';
 	o.style.top			= c.offsetTop + 'px';	//'2px';
 	o.style.left		= '2px';
-	// o.style.left		= '-50px';
 	o.style.height		= ( c.offsetHeight * 2 ) + 'px';
-	// o.style.zIndex		= 1000;
-	// o.style.border		= '1px solid red';
 	var r = '';
 	r += '<button type="button" class="workplace_edit_button_small"     cmd="edit"    ></button>';
 	r += '<button type="button" class="workplace_delete_button_small"   cmd="delete"  ></button>';
@@ -2236,9 +2233,9 @@ function selectChildrenTransitionEnd( e ){
 		var op = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName( 'opChild');
 		if ( op.length > 0)
 			op[0].parentNode.removeChild( op[0] );
-		var ch = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName( 'childrenHistory');
-		if ( ch.length > 0)
-			ch[0].parentNode.removeChild( ch[0] );
+		var coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName( 'childrenOptionArea');
+		if ( coa.length > 0)
+			coa[0].parentNode.removeChild( coa[0] );
 		}
 
 }
@@ -2444,8 +2441,8 @@ function cancelAddChildren(){
 
 
 function wp_editChildren(){
+	// セレクトしているチルドレンを検索
 	var lists = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
-	
 	var c = null;
 	for ( var i=0; i<lists.length; i++ ){
 		if ( lists[i].hasAttribute('selected')){
@@ -2454,22 +2451,80 @@ function wp_editChildren(){
 		}
 	}
 	if ( c == null ) return;
-	// while ( true ){
-	// 	if ( c.classList.contains('WP_PALLETE_CHILD')) break;
-	// 	c = c.parentNode;
-	// }
 	var m = document.getElementById( 'WORKPLACE_CHILDREN_MAIN');
 	// m.scrollTop = c.offsetTop - 80;
 
-	c.classList.remove('left100');
-	c.classList.toggle('height320');
-	var flg = c.classList.contains('height320');
-	var apdxs = c.getElementsByClassName('appendix');
-	for ( var i=0; i<apdxs.length; i++ ){
-		apdxs[i].style.display = ( flg )?'inline':'none';
-		if ( flg ) 	apdxs[i].addEventListener('click', function(e){ e.stopPropagation();}, false );
-			else	apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
+	var coa = null;
+	if ( document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName('childrenOptionArea').length == 0 ){
+		var o = document.createElement('DIV');
+		o.classList.add('childrenOptionArea');
+		o.setAttribute('child_id', c.getAttribute('child_id'));
+		o.style.position	= 'absolute';
+		o.style.top			= ( c.offsetTop + c.offsetHeight + 0 ) + 'px';
+		o.style.left		= ( c.offsetLeft ) + 'px'; //'-2px';
+		o.style.textAlign	= 'left';
+		coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').appendChild( o );	
+
+		coa.addEventListener('click',function(e){e.stopPropagation();}, false);
+	} else {
+		coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName('childrenOptionArea')[0];
 	}
+
+	if ( coa.getElementsByClassName('childrenEdit').length > 0 ) return;
+
+	var o = document.createElement('DIV');
+	o.classList.add('childrenEdit');
+	o.style.top			= ( c.offsetHeight + 0 ) + 'px';
+	o.style.left		= '-2px';
+	o.style.textAlign	= 'left';
+	var p = coa.appendChild( o );
+
+	var child_id 	= c.getAttribute( 'child_id' );
+	var kana		= c.getAttribute( 'kana' );
+	var child_name	= c.getAttribute( 'child_name' );
+	var remark		= c.getAttribute( 'remark' );
+	var child_type	= c.getAttribute( 'child_type' );
+	var child_grade	= c.getAttribute( 'child_grade' );
+	var imagefile	= c.getAttribute( 'imagefile' );
+	p.innerHTML = makeChildrenEditTag( child_id, kana, child_name, remark, child_type, child_grade, imagefile );
+	p.getElementsByClassName('appendix')[0].style.display	= 'inline';
+
+	p.getElementsByClassName('operation')[0].addEventListener(
+		'click',
+		function ( e ){
+			var x = e.target;
+			while ( true ){
+				if ( x == this ) return;
+				if ( x.hasAttribute('cmd')) break;
+				x = x.parentNode;
+			}
+			var chd = x;
+			while ( true ){
+				if ( chd.hasAttribute( 'child_id' )) break;
+				chd = chd.parentNode;
+			}
+			switch ( x.getAttribute('cmd') ){
+				case 'commit':
+					console.log( 'commit:' + chd.getAttribute('child_id') );
+					break;
+				case 'cancel':
+					console.log( 'cancel:' + chd.getAttribute('child_id') );
+					m.dispatchEvent( new Event( 'click') );
+					break;
+			}
+		}
+	);
+
+
+	// c.classList.remove('left100');
+	// c.classList.toggle('height320');
+	// var flg = c.classList.contains('height320');
+	// var apdxs = c.getElementsByClassName('appendix');
+	// for ( var i=0; i<apdxs.length; i++ ){
+	// 	apdxs[i].style.display = ( flg )?'inline':'none';
+	// 	if ( flg ) 	apdxs[i].addEventListener('click', function(e){ e.stopPropagation();}, false );
+	// 		else	apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
+	// }
 
 
 }
@@ -2524,13 +2579,6 @@ function wp_deleteChildrenHelper( child_id ){
 
 }
 
-//
-//
-function wp_find(){
-	var wph = document.getElementById('WORKPLACE_HDR');
-	wph.style.height = '0px';
-	wph.style.padding = '0px';
-}
 
 function showChildrenHistory(){
 	var lists = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
@@ -2544,14 +2592,24 @@ function showChildrenHistory(){
 	}
 	if ( c == null ) return;
 
-	if ( c.getElementsByClassName('childrenHistory').length > 0 ) return;
+	var coa = null;
+	if ( c.getElementsByClassName('childrenOptionArea').length == 0 ){
+		var o = document.createElement('DIV');
+		o.classList.add('childrenOptionArea');
+		o.style.top			= ( c.offsetHeight + 0 ) + 'px';
+		o.style.left		= '-2px';
+		o.style.textAlign	= 'left';
+		coa = c.appendChild( o );
+		coa.addEventListener('click', function(e){ e.stopPropagation();}, false);
+	} else {
+		coa = c.getElementsByClassName('childrenOptionArea')[0];
+	}
+
+	if ( coa.getElementsByClassName('childrenHistory').length > 0 ) return;
 
 	var o = document.createElement('DIV');
 	o.classList.add('childrenHistory');
-	o.style.top			= ( c.offsetHeight + 0 ) + 'px';
-	o.style.left		= '-2px';
-	o.style.textAlign	= 'left';
-	var p = c.appendChild( o );
+	var p = coa.appendChild( o );
 	var child_id = c.getAttribute('child_id');
 	showChildrenHistoryHelper( p, child_id );
 
@@ -2614,6 +2672,7 @@ function showChildrenHistoryHelper( p, child_id ){
 //	リサイズ処理
 //
 function resizeWorkplace(){
+	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
 	// var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 
@@ -2638,6 +2697,11 @@ function resizeWorkplace(){
 	var alist		= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
 	console.log( 'resizeWorkplace' );
+
+	workplace.style.width			= ( w - 48 ) + 'px';
+	children.style.width			= ( w - 48 ) + 'px';
+	range.style.width				= ( w - 48 ) + 'px';
+	account.style.width				= ( w - 48 ) + 'px';
 
 	switch ( workplace_id ){
 		case 'WHITEBOARD':
@@ -2683,9 +2747,9 @@ function finder(){
 	}
 
 
-    var wph = document.getElementById('WORKPLACE_HDR');
-	wph.style.height = '0px';
-	wph.style.padding = '0px';
+    // var wph = document.getElementById('WORKPLACE_HDR');
+	// wph.style.height = '0px';
+	// wph.style.padding = '0px';
 
 	var keyword = document.getElementById('WP_KEYWORD').value;
 	finderHelper( keyword, range_id );
@@ -2735,8 +2799,11 @@ function finderHelper( keyword, range_id ){
 							c.setAttribute("id",          "c_1");
 							c.classList.add( "WP_PALLETE_CHILD" );
 							c.setAttribute('kana',        kana );
+							c.setAttribute('child_name',  child_name );
 							c.setAttribute('child_type',  child_type );
 							c.setAttribute('child_grade', child_grade );
+							c.setAttribute('imagefile',   imagefile );
+							c.setAttribute('remark',      remark );
 							c.style.position	= 'relative';
 							c.style.top			= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
 							c.style.left		= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
@@ -2769,104 +2836,102 @@ function finderHelper( keyword, range_id ){
 								r += '</div>';
 							r += '</div>';
 
-							r += '<div class="appendix" style="float:left;width:calc(100% - 6px);display:none;" >';
-								r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
-								// r += '<div style="width:100%;padding:4px 0px 4px 0px;font-size:14px;font-weight:bold;" >Profeel:</div>';
-								r += '<div style="width:97%;height:auto;padding:1px;text-align:left;" >';
-									r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
-										r += 'Kana:<br/>';
-										r += '<input type="text" name="kana"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + kana        + '" />';
-									r += '</div>';
-									r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
-										r += 'Name:<br/>';
-										r += '<input type="text" name="child_name" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + child_name  + '" />';
-									r += '</div>';
-									r += '<div style="clear:both;width:100%;padding:4px 0px 4px 0px;" >';
-										r += 'Remark:<br/>';
-										r += '<textarea name="remark" style="width:90%;height:40px;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" >' + remark + '</textarea>';
-									r += '</div>';
-									r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
-										r += 'Imagefile:<br/>';
-										r += '<input type="text" name="imagefile" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + imagefile + '" />';
-									r += '</div>';
+							// r += makeChildrenEditTag( child_id, kana, child_name, remark, child_type, child_grade, imagefile );
+							// r += '<div class="appendix" style="float:left;width:calc(100% - 6px);display:none;" >';		
+								// r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
+								// r += '<div style="width:97%;height:auto;padding:1px;text-align:left;" >';
+								// 	r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+								// 		r += 'Kana:<br/>';
+								// 		r += '<input type="text" name="kana"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + kana        + '" />';
+								// 	r += '</div>';
+								// 	r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+								// 		r += 'Name:<br/>';
+								// 		r += '<input type="text" name="child_name" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + child_name  + '" />';
+								// 	r += '</div>';
+								// 	r += '<div style="clear:both;width:100%;padding:4px 0px 4px 0px;" >';
+								// 		r += 'Remark:<br/>';
+								// 		r += '<textarea name="remark" style="width:90%;height:40px;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" >' + remark + '</textarea>';
+								// 	r += '</div>';
+								// 	r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+								// 		r += 'Imagefile:<br/>';
+								// 		r += '<input type="text" name="imagefile" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + imagefile + '" />';
+								// 	r += '</div>';
 														
 
-									r += '<div  style="clear:both;width:100%;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
-										switch ( child_type){
-											case 'A':
-												var a = ' checked ';
-												var b = ' ';
-												break;
-											default:
-												var a = '  ';
-												var b = ' checked ';
-												break;
-										}
-										r += '<div>Type:</div>';
-										r += '<div style="width:72px;height:22px;padding:2px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
-											r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
-											r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
-											r += '&nbsp;'
-											r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
-											r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
-										r += '</div>';
+								// 	r += '<div  style="clear:both;width:100%;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
+								// 		switch ( child_type){
+								// 			case 'A':
+								// 				var a = ' checked ';
+								// 				var b = ' ';
+								// 				break;
+								// 			default:
+								// 				var a = '  ';
+								// 				var b = ' checked ';
+								// 				break;
+								// 		}
+								// 		r += '<div>Type:</div>';
+								// 		r += '<div style="width:72px;height:22px;padding:2px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+								// 			r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
+								// 			r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
+								// 			r += '&nbsp;'
+								// 			r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
+								// 			r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
+								// 		r += '</div>';
 
-										// r += '<img width="14px" src="./images/minus-3.png" />';
-									r += '</div>';
+								// 	r += '</div>';
 
-									r += '<div  style="clear:both;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
+								// 	r += '<div  style="clear:both;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
 
-										var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
-										grades[ child_grade - 1 ] = ' checked ';
-										r += '<div>Grade:</div>';
-										r += '<div style="width:90%;height:22px;padding:2px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
-											for ( var g=0; g<grades.length; g++ ){
-												r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
-												r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:14px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
-											}
-										r += '</div>';
+								// 		var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
+								// 		grades[ child_grade - 1 ] = ' checked ';
+								// 		r += '<div>Grade:</div>';
+								// 		r += '<div style="width:90%;height:22px;padding:2px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+								// 			for ( var g=0; g<grades.length; g++ ){
+								// 				r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
+								// 				r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:14px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
+								// 			}
+								// 		r += '</div>';
 	
-									r += '</div>';
-									r += '<div style="clear:both;width:100%;" >';
-										r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
-									r += '</div>';
-								r += '</div>';
+								// 	r += '</div>';
+								// 	r += '<div style="clear:both;width:100%;" >';
+								// 		r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
+								// 	r += '</div>';
+								// r += '</div>';
 
-								r += '<div class="operation" style="padding:20px 1px 1px 1px;width:100%;" >';
-									r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
-									r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
-								r += '</div>';
-
-								r += '</form>';
-							r += '</div>';
+								// r += '<div class="operation" style="padding:20px 1px 1px 1px;width:100%;" >';
+								// 	r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
+								// 	r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
+								// r += '</div>';
+								// r += '</form>';
+							// r += '</div>';
 
 							cc.innerHTML = r;
 
-							cc.getElementsByClassName('operation')[0].addEventListener(
-								'click',
-								function ( e ){
-									var x = e.target;
-									while ( true ){
-										if ( x == this ) return;
-										if ( x.hasAttribute('cmd')) break;
-										x = x.parentNode;
-									}
-									var chd = x;
-									while ( true ){
-										if ( chd.hasAttribute( 'child_id' )) break;
-										chd = chd.parentNode;
-									}
-									switch ( x.getAttribute('cmd') ){
-										case 'commit':
-											console.log( 'commit:' + chd.getAttribute('child_id') );
-											break;
-										case 'cancel':
-											console.log( 'cancel:' + chd.getAttribute('child_id') );
-											list.dispatchEvent( new Event( 'click') );
-											break;
-									}
-								}
-							);
+							// cc.getElementsByClassName('operation')[0].addEventListener(
+							// 	'click',
+							// 	function ( e ){
+							// 		var x = e.target;
+							// 		while ( true ){
+							// 			if ( x == this ) return;
+							// 			if ( x.hasAttribute('cmd')) break;
+							// 			x = x.parentNode;
+							// 		}
+							// 		var chd = x;
+							// 		while ( true ){
+							// 			if ( chd.hasAttribute( 'child_id' )) break;
+							// 			chd = chd.parentNode;
+							// 		}
+							// 		switch ( x.getAttribute('cmd') ){
+							// 			case 'commit':
+							// 				console.log( 'commit:' + chd.getAttribute('child_id') );
+							// 				break;
+							// 			case 'cancel':
+							// 				console.log( 'cancel:' + chd.getAttribute('child_id') );
+							// 				list.dispatchEvent( new Event( 'click') );
+							// 				break;
+							// 		}
+							// 	}
+							// );
 	
 							
 						}
@@ -2928,6 +2993,81 @@ function finderHelper( keyword, range_id ){
 
 }
 
+function makeChildrenEditTag( child_id, kana, child_name, remark, child_type, child_grade, imagefile ){
+
+	var r = '';
+	r += '<div class="appendix" style="float:left;width:calc(100% - 6px);display:none;" >';
+		r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
+		r += '<div style="width:97%;height:auto;padding:1px;text-align:left;" >';
+			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+				r += 'Kana:<br/>';
+				r += '<input type="text" name="kana"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + kana        + '" />';
+			r += '</div>';
+			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+				r += 'Name:<br/>';
+				r += '<input type="text" name="child_name" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + child_name  + '" />';
+			r += '</div>';
+			r += '<div style="clear:both;width:100%;padding:4px 0px 4px 0px;" >';
+				r += 'Remark:<br/>';
+				r += '<textarea name="remark" style="width:90%;height:40px;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" >' + remark + '</textarea>';
+			r += '</div>';
+			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
+				r += 'Imagefile:<br/>';
+				r += '<input type="text" name="imagefile" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + imagefile + '" />';
+			r += '</div>';
+
+			r += '<div  style="clear:both;width:100%;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
+				switch ( child_type){
+					case 'A':
+						var a = ' checked ';
+						var b = ' ';
+						break;
+					default:
+						var a = '  ';
+						var b = ' checked ';
+						break;
+				}
+				r += '<div>Type:</div>';
+				r += '<div style="width:72px;height:22px;padding:2px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+					r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
+					r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
+					r += '&nbsp;'
+					r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
+					r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
+				r += '</div>';
+
+			r += '</div>';
+
+			r += '<div  style="clear:both;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
+
+				var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
+				grades[ child_grade - 1 ] = ' checked ';
+				r += '<div>Grade:</div>';
+				r += '<div style="width:90%;height:22px;padding:2px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
+					for ( var g=0; g<grades.length; g++ ){
+						r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
+						r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:14px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
+					}
+				r += '</div>';
+
+			r += '</div>';
+
+			r += '<div style="clear:both;width:100%;" >';
+				r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
+			r += '</div>';
+		r += '</div>';
+
+		r += '<div class="operation" style="padding:20px 1px 1px 1px;width:100%;" >';
+			r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
+			r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
+		r += '</div>';
+
+		r += '</form>';
+	r += '</div>';
+
+	return r;
+
+}
 function finderHelperStatis( p, range_id ){
 
 	var r = '';
