@@ -154,7 +154,7 @@ function birdsEyeView(){
 		bf.removeAttribute('birdseye');
 	} else{
 		bf.style.transition	= 'all 0.5s ease-in-out';
-		bf.style.transform	= 'scale(0.7,0.7)';
+		bf.style.transform	= 'scale(0.7,0.7) translateX(-800px)';
 		bf.setAttribute('birdseye','yes');
 	}
 }
@@ -582,9 +582,12 @@ function workplaceReset(){
 	var signin	= document.getElementById('WP_SIGNIN');
 	var signout	= document.getElementById('WP_SIGNOUT');
 
+	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
+	var bf= document.getElementById('BOTTOM_FRAME');
+	bf.style.transform	= 'translateX(0px)';
+
+
 	if ( icon.style.height == '0px'){
-		// icon.style.height = icon.getAttribute('orgHeight');
-		// hdr.style.height = hdr.getAttribute('orgHeight');
 		menu.style.display	= 'inline';
 	} else {
 		// icon.setAttribute('orgHeight', icon.style.height );
@@ -592,10 +595,10 @@ function workplaceReset(){
 	}
 
 	menu.style.display		= 'inline';
-	wb.style.height			= '0px';
-	children.style.height	= '0px';
-	range.style.height		= '0px';
-	account.style.height	= '0px';
+	// wb.style.height			= '0px';
+	// children.style.height	= '0px';
+	// range.style.height		= '0px';
+	// account.style.height	= '0px';
 
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
@@ -632,6 +635,9 @@ function workplaceWhiteboard(){
 	var wpwm	= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
 	var list	= document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
+	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
+	var bf= document.getElementById('BOTTOM_FRAME');
+	bf.style.transform	= 'translateX(' + (-w) + 'px)';
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
 	// var current 	= document.getElementById('TAB_CURRENT');
@@ -1164,6 +1170,11 @@ function workplaceChildren(){
 	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
 	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 
+	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
+	var bf= document.getElementById('BOTTOM_FRAME');
+	bf.style.transform	= 'translateX(' + ( -w * 2 ) + 'px)';
+
+
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	// var current 	= document.getElementById('TAB_CURRENT');
@@ -1204,6 +1215,10 @@ function workplaceRange(){
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	// var list	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
+
+	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
+	var bf= document.getElementById('BOTTOM_FRAME');
+	bf.style.transform	= 'translateX(' + ( -w * 3 ) + 'px)';
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
@@ -1468,6 +1483,10 @@ function workplaceAccount(){
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	// var list	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+
+	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
+	var bf= document.getElementById('BOTTOM_FRAME');
+	bf.style.transform	= 'translateX(' + ( -w * 4 ) + 'px)';
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
@@ -1814,6 +1833,7 @@ function makeAccountEditTag( acc_id, acc_name, priv, imagefile ){
 }
 
 function addAccount(){
+	//	リストしているアカウントを削除
 	var p	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 	while ( p.firstChild ){
 		p.removeChild( p.firstChild );
@@ -1822,42 +1842,16 @@ function addAccount(){
 	var o = document.createElement('DIV');
 	o.classList.add('add_account');
 	o.style.textAlign	= 'left';
+
 	var r = '';
-
+	r += '<div style="width:100%;height:40px;color:white;background-color:royalblue;" >';
+		r += '<div style="padding:4px;" >アカウントを作成します.</div>';
+	r += '</div>';
 	r += makeAccountEditTag( null, '', '', '' );
-
-	// r += '<form name="accountForm" onsubmit="return false;" >';
-	// 	r += '<div>acc_id:</div>';
-	// 	r += '<div style="padding-top:4px;" >';
-	// 		r += '<input type="text" name="acc_id" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
-	// 	r += '</div>';
-	// 	r += '<div style="padding-top:4px;" >acc_name:</div>';
-	// 	r += '<div style="padding-top:4px;" >';
-	// 		r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
-	// 	r += '</div>';
-	// 	var privs = [ 'admin', 'editor', 'guest' ];
-	// 	r += '<div style="padding-top:4px;" >priveledge:</div>';
-	// 	r += '<div style="width:90%;height:30px;padding:3px;background-color:#EDEDED;border-radius:4px;" >';
-	// 		for ( var j=0; j<privs.length; j++ ){
-	// 			r += '<input type="radio" id="acc_priv_' + j + '" name="acc_priv"  value="' + privs[j] + '"   />';
-	// 			r += '<label for="acc_priv_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
-	// 		}
-	// 	r += '</div>';
-	// 	r += '<div style="padding-top:4px;" >image file:</div>';
-	// 	r += '<div style="padding-top:4px;" >';
-	// 		r += '<input type="text" name="acc_imagefile" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
-	// 	r += '</div>';
-
-	// 	r += '<div style="margin:0 auto;width:100%;text-align:center;padding-top:40px;">';
-	// 		r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
-	// 		r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
-	// 	r += '</div>';
-
-	// r += '</form>';
 	o.innerHTML = r;
 
-	p.prepend( o );
-	p.getElementsByClassName('appendix')[0].style.display = 'inline';
+	// p.prepend( o );
+	p.appendChild( o ).getElementsByClassName('appendix')[0].style.display = 'inline';
 
 	var accept = p.getElementsByClassName('workplace_commit_button');
 	accept[0].addEventListener('click',
@@ -2712,6 +2706,7 @@ function resizeWorkplace(){
 	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
 	// var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
 
+	var menu		= document.getElementById('WORKPLACE_MENU');
 	var workplace	= document.getElementById('WORKPLACE_WHITEBOARD');
 	var wpwh		= document.getElementById('WORKPLACE_WHITEBOARD_HDR').offsetHeight;
 	var wpwm		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
@@ -2733,11 +2728,18 @@ function resizeWorkplace(){
 	var alist		= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
 	console.log( 'resizeWorkplace' );
+	console.log( 'bottom overlay width:' + w );
 
+	menu.style.width				= ( w ) + 'px';
+	menu.style.left					= '0px';
 	workplace.style.width			= ( w - 48 ) + 'px';
+	workplace.style.left			= ( w *  1 ) + 'px';
 	children.style.width			= ( w - 48 ) + 'px';
+	children.style.left				= ( w *  2 ) + 'px';
 	range.style.width				= ( w - 48 ) + 'px';
+	range.style.left				= ( w *  3 ) + 'px';
 	account.style.width				= ( w - 48 ) + 'px';
+	account.style.left				= ( w *  4 ) + 'px';
 
 	switch ( workplace_id ){
 		case 'WHITEBOARD':

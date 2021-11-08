@@ -5,15 +5,16 @@
 	width:					100%;
 	height:					100%;
 	background-color:		transparent;
-	overflow:				hidden;
+	overflow:				scroll;
 }
 #BOTTOM_FRAME{
-	position:				absolute;
+    position:				absolute;
 	top:					0px;
 	left:					0px;
-	width:					100%;
+	width:					500%;
 	height:					100%;
 	overflow:				auto;
+    transition:             all 0.3s ease-in-out;
 }
 
 
@@ -228,8 +229,11 @@
     background-position:    center center;
 } 
 #WORKPLACE_WHITEBOARD{
+    position:               absolute;
+    top:                    0px;    /* resize */
+    left:                   0px;
     width:                  auto;   /* calc(100% - 48px); */
-    height:                 0px;
+    height:                 100%;
     overflow:               hidden;
     font-size:              16px;
     background-color:       #EDEDED;
@@ -305,8 +309,11 @@
 }
 
 #WORKPLACE_CHILDREN{
+    position:               absolute;
+    top:                    0px;    /* resize */
+    left:                   0px;
     width:                  auto;   /*calc(100% - 48px); */
-    height:                 0px;
+    height:                 100%;
     overflow:               hidden;
     font-size:              16px;
     background-color:       #EDEDED;
@@ -347,8 +354,11 @@
 }
 
 #WORKPLACE_RANGE{
+    position:               absolute;
+    top:                    0px;    /* resize */
+    left:                   0px;
     width:                  auto;   /* 100%; */
-    height:                 0px;
+    height:                 100%;
     overflow:               hidden;
     font-size:              16px;
     background-color:          #EDEDED;
@@ -444,27 +454,30 @@
 }
 
 .range{
-    position:       relative;
-    width:          calc( 50% - 4px);
-    height:			22px;
-    border:			1px solid lightgrey;
-    padding:	    8px 2px 6px 2px;
-    margin:			2px;
-    border-radius:	4px;
-    overflow:       visible;
-    transition:     all 0.3s ease-in-out;
+    position:               relative;
+    width:                  calc( 50% - 4px);
+    height:			        22px;
+    border:			        1px solid lightgrey;
+    padding:	            8px 2px 6px 2px;
+    margin:			        2px;
+    border-radius:	        4px;
+    overflow:               visible;
+    transition:             all 0.3s ease-in-out;
 
 }
 
 #WORKPLACE_ACCOUNT{
-    width:              auto;   /* 100%; */
-    height:             0px;
-    overflow:           hidden;
-    font-size:          16px;
-    background-color:   #EDEDED;
-    border-bottom:      gray;
-    text-align:         center;
-    /* transition:all 0.3s ease-in-out; */
+    position:               absolute;
+    top:                    0px;    /* resize */
+    left:                   0px;
+    width:                  auto;   /* 100%; */
+    height:                 100%;
+    overflow:               hidden;
+    font-size:              16px;
+    background-color:       #EDEDED;
+    border-bottom:          gray;
+    text-align:             center;
+
 }
 #WORKPLACE_ACCOUNT_HDR{
     /* margin:0 auto; */
