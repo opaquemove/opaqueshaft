@@ -1518,7 +1518,7 @@ function selectAccount( e ){
 					// c.classList.remove('left40');
 					c.classList.remove('height360');
 			
-					wp_editAccount( c );
+					wp_editAccountArea( c );
 					// c.removeChild( c.getElementsByClassName('op')[0] );
 				}	
 			}
@@ -1541,7 +1541,7 @@ function selectAccount( e ){
 			// c.classList.remove('left40');
 			c.classList.remove('height360');
 	
-			wp_editAccount( c );
+			wp_editAccountArea( c );
 		}	
 	}
 
@@ -1554,7 +1554,7 @@ function selectAccount( e ){
 		o.style.animationDuration		= '0.3s';
 		o.style.animationIterationCount = 1;
 
-		wp_editAccount( o );
+		wp_editAccountArea( o );
 	} else{
 		o.setAttribute('selected', 'true');
 		o.classList.add('selected');
@@ -1591,7 +1591,7 @@ function selectAccount( e ){
 			switch ( cmd ){
 				case 'edit':
 					this.parentNode.classList.toggle('height360');
-					wp_editAccount( this.parentNode );
+					wp_editAccountArea( this.parentNode );
 					break;
 				case 'delete':
 					if ( o.innerText == 'Ok?' ){
@@ -1662,7 +1662,6 @@ function workplaceAccountHelper(){
 						var acc_id = result[i].acc_id;
 						var acc_name = result[i].acc_name;
 						var priv	 = result[i].priv;
-						var range_id = result[i].range_id;
 						var imagefile= result[i].imagefile;
 						if ( imagefile == null || imagefile == '')
 							imagefile = '';
@@ -1688,7 +1687,7 @@ function workplaceAccountHelper(){
 							r += '<div style="padding:2px;" >' + priv      + '</div>';
 						r += '</div>';
 
-						r += makeAccountEditTag( acc_id, acc_name, range_id, priv, imagefile );
+						r += makeAccountEditTag( acc_id, acc_name, priv, imagefile );
 
 						o.innerHTML		= r;
 						var acc = p.appendChild( o )
@@ -1710,7 +1709,7 @@ function workplaceAccountHelper(){
 									case 'commit':
 										if ( x.innerText == 'commit?' ){
 											acc.classList.toggle('height360');
-											wp_editAccount( acc );
+											wp_editAccountArea( acc );
 											updateAccount( acc.getElementsByTagName( 'FORM')[0] );
 											x.innerText = ' ';
 											break;
@@ -1720,7 +1719,7 @@ function workplaceAccountHelper(){
 									case 'cancel':
 										// if ( x.innerText == 'cancel?' ){
 											acc.classList.toggle('height360');
-											wp_editAccount( acc );
+											wp_editAccountArea( acc );
 											// x.innerText = ' ';
 											break;
 										// }
@@ -1773,18 +1772,21 @@ function workplaceAccountHelper(){
 
 }
 
-function makeAccountEditTag( acc_id, acc_name, range_id, priv, imagefile ){
+function makeAccountEditTag( acc_id, acc_name, priv, imagefile ){
 	var r = '';
 	r += '<div class="appendix" style="float:none;width:auto;height:auto;padding-bottom:20px;display:none;" >';
-		r += '<form onsubmit="return false;" >';
-		r += '<input type="hidden" name="acc_id" value="' + acc_id + '" />';
+		r += '<form name="accountForm" onsubmit="return false;" >';
+		if ( acc_id == null || acc_id == '' ){
+			r += '<div>acc_id:</div>';
+			r += '<div style="padding-top:4px;" >';
+				r += '<input type="text" name="acc_id" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+			r += '</div>';	
+		}else{
+			r += '<input type="hidden" name="acc_id" value="' + acc_id + '" />';
+		}
 		r += '<div style="padding-top:4px;" >acc_name:</div>';
 		r += '<div style="padding-top:4px;" >';
 			r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + acc_name + '" />';
-		r += '</div>';
-		r += '<div style="padding-top:4px;" >range_id:</div>';
-		r += '<div style="padding-top:4px;" >';
-			r += '<input type="text" name="range_id" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + range_id + '" />';
 		r += '</div>';
 
 		var privs = [ 'admin', 'editor', 'guest' ];
@@ -1821,37 +1823,42 @@ function addAccount(){
 	o.classList.add('add_account');
 	o.style.textAlign	= 'left';
 	var r = '';
-	r += '<form name="accountForm" onsubmit="return false;" >';
-		r += '<div>acc_id:</div>';
-		r += '<div style="padding-top:4px;" >';
-			r += '<input type="text" name="acc_id" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
-		r += '</div>';
-		r += '<div style="padding-top:4px;" >acc_name:</div>';
-		r += '<div style="padding-top:4px;" >';
-			r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
-		r += '</div>';
-		var privs = [ 'admin', 'editor', 'guest' ];
-		r += '<div style="padding-top:4px;" >priveledge:</div>';
-		r += '<div style="width:90%;height:30px;padding:3px;background-color:#EDEDED;border-radius:4px;" >';
-			for ( var j=0; j<privs.length; j++ ){
-				r += '<input type="radio" id="acc_priv_' + j + '" name="acc_priv"  value="' + privs[j] + '"   />';
-				r += '<label for="acc_priv_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
-			}
-		r += '</div>';
-		r += '<div style="padding-top:4px;" >image file:</div>';
-		r += '<div style="padding-top:4px;" >';
-			r += '<input type="text" name="acc_imagefile" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
-		r += '</div>';
 
-		r += '<div style="margin:0 auto;width:100%;text-align:center;padding-top:40px;">';
-			r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
-			r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
-		r += '</div>';
+	r += makeAccountEditTag( null, '', '', '' );
 
-	r += '</form>';
+	// r += '<form name="accountForm" onsubmit="return false;" >';
+	// 	r += '<div>acc_id:</div>';
+	// 	r += '<div style="padding-top:4px;" >';
+	// 		r += '<input type="text" name="acc_id" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+	// 	r += '</div>';
+	// 	r += '<div style="padding-top:4px;" >acc_name:</div>';
+	// 	r += '<div style="padding-top:4px;" >';
+	// 		r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+	// 	r += '</div>';
+	// 	var privs = [ 'admin', 'editor', 'guest' ];
+	// 	r += '<div style="padding-top:4px;" >priveledge:</div>';
+	// 	r += '<div style="width:90%;height:30px;padding:3px;background-color:#EDEDED;border-radius:4px;" >';
+	// 		for ( var j=0; j<privs.length; j++ ){
+	// 			r += '<input type="radio" id="acc_priv_' + j + '" name="acc_priv"  value="' + privs[j] + '"   />';
+	// 			r += '<label for="acc_priv_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
+	// 		}
+	// 	r += '</div>';
+	// 	r += '<div style="padding-top:4px;" >image file:</div>';
+	// 	r += '<div style="padding-top:4px;" >';
+	// 		r += '<input type="text" name="acc_imagefile" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+	// 	r += '</div>';
+
+	// 	r += '<div style="margin:0 auto;width:100%;text-align:center;padding-top:40px;">';
+	// 		r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
+	// 		r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
+	// 	r += '</div>';
+
+	// r += '</form>';
 	o.innerHTML = r;
 
 	p.prepend( o );
+	p.getElementsByClassName('appendix')[0].style.display = 'inline';
+
 	var accept = p.getElementsByClassName('workplace_commit_button');
 	accept[0].addEventListener('click',
 		function(e){
@@ -2007,8 +2014,8 @@ function cancelAddAccount(){
 		accform[0].parentNode.removeChild( accform[0] );
 }
 
-function wp_editAccount( p ){
-	console.log( 'wp_editAccount');
+function wp_editAccountArea( p ){
+	console.log( 'wp_editAccountArea');
 	var flg = p.classList.contains('height360');
 	var apdxs = p.getElementsByClassName('appendix');
 	for ( var i=0; i<apdxs.length; i++ ){

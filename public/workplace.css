@@ -694,7 +694,7 @@
 .childrenOptionArea{
     pointer-events:        auto;
     position:               absolute;
-	width:					100%;
+	width:					calc(80% - 4px);
 	height:					470px;
 	font-size:				12px;
 	color:					gray;

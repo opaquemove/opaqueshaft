@@ -98,8 +98,8 @@ router.post('/registaccount', function(req, res, next ){
   res.header('Content-Type', 'application/json;charset=utf-8');
 
   db.none( {
-    text: 'INSERT INTO accounts (acc_id, acc_name, password, range_id, priv, imagefile, delete_flag ) VALUES($1,$2,$3,$4,$5,$6,$7)',
-    values: [ acc_id, acc_name, 'password', 2021, acc_priv, acc_imagefile, 0 ] } )
+    text: 'INSERT INTO accounts (acc_id, acc_name, password, priv, imagefile, delete_flag ) VALUES($1,$2,$3,$4,$5,$6,$7)',
+    values: [ acc_id, acc_name, 'password', acc_priv, acc_imagefile, 0 ] } )
   .then( function() {
     res.json( {status: 'SUCCESS', message:  'regist account'});
   })
@@ -116,7 +116,7 @@ router.post('/updateaccount', function(req, res, next ){
   var acc_name      = req.body.acc_name;
   var acc_priv      = req.body.acc_priv;
   var acc_imagefile = req.body.acc_imagefile;
-  var range_id      = req.body.range_id;
+  // var range_id      = req.body.range_id;
 
   console.log( 'acc_id:'   + acc_id );
   console.log( 'acc_name:' + acc_name );
@@ -126,8 +126,8 @@ router.post('/updateaccount', function(req, res, next ){
   res.header('Content-Type', 'application/json;charset=utf-8');
 
   db.none( {
-    text: 'UPDATE accounts SET acc_name = $2, priv = $3, imagefile = $4, range_id = $5 WHERE acc_id = $1',
-    values: [ acc_id, acc_name, acc_priv, acc_imagefile, range_id ] } )
+    text: 'UPDATE accounts SET acc_name = $2, priv = $3, imagefile = $4 WHERE acc_id = $1',
+    values: [ acc_id, acc_name, acc_priv, acc_imagefile ] } )
   .then( function() {
     res.json( {status: 'SUCCESS', message:  'update account'});
   })
