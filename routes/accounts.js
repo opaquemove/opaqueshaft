@@ -185,7 +185,7 @@ router.post('/signin', function(req, res, next ){
     console.log( 'acc:' + id );
     res.header('Content-Type', 'application/json;charset=utf-8');
     db.any( {
-        text: 'SELECT acc_id, range_id FROM accounts WHERE acc_id = $1 AND password = $2',
+        text: 'SELECT acc_id FROM accounts WHERE acc_id = $1 AND password = $2',
         values: [id,pwd] } )
       .then( rows => {
           if ( rows.length > 0 ) {

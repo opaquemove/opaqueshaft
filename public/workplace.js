@@ -521,8 +521,14 @@ function showWorkPlace(){
 	if ( wp_signout.classList.contains('signoutMotion'))
 		wp_signout.classList.remove('signoutMotion');
 
+	var bo = document.getElementById('BOTTOM_OVERLAY');
+	var bf = document.getElementById('BOTTOM_FRAME');
+
 	if ( checkSign() ){
 		// signed
+		bo.style.overflow	= 'scroll';
+		bf.style.width		= '500%';
+		bf.style.overflow	= 'auto';
 		wp_signin.setAttribute( 'disabled', 'true' );
 		wp_whiteboard.removeAttribute( 'disabled' );
 		wp_children.removeAttribute( 'disabled' );
@@ -545,6 +551,9 @@ function showWorkPlace(){
 		}
 	} else {
 		// not sign
+		bo.style.overflow	= 'hidden';
+		bf.style.width		= '100%';
+		bf.style.overflow	= 'hidden';
 		wp_signin.removeAttribute( 'disabled' );
 		wp_signout.setAttribute( 'disabled', 'true' );
 		wp_whiteboard.setAttribute( 'disabled', 'true' );
