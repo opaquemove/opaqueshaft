@@ -28,7 +28,7 @@
     /* transition:             height 0.3s ease-in-out; */
 }
 
-#WORKPLACE_SELECTOR{
+#WORKPLACE_BIRDSEYEVIEW{
     pointer-events:         all;
     position:               fixed;
     top:                    0px;

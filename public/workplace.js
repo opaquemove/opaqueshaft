@@ -134,6 +134,42 @@ function initWorkplace(){
 	document.getElementById( 'TAB_CURRENT2' ).addEventListener(
 		'click', selectCurrentRangeId, false );
 
+	document.getElementById('WORKPLACE_BIRDSEYEVIEW').addEventListener(
+		'click', function( e ){
+			var view = e.target;
+			while ( true ){
+				if ( this == view ) return;
+				if ( view.hasAttribute('view')) break;
+				view = view.parentNode;
+			}
+			var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
+			var bf= document.getElementById('BOTTOM_FRAME');
+			
+			switch( view.getAttribute('view')){
+				case 'menu':
+					bf.style.transform	= 'translateX(0px)';
+					workplace_id = null;
+					break;
+				case 'whiteboard':
+					bf.style.transform	= 'translateX(' + (-w) + 'px)';
+					workplace_id = 'WHITEBOARD';
+					break;
+				case 'children':
+					bf.style.transform	= 'translateX(' + (-w * 2) + 'px)';
+					workplace_id = 'CHILDREN';
+					break;
+				case 'range':
+					bf.style.transform	= 'translateX(' + (-w * 3) + 'px)';
+					workplace_id = 'RANGE';
+					break;
+				case 'account':
+					bf.style.transform	= 'translateX(' + (-w * 4) + 'px)';
+					workplace_id = 'ACCOUNT';
+					break;	
+				}
+
+		}, false );
+	
 	// document.getElementById('BOTTOM_FRAME').addEventListener(
 	// 	'resize', resizeWorkplace );
 	// var bf = document.getElementById('BOTTOM_FRAME');
