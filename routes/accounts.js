@@ -98,7 +98,7 @@ router.post('/registaccount', function(req, res, next ){
   res.header('Content-Type', 'application/json;charset=utf-8');
 
   db.none( {
-    text: 'INSERT INTO accounts (acc_id, acc_name, password, priv, imagefile, delete_flag ) VALUES($1,$2,$3,$4,$5,$6,$7)',
+    text: 'INSERT INTO accounts (acc_id, acc_name, password, priv, imagefile, delete_flag ) VALUES($1,$2,$3,$4,$5,$6)',
     values: [ acc_id, acc_name, 'password', acc_priv, acc_imagefile, 0 ] } )
   .then( function() {
     res.json( {status: 'SUCCESS', message:  'regist account'});
