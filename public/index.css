@@ -40,6 +40,7 @@ BUTTON:hover{
 
 TEXTAREA{
 	color:					gray;
+	background-color: 		#EDEDED;
 	border-top:				none;
 	border-left:			none;
 	border-right:			1px solid lightgrey;
@@ -85,6 +86,12 @@ INPUT[type=text]:focus{
 	background-color:	transparent;
 }
 */
+INPUT[type=text]{
+	outline:				none;
+	border-radius:			14px;
+	padding:				2px 2px 2px 10px;
+	background-color:		#EDEDED;
+}
 INPUT[type=password]:focus{
 	outline:				none;
 	background-color:		transparent;
