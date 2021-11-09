@@ -1882,12 +1882,6 @@ function accountProperty(){
             r += "<td><input style='width:100%;height:18px;background-color:lightgrey;border:1px solid lightgrey;border-radius:3px;' type='text' name='acc_name' tabindex=2 readonly value='" + oAcc.acc_name + "' /></td>";
             r += "</tr>";
             r += "<tr>";
-            r += "<td>Range:</td>";
-            r += "</tr>";
-            r += "<tr>";
-            r += "<td><input style='width:100%;height:18px;background-color:lightgrey;border:1px solid lightgrey;border-radius:3px;' type='text' name='range_id' tabindex=2 readonly value='" + oAcc.range_id + "' /></td>";
-            r += "</tr>";
-            r += "<tr>";
             r += "<td><div style='width:64px;height:64px;border-radius:50%;background-image:url(./images/accounts/" + acc_id + ".jpeg);background-size:cover;background-position:center center;background-repeat:no-repeat;' ></div></td>";
             r += "</tr>";
             r += "</table>";

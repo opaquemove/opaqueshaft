@@ -142,29 +142,22 @@ function initWorkplace(){
 				if ( view.hasAttribute('view')) break;
 				view = view.parentNode;
 			}
-			var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
-			var bf= document.getElementById('BOTTOM_FRAME');
 			
 			switch( view.getAttribute('view')){
 				case 'menu':
-					bf.style.transform	= 'translateX(0px)';
-					workplace_id = null;
+					workplaceReset();
 					break;
 				case 'whiteboard':
-					bf.style.transform	= 'translateX(' + (-w) + 'px)';
-					workplace_id = 'WHITEBOARD';
+					workplaceWhiteboard();
 					break;
 				case 'children':
-					bf.style.transform	= 'translateX(' + (-w * 2) + 'px)';
-					workplace_id = 'CHILDREN';
+					workplaceChildren();
 					break;
 				case 'range':
-					bf.style.transform	= 'translateX(' + (-w * 3) + 'px)';
-					workplace_id = 'RANGE';
+					workplaceRange();
 					break;
 				case 'account':
-					bf.style.transform	= 'translateX(' + (-w * 4) + 'px)';
-					workplace_id = 'ACCOUNT';
+					workplaceAccount();
 					break;	
 				}
 

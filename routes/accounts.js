@@ -168,7 +168,7 @@ router.post('/property', function(req, res, next ){
       res.json( null );
   }else {
       db.one( {
-          text: 'SELECT acc_id, acc_name, range_id FROM accounts WHERE acc_id = $1 ',
+          text: 'SELECT acc_id, acc_name FROM accounts WHERE acc_id = $1 ',
           values: [id] } )
         .then( rows => {
               res.json( rows );
@@ -192,7 +192,7 @@ router.post('/signin', function(req, res, next ){
               //res.json( rows );
               console.log( rows );
               res.cookie( 'acc', id );
-              res.json( {cmd:'signin',status:'SUCCESS', acc_id:id, range_id: rows.range_id } );
+              res.json( {cmd:'signin',status:'SUCCESS', acc_id:id } );
             } else{
                 res.json( {cmd:'signin',status:'FAIL'} );
           }
