@@ -251,7 +251,7 @@
     background-color:       #EDEDED;
     border-radius:          14px;
     text-align:             center;
-    /* transition:             all 0.7s ease-in-out; */
+    visibility:             hidden;
 }
 #WORKPLACE_WHITEBOARD_HDR{
     /* margin:                 0 auto; */
@@ -323,7 +323,7 @@
 #WORKPLACE_CHILDREN{
     position:               absolute;
     top:                    0px;    /* resize */
-    left:                   0px;
+    left:                   0px;    /* resize */
     width:                  auto;   /*calc(100% - 48px); */
     height:                 100%;
     overflow:               hidden;
@@ -331,6 +331,7 @@
     background-color:       #EDEDED;
     border-radius:          14px;
     text-align:             center;
+    visibility:             hidden;
 }
 #WORKPLACE_CHILDREN_HDR{
     margin:                 0 auto;
@@ -368,14 +369,14 @@
 #WORKPLACE_RANGE{
     position:               absolute;
     top:                    0px;    /* resize */
-    left:                   0px;
+    left:                   0px;    /* resize */
     width:                  auto;   /* 100%; */
     height:                 100%;
     overflow:               hidden;
     font-size:              16px;
     background-color:          #EDEDED;
     text-align:             center;
-    /* transition:             all 0.7s ease-in-out; */
+    visibility:             hidden;
 }
 #WORKPLACE_RANGE_HDR{
     margin:                 0 auto;
@@ -481,7 +482,7 @@
 #WORKPLACE_ACCOUNT{
     position:               absolute;
     top:                    0px;    /* resize */
-    left:                   0px;
+    left:                   0px;    /* resize */
     width:                  auto;   /* 100%; */
     height:                 100%;
     overflow:               hidden;
@@ -489,7 +490,7 @@
     background-color:       #EDEDED;
     border-bottom:          gray;
     text-align:             center;
-
+    visibility:             hidden;
 }
 #WORKPLACE_ACCOUNT_HDR{
     /* margin:0 auto; */

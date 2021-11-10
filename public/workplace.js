@@ -184,13 +184,18 @@ function birdsEyeView(){
 	var account	= document.getElementById('WORKPLACE_ACCOUNT');
 	console.log( 'transform:' + bf.style.transform);
 	if ( bf.hasAttribute('birdseye')){
-		bf.style.transition	= 'all 0.5s ease-in-out';
-		bf.style.perspective	= 'none';
-		menu.style.transform	= '';
-		wb.style.transform		= '';
-		children.style.transform= '';
-		range.style.transform= '';
-		account.style.transform= '';
+		bf.style.transition			= 'all 0.5s ease-in-out';
+		bf.style.perspective		= 'none';
+		menu.style.transform		= '';
+		menu.style.visibility		= 'visible';
+		wb.style.transform			= '';
+		wb.style.visibility			= 'hidden';
+		children.style.transform	= '';
+		children.style.visibility	= 'hidden';
+		range.style.transform		= '';
+		range.style.visibility		= 'hidden';
+		account.style.transform		= '';
+		account.style.visibility	= 'hidden';
 		bf.removeAttribute('birdseye');
 	} else{
 		bf.style.transition	= 'all 0.5s ease-in-out';
@@ -199,14 +204,20 @@ function birdsEyeView(){
 		// perspective
 		menu.style.transition		= 'all 0.5s ease-in-out';
 		menu.style.transform		= 'perspective(400px) rotateX(-10deg) scale(0.5,0.5)';
+		menu.style.visibility		= 'visible';
+
 		wb.style.transition			= 'all 0.5s ease-in-out';
 		wb.style.transform			= 'perspective(450px) translateY(-0px) rotateX(-14deg) scale(0.5,0.5)';
+		wb.style.visibility			= 'visible';
 		children.style.transition	= 'all 0.5s ease-in-out';
 		children.style.transform	= 'perspective(500px) translateY(-0px) rotateX(-18deg) scale(0.5,0.5)';
+		children.style.visibility	= 'visible';
 		range.style.transition		= 'all 0.5s ease-in-out';
 		range.style.transform		= 'perspective(550px) translateY(-0px) rotateX(-22deg) scale(0.5,0.5)';
+		range.style.visibility		= 'visible';
 		account.style.transition	= 'all 0.5s ease-in-out';
 		account.style.transform		= 'perspective(600px) translateY(-00px) rotateX(-26deg) scale(0.5,0.5)';
+		account.style.visibility	= 'visible';
 		bf.setAttribute('birdseye','yes');
 	}
 
