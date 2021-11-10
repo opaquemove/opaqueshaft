@@ -177,18 +177,27 @@ function birdsEyeView(){
 
 	var bf 		= document.getElementById('BOTTOM_FRAME');
 	var menu 	= document.getElementById('WORKPLACE_MENU');
+	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
+	var children= document.getElementById('WORKPLACE_CHILDREN');
 	console.log( 'transform:' + bf.style.transform);
 	if ( bf.hasAttribute('birdseye')){
 		bf.style.transition	= 'all 0.5s ease-in-out';
-		bf.style.transform	= 'scale(1,1)';
+		bf.style.perspective	= '';
+		menu.style.transform	= '';
+		wb.style.transform		= '';
+		children.style.transform= '';
 		bf.removeAttribute('birdseye');
 	} else{
 		bf.style.transition	= 'all 0.5s ease-in-out';
 		bf.style.perspective	= '7000px';
 		// bf.style.transform	= 'scale(0.7,0.7) translateX(-800px)';
-		menu.style.transition	= 'all 0.5s ease-in-out';
 		// perspective
+		menu.style.transition	= 'all 0.5s ease-in-out';
 		menu.style.transform	= 'perspective(400px) rotateY(10deg) scale(0.5,0.5)';
+		wb.style.transition	= 'all 0.5s ease-in-out';
+		wb.style.transform	= 'perspective(400px) translateX(-400px) rotateY(10deg) scale(0.5,0.5)';
+		children.style.transition	= 'all 0.5s ease-in-out';
+		children.style.transform	= 'perspective(400px) translateX(-800px) rotateY(10deg) scale(0.5,0.5)';
 		bf.setAttribute('birdseye','yes');
 	}
 
