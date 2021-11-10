@@ -1584,11 +1584,11 @@ function checkoutWhiteboardChild(){
         r += '<div style="float:left;width:150px;font-size:14px;padding-left:4px;" >' + child_name + '</div>';
         r += '<div style="float:right;width:26px;padding:4px;" >';
             r += '<input type="radio" id="child_' +  id + '_right" name="child_' + id + '" value="right" >';
-            r += '<label for="child_' + id + '_right"  ><img width="14px" src="./images/next.png" /></label>';
+            r += '<label for="child_' + id + '_right" style="display:block;width:24px;height:18px;" ><img width="8px" src="./images/next.png" /></label>';
         r += '</div>';
         r += '<div style="float:right;width:26px;padding:4px;" >';
             r += '<input type="radio" id="child_' + id + '_left"   name="child_' + id + '" value="left" >';
-            r += '<label for="child_'+ id + '_left"  ><img width="14px" src="./images/prev.png" /></label>';
+            r += '<label for="child_'+ id + '_left"   style="display:block;width:24px;height:18px;" ><img width="8px" src="./images/prev.png" /></label>';
         r += '</div>';
         r += '<div style="float:right;width:50px;padding:4px;" >';
             r += estimate;

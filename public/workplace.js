@@ -176,16 +176,18 @@ function initWorkplace(){
 function birdsEyeView(){
 
 	var bf = document.getElementById('BOTTOM_FRAME');
-	console.log( 'transform:' + bf.style.transform);
-	if ( bf.hasAttribute('birdseye')){
-		bf.style.transition	= 'all 0.5s ease-in-out';
-		bf.style.transform	= 'scale(1,1)';
-		bf.removeAttribute('birdseye');
-	} else{
-		bf.style.transition	= 'all 0.5s ease-in-out';
-		bf.style.transform	= 'scale(0.7,0.7) translateX(-800px)';
-		bf.setAttribute('birdseye','yes');
-	}
+	// console.log( 'transform:' + bf.style.transform);
+	// if ( bf.hasAttribute('birdseye')){
+	// 	bf.style.transition	= 'all 0.5s ease-in-out';
+	// 	bf.style.transform	= 'scale(1,1)';
+	// 	bf.removeAttribute('birdseye');
+	// } else{
+	// 	bf.style.transition	= 'all 0.5s ease-in-out';
+	// 	bf.style.transform	= 'scale(0.7,0.7) translateX(-800px)';
+	// 	bf.setAttribute('birdseye','yes');
+	// }
+
+	bf.classList.toggle('transitionWorkplace');
 }
 
 function refreshTab(){
