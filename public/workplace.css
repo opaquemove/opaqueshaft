@@ -243,7 +243,7 @@
 #WORKPLACE_WHITEBOARD{
     position:               absolute;
     top:                    0px;    /* resize */
-    left:                   0px;
+    left:                   0px;    /* resize */
     width:                  auto;   /* calc(100% - 48px); */
     height:                 100%;
     overflow:               hidden;

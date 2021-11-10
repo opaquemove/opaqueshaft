@@ -185,7 +185,7 @@ function birdsEyeView(){
 	console.log( 'transform:' + bf.style.transform);
 	if ( bf.hasAttribute('birdseye')){
 		bf.style.transition	= 'all 0.5s ease-in-out';
-		bf.style.perspective	= '';
+		bf.style.perspective	= 'none';
 		menu.style.transform	= '';
 		wb.style.transform		= '';
 		children.style.transform= '';
@@ -198,15 +198,15 @@ function birdsEyeView(){
 		// bf.style.transform	= 'scale(0.7,0.7) translateX(-800px)';
 		// perspective
 		menu.style.transition		= 'all 0.5s ease-in-out';
-		menu.style.transform		= 'perspective(400px) rotateY(10deg) scale(0.5,0.5)';
+		menu.style.transform		= 'perspective(400px) rotateX(-10deg) scale(0.5,0.5)';
 		wb.style.transition			= 'all 0.5s ease-in-out';
-		wb.style.transform			= 'perspective(450px) translateX(-400px) rotateY(14deg) scale(0.5,0.5)';
+		wb.style.transform			= 'perspective(450px) translateY(-0px) rotateX(-14deg) scale(0.5,0.5)';
 		children.style.transition	= 'all 0.5s ease-in-out';
-		children.style.transform	= 'perspective(500px) translateX(-800px) rotateY(18deg) scale(0.5,0.5)';
+		children.style.transform	= 'perspective(500px) translateY(-0px) rotateX(-18deg) scale(0.5,0.5)';
 		range.style.transition		= 'all 0.5s ease-in-out';
-		range.style.transform		= 'perspective(550px) translateX(-1200px) rotateY(22deg) scale(0.5,0.5)';
+		range.style.transform		= 'perspective(550px) translateY(-0px) rotateX(-22deg) scale(0.5,0.5)';
 		account.style.transition	= 'all 0.5s ease-in-out';
-		account.style.transform		= 'perspective(600px) translateX(-1600px) rotateY(26deg) scale(0.5,0.5)';
+		account.style.transform		= 'perspective(600px) translateY(-00px) rotateX(-26deg) scale(0.5,0.5)';
 		bf.setAttribute('birdseye','yes');
 	}
 
@@ -2796,13 +2796,17 @@ function resizeWorkplace(){
 	menu.style.width				= ( w ) + 'px';
 	menu.style.left					= '0px';
 	workplace.style.width			= ( w - 48 ) + 'px';
-	workplace.style.left			= ( w *  1 ) + 'px';
+	workplace.style.top				= ( 64 * 1 ) + 'px';
+	// workplace.style.left			= ( w *  1 ) + 'px';
 	children.style.width			= ( w - 48 ) + 'px';
-	children.style.left				= ( w *  2 ) + 'px';
+	children.style.top				= ( 64 * 2 ) + 'px';
+	// children.style.left				= ( w *  2 ) + 'px';
 	range.style.width				= ( w - 48 ) + 'px';
-	range.style.left				= ( w *  3 ) + 'px';
+	range.style.top					= ( 64 * 3 ) + 'px';
+	// range.style.left				= ( w *  3 ) + 'px';
 	account.style.width				= ( w - 48 ) + 'px';
-	account.style.left				= ( w *  4 ) + 'px';
+	account.style.top				= ( 64 * 4 ) + 'px';
+	// account.style.left				= ( w *  4 ) + 'px';
 
 	switch ( workplace_id ){
 		case 'WHITEBOARD':
