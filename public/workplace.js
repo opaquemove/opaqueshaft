@@ -145,7 +145,8 @@ function initWorkplace(){
 			
 			switch( view.getAttribute('view')){
 				case 'menu':
-					workplaceReset();
+					// workplaceReset();
+					birdsEyeView();
 					break;
 				case 'whiteboard':
 					workplaceWhiteboard();
@@ -179,6 +180,8 @@ function birdsEyeView(){
 	var menu 	= document.getElementById('WORKPLACE_MENU');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
+	var range	= document.getElementById('WORKPLACE_RANGE');
+	var account	= document.getElementById('WORKPLACE_ACCOUNT');
 	console.log( 'transform:' + bf.style.transform);
 	if ( bf.hasAttribute('birdseye')){
 		bf.style.transition	= 'all 0.5s ease-in-out';
@@ -186,18 +189,24 @@ function birdsEyeView(){
 		menu.style.transform	= '';
 		wb.style.transform		= '';
 		children.style.transform= '';
+		range.style.transform= '';
+		account.style.transform= '';
 		bf.removeAttribute('birdseye');
 	} else{
 		bf.style.transition	= 'all 0.5s ease-in-out';
 		bf.style.perspective	= '7000px';
 		// bf.style.transform	= 'scale(0.7,0.7) translateX(-800px)';
 		// perspective
-		menu.style.transition	= 'all 0.5s ease-in-out';
-		menu.style.transform	= 'perspective(400px) rotateY(10deg) scale(0.5,0.5)';
-		wb.style.transition	= 'all 0.5s ease-in-out';
-		wb.style.transform	= 'perspective(400px) translateX(-400px) rotateY(10deg) scale(0.5,0.5)';
+		menu.style.transition		= 'all 0.5s ease-in-out';
+		menu.style.transform		= 'perspective(400px) rotateY(10deg) scale(0.5,0.5)';
+		wb.style.transition			= 'all 0.5s ease-in-out';
+		wb.style.transform			= 'perspective(450px) translateX(-400px) rotateY(14deg) scale(0.5,0.5)';
 		children.style.transition	= 'all 0.5s ease-in-out';
-		children.style.transform	= 'perspective(400px) translateX(-800px) rotateY(10deg) scale(0.5,0.5)';
+		children.style.transform	= 'perspective(500px) translateX(-800px) rotateY(18deg) scale(0.5,0.5)';
+		range.style.transition		= 'all 0.5s ease-in-out';
+		range.style.transform		= 'perspective(550px) translateX(-1200px) rotateY(22deg) scale(0.5,0.5)';
+		account.style.transition	= 'all 0.5s ease-in-out';
+		account.style.transform		= 'perspective(600px) translateX(-1600px) rotateY(26deg) scale(0.5,0.5)';
 		bf.setAttribute('birdseye','yes');
 	}
 
