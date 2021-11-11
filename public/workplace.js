@@ -1755,9 +1755,6 @@ function selectAccountMotionEnd( e ){
 
 	if ( !c.hasAttribute( 'selected' )){
 		flipAccountToolBar();			// toolbar close
-		// var op = c.getElementsByClassName( 'op');
-		// if ( op.length > 0)
-		// 	op[0].parentNode.removeChild( op[0] );
 	}
 
 }
@@ -2292,7 +2289,7 @@ function selectChildren( e ){
 			o.style.animationName	 		= 'scale-in-out';
 			o.style.animationDuration		= '0.3s';
 			o.style.animationIterationCount = 1;
-			// o.classList.remove('height360');	
+			o.classList.remove('height360');	
 			// wp_editAccountArea( c );
 		}	
 	}
@@ -2393,7 +2390,7 @@ function flipChildrenToolBar(){
 		switch ( cmd ){
 			case 'edit':
 				c.classList.toggle('height360');
-				wp_editChildren();
+				// wp_editChildren();
 				break;
 			case 'delete':
 				if ( o.innerText == 'Ok?' ){
@@ -2404,6 +2401,7 @@ function flipChildrenToolBar(){
 				o.innerText = 'Ok?';
 				break;
 			case 'history':
+				c.classList.toggle('height360');
 				showChildrenHistory();
 				break;
 		}
@@ -2785,16 +2783,17 @@ function showChildrenHistory(){
 	if ( c == null ) return;
 
 	var coa = null;
-	if ( c.getElementsByClassName('childrenOptionArea').length == 0 ){
+	var id = 'container';	//	childrenOptionArea
+	if ( c.getElementsByClassName( id ).length == 0 ){
 		var o = document.createElement('DIV');
-		o.classList.add('childrenOptionArea');
+		o.classList.add( id );
 		o.style.top			= ( c.offsetHeight + 0 ) + 'px';
 		o.style.left		= '-2px';
 		o.style.textAlign	= 'left';
 		coa = c.appendChild( o );
 		coa.addEventListener('click', function(e){ e.stopPropagation();}, false);
 	} else {
-		coa = c.getElementsByClassName('childrenOptionArea')[0];
+		coa = c.getElementsByClassName( id )[0];
 	}
 
 	if ( coa.getElementsByClassName('childrenHistory').length > 0 ) return;
@@ -2960,6 +2959,12 @@ function finder(){
 	document.body.focus();	// タブレットでのキーボードを消去する
 }
 function finderHelper( keyword, range_id ){
+
+	var ctb = document.getElementById('CHILDREN_TOOLBAR');
+	if ( ctb != null ){
+		ctb.parentNode.removeChild( ctb );
+	}
+
 	console.log( 'keyword:' + keyword );
 	var list = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 	list.innerHTML = '';
@@ -3041,6 +3046,8 @@ function finderHelper( keyword, range_id ){
 								r += '</div>';
 							r += '</div>';
 
+							r += '<div class="container" style="background-color:white;" ></div>';
+
 							cc.innerHTML = r;
 							
 						}
@@ -3051,6 +3058,7 @@ function finderHelper( keyword, range_id ){
 						c.style.position			= 'relative';
 						c.style.top					= '-1000px';
 						c.style.color				= 'red';
+						c.style.backgroundColor		= 'white';
 						c.style.fontSize 			= '12px';
 						c.style.border				= 'none';
 						c.style.backgroundImage		= 'url(./images/restriction.png)';

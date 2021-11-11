@@ -713,7 +713,7 @@
 
 .WP_PALLETE_CHILD{
     position:               relative;
-	width:					calc( 80% - 4px );       /* 180px; */
+	width:					calc( 100% - 8px );       /* 180px; */
 	height:					80px;
 	/* color:					gray; */
 	overflow-x:				none;
