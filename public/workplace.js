@@ -199,24 +199,24 @@ function birdsEyeView(){
 		bf.removeAttribute('birdseye');
 	} else{
 		bf.style.transition	= 'all 0.5s ease-in-out';
-		bf.style.perspective	= '7000px';
-		// bf.style.transform	= 'scale(0.7,0.7) translateX(-800px)';
+		bf.style.perspective		= '20000px';
+		// bf.style.transform		= 'scale(0.7,0.7) translateX(-800px)';
 		// perspective
 		menu.style.transition		= 'all 0.5s ease-in-out';
-		menu.style.transform		= 'perspective(400px) rotateX(-10deg) scale(0.5,0.5)';
+		menu.style.transform		= 'perspective(400px) rotateX(-10deg) scale(0.8,0.8)';
 		menu.style.visibility		= 'visible';
 
 		wb.style.transition			= 'all 0.5s ease-in-out';
-		wb.style.transform			= 'perspective(450px) translateY(-0px) rotateX(-14deg) scale(0.5,0.5)';
+		wb.style.transform			= 'perspective(500px) translateY(-0px) rotateX(-14deg) scale(0.8,0.8)';
 		wb.style.visibility			= 'visible';
 		children.style.transition	= 'all 0.5s ease-in-out';
-		children.style.transform	= 'perspective(500px) translateY(-0px) rotateX(-18deg) scale(0.5,0.5)';
+		children.style.transform	= 'perspective(600px) translateY(-0px) rotateX(-18deg) scale(0.8,0.8)';
 		children.style.visibility	= 'visible';
 		range.style.transition		= 'all 0.5s ease-in-out';
-		range.style.transform		= 'perspective(550px) translateY(-0px) rotateX(-22deg) scale(0.5,0.5)';
+		range.style.transform		= 'perspective(700px) translateY(-0px) rotateX(-22deg) scale(0.8,0.8)';
 		range.style.visibility		= 'visible';
 		account.style.transition	= 'all 0.5s ease-in-out';
-		account.style.transform		= 'perspective(600px) translateY(-00px) rotateX(-26deg) scale(0.5,0.5)';
+		account.style.transform		= 'perspective(800px) translateY(-00px) rotateX(-26deg) scale(0.8,0.8)';
 		account.style.visibility	= 'visible';
 		bf.setAttribute('birdseye','yes');
 	}
@@ -712,6 +712,9 @@ function workplaceWhiteboard(){
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
 	bf.style.transform	= 'translateX(' + (-w) + 'px)';
+	// bf.style.transform	= 'translateY(' + (-48) + 'px)';
+	// wb.style.visibility	= 'visible';
+
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
 	// var current 	= document.getElementById('TAB_CURRENT');
@@ -1668,6 +1671,7 @@ function selectAccount( e ){
 		r += '<button type="button" class="workplace_delete_button_small" cmd="delete" ></button>';
 		op.innerHTML = r;
 
+		flipAccountToolBar();
 		o.appendChild( op ).addEventListener('click',
 		function(e){
 			e.stopPropagation();
@@ -1704,6 +1708,34 @@ function selectAccount( e ){
 
 }
 
+function flipAccountToolBar(){
+
+	var atb = document.getElementById('ACCOUNT_TOOLBAR');
+	if ( atb != null ){
+		atb.parentNode.removeChild( atb );
+		return;
+	}
+	var p = document.getElementById('WORKPLACE_ACCOUNT_MAIN');
+	var o = document.createElement('DIV');
+	o.id				= 'ACCOUNT_TOOLBAR';
+	o.style.position	= 'absolute';
+	o.style.top			= 'calc(100% - 64px)';
+	o.style.left		= '0px';
+	o.style.width		= '100%';
+	o.style.height		= '64px';
+	o.style.margin		= '0 auto';
+	o.style.zIndex		= 65000;
+
+	var r = '';
+	r += '<div style="margin:0 auto;width:100px;height:64px;" >';
+		r += '<button type="button" class="workplace_edit_button"     cmd="edit"    ></button>';
+		r += '<button type="button" class="workplace_delete_button"   cmd="delete"    ></button>';
+	r += '</div>';
+	o.innerHTML = r;
+	p.appendChild( o );
+
+}
+
 function selectAccountMotionStart( e ){
 	console.log('motion start');
 }
@@ -1719,6 +1751,7 @@ function selectAccountMotionEnd( e ){
 	}
 
 	if ( !c.hasAttribute( 'selected' )){
+		flipAccountToolBar();			// toolbar close
 		var op = c.getElementsByClassName( 'op');
 		if ( op.length > 0)
 			op[0].parentNode.removeChild( op[0] );
@@ -2208,14 +2241,6 @@ function selectChildren( e ){
 				if ( o.classList.contains('right100')){
 					o.classList.remove( 'right100');
 				}
-				if ( o.classList.contains('height320')){
-					o.classList.remove( 'height320');
-					var apdxs = o.getElementsByClassName('appendix');
-					for ( var i=0; i<apdxs.length; i++ ){
-						apdxs[i].style.display = 'none';
-						apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
-					}	
-				}
 			}
 			return;
 		}
@@ -2230,38 +2255,23 @@ function selectChildren( e ){
 		if ( o.classList.contains('right100')){
 			o.classList.remove( 'right100');
 		}
-		if ( o.classList.contains('height320')){
-			o.classList.remove( 'height320');
-			var apdxs = o.getElementsByClassName('appendix');
-			for ( var i=0; i<apdxs.length; i++ ){
-				apdxs[i].style.display = 'none';
-				apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
-			}
-		}
 		o.classList.toggle('hiding');
 	}
 
-	// c.style.position = 'absolute';
-	// c.style.top	= c.offsetTop + 'px';
-	// c.style.left	= c.offsetLeft + 'px';
+	if ( !c.hasAttribute( 'selected' )){
+		c.setAttribute( 'selected', 'yes' );
+		c.classList.add('right100');
+	} else {
+		c.classList.remove('right100');
+		return;
+	}
 
 	// メニューを開く
-	c.classList.toggle( 'right100' );
-	if ( ! c.classList.contains( 'right100' )){
-		if ( c.classList.contains( 'height320') ){
-			c.classList.remove('height320');
-			var apdxs = c.getElementsByClassName('appendix');
-			for ( var i=0; i<apdxs.length; i++ ){
-				apdxs[i].style.display = 'none';
-				apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
-			}
-
-		}
-		return;
-	} 
+	// c.classList.toggle( 'right100' );
+	// if ( ! c.classList.contains( 'right100' )){
+	// 	return;
+	// } 
 	
-	console.log( 'top:' + c.offsetTop );
-	c.setAttribute( 'selected', 'yes' );
 	var o = document.createElement('DIV');
 	o.classList.add('opChild');
 	o.style.position 	= 'absolute';
@@ -2317,8 +2327,6 @@ function selectChildren( e ){
 			if ( o.classList.contains('left100')){
 				o.classList.remove( 'left100');
 			}
-			if ( o.classList.contains( 'height320') )
-				o.classList.remove('height320');
 		}
 	}
 
@@ -2326,13 +2334,15 @@ function selectChildren( e ){
 
 
 function selectChildrenTransitionEnd( e ){
+	console.log('transition end');
 	var c = e.target;
 	while ( true ){
 		if ( c == this ) return;
 		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
 		c = c.parentNode;
 	}
-	if ( !c.classList.contains( 'right100' )){
+	// if ( !c.classList.contains( 'right100' )){
+	if ( c.hasAttribute( 'selected' )){
 		c.removeAttribute('selected');
 		var op = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName( 'opChild');
 		if ( op.length > 0)
@@ -2340,7 +2350,7 @@ function selectChildrenTransitionEnd( e ){
 		var coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName( 'childrenOptionArea');
 		if ( coa.length > 0)
 			coa[0].parentNode.removeChild( coa[0] );
-		}
+	}
 
 }
 
@@ -2807,17 +2817,17 @@ function resizeWorkplace(){
 	menu.style.width				= ( w ) + 'px';
 	menu.style.left					= '0px';
 	workplace.style.width			= ( w - 48 ) + 'px';
-	workplace.style.top				= ( 64 * 1 ) + 'px';
-	// workplace.style.left			= ( w *  1 ) + 'px';
+	// workplace.style.top				= ( 48 * 1 ) + 'px';
+	workplace.style.left			= ( w *  1 ) + 'px';
 	children.style.width			= ( w - 48 ) + 'px';
-	children.style.top				= ( 64 * 2 ) + 'px';
-	// children.style.left				= ( w *  2 ) + 'px';
+	// children.style.top				= ( 48 * 2 ) + 'px';
+	children.style.left				= ( w *  2 ) + 'px';
 	range.style.width				= ( w - 48 ) + 'px';
-	range.style.top					= ( 64 * 3 ) + 'px';
-	// range.style.left				= ( w *  3 ) + 'px';
+	// range.style.top					= ( 48 * 3 ) + 'px';
+	range.style.left				= ( w *  3 ) + 'px';
 	account.style.width				= ( w - 48 ) + 'px';
-	account.style.top				= ( 64 * 4 ) + 'px';
-	// account.style.left				= ( w *  4 ) + 'px';
+	// account.style.top				= ( 48 * 4 ) + 'px';
+	account.style.left				= ( w *  4 ) + 'px';
 
 	switch ( workplace_id ){
 		case 'WHITEBOARD':
