@@ -551,11 +551,11 @@
 }
 .account{
     position:               relative;
-	width:			        calc( 70% - 6px );       /* 180px; */
+	width:			        calc( 100% - 6px );       /* 180px; */
     height:			        80px;
 	font-size:		        12px;
-	color:					gray;
-	background-color:		white;
+	/* color:					gray; */
+	/* background-color:		white; */
     border:			        1px solid lightgrey;
     padding:	            2px 2px 2px 4px;
 	margin:					1px 1px 1px 1px;
@@ -622,7 +622,7 @@
     height:                 40px;
     color:                  snow;
     font-size:              12px;
-    border:                 1px solid limegreen;
+    border:                 1px solid lightgrey;
     border-radius:          4px;
     background-color:       white;
     background-image:       url(images/document-editor.png);
@@ -649,13 +649,13 @@
     pointer-events:         auto;
     width:                  40px;
     height:                 40px;
-    color:                  snow;
+    color:                  dimgray;
     font-size:              12px;
-    border:                 1px solid red;
+    border:                 1px solid lightgrey;
     border-radius:          4px;
     background-color:       white;
     background-image:       url(images/minus-2.png);
-    background-size:        12px;
+    background-size:        10px;
     background-repeat:      no-repeat;
     background-position:    right 4px bottom 4px;
     margin:                 0px 1px;

@@ -1657,50 +1657,50 @@ function selectAccount( e ){
 		// o.classList.add('left40');
 		// o.classList.add('scaleInOut');
 
-		var op = document.createElement('DIV');
-		op.classList.add('op');
-		op.classList.add('delete_object');
-		op.style.position			= 'absolute';
-		op.style.top				= '0px';
-		op.style.left				= ( o.offsetWidth + 2 ) + 'px';
-		op.style.width				= '30px';
-		op.style.height				= '38px';
-		op.style.backgroundColor	= '';
-		var r = '';
-		r += '<button type="button" class="workplace_edit_button_small"   cmd="edit" ></button>';
-		r += '<button type="button" class="workplace_delete_button_small" cmd="delete" ></button>';
-		op.innerHTML = r;
+		// var op = document.createElement('DIV');
+		// op.classList.add('op');
+		// op.classList.add('delete_object');
+		// op.style.position			= 'absolute';
+		// op.style.top				= '0px';
+		// op.style.left				= ( o.offsetWidth + 2 ) + 'px';
+		// op.style.width				= '30px';
+		// op.style.height				= '38px';
+		// op.style.backgroundColor	= '';
+		// var r = '';
+		// r += '<button type="button" class="workplace_edit_button_small"   cmd="edit" ></button>';
+		// r += '<button type="button" class="workplace_delete_button_small" cmd="delete" ></button>';
+		// op.innerHTML = r;
 
 		flipAccountToolBar();
-		o.appendChild( op ).addEventListener('click',
-		function(e){
-			e.stopPropagation();
-			var o = e.target;
-			var cmd = '';
-			while(true){
-				if ( o == this ) return;
-				if ( o.hasAttribute('cmd')){
-					cmd = o.getAttribute('cmd');
-					break;
-				}
-			}
-			var acc_id = this.parentNode.getAttribute('acc_id');
-			switch ( cmd ){
-				case 'edit':
-					this.parentNode.classList.toggle('height360');
-					wp_editAccountArea( this.parentNode );
-					break;
-				case 'delete':
-					if ( o.innerText == 'Ok?' ){
-						wp_deleteAccount( this.parentNode );
-						break;
-					}
-					o.style.width = '100px';
-					o.innerText = 'Ok?';
-					break;
-			}
-			console.log( cmd + ' acc_id:' + acc_id );
-		}, false );
+		// o.appendChild( op ).addEventListener('click',
+		// function(e){
+		// 	e.stopPropagation();
+		// 	var o = e.target;
+		// 	var cmd = '';
+		// 	while(true){
+		// 		if ( o == this ) return;
+		// 		if ( o.hasAttribute('cmd')){
+		// 			cmd = o.getAttribute('cmd');
+		// 			break;
+		// 		}
+		// 	}
+		// 	var acc_id = this.parentNode.getAttribute('acc_id');
+		// 	switch ( cmd ){
+		// 		case 'edit':
+		// 			this.parentNode.classList.toggle('height360');
+		// 			wp_editAccountArea( this.parentNode );
+		// 			break;
+		// 		case 'delete':
+		// 			if ( o.innerText == 'Ok?' ){
+		// 				wp_deleteAccount( this.parentNode );
+		// 				break;
+		// 			}
+		// 			o.style.width = '100px';
+		// 			o.innerText = 'Ok?';
+		// 			break;
+		// 	}
+		// 	console.log( cmd + ' acc_id:' + acc_id );
+		// }, false );
 	}
 	o.style.animationName	 		= 'scale-in-out';
 	o.style.animationDuration		= '0.3s';
@@ -1715,7 +1715,7 @@ function flipAccountToolBar(){
 		atb.parentNode.removeChild( atb );
 		return;
 	}
-	var p = document.getElementById('WORKPLACE_ACCOUNT_MAIN');
+	var p = document.getElementById('WORKPLACE_ACCOUNT');
 	var o = document.createElement('DIV');
 	o.id				= 'ACCOUNT_TOOLBAR';
 	o.style.position	= 'absolute';
@@ -1728,7 +1728,7 @@ function flipAccountToolBar(){
 	o.style.zIndex		= 65000;
 
 	var r = '';
-	r += '<div style="margin:0 auto;width:100px;height:64px;" >';
+	r += '<div style="margin:0 auto;width:190px;height:40px;padding:4px;background-color:#EDEDED;border-radius:8px;" >';
 		r += '<button type="button" class="workplace_edit_button"     cmd="edit"    ></button>';
 		r += '<button type="button" class="workplace_delete_button"   cmd="delete"    ></button>';
 	r += '</div>';
@@ -1737,6 +1737,52 @@ function flipAccountToolBar(){
 	tb.style.animationName			= 'scale-in-out';
 	tb.style.animationDuration		= '0.3s';
 	tb.style.animationIterationCount = 1;
+
+	tb.addEventListener('click',
+	function(e){
+		e.stopPropagation();
+		var o = e.target;
+		var cmd = '';
+		while(true){
+			if ( o == this ) return;
+			if ( o.hasAttribute('cmd')){
+				cmd = o.getAttribute('cmd');
+				break;
+			}
+		}
+		// var acc_id = this.parentNode.getAttribute('acc_id');
+		var accounts = document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST').childNodes;
+		var acc_id = null;
+		var c = null;
+		for ( var i=0; i<accounts.length; i++ ){
+			if ( accounts[i].hasAttribute('selected')){
+				acc_id  = accounts[i].getAttribute('acc_id');
+				c		= accounts[i];
+				break;
+			}
+		}
+		if ( acc_id == null ) return;
+
+		switch ( cmd ){
+			case 'edit':
+				// this.parentNode.classList.toggle('height360');
+				// wp_editAccountArea( this.parentNode );
+				c.classList.toggle('height360');
+				wp_editAccountArea( c );
+				break;
+			case 'delete':
+				if ( o.innerText == 'Ok?' ){
+					// wp_deleteAccount( this.parentNode );
+					wp_deleteAccount( c );
+					break;
+				}
+				o.style.width = '100px';
+				o.innerText = 'Ok?';
+				break;
+		}
+		console.log( cmd + ' acc_id:' + acc_id );
+	}, false );
+
 
 }
 
@@ -1861,12 +1907,14 @@ function workplaceAccountHelper(){
 
 					}
 
-					// bottom padding
+					// bottom padding footer
 					var c = document.createElement('DIV');
 					c.classList.add( "account" );
 					c.style.color				= 'red';
 					c.style.fontSize 			= '12px';
 					c.style.border				= 'none';
+					c.style.color				= 'dimgray';
+					c.style.backgroundColor		= 'white';
 					c.style.backgroundImage		= 'url(./images/restriction.png)';
 					c.style.backgroundSize		= '14px';
 					c.style.backgroundRepeat 	= 'no-repeat';
