@@ -559,7 +559,7 @@
     border:			        1px solid lightgrey;
     padding:	            2px 2px 2px 4px;
 	margin:					1px 1px 1px 1px;
-    border-radius:	        4px;
+    /* border-radius:	        4px; */
     overflow:               visible;
     transition:             all 0.3s ease-in-out;
 }
@@ -679,6 +679,22 @@
     background-repeat:      no-repeat;
     background-position:    right 4px bottom 4px;
 }
+.workplace_history_button{
+    pointer-events:         auto;
+    width:                  40px;
+    height:                 40px;
+    color:                  dimgray;
+    font-size:              12px;
+    border:                 1px solid lightgrey;
+    border-radius:          4px;
+    background-color:       white;
+    background-image:       url(images/link.png);
+    background-size:        10px;
+    background-repeat:      no-repeat;
+    background-position:    right 4px bottom 4px;
+    margin:                 0px 1px;
+}
+
 .workplace_history_button_small{
     pointer-events:         all;
     width:                  36px;
@@ -699,9 +715,9 @@
     position:               relative;
 	width:					calc( 80% - 4px );       /* 180px; */
 	height:					80px;
-	color:					gray;
+	/* color:					gray; */
 	overflow-x:				none;
-	background-color:		white;
+	/* background-color:		white; */
     border:                 1px solid lightgrey;
 	overflow:visible;
 	padding:				2px;

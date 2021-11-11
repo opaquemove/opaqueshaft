@@ -115,7 +115,7 @@ function initWorkplace(){
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
 		'click', selectChildren );
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
-		'transitionend', selectChildrenTransitionEnd );
+		'animationend', selectChildrenMotionEnd );
 
 	document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST').addEventListener(
 		'click', selectAccount );
@@ -1755,9 +1755,9 @@ function selectAccountMotionEnd( e ){
 
 	if ( !c.hasAttribute( 'selected' )){
 		flipAccountToolBar();			// toolbar close
-		var op = c.getElementsByClassName( 'op');
-		if ( op.length > 0)
-			op[0].parentNode.removeChild( op[0] );
+		// var op = c.getElementsByClassName( 'op');
+		// if ( op.length > 0)
+		// 	op[0].parentNode.removeChild( op[0] );
 	}
 
 }
@@ -1880,7 +1880,7 @@ function workplaceAccountHelper(){
 					c.style.backgroundImage		= 'url(./images/restriction.png)';
 					c.style.backgroundSize		= '14px';
 					c.style.backgroundRepeat 	= 'no-repeat';
-					c.style.backgroundPosition	= 'top 40px  center';
+					c.style.backgroundPosition	= 'top 140px  center';
 					c.style.display				= 'flex';
 					c.style.justifyContent		= 'center';
 
@@ -2261,125 +2261,175 @@ function updateAccount( frm ){
 function selectChildren( e ){
 	e.stopPropagation();
 	var c = e.target;
-	while ( true ){
-		//	エリア外をクリックしたらリセットする.
+	while( true ){
 		if ( c == this ){
+			// エリア外をアクセスしたらリセット
 			for ( var i=0; i<this.childNodes.length; i++ ){
 				var o = this.childNodes[i];
-				if ( o.classList.contains('right100')){
-					o.classList.remove( 'right100');
-				}
+				if ( o.hasAttribute('selected')){
+					o.removeAttribute('selected');
+					o.classList.remove('selected');
+					o.style.animationName	 		= 'scale-in-out';
+					o.style.animationDuration		= '0.3s';
+					o.style.animationIterationCount = 1;
+					o.classList.remove('height360');
+				}	
 			}
 			return;
-		}
+		} 
 		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
 		c = c.parentNode;
 	}
+
+
+	//	すでに他のチャイルドをセレクトしていたらリセット
+	for ( var i=0; i<this.childNodes.length; i++ ){
+		var o = this.childNodes[i];
+		if ( c == o ) continue;
+		if ( o.hasAttribute('selected')){
+			o.removeAttribute('selected');
+			o.classList.remove('selected');
+			o.style.animationName	 		= 'scale-in-out';
+			o.style.animationDuration		= '0.3s';
+			o.style.animationIterationCount = 1;
+			// o.classList.remove('height360');	
+			// wp_editAccountArea( c );
+		}	
+	}
+
 
 	// 他のチャイルドのメニューを閉じる
 	for ( var i=0; i<this.childNodes.length; i++ ){
 		var o = this.childNodes[i];
 		if ( c == o ) continue;
-		if ( o.classList.contains('right100')){
-			o.classList.remove( 'right100');
-		}
-		o.classList.toggle('hiding');
+		if ( o.classList.contains('WP_PALLETE_CHILDREN'))
+			o.classList.toggle('hiding');
 	}
 
-	if ( !c.hasAttribute( 'selected' )){
-		c.setAttribute( 'selected', 'yes' );
-		c.classList.add('right100');
-	} else {
-		c.classList.remove('right100');
-		return;
-	}
-
-	// メニューを開く
-	// c.classList.toggle( 'right100' );
-	// if ( ! c.classList.contains( 'right100' )){
+	// if ( !c.hasAttribute( 'selected' )){
+	// 	c.setAttribute( 'selected', 'yes' );
+	// 	c.classList.add('right100');
+	// } else {
+	// 	c.classList.remove('right100');
 	// 	return;
-	// } 
-	
-	var o = document.createElement('DIV');
-	o.classList.add('opChild');
-	o.style.position 	= 'absolute';
-	o.style.top			= c.offsetTop + 'px';	//'2px';
-	o.style.left		= '2px';
-	o.style.height		= ( c.offsetHeight * 2 ) + 'px';
-	var r = '';
-	r += '<button type="button" class="workplace_edit_button_small"     cmd="edit"    ></button>';
-	r += '<button type="button" class="workplace_delete_button_small"   cmd="delete"  ></button>';
-	r += '<button type="button" class="workplace_history_button_small"  cmd="history" ></button>';
-	o.innerHTML = r;
-	// c.appendChild( o ).addEventListener('click',
-	document.getElementById('WORKPLACE_CHILDREN_MAIN' ).appendChild(o).addEventListener('click',
-		function(e){
-			e.stopPropagation();
-			var o = e.target;
-			var cmd = '';
-			while(true){
-				if ( o == this ) return;
-				if ( o.hasAttribute('cmd')){
-					cmd = o.getAttribute('cmd');
-					break;
-				}
-				o = o.parentNode;
-			}
+	// }
 
-			switch ( cmd ){
-				case 'edit':
-					wp_editChildren();
-					break;
-				case 'delete':
-					// wp_deleteChildren( o );
-					if ( o.innerText == 'Ok?' ){
-						wp_deleteChildren( o );
-						break;
-					}
-					o.style.width = '100px';
-					o.innerText = 'Ok?';
-					break;
-				case 'history':
-					console.log('history');
-					showChildrenHistory();
-					break;
-			}
-
-		}, false );
-
-	var nodes = this.childNodes;
-	console.log('nodes:' + nodes.length );
-	for ( var i=0; i<nodes.length; i++ ){
-		var o = nodes[i];
-		if ( c != o){
-			if ( o.classList.contains('left100')){
-				o.classList.remove( 'left100');
-			}
-		}
+	//	対象チャイルドがセレクトされているかどうかで処理を振り分け
+	if ( c.hasAttribute('selected')){
+		//	セレクト解除処理
+		c.removeAttribute('selected');
+		c.classList.remove('selected');
+		c.classList.remove('height360');
+		// wp_editAccountArea( o );
+	} else{
+		//	セレクト処理
+		c.setAttribute('selected', 'true');
+		c.classList.add('selected');
+		flipChildrenToolBar();
 	}
+	//	対象のアニメーション処理
+	c.style.animationName	 		= 'scale-in-out';
+	c.style.animationDuration		= '0.3s';
+	c.style.animationIterationCount = 1;
 
 }
 
+function flipChildrenToolBar(){
 
-function selectChildrenTransitionEnd( e ){
-	console.log('transition end');
+	var ctb = document.getElementById('CHILDREN_TOOLBAR');
+	if ( ctb != null ){
+		ctb.parentNode.removeChild( ctb );
+		return;
+	}
+	var p = document.getElementById('WORKPLACE_CHILDREN');
+	var o = document.createElement('DIV');
+	o.id					= 'CHILDREN_TOOLBAR';
+	o.style.position		= 'absolute';
+	o.style.top				= 'calc(100% - 76px)';
+	o.style.left			= '0px';
+	o.style.width			= '100%';
+	o.style.height			= '64px';
+	o.style.paddintBottom	= '12px';
+	o.style.margin			= '0 auto';
+	o.style.zIndex			= 65000;
+
+	var r = '';
+	r += '<div style="margin:0 auto;width:190px;height:40px;padding:4px;background-color:#EDEDED;border-radius:8px;" >';
+		r += '<button type="button" class="workplace_edit_button"     cmd="edit"    ></button>';
+		r += '<button type="button" class="workplace_delete_button"   cmd="delete"  ></button>';
+		r += '<button type="button" class="workplace_history_button"  cmd="history" ></button>';	
+	r += '</div>';
+	o.innerHTML = r;
+	var tb = p.appendChild( o );
+	tb.style.animationName			= 'scale-in-out';
+	tb.style.animationDuration		= '0.3s';
+	tb.style.animationIterationCount = 1;
+
+	tb.addEventListener('click',
+	function(e){
+		e.stopPropagation();
+		var o = e.target;
+		var cmd = '';
+		while(true){
+			if ( o == this ) return;
+			if ( o.hasAttribute('cmd')){
+				cmd = o.getAttribute('cmd');
+				break;
+			}
+		}
+
+		var children = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
+		var child_id = null;
+		var c = null;
+		for ( var i=0; i<children.length; i++ ){
+			if ( children[i].hasAttribute('selected')){
+				child_id  = children[i].getAttribute('child_id');
+				c		= children[i];
+				break;
+			}
+		}
+		if ( child_id == null ) return;
+
+		switch ( cmd ){
+			case 'edit':
+				c.classList.toggle('height360');
+				wp_editChildren();
+				break;
+			case 'delete':
+				if ( o.innerText == 'Ok?' ){
+					wp_deleteChildren( o );
+					break;
+				}
+				o.style.width = '100px';
+				o.innerText = 'Ok?';
+				break;
+			case 'history':
+				showChildrenHistory();
+				break;
+		}
+
+	}, false );
+
+}
+
+function selectChildrenMotionEnd( e ){
+	console.log('motion end');
 	var c = e.target;
+	c.style.animationName	= '';
+
 	while ( true ){
 		if ( c == this ) return;
 		if ( c.classList.contains('WP_PALLETE_CHILD')) break;
 		c = c.parentNode;
 	}
-	// if ( !c.classList.contains( 'right100' )){
-	if ( c.hasAttribute( 'selected' )){
-		c.removeAttribute('selected');
-		var op = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName( 'opChild');
-		if ( op.length > 0)
-			op[0].parentNode.removeChild( op[0] );
-		var coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName( 'childrenOptionArea');
-		if ( coa.length > 0)
-			coa[0].parentNode.removeChild( coa[0] );
-	}
 
+	if ( !c.hasAttribute( 'selected' )){
+		flipChildrenToolBar();			// toolbar close
+		// var op = c.getElementsByClassName( 'op');
+		// if ( op.length > 0)
+		// 	op[0].parentNode.removeChild( op[0] );
+	}
+	
 }
 
 function addChildren(){
@@ -2952,6 +3002,7 @@ function finderHelper( keyword, range_id ){
 							c.setAttribute("child_id",    child_id );
 							c.setAttribute("id",          "c_1");
 							c.classList.add( "WP_PALLETE_CHILD" );
+							c.classList.add('unselected');
 							c.setAttribute('kana',        kana );
 							c.setAttribute('child_name',  child_name );
 							c.setAttribute('child_type',  child_type );
@@ -2994,18 +3045,18 @@ function finderHelper( keyword, range_id ){
 							
 						}
 
-						// bottom padding
+						// bottom padding footer
 						var c = document.createElement('DIV');
 						c.classList.add( "WP_PALLETE_CHILD" );
-						c.style.position		= 'relative';
-						c.style.top				= '-1000px';
-						c.style.color			= 'red';
-						c.style.fontSize 		= '12px';
-						c.style.border			= 'none';
-						c.style.backgroundImage	= 'url(./images/restriction.png)';
-						c.style.backgroundSize	= '14px';
-						c.style.backgroundRepeat = 'no-repeat';
-						c.style.backgroundPosition	= 'top 40px  center';
+						c.style.position			= 'relative';
+						c.style.top					= '-1000px';
+						c.style.color				= 'red';
+						c.style.fontSize 			= '12px';
+						c.style.border				= 'none';
+						c.style.backgroundImage		= 'url(./images/restriction.png)';
+						c.style.backgroundSize		= '14px';
+						c.style.backgroundRepeat 	= 'no-repeat';
+						c.style.backgroundPosition	= 'top 140px  center';
 						c.style.display				= 'flex';
 						c.style.justifyContent		= 'center';
 
