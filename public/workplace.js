@@ -1732,7 +1732,10 @@ function flipAccountToolBar(){
 		r += '<button type="button" class="workplace_delete_button"   cmd="delete"    ></button>';
 	r += '</div>';
 	o.innerHTML = r;
-	p.appendChild( o );
+	var tb = p.appendChild( o );
+	tb.style.animationName			= 'scale-in-out';
+	tb.style.animationDuration		= '0.3s';
+	tb.style.animationIterationCount = 1;
 
 }
 
