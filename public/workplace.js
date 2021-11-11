@@ -1719,10 +1719,11 @@ function flipAccountToolBar(){
 	var o = document.createElement('DIV');
 	o.id				= 'ACCOUNT_TOOLBAR';
 	o.style.position	= 'absolute';
-	o.style.top			= 'calc(100% - 64px)';
+	o.style.top			= 'calc(100% - 76px)';
 	o.style.left		= '0px';
 	o.style.width		= '100%';
 	o.style.height		= '64px';
+	o.style.paddintBottom	= '12px';
 	o.style.margin		= '0 auto';
 	o.style.zIndex		= 65000;
 
