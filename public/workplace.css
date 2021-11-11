@@ -537,7 +537,7 @@
 
 .add_account{
     position:               relative;
-	width:			        calc( 70% - 6px );       /* 180px; */
+	width:			        calc( 100% - 6px );       /* 180px; */
     height:			        370px;
 	font-size:		        12px;
 	color:					gray;

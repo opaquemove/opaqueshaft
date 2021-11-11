@@ -1603,6 +1603,7 @@ function selectAccount( e ){
 	var o = e.target;
 	while( true ){
 		if ( o == this ){
+			// エリア外をアクセスしたらリセット
 			for ( var i=0; i<this.childNodes.length; i++ ){
 				var c = this.childNodes[i];
 				if ( c.hasAttribute('selected')){
@@ -1611,12 +1612,9 @@ function selectAccount( e ){
 					c.style.animationName	 		= 'scale-in-out';
 					c.style.animationDuration		= '0.3s';
 					c.style.animationIterationCount = 1;
-				
-					// c.classList.remove('left40');
 					c.classList.remove('height360');
 			
 					wp_editAccountArea( c );
-					// c.removeChild( c.getElementsByClassName('op')[0] );
 				}	
 			}
 			return;
@@ -1625,6 +1623,7 @@ function selectAccount( e ){
 		o = o.parentNode;
 	}
 
+	//	すでに他のアカウントをセレクトしていたらリセット
 	for ( var i=0; i<this.childNodes.length; i++ ){
 		var c = this.childNodes[i];
 		if ( c == o ) continue;
@@ -1642,67 +1641,23 @@ function selectAccount( e ){
 		}	
 	}
 
+	//	対象アカウントがセレクトされているかどうかで処理を振り分け
 	if ( o.hasAttribute('selected')){
+		//	セレクト解除処理
 		o.removeAttribute('selected');
 		o.classList.remove('selected');
-		// o.classList.remove('left40');
 		o.classList.remove('height360');
-		o.style.animationName	 		= 'scale-in-out';
-		o.style.animationDuration		= '0.3s';
-		o.style.animationIterationCount = 1;
-
+		// o.style.animationName	 		= 'scale-in-out';
+		// o.style.animationDuration		= '0.3s';
+		// o.style.animationIterationCount = 1;
 		wp_editAccountArea( o );
 	} else{
+		//	セレクト処理
 		o.setAttribute('selected', 'true');
 		o.classList.add('selected');
-		// o.classList.add('left40');
-		// o.classList.add('scaleInOut');
-
-		// var op = document.createElement('DIV');
-		// op.classList.add('op');
-		// op.classList.add('delete_object');
-		// op.style.position			= 'absolute';
-		// op.style.top				= '0px';
-		// op.style.left				= ( o.offsetWidth + 2 ) + 'px';
-		// op.style.width				= '30px';
-		// op.style.height				= '38px';
-		// op.style.backgroundColor	= '';
-		// var r = '';
-		// r += '<button type="button" class="workplace_edit_button_small"   cmd="edit" ></button>';
-		// r += '<button type="button" class="workplace_delete_button_small" cmd="delete" ></button>';
-		// op.innerHTML = r;
-
 		flipAccountToolBar();
-		// o.appendChild( op ).addEventListener('click',
-		// function(e){
-		// 	e.stopPropagation();
-		// 	var o = e.target;
-		// 	var cmd = '';
-		// 	while(true){
-		// 		if ( o == this ) return;
-		// 		if ( o.hasAttribute('cmd')){
-		// 			cmd = o.getAttribute('cmd');
-		// 			break;
-		// 		}
-		// 	}
-		// 	var acc_id = this.parentNode.getAttribute('acc_id');
-		// 	switch ( cmd ){
-		// 		case 'edit':
-		// 			this.parentNode.classList.toggle('height360');
-		// 			wp_editAccountArea( this.parentNode );
-		// 			break;
-		// 		case 'delete':
-		// 			if ( o.innerText == 'Ok?' ){
-		// 				wp_deleteAccount( this.parentNode );
-		// 				break;
-		// 			}
-		// 			o.style.width = '100px';
-		// 			o.innerText = 'Ok?';
-		// 			break;
-		// 	}
-		// 	console.log( cmd + ' acc_id:' + acc_id );
-		// }, false );
 	}
+	//	対象のアニメーション処理
 	o.style.animationName	 		= 'scale-in-out';
 	o.style.animationDuration		= '0.3s';
 	o.style.animationIterationCount = 1;
@@ -1766,14 +1721,11 @@ function flipAccountToolBar(){
 
 		switch ( cmd ){
 			case 'edit':
-				// this.parentNode.classList.toggle('height360');
-				// wp_editAccountArea( this.parentNode );
 				c.classList.toggle('height360');
 				wp_editAccountArea( c );
 				break;
 			case 'delete':
 				if ( o.innerText == 'Ok?' ){
-					// wp_deleteAccount( this.parentNode );
 					wp_deleteAccount( c );
 					break;
 				}
@@ -1854,6 +1806,9 @@ function workplaceAccountHelper(){
 						o.classList.add( 'unselected' );
 						o.setAttribute('acc_id', acc_id );
 						o.style.textAlign = 'left';
+						o.style.top			= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
+						o.style.left		= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
+
 						var r = '';
 						r += '<div style="float:left;width:80px;height:80px;" class="vh-center" >';
 							if ( imagefile != '' ){
@@ -1939,6 +1894,14 @@ function workplaceAccountHelper(){
 					c.innerHTML = r;
 					var cc = p.appendChild( c );
 					
+					setTimeout(() => {
+						var accounts = document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST').childNodes;
+						for ( var i=0; i<accounts.length; i++ ){
+							accounts[i].style.top = '0px';
+							accounts[i].style.left = '0px';
+						}
+					}, 50 );
+
 
 				} else{
 					p.innerText = xmlhttp.status;
@@ -2995,7 +2958,7 @@ function finderHelper( keyword, range_id ){
 							c.setAttribute('child_grade', child_grade );
 							c.setAttribute('imagefile',   imagefile );
 							c.setAttribute('remark',      remark );
-							c.style.position	= 'relative';
+							// c.style.position	= 'relative';
 							c.style.top			= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
 							c.style.left		= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
 
@@ -3027,103 +2990,7 @@ function finderHelper( keyword, range_id ){
 								r += '</div>';
 							r += '</div>';
 
-							// r += makeChildrenEditTag( child_id, kana, child_name, remark, child_type, child_grade, imagefile );
-							// r += '<div class="appendix" style="float:left;width:calc(100% - 6px);display:none;" >';		
-								// r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
-								// r += '<div style="width:97%;height:auto;padding:1px;text-align:left;" >';
-								// 	r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
-								// 		r += 'Kana:<br/>';
-								// 		r += '<input type="text" name="kana"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + kana        + '" />';
-								// 	r += '</div>';
-								// 	r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
-								// 		r += 'Name:<br/>';
-								// 		r += '<input type="text" name="child_name" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + child_name  + '" />';
-								// 	r += '</div>';
-								// 	r += '<div style="clear:both;width:100%;padding:4px 0px 4px 0px;" >';
-								// 		r += 'Remark:<br/>';
-								// 		r += '<textarea name="remark" style="width:90%;height:40px;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" >' + remark + '</textarea>';
-								// 	r += '</div>';
-								// 	r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
-								// 		r += 'Imagefile:<br/>';
-								// 		r += '<input type="text" name="imagefile" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + imagefile + '" />';
-								// 	r += '</div>';
-														
-
-								// 	r += '<div  style="clear:both;width:100%;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
-								// 		switch ( child_type){
-								// 			case 'A':
-								// 				var a = ' checked ';
-								// 				var b = ' ';
-								// 				break;
-								// 			default:
-								// 				var a = '  ';
-								// 				var b = ' checked ';
-								// 				break;
-								// 		}
-								// 		r += '<div>Type:</div>';
-								// 		r += '<div style="width:72px;height:22px;padding:2px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
-								// 			r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
-								// 			r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
-								// 			r += '&nbsp;'
-								// 			r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
-								// 			r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
-								// 		r += '</div>';
-
-								// 	r += '</div>';
-
-								// 	r += '<div  style="clear:both;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
-
-								// 		var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
-								// 		grades[ child_grade - 1 ] = ' checked ';
-								// 		r += '<div>Grade:</div>';
-								// 		r += '<div style="width:90%;height:22px;padding:2px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
-								// 			for ( var g=0; g<grades.length; g++ ){
-								// 				r += '<input type="radio" id="child_grade_' + child_id + '_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
-								// 				r += '<label for="child_grade_' + child_id + '_' + g + '"  style="display:block;float:left;width:30px;height:14px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
-								// 			}
-								// 		r += '</div>';
-	
-								// 	r += '</div>';
-								// 	r += '<div style="clear:both;width:100%;" >';
-								// 		r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
-								// 	r += '</div>';
-								// r += '</div>';
-
-								// r += '<div class="operation" style="padding:20px 1px 1px 1px;width:100%;" >';
-								// 	r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
-								// 	r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
-								// r += '</div>';
-								// r += '</form>';
-							// r += '</div>';
-
 							cc.innerHTML = r;
-
-							// cc.getElementsByClassName('operation')[0].addEventListener(
-							// 	'click',
-							// 	function ( e ){
-							// 		var x = e.target;
-							// 		while ( true ){
-							// 			if ( x == this ) return;
-							// 			if ( x.hasAttribute('cmd')) break;
-							// 			x = x.parentNode;
-							// 		}
-							// 		var chd = x;
-							// 		while ( true ){
-							// 			if ( chd.hasAttribute( 'child_id' )) break;
-							// 			chd = chd.parentNode;
-							// 		}
-							// 		switch ( x.getAttribute('cmd') ){
-							// 			case 'commit':
-							// 				console.log( 'commit:' + chd.getAttribute('child_id') );
-							// 				break;
-							// 			case 'cancel':
-							// 				console.log( 'cancel:' + chd.getAttribute('child_id') );
-							// 				list.dispatchEvent( new Event( 'click') );
-							// 				break;
-							// 		}
-							// 	}
-							// );
-	
 							
 						}
 
