@@ -245,6 +245,7 @@ function refreshTab(){
 }
 
 function addObject(){
+	console.log('addObject');
 	switch ( workplace_id ){
 		case 'WHITEBOARD':
 			createWhiteboard();
@@ -1812,6 +1813,12 @@ function selectAccountMotionEnd( e ){
 
 function workplaceAccountHelper(){
 
+	//	if close TOOLBAR
+	var atb = document.getElementById('ACCOUNT_TOOLBAR');
+	if ( atb != null ){
+		atb.parentNode.removeChild( atb );
+	}
+	
 	var p	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
 	var keyword = document.getElementById( 'WP_ACCOUNT_ID' ).value;
@@ -1952,7 +1959,7 @@ function workplaceAccountHelper(){
 
 function makeAccountEditTag( acc_id, acc_name, priv, imagefile ){
 	var r = '';
-	r += '<div class="appendix" style="float:none;width:auto;height:auto;padding-bottom:20px;display:none;" >';
+	r += '<div class="appendix" style="float:none;width:100%;height:calc(100% - 40px);background-color:white;padding:20px 0px;display:none;" >';
 		r += '<form name="accountForm" onsubmit="return false;" >';
 		if ( acc_id == null || acc_id == '' ){
 			r += '<div>acc_id:</div>';
@@ -1992,6 +1999,12 @@ function makeAccountEditTag( acc_id, acc_name, priv, imagefile ){
 }
 
 function addAccount(){
+	//	if close TOOLBAR
+	var atb = document.getElementById('ACCOUNT_TOOLBAR');
+	if ( atb != null ){
+		atb.parentNode.removeChild( atb );
+	}
+
 	//	リストしているアカウントを削除
 	var p	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 	while ( p.firstChild ){

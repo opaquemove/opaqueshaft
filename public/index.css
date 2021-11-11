@@ -1530,8 +1530,9 @@ INPUT[type=password]:focus{
 	background-color:	white;
 }
 .selected{
-	color:				white;
-	background-color:	rgb(32, 116, 243);
+	color:				dimgray;
+	/* background-color:	rgb(32, 116, 243); */
+	background-color:	lightgrey;
 }
 
 .vh-center{
