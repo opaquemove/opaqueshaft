@@ -2395,8 +2395,14 @@ function flipChildrenToolBar(){
 
 		switch ( cmd ){
 			case 'edit':
-				c.classList.add('height360');
-				wp_editChildren();
+				if ( c.classList.contains('height360')){
+					c.classList.remove('height360');
+					c.getElementsByClassName('container')[0].innerHTML = '';
+					c.getElementsByClassName('container')[0].display = 'none';			
+				} else {
+					c.classList.add('height360');
+					wp_editChildren();
+				}
 				break;
 			case 'delete':
 				if ( o.innerText == 'Ok?' ){
@@ -2409,8 +2415,14 @@ function flipChildrenToolBar(){
 				o.innerText = 'Ok?';
 				break;
 			case 'history':
-				c.classList.add('height360');
-				showChildrenHistory();
+				if ( c.classList.contains('height360')){
+					c.classList.remove('height360');
+					c.getElementsByClassName('container')[0].innerHTML = '';
+					c.getElementsByClassName('container')[0].display = 'none';			
+				} else {
+					c.classList.add('height360');
+					showChildrenHistory();
+				}
 				break;
 		}
 
@@ -2667,8 +2679,6 @@ function wp_editChildren(){
 	// } else {
 	// 	coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName('childrenOptionArea')[0];
 	// }
-
-	if ( container.getElementsByClassName('childrenEdit').length > 0 ) return;
 
 	container.addEventListener('click',function(e){e.stopPropagation();}, false);
 
