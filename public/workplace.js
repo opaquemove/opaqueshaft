@@ -2270,6 +2270,8 @@ function selectChildren( e ){
 					o.style.animationDuration		= '0.3s';
 					o.style.animationIterationCount = 1;
 					o.classList.remove('height360');
+					o.getElementsByClassName('container')[0].innerHTML = '';
+					o.getElementsByClassName('container')[0].display = 'none';
 				}	
 			}
 			return;
@@ -2290,7 +2292,9 @@ function selectChildren( e ){
 			o.style.animationDuration		= '0.3s';
 			o.style.animationIterationCount = 1;
 			o.classList.remove('height360');	
-			// wp_editAccountArea( c );
+			o.getElementsByClassName('container')[0].innerHTML = '';
+			o.getElementsByClassName('container')[0].display = 'none';
+	// wp_editAccountArea( c );
 		}	
 	}
 
@@ -2317,7 +2321,9 @@ function selectChildren( e ){
 		c.removeAttribute('selected');
 		c.classList.remove('selected');
 		c.classList.remove('height360');
-		// wp_editAccountArea( o );
+		c.getElementsByClassName('container')[0].innerHTML = '';
+		c.getElementsByClassName('container')[0].display = 'none';
+// wp_editAccountArea( o );
 	} else{
 		//	セレクト処理
 		c.setAttribute('selected', 'true');
@@ -2389,8 +2395,8 @@ function flipChildrenToolBar(){
 
 		switch ( cmd ){
 			case 'edit':
-				c.classList.toggle('height360');
-				// wp_editChildren();
+				c.classList.add('height360');
+				wp_editChildren();
 				break;
 			case 'delete':
 				if ( o.innerText == 'Ok?' ){
@@ -2403,7 +2409,7 @@ function flipChildrenToolBar(){
 				o.innerText = 'Ok?';
 				break;
 			case 'history':
-				c.classList.toggle('height360');
+				c.classList.add('height360');
 				showChildrenHistory();
 				break;
 		}
@@ -2626,6 +2632,12 @@ function acceptAddChildrenHelper(){
 								// workplaceChildren();
 								oLog.log( null, '登録しました.' );
 								oLog.open(5);
+								//	登録画面を消去
+								var p	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
+								while ( p.firstChild){
+									p.removeChild( p.firstChild );
+								}
+							
 								break;
 							case 'FAILED':
 								oLog.log( null, '登録に失敗しました.' );
@@ -2659,6 +2671,7 @@ function cancelAddChildren(){
 
 
 function wp_editChildren(){
+
 	// セレクトしているチルドレンを検索
 	var lists = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
 	var c = null;
@@ -2669,31 +2682,41 @@ function wp_editChildren(){
 		}
 	}
 	if ( c == null ) return;
+
+	var coa = null;
+	var id = 'container';	//	childrenOptionArea
+	coa = c.getElementsByClassName( id )[0];
+
+	coa.style.display	= 'inline';
+	if ( coa.getElementsByClassName('childrenEdit').length > 0 ) return;
+
 	var m = document.getElementById( 'WORKPLACE_CHILDREN_MAIN');
 	// m.scrollTop = c.offsetTop - 80;
 
-	var coa = null;
-	if ( document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName('childrenOptionArea').length == 0 ){
-		var o = document.createElement('DIV');
-		o.classList.add('childrenOptionArea');
-		o.setAttribute('child_id', c.getAttribute('child_id'));
-		o.style.position	= 'absolute';
-		o.style.top			= ( c.offsetTop + c.offsetHeight + 0 ) + 'px';
-		o.style.left		= ( c.offsetLeft ) + 'px'; //'-2px';
-		o.style.textAlign	= 'left';
-		coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').appendChild( o );	
+	// var coa = null;
+	// if ( document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName('childrenOptionArea').length == 0 ){
+	// 	var o = document.createElement('DIV');
+	// 	o.classList.add('childrenOptionArea');
+	// 	o.setAttribute('child_id', c.getAttribute('child_id'));
+	// 	o.style.position	= 'absolute';
+	// 	o.style.top			= ( c.offsetTop + c.offsetHeight + 0 ) + 'px';
+	// 	o.style.left		= ( c.offsetLeft ) + 'px'; //'-2px';
+	// 	o.style.textAlign	= 'left';
+	// 	coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').appendChild( o );	
 
-		coa.addEventListener('click',function(e){e.stopPropagation();}, false);
-	} else {
-		coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName('childrenOptionArea')[0];
-	}
+	// 	coa.addEventListener('click',function(e){e.stopPropagation();}, false);
+	// } else {
+	// 	coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName('childrenOptionArea')[0];
+	// }
 
 	if ( coa.getElementsByClassName('childrenEdit').length > 0 ) return;
 
+	coa.addEventListener('click',function(e){e.stopPropagation();}, false);
+
 	var o = document.createElement('DIV');
 	o.classList.add('childrenEdit');
-	o.style.top			= ( c.offsetHeight + 0 ) + 'px';
-	o.style.left		= '-2px';
+	// o.style.top			= ( c.offsetHeight + 0 ) + 'px';
+	// o.style.left		= '-2px';
 	o.style.textAlign	= 'left';
 	var p = coa.appendChild( o );
 
@@ -2782,6 +2805,7 @@ function wp_deleteChildrenHelper( child_id ){
 						var result = JSON.parse( xmlhttp.responseText );
 						oLog.log( null, 'チャイルドを削除しました.' );
 						oLog.open(3);
+						flipChildrenToolBar();
 												
 					} else{
 						console.log( null, 'deletechild:' + xmlhttp.status );
@@ -2799,8 +2823,9 @@ function wp_deleteChildrenHelper( child_id ){
 
 
 function showChildrenHistory(){
-	var lists = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
-	
+
+	// 選択しているチャイルドを検索
+	var lists = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;	
 	var c = null;
 	for ( var i=0; i<lists.length; i++ ){
 		if ( lists[i].hasAttribute('selected')){
@@ -2812,18 +2837,9 @@ function showChildrenHistory(){
 
 	var coa = null;
 	var id = 'container';	//	childrenOptionArea
-	if ( c.getElementsByClassName( id ).length == 0 ){
-		var o = document.createElement('DIV');
-		o.classList.add( id );
-		o.style.top			= ( c.offsetHeight + 0 ) + 'px';
-		o.style.left		= '-2px';
-		o.style.textAlign	= 'left';
-		coa = c.appendChild( o );
-		coa.addEventListener('click', function(e){ e.stopPropagation();}, false);
-	} else {
-		coa = c.getElementsByClassName( id )[0];
-	}
+	coa = c.getElementsByClassName( id )[0];
 
+	coa.style.display	= 'inline';
 	if ( coa.getElementsByClassName('childrenHistory').length > 0 ) return;
 
 	var o = document.createElement('DIV');
@@ -3066,7 +3082,7 @@ function finderHelper( keyword, range_id ){
 								r += '</div>';
 							r += '</div>';
 
-							r += '<div class="container" style="background-color:white;" ></div>';
+							r += '<div class="container" style="background-color:white;display:none;" ></div>';
 
 							cc.innerHTML = r;
 							
