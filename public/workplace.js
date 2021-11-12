@@ -2467,61 +2467,20 @@ function addChildren(){
 	o.style.left		= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
 
 	var r = '';
-	r += '<form name="childrenForm" onsubmit="return false;" >';
-		r += '<div style="width:100%;height:auto;padding:0px;text-align:left;" >';
-			r += '<div style="width:100%;height:50px;font-size:14px;color:white;background-color:royalblue;" >';
-				r += '<div style="padding:4px;" >';
-				r += 'add child';
-				r += '</div>';
-			r += '</div>';
-			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
-				r += 'Kana:<br/>';
-				r += '<input type="text" name="kana" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
-			r += '</div>';
-			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
-				r += 'Name:<br/>';
-				r += '<input type="text" name="child_name" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="" />';
-			r += '</div>';
-			r += '<div style="clear:both;width:100%;padding:4px 0px 4px 0px;" >';
-				r += 'Remark:<br/>';
-				r += '<textarea name="remark" autocomplete="off" style="width:90%;height:40px;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" ></textarea>';
-			r += '</div>';
-			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
-				r += 'Imagefile:<br/>';
-				r += '<input type="text" name="imagefile" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="" />';
-			r += '</div>';
-			r += '<div  style="clear:both;width:100%;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
-			r += '<div>Type:</div>';
-			r += '<div style="width:72px;height:22px;padding:2px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
-				r += '<input type="radio" id="child_type_a" name="child_type" value="A" />';
-				r += '<label for="child_type_a"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
-				r += '&nbsp;'
-				r += '<input type="radio" id="child_type_b" name="child_type" value="B" />';
-				r += '<label for="child_type_b"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
-			r += '</div>';
-			r += '<div  style="clear:both;height:auto;text-align:left;padding:4px 0px 4px 0px;" >';
-				var grades = [ ' ', ' ', ' ', ' ', ' ', ' ' ];
-				r += '<div>Grade:</div>';
-				r += '<div style="width:90%;height:22px;padding:2px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
-					for ( var g=0; g<grades.length; g++ ){
-						r += '<input type="radio" id="child_grade_' + g + '" name="child_grade" ' + grades[g] + ' value="' + (g+1) + '" />';
-						r += '<label for="child_grade_' + g + '"  style="display:block;float:left;width:30px;height:14px;padding:5px 4px 1px 5px;" >' + ( g+1 ) + '</label>';
-					}
-				r += '</div>';
-			r += '</div>';
-			r += '<div class="operation" style="padding:20px 1px 1px 1px;width:100%;" >';
-				r += '<button type="button" class="workplace_commit_button" cmd="commit" ></button>';
-				r += '<button type="button" class="workplace_cancel_button" cmd="cancel" ></button>';
-			r += '</div>';
-	
+	r += '<div style="width:100%;height:50px;font-size:14px;color:white;background-color:royalblue;" >';
+		r += '<div style="padding:4px;" >';
+		r += 'add child';
 		r += '</div>';
+	r += '</div>';
 
-	r += '</form>';
+	r += makeChildrenEditTag( null, '', '', '', '', '', '' );
 
 	o.innerHTML = r;
 
 	// p.prepend( o );
-	p.appendChild( o );
+	var container = p.appendChild( o );
+	container.getElementsByClassName( 'appendix' )[0].style.display = 'inline';
+
 
 	setTimeout(() => {
 		var children = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
@@ -2683,12 +2642,12 @@ function wp_editChildren(){
 	}
 	if ( c == null ) return;
 
-	var coa = null;
+	var container = null;
 	var id = 'container';	//	childrenOptionArea
-	coa = c.getElementsByClassName( id )[0];
+	container = c.getElementsByClassName( id )[0];
 
-	coa.style.display	= 'inline';
-	if ( coa.getElementsByClassName('childrenEdit').length > 0 ) return;
+	container.style.display	= 'inline';
+	if ( container.getElementsByClassName('childrenEdit').length > 0 ) return;
 
 	var m = document.getElementById( 'WORKPLACE_CHILDREN_MAIN');
 	// m.scrollTop = c.offsetTop - 80;
@@ -2709,16 +2668,16 @@ function wp_editChildren(){
 	// 	coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName('childrenOptionArea')[0];
 	// }
 
-	if ( coa.getElementsByClassName('childrenEdit').length > 0 ) return;
+	if ( container.getElementsByClassName('childrenEdit').length > 0 ) return;
 
-	coa.addEventListener('click',function(e){e.stopPropagation();}, false);
+	container.addEventListener('click',function(e){e.stopPropagation();}, false);
 
 	var o = document.createElement('DIV');
 	o.classList.add('childrenEdit');
 	// o.style.top			= ( c.offsetHeight + 0 ) + 'px';
 	// o.style.left		= '-2px';
 	o.style.textAlign	= 'left';
-	var p = coa.appendChild( o );
+	var p = container.appendChild( o );
 
 	var child_id 	= c.getAttribute( 'child_id' );
 	var kana		= c.getAttribute( 'kana' );
@@ -2727,6 +2686,7 @@ function wp_editChildren(){
 	var child_type	= c.getAttribute( 'child_type' );
 	var child_grade	= c.getAttribute( 'child_grade' );
 	var imagefile	= c.getAttribute( 'imagefile' );
+
 	p.innerHTML = makeChildrenEditTag( child_id, kana, child_name, remark, child_type, child_grade, imagefile );
 	p.getElementsByClassName('appendix')[0].style.display	= 'inline';
 
@@ -2747,28 +2707,71 @@ function wp_editChildren(){
 			switch ( x.getAttribute('cmd') ){
 				case 'commit':
 					console.log( 'commit:' + chd.getAttribute('child_id') );
+					if ( !acceptAddChildren() ) return;
+					if ( x.innerText == 'Ok?'){
+						updateChildren();
+					} else {
+						x.innerText = 'Ok?';
+					}
 					break;
 				case 'cancel':
 					console.log( 'cancel:' + chd.getAttribute('child_id') );
-					m.dispatchEvent( new Event( 'click') );
+					chd.classList.remove('height360');
+					chd.getElementsByClassName('container')[0].innerHTML = '';
+					chd.getElementsByClassName('container')[0].display = 'none';
+
 					break;
 			}
 		}
 	);
 
+}
 
-	// c.classList.remove('left100');
-	// c.classList.toggle('height320');
-	// var flg = c.classList.contains('height320');
-	// var apdxs = c.getElementsByClassName('appendix');
-	// for ( var i=0; i<apdxs.length; i++ ){
-	// 	apdxs[i].style.display = ( flg )?'inline':'none';
-	// 	if ( flg ) 	apdxs[i].addEventListener('click', function(e){ e.stopPropagation();}, false );
-	// 		else	apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
-	// }
+//
+//	チャイルド更新
+//
+function updateChild(){
+	var child_id		= childrenForm.child_id.value;
+	var kana	   		= childrenForm.kana.value;
+	var child_name 		= childrenForm.child_name.value;
+	var remark	 		= childrenForm.remark.value;
+	var imagefile		= childrenForm.imagefile.value;
+	var child_type		= childrenForm.child_type.value;
+	var child_grade		= childrenForm.child_grade.value;
+	var range_id		= getCurrentRangeId();
 
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					// p.innerText = 'access...'
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+					if ( xmlhttp.status == 200 ){
+						var result = JSON.parse( xmlhttp.responseText );
+						console.log( xmlhttp.responseText );
+						oLog.log( null, 'update child:' + result.message)
+						oLog.open(2);
+					}
+				break;
+			}
+		}, false );
+
+	console.log( 'child update: ' + child_id +',' + child_name);
+
+	xmlhttp.open("POST", "/accounts/childupdate", true );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'child_id=' + child_id + '&child_name=' + child_name + '&kana=' + kana + '&remark=' + remark + '&child_grade=' + child_grade + '&child_type=' + child_type );
 
 }
+
 
 function wp_deleteChildren( c ){
 	var o = c;
@@ -3082,7 +3085,7 @@ function finderHelper( keyword, range_id ){
 								r += '</div>';
 							r += '</div>';
 
-							r += '<div class="container" style="background-color:white;display:none;" ></div>';
+							r += '<div class="container" style="height:0px;background-color:white;display:none;overflow:visible;" ></div>';
 
 							cc.innerHTML = r;
 							
@@ -3150,15 +3153,15 @@ function makeChildrenEditTag( child_id, kana, child_name, remark, child_type, ch
 
 	var r = '';
 	r += '<div class="appendix" style="float:left;width:calc(100% - 6px);display:none;" >';
-		r += '<form id="child_prop_' + child_id + '"  name="child_prop_' + child_id + '" onsubmit="return false;" >';
+		r += '<form id="childrenForm"  name="childrenForm" onsubmit="return false;" >';
 		r += '<div style="width:97%;height:auto;padding:1px;text-align:left;" >';
 			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
 				r += 'Kana:<br/>';
-				r += '<input type="text" name="kana"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + kana        + '" />';
+				r += '<input type="text" name="kana"  style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" value="' + kana        + '" />';
 			r += '</div>';
 			r += '<div style="width:100%;height:;padding:4px 0px 4px 0px;" >';
 				r += 'Name:<br/>';
-				r += '<input type="text" name="child_name" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" value="' + child_name  + '" />';
+				r += '<input type="text" name="child_name" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;" autocomplete="off" value="' + child_name  + '" />';
 			r += '</div>';
 			r += '<div style="clear:both;width:100%;padding:4px 0px 4px 0px;" >';
 				r += 'Remark:<br/>';
@@ -3175,18 +3178,18 @@ function makeChildrenEditTag( child_id, kana, child_name, remark, child_type, ch
 						var a = ' checked ';
 						var b = ' ';
 						break;
-					default:
+					case 'B':
 						var a = '  ';
 						var b = ' checked ';
 						break;
 				}
 				r += '<div>Type:</div>';
 				r += '<div style="width:72px;height:22px;padding:2px;text-align:center;background-color:#EDEDED;border-radius:4px;display:flex;" >';
-					r += '<input type="radio" id="child_type_a_' + child_id + '" name="child_type" value="A" ' + a + '/>';
-					r += '<label for="child_type_a_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
+					r += '<input type="radio" id="child_type_a" name="child_type" value="A" ' + a + '/>';
+					r += '<label for="child_type_a"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >A</label>';
 					r += '&nbsp;'
-					r += '<input type="radio" id="child_type_b_' + child_id + '" name="child_type" value="B" ' + b + '/>';
-					r += '<label for="child_type_b_' + child_id + '"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
+					r += '<input type="radio" id="child_type_b" name="child_type" value="B" ' + b + '/>';
+					r += '<label for="child_type_b"  style="display:block;float:left;width:30px;height:14px;font-size:10px;padding:5px 4px 1px 5px;" >B</label>';
 				r += '</div>';
 
 			r += '</div>';
@@ -3206,7 +3209,9 @@ function makeChildrenEditTag( child_id, kana, child_name, remark, child_type, ch
 			r += '</div>';
 
 			r += '<div style="clear:both;width:100%;" >';
-				r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
+				if ( child_id != null ){
+					r += '<input type="hidden" name="child_id" value="' + child_id + '" />';
+				}
 			r += '</div>';
 		r += '</div>';
 

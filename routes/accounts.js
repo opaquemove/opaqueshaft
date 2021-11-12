@@ -318,12 +318,12 @@ router.post('/childupdate', function(req, res, next ){
   var child_type  = req.body.child_type;
   var remark      = req.body.remark;
   var imagefile   = req.body.imagefile;
-  var range_id    = req.body.range_id;
+  // var range_id    = req.body.range_id;
   console.log('child update:' + child_name );
   res.header('Content-Type', 'application/json;charset=utf-8');
   db.none( {
-      text: 'UPDATE children SET child_name = $1, kana = $2, child_grade = $3, child_type = $4, remark = $5 WHERE child_id = $6',
-      values: [ child_name, kana, child_grade, child_type, remark, child_id ] } )
+      text: 'UPDATE children SET child_name = $1, kana = $2, child_grade = $3, child_type = $4, remark = $5, imagefile = $6 WHERE child_id = $7',
+      values: [ child_name, kana, child_grade, child_type, remark, imagefile, child_id ] } )
     .then( function() {
       res.json( {status: 'SUCCESS', message:  'update child:' + child_name });
     });
