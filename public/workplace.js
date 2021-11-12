@@ -2394,8 +2394,10 @@ function flipChildrenToolBar(){
 				break;
 			case 'delete':
 				if ( o.innerText == 'Ok?' ){
-					wp_deleteChildren( o );
-					break;
+					wp_deleteChildren( c );
+					o.style.width = '';
+					o.innerText = '';
+						break;
 				}
 				o.style.width = '100px';
 				o.innerText = 'Ok?';
@@ -2423,14 +2425,27 @@ function selectChildrenMotionEnd( e ){
 
 	if ( !c.hasAttribute( 'selected' )){
 		flipChildrenToolBar();			// toolbar close
-		// var op = c.getElementsByClassName( 'op');
-		// if ( op.length > 0)
-		// 	op[0].parentNode.removeChild( op[0] );
 	}
 	
 }
 
 function addChildren(){
+
+	var range_id = null;
+	range_id = getCurrentRangeId();
+
+	if (range_id == null ){
+		oLog.log( null, 'レンジを指定してください.');
+		oLog.open(3);
+		return;
+	}
+	console.log( 'range_id:' + range_id );
+
+	var ctb = document.getElementById('CHILDREN_TOOLBAR');
+	if ( ctb != null ){
+		ctb.parentNode.removeChild( ctb );
+	}
+
 	var p	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 	while ( p.firstChild){
         p.removeChild( p.firstChild );
@@ -2442,6 +2457,9 @@ function addChildren(){
 	var o = document.createElement('DIV');
 	o.classList.add('add_children');
 	o.style.textAlign	= 'left';
+	o.style.top			= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
+	o.style.left		= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
+
 	var r = '';
 	r += '<form name="childrenForm" onsubmit="return false;" >';
 		r += '<div style="width:100%;height:auto;padding:0px;text-align:left;" >';
@@ -2496,7 +2514,17 @@ function addChildren(){
 
 	o.innerHTML = r;
 
-	p.prepend( o );
+	// p.prepend( o );
+	p.appendChild( o );
+
+	setTimeout(() => {
+		var children = document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').childNodes;
+		for ( var i=0; i<children.length; i++ ){
+			children[i].style.top = '0px';
+			children[i].style.left = '0px';
+		}
+	}, 50 );
+
 	var accept = p.getElementsByClassName('workplace_commit_button');
 	accept[0].addEventListener('click',
 		function(e){
@@ -2934,14 +2962,6 @@ function finder(){
 
 	var range_id = null;
 	range_id = getCurrentRangeId();
-
-	// var ranges = document.getElementById('RANGE_LIST2').childNodes;
-	// for ( var i=0; i<ranges.length; i++ ){
-	// 	if ( ranges[i].hasAttribute('selected')) {
-	// 		range_id = ranges[i].getAttribute('range_id');
-	// 		break;
-	// 	}
-	// }
 
 	if (range_id == null ){
 		oLog.log( null, 'レンジを指定してください.');

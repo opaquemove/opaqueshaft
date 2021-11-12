@@ -723,13 +723,12 @@
 	padding:				2px;
 	margin:					1px 1px 1px 1px;
 	font-size:				12px;
-
-    transition: all 0.3s ease-in-out;
+    transition:             all 0.3s ease-in-out;
 	-webkit-user-select: 	    none;
 }
 .add_children{
     position:               relative;
-	width:					calc( 80% - 0px );       /* 180px; */
+	width:					calc( 100% - 8px );       /* 180px; */
 	height:					470px;
 	font-size:				12px;
 	color:					gray;
@@ -739,6 +738,8 @@
 	overflow:               visible;
 	padding:				0px;
 	margin:					1px 1px 1px 1px;
+    transition:             all 0.3s ease-in-out;
+
 }
 .childrenOptionArea{
     pointer-events:         auto;
