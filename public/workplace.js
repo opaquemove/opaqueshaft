@@ -421,6 +421,7 @@ function selectCurrentRangeId( e ){
 	e.stopPropagation();
 	var o = e.target;
 	while( true ){
+		if ( o.tagName == 'BODY' ) return;
 		if ( o == this ) return;
 		if ( o.hasAttribute( 'range_id' ) ) break;
 		o = o.parentNode;
@@ -1333,6 +1334,7 @@ function workplaceRange(){
 function selectRange(e){
 	var o = e.target;
 	while( true ){
+		if ( o.tagName == 'BODY' ) return;
 		if ( o == this ){
 			for ( var i=0; i<this.childNodes.length; i++ ){
 				var c = this.childNodes[i];
@@ -1602,6 +1604,7 @@ function workplaceAccount(){
 function selectAccount( e ){
 	var o = e.target;
 	while( true ){
+		if ( o.tagName == 'BODY' ) return;
 		if ( o == this ){
 			// エリア外をアクセスしたらリセット
 			for ( var i=0; i<this.childNodes.length; i++ ){
@@ -2259,6 +2262,7 @@ function selectChildren( e ){
 	e.stopPropagation();
 	var c = e.target;
 	while( true ){
+		if ( c.tagName == 'BODY' ) return;
 		if ( c == this ){
 			// エリア外をアクセスしたらリセット
 			for ( var i=0; i<this.childNodes.length; i++ ){
@@ -2347,6 +2351,7 @@ function flipChildrenToolBar(){
 	var p = document.getElementById('WORKPLACE_CHILDREN');
 	var o = document.createElement('DIV');
 	o.id					= 'CHILDREN_TOOLBAR';
+	o.style.pointerEvents	= 'none';
 	o.style.position		= 'absolute';
 	o.style.top				= 'calc(100% - 76px)';
 	o.style.left			= '0px';
@@ -2357,7 +2362,7 @@ function flipChildrenToolBar(){
 	o.style.zIndex			= 65000;
 
 	var r = '';
-	r += '<div style="margin:0 auto;width:190px;height:40px;padding:4px;background-color:#EDEDED;border-radius:8px;" >';
+	r += '<div style="pointer-events:auto;margin:0 auto;width:190px;height:40px;padding:4px;background-color:#EDEDED;border-radius:8px;" >';
 		r += '<button type="button" class="workplace_edit_button"     cmd="edit"    ></button>';
 		r += '<button type="button" class="workplace_delete_button"   cmd="delete"  ></button>';
 		r += '<button type="button" class="workplace_history_button"  cmd="history" ></button>';	
@@ -2655,11 +2660,11 @@ function wp_editChildren(){
 	if ( c == null ) return;
 
 	var container = null;
-	var id = 'container';	//	childrenOptionArea
-	container = c.getElementsByClassName( id )[0];
+	container = c.getElementsByClassName( 'container' )[0];
 
 	container.style.display	= 'inline';
 	if ( container.getElementsByClassName('childrenEdit').length > 0 ) return;
+	container.addEventListener('click',function(e){e.stopPropagation();}, false);
 
 	var m = document.getElementById( 'WORKPLACE_CHILDREN_MAIN');
 	// m.scrollTop = c.offsetTop - 80;
@@ -2680,7 +2685,6 @@ function wp_editChildren(){
 	// 	coa = document.getElementById('WORKPLACE_CHILDREN_MAIN').getElementsByClassName('childrenOptionArea')[0];
 	// }
 
-	container.addEventListener('click',function(e){e.stopPropagation();}, false);
 
 	var o = document.createElement('DIV');
 	o.classList.add('childrenEdit');
@@ -2719,7 +2723,22 @@ function wp_editChildren(){
 					console.log( 'commit:' + chd.getAttribute('child_id') );
 					if ( !acceptAddChildren() ) return;
 					if ( x.innerText == 'Ok?'){
-						updateChildren();
+						x.innerText = '';
+						updateChild();
+						chd.setAttribute( 'kana', 			childrenForm.kana.value );
+						chd.setAttribute( 'child_name', 	childrenForm.child_name.value );
+						chd.setAttribute( 'remark', 		childrenForm.remark.value );
+						chd.setAttribute( 'child_type', 	childrenForm.child_type.value );
+						chd.setAttribute( 'child_grade',	childrenForm.child_grade.value );
+						chd.setAttribute( 'imagefile', 		childrenForm.imagefile.value );
+						chd.getElementsByClassName('child_kana')[0].innerHTML =
+							childrenForm.kana.value;
+						// console.log('kana:' + childrenForm.kana.value);
+						chd.getElementsByClassName('child_header')[0].innerHTML =
+							childrenForm.child_name.value  + '&nbsp;&nbsp;' + 
+							childrenForm.child_grade.value + childrenForm.child_type.value +
+							'<span style="color:' + arChildGradeColor[ childrenForm.child_grade.value ] + ';">●</span>';
+
 					} else {
 						x.innerText = 'Ok?';
 					}
@@ -2748,7 +2767,7 @@ function updateChild(){
 	var imagefile		= childrenForm.imagefile.value;
 	var child_type		= childrenForm.child_type.value;
 	var child_grade		= childrenForm.child_grade.value;
-	var range_id		= getCurrentRangeId();
+	// var range_id		= getCurrentRangeId();
 
 	var r = '';
 	var xmlhttp = new XMLHttpRequest();
@@ -2767,7 +2786,7 @@ function updateChild(){
 					if ( xmlhttp.status == 200 ){
 						var result = JSON.parse( xmlhttp.responseText );
 						console.log( xmlhttp.responseText );
-						oLog.log( null, 'update child:' + result.message)
+						oLog.log( null, '更新しました. update child:' + result.message)
 						oLog.open(2);
 					}
 				break;
@@ -2778,7 +2797,7 @@ function updateChild(){
 
 	xmlhttp.open("POST", "/accounts/childupdate", true );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-	xmlhttp.send( 'child_id=' + child_id + '&child_name=' + child_name + '&kana=' + kana + '&remark=' + remark + '&child_grade=' + child_grade + '&child_type=' + child_type );
+	xmlhttp.send( 'child_id=' + child_id + '&child_name=' + child_name + '&kana=' + kana + '&remark=' + remark + '&child_grade=' + child_grade + '&child_type=' + child_type + '&imagefile=' + imagefile );
 
 }
 
@@ -2848,16 +2867,17 @@ function showChildrenHistory(){
 	}
 	if ( c == null ) return;
 
-	var coa = null;
-	var id = 'container';	//	childrenOptionArea
-	coa = c.getElementsByClassName( id )[0];
+	var container = null;
+	container = c.getElementsByClassName( 'container' )[0];
 
-	coa.style.display	= 'inline';
-	if ( coa.getElementsByClassName('childrenHistory').length > 0 ) return;
+	container.style.display	= 'inline';
+	container.innerHTML		= '';
+	// if ( coa.getElementsByClassName('childrenHistory').length > 0 ) return;
+
 
 	var o = document.createElement('DIV');
 	o.classList.add('childrenHistory');
-	var p = coa.appendChild( o );
+	var p = container.appendChild( o );
 	var child_id = c.getAttribute('child_id');
 	showChildrenHistoryHelper( p, child_id );
 
@@ -3083,15 +3103,15 @@ function finderHelper( keyword, range_id ){
 									r += '</div>';
 								}
 								r += '<div style="float:left;width:auto;height:80px;text-align:left;padding-left:12px;" >';
-									r += '<div style="padding:1px;font-size:10px;font-weight:bold;" >' + kana + '</div>';
+									r += '<div class="child_kana"   style="padding:1px;font-size:10px;font-weight:bold;" >' + kana + '</div>';
 									r += '<div class="child_header" style="" >';
 										r += child_name + '&nbsp;&nbsp;' + child_grade + child_type;
 										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
 									r += '</div>';
 									r += '<div style="padding:1px;" >id:' + child_id + '</div>';
 								r += '</div>';
-								r += '<div class="vh-center" style="float:right;width:42px;height:100%;padding-right:8px;font-size:18px;" >';
-									r += '<div style="width:30px;height:30px;color:white;background-color:limegreen;" >+' + n_result + '</div>';
+								r += '<div class="vh-center" style="float:right;width:42px;height:100%;padding-right:8px;font-size:14px;" >';
+									r += '<div style="width:30px;height:23px;padding-top:7px;color:white;background-color:limegreen;" >+' + n_result + '</div>';
 								r += '</div>';
 							r += '</div>';
 
