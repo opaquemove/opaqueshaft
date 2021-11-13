@@ -107,7 +107,8 @@ function init()
 
 	//	ワークプレイス表示
 	initWorkplace();
-	showWorkPlace();
+	// showWorkPlace();		// initWorkplaceにインクルード
+	
 /*
 	// チャイルドパレットのチャイルドリスト作成
 	if ( !checkSign() ){			//サインアウトしている
@@ -2140,6 +2141,7 @@ Nav.prototype = {
 //	ホワイトボードエリアのフィッティング処理
 //
 function fitting(){
+	console.log('fitting');
 	if ( !openWhiteboardFlg ){
 		resizeWorkplace();
 		return;

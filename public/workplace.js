@@ -1,6 +1,7 @@
 var workplace_id = null;
 
 function initWorkplace(){
+	console.log('initWorkplace');
 
 	var hdr = document.getElementById('WORKPLACE_HDR');
 	hdr.setAttribute( 'orgHeight', hdr.offsetHeight + 'px' );
@@ -20,8 +21,8 @@ function initWorkplace(){
 			console.log('test');
 		}
 	);
-	document.getElementById('TAB_OPAQUESHAFT').addEventListener(
-		'click', workplaceReset );
+	// document.getElementById('TAB_OPAQUESHAFT').addEventListener(
+	// 	'click', workplaceReset );
 	document.getElementById('WORKPLACE_ICON').addEventListener(
 		'click', birdsEyeView );
 		
@@ -164,6 +165,9 @@ function initWorkplace(){
 
 		}, false );
 	
+	showWorkPlace();
+	// resizeWorkplace();
+
 	// document.getElementById('BOTTOM_FRAME').addEventListener(
 	// 	'resize', resizeWorkplace );
 	// var bf = document.getElementById('BOTTOM_FRAME');
@@ -171,6 +175,89 @@ function initWorkplace(){
 	// 	resizeWorkplace();
 	// });
 	// observer.observe( bf, { attributes: true });
+
+}
+
+//
+//		ワークプレイス（統合メニュー）を表示
+//
+function showWorkPlace(){
+
+	closeModalDialog();
+
+	//	OPAQUESHAFT_TITLE表示制御
+	var opaqueshaft_title = document.getElementById('OPAQUESHAFT_TITLE');
+	opaqueshaft_title.style.visibility = ( openWhiteboardFlg )? 'visible' : 'hidden';
+
+	var bo		= document.getElementById('BOTTOM_OVERLAY');
+	bo.style.visibility		= 'visible';
+
+	var wp_test			= document.getElementById('WP_TEST');
+	var wp_empty		= document.getElementById('WP_EMPTY');
+	var wp_content		= document.getElementById('WP_CONTENT');
+	var wp_signin		= document.getElementById('WP_SIGNIN');
+	var wp_signout		= document.getElementById('WP_SIGNOUT');
+	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
+	var wp_children		= document.getElementById('WP_CHILDREN');
+	var wp_range		= document.getElementById('WP_RANGE');
+	var wp_account		= document.getElementById('WP_ACCOUNT');
+
+	if ( wp_signin.classList.contains('signinMotion'))
+		wp_signin.classList.remove('signinMotion');
+	if ( wp_signout.classList.contains('signoutMotion'))
+		wp_signout.classList.remove('signoutMotion');
+
+	var bo = document.getElementById('BOTTOM_OVERLAY');
+	var bf = document.getElementById('BOTTOM_FRAME');
+
+	if ( checkSign() ){
+		// signed
+		bo.style.overflow	= 'hidden';	// scroll
+		bf.style.width		= '100%';
+		bf.style.overflow	= 'auto';
+		wp_signin.setAttribute( 'disabled', 'true' );
+		wp_whiteboard.removeAttribute( 'disabled' );
+		wp_children.removeAttribute( 'disabled' );
+		wp_range.removeAttribute( 'disabled' );
+		wp_account.removeAttribute( 'disabled' );
+		wp_signout.removeAttribute( 'disabled' );
+		wp_test.style.display			= 'inline';
+		wp_empty.style.display			= 'inline';
+		wp_content.style.display		= 'inline';
+		wp_signin.style.visibility		= 'hidden';
+		wp_signout.style.visibility		= 'visible';
+		wp_whiteboard.style.visibility	= 'visible';
+		wp_children.style.visibility	= 'visible';
+		wp_range.style.visibility		= 'visible';
+		wp_account.style.visibility		= 'visible';
+
+		var opt = wp_signin.getElementsByClassName('option');
+		if ( opt.length > 0 ){
+			opt[0].parentNode.removeChild( opt[0] );
+		}
+	} else {
+		// not sign
+		bo.style.overflow	= 'hidden';
+		bf.style.width		= '100%';
+		bf.style.overflow	= 'hidden';
+		wp_signin.removeAttribute( 'disabled' );
+		wp_signout.setAttribute( 'disabled', 'true' );
+		wp_whiteboard.setAttribute( 'disabled', 'true' );
+		wp_children.setAttribute( 'disabled', 'true' );
+		wp_range.setAttribute( 'disabled', 'true' );
+		wp_account.setAttribute( 'disabled', 'true' );
+		wp_test.style.display			= 'none';
+		wp_empty.style.display			= 'none';
+		wp_content.style.display		= 'none';
+		wp_signin.style.visibility		= 'visible';
+		wp_signout.style.visibility		= 'hidden';
+		wp_whiteboard.style.visibility	= 'hidden';
+		wp_children.style.visibility	= 'hidden';
+		wp_range.style.visibility		= 'hidden';
+		wp_account.style.visibility		= 'hidden';
+	}
+
+	resizeWorkplace();
 
 }
 
@@ -559,93 +646,13 @@ function closingRotation(e){
 	}
 }
 
-//
-//		ワークプレイス（統合メニュー）を表示
-//
-function showWorkPlace(){
-
-	closeModalDialog();
-
-	//	OPAQUESHAFT_TITLE表示制御
-	var opaqueshaft_title = document.getElementById('OPAQUESHAFT_TITLE');
-	opaqueshaft_title.style.visibility = ( openWhiteboardFlg )? 'visible' : 'hidden';
-
-	var bo		= document.getElementById('BOTTOM_OVERLAY');
-	bo.style.visibility		= 'visible';
-
-	var wp_test			= document.getElementById('WP_TEST');
-	var wp_empty		= document.getElementById('WP_EMPTY');
-	var wp_content		= document.getElementById('WP_CONTENT');
-	var wp_signin		= document.getElementById('WP_SIGNIN');
-	var wp_signout		= document.getElementById('WP_SIGNOUT');
-	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
-	var wp_children		= document.getElementById('WP_CHILDREN');
-	var wp_range		= document.getElementById('WP_RANGE');
-	var wp_account		= document.getElementById('WP_ACCOUNT');
-
-	if ( wp_signin.classList.contains('signinMotion'))
-		wp_signin.classList.remove('signinMotion');
-	if ( wp_signout.classList.contains('signoutMotion'))
-		wp_signout.classList.remove('signoutMotion');
-
-	var bo = document.getElementById('BOTTOM_OVERLAY');
-	var bf = document.getElementById('BOTTOM_FRAME');
-
-	if ( checkSign() ){
-		// signed
-		bo.style.overflow	= 'scroll';
-		bf.style.width		= '500%';
-		bf.style.overflow	= 'auto';
-		wp_signin.setAttribute( 'disabled', 'true' );
-		wp_whiteboard.removeAttribute( 'disabled' );
-		wp_children.removeAttribute( 'disabled' );
-		wp_range.removeAttribute( 'disabled' );
-		wp_account.removeAttribute( 'disabled' );
-		wp_signout.removeAttribute( 'disabled' );
-		wp_test.style.display			= 'inline';
-		wp_empty.style.display			= 'inline';
-		wp_content.style.display		= 'inline';
-		wp_signin.style.visibility		= 'hidden';
-		wp_signout.style.visibility		= 'visible';
-		wp_whiteboard.style.visibility	= 'visible';
-		wp_children.style.visibility	= 'visible';
-		wp_range.style.visibility		= 'visible';
-		wp_account.style.visibility		= 'visible';
-
-		var opt = wp_signin.getElementsByClassName('option');
-		if ( opt.length > 0 ){
-			opt[0].parentNode.removeChild( opt[0] );
-		}
-	} else {
-		// not sign
-		bo.style.overflow	= 'hidden';
-		bf.style.width		= '100%';
-		bf.style.overflow	= 'hidden';
-		wp_signin.removeAttribute( 'disabled' );
-		wp_signout.setAttribute( 'disabled', 'true' );
-		wp_whiteboard.setAttribute( 'disabled', 'true' );
-		wp_children.setAttribute( 'disabled', 'true' );
-		wp_range.setAttribute( 'disabled', 'true' );
-		wp_account.setAttribute( 'disabled', 'true' );
-		wp_test.style.display			= 'none';
-		wp_empty.style.display			= 'none';
-		wp_content.style.display		= 'none';
-		wp_signin.style.visibility		= 'visible';
-		wp_signout.style.visibility		= 'hidden';
-		wp_whiteboard.style.visibility	= 'hidden';
-		wp_children.style.visibility	= 'hidden';
-		wp_range.style.visibility		= 'hidden';
-		wp_account.style.visibility		= 'hidden';
-	}
-
-	resizeWorkplace();
-
-}
 
 //
 //	ワークプレイス
 //
 function workplaceReset(){
+	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
+	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
 
 	workplace_id = null;
 	var menu	= document.getElementById('WORKPLACE_MENU');
@@ -658,9 +665,9 @@ function workplaceReset(){
 	var signin	= document.getElementById('WP_SIGNIN');
 	var signout	= document.getElementById('WP_SIGNOUT');
 
-	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
-	bf.style.transform	= 'translateX(0px)';
+	// bf.style.transform	= 'translateX(0px)';
+	// bf.style.left		= '0px';
 
 
 	if ( icon.style.height == '0px'){
@@ -671,10 +678,6 @@ function workplaceReset(){
 	}
 
 	menu.style.display		= 'inline';
-	// wb.style.height			= '0px';
-	// children.style.height	= '0px';
-	// range.style.height		= '0px';
-	// account.style.height	= '0px';
 
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
@@ -692,6 +695,84 @@ function workplaceReset(){
 		signin.classList.remove('signinMotion');
 	if (signout.classList.contains('signoutMotion'))
 		signout.classList.remove('signoutMotion');
+
+	showWorkPlace();
+}
+
+//
+//	リサイズ処理
+//
+function resizeWorkplace(){
+	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
+	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
+	// var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
+
+	var menu		= document.getElementById('WORKPLACE_MENU');
+	var workplace	= document.getElementById('WORKPLACE_WHITEBOARD');
+	var wpwh		= document.getElementById('WORKPLACE_WHITEBOARD_HDR').offsetHeight;
+	var wpwm		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
+	var wlist		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+
+	var children	= document.getElementById('WORKPLACE_CHILDREN');
+	var wpch		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
+	var wpcm		= document.getElementById('WORKPLACE_CHILDREN_MAIN');
+	var clist		= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
+
+	var range		= document.getElementById('WORKPLACE_RANGE');
+	var wprh		= document.getElementById('WORKPLACE_RANGE_HDR').offsetHeight;
+	var wprm		= document.getElementById('WORKPLACE_RANGE_MAIN');
+	var rlist		= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
+
+	var account		= document.getElementById('WORKPLACE_ACCOUNT');
+	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
+	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
+	var alist		= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+
+	console.log( 'resizeWorkplace' );
+	console.log( 'bottom overlay width:' + w );
+
+	menu.style.width				= ( w ) + 'px';
+	menu.style.top					= '0px';
+	menu.style.left					= '0px';
+	workplace.style.width			= ( w - 48 ) + 'px';
+	workplace.style.top				= ( -h )     + 'px';
+	workplace.style.left			= '0px';
+
+	children.style.width			= ( w - 48 ) + 'px';
+	children.style.top				= ( -h )     + 'px';
+	children.style.left				= '0px';
+
+	range.style.width				= ( w - 48 ) + 'px';
+	range.style.top					= ( -h )     + 'px';
+	range.style.left				= '0px';
+ 
+	account.style.width				= ( w - 48 ) + 'px';
+	account.style.top				= ( -h ) + 'px';
+	account.style.left				= '0px';
+
+
+	switch ( workplace_id ){
+		case 'WHITEBOARD':
+			workplace.style.top		= '0px';
+			workplace.style.height	= ( h - 0 ) + 'px';
+			wpwm.style.height 		= ( h - wpwh ) + 'px';
+			break;
+		case 'CHILDREN':
+			children.style.top		= '0px';
+			children.style.height 	= ( h - 0 ) + 'px';
+			wpcm.style.height 		= ( h - wpch ) + 'px';	// offset 252
+			break;
+		case 'RANGE':
+			range.style.top			= '0px';
+			range.style.height 		= ( h - 0 ) + 'px';
+			wprm.style.height 		= ( h - wprh ) + 'px';	// offset 252
+			break;
+		case 'ACCOUNT':
+			account.style.top		= '0px';
+			account.style.height 	= ( h - 0 ) + 'px';
+			wpam.style.height 		= ( h - wpah ) + 'px';	// offset 252
+			break;
+		}
 
 }
 
@@ -713,7 +794,10 @@ function workplaceWhiteboard(){
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
-	bf.style.transform	= 'translateX(' + (-w) + 'px)';
+	// bf.style.transform	= 'translateX(' + (-w) + 'px)';
+	// bf.style.left		= '100%';
+	wb.style.top		= '0px';
+
 	// bf.style.transform	= 'translateY(' + (-48) + 'px)';
 	// wb.style.visibility	= 'visible';
 
@@ -1251,7 +1335,10 @@ function workplaceChildren(){
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
-	bf.style.transform	= 'translateX(' + ( -w * 2 ) + 'px)';
+	// bf.style.transform	= 'translateX(' + ( -w * 2 ) + 'px)';
+	// bf.style.left		= '200%';
+	children.style.top		= '0px';
+
 
 
 	//	TAB
@@ -1293,11 +1380,15 @@ function workplaceRange(){
 	var menu	= document.getElementById('WORKPLACE_MENU');
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
+	var range	= document.getElementById('WORKPLACE_RANGE');
 	// var list	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
-	bf.style.transform	= 'translateX(' + ( -w * 3 ) + 'px)';
+	// bf.style.transform	= 'translateX(' + ( -w * 3 ) + 'px)';
+	// bf.style.left		= '300%';
+	range.style.top			= '0px';
+
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
@@ -1562,11 +1653,14 @@ function workplaceAccount(){
 	var menu	= document.getElementById('WORKPLACE_MENU');
 	var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
+	var account	= document.getElementById('WORKPLACE_ACCOUNT');
 	// var list	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
-	bf.style.transform	= 'translateX(' + ( -w * 4 ) + 'px)';
+	// bf.style.transform	= 'translateX(' + ( -w * 4 ) + 'px)';
+	// bf.style.left		= '400%';
+	account.style.top		= '0px';
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
@@ -2936,73 +3030,6 @@ function showChildrenHistoryHelper( p, child_id ){
 
 }
 
-//
-//	リサイズ処理
-//
-function resizeWorkplace(){
-	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
-	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
-	// var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
-
-	var menu		= document.getElementById('WORKPLACE_MENU');
-	var workplace	= document.getElementById('WORKPLACE_WHITEBOARD');
-	var wpwh		= document.getElementById('WORKPLACE_WHITEBOARD_HDR').offsetHeight;
-	var wpwm		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
-	var wlist		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
-
-	var children	= document.getElementById('WORKPLACE_CHILDREN');
-	var wpch		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
-	var wpcm		= document.getElementById('WORKPLACE_CHILDREN_MAIN');
-	var clist		= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
-
-	var range		= document.getElementById('WORKPLACE_RANGE');
-	var wprh		= document.getElementById('WORKPLACE_RANGE_HDR').offsetHeight;
-	var wprm		= document.getElementById('WORKPLACE_RANGE_MAIN');
-	var rlist		= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
-
-	var account		= document.getElementById('WORKPLACE_ACCOUNT');
-	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
-	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
-	var alist		= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
-
-	console.log( 'resizeWorkplace' );
-	console.log( 'bottom overlay width:' + w );
-
-	menu.style.width				= ( w ) + 'px';
-	menu.style.left					= '0px';
-	workplace.style.width			= ( w - 48 ) + 'px';
-	// workplace.style.top				= ( 48 * 1 ) + 'px';
-	workplace.style.left			= ( w *  1 ) + 'px';
-	children.style.width			= ( w - 48 ) + 'px';
-	// children.style.top				= ( 48 * 2 ) + 'px';
-	children.style.left				= ( w *  2 ) + 'px';
-	range.style.width				= ( w - 48 ) + 'px';
-	// range.style.top					= ( 48 * 3 ) + 'px';
-	range.style.left				= ( w *  3 ) + 'px';
-	account.style.width				= ( w - 48 ) + 'px';
-	// account.style.top				= ( 48 * 4 ) + 'px';
-	account.style.left				= ( w *  4 ) + 'px';
-
-	switch ( workplace_id ){
-		case 'WHITEBOARD':
-			workplace.style.height	= ( h - 0 ) + 'px';
-			wpwm.style.height 		= ( h - wpwh ) + 'px';
-			break;
-		case 'CHILDREN':
-			children.style.height 	= ( h - 0 ) + 'px';
-			wpcm.style.height 		= ( h - wpch ) + 'px';	// offset 252
-			break;
-		case 'RANGE':
-			range.style.height 		= ( h - 0 ) + 'px';
-			wprm.style.height 		= ( h - wprh ) + 'px';	// offset 252
-			break;
-		case 'ACCOUNT':
-			account.style.height 	= ( h - 0 ) + 'px';
-			wpam.style.height 		= ( h - wpah ) + 'px';	// offset 252
-			break;
-		}
-
-}
 
 //
 //	チャイルドファインダ
