@@ -86,11 +86,13 @@ router.post('/existaccount', function(req, res, next ){
 //
 router.post('/registaccount', function(req, res, next ){
   var acc_id        = req.body.acc_id;
+  var acc_pwd       = req.body.acc_pwd;
   var acc_name      = req.body.acc_name;
   var acc_priv      = req.body.acc_priv;
   var acc_imagefile = req.body.acc_imagefile;
 
   console.log( 'acc_id:'   + acc_id );
+  console.log( 'acc_pwd:' + acc_pwd );
   console.log( 'acc_name:' + acc_name );
   console.log( 'acc_priv:' + acc_priv );
   console.log( 'acc_imagefile:' + acc_imagefile );
@@ -99,7 +101,7 @@ router.post('/registaccount', function(req, res, next ){
 
   db.none( {
     text: 'INSERT INTO accounts (acc_id, acc_name, password, priv, imagefile, delete_flag ) VALUES($1,$2,$3,$4,$5,$6)',
-    values: [ acc_id, acc_name, 'password', acc_priv, acc_imagefile, 0 ] } )
+    values: [ acc_id, acc_name, acc_pwd, acc_priv, acc_imagefile, 0 ] } )
   .then( function() {
     res.json( {status: 'SUCCESS', message:  'regist account'});
   })
@@ -113,21 +115,36 @@ router.post('/registaccount', function(req, res, next ){
 //
 router.post('/updateaccount', function(req, res, next ){
   var acc_id        = req.body.acc_id;
+  var acc_pwd       = req.body.acc_pwd;
   var acc_name      = req.body.acc_name;
   var acc_priv      = req.body.acc_priv;
   var acc_imagefile = req.body.acc_imagefile;
   // var range_id      = req.body.range_id;
 
   console.log( 'acc_id:'   + acc_id );
+  console.log( 'acc_pwd:'  + acc_pwd );
   console.log( 'acc_name:' + acc_name );
   console.log( 'acc_priv:' + acc_priv );
   console.log( 'acc_imagefile:' + acc_imagefile );
 
   res.header('Content-Type', 'application/json;charset=utf-8');
 
+  var sql = null;
+  var values = null;
+  if ( acc_pwd == null || acc_pwd == '' )
+  {
+    sql     = 'UPDATE accounts SET acc_name = $2, priv = $3, imagefile = $4 WHERE acc_id = $1';
+    values  = [ acc_id, acc_name, acc_priv, acc_imagefile ];
+  }
+  else {
+    sql     = 'UPDATE accounts SET password = $2 , acc_name = $3, priv = $4, imagefile = $5 WHERE acc_id = $1';
+    values  = [ acc_id, acc_pwd, acc_name, acc_priv, acc_imagefile ];
+  }
+
+
   db.none( {
-    text: 'UPDATE accounts SET acc_name = $2, priv = $3, imagefile = $4 WHERE acc_id = $1',
-    values: [ acc_id, acc_name, acc_priv, acc_imagefile ] } )
+    text: sql,
+    values: values } )
   .then( function() {
     res.json( {status: 'SUCCESS', message:  'update account'});
   })

@@ -1710,8 +1710,9 @@ function selectAccount( e ){
 					c.style.animationDuration		= '0.3s';
 					c.style.animationIterationCount = 1;
 					c.classList.remove('height360');
-			
-					wp_editAccountArea( c );
+					c.getElementsByClassName('container')[0].innerHTML = '';
+					c.getElementsByClassName('container')[0].display = 'none';
+					// wp_editAccount( c );
 				}	
 			}
 			return;
@@ -1733,8 +1734,9 @@ function selectAccount( e ){
 
 			// c.classList.remove('left40');
 			c.classList.remove('height360');
-	
-			wp_editAccountArea( c );
+			c.getElementsByClassName('container')[0].innerHTML = '';
+			c.getElementsByClassName('container')[0].display = 'none';
+			// wp_editAccount( c );
 		}	
 	}
 
@@ -1744,10 +1746,10 @@ function selectAccount( e ){
 		o.removeAttribute('selected');
 		o.classList.remove('selected');
 		o.classList.remove('height360');
-		// o.style.animationName	 		= 'scale-in-out';
-		// o.style.animationDuration		= '0.3s';
-		// o.style.animationIterationCount = 1;
-		wp_editAccountArea( o );
+		o.getElementsByClassName('container')[0].innerHTML = '';
+		o.getElementsByClassName('container')[0].display = 'none';
+
+		// wp_editAccount( o );
 	} else{
 		//	セレクト処理
 		o.setAttribute('selected', 'true');
@@ -1818,8 +1820,17 @@ function flipAccountToolBar(){
 
 		switch ( cmd ){
 			case 'edit':
-				c.classList.toggle('height360');
-				wp_editAccountArea( c );
+				if ( c.classList.contains('height360')){
+					c.classList.remove('height360');
+					c.getElementsByClassName('container')[0].innerHTML = '';
+					c.getElementsByClassName('container')[0].display = 'none';			
+				} else {
+					c.classList.add('height360');
+					wp_editAccount( c );
+				}
+
+				// c.classList.toggle('height360');
+				// wp_editAccount( c );
 				break;
 			case 'delete':
 				if ( o.innerText == 'Ok?' ){
@@ -1898,7 +1909,10 @@ function workplaceAccountHelper(){
 						var o = document.createElement('DIV');
 						o.classList.add( 'account' );
 						o.classList.add( 'unselected' );
-						o.setAttribute('acc_id', acc_id );
+						o.setAttribute('acc_id', 	acc_id );
+						o.setAttribute('acc_name',	acc_name );
+						o.setAttribute('priv', 		priv );
+						o.setAttribute('imagefile',	imagefile );
 						o.style.textAlign = 'left';
 						o.style.top			= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
 						o.style.left		= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
@@ -1915,51 +1929,14 @@ function workplaceAccountHelper(){
 						r += '</div>';
 						r += '<div style="float:left;width:calc(100% - 80px);height:80px;"  >';
 							r += '<div style="padding:2px;font-weight:bold;" >' + acc_id + '</div>';
-							r += '<div style="padding:2px;font-weight:bold;font-size:18px;" >' + acc_name  + '</div>';
-							r += '<div style="padding:2px;" >' + priv      + '</div>';
+							r += '<div class="acc_name" style="padding:2px;font-weight:bold;font-size:18px;" >' + acc_name  + '</div>';
+							r += '<div class="acc_priv" style="padding:2px;" >' + priv      + '</div>';
 						r += '</div>';
 
-						r += makeAccountEditTag( acc_id, acc_name, priv, imagefile );
+						r += '<div class="container" style="height:0px;background-color:white;display:none;overflow:visible;" ></div>';
 
 						o.innerHTML		= r;
 						var acc = p.appendChild( o )
-						acc.getElementsByClassName('operation')[0].addEventListener(
-							'click',
-							function ( e ){
-								var x = e.target;
-								while ( true ){
-									if ( x == this ) return;
-									if ( x.hasAttribute('cmd')) break;
-									x = x.parentNode;
-								}
-								var acc = x;
-								while ( true ){
-									if ( acc.getAttribute( 'acc_id' )) break;
-									acc = acc.parentNode;
-								}
-								switch ( x.getAttribute('cmd') ){
-									case 'commit':
-										if ( x.innerText == 'commit?' ){
-											acc.classList.toggle('height360');
-											wp_editAccountArea( acc );
-											updateAccount( acc.getElementsByTagName( 'FORM')[0] );
-											x.innerText = ' ';
-											break;
-										}
-										x.innerText = 'commit?';
-										break;
-									case 'cancel':
-										// if ( x.innerText == 'cancel?' ){
-											acc.classList.toggle('height360');
-											wp_editAccountArea( acc );
-											// x.innerText = ' ';
-											break;
-										// }
-										// x.innerText = 'cancel?';
-										break;
-								}
-							}
-						);
 
 					}
 
@@ -2030,14 +2007,18 @@ function makeAccountEditTag( acc_id, acc_name, priv, imagefile ){
 		r += '<div style="padding-top:4px;" >';
 			r += '<input type="text" name="acc_name" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="' + acc_name + '" />';
 		r += '</div>';
+		r += '<div style="padding-top:4px;" >password:</div>';
+		r += '<div style="padding-top:4px;" >';
+			r += '<input type="password" name="acc_pwd" maxlength="64" autocomplete="off" style="width:90%;border:1px solid lightgrey;border-radius:4px;padding:4px;"  value="" />';
+		r += '</div>';
 
 		var privs = [ 'admin', 'editor', 'guest' ];
 		r += '<div style="padding-top:4px;" >priveledge:</div>';
 		r += '<div style="width:90%;height:30px;padding:3px;background-color:#EDEDED;border-radius:4px;display:flex;" >';
 		for ( var j=0; j<privs.length; j++ ){
 			var checked = ( priv == privs[j] ) ? ' checked ' : '';
-			r += '<input type="radio" id="acc_priv_' + acc_id + '_' + j + '" name="acc_priv"  value="' + privs[j] + '"  ' + checked + '  />';
-			r += '<label for="acc_priv_' + acc_id + '_' + j + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
+			r += '<input type="radio" id="acc_priv_' + privs[j] + '" name="acc_priv"  value="' + privs[j] + '"  ' + checked + '  />';
+			r += '<label for="acc_priv_' + privs[j] + '"  style="display:block;float:left;width:30px;height:21px;padding:5px 4px 1px 5px;" >' + privs[j] + '</label>';
 		}
 		r += '</div>';
 		r += '<div style="padding-top:4px;" >image file:</div>';
@@ -2086,9 +2067,9 @@ function addAccount(){
 	accept[0].addEventListener('click',
 		function(e){
 			e.stopPropagation();
-			if ( !acceptAddAccount() ) return;
+			if ( !confirmAccount( 'ADD' ) ) return;
 			if ( this.innerText == 'Ok?'){
-				acceptAddAccountHelper();
+				addAccountHelper();
 			} else {
 				this.innerText = 'Ok?';
 			}
@@ -2102,18 +2083,33 @@ function addAccount(){
 	
 }
 
-function acceptAddAccount(){
+function confirmAccount( op ){
 	var acc_id   		= accountForm.acc_id.value;
+	var acc_pwd   		= accountForm.acc_pwd.value;
 	var acc_name 		= accountForm.acc_name.value;
 	var acc_priv 		= accountForm.acc_priv.value;
 	var acc_imagefile	= accountForm.acc_imagefile.value;
 
-	if ( acc_id == '' ){
-		accountForm.acc_id.focus();
-		oLog.log( null, 'acc_id を入力してください.' );
-		oLog.open(3);
-		return false;
+	//	個別対応
+	switch ( op ){
+		case 'ADD':
+			if ( acc_id == '' ){
+				accountForm.acc_id.focus();
+				oLog.log( null, 'acc_id を入力してください.' );
+				oLog.open(3);
+				return false;
+			}
+			if ( acc_pwd == '' ){
+				accountForm.acc_id.focus();
+				oLog.log( null, 'password を入力してください.' );
+				oLog.open(3);
+				return false;
+			}
+			break;
+		case 'UPDATE':
+			break;
 	}
+	// 共通処理
 	if ( acc_name == '' ){
 		accountForm.acc_name.focus();
 		oLog.log( null, 'acc_name を入力してください.' );
@@ -2131,8 +2127,9 @@ function acceptAddAccount(){
 
 }
 
-function acceptAddAccountHelper(){
+function addAccountHelper(){
 	var acc_id   		= accountForm.acc_id.value;
+	var acc_pwd			= accountForm.acc_pwd.value;
 	var acc_name 		= accountForm.acc_name.value;
 	var acc_priv 		= accountForm.acc_priv.value;
 	var acc_imagefile	= accountForm.acc_imagefile.value;
@@ -2165,7 +2162,7 @@ function acceptAddAccountHelper(){
 								oLog.open(5);
 								break;
 							case 'NOENTRY':
-								registAccount( acc_id, acc_name, acc_priv, acc_imagefile );
+								registAccount( acc_id, acc_pwd, acc_name, acc_priv, acc_imagefile );
 								break;
 							}						
 
@@ -2185,7 +2182,7 @@ function acceptAddAccountHelper(){
 
 }
 
-function registAccount( acc_id, acc_name, acc_priv, acc_imagefile ){
+function registAccount( acc_id, acc_pwd, acc_name, acc_priv, acc_imagefile ){
 	console.log('registAccount');
 	var r = '';
 	var xmlhttp = new XMLHttpRequest();
@@ -2226,7 +2223,7 @@ function registAccount( acc_id, acc_name, acc_priv, acc_imagefile ){
 
 		xmlhttp.open("POST", "/accounts/registaccount", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send( 'acc_id=' + acc_id + '&acc_name=' + acc_name + '&acc_priv=' + acc_priv + '&acc_imagefile=' + acc_imagefile );
+		xmlhttp.send( 'acc_id=' + acc_id + '&acc_pwd=' + acc_pwd + '&acc_name=' + acc_name + '&acc_priv=' + acc_priv + '&acc_imagefile=' + acc_imagefile );
 
 }
 
@@ -2237,17 +2234,99 @@ function cancelAddAccount(){
 		accform[0].parentNode.removeChild( accform[0] );
 }
 
-function wp_editAccountArea( p ){
-	console.log( 'wp_editAccountArea');
-	var flg = p.classList.contains('height360');
-	var apdxs = p.getElementsByClassName('appendix');
-	for ( var i=0; i<apdxs.length; i++ ){
-		apdxs[i].style.display = ( flg ) ? 'inline' : 'none';
-		apdxs[i].getElementsByClassName( 'workplace_commit_button' )[0].innerText = '';
-		apdxs[i].getElementsByClassName( 'workplace_cancel_button' )[0].innerText = '';
-		if ( flg ) 	apdxs[i].addEventListener('click', function(e){ e.stopPropagation();}, false );
-			else	apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
+function wp_editAccount( p_old ){
+	console.log( 'wp_editAccount');
+
+	// セレクトしているアカウントを検索
+	var lists = document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST').childNodes;
+	var c = null;
+	for ( var i=0; i<lists.length; i++ ){
+		if ( lists[i].hasAttribute('selected')){
+			c = lists[i];
+			break;
+		}
 	}
+	if ( c == null ) return;
+
+	var container = null;
+	container = c.getElementsByClassName( 'container' )[0];
+
+	container.style.display	= 'inline';
+	if ( container.getElementsByClassName('accountEdit').length > 0 ) return;
+	container.addEventListener('click',function(e){e.stopPropagation();}, false);
+
+	var m = document.getElementById( 'WORKPLACE_ACCOUNT_MAIN');
+
+	var o = document.createElement('DIV');
+	o.classList.add('accountEdit');
+	o.style.textAlign	= 'left';
+	var p = container.appendChild( o );
+
+	var acc_id 		= c.getAttribute( 'acc_id' );
+	var acc_name	= c.getAttribute( 'acc_name' );
+	var priv		= c.getAttribute( 'priv' );
+	var imagefile	= c.getAttribute( 'imagefile' );
+
+	p.innerHTML		= makeAccountEditTag( acc_id, acc_name, priv, imagefile );
+	// p.innerHTML = makeChildrenEditTag( child_id, kana, child_name, remark, child_type, child_grade, imagefile );
+	p.getElementsByClassName('appendix')[0].style.display	= 'inline';
+
+	p.getElementsByClassName('operation')[0].addEventListener(
+		'click',
+		function ( e ){
+			var x = e.target;
+			while ( true ){
+				if ( x == this ) return;
+				if ( x.hasAttribute('cmd')) break;
+				x = x.parentNode;
+			}
+			var acc = x;
+			while ( true ){
+				if ( acc.hasAttribute( 'acc_id' )) break;
+				acc = acc.parentNode;
+			}
+			switch ( x.getAttribute('cmd') ){
+				case 'commit':
+					console.log( 'commit:' + acc.getAttribute('acc_id') );
+					if ( !confirmAccount('UPDATE') ) return;
+					if ( x.innerText == 'Ok?'){
+						x.innerText = '';
+						updateAccount();
+						acc.setAttribute( 'acc_name', 		accountForm.acc_name.value );
+						acc.setAttribute( 'priv', 			accountForm.acc_priv.value );
+						acc.setAttribute( 'imagefile', 		accountForm.acc_imagefile.value );
+						acc.getElementsByClassName('acc_name')[0].innerHTML =
+							accountForm.acc_name.value;
+						acc.getElementsByClassName('acc_priv')[0].innerHTML =
+							accountForm.acc_priv.value; 
+
+					} else {
+						x.innerText = 'Ok?';
+					}
+					break;
+				case 'cancel':
+					console.log( 'cancel:' + acc.getAttribute('acc_id') );
+					acc.classList.remove('height360');
+					acc.getElementsByClassName('container')[0].innerHTML = '';
+					acc.getElementsByClassName('container')[0].display = 'none';
+
+					break;
+			}
+		}
+	);
+
+
+
+	// var flg = p.classList.contains('height360');
+	// var apdxs = p.getElementsByClassName('appendix');
+	// for ( var i=0; i<apdxs.length; i++ ){
+	// 	apdxs[i].style.display = ( flg ) ? 'inline' : 'none';
+	// 	apdxs[i].getElementsByClassName( 'workplace_commit_button' )[0].innerText = '';
+	// 	apdxs[i].getElementsByClassName( 'workplace_cancel_button' )[0].innerText = '';
+	// 	if ( flg ) 	apdxs[i].addEventListener('click', function(e){ e.stopPropagation();}, false );
+	// 		else	apdxs[i].removeEventListener('click', function(e){ e.stopPropagation();}, false );
+	// }
+
 }
 function wp_deleteAccount( p ){
 	p.parentNode.removeChild( p );
@@ -2295,18 +2374,17 @@ function wp_deleteAccount( p ){
 
 }
 
-function updateAccount( frm ){
-	var acc_id 			= frm.acc_id.value;
-	var acc_name		= frm.acc_name.value;
-	var acc_priv		= frm.acc_priv.value;
-	var acc_imagefile	= frm.acc_imagefile.value;
-	var range_id		= frm.range_id.value;
+function updateAccount(){
+	var acc_id 			= accountForm.acc_id.value;
+	var acc_pwd			= accountForm.acc_pwd.value;
+	var acc_name		= accountForm.acc_name.value;
+	var acc_priv		= accountForm.acc_priv.value;
+	var acc_imagefile	= accountForm.acc_imagefile.value;
 	console.log( 'acc_id:'     + acc_id );
+	console.log( 'acc_pwd:'    + acc_pwd );
 	console.log( 'acc_name:'   + acc_name );
 	console.log( 'priveledge:' + acc_priv );
 	console.log( 'imagefile:'  + acc_imagefile );
-	console.log( 'range_id:'   + range_id );
-
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.addEventListener('readystatechange', 
@@ -2345,7 +2423,7 @@ function updateAccount( frm ){
 
 		xmlhttp.open("POST", "/accounts/updateaccount", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send( 'acc_id=' + acc_id + '&acc_name=' + acc_name + '&acc_priv=' + acc_priv + '&acc_imagefile=' + acc_imagefile + '&range_id=' + range_id );
+		xmlhttp.send( 'acc_id=' + acc_id + '&acc_pwd=' + acc_pwd + '&acc_name=' + acc_name + '&acc_priv=' + acc_priv + '&acc_imagefile=' + acc_imagefile );
 
 }
 
@@ -2392,7 +2470,6 @@ function selectChildren( e ){
 			o.classList.remove('height360');	
 			o.getElementsByClassName('container')[0].innerHTML = '';
 			o.getElementsByClassName('container')[0].display = 'none';
-	// wp_editAccountArea( c );
 		}	
 	}
 
@@ -2421,7 +2498,6 @@ function selectChildren( e ){
 		c.classList.remove('height360');
 		c.getElementsByClassName('container')[0].innerHTML = '';
 		c.getElementsByClassName('container')[0].display = 'none';
-// wp_editAccountArea( o );
 	} else{
 		//	セレクト処理
 		c.setAttribute('selected', 'true');
@@ -2605,9 +2681,9 @@ function addChildren(){
 	accept[0].addEventListener('click',
 		function(e){
 			e.stopPropagation();
-			if ( !acceptAddChildren() ) return;
+			if ( !confirmChildren('ADD') ) return;
 			if ( this.innerText == 'Ok?'){
-				acceptAddChildrenHelper();
+				addChildrenHelper();
 			} else {
 				this.innerText = 'Ok?';
 			}
@@ -2621,7 +2697,7 @@ function addChildren(){
 	
 }
 
-function acceptAddChildren(){
+function confirmChildren( op ){
 	var kana	   		= childrenForm.kana.value;
 	var child_name 		= childrenForm.child_name.value;
 	// var remark	 		= childrenForm.remark.value;
@@ -2670,7 +2746,7 @@ function acceptAddChildren(){
 
 }
 
-function acceptAddChildrenHelper(){
+function addChildrenHelper(){
 	var kana	   		= childrenForm.kana.value;
 	var child_name 		= childrenForm.child_name.value;
 	var remark	 		= childrenForm.remark.value;
@@ -2815,7 +2891,7 @@ function wp_editChildren(){
 			switch ( x.getAttribute('cmd') ){
 				case 'commit':
 					console.log( 'commit:' + chd.getAttribute('child_id') );
-					if ( !acceptAddChildren() ) return;
+					if ( !confirmChildren('UPDATE') ) return;
 					if ( x.innerText == 'Ok?'){
 						x.innerText = '';
 						updateChild();
