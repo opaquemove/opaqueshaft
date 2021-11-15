@@ -11,7 +11,7 @@
     position:				absolute;
 	top:					0px;
 	left:					0px;
-	width:					500%;       /* signin:500% signout:100% */
+	width:					100%;       /* signin:500% signout:100% */
 	height:					100%;
 	overflow:				auto;
     transition:             all 0.3s ease-in-out;
@@ -196,7 +196,17 @@
     padding-bottom:10px;
 }
 #WP_TEST{}
-#WP_EMPTY{}
+
+#WP_EMPTY{
+    /* position: relative;
+    overflow: hidden;
+    display:flex;
+    flex-wrap:nowrap;
+	justify-content:flex-start; */
+	/* align-items:            flex-start;
+	align-content:          center; */
+
+}
 #WP_CONTENT{}
 
 
@@ -244,14 +254,14 @@
 } 
 #WORKPLACE_WHITEBOARD{
     position:               absolute;
-    top:                    0px;    /* resize */
-    left:                   0px;    /* resize */
+    top:                    0px;
+    left:                   0px;
     width:                  auto;   /* calc(100% - 48px); */
     height:                 100%;
     overflow:               hidden;
     font-size:              16px;
     background-color:       #EDEDED;
-    border-radius:          14px;
+    border-radius:          0px;
     text-align:             center;
     /* visibility:             hidden; */
 }
@@ -331,7 +341,7 @@
     overflow:               hidden;
     font-size:              16px;
     background-color:       #EDEDED;
-    border-radius:          14px;
+    border-radius:          0px;
     text-align:             center;
     /* visibility:             hidden; */
 }
@@ -376,7 +386,7 @@
     height:                 100%;
     overflow:               hidden;
     font-size:              16px;
-    background-color:          #EDEDED;
+    background-color:       #EDEDED;
     text-align:             center;
     /* visibility:             hidden; */
 }
@@ -444,28 +454,28 @@
 }
 
 #WP_CREATERANGE{
-    background-image:url(images/plus3.png);
-    background-size:14px;
-    background-repeat:no-repeat;
-    background-position: center center;
+    background-image:       url(images/plus3.png);
+    background-size:        14px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
 }
 #WP_REFRESHRANGE{
-    background-image:url(images/recycle.png);
-    background-size:14px;
-    background-repeat:no-repeat;
-    background-position: center center;
+    background-image:       url(images/recycle.png);
+    background-size:        14px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
 }
 .edit_object{
-    background-image:url(images/document-editor.png);
-    background-size:14px;
-    background-repeat:no-repeat;
-    background-position: center center;
+    background-image:       url(images/document-editor.png);
+    background-size:        14px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
 }
 .delete_object{
-    background-image:url(images/minus-2.png);
-    background-size:14px;
-    background-repeat:no-repeat;
-    background-position: center center;
+    background-image:       url(images/minus-2.png);
+    background-size:        14px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
 }
 
 .range{
@@ -518,23 +528,23 @@
     overflow:               auto;
 } 
 #WP_FINDACCOUNT{
-    background-image:url(images/bleach2.png);
-    background-size:12px;
-    background-repeat:no-repeat;
-    background-position: center center;
+    background-image:       url(images/bleach2.png);
+    background-size:        12px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
 }
 #WP_CREATEACCOUNT{
-    background-image:url(images/plus3.png);
-    background-size:14px;
-    background-repeat:no-repeat;
-    background-position: center center;
+    background-image:       url(images/plus3.png);
+    background-size:        14px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
 }
 
 #WP_REFRESHACCOUNT{
-    background-image:url(images/recycle.png);
-    background-size:14px;
-    background-repeat:no-repeat;
-    background-position: center center;
+    background-image:       url(images/recycle.png);
+    background-size:        14px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
 }
 
 .add_account{

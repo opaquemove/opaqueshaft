@@ -185,7 +185,7 @@ router.post('/property', function(req, res, next ){
       res.json( null );
   }else {
       db.one( {
-          text: 'SELECT acc_id, acc_name FROM accounts WHERE acc_id = $1 ',
+          text: 'SELECT acc_id, acc_name, imagefile FROM accounts WHERE acc_id = $1 ',
           values: [id] } )
         .then( rows => {
               res.json( rows );
