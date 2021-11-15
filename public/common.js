@@ -34,6 +34,7 @@ function isSignId(){
 //
 function getAccount( id ){
 	var xmlhttp = new XMLHttpRequest();
+
 	xmlhttp.open("POST", "/accounts/property", false );
 	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 	xmlhttp.send( 'acc=' + id );
@@ -42,6 +43,24 @@ function getAccount( id ){
 		var result = JSON.parse( xmlhttp.responseText );
 		return ( result != null )? result:null;	
 	} else return null;
+
+}
+
+//
+//	アカウント情報を取得
+//
+function getAccountAction( id, proc ){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = proc;
+
+	xmlhttp.open("POST", "/accounts/property", true );
+	xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+	xmlhttp.send( 'acc=' + id );
+	// if ( xmlhttp.status == 200 ){
+	// 	//alert( xmlhttp.responseText );
+	// 	var result = JSON.parse( xmlhttp.responseText );
+	// 	return ( result != null )? result:null;	
+	// } else return null;
 
 }
 

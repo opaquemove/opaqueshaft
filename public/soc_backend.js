@@ -1861,7 +1861,7 @@ function checkoutTimelineWhiteboardChild( timeline ){
 //
 function accountProperty(){
 
-    var oAcc = getAccount( acc_id );
+    var oAcc = getAccount( isSignId() );
     var r = '';
 	// r += '<div style="font-size:24px;text-align:center;padding-top:24px;padding-bottom:24px;" >';
 	// 	r += 'Account property';

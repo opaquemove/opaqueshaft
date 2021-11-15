@@ -183,35 +183,98 @@ function initWorkplace(){
 }
 
 function hoge(){
-	var menu = document.getElementById('WORKPLACE_MENU');
 	if ( !checkSign()) return;
-	var oAcc = getAccount( acc_id );
-	var imagefile = oAcc.imagefile;
-	var o = document.createElement('DIV');
-	o.classList.add('vh-center');
-	o.style.position	= 'absolute';
-	o.style.top			= '0px';
-	o.style.left		= '0px';
-	o.style.width		= '48px';
-	o.style.height		= '48px';
-	var r = '';
-	r += '<div style="width:100%;height:100%;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" ></div>';
-	o.innerHTML = r;
-	menu.appendChild( o );
+	// var menu = document.getElementById('WORKPLACE_MENU');
+	// var oAcc = getAccount( isSignId() );
+	// var imagefile = oAcc.imagefile;
+	// var o = document.createElement('DIV');
+	// o.classList.add('vh-center');
+	// o.style.position	= 'absolute';
+	// o.style.top			= '0px';
+	// o.style.left		= '0px';
+	// o.style.width		= '48px';
+	// o.style.height		= '48px';
+	// var r = '';
+	// r += '<div style="width:100%;height:100%;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" ></div>';
+	// o.innerHTML = r;
+	// menu.appendChild( o );
 
+	getAccountAction( isSignId(), 
+		function(){
+			switch( this.readyState ){
+				case 1:
+				case 2:
+				case 3:
+					break;
+				case 4:
+					if ( this.status == 200 ){
+						var result = JSON.parse( this.responseText );
+						// console.log( result.acc_name );
+						// console.log( result.imagefile );
+						var menu = document.getElementById('WPH_SIGN');
+						var imagefile = result.imagefile;
+						var o = document.createElement('DIV');
+						o.classList.add('vh-center');
+						o.style.position	= 'absolute';
+						o.style.top			= '0px';
+						o.style.left		= '0px';
+						o.style.width		= '26px';
+						o.style.height		= '26px';
+						o.style.padding		= '6px';
+						var r = '';
+						if ( imagefile != '' && imagefile != null )
+							r += '<div style="width:100%;height:100%;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" ></div>';
+							else
+							r += '<div style="width:100%;height:100%;border-radius:50%;background-image:url(./images/user-2.png);background-size:cover;background-position:center center;background-repeat:no-repeat;" ></div>';
+						o.innerHTML = r;
+						menu.appendChild( o );
+					
+					}
+					break;
+			}
+		}
+	);
 }
 
 function calendarGadget(){
 
 	var calen = document.getElementById('WP_EMPTY');
-	var w = Math.floor( calen.offsetWidth / 7 ) - 5;
+	var w = Math.floor( calen.offsetWidth / 7 ) - 3;
 
 	var today = new Date();
 	var sotd  = new Date( today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/1' );
+	var cur_month = sotd.getMonth();
 
+
+	var month = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+	var week  = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ];	
+	var o = document.createElement('DIV');
+	o.style.width			= 'calc(100% - 2px)';
+	o.style.height			= '14px';
+	o.style.textAlign		= 'center';
+	o.style.color			= 'white';
+	o.style.backgroundColor	= 'darkorange';
+	o.style.padding			= '2px 0px';
+	o.innerText			= month[ sotd.getMonth() ] + '.' + sotd.getFullYear();
+	calen.appendChild( o );
+	o = document.createElement('DIV');
+	o.style.width			= 'calc(100% - 2px)';
+	o.style.height			= ( w + 2) + 'px';
+	o.style.color			= 'white';
+	o.style.backgroundColor	= 'darkorange';
+	// o.style.border	= '1px solid lightgrey';
+	var r = '';
+	for ( var i=0; i<week.length; i++ ){
+		r += '<div style="float:left;text-align:center;font-weight:bold;width:' + w + 'px;height:' + (w-4) + 'px;font-size:8px;padding-top:4px;border-bottom:1px solid lightgrey;margin:1px;" >' + week[i] + '</div>';
+	}
+	o.innerHTML		= r;
+	calen.appendChild( o );
+
+	
 	console.log( 'week num:' + sotd.getDay() );
 	sotd.setDate  ( sotd.getDate() - sotd.getDay() );
 	console.log( 'start:' + sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' +  sotd.getDate());
+
 	while( true ){
 		// var r = '';
 		// r += '<div style="width:24px;height:24px;border:1px solid lightgrey;" >';
@@ -219,14 +282,16 @@ function calendarGadget(){
 		// r += '</div>';
 		var o = document.createElement('DIV');
 		if ( sotd.getDay() == 0 )
-			o.style.clear	= 'both';
-		o.style.float 		= 'left';
-		o.style.width		= w + 'px';
-		o.style.height		= w + 'px';
-		o.style.fontSize	= '8px';
-		o.style.border		= '1px solid lightgrey';
-		o.style.margin		= '1px';
-		o.innerHTML = sotd.getDate();
+			o.style.clear		= 'both';
+		o.style.float 			= 'left';
+		o.style.width			= w + 'px';
+		o.style.height			= w + 'px';
+		o.style.fontSize		= '12px';
+		o.style.textAlign		= 'center';
+		o.style.color			= ( sotd.getMonth() == cur_month )? 'gray':'#EDEDED';
+		o.style.borderBottom	= '1px solid lightgrey';
+		o.style.margin			= '1px';
+		o.innerHTML = ('00' + sotd.getDate() ).slice(-2);
 		calen.appendChild( o );
 		sotd.setDate( sotd.getDate() + 1 );
 		if ( sotd.getMonth() > today.getMonth() && sotd.getDay() == 0 )break;
