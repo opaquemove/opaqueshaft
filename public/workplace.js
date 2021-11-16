@@ -206,8 +206,9 @@ function selectWorkplaceHeader( e ){
 	switch ( o.getAttribute('cmd' )){
 		case 'admin':
 			Object.keys(toolbar).forEach( function(key){
-				if ( toolbar[key].classList.contains('selectedmenu'))
+				if ( toolbar[key].classList.contains('selectedmenu')){
 					toolbar[key].classList.remove('selectedmenu');
+				}
 				toolbar[key].classList.add('deselectedmenu');
 			});
 			toolbar.admin.classList.add('selectedmenu');
@@ -1967,7 +1968,7 @@ function flipAccountToolBar(){
 	var o = document.createElement('DIV');
 	o.id				= 'ACCOUNT_TOOLBAR';
 	o.style.position	= 'absolute';
-	o.style.top			= 'calc(100% - 76px)';
+	o.style.top			= 'calc(100% - 76px - 48px)';
 	o.style.left		= '0px';
 	o.style.width		= '100%';
 	o.style.height		= '64px';
@@ -2716,7 +2717,7 @@ function flipChildrenToolBar(){
 	o.id					= 'CHILDREN_TOOLBAR';
 	o.style.pointerEvents	= 'none';
 	o.style.position		= 'absolute';
-	o.style.top				= 'calc(100% - 76px)';
+	o.style.top				= 'calc(100% - 76px - 48px)';
 	o.style.left			= '0px';
 	o.style.width			= '100%';
 	o.style.height			= '64px';
