@@ -6,6 +6,11 @@ function initWorkplace(){
 	var hdr = document.getElementById('WORKPLACE_HDR');
 	hdr.setAttribute( 'orgHeight', hdr.offsetHeight + 'px' );
 
+	//
+	document.getElementById('WORKPLACE_HEADER').addEventListener(
+		'click', selectWorkplaceHeader, false );
+
+
 	// test code
 	document.getElementById('OPAQUESHAFT_TITLE').addEventListener(
 		'click',
@@ -135,39 +140,39 @@ function initWorkplace(){
 	document.getElementById( 'TAB_CURRENT2' ).addEventListener(
 		'click', selectCurrentRangeId, false );
 
-	document.getElementById('WORKPLACE_BIRDSEYEVIEW').addEventListener(
-		'click', function( e ){
-			var view = e.target;
-			while ( true ){
-				if ( this == view ) return;
-				if ( view.hasAttribute('view')) break;
-				view = view.parentNode;
-			}
+	// document.getElementById('WORKPLACE_BIRDSEYEVIEW').addEventListener(
+	// 	'click', function( e ){
+	// 		var view = e.target;
+	// 		while ( true ){
+	// 			if ( this == view ) return;
+	// 			if ( view.hasAttribute('view')) break;
+	// 			view = view.parentNode;
+	// 		}
 			
-			switch( view.getAttribute('view')){
-				case 'menu':
-					// workplaceReset();
-					birdsEyeView();
-					break;
-				case 'whiteboard':
-					workplaceWhiteboard();
-					break;
-				case 'children':
-					workplaceChildren();
-					break;
-				case 'range':
-					workplaceRange();
-					break;
-				case 'account':
-					workplaceAccount();
-					break;	
-				}
+	// 		switch( view.getAttribute('view')){
+	// 			case 'menu':
+	// 				// workplaceReset();
+	// 				birdsEyeView();
+	// 				break;
+	// 			case 'whiteboard':
+	// 				workplaceWhiteboard();
+	// 				break;
+	// 			case 'children':
+	// 				workplaceChildren();
+	// 				break;
+	// 			case 'range':
+	// 				workplaceRange();
+	// 				break;
+	// 			case 'account':
+	// 				workplaceAccount();
+	// 				break;	
+	// 			}
 
-		}, false );
+	// 	}, false );
 	
 	showWorkPlace();
 
-	calendarGadget();
+	calendarGadget( null );
 	hoge();
 
 	// resizeWorkplace();
@@ -182,22 +187,69 @@ function initWorkplace(){
 
 }
 
+function selectWorkplaceHeader( e ){
+	var toolbar = {
+		admin: 		document.getElementById('WPH_OPAQUESHAFT_ADMIN'),
+		day:		document.getElementById('WPH_DAY'),
+		children:	document.getElementById('WPH_CHILDREN'),
+		range:		document.getElementById('WPH_RANGE'),
+		account:	document.getElementById('WPH_ACCOUNT')
+	}
+
+	var o = e.target;
+	while ( true ){
+		if ( o.tagName == 'BODY') return;
+		if ( o == this ) return;
+		if ( o.hasAttribute('cmd')) break;
+		o = o.parentNode;
+	}
+	switch ( o.getAttribute('cmd' )){
+		case 'admin':
+			Object.keys(toolbar).forEach( function(key){
+				if ( toolbar[key].classList.contains('selectedmenu'))
+					toolbar[key].classList.remove('selectedmenu');
+				toolbar[key].classList.add('deselectedmenu');
+			});
+			toolbar.admin.classList.add('selectedmenu');
+			workplaceReset();
+			break;
+		case 'day':
+			Object.keys(toolbar).forEach( function(key){
+				if ( toolbar[key].classList.contains('selectedmenu'))
+				toolbar[key].classList.remove('selectedmenu');
+			});
+			toolbar.day.classList.add('selectedmenu');
+			workplaceWhiteboard();
+			break;
+		case 'children':
+			Object.keys(toolbar).forEach( function(key){
+				if ( toolbar[key].classList.contains('selectedmenu'))
+				toolbar[key].classList.remove('selectedmenu');
+			});
+			toolbar.children.classList.add('selectedmenu');
+			workplaceChildren();
+			break;
+		case 'range':
+			Object.keys(toolbar).forEach( function(key){
+				if ( toolbar[key].classList.contains('selectedmenu'))
+				toolbar[key].classList.remove('selectedmenu');
+			});
+			toolbar.range.classList.add('selectedmenu');
+			workplaceRange();
+			break;
+		case 'account':
+			Object.keys(toolbar).forEach( function(key){
+				if ( toolbar[key].classList.contains('selectedmenu'))
+				toolbar[key].classList.remove('selectedmenu');
+			});
+			toolbar.account.classList.add('selectedmenu');
+			workplaceAccount();
+			break;
+	}
+}
+
 function hoge(){
 	if ( !checkSign()) return;
-	// var menu = document.getElementById('WORKPLACE_MENU');
-	// var oAcc = getAccount( isSignId() );
-	// var imagefile = oAcc.imagefile;
-	// var o = document.createElement('DIV');
-	// o.classList.add('vh-center');
-	// o.style.position	= 'absolute';
-	// o.style.top			= '0px';
-	// o.style.left		= '0px';
-	// o.style.width		= '48px';
-	// o.style.height		= '48px';
-	// var r = '';
-	// r += '<div style="width:100%;height:100%;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" ></div>';
-	// o.innerHTML = r;
-	// menu.appendChild( o );
 
 	getAccountAction( isSignId(), 
 		function(){
@@ -209,8 +261,6 @@ function hoge(){
 				case 4:
 					if ( this.status == 200 ){
 						var result = JSON.parse( this.responseText );
-						// console.log( result.acc_name );
-						// console.log( result.imagefile );
 						var menu = document.getElementById('WPH_SIGN');
 						var imagefile = result.imagefile;
 						var o = document.createElement('DIV');
@@ -220,7 +270,7 @@ function hoge(){
 						o.style.left		= '0px';
 						o.style.width		= '26px';
 						o.style.height		= '26px';
-						o.style.padding		= '6px';
+						o.style.padding		= '11px';
 						var r = '';
 						if ( imagefile != '' && imagefile != null )
 							r += '<div style="width:100%;height:100%;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" ></div>';
@@ -236,26 +286,42 @@ function hoge(){
 	);
 }
 
-function calendarGadget(){
+function calendarGadget( serial ){
 
+	console.log('serial:' + serial );
 	var calen = document.getElementById('WP_EMPTY');
+	calen.innerHTML = '';
+
 	var w = Math.floor( calen.offsetWidth / 7 ) - 3;
 
-	var today = new Date();
-	var sotd  = new Date( today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/1' );
+	var sotm = new Date();
+	if ( serial != null ) {
+			sotm.setTime( serial ); 
+		}
+	var sotd  = new Date( sotm.getFullYear() + '/' + ( sotm.getMonth() + 1 ) + '/1' );
 	var cur_month = sotd.getMonth();
 
+	var prev = new Date( sotm.getFullYear() + '/' + ( sotm.getMonth() + 1) + '/1' );
+	prev.setMonth( prev.getMonth() - 1 ); 
+	var prev_ym = prev.getTime();
+	var next = new Date( sotm.getFullYear() + '/' + ( sotm.getMonth() + 1) + '/1' );
+	next.setMonth( next.getMonth() + 1 ); 
+	var next_ym = next.getTime();
 
 	var month = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 	var week  = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ];	
 	var o = document.createElement('DIV');
 	o.style.width			= 'calc(100% - 2px)';
 	o.style.height			= '14px';
-	o.style.textAlign		= 'center';
+	// o.style.textAlign		= 'center';
 	o.style.color			= 'white';
 	o.style.backgroundColor	= 'darkorange';
 	o.style.padding			= '2px 0px';
-	o.innerText			= month[ sotd.getMonth() ] + '.' + sotd.getFullYear();
+	var r = '';
+	r += '<div style="float:left;padding-left:4px;" >' + month[ sotd.getMonth() ] + '.' + sotd.getFullYear() + '</div>';
+	r += '<div style="float:right;padding:0px 4px;" onclick="calendarGadget(' + next_ym + ');" >&gt;</div>';
+	r += '<div style="float:right;padding:0px 4px;" onclick="calendarGadget(' + prev_ym + ');" >&lt;</div>';
+	o.innerHTML			= r;
 	calen.appendChild( o );
 	o = document.createElement('DIV');
 	o.style.width			= 'calc(100% - 2px)';
@@ -263,7 +329,7 @@ function calendarGadget(){
 	o.style.color			= 'white';
 	o.style.backgroundColor	= 'darkorange';
 	// o.style.border	= '1px solid lightgrey';
-	var r = '';
+	r = '';
 	for ( var i=0; i<week.length; i++ ){
 		r += '<div style="float:left;text-align:center;font-weight:bold;width:' + w + 'px;height:' + (w-4) + 'px;font-size:8px;padding-top:4px;border-bottom:1px solid lightgrey;margin:1px;" >' + week[i] + '</div>';
 	}
@@ -273,7 +339,8 @@ function calendarGadget(){
 	
 	console.log( 'week num:' + sotd.getDay() );
 	sotd.setDate  ( sotd.getDate() - sotd.getDay() );
-	console.log( 'start:' + sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' +  sotd.getDate());
+	console.log( 'sotm:' + sotm.getFullYear() + '/' + ( sotm.getMonth() + 1 ) + '/' +  sotm.getDate());
+	console.log( 'sotd:' + sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' +  sotd.getDate());
 
 	while( true ){
 		// var r = '';
@@ -289,12 +356,13 @@ function calendarGadget(){
 		o.style.fontSize		= '12px';
 		o.style.textAlign		= 'center';
 		o.style.color			= ( sotd.getMonth() == cur_month )? 'gray':'#EDEDED';
-		o.style.borderBottom	= '1px solid lightgrey';
+		// o.style.borderBottom	= '1px solid lightgrey';
 		o.style.margin			= '1px';
 		o.innerHTML = ('00' + sotd.getDate() ).slice(-2);
 		calen.appendChild( o );
 		sotd.setDate( sotd.getDate() + 1 );
-		if ( sotd.getMonth() > today.getMonth() && sotd.getDay() == 0 )break;
+		if ( sotd.getFullYear() + ('00' + sotd.getMonth() ).slice(-2) 
+			 > sotm.getFullYear() + ('00' + sotm.getMonth() ).slice(-2) && sotd.getDay() == 0 )break;
 	}
 }
 
@@ -2659,8 +2727,8 @@ function flipChildrenToolBar(){
 	var r = '';
 	r += '<div style="pointer-events:auto;margin:0 auto;width:190px;height:40px;padding:4px;background-color:#EDEDED;border-radius:8px;" >';
 		r += '<button type="button" class="workplace_edit_button"     cmd="edit"    ></button>';
-		r += '<button type="button" class="workplace_delete_button"   cmd="delete"  ></button>';
 		r += '<button type="button" class="workplace_history_button"  cmd="history" ></button>';	
+		r += '<button type="button" class="workplace_delete_button"   cmd="delete"  ></button>';
 	r += '</div>';
 	o.innerHTML = r;
 	var tb = p.appendChild( o );

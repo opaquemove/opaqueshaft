@@ -42,14 +42,14 @@
 
 }
 .deselectedmenu{
-    color:#EDEDED;
+    color:                  lightgrey;
     border-bottom: 2px solid white;
 }
 .selectedmenu{
     color:black;
     border-bottom: 2px solid black;
 }
-#WORKPLACE_BIRDSEYEVIEW{
+/* #WORKPLACE_BIRDSEYEVIEW{
     pointer-events:         all;
     position:               fixed;
     top:                    0px;
@@ -59,7 +59,7 @@
     display:                flex;
     background-color:       transparent;
     opacity:                0.8;
-}
+} */
 
 #WORKPLACE_TAB{
     pointer-events:         all;
@@ -162,7 +162,8 @@
     top:                    0px;
     left:                   0px;
     width:                  100%;
-    height:                 100%;
+    height:                 calc(100% - 48px);
+    padding-top:            48px;
     display:                inline;
     overflow:               hidden;
     font-size:              16px;
@@ -210,7 +211,7 @@
     border-radius:          0px;
     font-size:              12px;
     color:                  dimgray;
-    background-color:       #EDEDED;
+    background-color:       rgb(254, 254, 254);
     text-align:             right;
     margin:                 2px;
     padding:                2px;
@@ -289,11 +290,12 @@
     top:                    0px;
     left:                   0px;
     width:                  auto;   /* calc(100% - 48px); */
-    height:                 100%;
+    height:                 calc(100% - 48px);
     overflow:               hidden;
     font-size:              16px;
     background-color:       #EDEDED;
     border-radius:          0px;
+    padding-top:            48px;
     text-align:             center;
     /* visibility:             hidden; */
 }
@@ -369,10 +371,11 @@
     top:                    0px;    /* resize */
     left:                   0px;    /* resize */
     width:                  auto;   /*calc(100% - 48px); */
-    height:                 100%;
+    height:                 calc(100% - 48px);
     overflow:               hidden;
     font-size:              16px;
     background-color:       #EDEDED;
+    padding-top:            48px;
     border-radius:          0px;
     text-align:             center;
     /* visibility:             hidden; */
@@ -415,10 +418,11 @@
     top:                    0px;    /* resize */
     left:                   0px;    /* resize */
     width:                  auto;   /* 100%; */
-    height:                 100%;
+    height:                 calc(100% - 48px);
     overflow:               hidden;
     font-size:              16px;
     background-color:       #EDEDED;
+    padding-top:            48px;
     text-align:             center;
     /* visibility:             hidden; */
 }
@@ -528,10 +532,11 @@
     top:                    0px;    /* resize */
     left:                   0px;    /* resize */
     width:                  auto;   /* 100%; */
-    height:                 100%;
+    height:                 calc(100% - 48px);
     overflow:               hidden;
     font-size:              16px;
     background-color:       #EDEDED;
+    padding-top:            48px;
     border-bottom:          gray;
     text-align:             center;
     /* visibility:             hidden; */
