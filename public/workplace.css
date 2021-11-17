@@ -339,11 +339,11 @@
     display:                flex;
     overflow:               scroll;
 }
-#CALENDAR_DETAIL_HDR{
+/* #CALENDAR_DETAIL_HDR{
     font-size:              12px;
     font-weight:            bold;
     color:                  gray;
-}
+} */
 #CALENDAR_DETAIL{
     /* float:                  ; */
     position:               relative;

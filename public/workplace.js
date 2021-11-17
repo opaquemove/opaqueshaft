@@ -69,18 +69,18 @@ function initWorkplace(){
 	document.getElementById('WORKPLACE_HDR').addEventListener(
 		'click', function(e){
 			switch( e.target.id ){
-				case 'WP_WHITEBOARD':
-					workplaceWhiteboard();
-					break;
-				case 'WP_CHILDREN':
-					workplaceChildren();
-					break;
-				case 'WP_RANGE':
-					workplaceRange();
-					break;
-				case 'WP_ACCOUNT':
-					workplaceAccount();
-					break;
+				// case 'WP_WHITEBOARD':
+				// 	workplaceWhiteboard();
+				// 	break;
+				// case 'WP_CHILDREN':
+				// 	workplaceChildren();
+				// 	break;
+				// case 'WP_RANGE':
+				// 	workplaceRange();
+				// 	break;
+				// case 'WP_ACCOUNT':
+				// 	workplaceAccount();
+				// 	break;
 				case 'WORKPLACE_HDR':
 				case 'WORKPLACE_SUMMARY':
 					var signin = document.getElementById('WP_SIGNIN');
@@ -681,7 +681,7 @@ function signoutMotion( e ){
 function openingSignoutMotion( e ){
 	var opt = this.getElementsByClassName('option');
 	if ( opt.length == 0 ){		//	opening transition
-		this.style.zIndex = 1;
+		// this.style.zIndex = 1;
 		var o = document.createElement('DIV');
 		o.classList.add('option');
 		// o.classList.add('signMotionOff');
@@ -882,11 +882,6 @@ function workplaceReset(){
 	workplace_id = null;
 	var menu	= document.getElementById('WORKPLACE_MENU');
 	// var icon	= document.getElementById('WORKPLACE_ICON');
-	var hdr		= document.getElementById('WORKPLACE_HDR');
-	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
-	var children= document.getElementById('WORKPLACE_CHILDREN');
-	var range	= document.getElementById('WORKPLACE_RANGE');
-	var account	= document.getElementById('WORKPLACE_ACCOUNT');
 	var signin	= document.getElementById('WP_SIGNIN');
 	var signout	= document.getElementById('WP_SIGNOUT');
 
@@ -895,13 +890,8 @@ function workplaceReset(){
 	// bf.style.left		= '0px';
 
 
-	// if ( icon.style.height == '0px'){
-	// 	menu.style.display	= 'inline';
-	// } else {
-	// 	menu.style.display	= 'none';
-	// }
-
 	menu.style.display		= 'inline';
+	menu.style.top			= '0px';
 
 	//	TAB
 	var tab = document.getElementById('TAB_OPAQUESHAFT');
@@ -935,22 +925,18 @@ function resizeWorkplace(){
 	var wb			= document.getElementById('WORKPLACE_WHITEBOARD');
 	var wpwh		= document.getElementById('WORKPLACE_WHITEBOARD_HDR').offsetHeight;
 	var wpwm		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
-	var wlist		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
 	var children	= document.getElementById('WORKPLACE_CHILDREN');
 	var wpch		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
 	var wpcm		= document.getElementById('WORKPLACE_CHILDREN_MAIN');
-	var clist		= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 
 	var range		= document.getElementById('WORKPLACE_RANGE');
 	var wprh		= document.getElementById('WORKPLACE_RANGE_HDR').offsetHeight;
 	var wprm		= document.getElementById('WORKPLACE_RANGE_MAIN');
-	var rlist		= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
 
 	var account		= document.getElementById('WORKPLACE_ACCOUNT');
 	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
 	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
-	var alist		= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
 	console.log( 'resizeWorkplace' );
 	console.log( 'bottom overlay width:' + w );
@@ -1041,13 +1027,6 @@ function workplaceWhiteboard(){
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
 	
-	// if ( icon.style.height == '0px'){
-	// 	menu.style.display	= 'inline';
-	// } else {
-	// 	icon.setAttribute('orgHeight', icon.style.height );
-	// 	menu.style.display	= 'none';
-	// }
-
 	resizeWorkplace();
 	// children.style.height = '0px';
 	if ( !list.hasChildNodes() ) list.innerHTML = '';
@@ -1452,12 +1431,12 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					var weekname = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI','SAT'];
 					// var o = document.getElementById('WHITEBOARD_LIST');
 					p.innerText = '';
-					var t_calen = document.createElement('DIV');
-					t_calen.setAttribute('id', 'CALENDAR_AREA');
-					t_calen.style.width	= '100%';
-					t_calen.style.height	= 'auto';
-					p.appendChild( t_calen );
-					calendarGadget('CALENDAR_AREA', new Date( sotd ).getTime() );
+					// var t_calen = document.createElement('DIV');
+					// t_calen.setAttribute('id', 'CALENDAR_AREA');
+					// t_calen.style.width	= '100%';
+					// t_calen.style.height	= 'auto';
+					// p.appendChild( t_calen );
+					// calendarGadget('CALENDAR_AREA', new Date( sotd ).getTime() );
 
 					var day = new Date( sotd );
 					m = day.getMonth();
@@ -1486,7 +1465,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 
 					}
 
-					var ca = document.getElementById('CALENDAR_AREA');
+					// var ca = document.getElementById('CALENDAR_AREA');
 					for ( var i=0; i<result.length; i++ ){
 
 						var day = new Date( result[i].day );
@@ -1502,15 +1481,15 @@ function makeWhiteboardListScope( p, sotd, eotd )
 							var detail = dd[0].getElementsByClassName( 'detail' )[0];
 							detail.innerHTML = 'Description:' + description + '<br/>Children:' + c_children + '<br/>checkouts:' + c_checkout;
 						}
-						dd = ca.getElementsByClassName('calendar_day_' + day.getDate() );
-						if ( dd.length != 0 ){
-							dd[0].style.fontWeight			= 'bold';
-							dd[0].style.backgroundImage 	= 'url(./images/checked-symbol.png)';
-							dd[0].style.backgroundSize		= '10px';
-							dd[0].style.backgroundRepeat	= 'no-repeat';
-							dd[0].style.backgroundPosition	= 'center center';
+						// dd = ca.getElementsByClassName('calendar_day_' + day.getDate() );
+						// if ( dd.length != 0 ){
+						// 	dd[0].style.fontWeight			= 'bold';
+						// 	dd[0].style.backgroundImage 	= 'url(./images/checked-symbol.png)';
+						// 	dd[0].style.backgroundSize		= '10px';
+						// 	dd[0].style.backgroundRepeat	= 'no-repeat';
+						// 	dd[0].style.backgroundPosition	= 'center center';
 
-						}
+						// }
 					}
 
 					//
@@ -1566,8 +1545,10 @@ function workplaceChildren(){
 	var bf= document.getElementById('BOTTOM_FRAME');
 	// bf.style.transform	= 'translateX(' + ( -w * 2 ) + 'px)';
 	// bf.style.left		= '200%';
-	children.style.top		= '0px';
+	children.style.top			= '0px';
 	children.style.transition	= 'all 0.4s ease-in-out';
+	// menu.style.top				= ( - menu.offsetHeight ) + 'px';
+	// menu.style.transition		= 'all 0.4s ease-in-out';
 
 
 
