@@ -330,16 +330,14 @@ function calendarGadget( id, serial ){
 	var month = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 	var week  = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ];	
 	var o = document.createElement('DIV');
-	o.style.width			= 'calc(100% - 2px)';
-	o.style.height			= '14px';
+	o.style.width			= 'calc(100% - 0px)';
+	o.style.height			= '18px';
 	// o.style.textAlign		= 'center';
 	o.style.color			= 'white';
 	o.style.backgroundColor	= 'darkorange';
 	o.style.padding			= '2px 0px';
 	var r = '';
 	r += '<div style="float:left;padding-left:4px;" >' + month[ sotd.getMonth() ] + '.' + sotd.getFullYear() + '</div>';
-	// r += '<div class="calen_next" style="float:right;padding:0px 4px;" onclick="calendarGadget( null,' + next_ym + ');" >&gt;</div>';
-	// r += '<div class="calen_prev" style="float:right;padding:0px 4px;" onclick="calendarGadget( null,' + prev_ym + ');" >&lt;</div>';
 	r += '<div class="calen_next" style="float:right;padding:0px 4px;"  >&gt;</div>';
 	r += '<div class="calen_prev" style="float:right;padding:0px 4px;"  >&lt;</div>';
 	o.innerHTML			= r;
@@ -352,14 +350,15 @@ function calendarGadget( id, serial ){
 	);
 
 	o = document.createElement('DIV');
-	o.style.width			= 'calc(100% - 2px)';
-	o.style.height			= ( w + 2) + 'px';
+	o.style.width			= 'calc(100% - 0px)';
+	o.style.height			= '18px';
+	o.style.clear			= 'both';
 	o.style.color			= 'white';
 	o.style.backgroundColor	= 'darkorange';
 	// o.style.border	= '1px solid lightgrey';
 	r = '';
 	for ( var i=0; i<week.length; i++ ){
-		r += '<div style="float:left;text-align:center;font-weight:bold;width:' + w + 'px;height:' + (w-4) + 'px;font-size:8px;padding-top:4px;border-bottom:1px solid lightgrey;margin:1px;" >' + week[i] + '</div>';
+		r += '<div style="float:left;text-align:center;font-weight:bold;width:' + w + 'px;font-size:8px;padding-top:4px;margin:1px;" >' + week[i] + '</div>';
 	}
 	o.innerHTML		= r;
 	calen.appendChild( o );
@@ -381,9 +380,11 @@ function calendarGadget( id, serial ){
 		o.style.float 			= 'left';
 		o.style.width			= w + 'px';
 		o.style.height			= w + 'px';
-		o.style.fontSize		= '12px';
+		o.style.fontSize		= '14px';
 		o.style.textAlign		= 'center';
-		o.style.color			= ( sotd.getMonth() == cur_month )? 'gray':'#EDEDED';
+		o.style.color			= ( sotd.getMonth() == cur_month )? 'gray':'#DDDDDD';
+		if ( sotd.getMonth() == sotm.getMonth() )
+			o.classList.add( 'calendar_day_'+ sotd.getDate() );
 		// o.style.borderBottom	= '1px solid lightgrey';
 		o.style.margin			= '1px';
 		o.innerHTML = ('00' + sotd.getDate() ).slice(-2);
@@ -1485,6 +1486,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 
 					}
 
+					var ca = document.getElementById('CALENDAR_AREA');
 					for ( var i=0; i<result.length; i++ ){
 
 						var day = new Date( result[i].day );
@@ -1499,6 +1501,15 @@ function makeWhiteboardListScope( p, sotd, eotd )
 							var description		= result[i].description;
 							var detail = dd[0].getElementsByClassName( 'detail' )[0];
 							detail.innerHTML = 'Description:' + description + '<br/>Children:' + c_children + '<br/>checkouts:' + c_checkout;
+						}
+						dd = ca.getElementsByClassName('calendar_day_' + day.getDate() );
+						if ( dd.length != 0 ){
+							dd[0].style.fontWeight			= 'bold';
+							dd[0].style.backgroundImage 	= 'url(./images/checked-symbol.png)';
+							dd[0].style.backgroundSize		= '10px';
+							dd[0].style.backgroundRepeat	= 'no-repeat';
+							dd[0].style.backgroundPosition	= 'center center';
+
 						}
 					}
 
