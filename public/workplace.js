@@ -170,7 +170,7 @@ function initWorkplace(){
 	
 	showWorkPlace();
 
-	calendarGadget( null );
+	calendarGadget( 'WP_EMPTY', null );
 	hoge();
 
 	// resizeWorkplace();
@@ -304,10 +304,11 @@ function hoge(){
 	);
 }
 
-function calendarGadget( serial ){
+function calendarGadget( id, serial ){
 
+	console.log('calendar id:' + id );
 	console.log('serial:' + serial );
-	var calen = document.getElementById('WP_EMPTY');
+	var calen = document.getElementById( id );
 	calen.innerHTML = '';
 
 	var w = Math.floor( calen.offsetWidth / 7 ) - 3;
@@ -337,10 +338,19 @@ function calendarGadget( serial ){
 	o.style.padding			= '2px 0px';
 	var r = '';
 	r += '<div style="float:left;padding-left:4px;" >' + month[ sotd.getMonth() ] + '.' + sotd.getFullYear() + '</div>';
-	r += '<div style="float:right;padding:0px 4px;" onclick="calendarGadget(' + next_ym + ');" >&gt;</div>';
-	r += '<div style="float:right;padding:0px 4px;" onclick="calendarGadget(' + prev_ym + ');" >&lt;</div>';
+	// r += '<div class="calen_next" style="float:right;padding:0px 4px;" onclick="calendarGadget( null,' + next_ym + ');" >&gt;</div>';
+	// r += '<div class="calen_prev" style="float:right;padding:0px 4px;" onclick="calendarGadget( null,' + prev_ym + ');" >&lt;</div>';
+	r += '<div class="calen_next" style="float:right;padding:0px 4px;"  >&gt;</div>';
+	r += '<div class="calen_prev" style="float:right;padding:0px 4px;"  >&lt;</div>';
 	o.innerHTML			= r;
-	calen.appendChild( o );
+	var calen2 = calen.appendChild( o );
+	calen2.getElementsByClassName('calen_prev')[0].addEventListener(
+		'click', function(){ calendarGadget( id, prev_ym )}
+	);
+	calen2.getElementsByClassName('calen_next')[0].addEventListener(
+		'click', function(){ calendarGadget( id, next_ym )}
+	);
+
 	o = document.createElement('DIV');
 	o.style.width			= 'calc(100% - 2px)';
 	o.style.height			= ( w + 2) + 'px';
@@ -1061,22 +1071,11 @@ function workplaceWhiteboardHelper(){
 
 	p.innerHTML = r;
 
-	// var ct_height = document.getElementById('CALENDAR_TOOLBAR').offsetHeight;
-	// var cl_height = document.getElementById('CALENDAR_LIST').offsetHeight + 6;
-	// var cdh_height = document.getElementById('CALENDAR_DETAIL_HDR').offsetHeight + 4;
 	var offset = 0 ;
 	var calen_detail = document.getElementById('CALENDAR_DETAIL');
 	calen_detail.style.height = 'calc(100% - ' + offset + 'px)';
 
 
-	// document.getElementById('CALENDAR_LIST').addEventListener('gesturestart',
-	// function(e){
-	// 	e.stopPropagation();	// スクロールジェスチャ抑制
-	// } );
-	// document.getElementById('CALENDAR_LIST').addEventListener('gestureend',
-	// function(e){
-	// 	e.stopPropagation();	// スクロールジェスチャ抑制
-	// } );
 	document.getElementById('TAB_OPTION').addEventListener('click',
 	function(e) {
 		var o = e.target;
@@ -1452,6 +1451,13 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					var weekname = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI','SAT'];
 					// var o = document.getElementById('WHITEBOARD_LIST');
 					p.innerText = '';
+					var t_calen = document.createElement('DIV');
+					t_calen.setAttribute('id', 'CALENDAR_AREA');
+					t_calen.style.width	= '100%';
+					t_calen.style.height	= 'auto';
+					p.appendChild( t_calen );
+					calendarGadget('CALENDAR_AREA', new Date( sotd ).getTime() );
+
 					var day = new Date( sotd );
 					m = day.getMonth();
 					// var cnt = 0;
