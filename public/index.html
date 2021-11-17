@@ -28,7 +28,7 @@
 	<div id="BOTTOM_OVERLAY" class="not_select toolbar_hidden" >
 		<div id="BOTTOM_FRAME" class="not_select" style="color:dimgray;">
 			<div id="WORKPLACE_MENU" >
-				<div ID="WORKPLACE_ICON" >
+				<!-- <div ID="WORKPLACE_ICON" >
 					<div style="position:absolute;top:20px;left:10px;
 							width:60px;height:30px;
 							background-color:lightgrey;border-radius: 10px;
@@ -58,28 +58,29 @@
 							width:60px;height:30px;
 							background-color:red;border-radius: 10px;
 							transform:rotate(-133deg);" ></div>
-				</div>
+				</div> -->
 				<div id="WORKPLACE_HDR" >	<!--  100% * auto-->
 					<div id="WORKPLACE_SUMMARY" > 		<!-- 70% * 70% -->
-						<div id="WP_TEST"       class="summary_box" style="width:23%;height:23%;font-weight:bold;display:block;transition: transform 0.5s ease-in-out;" >TEST</div>
-						<div id="WP_EMPTY"      class="summary_box" style="width:46%;height:46%;" ></div>
-						<div id="WP_CONTENT"    class="summary_box" style="width:23%;height:23%;font-weight:bold;" >CONTENTS</div>
-						<div id="WP_WHITEBOARD" class="summary_box" style="width:23%;height:23%;font-weight:bold;font-size:12px;" >DAY</div>					
-						<div id="WP_CHILDREN"   class="summary_box" style="width:23%;height:23%;font-weight:bold;" >CHILDREN</div>
-						<div id="WP_RANGE"      class="summary_box" style="width:23%;height:23%;font-weight:bold;" >RANGE</div>
-						<div id="WP_ACCOUNT"    class="summary_box" style="width:23%;height:23%;font-weight:bold;" >ACCOUNT</div>
-						<div id="WP_SIGNIN"     class="summary_box" style="width:23%;height:23%;font-weight:bold;display:block;transition: transform 0.5s ease-in-out;" >SIGN IN</div>
-						<div id="WP_SIGNOUT"    class="summary_box" style="width:23%;height:23%;font-weight:bold;display:block;transition: transform 0.5s ease-in-out;" >SIGN OUT</div>
+						<div id="WP_TEST"       class="summary_box" style="width:86px;height:86px;font-weight:bold;display:block;transition: transform 0.5s ease-in-out;" >TEST</div>
+						<div id="WP_EMPTY"      class="summary_box" style="width:46%;height:46%;" ></div> <!-- 23% default-->
+						<div id="WP_CONTENT"    class="summary_box" style="width:86px;height:86px;font-weight:bold;" >CONTENTS</div>
+						<div id="WP_WHITEBOARD" class="summary_box" style="width:86px;height:86px;font-weight:bold;font-size:12px;" >DAY</div>					
+						<div id="WP_CHILDREN"   class="summary_box" style="width:86px;height:86px;font-weight:bold;" >CHILDREN</div>
+						<div id="WP_RANGE"      class="summary_box" style="width:86px;height:86px;font-weight:bold;" >RANGE</div>
+						<div id="WP_ACCOUNT"    class="summary_box" style="width:86px;height:86px;font-weight:bold;" >ACCOUNT</div>
+						<div id="WP_SIGNIN"     class="summary_box" style="width:86px;height:86px;font-weight:bold;display:block;transition: transform 0.5s ease-in-out;" >SIGN IN</div>
+						<div id="WP_SIGNOUT"    class="summary_box" style="width:86px;height:86px;font-weight:bold;display:block;transition: transform 0.5s ease-in-out;" >SIGN OUT</div>
+						<div id=""              class="summary_box" style="width:278px;height:86px;" ></div>
 					</div>
 				</div>
 			</div>
 
 			<div id="WORKPLACE_WHITEBOARD" >	<!-- 100% * 0px -->
 				<div id="WORKPLACE_WHITEBOARD_HDR" >
-					<div class="MENU_OPAQUESHAFT" onclick="workplaceReset();" ></div>
-					<div style="float: left;width:120px;height: 100%;" >
+					<!-- <div class="MENU_OPAQUESHAFT" onclick="workplaceReset();" ></div> -->
+					<!-- <div style="float: left;width:120px;height: 100%;" >
 						<div style="width:60px;height:60px;font-weight:bold;padding:14px 10px;" >WHITEBOARD</div>
-					</div>
+					</div> -->
 					<div style="float: left;height:100%;" >
 						<div style="padding:6px 4px 0px 0px;">
 							<button  class="workplace_button_small"
@@ -108,10 +109,10 @@
 
 			<div id="WORKPLACE_CHILDREN" >		<!--  100% * 0px -->
 				<div id="WORKPLACE_CHILDREN_HDR" >
-					<div class="MENU_OPAQUESHAFT" onclick="workplaceReset();"></div>
-					<div style="float: left;width:120px;height: 100%;" >
+					<!-- <div class="MENU_OPAQUESHAFT" onclick="workplaceReset();"></div> -->
+					<!-- <div style="float: left;width:120px;height: 100%;" >
 						<div style="width:60px;height:60px;font-weight:bold;padding:14px 10px;" >CHILDREN</div>
-					</div>
+					</div> -->
 					<div style="float:left;height:80px;" >
 					</div>
 					<div style="float:left;height:48px;padding:3px 4px 0px 4px;" >
@@ -134,10 +135,10 @@
 
 			<div id="WORKPLACE_RANGE" >		<!--  100% * 0px -->
 				<div id="WORKPLACE_RANGE_HDR" >
-					<div class="MENU_OPAQUESHAFT" onclick="workplaceReset();"></div>
-					<div style="float: left;width:120px;height: 100%;" >
+					<!-- <div class="MENU_OPAQUESHAFT" onclick="workplaceReset();"></div> -->
+					<!-- <div style="float: left;width:120px;height: 100%;" >
 						<div style="width:60px;height:60px;font-weight:bold;padding:14px 10px;" >RANGE</div>
-					</div>
+					</div> -->
 					<div style="float:left;height:48px;padding-top:14px;" >
 						<form  onsubmit="return false;" >
 							<input type="text" id="WP_RANGE_ID" name="WP_RANGE_ID" autocomplete="off" style="width:120px;height:24px;font-size:14px;background-color:#EDEDED;border:1px solid #EDEDED;box-sizing: border-box;padding:2px 4px 2px 18px;border-radius: 8px;outline:none;background-image:url(./images/annual-calendar-page.png);background-size:10px;background-repeat: no-repeat;background-position: left 4px center;"" />
@@ -158,10 +159,10 @@
 
 			<div id="WORKPLACE_ACCOUNT" >		<!--  100% * 0px -->
 				<div id="WORKPLACE_ACCOUNT_HDR" >
-					<div class="MENU_OPAQUESHAFT" onclick="workplaceReset();" ></div>
-					<div style="float: left;width:120px;height: 100%;" >
+					<!-- <div class="MENU_OPAQUESHAFT" onclick="workplaceReset();" ></div> -->
+					<!-- <div style="float: left;width:120px;height: 100%;" >
 						<div style="width:60px;height:40px;font-weight:bold;padding:14px 10px;" >ACCOUNT</div>
-					</div>
+					</div> -->
 					<div style="float:left;height:48px;" >
 					</div>
 					<div style="float:left;height:40px;padding:4px 4px;" >
@@ -200,8 +201,8 @@
 		</div> -->
 		<div id="WORKPLACE_HEADER" >
 			<div id="WPH_SIGN"               style="float:left;width:48px;height:48px;" ></div>
-			<div id="WPH_OPAQUESHAFT_ADMIN"  cmd="admin"    class="selectedmenu"   style="float:left;height:28px;padding-top:18px;" >OPAQUESHAFT ADMIN</div>
-			<div id="WPH_DAY"                cmd="day"      class="deselectedmenu" style="float:left;height:28px;padding:18px 12px 0px 12px;font-size:10px;font-weight:bold;" >DAY</div>
+			<div id="WPH_OPAQUESHAFT_ADMIN"  cmd="admin"    class="deselectedmenu" style="" >OPAQUESHAFT ADMIN</div>
+			<div id="WPH_DAY"                cmd="day"      class="deselectedmenu"  >DAY</div>
 			<div id="WPH_CHILDREN"           cmd="children" class="deselectedmenu" style="float:left;height:28px;padding:18px 12px 0px 12px;font-size:10px;font-weight:bold;" >CHILDREN</div>
 			<div id="WPH_RANGE"              cmd="range"    class="deselectedmenu" style="float:left;height:28px;padding:18px 12px 0px 12px;font-size:10px;font-weight:bold;" >RANGE</div>
 			<div id="WPH_ACCOUNT"            cmd="account"  class="deselectedmenu" style="float:left;height:28px;padding:18px 12px 0px 12px;font-size:10px;font-weight:bold;" >ACCOUNT</div>

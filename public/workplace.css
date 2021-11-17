@@ -25,20 +25,31 @@
     width:                  calc(100% - 48px);
     height:                 48px;
     background-color:       white;
-    opacity:                0.7;
+    visibility:             hidden;
+    opacity:                0.8;
 }
 #WPH_OPAQUESHAFT_ADMIN{
-    float:left;
-    height:24px;
-    padding-top:12px;
-    padding-left:24px;
-    padding-right:12px;
-    font-size:10px;
-    font-weight:bold;
+    float:                  left;
+    height:                 28px;
+    padding:                18px 16px 0px 18px;
+    font-size:              10px;
+    font-weight:            bold;
     background-image:       url(./images/homepage.png);
     background-size:        12px;
     background-repeat:      no-repeat;
     background-position:    left center;
+
+}
+#WPH_DAY{
+    float:                  left;
+    height:                 28px;
+    padding:                18px 16px 0px 18px;
+    font-size:              10px;
+    font-weight:            bold;
+    /* background-image:       url(./images/management.png);
+    background-size:        12px;
+    background-repeat:      no-repeat;
+    background-position:    left center; */
 
 }
 .deselectedmenu{
@@ -170,7 +181,7 @@
     background-color:       white;
 }
 
-#WORKPLACE_ICON{
+/* #WORKPLACE_ICON{
     margin:                 0 auto;
     position:               relative;
     width:                  160px;
@@ -178,13 +189,12 @@
     overflow:               hidden;
     padding-bottom:         0px;
     border:                 0px solid lightgrey;
-    /* transition:             height 0.3s ease-in-out; */
-}
+} */
 
 #WORKPLACE_HDR{
     position:               relative;
     width:                  100%;
-    height:                 auto;
+    height:                 100%;
     overflow:               auto;
     /* border-bottom:1px solid lightgrey; */
     text-align:             center;
@@ -195,7 +205,7 @@
 #WORKPLACE_SUMMARY{
     margin:                 0 auto;
     width:                  375px;    /*375px; */
-    height:                 375px;
+    height:                 auto;
     overflow:               visible;
 	display:				flex;
 	flex-wrap:				wrap;

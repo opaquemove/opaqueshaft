@@ -6,9 +6,9 @@ function initWorkplace(){
 	var hdr = document.getElementById('WORKPLACE_HDR');
 	hdr.setAttribute( 'orgHeight', hdr.offsetHeight + 'px' );
 
-	//
-	document.getElementById('WORKPLACE_HEADER').addEventListener(
-		'click', selectWorkplaceHeader, false );
+	// init WORKPLACE_HEADER
+	initWorkplaceHeader();
+
 
 
 	// test code
@@ -26,10 +26,8 @@ function initWorkplace(){
 			console.log('test');
 		}
 	);
-	// document.getElementById('TAB_OPAQUESHAFT').addEventListener(
-	// 	'click', workplaceReset );
-	document.getElementById('WORKPLACE_ICON').addEventListener(
-		'click', birdsEyeView );
+	// document.getElementById('WORKPLACE_ICON').addEventListener(
+	// 	'click', birdsEyeView );
 		
     document.getElementById('WP_KEYWORD').addEventListener(
 		'keyup',
@@ -186,15 +184,19 @@ function initWorkplace(){
 	// observer.observe( bf, { attributes: true });
 
 }
+function initWorkplaceHeader(){
+
+	document.getElementById('WORKPLACE_HEADER').addEventListener(
+		'click', selectWorkplaceHeader, false );
+	if ( checkSign()){
+		selectWorkplaceHeaderHepler('admin');
+	} else{
+
+	}
+
+}
 
 function selectWorkplaceHeader( e ){
-	var toolbar = {
-		admin: 		document.getElementById('WPH_OPAQUESHAFT_ADMIN'),
-		day:		document.getElementById('WPH_DAY'),
-		children:	document.getElementById('WPH_CHILDREN'),
-		range:		document.getElementById('WPH_RANGE'),
-		account:	document.getElementById('WPH_ACCOUNT')
-	}
 
 	var o = e.target;
 	while ( true ){
@@ -203,7 +205,20 @@ function selectWorkplaceHeader( e ){
 		if ( o.hasAttribute('cmd')) break;
 		o = o.parentNode;
 	}
-	switch ( o.getAttribute('cmd' )){
+
+	selectWorkplaceHeaderHepler( o.getAttribute('cmd'));
+}
+
+function selectWorkplaceHeaderHepler( cmd ){
+	var toolbar = {
+		admin: 		document.getElementById('WPH_OPAQUESHAFT_ADMIN'),
+		day:		document.getElementById('WPH_DAY'),
+		children:	document.getElementById('WPH_CHILDREN'),
+		range:		document.getElementById('WPH_RANGE'),
+		account:	document.getElementById('WPH_ACCOUNT')
+	}
+
+	switch ( cmd ){
 		case 'admin':
 			Object.keys(toolbar).forEach( function(key){
 				if ( toolbar[key].classList.contains('selectedmenu')){
@@ -247,6 +262,7 @@ function selectWorkplaceHeader( e ){
 			workplaceAccount();
 			break;
 	}
+
 }
 
 function hoge(){
@@ -278,6 +294,7 @@ function hoge(){
 							else
 							r += '<div style="width:100%;height:100%;border-radius:50%;background-image:url(./images/user-2.png);background-size:cover;background-position:center center;background-repeat:no-repeat;" ></div>';
 						o.innerHTML = r;
+						menu.innerHTML	= '';
 						menu.appendChild( o );
 					
 					}
@@ -374,6 +391,7 @@ function showWorkPlace(){
 
 	closeModalDialog();
 
+
 	//	OPAQUESHAFT_TITLE表示制御
 	var opaqueshaft_title = document.getElementById('OPAQUESHAFT_TITLE');
 	opaqueshaft_title.style.visibility = ( openWhiteboardFlg )? 'visible' : 'hidden';
@@ -381,6 +399,7 @@ function showWorkPlace(){
 	var bo		= document.getElementById('BOTTOM_OVERLAY');
 	bo.style.visibility		= 'visible';
 
+	var wph				= document.getElementById('WORKPLACE_HEADER');
 	var wp_test			= document.getElementById('WP_TEST');
 	var wp_empty		= document.getElementById('WP_EMPTY');
 	var wp_content		= document.getElementById('WP_CONTENT');
@@ -401,9 +420,10 @@ function showWorkPlace(){
 
 	if ( checkSign() ){
 		// signed
-		bo.style.overflow	= 'hidden';	// scroll
-		bf.style.width		= '100%';
-		bf.style.overflow	= 'auto';
+		wph.style.visibility			= 'visible';
+		bo.style.overflow				= 'hidden';	// scroll
+		bf.style.width					= '100%';
+		bf.style.overflow				= 'auto';
 		wp_signin.setAttribute( 'disabled', 'true' );
 		wp_whiteboard.removeAttribute( 'disabled' );
 		wp_children.removeAttribute( 'disabled' );
@@ -424,11 +444,16 @@ function showWorkPlace(){
 		if ( opt.length > 0 ){
 			opt[0].parentNode.removeChild( opt[0] );
 		}
+
+		// selectWorkplaceHeaderHepler('admin');
+		hoge();
+
 	} else {
 		// not sign
-		bo.style.overflow	= 'hidden';
-		bf.style.width		= '100%';
-		bf.style.overflow	= 'hidden';
+		wph.style.visibility			= 'hidden';
+		bo.style.overflow				= 'hidden';
+		bf.style.width					= '100%';
+		bf.style.overflow				= 'hidden';
 		wp_signin.removeAttribute( 'disabled' );
 		wp_signout.setAttribute( 'disabled', 'true' );
 		wp_whiteboard.setAttribute( 'disabled', 'true' );
@@ -845,7 +870,7 @@ function workplaceReset(){
 
 	workplace_id = null;
 	var menu	= document.getElementById('WORKPLACE_MENU');
-	var icon	= document.getElementById('WORKPLACE_ICON');
+	// var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
@@ -859,12 +884,11 @@ function workplaceReset(){
 	// bf.style.left		= '0px';
 
 
-	if ( icon.style.height == '0px'){
-		menu.style.display	= 'inline';
-	} else {
-		// icon.setAttribute('orgHeight', icon.style.height );
-		menu.style.display	= 'none';
-	}
+	// if ( icon.style.height == '0px'){
+	// 	menu.style.display	= 'inline';
+	// } else {
+	// 	menu.style.display	= 'none';
+	// }
 
 	menu.style.display		= 'inline';
 
@@ -974,7 +998,7 @@ function workplaceWhiteboard(){
 	guidedance_whiteboard_form.day.value = '';
 
 	var menu	= document.getElementById('WORKPLACE_MENU');
-	var icon	= document.getElementById('WORKPLACE_ICON');
+	// var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
@@ -1006,16 +1030,12 @@ function workplaceWhiteboard(){
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
 	
-	if ( icon.style.height == '0px'){
-		// icon.style.height	= icon.getAttribute('orgHeight');
-		// hdr.style.height	= hdr.getAttribute('orgHeight');
-		menu.style.display	= 'inline';
-	} else {
-		icon.setAttribute('orgHeight', icon.style.height );
-		// icon.style.height	= '0px';
-		// hdr.style.height	= '0px';
-		menu.style.display	= 'none';
-	}
+	// if ( icon.style.height == '0px'){
+	// 	menu.style.display	= 'inline';
+	// } else {
+	// 	icon.setAttribute('orgHeight', icon.style.height );
+	// 	menu.style.display	= 'none';
+	// }
 
 	resizeWorkplace();
 	// children.style.height = '0px';
@@ -1518,7 +1538,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 function workplaceChildren(){
 	workplace_id = 'CHILDREN';
 	var menu	= document.getElementById('WORKPLACE_MENU');
-	var icon	= document.getElementById('WORKPLACE_ICON');
+	// var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
@@ -1548,16 +1568,11 @@ function workplaceChildren(){
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
 
-	if ( icon.style.height == '0px'){
-		// icon.style.height		= icon.getAttribute('orgHeight');
-		// hdr.style.height		= hdr.getAttribute('orgHeight');
-		menu.style.display		= 'inline';
-	} else {
-		// icon.setAttribute('orgHeight', icon.style.height );
-		// icon.style.height		= '0px';
-		// hdr.style.height		= '0px';
-		menu.style.display		= 'none';
-	}
+	// if ( icon.style.height == '0px'){
+	// 	menu.style.display		= 'inline';
+	// } else {
+	// 	menu.style.display		= 'none';
+	// }
 
 	resizeWorkplace();
 
@@ -1572,7 +1587,7 @@ function workplaceChildren(){
 function workplaceRange(){
 	workplace_id = 'RANGE';
 	var menu	= document.getElementById('WORKPLACE_MENU');
-	var icon	= document.getElementById('WORKPLACE_ICON');
+	// var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var range	= document.getElementById('WORKPLACE_RANGE');
 	// var list	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
@@ -1597,22 +1612,15 @@ function workplaceRange(){
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
 
-	if ( icon.style.height == '0px'){
-		// icon.style.height		= icon.getAttribute('orgHeight');
-		// hdr.style.height		= hdr.getAttribute('orgHeight');
-		menu.style.display		= 'inline';
-	} else {
-		// icon.setAttribute('orgHeight', icon.style.height );
-		// icon.style.height		= '0px';
-		// hdr.style.height		= '0px';
-		menu.style.display		= 'none';
-	}
+	// if ( icon.style.height == '0px'){
+	// 	menu.style.display		= 'inline';
+	// } else {
+	// 	menu.style.display		= 'none';
+	// }
 
 	resizeWorkplace();
 
 	workplaceRangeHelper( );
-
-	// list.addEventListener('click', selectRange, false );
 
 }
 
@@ -1845,7 +1853,7 @@ function todayWhiteboard(){
 function workplaceAccount(){
 	workplace_id = 'ACCOUNT';
 	var menu	= document.getElementById('WORKPLACE_MENU');
-	var icon	= document.getElementById('WORKPLACE_ICON');
+	// var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var account	= document.getElementById('WORKPLACE_ACCOUNT');
 	// var list	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
@@ -1869,16 +1877,11 @@ function workplaceAccount(){
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
 
-	if ( icon.style.height == '0px'){
-		// icon.style.height		= icon.getAttribute('orgHeight');
-		// hdr.style.height		= hdr.getAttribute('orgHeight');
-		menu.style.display		= 'inline';
-	} else {
-		// icon.setAttribute('orgHeight', icon.style.height );
-		// icon.style.height		= '0px';
-		// hdr.style.height		= '0px';
-		menu.style.display		= 'none';
-	}
+	// if ( icon.style.height == '0px'){
+	// 	menu.style.display		= 'inline';
+	// } else {
+	// 	menu.style.display		= 'none';
+	// }
 
 	resizeWorkplace();
 //	workplaceAccountHelper();
