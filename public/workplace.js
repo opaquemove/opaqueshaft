@@ -72,15 +72,6 @@ function initWorkplace(){
 				// case 'WP_WHITEBOARD':
 				// 	workplaceWhiteboard();
 				// 	break;
-				// case 'WP_CHILDREN':
-				// 	workplaceChildren();
-				// 	break;
-				// case 'WP_RANGE':
-				// 	workplaceRange();
-				// 	break;
-				// case 'WP_ACCOUNT':
-				// 	workplaceAccount();
-				// 	break;
 				case 'WORKPLACE_HDR':
 				case 'WORKPLACE_SUMMARY':
 					var signin = document.getElementById('WP_SIGNIN');
@@ -170,7 +161,7 @@ function initWorkplace(){
 	
 	showWorkPlace();
 
-	calendarGadget( 'WP_EMPTY', null );
+	// calendarGadget( 'WP_EMPTY', null );
 	hoge();
 
 	// resizeWorkplace();
@@ -416,10 +407,10 @@ function showWorkPlace(){
 	var wp_content		= document.getElementById('WP_CONTENT');
 	var wp_signin		= document.getElementById('WP_SIGNIN');
 	var wp_signout		= document.getElementById('WP_SIGNOUT');
-	var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
-	var wp_children		= document.getElementById('WP_CHILDREN');
-	var wp_range		= document.getElementById('WP_RANGE');
-	var wp_account		= document.getElementById('WP_ACCOUNT');
+	// var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
+	// var wp_children		= document.getElementById('WP_CHILDREN');
+	// var wp_range		= document.getElementById('WP_RANGE');
+	// var wp_account		= document.getElementById('WP_ACCOUNT');
 
 	if ( wp_signin.classList.contains('signinMotion'))
 		wp_signin.classList.remove('signinMotion');
@@ -436,20 +427,20 @@ function showWorkPlace(){
 		bf.style.width					= '100%';
 		bf.style.overflow				= 'auto';
 		wp_signin.setAttribute( 'disabled', 'true' );
-		wp_whiteboard.removeAttribute( 'disabled' );
-		wp_children.removeAttribute( 'disabled' );
-		wp_range.removeAttribute( 'disabled' );
-		wp_account.removeAttribute( 'disabled' );
+		// wp_whiteboard.removeAttribute( 'disabled' );
+		// wp_children.removeAttribute( 'disabled' );
+		// wp_range.removeAttribute( 'disabled' );
+		// wp_account.removeAttribute( 'disabled' );
 		wp_signout.removeAttribute( 'disabled' );
 		wp_test.style.display			= 'inline';
 		wp_empty.style.display			= 'inline';
 		wp_content.style.display		= 'inline';
 		wp_signin.style.visibility		= 'hidden';
 		wp_signout.style.visibility		= 'visible';
-		wp_whiteboard.style.visibility	= 'visible';
-		wp_children.style.visibility	= 'visible';
-		wp_range.style.visibility		= 'visible';
-		wp_account.style.visibility		= 'visible';
+		// wp_whiteboard.style.visibility	= 'visible';
+		// wp_children.style.visibility	= 'visible';
+		// wp_range.style.visibility		= 'visible';
+		// wp_account.style.visibility		= 'visible';
 
 		var opt = wp_signin.getElementsByClassName('option');
 		if ( opt.length > 0 ){
@@ -467,19 +458,19 @@ function showWorkPlace(){
 		bf.style.overflow				= 'hidden';
 		wp_signin.removeAttribute( 'disabled' );
 		wp_signout.setAttribute( 'disabled', 'true' );
-		wp_whiteboard.setAttribute( 'disabled', 'true' );
-		wp_children.setAttribute( 'disabled', 'true' );
-		wp_range.setAttribute( 'disabled', 'true' );
-		wp_account.setAttribute( 'disabled', 'true' );
+		// wp_whiteboard.setAttribute( 'disabled', 'true' );
+		// wp_children.setAttribute( 'disabled', 'true' );
+		// wp_range.setAttribute( 'disabled', 'true' );
+		// wp_account.setAttribute( 'disabled', 'true' );
 		wp_test.style.display			= 'none';
 		wp_empty.style.display			= 'none';
 		wp_content.style.display		= 'none';
 		wp_signin.style.visibility		= 'visible';
 		wp_signout.style.visibility		= 'hidden';
-		wp_whiteboard.style.visibility	= 'hidden';
-		wp_children.style.visibility	= 'hidden';
-		wp_range.style.visibility		= 'hidden';
-		wp_account.style.visibility		= 'hidden';
+		// wp_whiteboard.style.visibility	= 'hidden';
+		// wp_children.style.visibility	= 'hidden';
+		// wp_range.style.visibility		= 'hidden';
+		// wp_account.style.visibility		= 'hidden';
 	}
 
 	resizeWorkplace();
@@ -1042,7 +1033,6 @@ function workplaceWhiteboardHelper(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
 	if ( p.hasChildNodes() ){
-	// 	makeRangeList( 'RANGE_LIST', 'H' );
 		return;
 	}
 
@@ -1082,110 +1072,214 @@ function workplaceWhiteboardHelper(){
 		var eotd = o.getAttribute('eotd');
 		var p = document.getElementById('CALENDAR_DETAIL');
 		makeWhiteboardListScope( p, sotd, eotd );
-		// p.innerHTML = 'sotd:' + o.getAttribute('sotd') + ' eotd:' + o.getAttribute('eotd');
+
 	}, false );
 
-	document.getElementById('CALENDAR_DETAIL').addEventListener('click',
-	function(e) {
+	document.getElementById('CALENDAR_DETAIL').addEventListener('click', selectWhiteboard, false );
+	document.getElementById('CALENDAR_DETAIL').addEventListener('animationend', selectWhiteboardMotionEnd, false );
+	// document.getElementById('CALENDAR_DETAIL').addEventListener('transitionend',
+	// function (e){
+	// 	var c = e.target;
+	// 	while ( true ){
+	// 		if ( c == this ) return;
+	// 		if ( c.hasAttribute( 'day' ) ) break;
+	// 		c = c.parentNode;
+	// 	}
+	// 	if ( c.classList.contains( 'right56' )){
+	// 	}	
+	// }, false );
 
-		var o = e.target;
-		while ( true ){
-			if ( o == this ){
-				for ( var i=0; i<this.childNodes.length; i++ ){
-					 var o = this.childNodes[i];
-					 if ( o.hasAttribute('selected')){
-						o.removeAttribute('selected');
-						o.classList.remove('right56');
-					}
-					if ( o.classList.contains('calendar_detail_invisible')){
-						o.classList.remove('calendar_detail_invisible');
-					}
+
+}
+
+function selectWhiteboard(e){
+	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+
+	var o = e.target;
+	while ( true ){
+		if ( o == this ){
+			for ( var i=0; i<this.childNodes.length; i++ ){
+				 var o = this.childNodes[i];
+				 if ( o.hasAttribute('selected')){
+					o.removeAttribute('selected');
+					// o.classList.remove('right56');
 				}
-				return;
-			}
-			o = o.parentNode;
-			if ( o.hasAttribute('day')) break;
-		}
-	
-		for ( var i=0; i<this.childNodes.length; i++ ){
-			var c = this.childNodes[i];
-			if ( o != c && c.hasAttribute('selected') ){
-				c.removeAttribute( 'selected' );
-				c.classList.remove('right56');
-			}
-			if ( c.classList.contains('calendar_detail_invisible')){
-				c.classList.remove('calendar_detail_invisible');
-			}
-		}
-
-		if ( !o.hasAttribute( 'selected' ) ) o.setAttribute( 'selected', 'true' );
-			else o.removeAttribute( 'selected' );
-		o.style.animationName			= 'scale-in-out';
-    	o.style.animationDuration		= '0.3s';
-    	o.style.animationIterationCount = 1;
-
-		//property area hidden
-		var cdp = p.getElementsByClassName('calendar_detail_property');
-		cdp[0].style.display = 'none';
-
-
-		var day = o.getAttribute('day');
-		guidedance_whiteboard_form.day.value = day;
-		// var p = document.getElementById('CALENDAR_DETAIL');
-	}, false );
-	document.getElementById('CALENDAR_DETAIL').addEventListener('animationend',
-	function (e){
-		switch ( e.target.style.animationName ){
-			case 'scale-in-out':
-				e.target.style.animationName = '';	// old shift-frame
-				e.target.style.animationDuration		= '0.3s';
-				e.target.style.animationIterationCount = 1;
-				if ( e.target.hasAttribute('selected')){
-					e.target.classList.add('right56');
-					var o = document.createElement('DIV');
-					o.classList.add( 'edit' );
-					o.style.position		= 'absolute';
-					o.style.top				= '0px';
-					o.style.left			= '-55px';
-					o.style.width 			= '48px';
-					o.style.height 			= '48px';
-					o.style.backgroundColor = ':white';
-					o.style.padding 		= '2px';
-					o.style.border 			= '1px solid lightgrey';
-					o.style.borderRadius	= '3px';
-					var r = '';
-					r += '<button type="button" class="workplace_edit_button"  >edit</button>';
-					o.innerHTML				= r;
-					e.target.appendChild( o ).getElementsByClassName('workplace_edit_button')[0].addEventListener('click', editWhiteboard, false);
-				} else {
-					e.target.classList.remove('right56');
-					var ar = e.target.getElementsByClassName('edit');
-					if ( ar.length > 0 )
-					e.target.removeChild( ar[0] );
+				if ( o.classList.contains('calendar_detail_invisible')){
+					o.classList.remove('calendar_detail_invisible');
 				}
-				break;
-			case 'shift-frame':
-				e.target.style.animationName = '';
-				e.target.style.animationDuration		= '0.6';
-				e.target.style.animationIterationCount = 1;
-				break;
+			}
+			return;
 		}
-	}, false );
-	document.getElementById('CALENDAR_DETAIL').addEventListener('transitionend',
-	function (e){
-		var c = e.target;
-		while ( true ){
-			if ( c == this ) return;
-			if ( c.hasAttribute( 'day' ) ) break;
-			c = c.parentNode;
-		}
-		if ( c.classList.contains( 'right56' )){
-			// c.removeAttribute('selected');
-			// c.removeChild( c.getElementsByClassName( 'opChild')[0] );
-		}
-	
-	}, false );
+		o = o.parentNode;
+		if ( o.hasAttribute('day')) break;
+	}
 
+	for ( var i=0; i<this.childNodes.length; i++ ){
+		var c = this.childNodes[i];
+		if ( o != c && c.hasAttribute('selected') ){
+			c.removeAttribute( 'selected' );
+			// c.classList.remove('right56');
+		}
+		if ( c.classList.contains('calendar_detail_invisible')){
+			c.classList.remove('calendar_detail_invisible');
+		}
+	}
+
+	if ( !o.hasAttribute( 'selected' ) ){
+		o.setAttribute( 'selected', 'true' );
+		o.classList.add('selected');
+		flipWhiteboardToolBar();
+
+	} else {
+		o.removeAttribute( 'selected' );
+		o.classList.remove('selected');
+	} 
+	o.style.animationName			= 'scale-in-out';
+	o.style.animationDuration		= '0.3s';
+	o.style.animationIterationCount = 1;
+
+	//property area hidden
+	var cdp = p.getElementsByClassName('calendar_detail_property');
+	cdp[0].style.display = 'none';
+
+
+	var day = o.getAttribute('day');
+	guidedance_whiteboard_form.day.value = day;
+
+}
+
+function selectWhiteboardMotionEnd(e){
+	console.log('motion end');
+	var c = e.target;
+	c.style.animationName	= '';
+
+	while ( true ){
+		if ( c == this ) return;
+		if ( c.classList.contains('calendar_detail_visible')) break;
+		c = c.parentNode;
+	}
+
+	if ( !c.hasAttribute( 'selected' )){
+		flipWhiteboardToolBar();			// toolbar close
+	}
+
+	// switch ( e.target.style.animationName ){
+	// 	case 'scale-in-out':
+	// 		e.target.style.animationName = '';	// old shift-frame
+	// 		e.target.style.animationDuration		= '0.3s';
+	// 		e.target.style.animationIterationCount = 1;
+	// 		if ( e.target.hasAttribute('selected')){
+	// 			// e.target.classList.add('right56');
+	// 			var o = document.createElement('DIV');
+	// 			o.classList.add( 'edit' );
+	// 			o.style.position		= 'absolute';
+	// 			o.style.top				= '0px';
+	// 			o.style.left			= '-55px';
+	// 			o.style.width 			= '48px';
+	// 			o.style.height 			= '48px';
+	// 			o.style.backgroundColor = ':white';
+	// 			o.style.padding 		= '2px';
+	// 			o.style.border 			= '1px solid lightgrey';
+	// 			o.style.borderRadius	= '3px';
+	// 			var r = '';
+	// 			r += '<button type="button" class="workplace_edit_button"  >edit</button>';
+	// 			o.innerHTML				= r;
+	// 			e.target.appendChild( o ).getElementsByClassName('workplace_edit_button')[0].addEventListener('click', editWhiteboard, false);
+	// 		} else {
+	// 			e.target.classList.remove('right56');
+	// 			var ar = e.target.getElementsByClassName('edit');
+	// 			if ( ar.length > 0 )
+	// 				e.target.removeChild( ar[0] );
+	// 		}
+	// 		break;
+	// 	case 'shift-frame':
+	// 		e.target.style.animationName = '';
+	// 		e.target.style.animationDuration		= '0.6';
+	// 		e.target.style.animationIterationCount = 1;
+	// 		break;
+	// }
+}
+
+function flipWhiteboardToolBar(){
+	console.log('flipWhiteboardToolBar');
+	var wtb = document.getElementById('WHITEBOARD_CONTEXT_TOOLBAR');
+	if ( wtb != null ){
+		wtb.parentNode.removeChild( wtb );
+		console.log('flipWhiteboardToolBar off');
+		return;
+	}
+	var p = document.getElementById('WORKPLACE_WHITEBOARD');
+	var o = document.createElement('DIV');
+	o.id				= 'WHITEBOARD_CONTEXT_TOOLBAR';
+	o.style.position	= 'absolute';
+	o.style.top			= 'calc(100% - 76px - 48px)';
+	o.style.left		= '0px';
+	o.style.width		= '100%';
+	o.style.height		= '64px';
+	o.style.paddintBottom	= '12px';
+	o.style.margin		= '0 auto';
+	o.style.zIndex		= 65000;
+
+	var r = '';
+	r += '<div style="margin:0 auto;width:190px;height:40px;padding:4px;background-color:#EDEDED;border-radius:8px;" >';
+		r += '<button type="button" class="workplace_edit_button"     cmd="edit"    ></button>';
+		r += '<button type="button" class="workplace_delete_button"   cmd="delete"    ></button>';
+	r += '</div>';
+	o.innerHTML = r;
+	var tb = p.appendChild( o );
+	tb.style.animationName			= 'scale-in-out';
+	tb.style.animationDuration		= '0.3s';
+	tb.style.animationIterationCount = 1;
+
+	console.log('flipWhiteboardToolBar on');
+
+	tb.addEventListener('click',
+		function(e){
+			e.stopPropagation();
+			var o = e.target;
+			var cmd = '';
+			while(true){
+				if ( o == this ) return;
+				if ( o.hasAttribute('cmd')){
+					cmd = o.getAttribute('cmd');
+					break;
+				}
+			}
+			var whiteboards = document.getElementById('CALENDAR_DETAIL').childNodes;
+			// var acc_id = null;
+			// var c = null;
+			// for ( var i=0; i<whiteboards.length; i++ ){
+			// 	if ( whiteboards[i].hasAttribute('selected')){
+			// 		acc_id  = whiteboards[i].getAttribute('acc_id');
+			// 		c		= whiteboards[i];
+			// 		break;
+			// 	}
+			// }
+			// if ( acc_id == null ) return;
+
+			switch ( cmd ){
+				case 'edit':
+					// if ( c.classList.contains('height360')){
+					// 	c.classList.remove('height360');
+					// 	c.getElementsByClassName('container')[0].innerHTML = '';
+					// 	c.getElementsByClassName('container')[0].display = 'none';			
+					// } else {
+					// 	c.classList.add('height360');
+					// 	wp_editAccount( c );
+					// }
+
+					break;
+				case 'delete':
+					// if ( o.innerText == 'Ok?' ){
+					// 	wp_deleteAccount( c );
+					// 	break;
+					// }
+					// o.style.width = '100px';
+					// o.innerText = 'Ok?';
+					break;
+			}
+			// console.log( cmd + ' acc_id:' + acc_id );
+		}, false );
 
 }
 
@@ -1444,17 +1538,18 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					while ( true){
 						var o = document.createElement('DIV');
 						o.classList.add('calendar_detail_visible');
+						o.classList.add('unselected');
 						o.classList.add( 'day_' + day.getDate() );
 						o.setAttribute( 'day', day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate() );
 						// o.style.top		= ( 57 * cnt )+ 'px';
 						// o.style.left	= '0px';
 						var r = '';
-						r += '<div style="float:left;width:48px;height:48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
+						r += '<div style="float:left;width:48px;height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
 							// r += '<div style="padding:2px;">&nbsp;</div>';
 							r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
 							r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + weekname[ day.getDay() ] + '</div>';
 						r += '</div>';
-						r += '<div class="detail" style="float:left;font-size:12px;width:calc(100% - 62px);height:48px;background-color:white;padding:2px;border:1px solid lightgrey;border-radius:3px;margin-left:2px;" >';
+						r += '<div class="detail" style="float:left;font-size:12px;width:calc(100% - 62px);height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;margin-left:2px;" >';
 							r += '';
 						r += '</div>';
 						o.innerHTML = r;

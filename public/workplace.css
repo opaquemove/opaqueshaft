@@ -31,7 +31,7 @@
 #WPH_OPAQUESHAFT_ADMIN{
     float:                  left;
     height:                 28px;
-    padding:                18px 16px 0px 18px;
+    padding:                18px 12px 0px 18px;
     font-size:              10px;
     font-weight:            bold;
     background-image:       url(./images/homepage.png);
@@ -43,15 +43,39 @@
 #WPH_DAY{
     float:                  left;
     height:                 28px;
-    padding:                18px 16px 0px 18px;
+    padding:                18px 8px 0px 8px;
     font-size:              10px;
     font-weight:            bold;
-    /* background-image:       url(./images/management.png);
-    background-size:        12px;
-    background-repeat:      no-repeat;
-    background-position:    left center; */
-
 }
+#WPH_CHILDREN{
+    float:                  left;
+    height:                 28px;
+    padding:                18px 8px 0px 8px;
+    font-size:              10px;
+    font-weight:            bold;
+}
+#WPH_RANGE{
+    float:                  left;
+    height:                 28px;
+    padding:                18px 8px 0px 8px;
+    font-size:              10px;
+    font-weight:            bold;
+}
+#WPH_ACCOUNT{
+    float:                  left;
+    height:                 28px;
+    padding:                18px 8px 0px 8px;
+    font-size:              10px;
+    font-weight:            bold;
+}
+#WPH_SIGNOUT{
+    float:                  left;
+    height:                 28px;
+    padding:                18px 8px 0px 8px;
+    font-size:              10px;
+    font-weight:            bold;
+}
+
 .deselectedmenu{
     color:                  lightgrey;
     border-bottom: 2px solid white;
@@ -265,7 +289,7 @@
     background-repeat:      no-repeat;
     background-position:    center center;
 }
-#WP_WHITEBOARD{
+/* #WP_WHITEBOARD{
     background-image:       url(images/management.png);
     background-size:        26px;
     background-repeat:      no-repeat;
@@ -282,7 +306,7 @@
     background-size:        16px;
     background-repeat:      no-repeat;
     background-position:    center center;
-}
+} */
 #WP_ACCOUNT{
     background-image:       url(images/account.png);
     background-size:        20px;
@@ -327,10 +351,10 @@
     background-color:       transparent;
     overflow:               auto;
 } 
-#CALENDAR_LIST{
+/* #CALENDAR_LIST{
 	float:                  left;
     position:               relative;
-    width:                  calc(100% - 8px);      /* calc(100% - 212px) calc(100% - 6px);,300px */
+    width:                  calc(100% - 8px);
     height:                 48px;
     background-color:       #EDEDED;
     border:                 1px solid #EDEDED;
@@ -338,11 +362,6 @@
     padding:                1px;
     display:                flex;
     overflow:               scroll;
-}
-/* #CALENDAR_DETAIL_HDR{
-    font-size:              12px;
-    font-weight:            bold;
-    color:                  gray;
 } */
 #CALENDAR_DETAIL{
     /* float:                  ; */
