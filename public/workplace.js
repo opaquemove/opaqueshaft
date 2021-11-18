@@ -1036,14 +1036,13 @@ function workplaceWhiteboardHelper(){
 		return;
 	}
 
-	var r = '';
-	r += '<div id="CALENDAR_DETAIL"  ></div>';
+	// var r = '';
+	// r += '<div id="CALENDAR_DETAIL"  ></div>';
+	// p.innerHTML = r;
 
-	p.innerHTML = r;
-
-	var offset = 0 ;
-	var calen_detail = document.getElementById('CALENDAR_DETAIL');
-	calen_detail.style.height = 'calc(100% - ' + offset + 'px)';
+	// var offset = 0 ;
+	// var calen_detail = document.getElementById('CALENDAR_DETAIL');
+	// calen_detail.style.height = 'calc(100% - ' + offset + 'px)';
 
 
 	document.getElementById('TAB_OPTION').addEventListener('click',
@@ -1070,13 +1069,17 @@ function workplaceWhiteboardHelper(){
 
 		var sotd = o.getAttribute('sotd');
 		var eotd = o.getAttribute('eotd');
-		var p = document.getElementById('CALENDAR_DETAIL');
+		// var p = document.getElementById('CALENDAR_DETAIL');
+		var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 		makeWhiteboardListScope( p, sotd, eotd );
 
 	}, false );
 
-	document.getElementById('CALENDAR_DETAIL').addEventListener('click', selectWhiteboard, false );
-	document.getElementById('CALENDAR_DETAIL').addEventListener('animationend', selectWhiteboardMotionEnd, false );
+	// document.getElementById('CALENDAR_DETAIL').addEventListener('animationend', selectWhiteboardMotionEnd, false );
+	// document.getElementById('CALENDAR_DETAIL').addEventListener('click', selectWhiteboard, false );
+	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('animationend', selectWhiteboardMotionEnd, false );
+	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('click', selectWhiteboard, false );
+
 	// document.getElementById('CALENDAR_DETAIL').addEventListener('transitionend',
 	// function (e){
 	// 	var c = e.target;
@@ -1092,56 +1095,86 @@ function workplaceWhiteboardHelper(){
 
 }
 
+
+
+
+
 function selectWhiteboard(e){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
-
+	console.log('selectWhiteboard');
 	var o = e.target;
 	while ( true ){
 		if ( o == this ){
+			console.log( o );
+			// エリア外をアクセスしたらリセット
 			for ( var i=0; i<this.childNodes.length; i++ ){
 				 var o = this.childNodes[i];
 				 if ( o.hasAttribute('selected')){
 					o.removeAttribute('selected');
-					// o.classList.remove('right56');
+					o.classList.remove('selected');
+					o.style.animationName	 		= 'scale-in-out';
+					o.style.animationDuration		= '0.3s';
+					o.style.animationIterationCount = 1;
+					// c.classList.remove('height360');
+					o.getElementsByClassName('container')[0].innerHTML = '';
+					o.getElementsByClassName('container')[0].display = 'none';
 				}
 				if ( o.classList.contains('calendar_detail_invisible')){
 					o.classList.remove('calendar_detail_invisible');
 				}
 			}
+			console.log('return');
 			return;
 		}
 		o = o.parentNode;
 		if ( o.hasAttribute('day')) break;
 	}
 
+
+	//	すでに他のアカウントをセレクトしていたらリセット
 	for ( var i=0; i<this.childNodes.length; i++ ){
 		var c = this.childNodes[i];
-		if ( o != c && c.hasAttribute('selected') ){
-			c.removeAttribute( 'selected' );
-			// c.classList.remove('right56');
-		}
+		if ( c == o ) continue;
+		if ( c.hasAttribute('selected')){
+			c.removeAttribute('selected');
+			c.classList.remove('selected');
+			c.style.animationName	 		= 'scale-in-out';
+			c.style.animationDuration		= '0.3s';
+			c.style.animationIterationCount = 1;
+
+			// c.classList.remove('height360');
+			c.getElementsByClassName('container')[0].innerHTML = '';
+			c.getElementsByClassName('container')[0].display = 'none';
+		}	
 		if ( c.classList.contains('calendar_detail_invisible')){
 			c.classList.remove('calendar_detail_invisible');
 		}
 	}
 
-	if ( !o.hasAttribute( 'selected' ) ){
-		o.setAttribute( 'selected', 'true' );
+	//	対象アカウントがセレクトされているかどうかで処理を振り分け
+	if ( o.hasAttribute('selected')){
+		//	セレクト解除処理
+		o.removeAttribute('selected');
+		o.classList.remove('selected');
+		// o.classList.remove('height360');
+		o.getElementsByClassName('container')[0].innerHTML = '';
+		o.getElementsByClassName('container')[0].display = 'none';
+
+		// wp_editAccount( o );
+	} else{
+		//	セレクト処理
+		o.setAttribute('selected', 'true');
 		o.classList.add('selected');
 		flipWhiteboardToolBar();
-
-	} else {
-		o.removeAttribute( 'selected' );
-		o.classList.remove('selected');
-	} 
+	}
+	//	対象のアニメーション処理
 	o.style.animationName			= 'scale-in-out';
 	o.style.animationDuration		= '0.3s';
 	o.style.animationIterationCount = 1;
 
 	//property area hidden
-	var cdp = p.getElementsByClassName('calendar_detail_property');
-	cdp[0].style.display = 'none';
-
+	// var cdp = p.getElementsByClassName('calendar_detail_property');
+	// cdp[0].style.display = 'none';
 
 	var day = o.getAttribute('day');
 	guidedance_whiteboard_form.day.value = day;
@@ -1210,15 +1243,15 @@ function flipWhiteboardToolBar(){
 	}
 	var p = document.getElementById('WORKPLACE_WHITEBOARD');
 	var o = document.createElement('DIV');
-	o.id				= 'WHITEBOARD_CONTEXT_TOOLBAR';
-	o.style.position	= 'absolute';
-	o.style.top			= 'calc(100% - 76px - 48px)';
-	o.style.left		= '0px';
-	o.style.width		= '100%';
-	o.style.height		= '64px';
+	o.id					= 'WHITEBOARD_CONTEXT_TOOLBAR';
+	o.style.position		= 'absolute';
+	o.style.top				= 'calc(100% - 76px - 48px)';
+	o.style.left			= '0px';
+	o.style.width			= '100%';
+	o.style.height			= '64px';
 	o.style.paddintBottom	= '12px';
-	o.style.margin		= '0 auto';
-	o.style.zIndex		= 65000;
+	o.style.margin			= '0 auto';
+	o.style.zIndex			= 65000;
 
 	var r = '';
 	r += '<div style="margin:0 auto;width:190px;height:40px;padding:4px;background-color:#EDEDED;border-radius:8px;" >';
@@ -1245,37 +1278,47 @@ function flipWhiteboardToolBar(){
 					break;
 				}
 			}
-			var whiteboards = document.getElementById('CALENDAR_DETAIL').childNodes;
-			// var acc_id = null;
-			// var c = null;
-			// for ( var i=0; i<whiteboards.length; i++ ){
-			// 	if ( whiteboards[i].hasAttribute('selected')){
-			// 		acc_id  = whiteboards[i].getAttribute('acc_id');
-			// 		c		= whiteboards[i];
-			// 		break;
-			// 	}
-			// }
-			// if ( acc_id == null ) return;
-
+			
+			// var days = document.getElementById('CALENDAR_DETAIL').childNodes;
+			var days = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').childNodes;
+			var day_id = null;
+			var c = null;
+			for ( var i=0; i<days.length; i++ ){
+				if ( days[i].hasAttribute('selected')){
+					day_id  = days[i].getAttribute('day');
+					c		= days[i];
+					break;
+				}
+			}
+			if ( day_id == null ) return;
+			console.log('day_id:' + day_id );
+			console.log('cmd:' + cmd );
 			switch ( cmd ){
 				case 'edit':
-					// if ( c.classList.contains('height360')){
-					// 	c.classList.remove('height360');
-					// 	c.getElementsByClassName('container')[0].innerHTML = '';
-					// 	c.getElementsByClassName('container')[0].display = 'none';			
-					// } else {
-					// 	c.classList.add('height360');
-					// 	wp_editAccount( c );
-					// }
+					if ( c.classList.contains('height360')){
+						c.classList.remove('height360');
+						c.getElementsByClassName('container')[0].innerHTML = '';
+						c.getElementsByClassName('container')[0].style.display = 'none';			
+					} else {
+						console.log('add height360');
+						c.classList.add('height360');
+						// c.style.height = '360px';
+						c.getElementsByClassName('container')[0].innerHTML = 'hogehoge';
+						c.getElementsByClassName('container')[0].style.display = 'inline';	
+						console.log( c );		
+						// wp_editWhiteboard( c );
+					}
 
 					break;
 				case 'delete':
-					// if ( o.innerText == 'Ok?' ){
-					// 	wp_deleteAccount( c );
-					// 	break;
-					// }
-					// o.style.width = '100px';
-					// o.innerText = 'Ok?';
+					if ( o.innerText == 'Ok?' ){
+						// wp_deleteAccount( c );
+						o.style.width	= '';
+						o.innerText 	= '';
+						break;
+					}
+					o.style.width	= '100px';
+					o.innerText		= 'Ok?';
 					break;
 			}
 			// console.log( cmd + ' acc_id:' + acc_id );
@@ -1285,8 +1328,9 @@ function flipWhiteboardToolBar(){
 
 function editWhiteboard(e){
 	e.stopPropagation();
-
-	var p = document.getElementById('CALENDAR_DETAIL');
+	
+	// var p = document.getElementById('CALENDAR_DETAIL');
+	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 	var o = null;
 	var details = p.childNodes;
 	for ( var i=0; i<details.length; i++){
@@ -1345,7 +1389,9 @@ function editWhiteboard(e){
 			}
 
 		}, false );
-	document.getElementById('CALENDAR_DETAIL').scrollTop = 0;
+		
+	// document.getElementById('CALENDAR_DETAIL').scrollTop = 0;
+	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').scrollTop = 0;
 
 }
 
@@ -1418,7 +1464,9 @@ function makeCalendar( range_id ){
 	console.log( 'range_id:' + range_id );
 	var p = document.getElementById('TAB_OPTION');
 	p.innerHTML = '';
-	document.getElementById('CALENDAR_DETAIL').innerHTML = '';
+	
+	// document.getElementById('CALENDAR_DETAIL').innerHTML = '';
+	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').innerHTML = '';
 	
 	var monthname = [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL','AUG','SEP','OCT', 'NOV','DEC']
 	var ym = new Date( range_id + '/4/1' );
@@ -1545,13 +1593,14 @@ function makeWhiteboardListScope( p, sotd, eotd )
 						// o.style.left	= '0px';
 						var r = '';
 						r += '<div style="float:left;width:48px;height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
-							// r += '<div style="padding:2px;">&nbsp;</div>';
 							r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
 							r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + weekname[ day.getDay() ] + '</div>';
 						r += '</div>';
 						r += '<div class="detail" style="float:left;font-size:12px;width:calc(100% - 62px);height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;margin-left:2px;" >';
 							r += '';
 						r += '</div>';
+						r += '<div class="container" style="clear:left;width:100%;height:0px;background-color:white;display:none;overflow:visible;" ></div>';
+
 						o.innerHTML = r;
 						p.appendChild( o );
 						day.setDate( day.getDate() + 1 );
@@ -1590,18 +1639,18 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					//
 					//	calendar detail property area
 					//
-					var o = document.createElement('DIV');
-					o.classList.add('calendar_detail_property');
-					var r = '';
-					r += '<div  style="width:calc(100% - 2px);height:calc(100% - 60px);background-color:transparent;padding:1px;border:0px solid #EDEDED;border-radius:3px;overflow:scroll;" >';
-						r += '';
-					r += '</div>';
-					o.innerHTML = r;
-					p.appendChild( o ).addEventListener( 'click',
-						function ( e ){
-							e.stopPropagation();
-						}
-					);
+					// var o = document.createElement('DIV');
+					// o.classList.add('calendar_detail_property');
+					// var r = '';
+					// r += '<div  style="width:calc(100% - 2px);height:calc(100% - 60px);background-color:transparent;padding:1px;border:0px solid #EDEDED;border-radius:3px;overflow:scroll;" >';
+					// 	r += '';
+					// r += '</div>';
+					// o.innerHTML = r;
+					// p.appendChild( o ).addEventListener( 'click',
+					// 	function ( e ){
+					// 		e.stopPropagation();
+					// 	}
+					// );
 
 					//o.innerHTML = r;
 				} else{

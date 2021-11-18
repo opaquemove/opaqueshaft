@@ -289,24 +289,6 @@
     background-repeat:      no-repeat;
     background-position:    center center;
 }
-/* #WP_WHITEBOARD{
-    background-image:       url(images/management.png);
-    background-size:        26px;
-    background-repeat:      no-repeat;
-    background-position:    center center;
-}
-#WP_CHILDREN{
-    background-image:       url(images/management.png);
-    background-size:        26px;
-    background-repeat:      no-repeat;
-    background-position:    center center;
-}
-#WP_RANGE{
-    background-image:       url(images/annual-calendar-page.png);
-    background-size:        16px;
-    background-repeat:      no-repeat;
-    background-position:    center center;
-} */
 #WP_ACCOUNT{
     background-image:       url(images/account.png);
     background-size:        20px;
@@ -954,22 +936,17 @@
 }
 
 .calendar_detail_visible{
-    position		:'relative';
+    position		: relative;
     width			: 100%;
-    height			: 54px;
+    height			: auto; /*54px;*/
     margin-top 		: 1px;
     margin-bottom	: 1px;
-    transition		: 'all 5s ease-in-out';
+    overflow        : hidden;
+    transition		: all 0.5s ease-in-out;
 
 }
 .calendar_detail_invisible{
     display:        none;
-;    /* position		:'relative';
-    width			: 100%;
-    height			: 0px;
-    margin-top 		: 1px;
-    margin-bottom	: 1px;
-    transition		: 'all 0.5s ease-in-out'; */
 }
 .calendar_detail_visible_set{
     /* transform:translateY(0%); */
