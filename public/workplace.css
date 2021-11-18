@@ -318,9 +318,22 @@
 #WORKPLACE_WHITEBOARD_HDR{
     /* margin:                 0 auto; */
     width:                  100%;  /*540px;*/
+    height:                 432px;
+    background-color:       white;
+}
+#WORKPLACE_WHITEBOARD_HDR_TOOLBAR{
+    /* margin:                 0 auto; */
+    width:                  100%;  /*540px;*/
     height:                 48px;
     background-color:       white;
 }
+#WORKPLACE_WHITEBOARD_HDR_CALENDAR{
+    /* margin:                 0 auto; */
+    width:                  100%;  /*540px;*/
+    height:                 384px;
+    background-color:       white;
+}
+
 #WORKPLACE_WHITEBOARD_MAIN{
     margin:                 0 auto;
     width:                  100%;         /* height is fitting */

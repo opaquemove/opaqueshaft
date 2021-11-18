@@ -914,7 +914,7 @@ function resizeWorkplace(){
 
 	var menu		= document.getElementById('WORKPLACE_MENU');
 	var wb			= document.getElementById('WORKPLACE_WHITEBOARD');
-	var wpwh		= document.getElementById('WORKPLACE_WHITEBOARD_HDR').offsetHeight;
+	var wpwh		= document.getElementById('WORKPLACE_WHITEBOARD_HDR').offsetHeight + 48;
 	var wpwm		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
 
 	var children	= document.getElementById('WORKPLACE_CHILDREN');
@@ -1578,7 +1578,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 					// t_calen.style.width	= '100%';
 					// t_calen.style.height	= 'auto';
 					// p.appendChild( t_calen );
-					// calendarGadget('CALENDAR_AREA', new Date( sotd ).getTime() );
+					calendarGadget('WORKPLACE_WHITEBOARD_HDR_CALENDAR', new Date( sotd ).getTime() );
 
 					var day = new Date( sotd );
 					m = day.getMonth();
