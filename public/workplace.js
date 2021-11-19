@@ -302,7 +302,12 @@ function calendarGadget( id, serial ){
 	var calen = document.getElementById( id );
 	calen.innerHTML = '';
 
-	var w = Math.floor( calen.offsetWidth / 7 ) - 3;
+	var w = Math.floor( calen.offsetWidth / 7.2 );
+	w	= Math.floor( w / calen.offsetWidth  * 100 );
+	var h = Math.floor( calen.offsetWidth / 7.2 * 0.5 );
+
+	console.log( 'calendarGadget w:' + w );
+	console.log( 'calendarGadget h:' + h );
 
 	var sotm = new Date();
 	if ( serial != null ) {
@@ -349,7 +354,7 @@ function calendarGadget( id, serial ){
 	// o.style.border	= '1px solid lightgrey';
 	r = '';
 	for ( var i=0; i<week.length; i++ ){
-		r += '<div style="float:left;text-align:center;font-weight:bold;width:' + w + 'px;font-size:8px;padding-top:4px;margin:1px;" >' + week[i] + '</div>';
+		r += '<div style="float:left;text-align:center;font-weight:bold;width:' + w + '%;font-size:8px;padding-top:4px;margin:1px;" >' + week[i] + '</div>';
 	}
 	o.innerHTML		= r;
 	calen.appendChild( o );
@@ -369,9 +374,10 @@ function calendarGadget( id, serial ){
 		if ( sotd.getDay() == 0 )
 			o.style.clear		= 'both';
 		o.style.float 			= 'left';
-		o.style.width			= w + 'px';
-		o.style.height			= w + 'px';
-		o.style.fontSize		= '14px';
+		o.style.width			= w + '%';
+		o.style.height			= h + 'px';
+		o.style.padding			= '12px 0px';
+		o.style.fontSize		= '120%';
 		o.style.textAlign		= 'center';
 		o.style.color			= ( sotd.getMonth() == cur_month )? 'gray':'#DDDDDD';
 		if ( sotd.getMonth() == sotm.getMonth() )
