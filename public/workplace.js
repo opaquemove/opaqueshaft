@@ -922,6 +922,7 @@ function resizeWorkplace(){
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
 	// var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
+	var wph_height	= document.getElementById( 'WORKPLACE_HEADER').offsetHeight;
 
 	var menu		= document.getElementById('WORKPLACE_MENU');
 	var wb			= document.getElementById('WORKPLACE_WHITEBOARD');
@@ -940,12 +941,15 @@ function resizeWorkplace(){
 	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
 	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
 
+	console.log('wph_height:' + wph_height );
 	console.log( 'resizeWorkplace' );
 	console.log( 'bottom overlay width:' + w );
 
 	menu.style.width				= ( w ) + 'px';
 	menu.style.top					= '0px';
 	menu.style.left					= '0px';
+	menu.style.height				= 'calc(100% - ' + wph_height + 'px)';
+	menu.style.paddingTop			= wph_height + 'px';
 	wb.style.width					= ( w - 48 ) + 'px';
 	wb.style.top					= ( -h )     + 'px';
 	wb.style.left					= '0px';

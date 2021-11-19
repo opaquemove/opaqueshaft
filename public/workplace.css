@@ -25,11 +25,14 @@
     width:                  calc(100% - 48px);
     height:                 48px;
     background-color:       white;
+    display:                flex;
+    flex-wrap:              nowrap;
     visibility:             hidden;
+    overflow:               visible;
     opacity:                0.8;
 }
 #WPH_OPAQUESHAFT_ADMIN{
-    float:                  left;
+    /* float:                  left; */
     height:                 28px;
     padding:                18px 12px 0px 18px;
     font-size:              10px;
@@ -41,35 +44,35 @@
 
 }
 #WPH_DAY{
-    float:                  left;
+    /* float:                  left; */
     height:                 28px;
     padding:                18px 8px 0px 8px;
     font-size:              10px;
     font-weight:            bold;
 }
 #WPH_CHILDREN{
-    float:                  left;
+    /* float:                  left; */
     height:                 28px;
     padding:                18px 8px 0px 8px;
     font-size:              10px;
     font-weight:            bold;
 }
 #WPH_RANGE{
-    float:                  left;
+    /* float:                  left; */
     height:                 28px;
     padding:                18px 8px 0px 8px;
     font-size:              10px;
     font-weight:            bold;
 }
 #WPH_ACCOUNT{
-    float:                  left;
+    /* float:                  left; */
     height:                 28px;
     padding:                18px 8px 0px 8px;
     font-size:              10px;
     font-weight:            bold;
 }
 #WPH_SIGNOUT{
-    float:                  left;
+    /* float:                  left; */
     height:                 28px;
     padding:                18px 8px 0px 8px;
     font-size:              10px;
