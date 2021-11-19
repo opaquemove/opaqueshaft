@@ -72,6 +72,13 @@ app.post( '/webbackend', ( req, res ) => {
     res.send( r );
 })
 
+//
+//  ファイルアップロード評価
+//
+app.post( '/file_upload', ( req, res ) => {
+  
+})
+
 server.on( 'listening', () => {
   console.log('listening on ' + port );
   console.log('__dirname:' + __dirname );

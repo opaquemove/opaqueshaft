@@ -166,6 +166,10 @@ function initWorkplace(){
 	childrenRollup( document.getElementById('WP_ROLLUP') );
 	whiteboardRollup( document.getElementById('WP_ROLLUP2') );
 
+	//
+	//file upload test
+	//
+	initFileUpload();
 	//sign icon
 	hoge();
 
@@ -180,6 +184,48 @@ function initWorkplace(){
 	// observer.observe( bf, { attributes: true });
 
 }
+
+function initFileUpload(){
+
+	document.getElementById('imagefile').addEventListener(
+		'change', fileUpload, false );
+}
+
+function fileUpload(){
+	var file_in = e.target;
+	var ff = document.getElementById('fileForm');
+	var fd = new FormData( ff );
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.upload.addEventListener('loadstart', (evt) => {
+		console.log('loadstart');
+	} );
+	xmlhttp.upload.addEventListener('progress', (evt) => {
+		console.log('progress');
+	} );
+	xmlhttp.upload.addEventListener('abort', (evt) => {
+		console.log('abort');
+	} );
+	xmlhttp.upload.addEventListener('error', (evt) => {
+		console.log('error');
+	} );
+	xmlhttp.upload.addEventListener('load', (evt) => {
+		console.log('load');
+	} );
+	xmlhttp.upload.addEventListener('timeout', (evt) => {
+		console.log('timeout');
+	} );
+	xmlhttp.upload.addEventListener('loadend', (evt) => {
+		console.log('loadend');
+	} );
+
+
+	xmlhttp.open("POST", "/file_upload", true );
+	xmlhttp.send( fd );
+
+
+}
+
 function initWorkplaceHeader(){
 
 	document.getElementById('WORKPLACE_HEADER').addEventListener(
