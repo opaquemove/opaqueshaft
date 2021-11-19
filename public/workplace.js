@@ -3869,7 +3869,7 @@ function whiteboardRollupHelper( results ){
 		var day2 = day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate();
 		var c_children = ( o.c_children );
 		var margin		= 100 - ( c_children * 2 );
-		r += '<div style="float:left;width:24px;height:100%;" >';
+		r += '<div style="float:left;width:24px;height:100%;margin:1px;" >';
 			r += '<div style="width:100%;height:' + ( c_children * 2 ) + 'px;margin-top:' + ( margin ) + 'px;background-color:orange;" >&nbsp;</div>';			
 			r += '<div style="writing-mode:vertical-lr;" >';
 				r += day2 + '(' + c_children + ')';
