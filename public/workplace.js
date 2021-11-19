@@ -1615,7 +1615,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 
 					}
 
-					// var ca = document.getElementById('CALENDAR_AREA');
+					var ca = document.getElementById('WORKPLACE_WHITEBOARD_HDR_CALENDAR');
 					for ( var i=0; i<result.length; i++ ){
 
 						var day = new Date( result[i].day );
@@ -1631,15 +1631,15 @@ function makeWhiteboardListScope( p, sotd, eotd )
 							var detail = dd[0].getElementsByClassName( 'detail' )[0];
 							detail.innerHTML = 'Description:' + description + '<br/>Children:' + c_children + '<br/>checkouts:' + c_checkout;
 						}
-						// dd = ca.getElementsByClassName('calendar_day_' + day.getDate() );
-						// if ( dd.length != 0 ){
-						// 	dd[0].style.fontWeight			= 'bold';
-						// 	dd[0].style.backgroundImage 	= 'url(./images/checked-symbol.png)';
-						// 	dd[0].style.backgroundSize		= '10px';
-						// 	dd[0].style.backgroundRepeat	= 'no-repeat';
-						// 	dd[0].style.backgroundPosition	= 'center center';
+						dd = ca.getElementsByClassName('calendar_day_' + day.getDate() );
+						if ( dd.length != 0 ){
+							dd[0].style.fontWeight			= 'bold';
+							dd[0].style.backgroundImage 	= 'url(./images/checked-symbol.png)';
+							dd[0].style.backgroundSize		= '10px';
+							dd[0].style.backgroundRepeat	= 'no-repeat';
+							dd[0].style.backgroundPosition	= 'center center';
 
-						// }
+						}
 					}
 
 					//
