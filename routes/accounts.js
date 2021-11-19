@@ -272,6 +272,18 @@ router.post('/childstatis', function(req, res, next ){
           res.json( rows );
     });
 });
+//
+//  チャイルドロールアップ取得
+//
+router.post('/childrollup', function(req, res, next ){
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.any( {
+    text: 'select range_id, child_grade, child_type, count(*) cnt from children group by rollup( range_id, child_grade, child_type ) order by range_id, child_grade, child_type',
+    values: [  ] } )
+    .then( rows => {
+          res.json( rows );
+    });
+});
 
 //
 //  チャイルドリスト取得
@@ -546,7 +558,20 @@ router.post('/rangedelete', function(req, res, next ){
 });
 
 //
-//  ホワイトボードリスト取得（年度は気にしない）
+//  ホワイトボードリスト取得（年度）
+//
+router.post('/whiteboardlistall', function(req, res, next ){
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.any( {
+      text : 'SELECT w.*, ( SELECT count(*) FROM results r WHERE r.day = w.day ) c_children, ( SELECT count(*) FROM reserves rsv WHERE rsv.day = w.day ) c_resv_children FROM whiteboards w  ORDER BY w.day',
+      values : [  ] } )
+    .then( rows => {
+          res.json( rows );
+    });
+});
+
+//
+//  ホワイトボードリスト取得（年度）
 //
 router.post('/whiteboardlist', function(req, res, next ){
     var range_id = parseInt( req.body.range_id );

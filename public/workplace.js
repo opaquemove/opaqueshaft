@@ -162,6 +162,11 @@ function initWorkplace(){
 	showWorkPlace();
 
 	// calendarGadget( 'WP_EMPTY', null );
+	// Rollup
+	childrenRollup( document.getElementById('WP_ROLLUP') );
+	whiteboardRollup( document.getElementById('WP_ROLLUP2') );
+
+	//sign icon
 	hoge();
 
 	// resizeWorkplace();
@@ -3738,4 +3743,141 @@ function finderHelperStatis( p, range_id ){
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( 'range_id=' + range_id );
 	
+}
+
+function childrenRollup( p ){
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					p.innerHTML = 'access';
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						
+						var results = JSON.parse( xmlhttp.responseText );
+						p.innerHTML = childrenRollupHelper( results );
+					} else{
+						console.log( null, 'childrenRollup:' + xmlhttp.status );
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/childrollup", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( );
+
+}
+
+function childrenRollupHelper( results ){
+	var r = '';
+
+	var grades = [0,0,0,0,0,0];
+
+	r += '<div style="font-weight:bold;" >Children Rollup</div>';
+	for ( var i=0; i<results.length; i++ ){
+		var o = results[i];
+		var range_id    = ( o.range_id    == null )?'&nbsp;':o.range_id;
+		var cnt			= o.cnt;
+		var child_grade = ( o.child_grade == null )?'&nbsp;':o.child_grade;
+		var child_type  = ( o.child_type  == null )?'&nbsp;':o.child_type;
+		var summary 	= ( o.range_id == null || o.child_type == null || o.child_grade == null)?
+			'1px solid lightgrey':'1px solid white'; 
+
+		r += '<div style="clear:both;width:100%;height:20px;border-bottom:' + summary + ';" >';
+			r += '<div style="float:left;width:60px;height:auto;" >' 		+ range_id    + '</div>';
+			r += '<div style="float:left;width:20px;height:auto;" >' 		+ child_grade + '</div>';
+			r += '<div style="float:left;width:20px;height:auto;" >' 		+ child_type  + '</div>';
+			r += '<div style="float:left;width:60px;height:auto;text-align:right;" >' + cnt  + '</div>';
+			switch ( child_grade ){
+				case '&nbsp;':
+					r += '<div style="float:left;width:' + ( cnt * 2 ) + 'px;height:auto;background-color:orange;" >&nbsp;</div>';
+					break;
+				default:
+					r += '<div style="float:left;width:' + ( cnt * 2 ) + 'px;height:auto;background-color:' + arChildGradeColor[ child_grade ] + ';" >&nbsp;</div>';
+					break;
+			}
+			if ( range_id != '&nbsp;' && child_grade != '&nbsp;' && child_type == '&nbsp;')
+				grades[ child_grade - 1 ] += cnt;
+
+		r += '</div>';
+
+		
+	}
+	r += '<div style="clear:both;width:100%;height:20px;border:1px solid lightgrey;" >';
+		for ( var i=0; i<grades.length; i++ ){
+			r += '<div style="float:left;width:' + ( grades[i] * 2 ) + 'px;height:auto;background-color:' + arChildGradeColor[ i+1 ] + ';" >&nbsp;</div>';
+		}
+	r += '</div>';
+	console.log(grades );
+	return r;
+}
+
+
+function whiteboardRollup( p ){
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					p.innerHTML = 'access';
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						
+						var results = JSON.parse( xmlhttp.responseText );
+						p.innerHTML = whiteboardRollupHelper( results );
+					} else{
+						console.log( null, 'whiteboardRollup:' + xmlhttp.status );
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/whiteboardlistall", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( );
+
+}
+
+function whiteboardRollupHelper( results ){
+	var r = '';
+
+	r += '<div style="font-weight:bold;" >Whiteboard Rollup</div>';
+	r += '<div style="width:100%;height:100%;" >';
+	for ( var i=0; i<results.length; i++ ){
+		var o = results[i];
+		var day = new Date( o.day );
+		var day2 = day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate();
+		var c_children = ( o.c_children );
+		var margin		= 100 - ( c_children * 2 );
+		r += '<div style="float:left;width:24px;height:100%;" >';
+			r += '<div style="width:100%;height:' + ( c_children * 2 ) + 'px;margin-top:' + ( margin ) + 'px;background-color:orange;" >&nbsp;</div>';			
+			r += '<div style="writing-mode:vertical-lr;" >';
+				r += day2 + '(' + c_children + ')';
+			r += '</div>';
+		r += '</div>';
+		console.log( c_children , margin );
+	}
+	r += '</div>';
+	return r;
+
 }
