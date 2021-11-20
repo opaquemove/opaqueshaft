@@ -1,6 +1,10 @@
 var express = require('express');
 var router  = express.Router();
 var pgp     = require('pg-promise')();
+const multipart   = require('connect-multiparty');
+const fs          = require('fs');
+const mp_ware     = multipart();
+
 // SSL OFF connection 20210501 fix
 var conf    = {
     connectionString : process.env.DATABASE_URL,
@@ -26,6 +30,89 @@ router.post('/', function(req, res, next ){
     res.header('Content-Type', 'application/json;charset=utf-8');
     res.send('hoge');
 });
+
+//
+//
+//
+router.get( '/imagefile', ( req, res, next ) => {
+  var filename = req.query.filename;
+  console.log('filename:' + filename.toString() );
+
+  try{
+    db.one( {
+      text : "SELECT * FROM imagefiles WHERE filename = $1 ",
+      values : [ filename ] } )
+      .then( rows => {
+          if ( rows.length == 0 ){
+            console.log(e);
+            res.status(500).json(e);
+                  return;
+          }
+          const enc_data = rows.data;
+          const file_data = enc_data.replace(/^data:\w+\/\w+;base64,/, '');
+          let buffer = Buffer.from( file_data, 'base64' );
+          res.header('Content-Type', rows.mime );
+          res.send( buffer );
+      });
+    } catch ( e ){
+      console.log(e);
+      res.status(500).json(e);
+    }
+  
+})
+//
+//  ファイルアップロード
+//
+router.post( '/file_upload', mp_ware, ( req, res, next ) => {
+  try{
+    console.log( '/file_upload' );
+    console.log( req.headers['content-type']);
+    console.log( 'body' );
+    console.log( req.body );
+    console.log( 'files' );
+    console.log( req.files );
+
+    if ( req.files ){
+      const imagefile = req.files.imagefile;
+      const data = fs.readFile( imagefile.path,
+           function ( err, content ){
+             if ( err ){
+               console.log(err);
+             } else {
+               let base64_data = "data:" + imagefile.headers['content-type'] + ";base64," + content.toString('base64');
+               console.log( imagefile );
+               console.log( imagefile.name );
+               console.log( imagefile.headers['content-type'] );
+               //console.log( base64_data );
+               res.header('Content-Type', 'application/json;charset=utf-8');
+               db.none( {
+                     text : "INSERT INTO imagefiles ( filename, mime, data ) VALUES( $1, $2, $3 )",
+                     values : [ imagefile.name, imagefile.headers['content-type'], base64_data ] } )
+                 .then( rows => {
+                      //  res.json( rows );
+                      const msg = {
+                        message : 'upload success'
+                      };
+                      res.status(200).json( msg );
+                 });
+             
+             }
+           } );
+      // console.log( data );
+    }
+
+    // const msg = {
+    //   message : 'upload success'
+    // };
+    // res.status(200).json( msg );
+
+  } catch ( e ){
+    console.log(e);
+    res.status(500).json(e);
+  }
+})
+
+
 
 //
 //  アカウント関連

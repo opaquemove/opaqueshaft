@@ -191,7 +191,7 @@ function initFileUpload(){
 		'change', fileUpload, false );
 }
 
-function fileUpload(){
+function fileUpload(e){
 	var file_in = e.target;
 	var ff = document.getElementById('fileForm');
 	var fd = new FormData( ff );
@@ -220,7 +220,7 @@ function fileUpload(){
 	} );
 
 
-	xmlhttp.open("POST", "/file_upload", true );
+	xmlhttp.open("POST", "/accounts/file_upload", true );
 	xmlhttp.send( fd );
 
 

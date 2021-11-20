@@ -2,6 +2,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+// const multipart   = require('connect-multiparty');
+// const fs          = require('fs');
 const { resolve } = require('path');
 var app = express();
 var server = require('http').Server(app);
@@ -15,6 +17,8 @@ var accounts = require('./routes/accounts');
 
 var ipaddr = "0.0.0.0";
 var port   = process.env.PORT || 8080;
+
+// const mp_ware = multipart();
 
 app.use( bodyParser.urlencoded( { extended: true} ) );  // POST形式で受信
 app.use( cookieParser());
@@ -72,12 +76,45 @@ app.post( '/webbackend', ( req, res ) => {
     res.send( r );
 })
 
-//
-//  ファイルアップロード評価
-//
-app.post( '/file_upload', ( req, res ) => {
-  
-})
+// //
+// //  ファイルアップロード評価
+// //
+// app.post( '/file_upload', mp_ware, ( req, res ) => {
+//   try{
+//     console.log( '/file_upload' );
+//     console.log( req.headers['content-type']);
+//     console.log( 'body' );
+//     console.log( req.body );
+//     console.log( 'files' );
+//     console.log( req.files );
+
+//     if ( req.files ){
+//       const imagefile = req.files.imagefile;
+//       const data = fs.readFile( imagefile.path,
+//            function ( err, content ){
+//              if ( err ){
+//                console.log(err);
+//              } else {
+//                let base64_data = "data:image/jpeg;base64," + content.toString('base64');
+//                console.log( imagefile );
+//                console.log( imagefile.name );
+//                console.log( imagefile.headers['content-type'] );
+//                //console.log( base64_data );
+//              }
+//            } );
+//       // console.log( data );
+//     }
+
+//     const msg = {
+//       message : 'upload success'
+//     };
+//     res.status(200).json( msg );
+
+//   } catch ( e ){
+//     console.log(e);
+//     res.status(500).json(e);
+//   }
+// })
 
 server.on( 'listening', () => {
   console.log('listening on ' + port );
