@@ -140,6 +140,42 @@ function initWorkplace(){
 	document.getElementById( 'TAB_CURRENT2' ).addEventListener(
 		'click', selectCurrentRangeId, false );
 
+	makeCalendar( cur_range_id );
+	document.getElementById('TAB_OPTION').addEventListener(
+		'click',
+		function(e) {
+			var o = e.target;
+			if ( o == this ) return;
+			while ( o.parentNode != document.getElementById('TAB_OPTION') ){
+				o = o.parentNode;
+			}
+			for ( var i=0; i<this.childNodes.length; i++ ){
+				var c = this.childNodes[i];
+				if ( c.hasAttribute('selected') ){
+					c.removeAttribute( 'selected' );
+					c.classList.remove('selected');
+				}
+			}
+
+			o.classList.add('selected');
+			o.setAttribute( 'selected', 'true' );
+			
+			var sotd = o.getAttribute('sotd');
+			// var eotd = o.getAttribute('eotd');
+
+			cur_month 	= o.getAttribute( 'month' );
+			cur_sotd	= sotd;
+			// cur_eotd	= eotd;
+			// var p = document.getElementById('CALENDAR_DETAIL');
+			var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+			makeWhiteboardListScope( p, sotd );
+
+		}, false );
+	
+	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('animationend', selectWhiteboardMotionEnd, false );
+	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('click', selectWhiteboard, false );
+	
+
 	// document.getElementById('WORKPLACE_BIRDSEYEVIEW').addEventListener(
 	// 	'click', function( e ){
 	// 		var view = e.target;
@@ -345,7 +381,7 @@ function hoge(){
 						o.style.left		= '0px';
 						o.style.width		= '26px';
 						o.style.height		= '26px';
-						o.style.padding		= '11px';
+						o.style.padding		= '21px 11px 1px 11px';
 						var r = '';
 						if ( imagefile != '' && imagefile != null )
 							r += '<div style="width:100%;height:100%;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" ></div>';
@@ -475,6 +511,7 @@ function showWorkPlace(){
 	bo.style.visibility		= 'visible';
 
 	var wph				= document.getElementById('WORKPLACE_HEADER');
+	var wpat			= document.getElementById('WORKPLACE_ADMIN_TOOLS');
 	var wp_test			= document.getElementById('WP_TEST');
 	var wp_empty		= document.getElementById('WP_EMPTY');
 	var wp_content		= document.getElementById('WP_CONTENT');
@@ -496,6 +533,7 @@ function showWorkPlace(){
 	if ( checkSign() ){
 		// signed
 		wph.style.visibility			= 'visible';
+		wpat.style.visibility			= 'visible';
 		bo.style.overflow				= 'hidden';	// scroll
 		bf.style.width					= '100%';
 		bf.style.overflow				= 'auto';
@@ -526,6 +564,7 @@ function showWorkPlace(){
 	} else {
 		// not sign
 		wph.style.visibility			= 'hidden';
+		wpat.style.visibility			= 'hidden';
 		bo.style.overflow				= 'hidden';
 		bf.style.width					= '100%';
 		bf.style.overflow				= 'hidden';
@@ -1063,6 +1102,7 @@ function workplaceWhiteboard(){
 
 	guidedance_whiteboard_form.day.value = '';
 
+	var wpat	= document.getElementById('WORKPLACE_ADMIN_TOOLS');
 	var menu	= document.getElementById('WORKPLACE_MENU');
 	// var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
@@ -1070,6 +1110,8 @@ function workplaceWhiteboard(){
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 	var wpwm	= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
 	var list	= document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+
+	wpat.style.visibility		= 'hidden';
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
@@ -1100,87 +1142,14 @@ function workplaceWhiteboard(){
 	// children.style.height = '0px';
 	if ( !list.hasChildNodes() ) list.innerHTML = '';
 
-	workplaceWhiteboardHelper();
-
 	makeCalendar( getCurrentRangeId() );
-	// makeWhiteboardListScope( list, cur_sotd, cur_eotd );
+	var today = new Date();
+	var sotd  = today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/1';
+	makeWhiteboardListScope( list, sotd );
 
 	guidedance_whiteboard_form.day.value = '';
 
 }
-
-//
-//	ワークプレイスホワイトボード画面生成
-//
-function workplaceWhiteboardHelper(){
-	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
-
-	if ( p.hasChildNodes() ){
-		return;
-	}
-
-	// var r = '';
-	// r += '<div id="CALENDAR_DETAIL"  ></div>';
-	// p.innerHTML = r;
-
-	// var offset = 0 ;
-	// var calen_detail = document.getElementById('CALENDAR_DETAIL');
-	// calen_detail.style.height = 'calc(100% - ' + offset + 'px)';
-
-
-	document.getElementById('TAB_OPTION').addEventListener('click',
-	function(e) {
-		var o = e.target;
-		if ( o == this ) return;
-		while ( o.parentNode != document.getElementById('TAB_OPTION') ){
-			o = o.parentNode;
-		}
-		for ( var i=0; i<this.childNodes.length; i++ ){
-			var c = this.childNodes[i];
-			if ( c.hasAttribute('selected') ){
-				c.removeAttribute( 'selected' );
-				c.classList.remove('selected');
-				// c.style.color			= '';
-				// c.style.backgroundColor = '';
-			}
-		}
-
-		o.classList.add('selected');
-		o.setAttribute( 'selected', 'true' );
-		
-		var sotd = o.getAttribute('sotd');
-		var eotd = o.getAttribute('eotd');
-
-		cur_month 	= o.getAttribute( 'month' );
-		cur_sotd	= sotd;
-		cur_eotd	= eotd;
-		// var p = document.getElementById('CALENDAR_DETAIL');
-		var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
-		makeWhiteboardListScope( p, sotd, eotd );
-
-	}, false );
-
-	// document.getElementById('CALENDAR_DETAIL').addEventListener('animationend', selectWhiteboardMotionEnd, false );
-	// document.getElementById('CALENDAR_DETAIL').addEventListener('click', selectWhiteboard, false );
-	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('animationend', selectWhiteboardMotionEnd, false );
-	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('click', selectWhiteboard, false );
-
-	// document.getElementById('CALENDAR_DETAIL').addEventListener('transitionend',
-	// function (e){
-	// 	var c = e.target;
-	// 	while ( true ){
-	// 		if ( c == this ) return;
-	// 		if ( c.hasAttribute( 'day' ) ) break;
-	// 		c = c.parentNode;
-	// 	}
-	// 	if ( c.classList.contains( 'right56' )){
-	// 	}	
-	// }, false );
-
-
-}
-
-
 
 
 
@@ -1553,27 +1522,48 @@ function makeCalendar( range_id ){
 	// document.getElementById('CALENDAR_DETAIL').innerHTML = '';
 	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').innerHTML = '';
 	
-	var monthname = [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL','AUG','SEP','OCT', 'NOV','DEC']
+	var delta	  = [ 0, 0, 0, 0, 0, 0,  0,  0,  0, 1, 1, 1 ];
+	var monthid   = [ 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3 ];
+	var monthname = [ 'APR', 'MAY', 'JUN', 'JUL','AUG','SEP','OCT', 'NOV','DEC', 'JAN', 'FEB', 'MAR' ];
 	var ym = new Date( range_id + '/4/1' );
-	// r += 'range_id:' + range_id + '<br/>';
+
+	// for ( var i=0; i<12; i++ ){
+	// 	var sotd = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
+	// 	sotd.setMonth( ym.getMonth() + i );
+	// 	var eotd = new Date( sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
+	// 	eotd.setMonth( eotd.getMonth() + 1 );
+	// 	eotd.setDate( eotd.getDate() - 1 );
+	// 	var c = document.createElement('DIV');
+	// 	c.setAttribute( 'month', sotd.getMonth() + 1 );
+	// 	c.setAttribute( 'sotd', sotd.getFullYear() + '/' + ( '00' + ( sotd.getMonth() + 1 ) ).slice(-2) + '/' + sotd.getDate() );
+	// 	// c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( '00' + ( eotd.getMonth() + 1 ) ).slice(-2) + '/' + eotd.getDate() );
+	// 	c.classList.add('unselected');
+	// 	c.classList.add('month_box');
+	// 	// c.style.top				= '0px';
+	// 	// c.style.left			= ( 40 * i ) + 'px';
+	// 	var r = '';
+	// 		// r += '<div style="padding:1px;">&nbsp;</div>';
+	// 		r += '<div style="font-size:14px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
+	// 		r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + monthname[ sotd.getMonth() ] + '</div>';
+	// 	c.innerHTML = r;
+	// 	var cc = p.appendChild( c );
+	// 	if ( cc.getAttribute( 'month') == cur_month ){
+	// 		cc.classList.add('selected');
+	// 		cc.setAttribute( 'selected', 'true' );	
+	// 	}
+	// }
+
 	for ( var i=0; i<12; i++ ){
-		var sotd = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
-		sotd.setMonth( ym.getMonth() + i );
-		var eotd = new Date( sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
-		eotd.setMonth( eotd.getMonth() + 1 );
-		eotd.setDate( eotd.getDate() - 1 );
+		var sotd = ( range_id + delta[i] ) + '/' + monthid[i] + '/1';
 		var c = document.createElement('DIV');
-		c.setAttribute( 'month', sotd.getMonth() + 1 );
-		c.setAttribute( 'sotd', sotd.getFullYear() + '/' + ( '00' + ( sotd.getMonth() + 1 ) ).slice(-2) + '/' + sotd.getDate() );
-		c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( '00' + ( eotd.getMonth() + 1 ) ).slice(-2) + '/' + eotd.getDate() );
+		c.setAttribute( 'month', monthid[i] );
+		c.setAttribute( 'sotd', sotd );			// MM/1
 		c.classList.add('unselected');
 		c.classList.add('month_box');
-		// c.style.top				= '0px';
-		// c.style.left			= ( 40 * i ) + 'px';
 		var r = '';
 			// r += '<div style="padding:1px;">&nbsp;</div>';
-			r += '<div style="font-size:14px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
-			r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + monthname[ sotd.getMonth() ] + '</div>';
+			r += '<div style="font-size:14px;width:100%;text-align:center;font-weight:bold;" >'  + monthid[i] + '</div>';
+			r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + monthname[ i ] + '</div>';
 		c.innerHTML = r;
 		var cc = p.appendChild( c );
 		if ( cc.getAttribute( 'month') == cur_month ){
@@ -1582,14 +1572,15 @@ function makeCalendar( range_id ){
 		}
 	}
 
-	var ym = new Date( range_id + '/4/1' );
-	var sotd = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
-	var eotd = new Date( sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
-	eotd.setFullYear( eotd.getFullYear() + 1 );
-	eotd.setDate( eotd.getDate() - 1 );
-	console.log( 'sotd:' + getYYYYMMDD( sotd ) + ' eotd:' + getYYYYMMDD(eotd) );
 
-	makeCalendarHelper( p, getYYYYMMDD(sotd), getYYYYMMDD(eotd) );
+	// var ym = new Date( range_id + '/4/1' );
+	// var sotd = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
+	// var eotd = new Date( sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
+	// eotd.setFullYear( eotd.getFullYear() + 1 );
+	// eotd.setDate( eotd.getDate() - 1 );
+	// console.log( 'sotd:' + getYYYYMMDD( sotd ) + ' eotd:' + getYYYYMMDD(eotd) );
+
+	// makeCalendarHelper( p, getYYYYMMDD(sotd), getYYYYMMDD(eotd) );
 
 }
 
@@ -1644,7 +1635,7 @@ function getYYYYMMDD( d ){
 //
 //	ホワイトボードリスト生成処理
 //
-function makeWhiteboardListScope( p, sotd, eotd )
+function makeWhiteboardListScope( p, sotd )
 {
 	p.innerHTML = '';
 
@@ -1752,7 +1743,8 @@ function makeWhiteboardListScope( p, sotd, eotd )
 	try{
 		xmlhttp.open("POST", "/accounts/whiteboardlist2", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send( 'sotd=' + sotd + '&eotd=' + eotd );
+		// xmlhttp.send( 'sotd=' + sotd + '&eotd=' + eotd );
+		xmlhttp.send( 'sotd=' + sotd  );
 	} catch ( e ) {
 		oLog.log( null, 'makeWhiteboardListScope : ' + e );
 		oLog.open( 3 );
@@ -1767,6 +1759,7 @@ function makeWhiteboardListScope( p, sotd, eotd )
 //
 function workplaceChildren(){
 	workplace_id = 'CHILDREN';
+	var wpat	= document.getElementById('WORKPLACE_ADMIN_TOOLS');
 	var menu	= document.getElementById('WORKPLACE_MENU');
 	// var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
@@ -1774,6 +1767,8 @@ function workplaceChildren(){
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
 	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
+
+	wpat.style.visibility		= 'hidden';
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
@@ -1818,11 +1813,14 @@ function workplaceChildren(){
 //
 function workplaceRange(){
 	workplace_id = 'RANGE';
-	var menu	= document.getElementById('WORKPLACE_MENU');
-	// var icon	= document.getElementById('WORKPLACE_ICON');
-	var hdr		= document.getElementById('WORKPLACE_HDR');
-	var range	= document.getElementById('WORKPLACE_RANGE');
-	// var list	= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
+	var wpat			= document.getElementById('WORKPLACE_ADMIN_TOOLS');
+	var menu			= document.getElementById('WORKPLACE_MENU');
+	// var icon			= document.getElementById('WORKPLACE_ICON');
+	var hdr				= document.getElementById('WORKPLACE_HDR');
+	var range			= document.getElementById('WORKPLACE_RANGE');
+	// var list			= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
+
+	wpat.style.visibility	= 'hidden';
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
@@ -2084,11 +2082,15 @@ function todayWhiteboard(){
 //
 function workplaceAccount(){
 	workplace_id = 'ACCOUNT';
-	var menu	= document.getElementById('WORKPLACE_MENU');
-	// var icon	= document.getElementById('WORKPLACE_ICON');
-	var hdr		= document.getElementById('WORKPLACE_HDR');
-	var account	= document.getElementById('WORKPLACE_ACCOUNT');
-	// var list	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+
+	var wpat			= document.getElementById('WORKPLACE_ADMIN_TOOLS');
+	var menu			= document.getElementById('WORKPLACE_MENU');
+	// var icon			= document.getElementById('WORKPLACE_ICON');
+	var hdr				= document.getElementById('WORKPLACE_HDR');
+	var account			= document.getElementById('WORKPLACE_ACCOUNT');
+	// var list			= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+
+	wpat.style.visibility	= 'hidden';
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');

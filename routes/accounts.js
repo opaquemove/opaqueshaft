@@ -679,7 +679,11 @@ router.post('/whiteboardlist', function(req, res, next ){
 //
 router.post('/whiteboardlist2', function(req, res, next ){
   var sotd    = req.body.sotd;
-  var eotd    = req.body.eotd;
+  var d       = new Date( sotd );
+  d.setMonth( d.getMonth() + 1 );
+  d.setDate( d.getDate() - 1 );
+  var eotd    = d.getFullYear() + '/' + ( d.getMonth() + 1 ) + '/' + d.getDate();
+  // var eotd    = req.body.eotd;
   console.log( 'sotd:' + sotd );
   console.log( 'eotd:' + eotd );
 
