@@ -1,7 +1,18 @@
-var workplace_id = null;
+var workplace_id 	= null;
+var cur_range_id 	= null;
+var cur_month		= null;
+var cur_sotd		= null;
+var cur_eotd		= null;
 
 function initWorkplace(){
 	console.log('initWorkplace');
+
+	//	カレントのレンジを設定
+	var today = new Date();
+	cur_range_id = today.getFullYear();
+	if ( today.getMonth() >= 0 && today.getMonth() <= 2 )
+		cur_range_id--;
+	cur_month	= today.getMonth() + 1;
 
 	var hdr = document.getElementById('WORKPLACE_HDR');
 	hdr.setAttribute( 'orgHeight', hdr.offsetHeight + 'px' );
@@ -191,6 +202,9 @@ function initFileUpload(){
 		'change', fileUpload, false );
 }
 
+//
+//	reference: https://javascript.keicode.com/newjs/upload-files-with-xmlhttprequest.php
+//
 function fileUpload(e){
 	var file_in = e.target;
 	var ff = document.getElementById('fileForm');
@@ -202,6 +216,8 @@ function fileUpload(e){
 	} );
 	xmlhttp.upload.addEventListener('progress', (evt) => {
 		console.log('progress');
+		let percent = ( evt.loaded / evt.total * 100 ).toFixed(1);
+		console.log(`load progress ${percent}%`)
 	} );
 	xmlhttp.upload.addEventListener('abort', (evt) => {
 		console.log('abort');
@@ -365,7 +381,7 @@ function calendarGadget( id, serial ){
 			sotm.setTime( serial ); 
 		}
 	var sotd  = new Date( sotm.getFullYear() + '/' + ( sotm.getMonth() + 1 ) + '/1' );
-	var cur_month = sotd.getMonth();
+	var current_month = sotd.getMonth();
 
 	var prev = new Date( sotm.getFullYear() + '/' + ( sotm.getMonth() + 1) + '/1' );
 	prev.setMonth( prev.getMonth() - 1 ); 
@@ -378,10 +394,10 @@ function calendarGadget( id, serial ){
 	var week  = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ];	
 	var o = document.createElement('DIV');
 	o.style.width			= 'calc(100% - 0px)';
-	o.style.height			= '18px';
+	o.style.height			= '24px';
 	// o.style.textAlign		= 'center';
 	o.style.color			= 'white';
-	o.style.backgroundColor	= 'darkorange';
+	o.style.backgroundColor	= 'darkgray';	//'darkorange';
 	o.style.padding			= '2px 0px';
 	var r = '';
 	r += '<div style="float:left;padding-left:4px;" >' + month[ sotd.getMonth() ] + '.' + sotd.getFullYear() + '</div>';
@@ -398,10 +414,10 @@ function calendarGadget( id, serial ){
 
 	o = document.createElement('DIV');
 	o.style.width			= 'calc(100% - 0px)';
-	o.style.height			= '18px';
+	o.style.height			= '22px';
 	o.style.clear			= 'both';
 	o.style.color			= 'white';
-	o.style.backgroundColor	= 'darkorange';
+	o.style.backgroundColor	= 'gray';	//'darkorange';
 	// o.style.border	= '1px solid lightgrey';
 	r = '';
 	for ( var i=0; i<week.length; i++ ){
@@ -430,7 +446,7 @@ function calendarGadget( id, serial ){
 		o.style.padding			= '12px 0px';
 		o.style.fontSize		= '120%';
 		o.style.textAlign		= 'center';
-		o.style.color			= ( sotd.getMonth() == cur_month )? 'gray':'#DDDDDD';
+		o.style.color			= ( sotd.getMonth() == current_month )? 'gray':'#DDDDDD';
 		if ( sotd.getMonth() == sotm.getMonth() )
 			o.classList.add( 'calendar_day_'+ sotd.getDate() );
 		// o.style.borderBottom	= '1px solid lightgrey';
@@ -801,6 +817,7 @@ function selectCurrentRangeId( e ){
 	} else {
 		o.setAttribute( 'selected', 'yes' );
 		o.classList.add( 'selected' );
+		cur_range_id = o.getAttribute('range_id');
 	}
 
 	if ( getCurrentRangeId() == null ) return;
@@ -987,7 +1004,7 @@ function resizeWorkplace(){
 	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
 	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
 
-	console.log('wph_height:' + wph_height );
+	console.log( 'wph_height:' + wph_height );
 	console.log( 'resizeWorkplace' );
 	console.log( 'bottom overlay width:' + w );
 
@@ -1085,6 +1102,11 @@ function workplaceWhiteboard(){
 
 	workplaceWhiteboardHelper();
 
+	makeCalendar( getCurrentRangeId() );
+	// makeWhiteboardListScope( list, cur_sotd, cur_eotd );
+
+	guidedance_whiteboard_form.day.value = '';
+
 }
 
 //
@@ -1124,12 +1146,14 @@ function workplaceWhiteboardHelper(){
 		}
 
 		o.classList.add('selected');
-		// o.style.color			= 'white';
-		// o.style.backgroundColor = 'royalblue';
 		o.setAttribute( 'selected', 'true' );
-
+		
 		var sotd = o.getAttribute('sotd');
 		var eotd = o.getAttribute('eotd');
+
+		cur_month 	= o.getAttribute( 'month' );
+		cur_sotd	= sotd;
+		cur_eotd	= eotd;
 		// var p = document.getElementById('CALENDAR_DETAIL');
 		var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 		makeWhiteboardListScope( p, sotd, eotd );
@@ -1539,6 +1563,7 @@ function makeCalendar( range_id ){
 		eotd.setMonth( eotd.getMonth() + 1 );
 		eotd.setDate( eotd.getDate() - 1 );
 		var c = document.createElement('DIV');
+		c.setAttribute( 'month', sotd.getMonth() + 1 );
 		c.setAttribute( 'sotd', sotd.getFullYear() + '/' + ( '00' + ( sotd.getMonth() + 1 ) ).slice(-2) + '/' + sotd.getDate() );
 		c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( '00' + ( eotd.getMonth() + 1 ) ).slice(-2) + '/' + eotd.getDate() );
 		c.classList.add('unselected');
@@ -1550,7 +1575,11 @@ function makeCalendar( range_id ){
 			r += '<div style="font-size:14px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
 			r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + monthname[ sotd.getMonth() ] + '</div>';
 		c.innerHTML = r;
-		p.appendChild( c );
+		var cc = p.appendChild( c );
+		if ( cc.getAttribute( 'month') == cur_month ){
+			cc.classList.add('selected');
+			cc.setAttribute( 'selected', 'true' );	
+		}
 	}
 
 	var ym = new Date( range_id + '/4/1' );

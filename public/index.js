@@ -2762,6 +2762,10 @@ function addRangeListHelper( oParent, Result, direction ){
     r += '</div>';
 	c.innerHTML = r;
     var cc = oParent.appendChild( c );
+	if ( cur_range_id == range_id ){
+		cc.setAttribute( 'selected', 'yes' );
+		cc.classList.add( 'selected' );
+	}
 
 }
 
