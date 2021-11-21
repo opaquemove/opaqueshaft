@@ -225,13 +225,6 @@ function initWorkplace(){
 
 	// resizeWorkplace();
 
-	// document.getElementById('BOTTOM_FRAME').addEventListener(
-	// 	'resize', resizeWorkplace );
-	// var bf = document.getElementById('BOTTOM_FRAME');
-	// var observer = new MutationObserver( records => {
-	// 	resizeWorkplace();
-	// });
-	// observer.observe( bf, { attributes: true });
 
 }
 
@@ -342,9 +335,11 @@ function selectWorkplaceAdminTools( e ){
 			break;
 		case 'ranges':
 			toolbar.ranges.classList.add('selectedmenu');
+			workplaceRange();
 			break;
 		case 'accounts':
 			toolbar.accounts.classList.add('selectedmenu');
+			workplaceAccount();
 			break;
 		case 'icons':
 			toolbar.icons.classList.add('selectedmenu');
@@ -453,7 +448,7 @@ function hoge(){
 						o.style.left		= '0px';
 						o.style.width		= '22px';
 						o.style.height		= '22px';
-						o.style.padding		= '24px 6px 1px 18px';
+						o.style.padding		= '18px 6px 1px 18px';
 						var r = '';
 						if ( imagefile != '' && imagefile != null )
 							r += '<div style="width:100%;height:100%;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" ></div>';
@@ -681,7 +676,7 @@ function birdsEyeView(){
 		account.style.visibility	= 'hidden';
 		bf.removeAttribute('birdseye');
 	} else{
-		bf.style.transition	= 'all 0.5s ease-in-out';
+		bf.style.transition			= 'all 0.5s ease-in-out';
 		bf.style.perspective		= '20000px';
 		// bf.style.transform		= 'scale(0.7,0.7) translateX(-800px)';
 		// perspective
@@ -1124,15 +1119,15 @@ function resizeWorkplace(){
 	wb.style.top					= ( -h )     + 'px';
 	wb.style.left					= '0px';
 
-	children.style.width			= ( w - 48 ) + 'px';
+	children.style.width			= ( w - 48 - 144 ) + 'px';
 	children.style.top				= ( -h )     + 'px';
 	children.style.left				= '0px';
 
-	range.style.width				= ( w - 48 ) + 'px';
+	range.style.width				= ( w - 48 - 144 ) + 'px';
 	range.style.top					= ( -h )     + 'px';
 	range.style.left				= '0px';
  
-	account.style.width				= ( w - 48 ) + 'px';
+	account.style.width				= ( w - 48 - 144 ) + 'px';
 	account.style.top				= ( -h ) + 'px';
 	account.style.left				= '0px';
 
@@ -1140,23 +1135,23 @@ function resizeWorkplace(){
 	switch ( workplace_id ){
 		case 'WHITEBOARD':
 			wb.style.top			= '0px';
-			wb.style.height			= ( h - 0 ) + 'px';
-			wpwm.style.height 		= ( h - wpwh ) + 'px';
+			wb.style.height			= ( h - wph_height ) + 'px';
+			wpwm.style.height 		= ( h - wph_height - wpwh ) + 'px';
 			break;
 		case 'CHILDREN':
 			children.style.top		= '0px';
-			children.style.height 	= ( h - 0 ) + 'px';
-			wpcm.style.height 		= ( h - wpch ) + 'px';	// offset 252
+			children.style.height 	= ( h - wph_height ) + 'px';
+			wpcm.style.height 		= ( h - wph_height - wpch ) + 'px';	// offset 252
 			break;
 		case 'RANGE':
 			range.style.top			= '0px';
-			range.style.height 		= ( h - 0 ) + 'px';
-			wprm.style.height 		= ( h - wprh ) + 'px';	// offset 252
+			range.style.height 		= ( h - wph_height ) + 'px';
+			wprm.style.height 		= ( h - wph_height - wprh ) + 'px';	// offset 252
 			break;
 		case 'ACCOUNT':
 			account.style.top		= '0px';
-			account.style.height 	= ( h - 0 ) + 'px';
-			wpam.style.height 		= ( h - wpah ) + 'px';	// offset 252
+			account.style.height 	= ( h - wph_height ) + 'px';
+			wpam.style.height 		= ( h - wph_height - wpah ) + 'px';	// offset 252
 			break;
 		}
 
@@ -1836,7 +1831,7 @@ function workplaceChildren(){
 	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
 	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 
-	wpat.style.visibility		= 'hidden';
+	// wpat.style.visibility		= 'hidden';
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
@@ -1888,7 +1883,7 @@ function workplaceRange(){
 	var range			= document.getElementById('WORKPLACE_RANGE');
 	// var list			= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
 
-	wpat.style.visibility	= 'hidden';
+	// wpat.style.visibility	= 'hidden';
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
@@ -2158,7 +2153,7 @@ function workplaceAccount(){
 	var account			= document.getElementById('WORKPLACE_ACCOUNT');
 	// var list			= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
-	wpat.style.visibility	= 'hidden';
+	// wpat.style.visibility	= 'hidden';
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
