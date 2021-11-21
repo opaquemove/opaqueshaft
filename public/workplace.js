@@ -317,11 +317,12 @@ function selectWorkplaceAdminTools( e ){
 		signout:	document.getElementById('WAT_SIGNOUT')
 	}
 
-	if ( o.hasAttribute('selected')){
-
+	if ( o.hasAttribute( 'selected' ) ){
+		o.removeAttribute( 'selected' );
+		o.classList.remove( 'selectedmenu' );
 	} else {
-		o.setAttribute('selected', 'yes' );
-		o.classList.add('selectedmenu');
+		o.setAttribute( 'selected', 'yes' );
+		o.classList.add( 'selectedmenu');
 	}
 
 	Object.keys(toolbar).forEach( function(key){
@@ -330,6 +331,11 @@ function selectWorkplaceAdminTools( e ){
 		}
 		toolbar[key].classList.add('deselectedmenu');
 	});
+
+	if ( ! o.hasAttribute('selected')){
+		return;
+	} 
+
 	switch ( o.getAttribute('cmd')){
 		case 'sign':
 			toolbar.sign.classList.add('selectedmenu');
