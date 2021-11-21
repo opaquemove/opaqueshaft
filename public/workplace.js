@@ -373,15 +373,20 @@ function hoge(){
 					if ( this.status == 200 ){
 						var result = JSON.parse( this.responseText );
 						var menu = document.getElementById('WPH_SIGN');
-						var imagefile = result.imagefile;
+						var menu_info = document.getElementById('WPH_SIGN_INFO');
+						var account_name	= result.acc_name;
+						var imagefile 		= result.imagefile;
+
+						menu_info.innerHTML = 'sign in:<br/>' + account_name;
+
 						var o = document.createElement('DIV');
 						o.classList.add('vh-center');
 						o.style.position	= 'absolute';
 						o.style.top			= '0px';
 						o.style.left		= '0px';
-						o.style.width		= '26px';
-						o.style.height		= '26px';
-						o.style.padding		= '21px 11px 1px 11px';
+						o.style.width		= '22px';
+						o.style.height		= '22px';
+						o.style.padding		= '24px 6px 1px 18px';
 						var r = '';
 						if ( imagefile != '' && imagefile != null )
 							r += '<div style="width:100%;height:100%;border-radius:50%;background-image:url(./images/accounts/' + imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" ></div>';
@@ -517,10 +522,6 @@ function showWorkPlace(){
 	var wp_content		= document.getElementById('WP_CONTENT');
 	var wp_signin		= document.getElementById('WP_SIGNIN');
 	var wp_signout		= document.getElementById('WP_SIGNOUT');
-	// var wp_whiteboard	= document.getElementById('WP_WHITEBOARD');
-	// var wp_children		= document.getElementById('WP_CHILDREN');
-	// var wp_range		= document.getElementById('WP_RANGE');
-	// var wp_account		= document.getElementById('WP_ACCOUNT');
 
 	if ( wp_signin.classList.contains('signinMotion'))
 		wp_signin.classList.remove('signinMotion');
@@ -716,7 +717,7 @@ function openingSigninMotion( e ){
 		o.style.fontWeight		= 'normal';
 		o.style.color			= 'gray';
 		o.style.backgroundColor	= 'white';
-		o.style.border			= '1px solid lightgrey';
+		o.style.border			= '1px solid #EDEDED';
 		o.style.margin			= '4px';
 		o.style.padding			= '4px 2px 0px 14px';
 		o.style.overflow		= 'hidden';
