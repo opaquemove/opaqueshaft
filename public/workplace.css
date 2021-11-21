@@ -43,8 +43,21 @@
     padding:                0px 4px 4px 4px;
     visibility:             hidden;
     overflow:               visible;
+    opacity:                1;   
+}
+#WORKPLACE_ADMIN_ICONS{
+    pointer-events:         all;
+    position:               fixed;
+    top:                    48px;
+    left:                   -10000px;
+    width:                  calc(100% - 152px);
+    height:                 calc(100% - 52px);
+    background-color:       white;
+    font-weight:            bold;
+    padding:                4px 4px 4px 4px;
+    visibility:             visible;
+    overflow:               visible;
     opacity:                1;
-   
 }
 
 #WPH_OPAQUESHAFT_ADMIN{
@@ -97,7 +110,7 @@
 
 .deselectedmenu{
     color:                  lightgrey;
-    border-bottom: 2px solid white;
+    border-bottom:          2px solid white;
 }
 .selectedmenu{
     color:black;

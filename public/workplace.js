@@ -20,6 +20,9 @@ function initWorkplace(){
 	// init WORKPLACE_HEADER
 	initWorkplaceHeader();
 
+	// init WORKPLACE_ADMIN_TOOLS
+	initWorkplaceAdminTools();
+
 
 
 	// test code
@@ -287,6 +290,64 @@ function initWorkplaceHeader(){
 	} else{
 
 	}
+
+}
+
+function initWorkplaceAdminTools(){
+	var wat = document.getElementById('WORKPLACE_ADMIN_TOOLS');
+	wat.addEventListener( 'click', selectWorkplaceAdminTools, false );
+}
+
+function selectWorkplaceAdminTools( e ){
+	console.log('selectWorkplaceAdminTools');
+	var o = e.target;
+	while ( true ){
+		if ( o == this ) return;
+		if ( o.tagName == 'BODY') return;
+		if ( o.hasAttribute('cmd')) break;
+		o = o.parentNode;
+	}
+
+
+	var toolbar = {
+		sign: 		document.getElementById('WAT_SIGN'),
+		ranges:		document.getElementById('WAT_RANGES'),
+		accounts:	document.getElementById('WAT_ACCOUNTS'),
+		icons:		document.getElementById('WAT_ICONS'),
+		signout:	document.getElementById('WAT_SIGNOUT')
+	}
+
+	if ( o.hasAttribute('selected')){
+
+	} else {
+		o.setAttribute('selected', 'yes' );
+		o.classList.add('selectedmenu');
+	}
+
+	Object.keys(toolbar).forEach( function(key){
+		if ( toolbar[key].classList.contains('selectedmenu')){
+			toolbar[key].classList.remove('selectedmenu');
+		}
+		toolbar[key].classList.add('deselectedmenu');
+	});
+	switch ( o.getAttribute('cmd')){
+		case 'sign':
+			toolbar.sign.classList.add('selectedmenu');
+			break;
+		case 'ranges':
+			toolbar.ranges.classList.add('selectedmenu');
+			break;
+		case 'accounts':
+			toolbar.accounts.classList.add('selectedmenu');
+			break;
+		case 'icons':
+			toolbar.icons.classList.add('selectedmenu');
+			iconMgr();
+			break;
+		case 'signout':
+			toolbar.signout.classList.add('selectedmenu');
+			break;
+			}
 
 }
 
@@ -3963,3 +4024,72 @@ function whiteboardRollupHelper( results ){
 	return r;
 
 }
+
+function iconMgr(){
+	var wat = document.getElementById('WORKPLACE_ADMIN_TOOLS');
+	var wai = document.getElementById('WORKPLACE_ADMIN_ICONS');
+	if ( wai.offsetLeft < 0 ){
+		wai.style.left	= wat.offsetWidth + 'px';
+		iconMgrHelper( wai.getElementsByClassName('list')[0] );
+
+	} else {
+		wai.style.left	= '';
+
+	}
+}
+
+function iconMgrHelper( p ){
+	var r = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					p.innerHTML = 'access';
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						p.innerHTML = '';
+						var o = document.createElement('DIV');
+						o.style.width		= '100%';
+						o.style.height		= '100%';
+						o.style.display		= 'flex';
+						o.style.flexWrap	= 'wrap';
+						var pp = p.appendChild( o );
+						
+						var results = JSON.parse( xmlhttp.responseText );
+						for ( var i=0; i<results.length; i++ ){
+							var filename	= results[i].filename;
+							var o = document.createElement('DIV');
+							o.style.width				= '120px';
+							o.style.height				= '120px';
+							o.style.backgroundImage		= 'url(/accounts/imagefile?filename=' + filename + ')';
+							o.style.backgroundSize		= 'cover';
+							o.style.backgroundRepeat	= 'no-repeat';
+							o.style.backgroundPosition	= 'center center';
+							o.style.margin				= '1px';
+							pp.appendChild( o );
+
+						}
+
+
+					} else{
+						console.log( null, 'iconMgrHelper:' + xmlhttp.status );
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/imagefilelist", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( );
+
+}
+

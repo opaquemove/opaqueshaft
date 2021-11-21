@@ -112,6 +112,22 @@ router.post( '/file_upload', mp_ware, ( req, res, next ) => {
   }
 })
 
+//
+//  イメージファイル関連
+//
+//
+//  アカウントリスト取得
+//
+router.post('/imagefilelist', function(req, res, next ){
+
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.any( {
+        text : "SELECT filename, mime FROM imagefiles ORDER BY filename ASC",
+        values : [] } )
+    .then( rows => {
+          res.json( rows );
+    });
+});
 
 
 //
