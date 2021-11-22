@@ -672,6 +672,52 @@
     transition:             all 0.3s ease-in-out;
 }
 
+#WORKPLACE_IMAGEFILE{
+    position:               absolute;
+    top:                    0px;    /* resize */
+    left:                   0px;    /* resize */
+    width:                  auto;   /* 100%; */
+    height:                 calc(100% - 48px);
+    overflow:               hidden;
+    font-size:              16px;
+    background-color:       #EDEDED;
+    padding-top:            48px;
+    padding-left:           144px;
+    border-bottom:          gray;
+    text-align:             center;
+    /* visibility:             hidden; */
+}
+#WORKPLACE_IMAGEFILE_HDR{
+    /* margin:0 auto; */
+    width:                  calc(100%- 48px);
+    height:                 48px;
+    background-color:       white;
+}
+#WORKPLACE_IMAGEFILE_MAIN{
+    position:               relative;
+    margin:                 0 auto;
+    width:                  100%;
+    background-color:       transparent;
+    overflow:               scroll;
+} 
+#WORKPLACE_IMAGEFILE_MAIN_LIST{
+    width:                  100%;
+    background-color:       transparent;
+	display:				flex;
+	flex-wrap:				wrap;
+	justify-content: 		center;
+	align-items:            flex-start;
+	align-content:          space-between;
+    overflow:               auto;
+} 
+#WP_FINDIMAGEFILE{
+    background-image:       url(images/bleach2.png);
+    background-size:        12px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
+}
+
+
 .appendix{
     background-color:       white;
 }

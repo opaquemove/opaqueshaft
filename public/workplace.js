@@ -138,7 +138,13 @@ function initWorkplace(){
 	document.getElementById('WORKPLACE_RANGE_MAIN_LIST').addEventListener(
 		'transitionend', selectRangeTransitionEnd );
 	
-
+	// document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').addEventListener(
+	// 	'click', selectImagefile );
+	// document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').addEventListener(
+	// 	'animationstart', selectImagefileMotionStart );
+	// document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').addEventListener(
+	// 	'animationend', selectImagefileMotionEnd );
+	
 	makeRangeList( 'TAB_CURRENT2', 'V' );
 	document.getElementById( 'TAB_CURRENT2' ).addEventListener(
 		'click', selectCurrentRangeId, false );
@@ -301,22 +307,27 @@ function selectWorkplaceAdminTools( e ){
 		o = o.parentNode;
 	}
 
+	selectWorkplaceAdminToolsHelper( o.getAttribute('cmd'));
 
+}
+
+function selectWorkplaceAdminToolsHelper( cmd ){
 	var toolbar = {
 		sign: 		document.getElementById('WAT_SIGN'),
+		children:	document.getElementById('WAT_CHILDREN'),
 		ranges:		document.getElementById('WAT_RANGES'),
 		accounts:	document.getElementById('WAT_ACCOUNTS'),
 		icons:		document.getElementById('WAT_ICONS'),
 		signout:	document.getElementById('WAT_SIGNOUT')
 	}
 
-	if ( o.hasAttribute( 'selected' ) ){
-		o.removeAttribute( 'selected' );
-		o.classList.remove( 'selectedmenu' );
-	} else {
-		o.setAttribute( 'selected', 'yes' );
-		o.classList.add( 'selectedmenu');
-	}
+	// if ( o.hasAttribute( 'selected' ) ){
+	// 	o.removeAttribute( 'selected' );
+	// 	o.classList.remove( 'selectedmenu' );
+	// } else {
+	// 	o.setAttribute( 'selected', 'yes' );
+	// 	o.classList.add( 'selectedmenu');
+	// }
 
 	Object.keys(toolbar).forEach( function(key){
 		if ( toolbar[key].classList.contains('selectedmenu')){
@@ -325,30 +336,34 @@ function selectWorkplaceAdminTools( e ){
 		toolbar[key].classList.add('deselectedmenu');
 	});
 
-	if ( ! o.hasAttribute('selected')){
-		return;
-	} 
+	// if ( ! o.hasAttribute('selected')){
+	// 	return;
+	// } 
 
-	switch ( o.getAttribute('cmd')){
+	switch ( cmd ){
 		case 'sign':
 			toolbar.sign.classList.add('selectedmenu');
+			break;
+		case 'children':
+			toolbar.children.classList.add('selectedmenu');
+			workplaceChildren();
 			break;
 		case 'ranges':
 			toolbar.ranges.classList.add('selectedmenu');
 			workplaceRange();
 			break;
-		case 'accounts':
+			case 'accounts':
 			toolbar.accounts.classList.add('selectedmenu');
 			workplaceAccount();
 			break;
 		case 'icons':
 			toolbar.icons.classList.add('selectedmenu');
-			iconMgr();
+			workplaceImagefile();
 			break;
 		case 'signout':
 			toolbar.signout.classList.add('selectedmenu');
 			break;
-			}
+	}
 
 }
 
@@ -1106,6 +1121,10 @@ function resizeWorkplace(){
 	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
 	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
 
+	var imagefile	= document.getElementById('WORKPLACE_IMAGEFILE');
+	var wpih		= document.getElementById('WORKPLACE_IMAGEFILE_HDR').offsetHeight;
+	var wpim		= document.getElementById('WORKPLACE_IMAGEFILE_MAIN');
+
 	console.log( 'wph_height:' + wph_height );
 	console.log( 'resizeWorkplace' );
 	console.log( 'bottom overlay width:' + w );
@@ -1131,6 +1150,10 @@ function resizeWorkplace(){
 	account.style.top				= ( -h ) + 'px';
 	account.style.left				= '0px';
 
+	imagefile.style.width			= ( w - 48 - 144 ) + 'px';
+	imagefile.style.top				= ( -h ) + 'px';
+	imagefile.style.left			= '0px';
+
 
 	switch ( workplace_id ){
 		case 'WHITEBOARD':
@@ -1152,6 +1175,11 @@ function resizeWorkplace(){
 			account.style.top		= '0px';
 			account.style.height 	= ( h - wph_height ) + 'px';
 			wpam.style.height 		= ( h - wph_height - wpah ) + 'px';	// offset 252
+			break;
+		case 'IMAGEFILE':
+			imagefile.style.top		= '0px';
+			imagefile.style.height 	= ( h - wph_height ) + 'px';
+			wpim.style.height 		= ( h - wph_height - wpih ) + 'px';	// offset 252
 			break;
 		}
 
@@ -4024,6 +4052,45 @@ function whiteboardRollupHelper( results ){
 	r += '</div>';
 	return r;
 
+}
+
+//
+//		アカウント
+//
+function workplaceImagefile(){
+	workplace_id = 'IMAGEFILE';
+
+	var wpat			= document.getElementById('WORKPLACE_ADMIN_TOOLS');
+	var imagefile		= document.getElementById('WORKPLACE_IMAGEFILE');
+	// var list			= document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST');
+
+	// wpat.style.visibility	= 'hidden';
+
+	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
+	var bf= document.getElementById('BOTTOM_FRAME');
+	imagefile.style.top		= '0px';
+
+	//	TAB
+	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
+	// var current 	= document.getElementById('TAB_CURRENT');
+	var plus		= document.getElementById('TAB_PLUS');
+	var find		= document.getElementById('TAB_FIND');
+	var current2	= document.getElementById('TAB_CURRENT2');
+	var option		= document.getElementById('TAB_OPTION');
+	tab.style.visibility 		= 'visible';
+	plus.style.visibility		= 'visible';
+	find.style.visibility		= 'visible';
+	current2.style.visibility	= 'visible';
+	option.style.visibility		= 'visible';
+
+	resizeWorkplace();
+	
+}
+
+function workplaceImagefileHelper(){
+
+	var list = document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST');
+	iconMgrHelper( list );
 }
 
 function iconMgr(){
