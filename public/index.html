@@ -29,19 +29,15 @@
 		<div id="BOTTOM_FRAME" class="not_select" style="color:dimgray;">
 			<div id="WORKPLACE_MENU" >
 				<div id="WORKPLACE_HDR" >	<!--  100% * auto-->
-					<div id="WORKPLACE_SUMMARY" > 		<!-- 70% * 70% -->
+					<div id="WORKPLACE_SUMMARY" >
 						<div id="WP_TEST"       class="summary_box" style="width:86px;height:86px;font-weight:bold;display:block;transition: transform 0.5s ease-in-out;" >TEST</div>
-						<div id="WP_EMPTY"      class="summary_box" style="width:86px;height:86px;" >
-						</div> <!-- 23% default-->
+						<div id="WP_EMPTY"      class="summary_box" style="width:86px;height:86px;" ></div> <!-- 23% default-->
 						<div id="WP_CONTENT"    class="summary_box" style="width:86px;height:86px;font-weight:bold;" >CONTENTS</div>
-						<!-- <div id="WP_WHITEBOARD" class="summary_box" style="width:86px;height:86px;font-weight:bold;font-size:12px;" >DAY</div>					
-						<div id="WP_CHILDREN"   class="summary_box" style="width:86px;height:86px;font-weight:bold;" >CHILDREN</div>
-						<div id="WP_RANGE"      class="summary_box" style="width:86px;height:86px;font-weight:bold;" >RANGE</div> -->
 						<div id="WP_EMPTY2"     class="summary_box" style="width:86px;height:86px;font-weight:bold;" ></div>
 						<div id="WP_SIGNIN"     class="summary_box" style="width:86px;height:86px;font-weight:bold;display:block;transition: transform 0.5s ease-in-out;" >SIGN IN</div>
 						<div id="WP_SIGNOUT"    class="summary_box" style="width:86px;height:86px;font-weight:bold;display:block;transition: transform 0.5s ease-in-out;" >SIGN OUT</div>
-						<div id="WP_ROLLUP"     class="summary_box" style="width:278px;height:258px;overflow:scroll;" ></div>
-						<div id="WP_ROLLUP2"    class="summary_box" style="width:278px;height:258px;overflow:scroll;" ></div>
+						<div id="WP_ROLLUP"     class="summary_box" style="width:90%;height:auto;" ></div>
+						<div id="WP_ROLLUP2"    class="summary_box" style="width:90%;height:auto;" ></div>
 					</div>
 				</div>
 			</div>
@@ -162,12 +158,11 @@
 							></button>
 						</div>
 					</div>
-					<div style="float: right;height:100%;margin-right:2px;" >
-						<div style="border:1px solid #EDEDED;display:inline-block;padding:2px;" >
+					<div style="float: right;width:64px;height:100%;margin-right:2px;" >
+						<div style="height:42px;border:1px solid #EDEDED;display:inline-block;padding:2px;" >
+							FILE
 							<form method="post" id="fileForm" name="fileForm" onsubmit="return false;"  >
-								FILE...
-								<input type="file" id="imagefile" name="imagefile" style="width:20px;height:20px;opacity:0;"/>
-								<!-- <button type="button"  >upload</button> -->
+								<input type="file" id="imagefile" name="imagefile" style="pointer-events: all; width:20px;height:100%;font-size:10px;opacity:0;"/>
 							</form>
 						</div>
 		
@@ -206,12 +201,12 @@
 
 		<div id="WORKPLACE_ADMIN_ICONS" >
 			<div class="toolbar" style="width:100%;height:48px;display:flex;" >
-				<!-- <div style="border:1px solid #EDEDED;display:inline-block;padding:2px;" >
-					<form method="post" id="fileForm" name="fileForm" onsubmit="return false;"  >
+				<div style="border:1px solid #EDEDED;display:inline-block;padding:2px;" >
+					<!-- <form method="post" id="fileForm" name="fileForm" onsubmit="return false;"  >
 						FILE...
 						<input type="file" id="imagefile" name="imagefile" style="width:20px;height:20px;opacity:0;"/>
-					</form>
-				</div> -->
+					</form> -->
+				</div>
 				<div style="width:46px;height:46px;border:1px solid #EDEDED;" >refresh</div>
 			</div>
 			<div class="list"    style="width:100%;height:calc(100% - 48px);"></div>

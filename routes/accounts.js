@@ -119,11 +119,13 @@ router.post( '/file_upload', mp_ware, ( req, res, next ) => {
 //  アカウントリスト取得
 //
 router.post('/imagefilelist', function(req, res, next ){
+  var keyword = req.body.keyword;
 
+  console.log( 'imagefilelist:' + keyword );
   res.header('Content-Type', 'application/json;charset=utf-8');
   db.any( {
-        text : "SELECT filename, mime FROM imagefiles ORDER BY filename ASC",
-        values : [] } )
+        text : "SELECT filename, mime FROM imagefiles WHERE filename ILIKE '" + keyword + "%' ORDER BY filename ASC",
+        values : [  ] } )
     .then( rows => {
           res.json( rows );
     });

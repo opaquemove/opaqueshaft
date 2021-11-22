@@ -57,6 +57,13 @@ function initWorkplace(){
             workplaceAccountHelper();
 		}
 	);
+    document.getElementById('WP_IMAGEFILE_ID').addEventListener(
+		'keyup',
+		function( e ){
+			if ( e.key == 'Enter' )
+            workplaceImagefileHelper();
+		}
+	);
 
 	document.getElementById('BTN_ADD_DATE').addEventListener('click',
 	function(e){
@@ -297,6 +304,10 @@ function initWorkplaceAdminTools(){
 	wat.addEventListener( 'click', selectWorkplaceAdminTools, false );
 }
 
+function resetWorkplaceAdminTools(){
+	selectWorkplaceAdminToolsHelper( null );
+}
+
 function selectWorkplaceAdminTools( e ){
 	console.log('selectWorkplaceAdminTools');
 	var o = e.target;
@@ -398,6 +409,7 @@ function selectWorkplaceHeaderHepler( cmd ){
 				toolbar[key].classList.add('deselectedmenu');
 			});
 			toolbar.admin.classList.add('selectedmenu');
+			resetWorkplaceAdminTools();
 			workplaceReset();
 			break;
 		case 'day':
@@ -1129,7 +1141,7 @@ function resizeWorkplace(){
 	console.log( 'resizeWorkplace' );
 	console.log( 'bottom overlay width:' + w );
 
-	menu.style.width				= ( w ) + 'px';
+	menu.style.width				= ( w - 144 ) + 'px';
 	menu.style.top					= '0px';
 	menu.style.left					= '0px';
 	menu.style.height				= 'calc(100% - ' + wph_height + 'px)';
@@ -4089,8 +4101,19 @@ function workplaceImagefile(){
 
 function workplaceImagefileHelper(){
 
+	//	if close TOOLBAR
+	var itb = document.getElementById('IMAGEFILE_TOOLBAR');
+	if ( itb != null ){
+		itb.parentNode.removeChild( itb );
+	}
+	
+	var keyword = document.getElementById( 'WP_IMAGEFILE_ID' ).value;
+	if ( keyword == '' )
+		keyword = '%';
+
 	var list = document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST');
-	iconMgrHelper( list );
+	
+	iconMgrHelper( list, keyword );
 }
 
 function iconMgr(){
@@ -4106,7 +4129,7 @@ function iconMgr(){
 	}
 }
 
-function iconMgrHelper( p ){
+function iconMgrHelper( p, keyword ){
 	var r = '';
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.addEventListener('readystatechange', 
@@ -4142,6 +4165,10 @@ function iconMgrHelper( p ){
 							o.style.backgroundRepeat	= 'no-repeat';
 							o.style.backgroundPosition	= 'center center';
 							o.style.margin				= '1px';
+							o.style.color				= 'white';
+							o.style.fontSize			= '12px';
+							o.style.textShadow			= '1px 1px 1px gray';
+							o.innerText					= filename;
 							pp.appendChild( o );
 
 						}
@@ -4157,7 +4184,7 @@ function iconMgrHelper( p ){
 
 		xmlhttp.open("POST", "/accounts/imagefilelist", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		xmlhttp.send( );
+		xmlhttp.send( 'keyword=' + keyword );
 
 }
 
