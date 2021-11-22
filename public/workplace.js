@@ -119,6 +119,12 @@ function initWorkplace(){
 		'transitionstart', openingSignoutMotion );
 	document.getElementById('WP_SIGNOUT').addEventListener(
 		'transitionend', closingSignoutMotion );
+	// document.getElementById('WAT_SIGNOUT').addEventListener(
+	// 	'click', signoutMotion );
+	// document.getElementById('WAT_SIGNOUT').addEventListener(
+	// 	'transitionstart', openingSignoutMotion );
+	// document.getElementById('WAT_SIGNOUT').addEventListener(
+	// 	'transitionend', closingSignoutMotion );
 	
 
 	document.getElementById('WP_TEST').addEventListener(
@@ -867,11 +873,12 @@ function closingSigninMotion( e ){
 
 function signoutMotion( e ){
 	e.stopPropagation();
-	if ( e.target != this ) return;
+	// if ( e.target != this ) return;
 	this.classList.toggle( 'signoutMotion' );
 }
 //transition start
 function openingSignoutMotion( e ){
+	e.stopPropagation();
 	var opt = this.getElementsByClassName('option');
 	if ( opt.length == 0 ){		//	opening transition
 		// this.style.zIndex = 1;
@@ -914,6 +921,7 @@ function openingSignoutMotion( e ){
 }
 //transition end
 function closingSignoutMotion( e ){
+	e.stopPropagation();
 	var opt = this.getElementsByClassName('option');
 	if ( opt.length > 0 && ! this.classList.contains('signoutMotion')) {
 		opt[0].parentNode.removeChild( opt[0] );
