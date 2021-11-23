@@ -41,6 +41,13 @@ function initWorkplace(){
 		}
 	);
 		
+    document.getElementById('WP_QUERY_ID').addEventListener(
+		'keyup',
+		function( e ){
+			if ( e.key == 'Enter' )
+            query( this );
+		}
+	);
     document.getElementById('WP_KEYWORD').addEventListener(
 		'keyup',
 		function( e ){
@@ -219,6 +226,18 @@ function initWorkplace(){
 
 }
 
+function query( obj ){
+	var keyword = obj.value;
+	console.log( 'query keyword:' + keyword );
+
+	switch ( workplace_id ){
+		case 'ACCOUNT':
+			workplaceAccountHelper();
+			break;
+	}
+}
+
+
 function initFileUpload(){
 
 	document.getElementById('imagefile').addEventListener(
@@ -372,7 +391,8 @@ function selectWorkplaceHeader( e ){
 function selectWorkplaceHeaderHepler( cmd ){
 	var toolbar = {
 		admin: 		document.getElementById('WPH_OPAQUESHAFT_ADMIN'),
-		day:		document.getElementById('WPH_DAY')
+		day:		document.getElementById('WPH_DAY'),
+		sign:		document.getElementById('WPH_SIGNSTATUS')
 		// children:	document.getElementById('WPH_CHILDREN'),
 		// range:		document.getElementById('WPH_RANGE'),
 		// account:	document.getElementById('WPH_ACCOUNT')
@@ -649,6 +669,7 @@ function resizeWorkplace(){
 
 	var account		= document.getElementById('WORKPLACE_ACCOUNT');
 	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
+	var wpah_margin	= parseInt( document.getElementById('WORKPLACE_ACCOUNT_HDR').style.marginTop );
 	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
 
 	var imagefile	= document.getElementById('WORKPLACE_IMAGEFILE');
@@ -713,7 +734,7 @@ function resizeWorkplace(){
 		case 'ACCOUNT':
 			account.style.top		= '0px';
 			account.style.height 	= ( h - wph_height ) + 'px';
-			wpam.style.height 		= ( h - wph_height - wpah ) + 'px';	// offset 252
+			wpam.style.height 		= ( h - wph_height - wpah  ) + 'px';	// offset 252
 			break;
 		case 'IMAGEFILE':
 			imagefile.style.top		= '0px';
