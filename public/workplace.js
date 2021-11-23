@@ -372,10 +372,10 @@ function selectWorkplaceHeader( e ){
 function selectWorkplaceHeaderHepler( cmd ){
 	var toolbar = {
 		admin: 		document.getElementById('WPH_OPAQUESHAFT_ADMIN'),
-		day:		document.getElementById('WPH_DAY'),
-		children:	document.getElementById('WPH_CHILDREN'),
-		range:		document.getElementById('WPH_RANGE'),
-		account:	document.getElementById('WPH_ACCOUNT')
+		day:		document.getElementById('WPH_DAY')
+		// children:	document.getElementById('WPH_CHILDREN'),
+		// range:		document.getElementById('WPH_RANGE'),
+		// account:	document.getElementById('WPH_ACCOUNT')
 	}
 
 	switch ( cmd ){
@@ -397,30 +397,6 @@ function selectWorkplaceHeaderHepler( cmd ){
 			});
 			toolbar.day.classList.add('selectedmenu');
 			workplaceWhiteboard();
-			break;
-		case 'children':
-			Object.keys(toolbar).forEach( function(key){
-				if ( toolbar[key].classList.contains('selectedmenu'))
-				toolbar[key].classList.remove('selectedmenu');
-			});
-			toolbar.children.classList.add('selectedmenu');
-			workplaceChildren();
-			break;
-		case 'range':
-			Object.keys(toolbar).forEach( function(key){
-				if ( toolbar[key].classList.contains('selectedmenu'))
-				toolbar[key].classList.remove('selectedmenu');
-			});
-			toolbar.range.classList.add('selectedmenu');
-			workplaceRange();
-			break;
-		case 'account':
-			Object.keys(toolbar).forEach( function(key){
-				if ( toolbar[key].classList.contains('selectedmenu'))
-				toolbar[key].classList.remove('selectedmenu');
-			});
-			toolbar.account.classList.add('selectedmenu');
-			workplaceAccount();
 			break;
 	}
 
@@ -584,9 +560,9 @@ function showWorkPlace(){
 
 	var wph				= document.getElementById('WORKPLACE_HEADER');
 	var wpat			= document.getElementById('WORKPLACE_ADMIN_TOOLS');
-	var wp_test			= document.getElementById('WP_TEST');
-	var wp_empty		= document.getElementById('WP_EMPTY');
-	var wp_content		= document.getElementById('WP_CONTENT');
+	// var wp_test			= document.getElementById('WP_TEST');
+	// var wp_empty		= document.getElementById('WP_EMPTY');
+	// var wp_content		= document.getElementById('WP_CONTENT');
 	var wp_signin		= document.getElementById('WP_SIGNIN');
 	var wp_signout		= document.getElementById('WP_SIGNOUT');
 	var wp_rollup		= document.getElementById('WP_ROLLUP');
@@ -609,9 +585,9 @@ function showWorkPlace(){
 		bf.style.overflow				= 'auto';
 		wp_signin.setAttribute( 'disabled', 'true' );
 		wp_signout.removeAttribute( 'disabled' );
-		wp_test.style.display			= 'inline';
-		wp_empty.style.display			= 'inline';
-		wp_content.style.display		= 'inline';
+		// wp_test.style.display			= 'inline';
+		// wp_empty.style.display			= 'inline';
+		// wp_content.style.display		= 'inline';
 		wp_signin.style.visibility		= 'hidden';
 		wp_signout.style.visibility		= 'visible';
 		wp_rollup.style.visibility		= 'visible';
@@ -634,9 +610,9 @@ function showWorkPlace(){
 		bf.style.overflow				= 'hidden';
 		wp_signin.removeAttribute( 'disabled' );
 		wp_signout.setAttribute( 'disabled', 'true' );
-		wp_test.style.display			= 'none';
-		wp_empty.style.display			= 'none';
-		wp_content.style.display		= 'none';
+		// wp_test.style.display			= 'none';
+		// wp_empty.style.display			= 'none';
+		// wp_content.style.display		= 'none';
 		wp_signin.style.visibility		= 'visible';
 		wp_signout.style.visibility		= 'hidden';
 		wp_rollup.style.visibility		= 'hidden';
@@ -836,16 +812,16 @@ function openingSigninMotion( e ){
 		r += '<form name="sign_form" onsubmit="return false;" >';
 			// r += '<div style="font-size:10px;padding-top:2px;" >ID:</div>';
 			r += '<div style="padding:2px 0px;" >';
-				r += '<input style="font-size:12px;width:120px;outline:none;border:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:#EDEDED;background-image:url(./images/user-2.png);background-size:10px;background-repeat:no-repeat;background-position:right 4px center;" type="text" id="acc_id" name="id" tabindex=1 autocomplete="off" placeholder="ID" />';
+				r += '<input style="font-size:12px;width:120px;outline:none;border:none;border-radius:14px;padding:8px 8px 8px 10px;background-color:#EDEDED;background-image:url(./images/user-2.png);background-size:10px;background-repeat:no-repeat;background-position:right 4px center;" type="text" id="acc_id" name="id" tabindex=1 autocomplete="off" placeholder="ID" />';
 			r += '</div>';
 			// r += '<div style="font-size:10px;padding-top:2px;" >Password:</div>';
 			r += '<div style="padding:4px 0px;" >';
-				r += '<input style="font-size:12px;width:120px;outline:none;border:none;border-radius:14px;padding:2px 2px 2px 10px;background-color:#EDEDED;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;" type="password" name="pwd" tabindex=2 autocomplete="off" placeholder="Password" />';
+				r += '<input style="font-size:12px;width:120px;outline:none;border:none;border-radius:14px;padding:8px 8px 8px 10px;background-color:#EDEDED;background-image:url(./images/key.png);background-size:8px;background-repeat:no-repeat;background-position:right 4px center;" type="password" name="pwd" tabindex=2 autocomplete="off" placeholder="Password" />';
 			r += '</div>';
 
-			r += '<div class="operation" style="padding-top:4px;" >';
+			r += '<div class="operation" style="padding-top:8px;" >';
 				r += '<button tabindex="3" type="button" class="workplace_commit_button" ';
-				r += ' style="width:130px;height:24px;"  cmd="commit"  >sign in</button>';
+				r += ' style="width:130px;height:32px;font-size:14px;padding:8px;"  cmd="commit"  >sign in</button>';
 			r += '</div>';
 
 		r += '</form>';
@@ -1024,7 +1000,7 @@ function openingSignoutRotation(e){
 		o.style.opacity			= 0;
 		o.style.transition		= 'all 0.5s ease-in-out';
 		var r = '';
-		r += '<div style="float:right;padding:4px;writing-mode:vertical-lr" cmd="proceed" >sign out?</div>';
+		r += '<div style="float:right;padding:4px;height:84px;writing-mode:vertical-lr" cmd="proceed" >sign out?</div>';
 		o.innerHTML = r;
 
 		var oo = this.appendChild( o );
@@ -1217,10 +1193,7 @@ function workplaceWhiteboard(){
 	guidedance_whiteboard_form.day.value = '';
 
 	var wpat	= document.getElementById('WORKPLACE_ADMIN_TOOLS');
-	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
-	var children= document.getElementById('WORKPLACE_CHILDREN');
-	var wpwm	= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
 	var list	= document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
 	wpat.style.visibility		= 'hidden';
@@ -1872,8 +1845,6 @@ function makeWhiteboardListScope( p, sotd )
 function workplaceChildren(){
 	workplace_id = 'CHILDREN';
 	var wpat	= document.getElementById('WORKPLACE_ADMIN_TOOLS');
-	var hdr		= document.getElementById('WORKPLACE_HDR');
-	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
 
 	// wpat.style.visibility		= 'hidden';
@@ -3630,10 +3601,6 @@ function finder(){
 		return;
 	}
 
-
-    // var wph = document.getElementById('WORKPLACE_HDR');
-	// wph.style.height = '0px';
-	// wph.style.padding = '0px';
 
 	var keyword = document.getElementById('WP_KEYWORD').value;
 	finderHelper( keyword, range_id );
