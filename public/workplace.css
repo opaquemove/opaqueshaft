@@ -22,14 +22,14 @@
     position:               fixed;
     top:                    0px;
     left:                   0px;
-    width:                  calc(100% - 48px);
+    width:                  calc(100% - 0px);
     height:                 48px;
     background-color:       white;
     display:                flex;
     flex-wrap:              nowrap;
     visibility:             hidden;
     overflow:               visible;
-    opacity:                0.6;
+    opacity:                1;
 }
 #WORKPLACE_ADMIN_TOOLS{
     pointer-events:         all;
@@ -38,26 +38,12 @@
     left:                   0px;
     width:                  136px;
     height:                 calc(100% - 52px);
-    background-color:       #EDEDED;
+    background-color:       white;
     font-weight:            bold;
     padding:                0px 4px 4px 4px;
     visibility:             hidden;
     overflow:               visible;
     opacity:                1;   
-}
-#WORKPLACE_ADMIN_ICONS{
-    pointer-events:         all;
-    position:               fixed;
-    top:                    48px;
-    left:                   -10000px;
-    width:                  calc(100% - 152px);
-    height:                 calc(100% -  52px);
-    background-color:       white;
-    font-weight:            bold;
-    padding:                4px 4px 4px 4px;
-    visibility:             visible;
-    overflow:               visible;
-    opacity:                1;
 }
 
 #WPH_OPAQUESHAFT_ADMIN{
@@ -233,7 +219,7 @@
     height:                 calc(100% - 48px);
     overflow:               hidden;
     font-size:              16px;
-    background-color:       white;
+    background-color:       #EDEDED;
     padding-top:            48px;
     padding-left:           144px;
     display:                inline;

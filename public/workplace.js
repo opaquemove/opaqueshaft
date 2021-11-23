@@ -127,13 +127,19 @@ function initWorkplace(){
 	// 	'transitionend', closingSignoutMotion );
 	
 
-	document.getElementById('WP_TEST').addEventListener(
-		'click', rotateMenu );
-	document.getElementById('WP_TEST').addEventListener(
-		'transitionstart', openingRotation );
-	document.getElementById('WP_TEST').addEventListener(
-		'transitionend', closingRotation );
-		
+	// document.getElementById('WP_TEST').addEventListener(
+	// 	'click', rotateMenu );
+	// document.getElementById('WP_TEST').addEventListener(
+	// 	'transitionstart', openingRotation );
+	// document.getElementById('WP_TEST').addEventListener(
+	// 	'transitionend', closingRotation );
+	document.getElementById('WAT_SIGNOUT').addEventListener(
+		'click', rotateSignoutMenu );
+	document.getElementById('WAT_SIGNOUT').addEventListener(
+		'transitionstart', openingSignoutRotation );
+	document.getElementById('WAT_SIGNOUT').addEventListener(
+		'transitionend', closingSignoutRotation );
+			
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
 		'click', selectChildren );
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
@@ -617,6 +623,8 @@ function showWorkPlace(){
 	var wp_content		= document.getElementById('WP_CONTENT');
 	var wp_signin		= document.getElementById('WP_SIGNIN');
 	var wp_signout		= document.getElementById('WP_SIGNOUT');
+	var wp_rollup		= document.getElementById('WP_ROLLUP');
+	var wp_rollup2		= document.getElementById('WP_ROLLUP2');
 
 	if ( wp_signin.classList.contains('signinMotion'))
 		wp_signin.classList.remove('signinMotion');
@@ -644,6 +652,8 @@ function showWorkPlace(){
 		wp_content.style.display		= 'inline';
 		wp_signin.style.visibility		= 'hidden';
 		wp_signout.style.visibility		= 'visible';
+		wp_rollup.style.visibility		= 'visible';
+		wp_rollup2.style.visibility		= 'visible';
 		// wp_whiteboard.style.visibility	= 'visible';
 		// wp_children.style.visibility	= 'visible';
 		// wp_range.style.visibility		= 'visible';
@@ -675,6 +685,8 @@ function showWorkPlace(){
 		wp_content.style.display		= 'none';
 		wp_signin.style.visibility		= 'visible';
 		wp_signout.style.visibility		= 'hidden';
+		wp_rollup.style.visibility		= 'hidden';
+		wp_rollup2.style.visibility		= 'hidden';
 		// wp_whiteboard.style.visibility	= 'hidden';
 		// wp_children.style.visibility	= 'hidden';
 		// wp_range.style.visibility		= 'hidden';
@@ -884,8 +896,7 @@ function openingSignoutMotion( e ){
 		// this.style.zIndex = 1;
 		var o = document.createElement('DIV');
 		o.classList.add('option');
-		// o.classList.add('signMotionOff');
-		o.style.position		='absolute';
+		o.style.position		= 'absolute';
 		o.style.top				= '-5px';
 		o.style.left			= ( this.offsetWidth + -4 ) + 'px';
 		o.style.height			= '100%';
@@ -894,7 +905,7 @@ function openingSignoutMotion( e ){
 		o.style.textAlign		= 'left';
 		o.style.fontWeight		= 'normal';
 		o.style.color			= 'gray';
-		o.style.backgroundColor	= 'white';
+		o.style.backgroundColor	= 'red';
 		o.style.border			= '1px solid white';
 		o.style.margin			= '4px';
 		o.style.padding			= '4px 2px 0px 14px';
@@ -985,10 +996,87 @@ function getCurrentRangeId(){
 	return range_id;
 }
 
+function rotateSignoutMenu(e){
+	// e.stopPropagation();
+	this.classList.toggle( 'rotate1' );
+	console.log( this.classList.contains('rotate1') );
+}
+function openingSignoutRotation(e){
+	var opt = this.getElementsByClassName('option');
+	if ( opt.length == 0 ){		//	opening transition
+		this.style.zIndex = 1;
+		var o = document.createElement('DIV');
+		o.classList.add('option');
+		o.style.position		='absolute';
+		o.style.top				= '-5px';
+		o.style.left			= '-5px';
+		o.style.height			= '100%';
+		o.style.width			= 'calc( 100% - 4px )';
+		o.style.height			= 'calc( 100% - 4px )';
+		o.style.color			= 'white';
+		o.style.backgroundColor	= 'red';
+		o.style.border			= '1px solid lightgrey';
+		o.style.margin			= '4px';
+		o.style.padding			= '2px';
+		o.style.overflow		= 'hidden';
+		o.style.opacity			= 0;
+		o.style.transition		= 'all 0.5s ease-in-out';
+		var r = '';
+		r += '<div style="float:right;padding:4px;writing-mode:vertical-lr" cmd="proceed" >sign out?</div>';
+		o.innerHTML = r;
+
+		var oo = this.appendChild( o );
+		oo.addEventListener( 'click',
+			function ( e ){
+				var c = e.target;
+				while ( true ){
+					if ( c.tagName == 'BODY' ) return;
+					if ( c.hasAttribute('cmd')) break;
+					c = c.parentNode;
+				}
+				console.log( c.getAttribute('cmd'));
+				switch ( c.getAttribute('cmd')){
+					case 'proceed':
+						signout();
+						break;
+				}
+
+			}
+		, false);
+
+		setTimeout(() => {
+			oo.style.left = 'calc(-100% - 7px)';
+			oo.style.opacity = 1;
+		}, 50 );
+	} else {	// closing animation
+		if ( this == e.target ){
+			opt[0].style.left = '-5px';
+			opt[0].style.opacity = 0;
+			// this.style.zIndex = '';
+			// opt[0].parentNode.removeChild( opt[0]);
+		}
+	}
+	
+}
+function closingSignoutRotation(e){
+	var opt = this.getElementsByClassName('option');
+	if ( opt.length > 0 ){
+		console.log( 'offsetLeft' + opt[0].offsetLeft );
+		if ( opt[00].offsetLeft >= -5 ){
+			this.style.zIndex = '';
+			opt[0].style.left = '';
+			opt[0].style.opacity = 0;
+			opt[0].parentNode.removeChild( opt[0]);
+		}
+
+	}
+}
+
+
 
 //	Left90 transsition start/end invoke
 function rotateMenu(e){
-	e.stopPropagation();
+	// e.stopPropagation();
 	this.classList.toggle( 'rotate1' );
 	console.log( this.classList.contains('rotate1') );
 }
@@ -4124,18 +4212,18 @@ function workplaceImagefileHelper(){
 	iconMgrHelper( list, keyword );
 }
 
-function iconMgr(){
-	var wat = document.getElementById('WORKPLACE_ADMIN_TOOLS');
-	var wai = document.getElementById('WORKPLACE_ADMIN_ICONS');
-	if ( wai.offsetLeft < 0 ){
-		wai.style.left	= wat.offsetWidth + 'px';
-		iconMgrHelper( wai.getElementsByClassName('list')[0] );
+// function iconMgr(){
+// 	var wat = document.getElementById('WORKPLACE_ADMIN_TOOLS');
+// 	var wai = document.getElementById('WORKPLACE_ADMIN_ICONS');
+// 	if ( wai.offsetLeft < 0 ){
+// 		wai.style.left	= wat.offsetWidth + 'px';
+// 		iconMgrHelper( wai.getElementsByClassName('list')[0] );
 
-	} else {
-		wai.style.left	= '';
+// 	} else {
+// 		wai.style.left	= '';
 
-	}
-}
+// 	}
+// }
 
 function iconMgrHelper( p, keyword ){
 	var r = '';

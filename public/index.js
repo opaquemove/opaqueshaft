@@ -2487,6 +2487,7 @@ function signoutForm(){
 //	サインアウト処理（同期処理）
 //
 function signout(){
+	console.log('sign out');
 
 	var xmlhttp = new XMLHttpRequest();
 
