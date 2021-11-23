@@ -7,6 +7,8 @@ var cur_eotd		= null;
 function initWorkplace(){
 	console.log('initWorkplace');
 
+	if ( ! checkSign() ) workplace_id = 'AUTHENTICATION';
+
 	//	カレントのレンジを設定
 	var today = new Date();
 	cur_range_id = today.getFullYear();
@@ -14,8 +16,6 @@ function initWorkplace(){
 		cur_range_id--;
 	cur_month	= today.getMonth() + 1;
 
-	var hdr = document.getElementById('WORKPLACE_HDR');
-	hdr.setAttribute( 'orgHeight', hdr.offsetHeight + 'px' );
 
 	// init WORKPLACE_HEADER
 	initWorkplaceHeader();
@@ -40,8 +40,6 @@ function initWorkplace(){
 			console.log('test');
 		}
 	);
-	// document.getElementById('WORKPLACE_ICON').addEventListener(
-	// 	'click', birdsEyeView );
 		
     document.getElementById('WP_KEYWORD').addEventListener(
 		'keyup',
@@ -90,9 +88,6 @@ function initWorkplace(){
 	document.getElementById('WORKPLACE_HDR').addEventListener(
 		'click', function(e){
 			switch( e.target.id ){
-				// case 'WP_WHITEBOARD':
-				// 	workplaceWhiteboard();
-				// 	break;
 				case 'WORKPLACE_HDR':
 				case 'WORKPLACE_SUMMARY':
 					var signin = document.getElementById('WP_SIGNIN');
@@ -164,10 +159,12 @@ function initWorkplace(){
 	// document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').addEventListener(
 	// 	'animationend', selectImagefileMotionEnd );
 	
+	// レンジデータ生成
 	makeRangeList( 'TAB_CURRENT2', 'V' );
 	document.getElementById( 'TAB_CURRENT2' ).addEventListener(
 		'click', selectCurrentRangeId, false );
 
+	// カレンダー生成
 	makeCalendar( cur_range_id );
 	document.getElementById('TAB_OPTION').addEventListener(
 		'click',
@@ -202,38 +199,7 @@ function initWorkplace(){
 	
 	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('animationend', selectWhiteboardMotionEnd, false );
 	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('click', selectWhiteboard, false );
-	
-
-	// document.getElementById('WORKPLACE_BIRDSEYEVIEW').addEventListener(
-	// 	'click', function( e ){
-	// 		var view = e.target;
-	// 		while ( true ){
-	// 			if ( this == view ) return;
-	// 			if ( view.hasAttribute('view')) break;
-	// 			view = view.parentNode;
-	// 		}
-			
-	// 		switch( view.getAttribute('view')){
-	// 			case 'menu':
-	// 				// workplaceReset();
-	// 				birdsEyeView();
-	// 				break;
-	// 			case 'whiteboard':
-	// 				workplaceWhiteboard();
-	// 				break;
-	// 			case 'children':
-	// 				workplaceChildren();
-	// 				break;
-	// 			case 'range':
-	// 				workplaceRange();
-	// 				break;
-	// 			case 'account':
-	// 				workplaceAccount();
-	// 				break;	
-	// 			}
-
-	// 	}, false );
-	
+		
 	showWorkPlace();
 
 	// calendarGadget( 'WP_EMPTY', null );
@@ -602,14 +568,14 @@ function calendarGadget( id, serial ){
 }
 
 //
-//		ワークプレイス（統合メニュー）を表示
+//		ワークプレイス（統合メニュー）を表示.その後でresizeWorkPlaceを起動
 //
 function showWorkPlace(){
 
 	closeModalDialog();
 
 
-	//	OPAQUESHAFT_TITLE表示制御
+	//	OPAQUESHAFT_TITLE表示制御(WHITEBOARD DESIGN切り替えボタン)
 	var opaqueshaft_title = document.getElementById('OPAQUESHAFT_TITLE');
 	opaqueshaft_title.style.visibility = ( openWhiteboardFlg )? 'visible' : 'hidden';
 
@@ -638,14 +604,10 @@ function showWorkPlace(){
 		// signed
 		wph.style.visibility			= 'visible';
 		wpat.style.visibility			= 'visible';
-		bo.style.overflow				= 'hidden';	// scroll
+		// bo.style.overflow				= 'hidden';
 		bf.style.width					= '100%';
 		bf.style.overflow				= 'auto';
 		wp_signin.setAttribute( 'disabled', 'true' );
-		// wp_whiteboard.removeAttribute( 'disabled' );
-		// wp_children.removeAttribute( 'disabled' );
-		// wp_range.removeAttribute( 'disabled' );
-		// wp_account.removeAttribute( 'disabled' );
 		wp_signout.removeAttribute( 'disabled' );
 		wp_test.style.display			= 'inline';
 		wp_empty.style.display			= 'inline';
@@ -654,10 +616,6 @@ function showWorkPlace(){
 		wp_signout.style.visibility		= 'visible';
 		wp_rollup.style.visibility		= 'visible';
 		wp_rollup2.style.visibility		= 'visible';
-		// wp_whiteboard.style.visibility	= 'visible';
-		// wp_children.style.visibility	= 'visible';
-		// wp_range.style.visibility		= 'visible';
-		// wp_account.style.visibility		= 'visible';
 
 		var opt = wp_signin.getElementsByClassName('option');
 		if ( opt.length > 0 ){
@@ -671,15 +629,11 @@ function showWorkPlace(){
 		// not sign
 		wph.style.visibility			= 'hidden';
 		wpat.style.visibility			= 'hidden';
-		bo.style.overflow				= 'hidden';
+		// bo.style.overflow				= 'hidden';
 		bf.style.width					= '100%';
 		bf.style.overflow				= 'hidden';
 		wp_signin.removeAttribute( 'disabled' );
 		wp_signout.setAttribute( 'disabled', 'true' );
-		// wp_whiteboard.setAttribute( 'disabled', 'true' );
-		// wp_children.setAttribute( 'disabled', 'true' );
-		// wp_range.setAttribute( 'disabled', 'true' );
-		// wp_account.setAttribute( 'disabled', 'true' );
 		wp_test.style.display			= 'none';
 		wp_empty.style.display			= 'none';
 		wp_content.style.display		= 'none';
@@ -687,64 +641,111 @@ function showWorkPlace(){
 		wp_signout.style.visibility		= 'hidden';
 		wp_rollup.style.visibility		= 'hidden';
 		wp_rollup2.style.visibility		= 'hidden';
-		// wp_whiteboard.style.visibility	= 'hidden';
-		// wp_children.style.visibility	= 'hidden';
-		// wp_range.style.visibility		= 'hidden';
-		// wp_account.style.visibility		= 'hidden';
 	}
 
 	resizeWorkplace();
 
 }
 
-function birdsEyeView(){
+//
+//	リサイズ処理
+//
+function resizeWorkplace(){
+	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
+	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
+	var wph_height	= document.getElementById( 'WORKPLACE_HEADER').offsetHeight;
 
-	var bf 		= document.getElementById('BOTTOM_FRAME');
-	var menu 	= document.getElementById('WORKPLACE_MENU');
-	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
-	var children= document.getElementById('WORKPLACE_CHILDREN');
-	var range	= document.getElementById('WORKPLACE_RANGE');
-	var account	= document.getElementById('WORKPLACE_ACCOUNT');
-	console.log( 'transform:' + bf.style.transform);
-	if ( bf.hasAttribute('birdseye')){
-		bf.style.transition			= 'all 0.5s ease-in-out';
-		bf.style.perspective		= 'none';
-		menu.style.transform		= '';
-		menu.style.visibility		= 'visible';
-		wb.style.transform			= '';
-		wb.style.visibility			= 'hidden';
-		children.style.transform	= '';
-		children.style.visibility	= 'hidden';
-		range.style.transform		= '';
-		range.style.visibility		= 'hidden';
-		account.style.transform		= '';
-		account.style.visibility	= 'hidden';
-		bf.removeAttribute('birdseye');
-	} else{
-		bf.style.transition			= 'all 0.5s ease-in-out';
-		bf.style.perspective		= '20000px';
-		// bf.style.transform		= 'scale(0.7,0.7) translateX(-800px)';
-		// perspective
-		menu.style.transition		= 'all 0.5s ease-in-out';
-		menu.style.transform		= 'perspective(400px) rotateX(-10deg) scale(0.8,0.8)';
-		menu.style.visibility		= 'visible';
+	var auth		= document.getElementById('WORKPLACE_AUTHENTICATION');
+	var dash		= document.getElementById('WORKPLACE_DASHBOARD');
 
-		wb.style.transition			= 'all 0.5s ease-in-out';
-		wb.style.transform			= 'perspective(500px) translateY(-0px) rotateX(-14deg) scale(0.8,0.8)';
-		wb.style.visibility			= 'visible';
-		children.style.transition	= 'all 0.5s ease-in-out';
-		children.style.transform	= 'perspective(600px) translateY(-0px) rotateX(-18deg) scale(0.8,0.8)';
-		children.style.visibility	= 'visible';
-		range.style.transition		= 'all 0.5s ease-in-out';
-		range.style.transform		= 'perspective(700px) translateY(-0px) rotateX(-22deg) scale(0.8,0.8)';
-		range.style.visibility		= 'visible';
-		account.style.transition	= 'all 0.5s ease-in-out';
-		account.style.transform		= 'perspective(800px) translateY(-00px) rotateX(-26deg) scale(0.8,0.8)';
-		account.style.visibility	= 'visible';
-		bf.setAttribute('birdseye','yes');
-	}
 
-	// bf.classList.toggle('transitionWorkplace');
+	var wb			= document.getElementById('WORKPLACE_WHITEBOARD');
+	var wpwh		= document.getElementById('WORKPLACE_WHITEBOARD_HDR').offsetHeight + 48;
+	var wpwm		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
+
+	var children	= document.getElementById('WORKPLACE_CHILDREN');
+	var wpch		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
+	var wpcm		= document.getElementById('WORKPLACE_CHILDREN_MAIN');
+
+	var range		= document.getElementById('WORKPLACE_RANGE');
+	var wprh		= document.getElementById('WORKPLACE_RANGE_HDR').offsetHeight;
+	var wprm		= document.getElementById('WORKPLACE_RANGE_MAIN');
+
+	var account		= document.getElementById('WORKPLACE_ACCOUNT');
+	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
+	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
+
+	var imagefile	= document.getElementById('WORKPLACE_IMAGEFILE');
+	var wpih		= document.getElementById('WORKPLACE_IMAGEFILE_HDR').offsetHeight;
+	var wpim		= document.getElementById('WORKPLACE_IMAGEFILE_MAIN');
+
+	console.log( 'wph_height:' + wph_height );
+	console.log( 'resizeWorkplace' );
+	console.log( 'bottom overlay width:' + w );
+
+	// 各ワークプレイスの座標を初期化（マイナス座標に設定）
+	dash.style.width				= ( w - 144 ) + 'px';
+	dash.style.top					= ( -h ) + 'px';
+	dash.style.left					= '0px';
+	dash.style.height				= 'calc(100% - ' + wph_height + 'px)';
+	dash.style.paddingTop			= wph_height + 'px';
+
+	wb.style.width					= ( w - 48 ) + 'px';
+	wb.style.top					= ( -h )     + 'px';
+	wb.style.left					= '0px';
+
+	children.style.width			= ( w - 48 - 144 ) + 'px';
+	children.style.top				= ( -h )     + 'px';
+	children.style.left				= '0px';
+
+	range.style.width				= ( w - 48 - 144 ) + 'px';
+	range.style.top					= ( -h )     + 'px';
+	range.style.left				= '0px';
+ 
+	account.style.width				= ( w - 48 - 144 ) + 'px';
+	account.style.top				= ( -h ) + 'px';
+	account.style.left				= '0px';
+
+	imagefile.style.width			= ( w - 48 - 144 ) + 'px';
+	imagefile.style.top				= ( -h ) + 'px';
+	imagefile.style.left			= '0px';
+
+
+	switch ( workplace_id ){
+		case null:
+		case 'DASHBOARD':
+			dash.style.top			= '0px';
+			break;
+		case 'AUTHENTICATION':
+			auth.style.top			= '0px';
+			break;
+		case 'WHITEBOARD':
+			wb.style.top			= '0px';
+			wb.style.height			= ( h - wph_height ) + 'px';
+			wpwm.style.height 		= ( h - wph_height - wpwh ) + 'px';
+			break;
+		case 'CHILDREN':
+			children.style.top		= '0px';
+			children.style.height 	= ( h - wph_height ) + 'px';
+			wpcm.style.height 		= ( h - wph_height - wpch ) + 'px';	// offset 252
+			break;
+		case 'RANGE':
+			range.style.top			= '0px';
+			range.style.height 		= ( h - wph_height ) + 'px';
+			wprm.style.height 		= ( h - wph_height - wprh ) + 'px';	// offset 252
+			break;
+		case 'ACCOUNT':
+			account.style.top		= '0px';
+			account.style.height 	= ( h - wph_height ) + 'px';
+			wpam.style.height 		= ( h - wph_height - wpah ) + 'px';	// offset 252
+			break;
+		case 'IMAGEFILE':
+			imagefile.style.top		= '0px';
+			imagefile.style.height 	= ( h - wph_height ) + 'px';
+			wpim.style.height 		= ( h - wph_height - wpih ) + 'px';	// offset 252
+			break;
+		}
+
 }
 
 function refreshTab(){
@@ -802,6 +803,7 @@ function findObject(){
 }
 
 function signinMotion( e ){
+	console.log( 'signinMotion');
 	e.stopPropagation();
 	if ( e.target != this ) return;
 	this.classList.toggle( 'signinMotion' );
@@ -1163,32 +1165,32 @@ function closingRotation(e){
 
 
 //
-//	ワークプレイス
+//	ワークプレイス ダッシュボード
 //
 function workplaceReset(){
-	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
-	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
+	workplace_id = 'DASHBOARD';
 
-	workplace_id = null;
-	var menu	= document.getElementById('WORKPLACE_MENU');
-	// var icon	= document.getElementById('WORKPLACE_ICON');
+	var wpat	= document.getElementById('WORKPLACE_ADMIN_TOOLS')
+	var dash	= document.getElementById('WORKPLACE_DASHBOARD');
 	var signin	= document.getElementById('WP_SIGNIN');
 	var signout	= document.getElementById('WP_SIGNOUT');
 
+	wpat.style.visibility	= 'visible';
+
 	var bf= document.getElementById('BOTTOM_FRAME');
-	// bf.style.transform	= 'translateX(0px)';
-	// bf.style.left		= '0px';
 
 
-	menu.style.display		= 'inline';
-	menu.style.top			= '0px';
+	dash.style.display		= 'inline';
+	dash.style.top			= '0px';
+	dash.style.transition	= 'all 0.4s ease-in-out';
+
 
 	//	TAB
-	var tab = document.getElementById('TAB_OPAQUESHAFT');
-	var plus	 = document.getElementById('TAB_PLUS');
-	var find	 = document.getElementById('TAB_FIND');
-	var current2 = document.getElementById('TAB_CURRENT2');
-	var option	 = document.getElementById('TAB_OPTION');
+	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
+	var plus	 	= document.getElementById('TAB_PLUS');
+	var find	 	= document.getElementById('TAB_FIND');
+	var current2 	= document.getElementById('TAB_CURRENT2');
+	var option	 	= document.getElementById('TAB_OPTION');
 	tab.style.visibility		= 'hidden';
 	plus.style.visibility		= 'hidden';
 	find.style.visibility		= 'hidden';
@@ -1200,98 +1202,11 @@ function workplaceReset(){
 	if (signout.classList.contains('signoutMotion'))
 		signout.classList.remove('signoutMotion');
 
-	showWorkPlace();
+	// showWorkPlace();
+	resizeWorkplace();
 }
 
-//
-//	リサイズ処理
-//
-function resizeWorkplace(){
-	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
-	var h = document.getElementById('BOTTOM_FRAME').offsetHeight;
-	// var sysmenu = document.getElementById('WORKPLACE_SYSMENU');
-	var wph_height	= document.getElementById( 'WORKPLACE_HEADER').offsetHeight;
 
-	var menu		= document.getElementById('WORKPLACE_MENU');
-	var wb			= document.getElementById('WORKPLACE_WHITEBOARD');
-	var wpwh		= document.getElementById('WORKPLACE_WHITEBOARD_HDR').offsetHeight + 48;
-	var wpwm		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
-
-	var children	= document.getElementById('WORKPLACE_CHILDREN');
-	var wpch		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
-	var wpcm		= document.getElementById('WORKPLACE_CHILDREN_MAIN');
-
-	var range		= document.getElementById('WORKPLACE_RANGE');
-	var wprh		= document.getElementById('WORKPLACE_RANGE_HDR').offsetHeight;
-	var wprm		= document.getElementById('WORKPLACE_RANGE_MAIN');
-
-	var account		= document.getElementById('WORKPLACE_ACCOUNT');
-	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
-	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
-
-	var imagefile	= document.getElementById('WORKPLACE_IMAGEFILE');
-	var wpih		= document.getElementById('WORKPLACE_IMAGEFILE_HDR').offsetHeight;
-	var wpim		= document.getElementById('WORKPLACE_IMAGEFILE_MAIN');
-
-	console.log( 'wph_height:' + wph_height );
-	console.log( 'resizeWorkplace' );
-	console.log( 'bottom overlay width:' + w );
-
-	menu.style.width				= ( w - 144 ) + 'px';
-	menu.style.top					= '0px';
-	menu.style.left					= '0px';
-	menu.style.height				= 'calc(100% - ' + wph_height + 'px)';
-	menu.style.paddingTop			= wph_height + 'px';
-	wb.style.width					= ( w - 48 ) + 'px';
-	wb.style.top					= ( -h )     + 'px';
-	wb.style.left					= '0px';
-
-	children.style.width			= ( w - 48 - 144 ) + 'px';
-	children.style.top				= ( -h )     + 'px';
-	children.style.left				= '0px';
-
-	range.style.width				= ( w - 48 - 144 ) + 'px';
-	range.style.top					= ( -h )     + 'px';
-	range.style.left				= '0px';
- 
-	account.style.width				= ( w - 48 - 144 ) + 'px';
-	account.style.top				= ( -h ) + 'px';
-	account.style.left				= '0px';
-
-	imagefile.style.width			= ( w - 48 - 144 ) + 'px';
-	imagefile.style.top				= ( -h ) + 'px';
-	imagefile.style.left			= '0px';
-
-
-	switch ( workplace_id ){
-		case 'WHITEBOARD':
-			wb.style.top			= '0px';
-			wb.style.height			= ( h - wph_height ) + 'px';
-			wpwm.style.height 		= ( h - wph_height - wpwh ) + 'px';
-			break;
-		case 'CHILDREN':
-			children.style.top		= '0px';
-			children.style.height 	= ( h - wph_height ) + 'px';
-			wpcm.style.height 		= ( h - wph_height - wpch ) + 'px';	// offset 252
-			break;
-		case 'RANGE':
-			range.style.top			= '0px';
-			range.style.height 		= ( h - wph_height ) + 'px';
-			wprm.style.height 		= ( h - wph_height - wprh ) + 'px';	// offset 252
-			break;
-		case 'ACCOUNT':
-			account.style.top		= '0px';
-			account.style.height 	= ( h - wph_height ) + 'px';
-			wpam.style.height 		= ( h - wph_height - wpah ) + 'px';	// offset 252
-			break;
-		case 'IMAGEFILE':
-			imagefile.style.top		= '0px';
-			imagefile.style.height 	= ( h - wph_height ) + 'px';
-			wpim.style.height 		= ( h - wph_height - wpih ) + 'px';	// offset 252
-			break;
-		}
-
-}
 
 //
 //	ホワイトボードメニュー
@@ -1302,8 +1217,6 @@ function workplaceWhiteboard(){
 	guidedance_whiteboard_form.day.value = '';
 
 	var wpat	= document.getElementById('WORKPLACE_ADMIN_TOOLS');
-	var menu	= document.getElementById('WORKPLACE_MENU');
-	// var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
@@ -1959,27 +1872,16 @@ function makeWhiteboardListScope( p, sotd )
 function workplaceChildren(){
 	workplace_id = 'CHILDREN';
 	var wpat	= document.getElementById('WORKPLACE_ADMIN_TOOLS');
-	var menu	= document.getElementById('WORKPLACE_MENU');
-	// var icon	= document.getElementById('WORKPLACE_ICON');
 	var hdr		= document.getElementById('WORKPLACE_HDR');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
 	var children= document.getElementById('WORKPLACE_CHILDREN');
-	var wpcm	= document.getElementById('WORKPLACE_CHILDREN_MAIN');
-	var list	= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 
 	// wpat.style.visibility		= 'hidden';
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
-	// bf.style.transform	= 'translateX(' + ( -w * 2 ) + 'px)';
-	// bf.style.left		= '200%';
 	children.style.top			= '0px';
 	children.style.transition	= 'all 0.4s ease-in-out';
-	// menu.style.top				= ( - menu.offsetHeight ) + 'px';
-	// menu.style.transition		= 'all 0.4s ease-in-out';
-
-
-
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
@@ -1994,16 +1896,7 @@ function workplaceChildren(){
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
 
-	// if ( icon.style.height == '0px'){
-	// 	menu.style.display		= 'inline';
-	// } else {
-	// 	menu.style.display		= 'none';
-	// }
-
 	resizeWorkplace();
-
-	// document.getElementById('WP_KEYWORD').value = '';
-	// list.innerHTML = '';
 
 }
 
@@ -2013,9 +1906,6 @@ function workplaceChildren(){
 function workplaceRange(){
 	workplace_id = 'RANGE';
 	var wpat			= document.getElementById('WORKPLACE_ADMIN_TOOLS');
-	var menu			= document.getElementById('WORKPLACE_MENU');
-	// var icon			= document.getElementById('WORKPLACE_ICON');
-	var hdr				= document.getElementById('WORKPLACE_HDR');
 	var range			= document.getElementById('WORKPLACE_RANGE');
 	// var list			= document.getElementById('WORKPLACE_RANGE_MAIN_LIST');
 
@@ -2023,14 +1913,11 @@ function workplaceRange(){
 
 	var w = document.getElementById('BOTTOM_OVERLAY').offsetWidth;
 	var bf= document.getElementById('BOTTOM_FRAME');
-	// bf.style.transform	= 'translateX(' + ( -w * 3 ) + 'px)';
-	// bf.style.left		= '300%';
 	range.style.top			= '0px';
 
 
 	//	TAB
 	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
-	// var current 	= document.getElementById('TAB_CURRENT');
 	var plus		= document.getElementById('TAB_PLUS');
 	var find		= document.getElementById('TAB_FIND');
 	var current2	= document.getElementById('TAB_CURRENT2');
@@ -2040,12 +1927,6 @@ function workplaceRange(){
 	find.style.visibility		= 'visible';
 	current2.style.visibility	= 'visible';
 	option.style.visibility		= 'visible';
-
-	// if ( icon.style.height == '0px'){
-	// 	menu.style.display		= 'inline';
-	// } else {
-	// 	menu.style.display		= 'none';
-	// }
 
 	resizeWorkplace();
 
@@ -2283,8 +2164,6 @@ function workplaceAccount(){
 	workplace_id = 'ACCOUNT';
 
 	var wpat			= document.getElementById('WORKPLACE_ADMIN_TOOLS');
-	var menu			= document.getElementById('WORKPLACE_MENU');
-	// var icon			= document.getElementById('WORKPLACE_ICON');
 	var hdr				= document.getElementById('WORKPLACE_HDR');
 	var account			= document.getElementById('WORKPLACE_ACCOUNT');
 	// var list			= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');

@@ -2512,6 +2512,7 @@ function signout(){
 								acc_id = null;
 								// signForm();
 								document.cookie = 'acc=; max-age=0';
+								workplace_id = 'AUTHENTICATION';
 								showWorkPlace();
 								break;
 							default:
@@ -2590,6 +2591,7 @@ function sign()
 								oLog.log( null, 'サインインしました.' );
 								oLog.open( 3 );
 								acc_id = result.acc_id;
+								workplace_id = 'DASHBOARD';
 								showWorkPlace();
 								// ホワイトボードをオープン
 								// if ( !openWhiteboardFlg ){

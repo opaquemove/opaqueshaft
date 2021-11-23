@@ -87,13 +87,12 @@
     font-size:              10px;
     font-weight:            bold;
 }
-#WPH_SIGNOUT{
-    /* float:                  left; */
+/* #WPH_SIGNOUT{
     height:                 28px;
     padding:                18px 8px 0px 8px;
     font-size:              10px;
     font-weight:            bold;
-}
+} */
 
 .deselectedmenu{
     color:                  lightgrey;
@@ -103,17 +102,6 @@
     color:black;
     border-bottom: 2px solid black;
 }
-/* #WORKPLACE_BIRDSEYEVIEW{
-    pointer-events:         all;
-    position:               fixed;
-    top:                    0px;
-    left:                   calc(100% - 128px);
-    width:                  80px;
-    height:                 16px;
-    display:                flex;
-    background-color:       transparent;
-    opacity:                0.8;
-} */
 
 #WORKPLACE_TAB{
     pointer-events:         all;
@@ -211,32 +199,29 @@
     visibility:             hidden;
 }
 
-#WORKPLACE_MENU{
+#WORKPLACE_AUTHENTICATION{
     position:               absolute;
     top:                    0px;
     left:                   0px;
     width:                  100%;
+    height:                 100%;
+    overflow:               hidden;
+    font-size:              16px;
+    background-color:       white;
+}
+#WORKPLACE_DASHBOARD{
+    position:               absolute;
+    top:                    0px;
+    left:                   0px;
+    width:                  auto;
     height:                 calc(100% - 48px);
+    padding-top:            48px;
+    padding-left:           144px;
     overflow:               hidden;
     font-size:              16px;
     background-color:       #EDEDED;
-    padding-top:            48px;
-    padding-left:           144px;
     display:                inline;
 }
-
-/* position:               absolute;
-top:                    0px;    
-left:                   0px;    
-width:                  auto;   
-height:                 calc(100% - 48px);
-overflow:               hidden;
-font-size:              16px;
-background-color:       #EDEDED;
-padding-top:            48px;
-padding-left:           144px;
-border-bottom:          gray;
-text-align:             center; */
 
 
 /* #WORKPLACE_ICON{
