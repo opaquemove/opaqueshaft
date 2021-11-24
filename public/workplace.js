@@ -46,6 +46,7 @@ function initWorkplace(){
 		function( e ){
 			if ( e.key == 'Enter' )
             query( this );
+			document.body.dispatchEvent( new Event('click'));
 		}
 	);
     // document.getElementById('WP_KEYWORD').addEventListener(

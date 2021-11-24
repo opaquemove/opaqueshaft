@@ -128,6 +128,27 @@ router.post('/imagefilelist', function(req, res, next ){
     });
 });
 
+//
+//  イメージファイルを削除
+//
+router.post('/imagefiledelete', function(req, res, next ){
+  var imagefile_id = req.body.imagefile_id;
+
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  db.none(
+     {
+      text: 'DELETE FROM imagefiles WHERE imagefile_id = $1',
+      values: [ imagefile_id ]
+      } )
+    .then( function(){ 
+      res.json( {status: 'SUCCESS', message:  'delete imagefile:' + imagefile_id });
+      console.log( {status: 'SUCCESS', message:  'delete imagefile:' + imagefile_id });
+    } )
+    .catch ( err => {
+      console.log( err );
+    });
+});
+
 
 //
 //  アカウント関連
