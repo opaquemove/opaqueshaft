@@ -158,7 +158,15 @@ function initWorkplace(){
 		'click', selectRange );
 	document.getElementById('WORKPLACE_RANGE_MAIN_LIST').addEventListener(
 		'transitionend', selectRangeTransitionEnd );
+
+	document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').addEventListener(
+		'click', selectImagefile );
+	document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').addEventListener(
+		'animationstart', selectImagefileMotionStart );
+	document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').addEventListener(
+		'animationend', selectImagefileMotionEnd );
 	
+		
 	// document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').addEventListener(
 	// 	'click', selectImagefile );
 	// document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').addEventListener(
@@ -1424,7 +1432,6 @@ function flipWhiteboardToolBar(){
 	o.style.left			= '0px';
 	o.style.width			= '100%';
 	o.style.height			= '64px';
-	o.style.paddintBottom	= '12px';
 	o.style.margin			= '0 auto';
 	o.style.zIndex			= 65000;
 
@@ -2294,7 +2301,6 @@ function flipAccountToolBar(){
 	o.style.left		= '0px';
 	o.style.width		= '100%';
 	o.style.height		= '64px';
-	o.style.paddintBottom	= '12px';
 	o.style.margin		= '0 auto';
 	o.style.zIndex		= 65000;
 
@@ -2359,7 +2365,6 @@ function flipAccountToolBar(){
 		}
 		console.log( cmd + ' acc_id:' + acc_id );
 	}, false );
-
 
 }
 
@@ -3044,7 +3049,6 @@ function flipChildrenToolBar(){
 	o.style.left			= '0px';
 	o.style.width			= '100%';
 	o.style.height			= '64px';
-	o.style.paddintBottom	= '12px';
 	o.style.margin			= '0 auto';
 	o.style.zIndex			= 65000;
 
@@ -4155,32 +4159,63 @@ function iconMgrHelper( p, keyword ){
 
 					if ( xmlhttp.status == 200 ){
 						p.innerHTML = '';
-						var o = document.createElement('DIV');
-						o.style.width		= '100%';
-						o.style.height		= '100%';
-						o.style.display		= 'flex';
-						o.style.flexWrap	= 'wrap';
-						var pp = p.appendChild( o );
+						// var o = document.createElement('DIV');
+						// o.style.width		= '100%';
+						// o.style.height		= '100%';
+						// o.style.display		= 'flex';
+						// o.style.flexWrap	= 'wrap';
+						// var pp = p.appendChild( o );
 						
 						var results = JSON.parse( xmlhttp.responseText );
 						for ( var i=0; i<results.length; i++ ){
-							var filename	= results[i].filename;
+							var imagefile_id	= results[i].imagefile_id;
+							var filename		= results[i].filename;
 							var o = document.createElement('DIV');
-							o.style.width				= '120px';
-							o.style.height				= '120px';
+							o.classList.add( 'imagefile' );
+							o.classList.add( 'unselectedImage' );
+							o.setAttribute('imagefile_id', imagefile_id );
+							// o.style.top					= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
+							// o.style.left				= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
 							o.style.backgroundImage		= 'url(/accounts/imagefile?filename=' + filename + ')';
-							o.style.backgroundSize		= 'cover';
-							o.style.backgroundRepeat	= 'no-repeat';
-							o.style.backgroundPosition	= 'center center';
-							o.style.margin				= '1px';
-							o.style.color				= 'white';
-							o.style.fontSize			= '12px';
-							o.style.textShadow			= '1px 1px 1px gray';
+
 							o.innerText					= filename;
-							pp.appendChild( o );
+							p.appendChild( o );
 
 						}
 
+						// bottom padding footer
+						var c = document.createElement('DIV');
+						c.classList.add( "imagefile" );
+						c.style.color				= 'red';
+						c.style.fontSize 			= '12px';
+						c.style.border				= 'none';
+						c.style.color				= 'dimgray';
+						c.style.backgroundColor		= 'white';
+						c.style.backgroundImage		= 'url(./images/restriction.png)';
+						c.style.backgroundSize		= '14px';
+						c.style.backgroundRepeat 	= 'no-repeat';
+						c.style.backgroundPosition	= 'top 140px  center';
+						c.style.display				= 'flex';
+						c.style.justifyContent		= 'center';
+
+						c.style.pointerEvents 		= 'none';
+						c.style.width				= '100%';
+						c.style.height = ( p.parentNode.offsetHeight - 20 ) + 'px';
+						// c.innerHTML = 'bottom margin';
+						var r = '';
+						r += '<div style="width:40px;height:32px;padding-top:8px;font-size:16px;color:white;background-color:limegreen;" >';
+						r += '+' + results.length;
+						r += '</div>';
+						c.innerHTML = r;
+						var cc = p.appendChild( c );
+					
+						// setTimeout(() => {
+						// 	var images = document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').childNodes;
+						// 	for ( var i=0; i<images.length; i++ ){
+						// 		images[i].style.top 	= '0px';
+						// 		images[i].style.left	= '0px';
+						// 	}
+						// }, 50 );
 
 					} else{
 						console.log( null, 'iconMgrHelper:' + xmlhttp.status );
@@ -4195,4 +4230,145 @@ function iconMgrHelper( p, keyword ){
 		xmlhttp.send( 'keyword=' + keyword );
 
 }
+
+function selectImagefile( e ){
+	var o = e.target;
+	while( true ){
+		if ( o.tagName == 'BODY' ) return;
+		if ( o == this ){
+			// エリア外をアクセスしたらリセット
+			for ( var i=0; i<this.childNodes.length; i++ ){
+				var c = this.childNodes[i];
+				if ( c.hasAttribute('selected')){
+					c.removeAttribute('selected');
+					c.classList.remove('selectedImage');
+					c.style.animationName	 		= 'scale-in-out';
+					c.style.animationDuration		= '0.3s';
+					c.style.animationIterationCount = 1;
+				}	
+			}
+			return;
+		} 
+		if ( o.classList.contains('imagefile')) break;
+		o = o.parentNode;
+	}
+
+	//	すでに他のイメージファイルをセレクトしていたらリセット
+	for ( var i=0; i<this.childNodes.length; i++ ){
+		var c = this.childNodes[i];
+		if ( c == o ) continue;
+		if ( c.hasAttribute('selected')){
+			c.removeAttribute('selected');
+			c.classList.remove('selectedImage');
+			c.style.animationName	 		= 'scale-in-out';
+			c.style.animationDuration		= '0.3s';
+			c.style.animationIterationCount = 1;
+		}	
+	}
+
+	//	対象イメージファイルがセレクトされているかどうかで処理を振り分け
+	if ( o.hasAttribute('selected')){
+		//	セレクト解除処理
+		o.removeAttribute('selected');
+		o.classList.remove('selectedImage');
+	} else{
+		//	セレクト処理
+		console.log( 'imagefile_id:' + o.getAttribute('imagefile_id'));
+		o.setAttribute('selected', 'true');
+		o.classList.add('selectedImage');
+		flipImagefileToolBar();
+	}
+	//	対象のアニメーション処理
+	o.style.animationName	 		= 'scale-in-out';
+	o.style.animationDuration		= '0.3s';
+	o.style.animationIterationCount = 1;
+}
+function selectImagefileMotionStart( e ){
+	console.log('motion start');
+}
+function selectImagefileMotionEnd( e ){
+	console.log('motion end');
+	var c = e.target;
+	c.style.animationName	= '';
+
+	while ( true ){
+		if ( c.tagName == 'BODY' ) return;
+		if ( c.classList.contains('imagefile')) break;
+		c = c.parentNode;
+	}
+
+	if ( !c.hasAttribute( 'selected' )){
+		flipImagefileToolBar();			// toolbar close
+	}
+}
+
+function flipImagefileToolBar(){
+
+	var itb = document.getElementById('IMAGEFILE_TOOLBAR');
+	if ( itb != null ){
+		itb.parentNode.removeChild( itb );
+		return;
+	}
+	var p = document.getElementById('WORKPLACE_IMAGEFILE');
+	var o = document.createElement('DIV');
+	o.id					= 'IMAGEFILE_TOOLBAR';
+	o.style.position		= 'absolute';
+	o.style.top				= 'calc(100% - 76px - 48px)';
+	o.style.left			= '0px';
+	o.style.width			= '100%';
+	o.style.height			= '64px';
+	// o.style.paddingBottom	= '12px';
+	o.style.margin			= '0 auto';
+	o.style.zIndex			= 65000;
+
+	var r = '';
+	r += '<div style="margin:0 auto;width:90px;height:40px;padding:4px;background-color:#EDEDED;border:1px solid lightgrey;border-radius:8px;" >';
+		r += '<button type="button" class="workplace_delete_button"   cmd="delete"    ></button>';
+	r += '</div>';
+	o.innerHTML = r;
+	var tb = p.appendChild( o );
+	tb.style.animationName			= 'scale-in-out';
+	tb.style.animationDuration		= '0.3s';
+	tb.style.animationIterationCount = 1;
+
+	tb.addEventListener('click',
+	function(e){
+		e.stopPropagation();
+		var o = e.target;
+		var cmd = '';
+		while(true){
+			if ( o == this ) return;
+			if ( o.hasAttribute('cmd')){
+				cmd = o.getAttribute('cmd');
+				break;
+			}
+		}
+		// var acc_id = this.parentNode.getAttribute('acc_id');
+		var imagefiles = document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST').childNodes;
+		var imagefile_id = null;
+		var c = null;
+		for ( var i=0; i<imagefiles.length; i++ ){
+			if ( imagefiles[i].hasAttribute('selected')){
+				imagefile_id 	= imagefiles[i].getAttribute('imagefile_id');
+				c				= imagefiles[i];
+				break;
+			}
+		}
+		if ( imagefile_id == null ) return;
+
+		switch ( cmd ){
+			case 'delete':
+				if ( o.innerText == 'Ok?' ){
+					wp_deleteImagefile( c );
+					break;
+				}
+				o.style.width = '100px';
+				o.innerText = 'Ok?';
+				break;
+		}
+		console.log( cmd + ' imagefile_id:' + imagefile_id );
+	}, false );
+
+}
+
 

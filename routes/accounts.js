@@ -32,7 +32,7 @@ router.post('/', function(req, res, next ){
 });
 
 //
-//
+//  イメージファイル関連
 //
 router.get( '/imagefile', ( req, res, next ) => {
   var filename = req.query.filename;
@@ -61,7 +61,7 @@ router.get( '/imagefile', ( req, res, next ) => {
   
 })
 //
-//  ファイルアップロード
+//  イメージファイルアップロード
 //
 router.post( '/file_upload', mp_ware, ( req, res, next ) => {
   try{
@@ -113,10 +113,7 @@ router.post( '/file_upload', mp_ware, ( req, res, next ) => {
 })
 
 //
-//  イメージファイル関連
-//
-//
-//  アカウントリスト取得
+//  イメージファイルリスト取得
 //
 router.post('/imagefilelist', function(req, res, next ){
   var keyword = req.body.keyword;
@@ -124,7 +121,7 @@ router.post('/imagefilelist', function(req, res, next ){
   console.log( 'imagefilelist:' + keyword );
   res.header('Content-Type', 'application/json;charset=utf-8');
   db.any( {
-        text : "SELECT filename, mime FROM imagefiles WHERE filename ILIKE '" + keyword + "%' ORDER BY filename ASC",
+        text : "SELECT imagefile_id, filename, mime FROM imagefiles WHERE filename ILIKE '" + keyword + "%' ORDER BY filename ASC",
         values : [  ] } )
     .then( rows => {
           res.json( rows );

@@ -681,11 +681,36 @@
     background-color:       transparent;
 	display:				flex;
 	flex-wrap:				wrap;
-	justify-content: 		center;
+	/* justify-content: 		center;
 	align-items:            flex-start;
-	align-content:          space-between;
+	align-content:          space-between; */
     overflow:               auto;
 } 
+.imagefile{
+    position:               relative;
+    width:				    120px;
+    height:				    120px;
+    background-image:		url(./images/picture.png);
+    background-size:		cover;
+    background-repeat:      no-repeat;
+    background-position:	center center;
+    margin:				    1px;
+    color:				    white;
+    font-size:			    12px;
+    overflow:               hidden;
+    overflow-wrap:          break-word;
+    /* text-overflow:          ellipsis; */
+    text-shadow:			1px 1px 1px gray;
+
+}
+.unselectedImage{
+    border:                2px solid #EDEDED;
+}
+.selectedImage{
+    border:                2px solid royalblue;
+}
+
+
 #WP_FINDIMAGEFILE{
     background-image:       url(images/bleach2.png);
     background-size:        12px;
