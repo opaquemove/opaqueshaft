@@ -48,27 +48,27 @@ function initWorkplace(){
             query( this );
 		}
 	);
-    document.getElementById('WP_KEYWORD').addEventListener(
-		'keyup',
-		function( e ){
-			if ( e.key == 'Enter' )
-            finder();
-		}
-	);
-    document.getElementById('WP_ACCOUNT_ID').addEventListener(
-		'keyup',
-		function( e ){
-			if ( e.key == 'Enter' )
-            workplaceAccountHelper();
-		}
-	);
-    document.getElementById('WP_IMAGEFILE_ID').addEventListener(
-		'keyup',
-		function( e ){
-			if ( e.key == 'Enter' )
-            workplaceImagefileHelper();
-		}
-	);
+    // document.getElementById('WP_KEYWORD').addEventListener(
+	// 	'keyup',
+	// 	function( e ){
+	// 		if ( e.key == 'Enter' )
+    //         finder();
+	// 	}
+	// );
+    // document.getElementById('WP_ACCOUNT_ID').addEventListener(
+	// 	'keyup',
+	// 	function( e ){
+	// 		if ( e.key == 'Enter' )
+    //         workplaceAccountHelper();
+	// 	}
+	// );
+    // document.getElementById('WP_IMAGEFILE_ID').addEventListener(
+	// 	'keyup',
+	// 	function( e ){
+	// 		if ( e.key == 'Enter' )
+    //         workplaceImagefileHelper();
+	// 	}
+	// );
 
 	document.getElementById('BTN_ADD_DATE').addEventListener('click',
 	function(e){
@@ -231,17 +231,24 @@ function query( obj ){
 	console.log( 'query keyword:' + keyword );
 
 	switch ( workplace_id ){
+		case 'CHILDREN':
+			finder();
+			break;
 		case 'ACCOUNT':
 			workplaceAccountHelper();
 			break;
+		case 'IMAGEFILE':
+			workplaceImagefileHelper();
+			break;
 	}
+	document.body.focus();
 }
 
 
 function initFileUpload(){
 
-	document.getElementById('imagefile').addEventListener(
-		'change', fileUpload, false );
+	// document.getElementById('imagefile').addEventListener(
+	// 	'change', fileUpload, false );
 }
 
 //
@@ -660,7 +667,7 @@ function resizeWorkplace(){
 	var wpwm		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
 
 	var children	= document.getElementById('WORKPLACE_CHILDREN');
-	var wpch		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
+	// var wpch		= document.getElementById('WORKPLACE_CHILDREN_HDR').offsetHeight;
 	var wpcm		= document.getElementById('WORKPLACE_CHILDREN_MAIN');
 
 	var range		= document.getElementById('WORKPLACE_RANGE');
@@ -668,12 +675,11 @@ function resizeWorkplace(){
 	var wprm		= document.getElementById('WORKPLACE_RANGE_MAIN');
 
 	var account		= document.getElementById('WORKPLACE_ACCOUNT');
-	var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
-	var wpah_margin	= parseInt( document.getElementById('WORKPLACE_ACCOUNT_HDR').style.marginTop );
+	// var wpah		= document.getElementById('WORKPLACE_ACCOUNT_HDR').offsetHeight;
 	var wpam		= document.getElementById('WORKPLACE_ACCOUNT_MAIN');
 
 	var imagefile	= document.getElementById('WORKPLACE_IMAGEFILE');
-	var wpih		= document.getElementById('WORKPLACE_IMAGEFILE_HDR').offsetHeight;
+	// var wpih		= document.getElementById('WORKPLACE_IMAGEFILE_HDR').offsetHeight;
 	var wpim		= document.getElementById('WORKPLACE_IMAGEFILE_MAIN');
 
 	console.log( 'wph_height:' + wph_height );
@@ -724,7 +730,8 @@ function resizeWorkplace(){
 		case 'CHILDREN':
 			children.style.top		= '0px';
 			children.style.height 	= ( h - wph_height ) + 'px';
-			wpcm.style.height 		= ( h - wph_height - wpch ) + 'px';	// offset 252
+			// wpcm.style.height 		= ( h - wph_height - wpch ) + 'px';
+			wpcm.style.height		= '100%';
 			break;
 		case 'RANGE':
 			range.style.top			= '0px';
@@ -734,12 +741,14 @@ function resizeWorkplace(){
 		case 'ACCOUNT':
 			account.style.top		= '0px';
 			account.style.height 	= ( h - wph_height ) + 'px';
-			wpam.style.height 		= ( h - wph_height - wpah  ) + 'px';	// offset 252
+			// wpam.style.height 		= ( h - wph_height - wpah  ) + 'px';
+			wpam.style.height		= '100%';
 			break;
 		case 'IMAGEFILE':
 			imagefile.style.top		= '0px';
 			imagefile.style.height 	= ( h - wph_height ) + 'px';
-			wpim.style.height 		= ( h - wph_height - wpih ) + 'px';	// offset 252
+			// wpim.style.height 		= ( h - wph_height - wpih ) + 'px';
+			wpim.style.height		= '100%';
 			break;
 		}
 
@@ -780,6 +789,9 @@ function addObject(){
 		case 'ACCOUNT':
 			addAccount();
 			break;
+		case 'IMAGEFILE':
+			addImagefile();
+			break;
 	}
 }
 function findObject(){
@@ -795,6 +807,9 @@ function findObject(){
 			break;
 		case 'ACCOUNT':
 			workplaceAccountHelper();
+			break;
+		case 'IMAGEFILE':
+			workplaceImagefileHelper();
 			break;
 	}
 }
@@ -2379,7 +2394,8 @@ function workplaceAccountHelper(){
 	
 	var p	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
-	var keyword = document.getElementById( 'WP_ACCOUNT_ID' ).value;
+	// var keyword = document.getElementById( 'WP_ACCOUNT_ID' ).value;
+	var keyword = document.getElementById( 'WP_QUERY_ID' ).value;
 	if ( keyword == '' )
 		keyword = '%';
 
@@ -3623,7 +3639,8 @@ function finder(){
 	}
 
 
-	var keyword = document.getElementById('WP_KEYWORD').value;
+	// var keyword = document.getElementById('WP_KEYWORD').value;
+	var keyword = document.getElementById('WP_QUERY_ID').value;
 	finderHelper( keyword, range_id );
 	document.body.focus();	// タブレットでのキーボードを消去する
 }
@@ -4070,13 +4087,41 @@ function workplaceImagefileHelper(){
 		itb.parentNode.removeChild( itb );
 	}
 	
-	var keyword = document.getElementById( 'WP_IMAGEFILE_ID' ).value;
+	// var keyword = document.getElementById( 'WP_IMAGEFILE_ID' ).value;
+	var keyword = document.getElementById( 'WP_QUERY_ID' ).value;
 	if ( keyword == '' )
 		keyword = '%';
 
 	var list = document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST');
 	
 	iconMgrHelper( list, keyword );
+}
+
+function addImagefile(){
+	var p = document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST');
+	p.innerHTML = '';
+
+	var o = document.createElement('DIV');
+	o.style.width	= '100%';
+	o.style.height	= '48px';
+	o.style.backgroundColor	= 'white';
+
+	var r = '';
+	r += '<div style="padding:4px;margin:2px;" >';
+	r += 'FILE:';
+	r += '<form method="post" id="fileForm" name="fileForm" onsubmit="return false;"  >';
+	r += '<input type="file" id="imagefile" name="imagefile" ';
+	r += 'style="pointer-events: all;height:100%;font-size:10px;opacity:1;"/>';
+	r += '</form>';
+	r += '</div>';
+
+	o.innerHTML = r;
+	p.appendChild( o );
+
+	document.getElementById('imagefile').addEventListener(
+		'change', fileUpload, false );
+
+
 }
 
 // function iconMgr(){
