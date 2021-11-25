@@ -72,18 +72,27 @@
     font-size:              10px;
     font-weight:            bold;
 }
-#WPH_RANGE{
-    height:                 28px;
-    padding:                18px 8px 0px 8px;
-    font-size:              10px;
-    font-weight:            bold;
-}
 #WPH_ACCOUNT{
     height:                 28px;
     padding:                18px 8px 0px 8px;
     font-size:              10px;
     font-weight:            bold;
 } */
+
+#WPH_RANGE{
+    position:               relative;
+    float:                  right;
+    height:                 40px;
+    padding:                6px 8px 0px 8px;
+    font-size:              10px;
+    font-weight:            bold;
+    background-image:       url(./images/arrow-black-triangle-down.png);
+    background-size:        6px;
+    background-repeat:      no-repeat;
+    background-position:    center bottom 4px ;
+
+    
+}
 #WPH_QUERY{
     float:                  right;
     height:                 28px;
@@ -91,13 +100,13 @@
     font-size:              10px;
     font-weight:            bold;
 }
-#WPH_SIGNSTATUS{
+/* #WPH_SIGNSTATUS{
     float:                  right;
     height:                 28px;
     padding:                18px 8px 0px 8px;
     font-size:              10px;
     font-weight:            bold;
-}
+} */
 
 .deselectedmenu{
     color:                  lightgrey;
@@ -656,7 +665,7 @@
     height:                 calc(100% - 48px);
     overflow:               hidden;
     font-size:              16px;
-    background-color:       #EDEDED;
+    background-color:       white;
     padding-top:            48px;
     padding-left:           144px;
     border-bottom:          gray;
@@ -681,7 +690,8 @@
     background-color:       transparent;
 	display:				flex;
 	flex-wrap:				wrap;
-	/* justify-content: 		center;
+    /* flex-direction: row;
+	justify-content: 		center;
 	align-items:            flex-start;
 	align-content:          space-between; */
     overflow:               auto;
@@ -946,6 +956,12 @@
 .checked{
 	background-image:		url(./images/checked-symbol.png);
 	background-position: 	right 1px bottom 1px;
+	background-repeat: 		no-repeat;
+	background-size: 		8px;
+}
+.checked_lc{
+	background-image:		url(./images/checked-symbol.png);
+	background-position: 	left 2px center;
 	background-repeat: 		no-repeat;
 	background-size: 		8px;
 }

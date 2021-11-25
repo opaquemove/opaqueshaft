@@ -35,13 +35,13 @@ router.post('/', function(req, res, next ){
 //  イメージファイル関連
 //
 router.get( '/imagefile', ( req, res, next ) => {
-  var filename = req.query.filename;
-  console.log('filename:' + filename.toString() );
+  var imagefile_id = req.query.imagefile_id;
+  console.log('imagefile_id:' + imagefile_id.toString() );
 
   try{
     db.one( {
-      text : "SELECT * FROM imagefiles WHERE filename = $1 ",
-      values : [ filename ] } )
+      text : "SELECT * FROM imagefiles WHERE imagefile_id = $1 ",
+      values : [ imagefile_id ] } )
       .then( rows => {
           if ( rows.length == 0 ){
             console.log(e);
@@ -177,6 +177,7 @@ router.post('/list', function(req, res, next ){
         text : "SELECT * FROM accounts WHERE ( acc_id ILIKE '" + keyword + "%' OR acc_name ILIKE '" + keyword + "%' ) AND delete_flag = 0 ORDER BY acc_id ASC",
         values : [] } )
     .then( rows => {
+          console.log( 'account list length:' + rows.length );
           res.json( rows );
     });
 });
@@ -375,10 +376,15 @@ router.post('/childfind', function(req, res, next ){
     var id  = req.cookies.acc;
     console.log('childfind:' + keyword + ' range_id:' + range_id );
     res.header('Content-Type', 'application/json;charset=utf-8');
-    db.any( 
-      "SELECT children.*, ( SELECT count(*) FROM results r WHERE r.child_id = children.child_id ) n_result FROM children WHERE delete_flag = 0 AND range_id =  " + range_id + "  AND  ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) ORDER BY kana ASC   " )
+    db.any( {
+      text: "SELECT children.*, ( SELECT count(*) FROM results r WHERE r.child_id = children.child_id ) n_result FROM children WHERE delete_flag = 0 AND range_id =  $1  AND  ( kana ILIKE '" + keyword + "%' OR child_name ILIKE '" + keyword + "%' ) ORDER BY kana ASC   ",
+      values: [ range_id ] } )
       .then( rows => {
-            res.json( rows );
+          console.log( 'rows length:' + rows.length );
+          if ( rows.length > 0)
+              res.json( rows );
+            else
+              res.status(500).json()
       });
 });
 

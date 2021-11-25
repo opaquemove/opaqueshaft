@@ -138,34 +138,9 @@
 			</div>
 
 			<div id="WORKPLACE_IMAGEFILE" >
-				<!-- <div id="WORKPLACE_IMAGEFILE_HDR" >
-					<div style="float:left;height:48px;" >
-					</div>
-					<div style="float:left;height:40px;padding:4px 4px;" >
-						<form  onsubmit="return false;" >
-							<input type="text" id="WP_IMAGEFILE_ID" name="WP_IMAGEFILE_ID" autocomplete="off" style="width:120px;height:40px;font-size:18px;background-color:#EDEDED;border:1px solid #EDEDED;box-sizing: border-box;padding:2px 4px 2px 24px;border-radius: 20px;outline:none;background-image:url(./images/searching.png);background-size:18px;background-repeat: no-repeat;background-position: left 4px center;" />
-						</form>
-					</div>
-					<div style="float: left;height:100%;margin-right:2px;" >
-						<div style="padding-top:4px;">
-							<button id="WP_FINDIMAGEFILE" class="workplace_button"
-								onclick="workplaceImagefileHelper()"
-							></button>
-						</div>
-					</div>
-					<div style="float: right;width:64px;height:100%;margin-right:2px;" >
-						<div style="height:42px;border:1px solid #EDEDED;display:inline-block;padding:2px;" >
-							FILE
-							<form method="post" id="fileForm" name="fileForm" onsubmit="return false;"  >
-								<input type="file" id="imagefile" name="imagefile" style="pointer-events: all; width:20px;height:100%;font-size:10px;opacity:0;"/>
-							</form>
-						</div>		
-					</div>
-				</div> -->
 				<div id="WORKPLACE_IMAGEFILE_MAIN" >
 					<div id="WORKPLACE_IMAGEFILE_MAIN_LIST" ></div>
 				</div>
-
 			</div>
 
 		</div>
@@ -179,7 +154,11 @@
 		<div id="WORKPLACE_HEADER" >
 			<div id="WPH_OPAQUESHAFT_ADMIN"  cmd="admin"    class="deselectedmenu" >OPAQUESHAFT ADMIN</div>
 			<div id="WPH_DAY"                cmd="day"      class="deselectedmenu" >DAY</div>
-			<div id="WPH_SIGNSTATUS"                        class="deselectedmenu" >SIGN</div>
+			<!-- <div id="WPH_SIGNSTATUS"                        class="deselectedmenu" >SIGN</div> -->
+			<div id="WPH_RANGE"								class=""			   >
+				<div>RANGE:</div>
+				<div id="WPH_RANGE_ID" style="font-size:11px;padding-top:2px;" >2021</div>
+			</div>
 			<div id="WPH_QUERY"                             class="deselectedmenu" >
 				<div style="float:left;height:40px;padding:4px 2px;" onclick="" >
 					<form  onsubmit="return false;" >
@@ -188,10 +167,6 @@
 				</div>
 				<div class="workplace_button_small" style="float:left;width:16px;" ></div>
 			</div>
-			<!-- <div id="WPH_CHILDREN"           cmd="children" class="deselectedmenu" >CHILDREN</div>
-			<div id="WPH_RANGE"              cmd="range"    class="deselectedmenu" >RANGE</div>
-			<div id="WPH_ACCOUNT"            cmd="account"  class="deselectedmenu" >ACCOUNT</div> -->
-			<!-- <div id="WPH_SIGNOUT"            cmd="signout"  class="deselectedmenu" >SIGN OUT</div> -->
 		</div>
 
 		<div id="WORKPLACE_ADMIN_TOOLS" >

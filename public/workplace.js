@@ -180,6 +180,8 @@ function initWorkplace(){
 	document.getElementById( 'TAB_CURRENT2' ).addEventListener(
 		'click', selectCurrentRangeId, false );
 
+	initRangeSelector();
+
 	// カレンダー生成
 	makeCalendar( cur_range_id );
 	document.getElementById('TAB_OPTION').addEventListener(
@@ -232,6 +234,103 @@ function initWorkplace(){
 
 	// resizeWorkplace();
 
+
+}
+
+function initRangeSelector(){
+
+	document.getElementById('WPH_RANGE_ID').innerText = cur_range_id;
+	document.getElementById('WPH_RANGE').addEventListener(
+		'click', setRangeID, false );
+	document.getElementById('WPH_RANGE').addEventListener(
+		'mouseleave',
+		function ( e ){
+			var rs = this.getElementsByClassName('rangeSelector');
+			if ( rs.length > 0 ){
+				rs[0].parentNode.removeChild( rs[0] );
+				return;
+			}
+		
+		}
+	)
+
+}
+
+function setRangeID( e ){
+	e.stopPropagation();
+
+	var o = e.target;
+
+	var rs = this.getElementsByClassName('rangeSelector');
+	if ( rs.length > 0 ){
+		if ( o.hasAttribute('range_id')){
+			console.log( 'range_id:' + o.getAttribute('range_id'));
+			cur_range_id = o.getAttribute('range_id');
+			document.getElementById('WPH_RANGE_ID').innerText = cur_range_id;
+			rs[0].parentNode.removeChild( rs[0] );
+			return;
+		}
+
+	}
+
+	var f = document.createElement('DIV');
+	f.classList.add( 'rangeSelector');
+	f.style.position		= 'absolute';
+	f.style.top				= this.offsetHeight + 'px';
+	f.style.left			= '-2px';
+	f.style.width			= this.offsetWidth + 'px';
+	f.style.height			= 'auto';
+	f.style.color			= 'dimgray';
+	f.style.backgroundColor	= 'white';
+	f.style.fontSize		= '11px';
+	f.style.border			= '1px solid dimgray';
+	f.style.textAlign		= 'center';	
+	var p = this.appendChild( f );
+	setRangeIDHelper( p );
+
+
+
+}
+function setRangeIDHelper( p ){
+	p.innerHTML = '';
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						
+						var results = JSON.parse( xmlhttp.responseText );
+						for ( var i=0; i<results.length; i++ ){
+							var o = document.createElement('DIV');
+							o.classList.add( 'range_id' );
+							o.setAttribute('range_id', results[i].range_id );
+							o.style.padding			= '6px 0px';
+							o.style.margin			= '2px 0px';
+							if ( cur_range_id == results[i].range_id )
+								o.classList.add('checked_lc');
+							o.innerText = results[i].range_id;
+							p.appendChild( o );
+						}
+
+					} else{
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/rangelist", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send(  );
 
 }
 
@@ -407,8 +506,8 @@ function selectWorkplaceHeader( e ){
 function selectWorkplaceHeaderHepler( cmd ){
 	var toolbar = {
 		admin: 		document.getElementById('WPH_OPAQUESHAFT_ADMIN'),
-		day:		document.getElementById('WPH_DAY'),
-		sign:		document.getElementById('WPH_SIGNSTATUS')
+		day:		document.getElementById('WPH_DAY')
+		// sign:		document.getElementById('WPH_SIGNSTATUS')
 		// children:	document.getElementById('WPH_CHILDREN'),
 		// range:		document.getElementById('WPH_RANGE'),
 		// account:	document.getElementById('WPH_ACCOUNT')
@@ -1008,15 +1107,16 @@ function selectCurrentRangeId( e ){
 }
 
 function getCurrentRangeId(){
-	var ranges = document.getElementById('TAB_CURRENT2').childNodes;
-	var range_id = null;
-	for ( var i=0; i<ranges.length; i++ ){
-		if ( ranges[i].hasAttribute('selected')){
-			range_id = ranges[i].getAttribute('range_id');
-			break;
-		}
-	}
-	return range_id;
+	return cur_range_id;
+	// var ranges = document.getElementById('TAB_CURRENT2').childNodes;
+	// var range_id = null;
+	// for ( var i=0; i<ranges.length; i++ ){
+	// 	if ( ranges[i].hasAttribute('selected')){
+	// 		range_id = ranges[i].getAttribute('range_id');
+	// 		break;
+	// 	}
+	// }
+	// return range_id;
 }
 
 function rotateSignoutMenu(e){
@@ -4175,9 +4275,10 @@ function iconMgrHelper( p, keyword ){
 							o.classList.add( 'imagefile' );
 							o.classList.add( 'unselectedImage' );
 							o.setAttribute('imagefile_id', imagefile_id );
+							o.setAttribute('order', filename );
 							// o.style.top					= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
 							// o.style.left				= ( Math.floor( Math.random() * 2000 ) - 1000 ) + 'px';
-							o.style.backgroundImage		= 'url(/accounts/imagefile?filename=' + filename + ')';
+							o.style.backgroundImage		= 'url(/accounts/imagefile?imagefile_id=' + imagefile_id + ')';
 
 							o.innerText					= filename;
 							p.appendChild( o );
@@ -4323,7 +4424,7 @@ function flipImagefileToolBar(){
 	o.style.zIndex			= 65000;
 
 	var r = '';
-	r += '<div style="margin:0 auto;width:90px;height:40px;padding:4px;background-color:#EDEDED;border:1px solid lightgrey;border-radius:8px;" >';
+	r += '<div style="margin:0 auto;width:140px;height:40px;padding:4px;background-color:#EDEDED;border:1px solid lightgrey;border-radius:8px;" >';
 		r += '<button type="button" class="workplace_delete_button"   cmd="delete"    ></button>';
 	r += '</div>';
 	o.innerHTML = r;
@@ -4338,7 +4439,8 @@ function flipImagefileToolBar(){
 		var o = e.target;
 		var cmd = '';
 		while(true){
-			if ( o == this ) return;
+			// if ( o == this ) return;
+			if ( o.tagName == 'BODY' ) return;
 			if ( o.hasAttribute('cmd')){
 				cmd = o.getAttribute('cmd');
 				break;
@@ -4361,6 +4463,8 @@ function flipImagefileToolBar(){
 			case 'delete':
 				if ( o.innerText == 'Ok?' ){
 					wp_deleteImagefile( c );
+					o.style.width = '';
+					o.innerText = '';
 					break;
 				}
 				o.style.width = '100px';
@@ -4372,4 +4476,48 @@ function flipImagefileToolBar(){
 
 }
 
+function wp_deleteImagefile( p ){
+	p.parentNode.removeChild( p );
+	var imagefile_id = p.getAttribute('imagefile_id');
 
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.addEventListener('readystatechange', 
+		function (e){
+			switch ( xmlhttp.readyState){
+				case 1://opened
+					break;
+				case 2://header received
+					break;
+				case 3://loading
+					break;
+				case 4://done
+					console.log('status:' + xmlhttp.status );
+
+					if ( xmlhttp.status == 200 ){
+						
+						var result = JSON.parse( xmlhttp.responseText );
+						console.log( result );
+						switch ( result.status ){
+							case 'SUCCESS':
+								oLog.log(null, 'イメージファイルを削除しました.' );
+								oLog.open(3);
+								break;
+							case 'FAILED':
+								oLog.log(null, 'イメージファイルの削除に失敗しました.' );
+								oLog.open(3);
+								break;
+						}						
+
+					} else{
+					}
+					break;
+			}
+
+		}, false );
+
+		xmlhttp.open("POST", "/accounts/imagefiledelete", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'imagefile_id=' + imagefile_id );
+
+
+}
