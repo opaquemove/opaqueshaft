@@ -146,9 +146,9 @@
 		</div>
 		<div id="WORKPLACE_TAB" >
 			<div id="TAB_OPAQUESHAFT" ></div>
-			<div id="TAB_PLUS"        onclick="addObject();" ></div>
-			<div id="TAB_FIND"        onclick="findObject();" ></div>
-			<div id="TAB_CURRENT2" ></div>
+			<!-- <div id="TAB_PLUS"        onclick="addObject();" ></div>
+			<div id="TAB_FIND"        onclick="findObject();" ></div> -->
+			<!-- <div id="TAB_CURRENT2" ></div> -->
 			<div id="TAB_OPTION" ></div>
 		</div>
 		<div id="WORKPLACE_HEADER" >
@@ -159,13 +159,14 @@
 				<div>RANGE:</div>
 				<div id="WPH_RANGE_ID" style="font-size:11px;padding-top:2px;" >2021</div>
 			</div>
+			<div id="WPH_ADD"                               class="deselectedmenu" onclick="addObject();"></div>
 			<div id="WPH_QUERY"                             class="deselectedmenu" >
 				<div style="float:left;height:40px;padding:4px 2px;" onclick="" >
 					<form  onsubmit="return false;" >
 						<input type="text" id="WP_QUERY_ID" name="WP_QUERY_ID" autocomplete="off" style="width:70px;height:22px;background-color:#EDEDED;border:1px solid #EDEDED;box-sizing: border-box;padding:2px 4px 2px 24px;border-radius: 20px;outline:none;background-image:url(./images/searching.png);background-size:10px;background-repeat: no-repeat;background-position: left 4px center;" />
 					</form>
 				</div>
-				<div class="workplace_button_small" style="float:left;width:16px;" ></div>
+				<div class="workplace_button_small" style="float:left;width:16px;" onclick="findObject();"></div>
 			</div>
 		</div>
 

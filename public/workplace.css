@@ -83,7 +83,7 @@
     position:               relative;
     float:                  right;
     height:                 40px;
-    padding:                6px 8px 0px 8px;
+    padding:                6px 8px 0px 4px;
     font-size:              10px;
     font-weight:            bold;
     background-image:       url(./images/arrow-black-triangle-down.png);
@@ -96,7 +96,7 @@
 #WPH_QUERY{
     float:                  right;
     height:                 28px;
-    padding:                10px 8px 0px 8px;
+    padding:                10px 8px 0px 4px;
     font-size:              10px;
     font-weight:            bold;
 }
@@ -107,6 +107,18 @@
     font-size:              10px;
     font-weight:            bold;
 } */
+#WPH_ADD{
+    float:                  right;
+    width:48px;
+    height:                 28px;
+    padding:                18px 2px 0px 2px;
+    font-size:              10px;
+    font-weight:            bold;
+    background-image:       url(./images/plus3.png);
+    background-size:        10px;
+    background-repeat:      no-repeat;
+    background-position:    center center;
+}
 
 .deselectedmenu{
     color:                  lightgrey;
@@ -159,7 +171,7 @@
     writing-mode:           vertical-lr;
     visibility:             hidden;
 } */
-#TAB_PLUS{
+/* #TAB_PLUS{
     width:                  calc(100%);
     height:                 48px;
     color:                  dimgray;
@@ -180,7 +192,7 @@
     background-repeat:      no-repeat;
     background-position:    center center;
     visibility:             hidden;
-}
+} */
 #TAB_CURRENT2{
     width:                  calc(100% - 0px);
     height:                 128px;
