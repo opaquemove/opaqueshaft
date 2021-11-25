@@ -49,27 +49,6 @@ function initWorkplace(){
 			document.body.dispatchEvent( new Event('click'));
 		}
 	);
-    // document.getElementById('WP_KEYWORD').addEventListener(
-	// 	'keyup',
-	// 	function( e ){
-	// 		if ( e.key == 'Enter' )
-    //         finder();
-	// 	}
-	// );
-    // document.getElementById('WP_ACCOUNT_ID').addEventListener(
-	// 	'keyup',
-	// 	function( e ){
-	// 		if ( e.key == 'Enter' )
-    //         workplaceAccountHelper();
-	// 	}
-	// );
-    // document.getElementById('WP_IMAGEFILE_ID').addEventListener(
-	// 	'keyup',
-	// 	function( e ){
-	// 		if ( e.key == 'Enter' )
-    //         workplaceImagefileHelper();
-	// 	}
-	// );
 
 	document.getElementById('BTN_ADD_DATE').addEventListener('click',
 	function(e){
@@ -184,12 +163,12 @@ function initWorkplace(){
 
 	// カレンダー生成
 	makeCalendar( cur_range_id );
-	document.getElementById('TAB_OPTION').addEventListener(
+	document.getElementById('MONTH12').addEventListener(
 		'click',
 		function(e) {
 			var o = e.target;
 			if ( o == this ) return;
-			while ( o.parentNode != document.getElementById('TAB_OPTION') ){
+			while ( o.parentNode != document.getElementById('MONTH12') ){
 				o = o.parentNode;
 			}
 			for ( var i=0; i<this.childNodes.length; i++ ){
@@ -801,23 +780,23 @@ function resizeWorkplace(){
 	dash.style.height				= 'calc(100% - ' + wph_height + 'px)';
 	dash.style.paddingTop			= wph_height + 'px';
 
-	wb.style.width					= ( w - 48 ) + 'px';
+	wb.style.width					= ( w - 0 ) + 'px';
 	wb.style.top					= ( -h )     + 'px';
 	wb.style.left					= '0px';
 
-	children.style.width			= ( w - 48 - 144 ) + 'px';
+	children.style.width			= ( w - 0 - 144 ) + 'px';
 	children.style.top				= ( -h )     + 'px';
 	children.style.left				= '0px';
 
-	range.style.width				= ( w - 48 - 144 ) + 'px';
+	range.style.width				= ( w - 0 - 144 ) + 'px';
 	range.style.top					= ( -h )     + 'px';
 	range.style.left				= '0px';
  
-	account.style.width				= ( w - 48 - 144 ) + 'px';
+	account.style.width				= ( w - 0 - 144 ) + 'px';
 	account.style.top				= ( -h ) + 'px';
 	account.style.left				= '0px';
 
-	imagefile.style.width			= ( w - 48 - 144 ) + 'px';
+	imagefile.style.width			= ( w - 0 - 144 ) + 'px';
 	imagefile.style.top				= ( -h ) + 'px';
 	imagefile.style.left			= '0px';
 
@@ -1315,12 +1294,12 @@ function workplaceReset(){
 
 
 	//	TAB
-	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
+	// var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	// var plus	 	= document.getElementById('TAB_PLUS');
 	// var find	 	= document.getElementById('TAB_FIND');
 	// var current2 	= document.getElementById('TAB_CURRENT2');
-	var option	 	= document.getElementById('TAB_OPTION');
-	tab.style.visibility		= 'hidden';
+	var option	 	= document.getElementById('MONTH12');
+	// tab.style.visibility		= 'hidden';
 	// plus.style.visibility		= 'hidden';
 	// find.style.visibility		= 'hidden';
 	// current2.style.visibility	= 'hidden';
@@ -1373,13 +1352,13 @@ function workplaceWhiteboard(){
 
 
 	//	TAB
-	var tab = document.getElementById('TAB_OPAQUESHAFT');
+	// var tab = document.getElementById('TAB_OPAQUESHAFT');
 	// var current 	= document.getElementById('TAB_CURRENT');
 	// var plus		= document.getElementById('TAB_PLUS');
 	// var find		= document.getElementById('TAB_FIND');
 	// var current2 	= document.getElementById('TAB_CURRENT2');
-	var option		= document.getElementById('TAB_OPTION');
-	tab.style.visibility		= 'visible';
+	var option		= document.getElementById('MONTH12');
+	// tab.style.visibility		= 'visible';
 	// plus.style.visibility		= 'visible';
 	// find.style.visibility		= 'visible';
 	// current2.style.visibility	= 'visible';
@@ -1762,7 +1741,7 @@ function listChildren( p, day ){
 
 function makeCalendar( range_id ){
 	console.log( 'range_id:' + range_id );
-	var p = document.getElementById('TAB_OPTION');
+	var p = document.getElementById('MONTH12');
 	p.innerHTML = '';
 	
 	// document.getElementById('CALENDAR_DETAIL').innerHTML = '';
@@ -2024,13 +2003,13 @@ function workplaceChildren(){
 	wph_query.style.visibility		= 'visible';
 
 	//	TAB
-	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
+	// var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	// var current 	= document.getElementById('TAB_CURRENT');
 	// var plus 	 	= document.getElementById('TAB_PLUS');
 	// var find		= document.getElementById('TAB_FIND');
 	// var current2	= document.getElementById('TAB_CURRENT2');
-	var option		= document.getElementById('TAB_OPTION');
-	tab.style.visibility 		= 'visible';
+	var option		= document.getElementById('MONTH12');
+	// tab.style.visibility 		= 'visible';
 	// plus.style.visibility		= 'visible';
 	// find.style.visibility		= 'visible';
 	// current2.style.visibility	= 'visible';
@@ -2064,12 +2043,12 @@ function workplaceRange(){
 	wph_query.style.visibility		= 'visible';
 
 	//	TAB
-	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
+	// var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	// var plus		= document.getElementById('TAB_PLUS');
 	// var find		= document.getElementById('TAB_FIND');
 	// var current2	= document.getElementById('TAB_CURRENT2');
-	var option		= document.getElementById('TAB_OPTION');
-	tab.style.visibility 		= 'visible';
+	var option		= document.getElementById('MONTH12');
+	// tab.style.visibility 		= 'visible';
 	// plus.style.visibility		= 'visible';
 	// find.style.visibility		= 'visible';
 	// current2.style.visibility	= 'visible';
@@ -2332,13 +2311,13 @@ function workplaceAccount(){
 	wph_query.style.visibility		= 'visible';
 
 	//	TAB
-	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
+	// var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	// var current 	= document.getElementById('TAB_CURRENT');
 	// var plus		= document.getElementById('TAB_PLUS');
 	// var find		= document.getElementById('TAB_FIND');
 	// var current2	= document.getElementById('TAB_CURRENT2');
-	var option		= document.getElementById('TAB_OPTION');
-	tab.style.visibility 		= 'visible';
+	var option		= document.getElementById('MONTH12');
+	// tab.style.visibility 		= 'visible';
 	// plus.style.visibility		= 'visible';
 	// find.style.visibility		= 'visible';
 	// current2.style.visibility	= 'visible';
@@ -4216,13 +4195,13 @@ function workplaceImagefile(){
 	wph_query.style.visibility		= 'visible';
 
 	//	TAB
-	var tab 		= document.getElementById('TAB_OPAQUESHAFT');
+	// var tab 		= document.getElementById('TAB_OPAQUESHAFT');
 	// var current 	= document.getElementById('TAB_CURRENT');
 	// var plus		= document.getElementById('TAB_PLUS');
 	// var find		= document.getElementById('TAB_FIND');
 	// var current2	= document.getElementById('TAB_CURRENT2');
-	var option		= document.getElementById('TAB_OPTION');
-	tab.style.visibility 		= 'visible';
+	var option		= document.getElementById('MONTH12');
+	// tab.style.visibility 		= 'visible';
 	// plus.style.visibility		= 'visible';
 	// find.style.visibility		= 'visible';
 	// current2.style.visibility	= 'visible';

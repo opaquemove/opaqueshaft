@@ -129,7 +129,7 @@
     border-bottom: 2px solid black;
 }
 
-#WORKPLACE_TAB{
+/* #WORKPLACE_TAB{
     pointer-events:         all;
     position:               absolute;
     top:                    0px;
@@ -138,17 +138,13 @@
     height:                 100%;
     background-color:       transparent;
     opacity:                0.8;
-}
-#TAB_OPAQUESHAFT{
+} */
+/* #TAB_OPAQUESHAFT{
     width:                  100%;
     height:                 48px;
     background-color:       #EDEDED;
-    /* background-image:       url(./images/opaqueshaft_icon_portrait.png);
-    background-size:        12px;
-    background-repeat:      no-repeat;
-    background-position:    center center; */
     visibility:             hidden;
-}
+} */
 .MENU_OPAQUESHAFT{
     float:                  left;
     width:                  48px;
@@ -208,7 +204,7 @@
     flex-direction:         column;
     visibility:             hidden;
 }
-#TAB_OPTION{
+/* #TAB_OPTION{
     width:                  calc(100% - 0px);
     height:                 calc(100% - 276px);
     color:                  dimgray;
@@ -219,11 +215,10 @@
     padding-top:            1px;
     padding-left:           0px;
     overflow:               scroll;
-    /* writing-mode: vertical-lr; */
     display:                flex;
     flex-direction:         column;
     visibility:             hidden;
-}
+} */
 
 #WORKPLACE_AUTHENTICATION{
     position:               absolute;
