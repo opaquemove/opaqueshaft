@@ -1241,22 +1241,22 @@ function openWhiteboard(){
 			if ( e.keyCode == 13) // Enter key
 				createWhiteboard();
 		});
-	document.getElementById('BTN_ADD_DATE').addEventListener('click',
-		function(e){
-			var d = guidedance_whiteboard_form.day.value;
-			var dd = new Date( d );
-			dd.setDate( dd.getDate() + 1 );
-			guidedance_whiteboard_form.day.value =
-				dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
-		}, false );
-	document.getElementById('BTN_MINUS_DATE').addEventListener('click',
-		function(e){
-			var d = guidedance_whiteboard_form.day.value;
-			var dd = new Date( d );
-			dd.setDate( dd.getDate() - 1 );
-			guidedance_whiteboard_form.day.value =
-				dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
-		}, false );
+	// document.getElementById('BTN_ADD_DATE').addEventListener('click',
+	// 	function(e){
+	// 		var d = guidedance_whiteboard_form.day.value;
+	// 		var dd = new Date( d );
+	// 		dd.setDate( dd.getDate() + 1 );
+	// 		guidedance_whiteboard_form.day.value =
+	// 			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+	// 	}, false );
+	// document.getElementById('BTN_MINUS_DATE').addEventListener('click',
+	// 	function(e){
+	// 		var d = guidedance_whiteboard_form.day.value;
+	// 		var dd = new Date( d );
+	// 		dd.setDate( dd.getDate() - 1 );
+	// 		guidedance_whiteboard_form.day.value =
+	// 			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+	// 	}, false );
 	document.getElementById('WHITEBOARD_LIST').addEventListener('mousedown',
 		function(e) {
 			var o = e.target;

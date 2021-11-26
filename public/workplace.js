@@ -50,26 +50,26 @@ function initWorkplace(){
 		}
 	);
 
-	document.getElementById('BTN_ADD_DATE').addEventListener('click',
-	function(e){
-		var d = guidedance_whiteboard_form.day.value;
-		var dd = null;
-		if ( d == '' )	dd = new Date();
-		 else			dd = new Date( d );
-		dd.setDate( dd.getDate() + 1 );
-		guidedance_whiteboard_form.day.value =
-			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
-	}, false );
-	document.getElementById('BTN_MINUS_DATE').addEventListener('click',
-	function(e){
-		var d = guidedance_whiteboard_form.day.value;
-		var dd = null;
-		if ( d == '' )	dd = new Date();
-		 else			dd = new Date( d );
-		dd.setDate( dd.getDate() - 1 );
-		guidedance_whiteboard_form.day.value =
-			dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
-	}, false );
+	// document.getElementById('BTN_ADD_DATE').addEventListener('click',
+	// function(e){
+	// 	var d = guidedance_whiteboard_form.day.value;
+	// 	var dd = null;
+	// 	if ( d == '' )	dd = new Date();
+	// 	 else			dd = new Date( d );
+	// 	dd.setDate( dd.getDate() + 1 );
+	// 	guidedance_whiteboard_form.day.value =
+	// 		dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+	// }, false );
+	// document.getElementById('BTN_MINUS_DATE').addEventListener('click',
+	// function(e){
+	// 	var d = guidedance_whiteboard_form.day.value;
+	// 	var dd = null;
+	// 	if ( d == '' )	dd = new Date();
+	// 	 else			dd = new Date( d );
+	// 	dd.setDate( dd.getDate() - 1 );
+	// 	guidedance_whiteboard_form.day.value =
+	// 		dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
+	// }, false );
 
 
 	document.getElementById('WORKPLACE_HDR').addEventListener(
@@ -162,44 +162,40 @@ function initWorkplace(){
 	initRangeSelector();
 
 	// カレンダー生成
-	makeCalendar( cur_range_id );
-	document.getElementById('MONTH12').addEventListener(
-		'click',
-		function(e) {
-			var o = e.target;
-			if ( o == this ) return;
-			while ( o.parentNode != document.getElementById('MONTH12') ){
-				o = o.parentNode;
-			}
-			for ( var i=0; i<this.childNodes.length; i++ ){
-				var c = this.childNodes[i];
-				if ( c.hasAttribute('selected') ){
-					c.removeAttribute( 'selected' );
-					c.classList.remove('selected');
-				}
-			}
+	// makeCalendar( cur_range_id );
+	// document.getElementById('MONTH12').addEventListener(
+	// 	'click',
+	// 	function(e) {
+	// 		var o = e.target;
+	// 		if ( o == this ) return;
+	// 		while ( o.parentNode != document.getElementById('MONTH12') ){
+	// 			o = o.parentNode;
+	// 		}
+	// 		for ( var i=0; i<this.childNodes.length; i++ ){
+	// 			var c = this.childNodes[i];
+	// 			if ( c.hasAttribute('selected') ){
+	// 				c.removeAttribute( 'selected' );
+	// 				c.classList.remove('selected');
+	// 			}
+	// 		}
 
-			o.classList.add('selected');
-			o.setAttribute( 'selected', 'true' );
+	// 		o.classList.add('selected');
+	// 		o.setAttribute( 'selected', 'true' );
 			
-			var sotd = o.getAttribute('sotd');
-			// var eotd = o.getAttribute('eotd');
+	// 		var sotd = o.getAttribute('sotd');
 
-			cur_month 	= o.getAttribute( 'month' );
-			cur_sotd	= sotd;
-			// cur_eotd	= eotd;
-			// var p = document.getElementById('CALENDAR_DETAIL');
-			var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
-			makeWhiteboardListScope( p, sotd );
+	// 		cur_month 	= o.getAttribute( 'month' );
+	// 		cur_sotd	= sotd;
+	// 		var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+	// 		makeWhiteboardListScope( p, sotd );
 
-		}, false );
+	// 	}, false );
 	
 	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('animationend', selectWhiteboardMotionEnd, false );
 	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('click', selectWhiteboard, false );
 		
 	showWorkPlace();
 
-	// calendarGadget( 'WP_EMPTY', null );
 	// Rollup
 	childrenRollup( document.getElementById('WP_ROLLUP') );
 	whiteboardRollup( document.getElementById('WP_ROLLUP2') );
@@ -569,7 +565,7 @@ function calendarGadget( id, serial ){
 
 	var w = Math.floor( calen.offsetWidth / 7.2 );
 	w	= Math.floor( w / calen.offsetWidth  * 100 );
-	var h = Math.floor( calen.offsetWidth / 7.2 * 0.5 );
+	var h = Math.floor( calen.offsetWidth / 7.2 * 0.3 );
 
 	console.log( 'calendarGadget w:' + w );
 	console.log( 'calendarGadget h:' + h );
@@ -592,13 +588,14 @@ function calendarGadget( id, serial ){
 	var week  = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ];	
 	var o = document.createElement('DIV');
 	o.style.width			= 'calc(100% - 0px)';
-	o.style.height			= '24px';
+	o.style.height			= '36px';
 	// o.style.textAlign		= 'center';
-	o.style.color			= 'white';
-	o.style.backgroundColor	= 'darkgray';	//'darkorange';
-	o.style.padding			= '2px 0px';
+	o.style.color			= 'dimgray';
+	o.style.backgroundColor	= 'white';	//'darkorange';
+	o.style.padding			= '6px 0px';
 	var r = '';
 	r += '<div style="float:left;padding-left:4px;" >' + month[ sotd.getMonth() ] + '.' + sotd.getFullYear() + '</div>';
+	// r += '<div id="MONTH12" style="float:left;" ></div>';
 	r += '<div class="calen_next" style="float:right;padding:0px 4px;"  >&gt;</div>';
 	r += '<div class="calen_prev" style="float:right;padding:0px 4px;"  >&lt;</div>';
 	o.innerHTML			= r;
@@ -611,46 +608,54 @@ function calendarGadget( id, serial ){
 	);
 
 	o = document.createElement('DIV');
-	o.style.width			= 'calc(100% - 0px)';
-	o.style.height			= '22px';
-	o.style.clear			= 'both';
-	o.style.color			= 'white';
-	o.style.backgroundColor	= 'gray';	//'darkorange';
+	o.style.width			= '100%';
+	o.style.height			= '24px';
+	// o.style.clear			= 'both';
+	o.style.color			= 'dimgray';
+	o.style.backgroundColor	= 'white';
+	o.style.fontSize		= '8px';
+	o.style.fontWeight		= 'bold';
+	o.style.display			= 'flex';
 	// o.style.border	= '1px solid lightgrey';
 	r = '';
 	for ( var i=0; i<week.length; i++ ){
-		r += '<div style="float:left;text-align:center;font-weight:bold;width:' + w + '%;font-size:8px;padding-top:4px;margin:1px;" >' + week[i] + '</div>';
+		r += '<div style="text-align:center;width:' + w + '%;height:18px;background-color:white;padding-top:4px;margin:1px;border:1px solid #EDEDED;" >' + week[i] + '</div>';
 	}
 	o.innerHTML		= r;
 	calen.appendChild( o );
-
 	
 	console.log( 'week num:' + sotd.getDay() );
 	sotd.setDate  ( sotd.getDate() - sotd.getDay() );
 	console.log( 'sotm:' + sotm.getFullYear() + '/' + ( sotm.getMonth() + 1 ) + '/' +  sotm.getDate());
 	console.log( 'sotd:' + sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' +  sotd.getDate());
 
+	o = document.createElement('DIV');
+	o.style.width			= '100%';
+	o.style.height			= 'auto';
+	o.style.display			= 'flex';
+	o.style.flexDirection	= 'row';
+	o.style.flexWrap		= 'wrap';
+	var calen2 = calen.appendChild( o );
+
 	while( true ){
-		// var r = '';
-		// r += '<div style="width:24px;height:24px;border:1px solid lightgrey;" >';
-		// 	r += sotd.getDate();
-		// r += '</div>';
 		var o = document.createElement('DIV');
-		if ( sotd.getDay() == 0 )
-			o.style.clear		= 'both';
-		o.style.float 			= 'left';
+		// if ( sotd.getDay() == 0 )
+		// 	o.style.clear		= 'both';
+		// o.style.float 			= 'left';
 		o.style.width			= w + '%';
 		o.style.height			= h + 'px';
-		o.style.padding			= '12px 0px';
+		o.style.border			= '1px solid #EDEDED';
+		o.style.padding			= '20px 0px';
 		o.style.fontSize		= '120%';
 		o.style.textAlign		= 'center';
 		o.style.color			= ( sotd.getMonth() == current_month )? 'gray':'#DDDDDD';
+		o.style.backgroundColor	= 'white';
 		if ( sotd.getMonth() == sotm.getMonth() )
 			o.classList.add( 'calendar_day_'+ sotd.getDate() );
 		// o.style.borderBottom	= '1px solid lightgrey';
 		o.style.margin			= '1px';
 		o.innerHTML = ('00' + sotd.getDate() ).slice(-2);
-		calen.appendChild( o );
+		calen2.appendChild( o );
 		sotd.setDate( sotd.getDate() + 1 );
 		if ( sotd.getFullYear() + ('00' + sotd.getMonth() ).slice(-2) 
 			 > sotm.getFullYear() + ('00' + sotm.getMonth() ).slice(-2) && sotd.getDay() == 0 )break;
@@ -1294,16 +1299,8 @@ function workplaceReset(){
 
 
 	//	TAB
-	// var tab 		= document.getElementById('TAB_OPAQUESHAFT');
-	// var plus	 	= document.getElementById('TAB_PLUS');
-	// var find	 	= document.getElementById('TAB_FIND');
-	// var current2 	= document.getElementById('TAB_CURRENT2');
-	var option	 	= document.getElementById('MONTH12');
-	// tab.style.visibility		= 'hidden';
-	// plus.style.visibility		= 'hidden';
-	// find.style.visibility		= 'hidden';
-	// current2.style.visibility	= 'hidden';
-	option.style.visibility		= 'hidden';
+	// var option	 	= document.getElementById('MONTH12');
+	// option.style.visibility		= 'hidden';
 
 	if (signin.classList.contains('signinMotion'))
 		signin.classList.remove('signinMotion');
@@ -1352,26 +1349,17 @@ function workplaceWhiteboard(){
 
 
 	//	TAB
-	// var tab = document.getElementById('TAB_OPAQUESHAFT');
-	// var current 	= document.getElementById('TAB_CURRENT');
-	// var plus		= document.getElementById('TAB_PLUS');
-	// var find		= document.getElementById('TAB_FIND');
-	// var current2 	= document.getElementById('TAB_CURRENT2');
-	var option		= document.getElementById('MONTH12');
-	// tab.style.visibility		= 'visible';
-	// plus.style.visibility		= 'visible';
-	// find.style.visibility		= 'visible';
-	// current2.style.visibility	= 'visible';
-	option.style.visibility		= 'visible';
+	// var option		= document.getElementById('MONTH12');
+	// option.style.visibility		= 'visible';
 	
 	resizeWorkplace();
 	// children.style.height = '0px';
 	if ( !list.hasChildNodes() ) list.innerHTML = '';
 
-	makeCalendar( getCurrentRangeId() );
 	var today = new Date();
 	var sotd  = today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/1';
 	makeWhiteboardListScope( list, sotd );
+	makeCalendar( getCurrentRangeId() );
 
 	guidedance_whiteboard_form.day.value = '';
 
@@ -1742,6 +1730,10 @@ function listChildren( p, day ){
 function makeCalendar( range_id ){
 	console.log( 'range_id:' + range_id );
 	var p = document.getElementById('MONTH12');
+	if ( p == null ){
+		console.log('MONTH12 is not found.');
+		return;
+	}
 	p.innerHTML = '';
 	
 	// document.getElementById('CALENDAR_DETAIL').innerHTML = '';
@@ -1752,31 +1744,6 @@ function makeCalendar( range_id ){
 	var monthname = [ 'APR', 'MAY', 'JUN', 'JUL','AUG','SEP','OCT', 'NOV','DEC', 'JAN', 'FEB', 'MAR' ];
 	var ym = new Date( range_id + '/4/1' );
 
-	// for ( var i=0; i<12; i++ ){
-	// 	var sotd = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
-	// 	sotd.setMonth( ym.getMonth() + i );
-	// 	var eotd = new Date( sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
-	// 	eotd.setMonth( eotd.getMonth() + 1 );
-	// 	eotd.setDate( eotd.getDate() - 1 );
-	// 	var c = document.createElement('DIV');
-	// 	c.setAttribute( 'month', sotd.getMonth() + 1 );
-	// 	c.setAttribute( 'sotd', sotd.getFullYear() + '/' + ( '00' + ( sotd.getMonth() + 1 ) ).slice(-2) + '/' + sotd.getDate() );
-	// 	// c.setAttribute( 'eotd', eotd.getFullYear() + '/' + ( '00' + ( eotd.getMonth() + 1 ) ).slice(-2) + '/' + eotd.getDate() );
-	// 	c.classList.add('unselected');
-	// 	c.classList.add('month_box');
-	// 	// c.style.top				= '0px';
-	// 	// c.style.left			= ( 40 * i ) + 'px';
-	// 	var r = '';
-	// 		// r += '<div style="padding:1px;">&nbsp;</div>';
-	// 		r += '<div style="font-size:14px;width:100%;text-align:center;font-weight:bold;" >'  + ( sotd.getMonth() + 1 ) + '</div>';
-	// 		r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + monthname[ sotd.getMonth() ] + '</div>';
-	// 	c.innerHTML = r;
-	// 	var cc = p.appendChild( c );
-	// 	if ( cc.getAttribute( 'month') == cur_month ){
-	// 		cc.classList.add('selected');
-	// 		cc.setAttribute( 'selected', 'true' );	
-	// 	}
-	// }
 
 	for ( var i=0; i<12; i++ ){
 		var sotd = ( range_id + delta[i] ) + '/' + monthid[i] + '/1';
@@ -2003,17 +1970,8 @@ function workplaceChildren(){
 	wph_query.style.visibility		= 'visible';
 
 	//	TAB
-	// var tab 		= document.getElementById('TAB_OPAQUESHAFT');
-	// var current 	= document.getElementById('TAB_CURRENT');
-	// var plus 	 	= document.getElementById('TAB_PLUS');
-	// var find		= document.getElementById('TAB_FIND');
-	// var current2	= document.getElementById('TAB_CURRENT2');
-	var option		= document.getElementById('MONTH12');
-	// tab.style.visibility 		= 'visible';
-	// plus.style.visibility		= 'visible';
-	// find.style.visibility		= 'visible';
-	// current2.style.visibility	= 'visible';
-	option.style.visibility		= 'visible';
+	// var option		= document.getElementById('MONTH12');
+	// option.style.visibility		= 'visible';
 
 	resizeWorkplace();
 
@@ -2043,16 +2001,8 @@ function workplaceRange(){
 	wph_query.style.visibility		= 'visible';
 
 	//	TAB
-	// var tab 		= document.getElementById('TAB_OPAQUESHAFT');
-	// var plus		= document.getElementById('TAB_PLUS');
-	// var find		= document.getElementById('TAB_FIND');
-	// var current2	= document.getElementById('TAB_CURRENT2');
-	var option		= document.getElementById('MONTH12');
-	// tab.style.visibility 		= 'visible';
-	// plus.style.visibility		= 'visible';
-	// find.style.visibility		= 'visible';
-	// current2.style.visibility	= 'visible';
-	option.style.visibility		= 'visible';
+	// var option		= document.getElementById('MONTH12');
+	// option.style.visibility		= 'visible';
 
 	resizeWorkplace();
 
@@ -2311,17 +2261,8 @@ function workplaceAccount(){
 	wph_query.style.visibility		= 'visible';
 
 	//	TAB
-	// var tab 		= document.getElementById('TAB_OPAQUESHAFT');
-	// var current 	= document.getElementById('TAB_CURRENT');
-	// var plus		= document.getElementById('TAB_PLUS');
-	// var find		= document.getElementById('TAB_FIND');
-	// var current2	= document.getElementById('TAB_CURRENT2');
-	var option		= document.getElementById('MONTH12');
-	// tab.style.visibility 		= 'visible';
-	// plus.style.visibility		= 'visible';
-	// find.style.visibility		= 'visible';
-	// current2.style.visibility	= 'visible';
-	option.style.visibility		= 'visible';
+	// var option		= document.getElementById('MONTH12');
+	// option.style.visibility		= 'visible';
 
 	// if ( icon.style.height == '0px'){
 	// 	menu.style.display		= 'inline';
@@ -4195,17 +4136,8 @@ function workplaceImagefile(){
 	wph_query.style.visibility		= 'visible';
 
 	//	TAB
-	// var tab 		= document.getElementById('TAB_OPAQUESHAFT');
-	// var current 	= document.getElementById('TAB_CURRENT');
-	// var plus		= document.getElementById('TAB_PLUS');
-	// var find		= document.getElementById('TAB_FIND');
-	// var current2	= document.getElementById('TAB_CURRENT2');
-	var option		= document.getElementById('MONTH12');
-	// tab.style.visibility 		= 'visible';
-	// plus.style.visibility		= 'visible';
-	// find.style.visibility		= 'visible';
-	// current2.style.visibility	= 'visible';
-	option.style.visibility		= 'visible';
+	// var option		= document.getElementById('MONTH12');
+	// option.style.visibility		= 'visible';
 
 	resizeWorkplace();
 	
