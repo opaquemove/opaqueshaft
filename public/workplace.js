@@ -50,27 +50,6 @@ function initWorkplace(){
 		}
 	);
 
-	// document.getElementById('BTN_ADD_DATE').addEventListener('click',
-	// function(e){
-	// 	var d = guidedance_whiteboard_form.day.value;
-	// 	var dd = null;
-	// 	if ( d == '' )	dd = new Date();
-	// 	 else			dd = new Date( d );
-	// 	dd.setDate( dd.getDate() + 1 );
-	// 	guidedance_whiteboard_form.day.value =
-	// 		dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
-	// }, false );
-	// document.getElementById('BTN_MINUS_DATE').addEventListener('click',
-	// function(e){
-	// 	var d = guidedance_whiteboard_form.day.value;
-	// 	var dd = null;
-	// 	if ( d == '' )	dd = new Date();
-	// 	 else			dd = new Date( d );
-	// 	dd.setDate( dd.getDate() - 1 );
-	// 	guidedance_whiteboard_form.day.value =
-	// 		dd.getFullYear() + '/' + ('00' + ( dd.getMonth() + 1 )).slice(-2) + '/' + ('00' + dd.getDate()).slice(-2);
-	// }, false );
-
 
 	document.getElementById('WORKPLACE_HDR').addEventListener(
 		'click', function(e){
@@ -612,7 +591,7 @@ function calendarGadget( id, serial ){
 	o.style.height			= '24px';
 	// o.style.clear			= 'both';
 	o.style.color			= 'dimgray';
-	o.style.backgroundColor	= 'white';
+	o.style.backgroundColor	= '#EDEDED';
 	o.style.fontSize		= '8px';
 	o.style.fontWeight		= 'bold';
 	o.style.display			= 'flex';

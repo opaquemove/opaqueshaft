@@ -356,7 +356,7 @@
     /* margin:                 0 auto; */
     width:                  100%;  /*540px;*/
     height:                 auto;
-    background-color:       white;
+    background-color:       #EDEDED;
 }
 
 #WORKPLACE_WHITEBOARD_MAIN{
@@ -1050,7 +1050,7 @@
     padding:		1px;
     border:			1px solid lightgrey;
     border-radius:	0px;
-    margin:			1px 0px 0px 0px;
+    margin:			1px 1px 0px 0px;
     /* writing-mode: vertical-lr; */
 }
 
