@@ -142,33 +142,33 @@ function initWorkplace(){
 
 	// カレンダー生成
 	// makeCalendar( cur_range_id );
-	// document.getElementById('MONTH12').addEventListener(
-	// 	'click',
-	// 	function(e) {
-	// 		var o = e.target;
-	// 		if ( o == this ) return;
-	// 		while ( o.parentNode != document.getElementById('MONTH12') ){
-	// 			o = o.parentNode;
-	// 		}
-	// 		for ( var i=0; i<this.childNodes.length; i++ ){
-	// 			var c = this.childNodes[i];
-	// 			if ( c.hasAttribute('selected') ){
-	// 				c.removeAttribute( 'selected' );
-	// 				c.classList.remove('selected');
-	// 			}
-	// 		}
+	document.getElementById('MONTH12').addEventListener(
+		'click',
+		function(e) {
+			var o = e.target;
+			if ( o == this ) return;
+			while ( o.parentNode != document.getElementById('MONTH12') ){
+				o = o.parentNode;
+			}
+			for ( var i=0; i<this.childNodes.length; i++ ){
+				var c = this.childNodes[i];
+				if ( c.hasAttribute('selected') ){
+					c.removeAttribute( 'selected' );
+					c.classList.remove('selected');
+				}
+			}
 
-	// 		o.classList.add('selected');
-	// 		o.setAttribute( 'selected', 'true' );
+			o.classList.add('selected');
+			o.setAttribute( 'selected', 'true' );
 			
-	// 		var sotd = o.getAttribute('sotd');
+			var sotd = o.getAttribute('sotd');
 
-	// 		cur_month 	= o.getAttribute( 'month' );
-	// 		cur_sotd	= sotd;
-	// 		var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
-	// 		makeWhiteboardListScope( p, sotd );
+			cur_month 	= o.getAttribute( 'month' );
+			cur_sotd	= sotd;
+			var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+			makeWhiteboardListScope( p, sotd );
 
-	// 	}, false );
+		}, false );
 	
 	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('animationend', selectWhiteboardMotionEnd, false );
 	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('click', selectWhiteboard, false );
