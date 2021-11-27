@@ -544,7 +544,8 @@ function calendarGadget( id, serial ){
 
 	var w = Math.floor( calen.offsetWidth / 7.2 );
 	w	= Math.floor( w / calen.offsetWidth  * 100 );
-	var h = Math.floor( calen.offsetWidth / 7.2 * 0.3 );
+	// var w_px = Math.floor( calen.offsetWidth * w );
+	var h = Math.floor( calen.offsetWidth / 7.2 * 0.2 );
 
 	console.log( 'calendarGadget w:' + w );
 	console.log( 'calendarGadget h:' + h );
@@ -565,26 +566,24 @@ function calendarGadget( id, serial ){
 
 	var month = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 	var week  = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ];	
-	var o = document.createElement('DIV');
-	o.style.width			= 'calc(100% - 0px)';
-	o.style.height			= '36px';
-	// o.style.textAlign		= 'center';
-	o.style.color			= 'dimgray';
-	o.style.backgroundColor	= 'white';	//'darkorange';
-	o.style.padding			= '6px 0px';
-	var r = '';
-	r += '<div style="float:left;padding-left:4px;" >' + month[ sotd.getMonth() ] + '.' + sotd.getFullYear() + '</div>';
-	// r += '<div id="MONTH12" style="float:left;" ></div>';
-	r += '<div class="calen_next" style="float:right;padding:0px 4px;"  >&gt;</div>';
-	r += '<div class="calen_prev" style="float:right;padding:0px 4px;"  >&lt;</div>';
-	o.innerHTML			= r;
-	var calen2 = calen.appendChild( o );
-	calen2.getElementsByClassName('calen_prev')[0].addEventListener(
-		'click', function(){ calendarGadget( id, prev_ym )}
-	);
-	calen2.getElementsByClassName('calen_next')[0].addEventListener(
-		'click', function(){ calendarGadget( id, next_ym )}
-	);
+	// var o = document.createElement('DIV');
+	// o.style.width			= 'calc(100% - 0px)';
+	// o.style.height			= '36px';
+	// o.style.color			= 'dimgray';
+	// o.style.backgroundColor	= 'white';
+	// o.style.padding			= '6px 0px';
+	// var r = '';
+	// r += '<div style="float:left;padding-left:4px;" >' + month[ sotd.getMonth() ] + '.' + sotd.getFullYear() + '</div>';
+	// r += '<div class="calen_next" style="float:right;padding:0px 4px;"  >&gt;</div>';
+	// r += '<div class="calen_prev" style="float:right;padding:0px 4px;"  >&lt;</div>';
+	// o.innerHTML			= r;
+	// var calen2 = calen.appendChild( o );
+	// calen2.getElementsByClassName('calen_prev')[0].addEventListener(
+	// 	'click', function(){ calendarGadget( id, prev_ym )}
+	// );
+	// calen2.getElementsByClassName('calen_next')[0].addEventListener(
+	// 	'click', function(){ calendarGadget( id, next_ym )}
+	// );
 
 	o = document.createElement('DIV');
 	o.style.width			= '100%';
@@ -622,9 +621,10 @@ function calendarGadget( id, serial ){
 		// 	o.style.clear		= 'both';
 		// o.style.float 			= 'left';
 		o.style.width			= w + '%';
-		o.style.height			= h + 'px';
+		o.style.height			= (h - 22) + 'px';
 		o.style.border			= '1px solid #EDEDED';
 		o.style.padding			= '20px 0px';
+		o.style.margin			= '1px';
 		o.style.fontSize		= '120%';
 		o.style.textAlign		= 'center';
 		o.style.color			= ( sotd.getMonth() == current_month )? 'gray':'#DDDDDD';
@@ -632,7 +632,6 @@ function calendarGadget( id, serial ){
 		if ( sotd.getMonth() == sotm.getMonth() )
 			o.classList.add( 'calendar_day_'+ sotd.getDate() );
 		// o.style.borderBottom	= '1px solid lightgrey';
-		o.style.margin			= '1px';
 		o.innerHTML = ('00' + sotd.getDate() ).slice(-2);
 		calen2.appendChild( o );
 		sotd.setDate( sotd.getDate() + 1 );
@@ -1883,7 +1882,7 @@ function makeWhiteboardListScope( p, sotd )
 							dd[0].style.backgroundImage 	= 'url(./images/checked-symbol.png)';
 							dd[0].style.backgroundSize		= '10px';
 							dd[0].style.backgroundRepeat	= 'no-repeat';
-							dd[0].style.backgroundPosition	= 'center center';
+							dd[0].style.backgroundPosition	= 'right 4px bottom 4px';
 
 						}
 					}
