@@ -1732,6 +1732,31 @@ function listChildren( p, day ){
 						// p_absent.innerHTML	= '';
 					}
 
+					// footer
+					var c = document.createElement('DIV');
+					c.classList.add( "calendar_list_children" );
+					c.style.fontSize 			= '12px';
+					c.style.border				= 'none';
+					c.style.color				= 'dimgray';
+					c.style.backgroundColor		= 'white';
+					c.style.backgroundImage		= 'url(./images/restriction.png)';
+					c.style.backgroundSize		= '14px';
+					c.style.backgroundRepeat 	= 'no-repeat';
+					c.style.backgroundPosition	= 'top 140px  center';
+					c.style.display				= 'flex';
+					c.style.justifyContent		= 'center';
+
+					c.style.pointerEvents = 'none';
+					c.style.height = ( p.parentNode.offsetHeight - 20 ) + 'px';
+					// c.innerHTML = 'bottom margin';
+					var r = '';
+					r += '<div style="width:40px;height:32px;padding-top:8px;font-size:16px;color:white;background-color:limegreen;" >';
+					r += '+' + result.length;
+					r += '</div>';
+					c.innerHTML = r;
+					var cc = p.appendChild( c );
+
+
 
 				} else{
 					oLog.log( null, 'listChildren:' + xmlhttp.status );
