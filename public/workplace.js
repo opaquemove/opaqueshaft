@@ -1393,6 +1393,8 @@ function selectCalendar(e){
 		o.setAttribute('selected', 'true');
 		o.classList.add('selected');
 		console.log( 'day:' + o.getAttribute('day'));
+		guidedance_whiteboard_form.day.value = o.getAttribute('day');
+
 		var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 		listChildren( p, o.getAttribute('day'));
 		resizeWorkplace();
