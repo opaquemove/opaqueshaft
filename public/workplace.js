@@ -1929,8 +1929,9 @@ function makeWhiteboardListScope( p, sotd )
 //
 function workplaceChildren(){
 	workplace_id = 'CHILDREN';
-	var wpat	= document.getElementById('WORKPLACE_ADMIN_TOOLS');
-	var children= document.getElementById('WORKPLACE_CHILDREN');
+	var wpat		= document.getElementById('WORKPLACE_ADMIN_TOOLS');
+	var children	= document.getElementById('WORKPLACE_CHILDREN');
+	var lists		= document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST');
 
 	// wpat.style.visibility		= 'hidden';
 
@@ -1948,10 +1949,12 @@ function workplaceChildren(){
 	wph_query.style.visibility		= 'visible';
 
 	//	TAB
-	// var option		= document.getElementById('MONTH12');
-	// option.style.visibility		= 'visible';
 
 	resizeWorkplace();
+
+	if ( lists.innerText == '' ){
+		findObject();
+	}
 
 }
 
@@ -2220,7 +2223,7 @@ function workplaceAccount(){
 	var wpat			= document.getElementById('WORKPLACE_ADMIN_TOOLS');
 	var hdr				= document.getElementById('WORKPLACE_HDR');
 	var account			= document.getElementById('WORKPLACE_ACCOUNT');
-	// var list			= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
+	var lists			= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
 
 	// wpat.style.visibility	= 'hidden';
 
@@ -2249,6 +2252,10 @@ function workplaceAccount(){
 	// }
 
 	resizeWorkplace();
+
+	if ( lists.innerText == '' )
+		findObject();
+
 //	workplaceAccountHelper();
 
 	// var list	= document.getElementById('WORKPLACE_ACCOUNT_MAIN_LIST');
@@ -3006,7 +3013,7 @@ function selectChildren( e ){
 					o.style.animationName	 		= 'scale-in-out';
 					o.style.animationDuration		= '0.3s';
 					o.style.animationIterationCount = 1;
-					o.classList.remove('height360');
+					o.classList.remove('editChildrenFrame');
 					o.getElementsByClassName('container')[0].innerHTML = '';
 					o.getElementsByClassName('container')[0].display = 'none';
 				}	
@@ -3028,7 +3035,7 @@ function selectChildren( e ){
 			o.style.animationName	 		= 'scale-in-out';
 			o.style.animationDuration		= '0.3s';
 			o.style.animationIterationCount = 1;
-			o.classList.remove('height360');	
+			o.classList.remove('editChildrenFrame');	
 			o.getElementsByClassName('container')[0].innerHTML = '';
 			o.getElementsByClassName('container')[0].display = 'none';
 		}	
@@ -3056,7 +3063,7 @@ function selectChildren( e ){
 		//	セレクト解除処理
 		c.removeAttribute('selected');
 		c.classList.remove('selected');
-		c.classList.remove('height360');
+		c.classList.remove('editChildrenFrame');
 		c.getElementsByClassName('container')[0].innerHTML = '';
 		c.getElementsByClassName('container')[0].display = 'none';
 	} else{
@@ -3130,12 +3137,12 @@ function flipChildrenToolBar(){
 
 		switch ( cmd ){
 			case 'edit':
-				if ( c.classList.contains('height360')){
-					c.classList.remove('height360');
+				if ( c.classList.contains('editChildrenFrame')){
+					c.classList.remove('editChildrenFrame');
 					c.getElementsByClassName('container')[0].innerHTML = '';
 					c.getElementsByClassName('container')[0].display = 'none';			
 				} else {
-					c.classList.add('height360');
+					c.classList.add('editChildrenFrame');
 					wp_editChildren();
 				}
 				break;
@@ -3150,12 +3157,12 @@ function flipChildrenToolBar(){
 				o.innerText = 'Ok?';
 				break;
 			case 'history':
-				if ( c.classList.contains('height360')){
-					c.classList.remove('height360');
+				if ( c.classList.contains('editChildrenFrame')){
+					c.classList.remove('editChildrenFrame');
 					c.getElementsByClassName('container')[0].innerHTML = '';
 					c.getElementsByClassName('container')[0].display = 'none';			
 				} else {
-					c.classList.add('height360');
+					c.classList.add('editChildrenFrame');
 					showChildrenHistory();
 				}
 				break;
@@ -3763,7 +3770,7 @@ function finderHelper( keyword, range_id ){
 									r += '</div>';
 								}
 								r += '<div style="float:left;width:auto;height:80px;text-align:left;padding-left:12px;" >';
-									r += '<div class="child_kana"   style="padding:1px;font-size:10px;font-weight:bold;" >' + kana + '</div>';
+									r += '<div class="child_kana"   style="padding-top:12px;font-size:10px;font-weight:bold;" >' + kana + '</div>';
 									r += '<div class="child_header" style="" >';
 										r += child_name + '&nbsp;&nbsp;' + child_grade + child_type;
 										r += '<span style="color:' + arChildGradeColor[ child_grade ] + ';">●</span>';
@@ -4097,7 +4104,7 @@ function workplaceImagefile(){
 
 	var wpat			= document.getElementById('WORKPLACE_ADMIN_TOOLS');
 	var imagefile		= document.getElementById('WORKPLACE_IMAGEFILE');
-	// var list			= document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST');
+	var lists			= document.getElementById('WORKPLACE_IMAGEFILE_MAIN_LIST');
 
 	// wpat.style.visibility	= 'hidden';
 
@@ -4118,6 +4125,9 @@ function workplaceImagefile(){
 	// option.style.visibility		= 'visible';
 
 	resizeWorkplace();
+
+	if ( lists.innerText == '' )
+		findObject();
 	
 }
 

@@ -83,6 +83,7 @@
     position:               relative;
     float:                  right;
     height:                 40px;
+    color:                  dimgray;
     padding:                6px 8px 0px 4px;
     font-size:              10px;
     font-weight:            bold;
@@ -359,6 +360,15 @@
     background-color:       #EDEDED;
 }
 
+#MONTH12{
+    float:                  left;
+    width:                  100%;
+    height:                 48px;
+    background-color:       #EDEDED;
+    display:                flex;
+    justify-content: space-between;
+    overflow:               hidden;
+}
 #WORKPLACE_WHITEBOARD_MAIN{
     margin:                 0 auto;
     width:                  100%;         /* height is fitting */
@@ -988,11 +998,11 @@
 }
 .child_header{
     text-align: left;
-	font-size:				16px;
+	font-size:				18px;
 	font-weight: 			bold;
     /* background-color:       #EDEDED; */
 	border-bottom:			0px solid lightgrey;
-	padding:				2px 0px 2px 0px;
+	padding:				0px 0px 2px 0px;
 }
 .opChild{
     /* border-top:         1px solid lightgrey; */
@@ -1000,6 +1010,9 @@
     background-color:       transparent;
 }
 
+.editChildrenFrame{
+        height:         580px;
+}
 .right56{
     transform:      translateX(56px);
     /* opacity: 0.8; */
@@ -1038,7 +1051,6 @@
 }
 .height360{
     height:         580px;
-    /* opacity: 0.8; */
 }
 
 .month_box{
