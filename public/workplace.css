@@ -1093,12 +1093,13 @@
 
 }
 .calendar_list_children{
-    height:             64px;
-    border:             1px solid lightgrey;
-    border-radius:      4px;
-    padding:            2px;
-    margin-top:         2px;
-    overflow:           hidden;
+    width:                      calc(100% - 8px);
+    height:                     64px;
+    border:                     1px solid ＃EDEDED;
+    /* border-radius:           4px; */
+    padding:                    2px;
+    margin:                     2px 2px 2px 2px;
+    overflow:                   hidden;
 }
 
 .scaleInOut{

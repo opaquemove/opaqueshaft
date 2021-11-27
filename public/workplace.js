@@ -744,7 +744,7 @@ function resizeWorkplace(){
 
 
 	var wb			= document.getElementById('WORKPLACE_WHITEBOARD');
-	var wpwh		= document.getElementById('WORKPLACE_WHITEBOARD_HDR').offsetHeight + 48;
+	var wpwh		= document.getElementById('WORKPLACE_WHITEBOARD_HDR').offsetHeight;
 	var wpwm		= document.getElementById('WORKPLACE_WHITEBOARD_MAIN');
 
 	var children	= document.getElementById('WORKPLACE_CHILDREN');
@@ -1341,16 +1341,16 @@ function workplaceWhiteboard(){
 	// var option		= document.getElementById('MONTH12');
 	// option.style.visibility		= 'visible';
 	
-	resizeWorkplace();
 	// children.style.height = '0px';
 	if ( !list.hasChildNodes() ) list.innerHTML = '';
-
+	
 	var today = new Date();
 	var sotd  = today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/1';
 	makeWhiteboardListScope( list, sotd );
 	makeCalendar( getCurrentRangeId() );
-
+	
 	guidedance_whiteboard_form.day.value = '';
+	resizeWorkplace();
 
 }
 
@@ -1392,6 +1392,10 @@ function selectCalendar(e){
 		//	セレクト処理
 		o.setAttribute('selected', 'true');
 		o.classList.add('selected');
+		console.log( 'day:' + o.getAttribute('day'));
+		var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+		listChildren( p, o.getAttribute('day'));
+		resizeWorkplace();
 		// flipWhiteboardToolBar();
 	}
 	//	対象のアニメーション処理
@@ -1425,7 +1429,7 @@ function selectWhiteboard(e){
 	var o = e.target;
 	while ( true ){
 		if ( o == this ){
-			console.log( o );
+			// console.log( o );
 			// エリア外をアクセスしたらリセット
 			for ( var i=0; i<this.childNodes.length; i++ ){
 				 var o = this.childNodes[i];
@@ -1705,17 +1709,17 @@ function listChildren( p, day ){
 							o.classList.add('calendar_list_children');
 							o.classList.add('unselected');
 							var r = '';
-							r += '<div style="float:left;width:32px;height:100%;" class="vh-center" >';
+							r += '<div style="float:left;width:48px;height:100%;" class="vh-center" >';
 								if ( c.imagefile != '' && c.imagefile != null ){
-									r += '<div style="width:28px;height:28px;overflow:hidden;border-radius:45%;background-image:url(./images/children/' + c.imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
+									r += '<div style="width:28px;height:28px;overflow:hidden;border-radius:50%;background-image:url(./images/children/' + c.imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
 									r += '</div>';
 								}else {
-									r += '<div style="float:left;clear:both;width:28px;height:28px;overflow:hidden;border-radius:45%;" >';
+									r += '<div style="float:left;clear:both;width:28px;height:28px;overflow:hidden;border-radius:50%;" >';
 									r += '</div>';
 								}
 							r += '</div>';
-							r += '<div style="float:left;width:auto;height:100%;font-weight:bold;" >';
-								r += '<div>' + c.child_name + '(' + c.kana + ')' + c.child_type + c.child_grade	+ '</div>';
+							r += '<div style="float:left;width:auto;height:100%;padding:12px 0px 0px 12px;font-weight:;" >';
+								r += '<div>' + c.child_name + c.child_type + c.child_grade	+ '</div>';
 								r += '<div>'   + c.estimate + ' / ' + c.checkout  	+ '</div>';
 							r += '</div>';
 	
@@ -1868,46 +1872,46 @@ function makeWhiteboardListScope( p, sotd )
 					m = day.getMonth();
 
 					//	１ヶ月分のカレンダー生成
-					while ( true){
-						var o = document.createElement('DIV');
-						o.classList.add('calendar_detail_visible');
-						o.classList.add('unselected');
-						o.classList.add( 'day_' + day.getDate() );
-						o.setAttribute( 'day', day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate() );
+					// while ( true){
+					// 	var o = document.createElement('DIV');
+					// 	o.classList.add('calendar_detail_visible');
+					// 	o.classList.add('unselected');
+					// 	o.classList.add( 'day_' + day.getDate() );
+					// 	o.setAttribute( 'day', day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate() );
 
-						var r = '';
-						r += '<div style="float:left;width:48px;height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
-							r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
-							r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + weekname[ day.getDay() ] + '</div>';
-						r += '</div>';
-						r += '<div class="detail" style="float:left;font-size:12px;width:calc(100% - 62px);height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;margin-left:2px;" >';
-							r += '';
-						r += '</div>';
-						r += '<div class="container" style="clear:left;width:100%;height:0px;background-color:white;display:none;overflow:visible;" ></div>';
+					// 	var r = '';
+					// 	r += '<div style="float:left;width:48px;height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
+					// 		r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
+					// 		r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + weekname[ day.getDay() ] + '</div>';
+					// 	r += '</div>';
+					// 	r += '<div class="detail" style="float:left;font-size:12px;width:calc(100% - 62px);height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;margin-left:2px;" >';
+					// 		r += '';
+					// 	r += '</div>';
+					// 	r += '<div class="container" style="clear:left;width:100%;height:0px;background-color:white;display:none;overflow:visible;" ></div>';
 
-						o.innerHTML = r;
-						p.appendChild( o );
-						day.setDate( day.getDate() + 1 );
-						if ( m != day.getMonth() ) break;
+					// 	o.innerHTML = r;
+					// 	p.appendChild( o );
+					// 	day.setDate( day.getDate() + 1 );
+					// 	if ( m != day.getMonth() ) break;
 
-					}
+					// }
 
 					var ca = document.getElementById('WORKPLACE_WHITEBOARD_HDR_CALENDAR');
 					for ( var i=0; i<result.length; i++ ){
 
 						var day = new Date( result[i].day );
-						var dd = p.getElementsByClassName( 'day_' + day.getDate() );
-						if ( dd.length != 0 ){
-							dd[0].style.backgroundImage 	= 'url(./images/checked-symbol.png)';
-							dd[0].style.backgroundSize		= '10px';
-							dd[0].style.backgroundRepeat	= 'no-repeat';
-							dd[0].style.backgroundPosition	= 'right 4px bottom 4px';
-							var c_children		= result[i].c_children;
-							var c_checkout		= result[i].c_checkout;
-							var description		= result[i].description;
-							var detail = dd[0].getElementsByClassName( 'detail' )[0];
-							detail.innerHTML = 'Description:' + description + '<br/>Children:' + c_children + '<br/>checkouts:' + c_checkout;
-						}
+						// var dd = p.getElementsByClassName( 'day_' + day.getDate() );
+						// if ( dd.length != 0 ){
+						// 	dd[0].style.backgroundImage 	= 'url(./images/checked-symbol.png)';
+						// 	dd[0].style.backgroundSize		= '10px';
+						// 	dd[0].style.backgroundRepeat	= 'no-repeat';
+						// 	dd[0].style.backgroundPosition	= 'right 4px bottom 4px';
+						// 	var c_children		= result[i].c_children;
+						// 	var c_checkout		= result[i].c_checkout;
+						// 	var description		= result[i].description;
+						// 	var detail = dd[0].getElementsByClassName( 'detail' )[0];
+						// 	detail.innerHTML = 'Description:' + description + '<br/>Children:' + c_children + '<br/>checkouts:' + c_checkout;
+						// }
 						dd = ca.getElementsByClassName('calendar_day_' + day.getDate() );
 						if ( dd.length != 0 ){
 							dd[0].style.fontWeight			= 'bold';
