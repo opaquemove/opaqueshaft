@@ -84,13 +84,13 @@
     float:                  right;
     height:                 40px;
     color:                  dimgray;
-    padding:                6px 8px 0px 4px;
+    padding:                6px 8px 0px 8px;
     font-size:              10px;
     font-weight:            bold;
     background-image:       url(./images/arrow-black-triangle-down.png);
     background-size:        6px;
     background-repeat:      no-repeat;
-    background-position:    center bottom 4px ;
+    background-position:    center bottom 1px ;
 
     
 }

@@ -100,7 +100,8 @@ function initWorkplace(){
 		'transitionstart', openingSignoutRotation );
 	document.getElementById('WAT_SIGNOUT').addEventListener(
 		'transitionend', closingSignoutRotation );
-			
+
+	
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
 		'click', selectChildren );
 	document.getElementById('WORKPLACE_CHILDREN_MAIN_LIST').addEventListener(
@@ -169,9 +170,16 @@ function initWorkplace(){
 			makeWhiteboardListScope( p, sotd );
 
 		}, false );
-	
-	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('animationend', selectWhiteboardMotionEnd, false );
-	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener('click', selectWhiteboard, false );
+
+	document.getElementById('WORKPLACE_WHITEBOARD_HDR_CALENDAR').addEventListener(
+		'click', selectCalendar, false );
+	document.getElementById('WORKPLACE_WHITEBOARD_HDR_CALENDAR').addEventListener(
+		'animationend', selectCalendarMotionEnd, false );
+		
+	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener(
+		'click', selectWhiteboard, false );
+	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener(
+		'animationend', selectWhiteboardMotionEnd, false );
 		
 	showWorkPlace();
 
@@ -535,11 +543,11 @@ function hoge(){
 	);
 }
 
-function calendarGadget( id, serial ){
+function calendarGadget( parent_id, serial ){
 
-	console.log('calendar id:' + id );
+	console.log('calendar id:' + parent_id );
 	console.log('serial:' + serial );
-	var calen = document.getElementById( id );
+	var calen = document.getElementById( parent_id );
 	calen.innerHTML = '';
 
 	var w = Math.floor( calen.offsetWidth / 7.2 );
@@ -608,6 +616,7 @@ function calendarGadget( id, serial ){
 	console.log( 'sotd:' + sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' +  sotd.getDate());
 
 	o = document.createElement('DIV');
+	o.classList.add( 'calendar_frame');
 	o.style.width			= '100%';
 	o.style.height			= 'auto';
 	o.style.display			= 'flex';
@@ -620,6 +629,8 @@ function calendarGadget( id, serial ){
 		// if ( sotd.getDay() == 0 )
 		// 	o.style.clear		= 'both';
 		// o.style.float 			= 'left';
+		o.setAttribute( 'day', sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
+		o.classList.add('unselected');
 		o.style.width			= w + '%';
 		o.style.height			= (h - 22) + 'px';
 		o.style.border			= '1px solid #EDEDED';
@@ -628,7 +639,7 @@ function calendarGadget( id, serial ){
 		o.style.fontSize		= '120%';
 		o.style.textAlign		= 'center';
 		o.style.color			= ( sotd.getMonth() == current_month )? 'gray':'#DDDDDD';
-		o.style.backgroundColor	= 'white';
+		// o.style.backgroundColor	= 'white';
 		if ( sotd.getMonth() == sotm.getMonth() )
 			o.classList.add( 'calendar_day_'+ sotd.getDate() );
 		// o.style.borderBottom	= '1px solid lightgrey';
@@ -1343,6 +1354,69 @@ function workplaceWhiteboard(){
 
 }
 
+function selectCalendar(e){
+	var o = e.target;
+	while ( true ){
+		if ( o == this ){
+			return;
+		}
+		if ( o.hasAttribute('day') ) break;
+		o = o.parentNode;
+	}
+
+	//	すでに他のカレンダーをセレクトしていたらリセット
+	var calen = this.getElementsByClassName( 'calendar_frame' )[0];
+
+	console.log( 'days:' + calen.childNodes.length );
+	for ( var i=0; i<calen.childNodes.length; i++ ){
+		var c = calen.childNodes[i];
+		if ( c == o ) continue;
+		if ( c.hasAttribute('selected')){
+			c.removeAttribute('selected');
+			c.classList.remove('selected');
+			c.style.animationName	 		= 'scale-in-out';
+			c.style.animationDuration		= '0.3s';
+			c.style.animationIterationCount = 1;
+
+		}	
+	}
+
+	//	対象アカウントがセレクトされているかどうかで処理を振り分け
+	if ( o.hasAttribute('selected')){
+		//	セレクト解除処理
+		o.removeAttribute('selected');
+		o.classList.remove('selected');
+
+		// wp_editAccount( o );
+	} else{
+		//	セレクト処理
+		o.setAttribute('selected', 'true');
+		o.classList.add('selected');
+		// flipWhiteboardToolBar();
+	}
+	//	対象のアニメーション処理
+	o.style.animationName			= 'scale-in-out';
+	o.style.animationDuration		= '0.3s';
+	o.style.animationIterationCount = 1;
+	
+
+}
+function selectCalendarMotionEnd(e){
+	console.log('motion end');
+	var c = e.target;
+	c.style.animationName	= '';
+
+	// while ( true ){
+	// 	if ( c == this ) return;
+	// 	if ( c.tagName == 'BODY' ) return;
+	// 	c = c.parentNode;
+	// }
+
+	// if ( !c.hasAttribute( 'selected' )){
+	// 	flipWhiteboardToolBar();			// toolbar close
+	// }
+
+}
 
 
 function selectWhiteboard(e){
@@ -1372,8 +1446,8 @@ function selectWhiteboard(e){
 			console.log('return');
 			return;
 		}
-		o = o.parentNode;
 		if ( o.hasAttribute('day')) break;
+		o = o.parentNode;
 	}
 
 
@@ -1442,41 +1516,6 @@ function selectWhiteboardMotionEnd(e){
 		flipWhiteboardToolBar();			// toolbar close
 	}
 
-	// switch ( e.target.style.animationName ){
-	// 	case 'scale-in-out':
-	// 		e.target.style.animationName = '';	// old shift-frame
-	// 		e.target.style.animationDuration		= '0.3s';
-	// 		e.target.style.animationIterationCount = 1;
-	// 		if ( e.target.hasAttribute('selected')){
-	// 			// e.target.classList.add('right56');
-	// 			var o = document.createElement('DIV');
-	// 			o.classList.add( 'edit' );
-	// 			o.style.position		= 'absolute';
-	// 			o.style.top				= '0px';
-	// 			o.style.left			= '-55px';
-	// 			o.style.width 			= '48px';
-	// 			o.style.height 			= '48px';
-	// 			o.style.backgroundColor = ':white';
-	// 			o.style.padding 		= '2px';
-	// 			o.style.border 			= '1px solid lightgrey';
-	// 			o.style.borderRadius	= '3px';
-	// 			var r = '';
-	// 			r += '<button type="button" class="workplace_edit_button"  >edit</button>';
-	// 			o.innerHTML				= r;
-	// 			e.target.appendChild( o ).getElementsByClassName('workplace_edit_button')[0].addEventListener('click', editWhiteboard, false);
-	// 		} else {
-	// 			e.target.classList.remove('right56');
-	// 			var ar = e.target.getElementsByClassName('edit');
-	// 			if ( ar.length > 0 )
-	// 				e.target.removeChild( ar[0] );
-	// 		}
-	// 		break;
-	// 	case 'shift-frame':
-	// 		e.target.style.animationName = '';
-	// 		e.target.style.animationDuration		= '0.6';
-	// 		e.target.style.animationIterationCount = 1;
-	// 		break;
-	// }
 }
 
 function flipWhiteboardToolBar(){
@@ -1815,33 +1854,27 @@ function makeWhiteboardListScope( p, sotd )
 			case 1://opened
 			case 2://header received
 			case 3://loading
-				// var o = document.getElementById( 'WHITEBOARD_LIST' );
 				p.innerText = 'access...';
 				break;
 			case 4://done
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
 					var weekname = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI','SAT'];
-					// var o = document.getElementById('WHITEBOARD_LIST');
+
 					p.innerText = '';
-					// var t_calen = document.createElement('DIV');
-					// t_calen.setAttribute('id', 'CALENDAR_AREA');
-					// t_calen.style.width	= '100%';
-					// t_calen.style.height	= 'auto';
-					// p.appendChild( t_calen );
 					calendarGadget('WORKPLACE_WHITEBOARD_HDR_CALENDAR', new Date( sotd ).getTime() );
 
 					var day = new Date( sotd );
 					m = day.getMonth();
-					// var cnt = 0;
+
+					//	１ヶ月分のカレンダー生成
 					while ( true){
 						var o = document.createElement('DIV');
 						o.classList.add('calendar_detail_visible');
 						o.classList.add('unselected');
 						o.classList.add( 'day_' + day.getDate() );
 						o.setAttribute( 'day', day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate() );
-						// o.style.top		= ( 57 * cnt )+ 'px';
-						// o.style.left	= '0px';
+
 						var r = '';
 						r += '<div style="float:left;width:48px;height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
 							r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
@@ -1856,7 +1889,6 @@ function makeWhiteboardListScope( p, sotd )
 						p.appendChild( o );
 						day.setDate( day.getDate() + 1 );
 						if ( m != day.getMonth() ) break;
-						// cnt++;
 
 					}
 
@@ -1866,10 +1898,10 @@ function makeWhiteboardListScope( p, sotd )
 						var day = new Date( result[i].day );
 						var dd = p.getElementsByClassName( 'day_' + day.getDate() );
 						if ( dd.length != 0 ){
-							dd[0].style.backgroundImage 	= 'url(./images/document.png)';
-							dd[0].style.backgroundSize		= '18px';
+							dd[0].style.backgroundImage 	= 'url(./images/checked-symbol.png)';
+							dd[0].style.backgroundSize		= '10px';
 							dd[0].style.backgroundRepeat	= 'no-repeat';
-							dd[0].style.backgroundPosition	= 'top 2px left 2px';
+							dd[0].style.backgroundPosition	= 'right 4px bottom 4px';
 							var c_children		= result[i].c_children;
 							var c_checkout		= result[i].c_checkout;
 							var description		= result[i].description;
