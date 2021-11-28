@@ -598,7 +598,7 @@ function calendarGadget( parent_id, serial ){
 	o.style.height			= '24px';
 	// o.style.clear			= 'both';
 	o.style.color			= 'dimgray';
-	o.style.backgroundColor	= '#EDEDED';
+	o.style.backgroundColor	= 'white';
 	o.style.fontSize		= '8px';
 	o.style.fontWeight		= 'bold';
 	o.style.display			= 'flex';
