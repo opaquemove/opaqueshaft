@@ -605,7 +605,7 @@ function calendarGadget( parent_id, serial ){
 	// o.style.border	= '1px solid lightgrey';
 	r = '';
 	for ( var i=0; i<week.length; i++ ){
-		r += '<div style="text-align:center;width:' + w + '%;height:18px;background-color:white;padding-top:4px;margin:1px;border:1px solid #EDEDED;" >' + week[i] + '</div>';
+		r += '<div class="calendar_day_border" style="text-align:center;width:' + w + '%;height:18px;background-color:white;padding-top:4px;margin:1px;" >' + week[i] + '</div>';
 	}
 	o.innerHTML		= r;
 	calen.appendChild( o );
@@ -631,12 +631,13 @@ function calendarGadget( parent_id, serial ){
 		// o.style.float 			= 'left';
 		o.setAttribute( 'day', sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
 		o.classList.add('unselected');
+		o.classList.add('calendar_day_border');
 		o.style.width			= w + '%';
 		o.style.height			= (h - 22) + 'px';
-		o.style.border			= '1px solid #EDEDED';
+		// o.style.border			= '1px solid #EDEDED';
 		o.style.padding			= '20px 0px';
 		o.style.margin			= '1px';
-		o.style.fontSize		= '120%';
+		o.style.fontSize		= '12px';	//'120%';
 		o.style.textAlign		= 'center';
 		o.style.color			= ( sotd.getMonth() == current_month )? 'gray':'#DDDDDD';
 		// o.style.backgroundColor	= 'white';
@@ -1382,11 +1383,12 @@ function selectCalendar(e){
 	}
 
 	//	対象アカウントがセレクトされているかどうかで処理を振り分け
+	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 	if ( o.hasAttribute('selected')){
 		//	セレクト解除処理
 		o.removeAttribute('selected');
 		o.classList.remove('selected');
-
+		p.innerHTML = '';
 		// wp_editAccount( o );
 	} else{
 		//	セレクト処理
@@ -1395,7 +1397,6 @@ function selectCalendar(e){
 		console.log( 'day:' + o.getAttribute('day'));
 		guidedance_whiteboard_form.day.value = o.getAttribute('day');
 
-		var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 		listChildren( p, o.getAttribute('day'));
 		resizeWorkplace();
 		// flipWhiteboardToolBar();
@@ -1708,8 +1709,11 @@ function listChildren( p, day ){
 						for ( var i=0; i<result.length; i++ ){
 							var c = result[i];
 							var o = document.createElement('DIV');
+							var checkout = c.checkout;
 							o.classList.add('calendar_list_children');
 							o.classList.add('unselected');
+							if ( checkout != null )
+								o.classList.add('checked');
 							var r = '';
 							r += '<div style="float:left;width:48px;height:100%;" class="vh-center" >';
 								if ( c.imagefile != '' && c.imagefile != null ){
@@ -1720,9 +1724,14 @@ function listChildren( p, day ){
 									r += '</div>';
 								}
 							r += '</div>';
-							r += '<div style="float:left;width:auto;height:100%;padding:12px 0px 0px 12px;font-weight:;" >';
-								r += '<div>' + c.child_name + c.child_type + c.child_grade	+ '</div>';
+							r += '<div style="float:left;width:auto;height:100%;padding:22px 0px 0px 12px;font-weight:;" >';
+								r += '<div>' + c.child_name	+ '</div>';
+							r += '</div>';
+							r += '<div style="float:right;width:auto;height:100%;padding:22px 0px 0px 12px;font-weight:;" >';
 								r += '<div>'   + c.estimate + ' / ' + c.checkout  	+ '</div>';
+							r += '</div>';
+							r += '<div style="float:right;width:auto;height:100%;padding:22px 0px 0px 12px;font-weight:;" >';
+								r += '<div>'   + c.child_grade + c.child_type  	+ '</div>';
 							r += '</div>';
 	
 							o.innerHTML = r;
@@ -1813,14 +1822,13 @@ function makeCalendar( range_id ){
 	}
 
 
-	// var ym = new Date( range_id + '/4/1' );
-	// var sotd = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
-	// var eotd = new Date( sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
-	// eotd.setFullYear( eotd.getFullYear() + 1 );
-	// eotd.setDate( eotd.getDate() - 1 );
-	// console.log( 'sotd:' + getYYYYMMDD( sotd ) + ' eotd:' + getYYYYMMDD(eotd) );
+	var sotd = new Date( ym.getFullYear() + '/' + ( ym.getMonth() + 1 ) + '/' + ym.getDate() );
+	var eotd = new Date( sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
+	eotd.setFullYear( eotd.getFullYear() + 1 );
+	eotd.setDate( eotd.getDate() - 1 );
+	console.log( 'sotd:' + getYYYYMMDD( sotd ) + ' eotd:' + getYYYYMMDD(eotd) );
 
-	// makeCalendarHelper( p, getYYYYMMDD(sotd), getYYYYMMDD(eotd) );
+	makeCalendarHelper( p, getYYYYMMDD(sotd), getYYYYMMDD(eotd) );
 
 }
 

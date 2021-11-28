@@ -467,6 +467,7 @@
     position:               relative;
     width:                  100%;
     background-color:       transparent;
+    font-size:              12px;
 	display:				flex;
 	flex-wrap:				wrap;
 	justify-content:        center;
@@ -1063,7 +1064,12 @@
     height:         580px;
 }
 
-
+.calendar_day_border{
+    border-top:         1px solid white;
+    border-left:        1px solid white;
+    border-right:       1px solid white;
+    border-bottom:      1px solid #EDEDED;
+}
 .calendar_detail_visible{
     position		: relative;
     width			: 100%;
@@ -1093,6 +1099,7 @@
 .calendar_list_children{
     width:                      calc(100% - 8px);
     height:                     64px;
+    font-size:12px;
     border:                     1px solid ＃EDEDED;
     /* border-radius:           4px; */
     padding:                    2px;
