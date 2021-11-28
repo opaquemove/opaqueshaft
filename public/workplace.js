@@ -602,6 +602,7 @@ function calendarGadget( parent_id, serial ){
 	o.style.fontSize		= '8px';
 	o.style.fontWeight		= 'bold';
 	o.style.display			= 'flex';
+	o.style.justifyContent	= 'space-between';
 	// o.style.border	= '1px solid lightgrey';
 	r = '';
 	for ( var i=0; i<week.length; i++ ){
@@ -619,22 +620,27 @@ function calendarGadget( parent_id, serial ){
 	o.classList.add( 'calendar_frame');
 	o.style.width			= '100%';
 	o.style.height			= 'auto';
-	o.style.display			= 'flex';
-	o.style.flexDirection	= 'row';
-	o.style.flexWrap		= 'wrap';
 	var calen2 = calen.appendChild( o );
 
+	var oLine = null;
 	while( true ){
+		if ( oLine == null || sotd.getDay() == 0 ){
+			var weekline = document.createElement('DIV');
+			weekline.classList.add('weekline');
+			weekline.style.width			= '100%';
+			weekline.style.height			= 'auto';
+			weekline.style.display			= 'flex';
+			weekline.style.justifyContent	= 'space-between';
+			oLine = calen2.appendChild( weekline );
+
+		}
 		var o = document.createElement('DIV');
-		// if ( sotd.getDay() == 0 )
-		// 	o.style.clear		= 'both';
-		// o.style.float 			= 'left';
 		o.setAttribute( 'day', sotd.getFullYear() + '/' + ( sotd.getMonth() + 1 ) + '/' + sotd.getDate() );
 		o.classList.add('unselected');
 		o.classList.add('calendar_day_border');
+		o.classList.add('day');
 		o.style.width			= w + '%';
 		o.style.height			= (h - 22) + 'px';
-		// o.style.border			= '1px solid #EDEDED';
 		o.style.padding			= '20px 0px';
 		o.style.margin			= '1px';
 		o.style.fontSize		= '12px';	//'120%';
@@ -643,12 +649,21 @@ function calendarGadget( parent_id, serial ){
 		// o.style.backgroundColor	= 'white';
 		if ( sotd.getMonth() == sotm.getMonth() )
 			o.classList.add( 'calendar_day_'+ sotd.getDate() );
-		// o.style.borderBottom	= '1px solid lightgrey';
+
 		o.innerHTML = ('00' + sotd.getDate() ).slice(-2);
-		calen2.appendChild( o );
+		// calen2.appendChild( o );
+		oLine.appendChild( o );
 		sotd.setDate( sotd.getDate() + 1 );
 		if ( sotd.getFullYear() + ('00' + sotd.getMonth() ).slice(-2) 
 			 > sotm.getFullYear() + ('00' + sotm.getMonth() ).slice(-2) && sotd.getDay() == 0 )break;
+		// if ( sotd.getDay() == 0){
+		// 	var weekline = document.createElement('DIV');
+		// 	weekline.style.width			= '100%';
+		// 	weekline.style.height			= 'auto';
+		// 	weekline.style.display			= 'flex';
+		// 	weekline.style.justifyContent	= 'space-between';
+		// 	oLine = calen2.appendChild( weekline );
+		// }
 	}
 }
 
@@ -1369,8 +1384,10 @@ function selectCalendar(e){
 	var calen = this.getElementsByClassName( 'calendar_frame' )[0];
 
 	console.log( 'days:' + calen.childNodes.length );
-	for ( var i=0; i<calen.childNodes.length; i++ ){
-		var c = calen.childNodes[i];
+	var days = this.getElementsByClassName('day');
+	// for ( var i=0; i<calen.childNodes.length; i++ ){
+	for ( var i=0; i<days.length; i++ ){
+		var c = days[i];
 		if ( c == o ) continue;
 		if ( c.hasAttribute('selected')){
 			c.removeAttribute('selected');
@@ -1389,13 +1406,29 @@ function selectCalendar(e){
 		o.removeAttribute('selected');
 		o.classList.remove('selected');
 		p.innerHTML = '';
-		// wp_editAccount( o );
+
+		//	対象外のweeklineを表示復帰
+		var cur_weekline = o.parentNode;
+		var weeklines = this.getElementsByClassName('weekline');
+		for ( var i=0; i<weeklines.length; i++ ){
+			weeklines[i].style.display	= 'flex';
+		}
+
 	} else{
 		//	セレクト処理
 		o.setAttribute('selected', 'true');
 		o.classList.add('selected');
 		console.log( 'day:' + o.getAttribute('day'));
 		guidedance_whiteboard_form.day.value = o.getAttribute('day');
+
+		//	対象外のweeklineを非表示
+		var cur_weekline = o.parentNode;
+		var weeklines = this.getElementsByClassName('weekline');
+		for ( var i=0; i<weeklines.length; i++ ){
+			if ( cur_weekline != weeklines[i] ){
+				weeklines[i].style.display	= 'none';
+			}
+		}
 
 		listChildren( p, o.getAttribute('day'));
 		resizeWorkplace();
