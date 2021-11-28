@@ -144,32 +144,7 @@ function initWorkplace(){
 	// カレンダー生成
 	// makeCalendar( cur_range_id );
 	document.getElementById('MONTH12').addEventListener(
-		'click',
-		function(e) {
-			var o = e.target;
-			if ( o == this ) return;
-			while ( o.parentNode != document.getElementById('MONTH12') ){
-				o = o.parentNode;
-			}
-			for ( var i=0; i<this.childNodes.length; i++ ){
-				var c = this.childNodes[i];
-				if ( c.hasAttribute('selected') ){
-					c.removeAttribute( 'selected' );
-					c.classList.remove('selected');
-				}
-			}
-
-			o.classList.add('selected');
-			o.setAttribute( 'selected', 'true' );
-			
-			var sotd = o.getAttribute('sotd');
-
-			cur_month 	= o.getAttribute( 'month' );
-			cur_sotd	= sotd;
-			var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
-			makeWhiteboardListScope( p, sotd );
-
-		}, false );
+		'click', selectMonth, false );
 
 	document.getElementById('WORKPLACE_WHITEBOARD_HDR_CALENDAR').addEventListener(
 		'click', selectCalendar, false );
@@ -544,6 +519,28 @@ function hoge(){
 	);
 }
 
+function setCalendarMonth( o ){
+	var calen = document.getElementById('MONTH12');
+	for ( var i=0; i<calen.childNodes.length; i++ ){
+		var c = calen.childNodes[i];
+		if ( c.hasAttribute('selected') ){
+			c.removeAttribute( 'selected' );
+			c.classList.remove('selected');
+		}
+	}
+
+	o.classList.add('selected');
+	o.setAttribute( 'selected', 'true' );
+	
+	var sotd = o.getAttribute('sotd');
+
+	cur_month 	= o.getAttribute( 'month' );
+	cur_sotd	= sotd;
+	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+	makeWhiteboardListScope( p, sotd );
+
+}
+
 function calendarGadget( parent_id, serial ){
 
 	console.log('calendar id:' + parent_id );
@@ -588,10 +585,10 @@ function calendarGadget( parent_id, serial ){
 	// o.innerHTML			= r;
 	// var calen2 = calen.appendChild( o );
 	// calen2.getElementsByClassName('calen_prev')[0].addEventListener(
-	// 	'click', function(){ calendarGadget( id, prev_ym )}
+	// 	'click', function(){ calendarGadget( parent_id, prev_ym )}
 	// );
 	// calen2.getElementsByClassName('calen_next')[0].addEventListener(
-	// 	'click', function(){ calendarGadget( id, next_ym )}
+	// 	'click', function(){ calendarGadget( parent_id, next_ym )}
 	// );
 
 	o = document.createElement('DIV');
@@ -681,7 +678,23 @@ function calendarGadget( parent_id, serial ){
 	var r = '';
 	r += '<div class="calendar_handle_left" ></div>';
 	o.innerHTML = r;
-	calen.appendChild( o );
+	calen.appendChild( o ).getElementsByClassName('calendar_handle_left')[0].addEventListener(
+		'click', function(e){
+			 e.preventDefault();
+			var lists = document.getElementById('MONTH12').childNodes;
+			var m = null;
+			for ( var i=0; i<lists.length; i++ ){
+				if ( lists[i].hasAttribute('selected') ){
+					m = lists[i];
+					break;
+				}
+			}
+			m = m.previousSibling;
+			if ( m != null )
+				setCalendarMonth( m );
+		}
+	);
+
 	o = document.createElement('DIV');
 	o.classList.add( 'calendar_handle');
 	o.classList.add('vh-center');
@@ -693,7 +706,22 @@ function calendarGadget( parent_id, serial ){
 	var r = '';
 	r += '<div class="calendar_handle_right" ></div>';
 	o.innerHTML = r;
-	calen.appendChild( o );
+	calen.appendChild( o ).getElementsByClassName('calendar_handle_right')[0].addEventListener(
+		'click', function(e){
+			e.preventDefault();
+			var lists = document.getElementById('MONTH12').childNodes;
+			var m = null;
+			for ( var i=0; i<lists.length; i++ ){
+				if ( lists[i].hasAttribute('selected') ){
+					m = lists[i];
+					break;
+				}
+			}
+			m = m.nextSibling;
+			if ( m != null )
+				setCalendarMonth( m );
+		}
+	);
 
 }
 
@@ -1400,9 +1428,24 @@ function workplaceWhiteboard(){
 
 }
 
+function selectMonth( e ){
+	var o = e.target;
+	if ( o == this ) return;
+	while ( true ){
+		if ( o.tagName == 'BODY') return;
+		if ( o.hasAttribute('sotd')) break;
+		o = o.parentNode;
+		} 
+
+	setCalendarMonth( o );
+	showMonthSummary();
+}
+
 function selectCalendar(e){
+	e.stopPropagation();
 	var o = e.target;
 	while ( true ){
+		if ( o == null ) return;
 		if ( o == this ){
 			var days = this.getElementsByClassName('day');
 			for ( var i=0; i<days.length; i++ ){
@@ -1452,8 +1495,11 @@ function selectCalendar(e){
 		var weeklines = this.getElementsByClassName('weekline');
 		for ( var i=0; i<weeklines.length; i++ ){
 			weeklines[i].style.display	= 'flex';
-			// weeklines[i].classList.remove('hiding');
 		}
+		//	ハンドラを表示復帰
+		this.getElementsByClassName( 'calendar_handle_left' )[0].style.display = '';
+		this.getElementsByClassName( 'calendar_handle_right' )[0].style.display = '';
+
 
 	} else{
 		//	セレクト処理
@@ -1468,9 +1514,11 @@ function selectCalendar(e){
 		for ( var i=0; i<weeklines.length; i++ ){
 			if ( cur_weekline != weeklines[i] ){
 				weeklines[i].style.display	= 'none';
-				// weeklines[i].classList.add('hiding');
 			}
 		}
+		//	ハンドラを非表示
+		this.getElementsByClassName( 'calendar_handle_left' )[0].style.display = 'none';
+		this.getElementsByClassName( 'calendar_handle_right' )[0].style.display = 'none';
 
 		listChildren( p, o.getAttribute('day'));
 		resizeWorkplace();
@@ -1500,6 +1548,14 @@ function selectCalendarMotionEnd(e){
 
 }
 
+function showMonthSummary(){
+	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+
+	var r = '';
+	r += 'Summary';
+	p.innerHTML = r;
+	
+}
 
 function selectWhiteboard(e){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
