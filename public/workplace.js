@@ -141,10 +141,8 @@ function initWorkplace(){
 
 	initRangeSelector();
 
-	// カレンダー生成
-	// makeCalendar( cur_range_id );
 	document.getElementById('MONTH12').addEventListener(
-		'click', selectMonth, false );
+		'click', selectCalendarMonth, false );
 
 	document.getElementById('WORKPLACE_WHITEBOARD_HDR_CALENDAR').addEventListener(
 		'click', selectCalendar, false );
@@ -519,27 +517,6 @@ function hoge(){
 	);
 }
 
-function setCalendarMonth( o ){
-	var calen = document.getElementById('MONTH12');
-	for ( var i=0; i<calen.childNodes.length; i++ ){
-		var c = calen.childNodes[i];
-		if ( c.hasAttribute('selected') ){
-			c.removeAttribute( 'selected' );
-			c.classList.remove('selected');
-		}
-	}
-
-	o.classList.add('selected');
-	o.setAttribute( 'selected', 'true' );
-	
-	var sotd = o.getAttribute('sotd');
-
-	cur_month 	= o.getAttribute( 'month' );
-	cur_sotd	= sotd;
-	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
-	makeWhiteboardListScope( p, sotd );
-
-}
 
 function calendarGadget( parent_id, serial ){
 
@@ -691,7 +668,7 @@ function calendarGadget( parent_id, serial ){
 			}
 			m = m.previousSibling;
 			if ( m != null )
-				setCalendarMonth( m );
+				setCalendarMonth12( m.getAttribute('month') );
 		}
 	);
 
@@ -719,7 +696,7 @@ function calendarGadget( parent_id, serial ){
 			}
 			m = m.nextSibling;
 			if ( m != null )
-				setCalendarMonth( m );
+				setCalendarMonth12( m.getAttribute('month') );
 		}
 	);
 
@@ -1140,7 +1117,7 @@ function selectCurrentRangeId( e ){
 	if ( getCurrentRangeId() == null ) return;
 	switch ( workplace_id ){
 		case 'WHITEBOARD':
-			makeCalendar( getCurrentRangeId() );
+			makeCalendarMonth12( getCurrentRangeId() );
 			guidedance_whiteboard_form.day.value = '';
 			break;
 		case 'CHILDREN':
@@ -1386,7 +1363,6 @@ function workplaceWhiteboard(){
 
 	var wpat	= document.getElementById('WORKPLACE_ADMIN_TOOLS');
 	var wb		= document.getElementById('WORKPLACE_WHITEBOARD');
-	var list	= document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
 	wpat.style.visibility		= 'hidden';
 
@@ -1416,29 +1392,29 @@ function workplaceWhiteboard(){
 	// option.style.visibility		= 'visible';
 	
 	// children.style.height = '0px';
-	if ( !list.hasChildNodes() ) list.innerHTML = '';
+	// if ( !list.hasChildNodes() ) list.innerHTML = '';
 	
 	var today = new Date();
 	var sotd  = today.getFullYear() + '/' + ( today.getMonth() + 1 ) + '/1';
-	makeWhiteboardListScope( list, sotd );
-	makeCalendar( getCurrentRangeId() );
+	makeWhiteboardListScope( sotd );
+	makeCalendarMonth12( getCurrentRangeId() );
+	setCalendarMonth12( cur_month );
 	
 	guidedance_whiteboard_form.day.value = '';
 	resizeWorkplace();
 
 }
 
-function selectMonth( e ){
+function selectCalendarMonth( e ){
 	var o = e.target;
 	if ( o == this ) return;
 	while ( true ){
 		if ( o.tagName == 'BODY') return;
-		if ( o.hasAttribute('sotd')) break;
+		if ( o.hasAttribute('month')) break;
 		o = o.parentNode;
-		} 
+	} 
 
-	setCalendarMonth( o );
-	showMonthSummary();
+	setCalendarMonth12( o.getAttribute('month') );
 }
 
 function selectCalendar(e){
@@ -1551,10 +1527,12 @@ function selectCalendarMotionEnd(e){
 function showMonthSummary(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
+	var delta	  = [ 0, 1, 1, 1, 0, 0, 0,  0,  0,  0, 0, 0, 0 ];
+
 	var r = '';
-	r += 'Summary';
+	r += 'Summary:' +  ( cur_range_id + delta[ cur_month ] ) + '.' + cur_month;
 	p.innerHTML = r;
-	
+
 }
 
 function selectWhiteboard(e){
@@ -1915,7 +1893,33 @@ function listChildren( p, day ){
 
 }
 
-function makeCalendar( range_id ){
+function setCalendarMonth12( month  ){
+	var calen = document.getElementById('MONTH12');
+	for ( var i=0; i<calen.childNodes.length; i++ ){
+		var c = calen.childNodes[i];
+		if ( c.getAttribute('month') == month ){
+			o = c;
+		}
+		if ( c.hasAttribute('selected') ){
+			c.removeAttribute( 'selected' );
+			c.classList.remove('selected');
+		}
+	}
+
+	o.classList.add('selected');
+	o.setAttribute( 'selected', 'true' );
+	
+	var sotd = o.getAttribute('sotd');
+
+	cur_month 	= o.getAttribute( 'month' );
+	cur_sotd	= sotd;
+	// var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
+	makeWhiteboardListScope( sotd );
+	showMonthSummary();
+
+}
+
+function makeCalendarMonth12( range_id ){
 	console.log( 'range_id:' + range_id );
 	var p = document.getElementById('MONTH12');
 	if ( p == null ){
@@ -1924,8 +1928,7 @@ function makeCalendar( range_id ){
 	}
 	p.innerHTML = '';
 	
-	// document.getElementById('CALENDAR_DETAIL').innerHTML = '';
-	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').innerHTML = '';
+	// document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').innerHTML = '';
 	
 	var delta	  = [ 0, 0, 0, 0, 0, 0,  0,  0,  0, 1, 1, 1 ];
 	var monthid   = [ 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3 ];
@@ -1941,15 +1944,15 @@ function makeCalendar( range_id ){
 		c.classList.add('unselected');
 		c.classList.add('month_box');
 		var r = '';
-			// r += '<div style="padding:1px;">&nbsp;</div>';
-			r += '<div style="font-size:14px;width:100%;text-align:center;font-weight:bold;" >'  + monthid[i] + '</div>';
-			r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + monthname[ i ] + '</div>';
+		r += '<div style="font-size:14px;width:100%;text-align:center;font-weight:bold;" >'  + monthid[i] + '</div>';
+		r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + monthname[ i ] + '</div>';
 		c.innerHTML = r;
 		var cc = p.appendChild( c );
-		if ( cc.getAttribute( 'month') == cur_month ){
-			cc.classList.add('selected');
-			cc.setAttribute( 'selected', 'true' );	
-		}
+
+		// if ( cc.getAttribute( 'month') == cur_month ){
+		// 	cc.classList.add('selected');
+		// 	cc.setAttribute( 'selected', 'true' );	
+		// }
 	}
 
 
@@ -1959,11 +1962,11 @@ function makeCalendar( range_id ){
 	eotd.setDate( eotd.getDate() - 1 );
 	console.log( 'sotd:' + getYYYYMMDD( sotd ) + ' eotd:' + getYYYYMMDD(eotd) );
 
-	makeCalendarHelper( p, getYYYYMMDD(sotd), getYYYYMMDD(eotd) );
+	makeCalendarMonth12Helper( p, getYYYYMMDD(sotd), getYYYYMMDD(eotd) );
 
 }
 
-function makeCalendarHelper( p, sotd, eotd ){
+function makeCalendarMonth12Helper( p, sotd, eotd ){
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -1991,7 +1994,7 @@ function makeCalendarHelper( p, sotd, eotd ){
 					}
 					//o.innerHTML = r;
 				} else{
-					console.log( 'makeCalendarHelper:' + xmlhttp.status );
+					console.log( 'makeCalendarMonth12Helper:' + xmlhttp.status );
 				}
 				break;
 		}
@@ -2001,7 +2004,7 @@ function makeCalendarHelper( p, sotd, eotd ){
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
 		xmlhttp.send( 'sotd=' + sotd + '&eotd=' + eotd );
 	} catch ( e ) {
-		oLog.log( null, 'makeCalendarHelper : ' + e );
+		oLog.log( null, 'makeCalendarMonth12Helper : ' + e );
 		oLog.open( 3 );
 		// alert( e );
 	}
@@ -2014,9 +2017,8 @@ function getYYYYMMDD( d ){
 //
 //	ホワイトボードリスト生成処理
 //
-function makeWhiteboardListScope( p, sotd )
+function makeWhiteboardListScope( sotd )
 {
-	p.innerHTML = '';
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -2024,60 +2026,19 @@ function makeWhiteboardListScope( p, sotd )
 			case 1://opened
 			case 2://header received
 			case 3://loading
-				p.innerText = 'access...';
 				break;
 			case 4://done
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
-					var weekname = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI','SAT'];
 
-					p.innerText = '';
 					calendarGadget('WORKPLACE_WHITEBOARD_HDR_CALENDAR', new Date( sotd ).getTime() );
 
 					var day = new Date( sotd );
 					m = day.getMonth();
 
-					//	１ヶ月分のカレンダー生成
-					// while ( true){
-					// 	var o = document.createElement('DIV');
-					// 	o.classList.add('calendar_detail_visible');
-					// 	o.classList.add('unselected');
-					// 	o.classList.add( 'day_' + day.getDate() );
-					// 	o.setAttribute( 'day', day.getFullYear() + '/' + ( day.getMonth() + 1 ) + '/' + day.getDate() );
-
-					// 	var r = '';
-					// 	r += '<div style="float:left;width:48px;height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;" >';
-					// 		r += '<div style="font-size:16px;width:100%;text-align:center;font-weight:bold;" >'  + day.getDate() + '</div>';
-					// 		r += '<div style="font-size:10px;width:100%;text-align:center;" >'  + weekname[ day.getDay() ] + '</div>';
-					// 	r += '</div>';
-					// 	r += '<div class="detail" style="float:left;font-size:12px;width:calc(100% - 62px);height:48px;padding:2px;border:1px solid lightgrey;border-radius:3px;margin-left:2px;" >';
-					// 		r += '';
-					// 	r += '</div>';
-					// 	r += '<div class="container" style="clear:left;width:100%;height:0px;background-color:white;display:none;overflow:visible;" ></div>';
-
-					// 	o.innerHTML = r;
-					// 	p.appendChild( o );
-					// 	day.setDate( day.getDate() + 1 );
-					// 	if ( m != day.getMonth() ) break;
-
-					// }
-
 					var ca = document.getElementById('WORKPLACE_WHITEBOARD_HDR_CALENDAR');
 					for ( var i=0; i<result.length; i++ ){
-
 						var day = new Date( result[i].day );
-						// var dd = p.getElementsByClassName( 'day_' + day.getDate() );
-						// if ( dd.length != 0 ){
-						// 	dd[0].style.backgroundImage 	= 'url(./images/checked-symbol.png)';
-						// 	dd[0].style.backgroundSize		= '10px';
-						// 	dd[0].style.backgroundRepeat	= 'no-repeat';
-						// 	dd[0].style.backgroundPosition	= 'right 4px bottom 4px';
-						// 	var c_children		= result[i].c_children;
-						// 	var c_checkout		= result[i].c_checkout;
-						// 	var description		= result[i].description;
-						// 	var detail = dd[0].getElementsByClassName( 'detail' )[0];
-						// 	detail.innerHTML = 'Description:' + description + '<br/>Children:' + c_children + '<br/>checkouts:' + c_checkout;
-						// }
 						dd = ca.getElementsByClassName('calendar_day_' + day.getDate() );
 						if ( dd.length != 0 ){
 							dd[0].style.fontWeight			= 'bold';
@@ -2085,29 +2046,12 @@ function makeWhiteboardListScope( p, sotd )
 							dd[0].style.backgroundSize		= '10px';
 							dd[0].style.backgroundRepeat	= 'no-repeat';
 							dd[0].style.backgroundPosition	= 'right 4px bottom 4px';
-
 						}
 					}
 
-					//
-					//	calendar detail property area
-					//
-					// var o = document.createElement('DIV');
-					// o.classList.add('calendar_detail_property');
-					// var r = '';
-					// r += '<div  style="width:calc(100% - 2px);height:calc(100% - 60px);background-color:transparent;padding:1px;border:0px solid #EDEDED;border-radius:3px;overflow:scroll;" >';
-					// 	r += '';
-					// r += '</div>';
-					// o.innerHTML = r;
-					// p.appendChild( o ).addEventListener( 'click',
-					// 	function ( e ){
-					// 		e.stopPropagation();
-					// 	}
-					// );
-
-					//o.innerHTML = r;
 				} else{
-					p.innerText = xmlhttp.status;
+					oLog.log( null, xmlhttp.status );
+					oLog.open(3);
 				}
 				break;
 		}
@@ -2115,7 +2059,6 @@ function makeWhiteboardListScope( p, sotd )
 	try{
 		xmlhttp.open("POST", "/accounts/whiteboardlist2", true );
 		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
-		// xmlhttp.send( 'sotd=' + sotd + '&eotd=' + eotd );
 		xmlhttp.send( 'sotd=' + sotd  );
 	} catch ( e ) {
 		oLog.log( null, 'makeWhiteboardListScope : ' + e );
