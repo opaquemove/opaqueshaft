@@ -355,6 +355,7 @@
 }
 #WORKPLACE_WHITEBOARD_HDR_CALENDAR{
     /* margin:                 0 auto; */
+    position:               relative;
     width:                  100%;  /*540px;*/
     height:                 auto;
     background-color:       white;
@@ -370,12 +371,12 @@
     overflow:               hidden;
 }
 .month_box{
-    width:			44px;
-    height:			43px;
-    padding:		1px;
+    width:			50px;
+    height:			37px;
+    padding:		8px 1px 1px 1px;
     border:			1px solid white;
     border-radius:	0px;
-    margin:			1px 1px 0px 0px;
+    margin:			0px 1px 0px 0px;
     /* writing-mode: vertical-lr; */
 }
 
@@ -984,7 +985,7 @@
 
 .checked{
 	background-image:		url(./images/checked-symbol.png);
-	background-position: 	right 1px bottom 1px;
+	background-position: 	right 3px bottom 3px;
 	background-repeat: 		no-repeat;
 	background-size: 		8px;
 }
@@ -1107,6 +1108,30 @@
     overflow:                   hidden;
 }
 
+.calendar_handle_left{
+	width:                      100%;
+    height:                     96px;
+    background-color:           white;
+    border:                     1px solid #EDEDED;
+    border-radius:              0px 12px 12px 0px;
+    background-image:           url(./images/restriction.png), url(./images/restriction.png);
+    background-size:            8px, 8px;
+    background-position:        center top 3px, center bottom 3px;
+    background-repeat:          no-repeat, no-repeat;
+    opacity:                    0.7;
+}
+.calendar_handle_right{
+	width:                      100%;
+    height:                     96px;
+    background-color:           white;
+    border:                     1px solid #EDEDED;
+    border-radius:              12px 0px 0px 12px;
+    background-image:           url(./images/restriction.png), url(./images/restriction.png);
+    background-size:            8px, 8px;
+    background-position:        center top 3px, center bottom 3px;
+    background-repeat:          no-repeat, no-repeat;
+    opacity:                    0.7;
+}
 .scaleInOut{
     animation-name:             scale-in-out;
     animation-duration:         0.3s;

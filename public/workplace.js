@@ -175,6 +175,7 @@ function initWorkplace(){
 		'click', selectCalendar, false );
 	document.getElementById('WORKPLACE_WHITEBOARD_HDR_CALENDAR').addEventListener(
 		'animationend', selectCalendarMotionEnd, false );
+	
 		
 	document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST').addEventListener(
 		'click', selectWhiteboard, false );
@@ -609,6 +610,7 @@ function calendarGadget( parent_id, serial ){
 		r += '<div class="calendar_day_border" style="text-align:center;width:' + w + '%;height:18px;background-color:white;padding-top:4px;margin:1px;" >' + week[i] + '</div>';
 	}
 	o.innerHTML		= r;
+	// Week Header
 	calen.appendChild( o );
 	
 	console.log( 'week num:' + sotd.getDay() );
@@ -622,6 +624,7 @@ function calendarGadget( parent_id, serial ){
 	o.style.height			= 'auto';
 	var calen2 = calen.appendChild( o );
 
+	// day list
 	var oLine = null;
 	while( true ){
 		if ( oLine == null || sotd.getDay() == 0 ){
@@ -640,8 +643,8 @@ function calendarGadget( parent_id, serial ){
 		o.classList.add('calendar_day_border');
 		o.classList.add('day');
 		o.style.width			= w + '%';
-		o.style.height			= (h - 22) + 'px';
-		o.style.padding			= '20px 0px';
+		o.style.height			= (h - 20) + 'px';
+		o.style.padding			= '18px 0px';
 		o.style.margin			= '1px';
 		o.style.fontSize		= '12px';	//'120%';
 		o.style.textAlign		= 'center';
@@ -665,6 +668,33 @@ function calendarGadget( parent_id, serial ){
 		// 	oLine = calen2.appendChild( weekline );
 		// }
 	}
+
+	// handle
+	o = document.createElement('DIV');
+	o.classList.add( 'calendar_handle');
+	o.classList.add('vh-center');
+	o.style.position		= 'absolute';
+	o.style.top				= '0px';
+	o.style.left			= '0px';
+	o.style.width			= '18px';
+	o.style.height			= '100%';
+	var r = '';
+	r += '<div class="calendar_handle_left" ></div>';
+	o.innerHTML = r;
+	calen.appendChild( o );
+	o = document.createElement('DIV');
+	o.classList.add( 'calendar_handle');
+	o.classList.add('vh-center');
+	o.style.position		= 'absolute';
+	o.style.top				= '0px';
+	o.style.left			= 'calc(100% - 18px)';
+	o.style.width			= '18px';
+	o.style.height			= '100%';
+	var r = '';
+	r += '<div class="calendar_handle_right" ></div>';
+	o.innerHTML = r;
+	calen.appendChild( o );
+
 }
 
 //
@@ -1374,6 +1404,17 @@ function selectCalendar(e){
 	var o = e.target;
 	while ( true ){
 		if ( o == this ){
+			var days = this.getElementsByClassName('day');
+			for ( var i=0; i<days.length; i++ ){
+				var c = days[i];
+				if ( c.hasAttribute('selected')){
+					c.removeAttribute('selected');
+					c.classList.remove('selected');
+					c.style.animationName	 		= 'scale-in-out';
+					c.style.animationDuration		= '0.3s';
+					c.style.animationIterationCount = 1;		
+				}	
+			}
 			return;
 		}
 		if ( o.hasAttribute('day') ) break;
@@ -1385,7 +1426,6 @@ function selectCalendar(e){
 
 	console.log( 'days:' + calen.childNodes.length );
 	var days = this.getElementsByClassName('day');
-	// for ( var i=0; i<calen.childNodes.length; i++ ){
 	for ( var i=0; i<days.length; i++ ){
 		var c = days[i];
 		if ( c == o ) continue;
@@ -1412,6 +1452,7 @@ function selectCalendar(e){
 		var weeklines = this.getElementsByClassName('weekline');
 		for ( var i=0; i<weeklines.length; i++ ){
 			weeklines[i].style.display	= 'flex';
+			// weeklines[i].classList.remove('hiding');
 		}
 
 	} else{
@@ -1427,6 +1468,7 @@ function selectCalendar(e){
 		for ( var i=0; i<weeklines.length; i++ ){
 			if ( cur_weekline != weeklines[i] ){
 				weeklines[i].style.display	= 'none';
+				// weeklines[i].classList.add('hiding');
 			}
 		}
 
