@@ -1434,6 +1434,7 @@ function selectCalendar(e){
 					c.style.animationIterationCount = 1;		
 				}	
 			}
+			showCalendarMonthSummary();
 			return;
 		}
 		if ( o.hasAttribute('day') ) break;
@@ -1464,7 +1465,8 @@ function selectCalendar(e){
 		//	セレクト解除処理
 		o.removeAttribute('selected');
 		o.classList.remove('selected');
-		p.innerHTML = '';
+		// p.innerHTML = '';
+		showCalendarMonthSummary();
 
 		//	対象外のweeklineを表示復帰
 		var cur_weekline = o.parentNode;
@@ -1524,17 +1526,108 @@ function selectCalendarMotionEnd(e){
 
 }
 
-function showMonthSummary(){
+function showCalendarMonthSummary(){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 
 	var delta	  = [ 0, 1, 1, 1, 0, 0, 0,  0,  0,  0, 0, 0, 0 ];
 
 	var r = '';
+	r += '<div style="margin:1px;padding:4px;background-color:white;" >';
 	r += 'Summary:' +  ( cur_range_id + delta[ cur_month ] ) + '.' + cur_month;
+	r += '</div>';
+
+	r += '<div class="statistics" style="margin:1px;padding:4px;background-color:white;font-size:12px;" >';
+	r += '</div>';
+
+	r += '<div style="margin:1px;padding:4px;background-color:white;height:120px;font-size:8px;" >';
+	r += makeCalendarMonthGraphTemplate();
+	r += '</div>';
+
 	p.innerHTML = r;
+
+	var template 	= p.getElementsByClassName('template')[0];
+	var statis		= p.getElementsByClassName('statistics')[0];
+	setCalendarMonthGraphTemplate( template, statis );
 
 }
 
+function makeCalendarMonthGraphTemplate(){
+	var delta	  = [ 0, 1, 1, 1, 0, 0, 0,  0,  0,  0, 0, 0, 0 ];
+
+	var r = '';
+	r += '<div class="template" style="width:100%;height:100%;display:flex;align-items:flex-end;" >';
+		var sotd = new Date( ( cur_range_id + delta[ cur_month ] ) + '/' + cur_month + '/1' );
+		var m = sotd.getMonth();
+		while ( m == sotd.getMonth() ){
+			r += '<div style="margin:0px 1px;padding:2px;text-align:center;width:calc( 100% / 31 );height:14px;background-color:#EDEDED;" >';
+				r += sotd.getDate();
+			r += '</div>';
+			sotd.setDate( sotd.getDate() + 1 );
+		}
+	r += '</div>';
+	return r;
+}
+function setCalendarMonthGraphTemplate( p, statis ){
+	console.log('setCalendarMonthGraphTemplate');
+	var delta	  = [ 0, 1, 1, 1, 0, 0, 0,  0,  0,  0, 0, 0, 0 ];
+
+	var d = new Date( ( cur_range_id + delta[ cur_month ] ) + '/' + cur_month + '/1' );
+	var sotd = getYYYYMMDD( d );
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		switch ( xmlhttp.readyState){
+			case 1://opened
+			case 2://header received
+			case 3://loading
+				break;
+			case 4://done
+				if ( xmlhttp.status == 200 ){
+					var result = JSON.parse( xmlhttp.responseText );
+					var sum_children = 0;
+					var cnt_opendays = result.length;
+					for ( var i=0; i<result.length; i++ ){
+						var day = new Date( result[i].day );
+						console.log( day, result.c_children );
+						var o = p.childNodes[ day.getDate() - 1 ];
+						o.style.borderTop	= result[i].c_children + 'px solid orange';
+						sum_children += parseInt( result[i].c_children );
+					}
+
+					var r = '';
+					r += '<div>';
+						r += 'all children: ' + sum_children;
+					r += '</div>';
+					r += '<div>';
+						r += 'service days: ' + cnt_opendays;
+					r += '</div>';
+					r += '<div>';
+						r += 'average children per day: ' + ( sum_children / cnt_opendays );
+					r += '</div>';
+					r += '<div>';
+						r += 'escort rate: ';
+					r += '</div>';
+					r += '<div>';
+						r += 'type(A/B) rate: ';
+					r += '</div>';
+					statis.innerHTML = r;
+
+				} else{
+					oLog.log( null, xmlhttp.status );
+					oLog.open(3);
+				}
+				break;
+		}
+	}
+	try{
+		xmlhttp.open("POST", "/accounts/whiteboardlist2", true );
+		xmlhttp.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+		xmlhttp.send( 'sotd=' + sotd  );
+	} catch ( e ) {
+		oLog.log( null, 'makeWhiteboardListScope : ' + e );
+		oLog.open( 3 );
+		// alert( e );
+	}
+}
 function selectWhiteboard(e){
 	var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 	console.log('selectWhiteboard');
@@ -1915,7 +2008,7 @@ function setCalendarMonth12( month  ){
 	cur_sotd	= sotd;
 	// var p = document.getElementById('WORKPLACE_WHITEBOARD_MAIN_LIST');
 	makeWhiteboardListScope( sotd );
-	showMonthSummary();
+	showCalendarMonthSummary();
 
 }
 
