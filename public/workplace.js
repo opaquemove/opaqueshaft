@@ -1569,7 +1569,7 @@ function makeCalendarMonthGraphTemplate(){
 }
 function makeEstimeteGraphTemplate(){
 	var r = '';
-	for ( var i=0; i<12; i++ ){
+	for ( var i=0; i<11; i++ ){
 		r += '<div style="margin:0px 1px;padding:2px;text-align:center;width:calc( 100% / 12 );height:14px;background-color:#EDEDED;" >';
 			r += ( i + 9 );
 		r += '</div>';
@@ -1924,7 +1924,7 @@ function listChildren( p, day ){
 					var oEst = p.appendChild( o );
 
 					var estimates = {
-						'8':	0, '9':	0, '10':0, '11':0, '12':0, '13':0, '14':0, '15':0, '16':0,
+						'9':	0, '10':0, '11':0, '12':0, '13':0, '14':0, '15':0, '16':0,
 						'17':0, '18':0, '19':0
 					}
 
@@ -1965,7 +1965,7 @@ function listChildren( p, day ){
 						}
 
 						for ( var key in estimates ){
-							var o = oEst.childNodes[ parseInt( key ) - 8 ];
+							var o = oEst.childNodes[ parseInt( key ) - 9 ];
 							o.style.borderTop = estimates[ key ] + 'px solid orange';
 						}
 
