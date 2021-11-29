@@ -1540,14 +1540,18 @@ function showCalendarMonthSummary(){
 	r += '</div>';
 
 	r += '<div style="margin:1px;padding:4px;background-color:white;height:120px;font-size:8px;" >';
-	r += makeCalendarMonthGraphTemplate();
+		r += makeCalendarMonthGraphTemplate();
+	r += '</div>';
+
+	r += '<div class="estimates" style="margin:1px;padding:4px;background-color:white;height:60px;font-size:8px;display:flex;align-items:flex-end;" >';
+		r += makeEstimeteGraphTemplate();
 	r += '</div>';
 
 	p.innerHTML = r;
 
-	var template 	= p.getElementsByClassName('template')[0];
+	var timeline 	= p.getElementsByClassName('timeline')[0];
 	var statis		= p.getElementsByClassName('statistics')[0];
-	setCalendarMonthGraphTemplate( template, statis );
+	setCalendarMonthGraphTemplate( timeline, statis );
 
 }
 
@@ -1555,7 +1559,7 @@ function makeCalendarMonthGraphTemplate(){
 	var delta	  = [ 0, 1, 1, 1, 0, 0, 0,  0,  0,  0, 0, 0, 0 ];
 
 	var r = '';
-	r += '<div class="template" style="width:100%;height:100%;display:flex;align-items:flex-end;" >';
+	r += '<div class="timeline" style="width:100%;height:100%;display:flex;align-items:flex-end;" >';
 		var sotd = new Date( ( cur_range_id + delta[ cur_month ] ) + '/' + cur_month + '/1' );
 		var m = sotd.getMonth();
 		while ( m == sotd.getMonth() ){
@@ -1567,9 +1571,20 @@ function makeCalendarMonthGraphTemplate(){
 	r += '</div>';
 	return r;
 }
-function setCalendarMonthGraphTemplate( p, statis ){
+function makeEstimeteGraphTemplate(){
+	var r = '';
+	for ( var i=0; i<12; i++ ){
+		r += '<div style="margin:0px 1px;padding:2px;text-align:center;width:calc( 100% / 12 );height:14px;background-color:#EDEDED;" >';
+			r += ( i + 9 );
+		r += '</div>';
+	}
+	return r;
+}
+
+function setCalendarMonthGraphTemplate( timeline, statis ){
 	console.log('setCalendarMonthGraphTemplate');
 	var delta	  = [ 0, 1, 1, 1, 0, 0, 0,  0,  0,  0, 0, 0, 0 ];
+	var estimates = [ 0,0,0,0,0,0,0,0,0,0,0,0];
 
 	var d = new Date( ( cur_range_id + delta[ cur_month ] ) + '/' + cur_month + '/1' );
 	var sotd = getYYYYMMDD( d );
@@ -1588,7 +1603,7 @@ function setCalendarMonthGraphTemplate( p, statis ){
 					for ( var i=0; i<result.length; i++ ){
 						var day = new Date( result[i].day );
 						console.log( day, result.c_children );
-						var o = p.childNodes[ day.getDate() - 1 ];
+						var o = timeline.childNodes[ day.getDate() - 1 ];
 						o.style.borderTop	= result[i].c_children + 'px solid orange';
 						sum_children += parseInt( result[i].c_children );
 					}
@@ -1906,9 +1921,21 @@ function listChildren( p, day ){
 			case 4://done
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
+
+					var o = document.createElement('DIV');
+					o.classList.add( 'estimates_graph' );
+					o.innerHTML = makeEstimeteGraphTemplate();
+					var oEst = p.appendChild( o );
+
+					var estimates = {
+						'8':	0, '9':	0, '10':0, '11':0, '12':0, '13':0, '14':0, '15':0, '16':0,
+						'17':0, '18':0, '19':0
+					}
+
 					if ( result.length > 0 ){		//	レコードが存在すれば
 			
 						for ( var i=0; i<result.length; i++ ){
+							var r = '';
 							var c = result[i];
 							var o = document.createElement('DIV');
 							var checkout = c.checkout;
@@ -1916,7 +1943,6 @@ function listChildren( p, day ){
 							o.classList.add('unselected');
 							if ( checkout != null )
 								o.classList.add('checked');
-							var r = '';
 							r += '<div style="float:left;width:48px;height:100%;" class="vh-center" >';
 								if ( c.imagefile != '' && c.imagefile != null ){
 									r += '<div style="width:28px;height:28px;overflow:hidden;border-radius:50%;background-image:url(./images/children/' + c.imagefile + ');background-size:cover;background-position:center center;background-repeat:no-repeat;" >';
@@ -1938,6 +1964,13 @@ function listChildren( p, day ){
 	
 							o.innerHTML = r;
 							p.appendChild( o );
+
+							estimates[ c.estimate.split(':')[0]]++;
+						}
+
+						for ( var key in estimates ){
+							var o = oEst.childNodes[ parseInt( key ) - 8 ];
+							o.style.borderTop = estimates[ key ] + 'px solid orange';
 						}
 
 					} else{							// レコードが存在しなければ
