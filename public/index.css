@@ -133,11 +133,11 @@ INPUT[type=password]{
 	border:					0px solid dimgray;
 	padding:				0px;
 	margin:					0px;
-	overflow:				auto;
-	display:				flex;
+	overflow:				hidden;
+	/* display:				flex;
 	flex-direction: 		row;
 	justify-content:		left;
-	align-items:			flex-start;
+	align-items:			flex-start; */
 
 	transition: 			transform 0.3s ease-in-out;
 	z-index:				0;

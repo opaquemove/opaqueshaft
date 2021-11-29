@@ -719,9 +719,6 @@ function showWorkPlace(){
 
 	var wph				= document.getElementById('WORKPLACE_HEADER');
 	var wpat			= document.getElementById('WORKPLACE_ADMIN_TOOLS');
-	// var wp_test			= document.getElementById('WP_TEST');
-	// var wp_empty		= document.getElementById('WP_EMPTY');
-	// var wp_content		= document.getElementById('WP_CONTENT');
 	var wp_signin		= document.getElementById('WP_SIGNIN');
 	var wp_signout		= document.getElementById('WP_SIGNOUT');
 	var wp_rollup		= document.getElementById('WP_ROLLUP');
@@ -738,8 +735,8 @@ function showWorkPlace(){
 	if ( checkSign() ){
 		// signed
 		wph.style.visibility			= 'visible';
-		wpat.style.visibility			= 'visible';
-		// bo.style.overflow				= 'hidden';
+		if ( workplace_id == null || workplace_id == 'DASHBOARD')
+			wpat.style.visibility			= 'visible';
 		bf.style.width					= '100%';
 		bf.style.overflow				= 'auto';
 		wp_signin.setAttribute( 'disabled', 'true' );
@@ -764,7 +761,6 @@ function showWorkPlace(){
 		// not sign
 		wph.style.visibility			= 'hidden';
 		wpat.style.visibility			= 'hidden';
-		// bo.style.overflow				= 'hidden';
 		bf.style.width					= '100%';
 		bf.style.overflow				= 'hidden';
 		wp_signin.removeAttribute( 'disabled' );

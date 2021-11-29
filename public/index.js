@@ -1839,7 +1839,7 @@ function closeWhiteboardHelper(){
 	oTile.close('menu');
 	oTile.close('childfinder');
 	showWorkPlace();
-	// openWhiteboard();
+	// hiddenWhiteboard();
 }
 
 //
