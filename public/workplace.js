@@ -1918,7 +1918,18 @@ function listChildren( p, day ){
 				if ( xmlhttp.status == 200 ){
 					var result = JSON.parse( xmlhttp.responseText );
 
-					var o = document.createElement('DIV');
+					var o = null;
+					//	ヘッダー
+					o = document.createElement('DIV');
+					o.style.padding 	= '4px';
+					o.style.fontSize	= '18px';
+					o.style.fontWeight	= 'bold';
+					o.innerHTML = 'Summary day : ' + day;
+					p.appendChild( o );
+
+
+					//	お迎え時間帯のグラフを生成.
+					o = document.createElement('DIV');
 					o.classList.add( 'estimates_graph' );
 					o.innerHTML = makeEstimeteGraphTemplate();
 					var oEst = p.appendChild( o );
@@ -1934,7 +1945,9 @@ function listChildren( p, day ){
 							var r = '';
 							var c = result[i];
 							var o = document.createElement('DIV');
-							var checkout = c.checkout;
+							var checkout = getHHMM( ( c.checkout == null )?null : ( new Date ( day + ' ' + c.checkout ) ) );
+							var estimate = getHHMM( new Date( day + ' ' + c.estimate ));
+							var direction= c.direction;
 							o.classList.add('calendar_list_children');
 							o.classList.add('unselected');
 							if ( checkout != null )
@@ -1951,11 +1964,20 @@ function listChildren( p, day ){
 							r += '<div style="float:left;width:auto;height:100%;padding:22px 0px 0px 12px;font-weight:;" >';
 								r += '<div>' + c.child_name	+ '</div>';
 							r += '</div>';
-							r += '<div style="float:right;width:auto;height:100%;padding:22px 0px 0px 12px;font-weight:;" >';
-								r += '<div>'   + c.estimate + ' / ' + c.checkout  	+ '</div>';
+							r += '<div style="float:right;width:64px;height:100%;padding:22px 0px 0px 12px;font-weight:;" >';
+								r += '<div>'   + checkout + '(' + direction + ')' + '</div>';
+							r += '</div>';
+							r += '<div style="float:right;width:64px;height:100%;padding:22px 0px 0px 12px;font-weight:;" >';
+								r += '<div>'   + estimate + '</div>';
 							r += '</div>';
 							r += '<div style="float:right;width:auto;height:100%;padding:22px 0px 0px 12px;font-weight:;" >';
 								r += '<div>'   + c.child_grade + c.child_type  	+ '</div>';
+							r += '</div>';
+							r += '<div style="float:right;width:12px;height:100%;font-weight:;" >';
+								if ( c.escort == 0 )
+									r += '<div class="no_escort" style="width:100%;height:100%;" ></div>';
+									else
+									r += '<div class="escort"    style="width:100%;height:100%;" ></div>';
 							r += '</div>';
 	
 							o.innerHTML = r;
@@ -2135,6 +2157,12 @@ function makeCalendarMonth12Helper( p, sotd, eotd ){
 
 function getYYYYMMDD( d ){
 	return d.getFullYear() + '/' + ( d.getMonth() + 1 ) + '/' + d.getDate();
+}
+function getHHMM( d ){
+	if ( d == null )
+		return '--:--';
+		else 
+		return ('00' + d.getHours() ).slice(-2) + ':' + ( '00' + d.getMinutes() ).slice(-2);
 }
 //
 //	ホワイトボードリスト生成処理
